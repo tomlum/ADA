@@ -1,0 +1,5 @@
+
+# this is for Gimp's print preview
+gtk-print-preview-command="open %f"
+# this is Mac OS X default font
+gtk-font-name = "Lucida Grande 12"

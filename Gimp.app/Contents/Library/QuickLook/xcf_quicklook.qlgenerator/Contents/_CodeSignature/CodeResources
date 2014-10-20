@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>files</key>
+	<dict>
+		<key>Resources/English.lproj/InfoPlist.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			I4yMZ6b6ZF5pqdiQjhSnNd2D3IQ=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>Resources/TaskCall.h</key>
+		<data>
+		wxbTda+RywKe4Z0PE0Etj4ft2EY=
+		</data>
+		<key>Resources/link_launch.sh</key>
+		<data>
+		EJ4Mjnc4bAjP53PQOlaPSkuwvyY=
+		</data>
+	</dict>
+	<key>rules</key>
+	<dict>
+		<key>^Resources/</key>
+		<true/>
+		<key>^Resources/.*\.lproj/</key>
+		<dict>
+			<key>optional</key>
+			<true/>
+			<key>weight</key>
+			<real>1000</real>
+		</dict>
+		<key>^Resources/.*\.lproj/locversion.plist$</key>
+		<dict>
+			<key>omit</key>
+			<true/>
+			<key>weight</key>
+			<real>1100</real>
+		</dict>
+		<key>^version.plist$</key>
+		<true/>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,58 @@
+separate 0.3
+
+This CMYK separation plug-in has been built for GIMP 2.0+ on MacOSX.
+Specifically, it has been tested with MacGIMP 2.2.3.
+
+It will work with Mac OS X version 10.2, 10.3, and 10.4, i.e., Jaguar, Panther, and Tiger.
+The plug-in was built to work with the official MacGIMP distribution as well as gimp-app.
+
+
+Installation (Mac OS X)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+As root, copy the "separate" file into:
+        MacGIMP.app/Contents/Resources/share/gimp/2.0/plug-ins/
+
+You can also install the plugin for a single user, by copying the file to
+  $HOME/.gimp-2.0/plug-ins/
+(Replace 2.0 with your GIMP version!)
+This, of course, doesn't require root privileges.
+
+To install the Adobe ICC profiles, unzip the AdobeICCProfiles.zip file, and
+do the following as root:
+  mkdir /opt/local/iccprofiles
+  cp Adobe\ ICC\ Profiles/RGB\ Profiles/* /opt/local/share/color/icc/
+  cp Adobe\ ICC\ Profiles/CMYK\ Profiles/* /opt/local/share/color/icc/
+
+Finally, install the provided sRGB profile:
+  cp separate/sRGB/sRGB\ Color\ Space\ Profile.icm /opt/local/share/color/icc/
+
+The default profiles are:
+RGB: sRGB Color Space Profile.icm
+CMYK: USWebCoatedSWOP.icc
+
+
+
+
+MD5 (separate) = 7710f855ca575aa388f11d176256cbec
+
+Build Log
+~~~~~~~~~
+
+gcc -g `pkg-config gimp-2.0 --cflags` `pkg-config gimpui-2.0 --cflags` `pkg-config gtk+-2.0 --cflags` `pkg-config lcms --cflags` -O2 -Wall -c separate.c
+separate.c: In function `separate_full':
+separate.c:413: warning: unused variable `cmykprimaries'
+gcc -g `pkg-config gimp-2.0 --cflags` `pkg-config gimpui-2.0 --cflags` `pkg-config gtk+-2.0 --cflags` `pkg-config lcms --cflags` -O2 -Wall -c util.c
+gcc -g `pkg-config gimp-2.0 --cflags` `pkg-config gimpui-2.0 --cflags` `pkg-config gtk+-2.0 --cflags` `pkg-config lcms --cflags` -O2 -Wall -c tiff.c
+gcc -g separate.o util.o tiff.o -o separate `pkg-config gimp-2.0 --libs` `pkg-config gimpui-2.0 --libs` `pkg-config gtk+-2.0 --libs` `pkg-config lcms --libs` -ltiff
+
+powerbook# make install
+gimptool-2.0 --install-bin separate
+/usr/bin/install -c -d /var/root/.gimp-2.2/plug-ins
+/usr/bin/install -c separate /var/root/.gimp-2.2/plug-ins/separate
+
+
+
+Mat Caughron
+mat@archei.com
+last modified: Tue Feb  1 22:27:55 CST 2005
