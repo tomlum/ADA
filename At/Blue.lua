@@ -181,6 +181,7 @@ elseif younext == 10 and not x
 		youbluechargetimer = 0
     if youarmsreach(160) and sameheight() and not me.dodge 
 			then 
+        
 			me.v = you.v + (you.lr * 4)
 			if not (me.block and me.lr ~= you.lr) then
 			me.flinch = true
@@ -620,14 +621,17 @@ elseif x and menext == 6 or menext == 7 then
 		repplay(blues)		
     if mearmsreach(160) and sameheight() and not you.dodge 
 			then 
+--[[
 			you.v = me.v + (me.lr * 4)
 			if not (you.block and me.lr ~= you.lr) then
 			you.flinch = true
 			you.ft = bft
 			you.health = you.health - bluedam
 		end
+    ]]--
+    hc(me.mid, me.y+30, me.mid+me.v+160*me.lr, me.y+30-you.j, true, me.lr, true, true, me.v + (4*me.lr), me.j, bluedam, true, bft, 0, 0, false, false, 1)
 	end
-		--hc(me.mid, me.y+30, me.mid+me.v+160*me.lr, me.y+30-you.j, true, me.lr, true, true, me.v + (4*me.lr), me.j, bluedam, true, bft, 0, 0, false, false, 1)
+		
 		
 	elseif menext == 1 and not x then
 		me.im = blue11

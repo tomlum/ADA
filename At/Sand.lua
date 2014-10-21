@@ -477,51 +477,16 @@ elseif ygsrr and not x then
 
 	ygshhold = 45
 
-	if controller2.up then
-		you.im = upflap
-		you.yoffset = 30
-		youxoffset = 26
-		you.j = -20	
+
+		you.im = sbackflap
+		you.j = -yougupv*.9
+    you.v = -yougv*.9
 		yupgs = true
-	table.insert(youbolts, {x = you.mid -23 * you.lr , y = you.y + 40, lr = you.lr, time = 0, v = .000001, s = -202, upv = boltspeed})	
-	table.insert(youbolts, {x = you.mid, y = you.y + 40, lr = you.lr, time = 0, v = .000001, s = -202, upv = boltspeed})	
-	table.insert(youbolts, {x = you.mid + 23 * you.lr , y = you.y + 40 , lr = you.lr, time = 0, v = .000001, s = -202, upv = boltspeed})	
+    	table.insert(youbolts, {x = you.mid -23 * you.lr , y = you.y + 40, lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
+	table.insert(youbolts, {x = you.mid, y = you.y + 40, lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
+	table.insert(youbolts, {x = you.mid + 23 * you.lr , y = you.y + 40 , lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
 
 
-
-	elseif you.g then
-	yupgs = false
-	you.im = sbackflap
-	you.v = you.v - (you.lr*20)
-
-	table.insert(youbolts, {x = you.mid -23 * you.lr , y = you.y , lr = you.lr, time = 0, upv = 0, s = -202, v = (boltspeed * you.lr)})	
-	table.insert(youbolts, {x = you.mid , y = you.y + 20, lr = you.lr, time = 0, upv = 0, s = -202, v = (boltspeed * you.lr)})	
-	table.insert(youbolts, {x = you.mid + 23 * you.lr , y = you.y + 40 , lr = you.lr, time = 0, upv = 0, s = -202, v = (boltspeed * you.lr)})	
-	
-	elseif controller2.down then
-		yupgs = false
-		you.im = jsflap
-		youxoffset = 29
-		you.yoffset = 14
-		you.j = 25	
-	table.insert(youbolts, {x = you.mid -23 * you.lr , y = you.y + 40, lr = you.lr, time = 0, v = .000001, s = -202, upv = -boltspeed})	
-	table.insert(youbolts, {x = you.mid, y = you.y + 40, lr = you.lr, time = 0, v = .000001, s = -202, upv = -boltspeed})	
-	table.insert(youbolts, {x = you.mid + 23 * you.lr , y = you.y + 40 , lr = you.lr, time = 0, v = .000001, s = -202, upv = -boltspeed})	
-
-	
-	else
-		yupgs = false
-		you.im = jsflap
-		youxoffset = 29
-		you.yoffset = 14
-		you.j = 20
-		you.v = you.v - (you.lr*10)	
-	table.insert(youbolts, {x = you.mid -23 * you.lr , y = you.y + 40, lr = you.lr, time = 0, v = you.lr * boltspeed, s = -202, upv = -boltspeed})	
-	table.insert(youbolts, {x = you.mid, y = you.y + 40, lr = you.lr, time = 0, v = you.lr *  boltspeed, s = -202, upv = -boltspeed})	
-	table.insert(youbolts, {x = you.mid + 23 * you.lr , y = you.y + 40 , lr = you.lr, time = 0, v = you.lr * boltspeed, s = -202, upv = -boltspeed})	
-
-
-	end
 
 
 	if youarmsreach(100) and math.abs(you.y - me.y) <= 150 then
@@ -599,50 +564,16 @@ elseif gsrr and not x then
 
 	gshhold = 45
 
-	if controller1.up then
-	me.im = upflap
-	me.yoffset = 30
-	mexoffset = 26
-	me.j = -100
-	mupgs = true
-
-	table.insert(bolts, {x = me.mid -23 * me.lr , y = me.y , lr = me.lr, time = 0, upv = 0, s = -202, v = (boltspeed * me.lr)})	
-	table.insert(bolts, {x = me.mid , y = me.y + 20, lr = me.lr, time = 0, upv = 0, s = -202, v = (boltspeed * me.lr)})	
-	table.insert(bolts, {x = me.mid + 23 * me.lr , y = me.y + 40 , lr = me.lr, time = 0, upv = 0, s = -202, v = (boltspeed * me.lr)})	
-	
-
-	elseif me.g then
-	mupgs = false
 	me.im = sbackflap
-	me.v = me.v - (me.lr*20)
+	me.j = -megupv*.9
+  me.v = -megv*.9
+	mupgs = true
+  
+  
+	table.insert(bolts, {x = me.mid -23 * me.lr , y = me.y + 40, lr = me.lr, time = 0, v = megv, s = -202, upv = megupv})	
+	table.insert(bolts, {x = me.mid, y = me.y + 40, lr = me.lr, time = 0, v = megv, s = -202, upv = megupv})	
+	table.insert(bolts, {x = me.mid + 23 * me.lr , y = me.y + 40 , lr = me.lr, time = 0, v = megv, s = -202, upv = megupv})	
 
-	table.insert(bolts, {x = me.mid -23 * me.lr , y = me.y , lr = me.lr, time = 0, upv = 0, s = -202, v = (boltspeed * me.lr)})	
-	table.insert(bolts, {x = me.mid , y = me.y + 20, lr = me.lr, time = 0, upv = 0, s = -202, v = (boltspeed * me.lr)})	
-	table.insert(bolts, {x = me.mid + 23 * me.lr , y = me.y + 40 , lr = me.lr, time = 0, upv = 0, s = -202, v = (boltspeed * me.lr)})	
-	
-	elseif controller1.down then
-		mupgs = false
-		me.im = jsflap
-		mexoffset = 29
-		me.yoffset = 14
-		me.j = 25	
-	table.insert(bolts, {x = me.mid -23 * me.lr , y = me.y + 40, lr = me.lr, time = 0, v = .000001, s = -202, upv = -boltspeed})	
-	table.insert(bolts, {x = me.mid, y = me.y + 40, lr = me.lr, time = 0, v = .000001, s = -202, upv = -boltspeed})	
-	table.insert(bolts, {x = me.mid + 23 * me.lr , y = me.y + 40 , lr = me.lr, time = 0, v = .000001, s = -202, upv = -boltspeed})	
-
-else 
-	mupgs = false
-		me.im = jsflap
-		mexoffset = 29
-		me.yoffset = 14
-		me.j = 15
-		me.v = me.v - (me.lr*10)	
-	table.insert(bolts, {x = me.mid -23 * me.lr , y = me.y + 40, lr = me.lr, time = 0, v = me.lr*boltspeed, s = -202, upv = -boltspeed})	
-	table.insert(bolts, {x = me.mid, y = me.y + 40, lr = me.lr, time = 0, v = me.lr*boltspeed, s = -202, upv = -boltspeed})	
-	table.insert(bolts, {x = me.mid + 23 * me.lr , y = me.y + 40 , lr = me.lr, time = 0, v = me.lr*boltspeed, s = -202, upv = -boltspeed})	
-
-
-	end
 
 
 	if mearmsreach(100) and math.abs(me.y - you.y) <= 150 then

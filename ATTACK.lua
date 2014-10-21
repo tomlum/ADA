@@ -669,7 +669,7 @@ elseif not x and yougpready then
 	you.stop = true
 	you.jstop = true
 	yougpcd = 90
-	table.insert(youbolts, {x = you.mid - 30 + 35 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = 0, s = -1, v = pboltspeed * you.lr + you.v, time = 0,stuckinwall = false})
+	table.insert(youbolts, {x = you.mid + 5 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = yougpupv, s = -1, v = yougpv* you.lr + you.v, time = 0,stuckinwall = false})
 	if gp2:isStopped() then
 			gp2:play()
 		else gp2:rewind()
@@ -720,7 +720,7 @@ elseif not x and megpready then
 	me.stop = true
 	me.jstop = true
 	megpcd = 90
-	table.insert(bolts, {x = me.mid - 30 + 35 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = 0, s = -1, v = pboltspeed * me.lr + me.v, time = 0, stuckinwall = false})
+	table.insert(bolts, {x = me.mid + 5 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = megpupv, s = -1, v = megpv* me.lr + me.v, time = 0, stuckinwall = false})
 	if gp1:isStopped() then
 			gp1:play()
 		else gp1:rewind()

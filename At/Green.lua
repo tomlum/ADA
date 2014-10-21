@@ -120,7 +120,7 @@ function youbolts.update()
 										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,me.x+me.v+30,me.y-me.j+60,me.x,me.y,true,true))
 			then 
 			table.remove(youbolts, i)
-			me.v = me.v + v.v/3
+			me.v = me.v + v.v
 			me.g = false
 			me.j = me.j + sandboltknockup
 				if not (me.block and v.lr~=me.lr)
@@ -389,7 +389,7 @@ if you.landing
 	elseif you.prime == true and youboltcombocount < 5 and not youfired
 		then
 		you.prime = false
-		table.insert(youbolts, {x = you.mid -10  * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = yougupv, s = 0, v = yougv * you.lr + you.v})
+		table.insert(youbolts, {x = you.mid  , y = you.y + 24, lr = you.lr, time = 0, upv = yougupv, s = 0, v = yougv * you.lr + you.v})
 		
 		if gr2:isStopped() then
 			gr2:play()
@@ -398,7 +398,7 @@ if you.landing
 		end
 
 		if not you.g then
-		table.insert(youbolts, {x = you.mid -10  * you.lr , y = you.y + 38, lr = you.lr, time = 0, upv = yougupv, s = 0, v = yougv * you.lr + you.v})
+		table.insert(youbolts, {x = you.mid +12  * you.lr , y = you.y + 38, lr = you.lr, time = 0, upv = yougupv, s = 0, v = yougv * you.lr + you.v})
 		end
 		youfired = true
 		youboltcombocount = youboltcombocount + 1
@@ -504,7 +504,7 @@ function bolts.update()
 			then
 		 	table.remove(bolts, i)
 
-			you.v = you.v + v.v/3
+			you.v = you.v + v.v
 			you.g = false
 			you.j = you.j + sandboltknockup
 
@@ -796,7 +796,7 @@ if me.landing
 	elseif me.prime == true and meboltcombocount < 5 and not mefired
 		then
 		me.prime = false
-table.insert(bolts, {x = me.mid -10 * me.lr , y = me.y +24, lr = me.lr, time = 0, upv = megupv, s = 0, v = megv * me.lr + me.v})
+table.insert(bolts, {x = me.mid, y = me.y +24, lr = me.lr, time = 0, upv = megupv, s = 0, v = megv * me.lr + me.v})
 	
 
 		if gr1:isStopped() then
@@ -809,7 +809,7 @@ table.insert(bolts, {x = me.mid -10 * me.lr , y = me.y +24, lr = me.lr, time = 0
 
 
 		if not me.g then
-		table.insert(bolts, {x = me.mid -10 * me.lr , y = me.y + 38, lr = me.lr, time = 0, upv = megupv, s = 0, v = megv * me.lr + me.v})		mefired = true
+		table.insert(bolts, {x = me.mid +12 * me.lr , y = me.y + 38, lr = me.lr, time = 0, upv = megupv, s = 0, v = megv * me.lr + me.v})		mefired = true
 		end
 		mefired = true
 		meboltcombocount = meboltcombocount + 1

@@ -679,6 +679,7 @@ controller2 = {}
 	enviro.rselect:setFilter("nearest")
 	enviro.selector = love.graphics.newImage("enviro/selector.png")
 	enviro.selector:setFilter("nearest")
+  slantbar = love.graphics.newImage("enviro/slantbar.png")
 	enviro.ptile = love.graphics.newImage("enviro/rp.png")
 	enviro.ptile:setFilter("nearest")
 	enviro.btile = love.graphics.newImage("enviro/rb.png")

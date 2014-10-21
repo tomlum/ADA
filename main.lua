@@ -1,7 +1,5 @@
---ad some grab only ledges, like the streetlights and the billboard
+--add some grab only ledges, like the streetlights and the billboard
 --if not one screen then slowly decrease health?
---fix running slows it down
---green has up dir, up, and dir variants, MAYBE IT'S TIED TO THE RATIO OF X TO Y, SO IT'S LIKE AIMABLE
 --if falling and time the dodge you can do a roll land, if it follows qualifications of needing to crouch
 --one of the charge attacks lets you snipe by doing the above, sloep of x and y of stick
 --maybe do like, the black attack hits and hten throws in a direction?
@@ -13,7 +11,7 @@
 --leafs from trees like paper from office
 --incentive to attack after elapsed time, so game doesn't last forever
 --flick vs the select and trigger control mechanisms
---flapping allows you to move freely in air
+--flapping allows you to move freely in air?
 --have gamespeed variable and attach it to sounds
 --MAKE MASKS ON THE BLACK BAR
 --climb then hold down and block is weird
@@ -76,6 +74,7 @@ success = love.window.setMode(480, 300, {resizable=true, fullscreen = false, vsy
 
 
 fightclub = true
+debug = false
 
 mute = true
 
@@ -141,7 +140,7 @@ require "colorcontrol"
 loader = require "love-loader"
 
 
-
+moop = 0
 
 
 
@@ -174,9 +173,9 @@ function love.load()
     return sum;
   }
   ]]
-
-  --if arg[#arg] == "-debug" then require("mobdebug").start() end
-
+if debug then 
+  if arg[#arg] == "-debug" then require("mobdebug").start() end
+end
   finishedLoading = false
 
   stagey = 0
@@ -520,10 +519,13 @@ function love.update()
 
 
       if fightclub then 
-        mb = controller1.a1
-        mg = controller1.a2
+        ms = controller1.a2
+        mg = controller1.a1
         mp = controller1.a3
         my = controller1.a4
+        
+        ys = controller2.a1
+        yg = controller2.a2
         
       colorcontrol(mb,mg,mp,yb,yg,yp,my,yy,ms,ys)
       else
@@ -916,7 +918,6 @@ function love.update()
     elseif MENU == "choose" or MENU == "postchoose" then
       love.graphics.setColor(255,255,255,255)
       love.graphics.draw(enviro.lselect, ((lcx - ln)/1440)*screenwidth, 0, 0, screenwidth/1440, screenheight/900)	
-      love.graphics.setColor(155, 155, 155, 255)
       love.graphics.draw(enviro.rselect, ((720-lcx + rn)/1440)*screenwidth, 0, 0, screenwidth/1440, screenheight/900)
       love.graphics.setColor(255,255,255,255)
 
@@ -1162,54 +1163,68 @@ function love.update()
 
 
 
-
+if youchooseface then
+  
+  --- -10
+  
+          love.graphics.draw(slantbar, screenwidth, 0, 0 ,-screenwidth/1440, screenheight/900) 
         love.graphics.setColor(yf1r, yf1g, yf1b, 255)
-        love.graphics.draw(face1, ((193+720+rn)/1440)*screenwidth, (600/900)*screenheight, 0, screenwidth/360, screenheight/225)
-        love.graphics.setColor(yf2r, yf2g, yf2b, 255)
-        love.graphics.draw(face2, ((193+720+wa+rn)/1440)*screenwidth , (600/900)*screenheight, 0, screenwidth/360, screenheight/225)
-        love.graphics.setColor(yf3r, yf3g, yf3b, 255)
-        love.graphics.draw(face3, ((193+720+wa*2+rn)/1440)*screenwidth , (600/900)*screenheight, 0, screenwidth/360, screenheight/225)
-        love.graphics.setColor(yf4r, yf4g, yf4b, 255)
-        love.graphics.draw(face4, ((193+720+wa*3+rn)/1440)*screenwidth , (600/900)*screenheight, 0, screenwidth/360, screenheight/225)
-        love.graphics.setColor(yf5r, yf5g, yf5b, 255)
-        love.graphics.draw(face5, ((193+720+wa*4+rn)/1440)*screenwidth , (600/900)*screenheight, 0, screenwidth/360, screenheight/225)
-        love.graphics.setColor(yf6r, yf6g, yf6b, 255)
-        love.graphics.draw(face6, ((193+720+wa*5+rn)/1440)*screenwidth , (600/900)*screenheight, 0, screenwidth/360, screenheight/225)
+    love.graphics.draw(face1, ((1440 - 40-70)/1440)*screenwidth, ((tileyoffset+138)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+    love.graphics.setColor(yf2r, yf2g, yf2b, 255)
+    love.graphics.draw(face2, ((1440 - 40-70 - 8)/1440)*screenwidth, ((tileyoffset+138 + 56)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+    love.graphics.setColor(yf3r, yf3g, yf3b, 255)
+     love.graphics.draw(face3, ((1440 - 40-70 - 16)/1440)*screenwidth, ((tileyoffset+138 + 56*2)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+love.graphics.setColor(yf4r, yf4g, yf4b, 255)
+ love.graphics.draw(face4, ((1440 - 40-70 - 8*3)/1440)*screenwidth, ((tileyoffset+138 + 56*3)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+ love.graphics.setColor(yf5r, yf5g, yf5b, 255)
+  love.graphics.draw(face5, ((1440 - 40-70 - 8*4)/1440)*screenwidth, ((tileyoffset+138 + 56*4)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+  love.graphics.setColor(yf6r, yf6g, yf6b, 255)
+   love.graphics.draw(face6, ((1440 - 40-70 - 8*5)/1440)*screenwidth, ((tileyoffset+138 + 56*5)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+  
+  
 
+      love.graphics.setColor(a22r, a22g, a22b, 255)
+        love.graphics.draw(faceselector, ((1440 - 40 - 70 - 2 + 82 - (8 * youfaceselector))/1440)*screenwidth, ((tileyoffset+138 - 10 + 56*youfaceselector)/900)*screenheight, 0, -screenwidth/1440, screenheight/900)
 
-        love.graphics.setColor(mf1r, mf1g, mf1b, 255)
-        love.graphics.draw(face1, ((226-ln)/1440)*screenwidth, (600/900)*screenheight, 0, screenwidth/360, screenheight/225)
-        love.graphics.setColor(mf2r, mf2g, mf2b, 255)
-        love.graphics.draw(face2, ((226+wa-ln)/1440)*screenwidth , (600/900)*screenheight, 0, screenwidth/360, screenheight/225)
-        love.graphics.setColor(mf3r, mf3g, mf3b, 255)
-        love.graphics.draw(face3, ((226+wa*2-ln)/1440)*screenwidth , (600/900)*screenheight, 0, screenwidth/360, screenheight/225)
-        love.graphics.setColor(mf4r, mf4g, mf4b, 255)
-        love.graphics.draw(face4, ((226+wa*3-ln)/1440)*screenwidth , (600/900)*screenheight, 0, screenwidth/360, screenheight/225)
-        love.graphics.setColor(mf5r, mf5g, mf5b, 255)
-        love.graphics.draw(face5, ((226+wa*4-ln)/1440)*screenwidth , (600/900)*screenheight, 0, screenwidth/360, screenheight/225)
-        love.graphics.setColor(mf6r, mf6g, mf6b, 255)
-        love.graphics.draw(face6, ((226+wa*5-ln)/1440)*screenwidth , (600/900)*screenheight, 0, screenwidth/360, screenheight/225)
-        love.graphics.setColor(255,255,255, 255)
+end
+if mechooseface then
+  
+   love.graphics.draw(slantbar, 0, 0, 0 ,screenwidth/1440, screenheight/900) 
+        
+  
+  love.graphics.setColor(mf1r, mf1g, mf1b, 255)
+    love.graphics.draw(face1, ((70)/1440)*screenwidth, ((tileyoffset+138)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+    love.graphics.setColor(mf2r, mf2g, mf2b, 255)
+    love.graphics.draw(face2, ((70 + 8)/1440)*screenwidth, ((tileyoffset+138 + 56)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+    love.graphics.setColor(mf3r, mf3g, mf3b, 255)
+     love.graphics.draw(face3, ((70 + 16)/1440)*screenwidth, ((tileyoffset+138 + 56*2)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+love.graphics.setColor(mf4r, mf4g, mf4b, 255)
+ love.graphics.draw(face4, ((70 + 8*3)/1440)*screenwidth, ((tileyoffset+138 + 56*3)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+ love.graphics.setColor(mf5r, mf5g, mf5b, 255)
+  love.graphics.draw(face5, ((70 + 8*4)/1440)*screenwidth, ((tileyoffset+138 + 56*4)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+  love.graphics.setColor(mf6r, mf6g, mf6b, 255)
+   love.graphics.draw(face6, ((70 + 8*5)/1440)*screenwidth, ((tileyoffset+138 + 56*5)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+  
+ love.graphics.setColor(a31r, a31g, a31b, 255)
+        love.graphics.draw(faceselector, ((30 + (8 * mefaceselector))/1440)*screenwidth, ((tileyoffset+138 - 10 + 56*mefaceselector)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
+end
 
-
-        if mechooseface and not mereadytoplay then
-          love.graphics.draw(faceselector, ((226-4 + (wa * mefaceselector))/1440)*screenwidth, (596/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-        end
+      
 
         --22
         if youreadytoplay then
+          love.graphics.setColor(a22r, a22g, a22b, 255)
           love.graphics.draw(ready, ((267 + 720 +rn)/1440)*screenwidth, (107/900)*screenheight, 0, screenwidth/1440, screenheight/900)
         end
 
         if mereadytoplay then
+          love.graphics.setColor(a31r, a31g, a31b, 255)
           love.graphics.draw(ready, ((300-ln)/1440)*screenwidth, (107/900)*screenheight, 0, screenwidth/1440, screenheight/900)
         end
 
 
 
-        if youchooseface and not youreadytoplay then
-          love.graphics.draw(faceselector, ((193+720-4 + (wa * youfaceselector))/1440)*screenwidth, (596/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-        end
+        
 
 
 

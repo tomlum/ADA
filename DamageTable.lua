@@ -26,7 +26,7 @@ blanddam = 15
 bsft = 30
 swaittime = 48
 sandboltdam = 8
-sandboltknockup = 14
+sandboltknockup = 20
 gsft = 15
 
 fallflinchtime = 45

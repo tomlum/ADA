@@ -149,7 +149,7 @@ function hexcheck(mx1, my1, mx2, my2, ex, why, w, h, v, j)
       nc3.x,nc3.y,c3.x,c3.y)
       then return true
       end
-    
+    --[[
       if (sideofline(nc3.x,nc3.y,c3.x,c3.y,mx1,my1) ~= 
       sideofline(nc2.x,nc2.y,c2.x,c2.y,mx1,my1)) and 
     (sideofline(nc1.x,nc1.y,nc2.x,nc2.y,mx1,my1) ~= 
@@ -158,7 +158,7 @@ function hexcheck(mx1, my1, mx2, my2, ex, why, w, h, v, j)
       sideofline(c2.x,c2.y,c4.x,c4.y,mx1,my1)) then
       return true
     end
-    
+    ]]--
     
     elseif j > 0 then
       
@@ -174,7 +174,7 @@ function hexcheck(mx1, my1, mx2, my2, ex, why, w, h, v, j)
         then return true
         end
     
-  
+  --[[
       if (sideofline(nc1.x,nc1.y,c1.x,c1.y,mx1,my1) ~= 
         sideofline(nc4.x,nc4.y,c4.x,c4.y,mx1,my1)) and 
       (sideofline(nc3.x,nc3.y,nc4.x,nc4.y,mx1,my1) ~= 
@@ -183,7 +183,7 @@ function hexcheck(mx1, my1, mx2, my2, ex, why, w, h, v, j)
         sideofline(c2.x,c2.y,c4.x,c4.y,mx1,my1)) then
         return true
         end
-  
+  ]]--
   
     end
       return false

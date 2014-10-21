@@ -210,7 +210,7 @@ if controller1.a1 then controller1.a2, controller1.a3, controller1.a4 = false, f
 		elseif controller1.a4 then controller1.a2, controller1.a1, controller1.a3 = false, false, false
 			end
 
-if not controller1.block and not controller1.left and not controller1.right and not controller1.a1 and not controller1.a2 and not controller1.a3 and not controller1.start and not controller1.a4 then
+if not controller1.block and not controller1.left and not controller1.right and not controller1.a1 and not controller1.a2 and not controller1.a3 and not controller1.start and not controller1.a4 and not controller1.up and not controller1.down then
 	mns = true
 	end
 
@@ -219,7 +219,7 @@ if mechooseface then
 
 
 
-	if controller1.a1 or controller1.a2 or controller1.a3 then 
+	if controller1.a1 or controller1.a2 or controller1.a3 or controller1.a4 then 
 
 
 		if mefaceselector == 0 and mns then
@@ -279,11 +279,11 @@ if mechooseface then
 	end
 
 
-if controller1.left and mns and mefaceselector > 0 
+if controller1.up and mns and mefaceselector > 0 
 	then mefaceselector = mefaceselector - 1
 	mns = false
 	mov:play()
-elseif controller1.right and mns and mefaceselector < 5 
+elseif controller1.down and mns and mefaceselector < 5 
 	then mefaceselector = mefaceselector + 1
 	mns = false
 	mov:play()
@@ -593,14 +593,14 @@ if controller2.a1 then controller2.a2, controller2.a3, controller2.a4 = false, f
 
 
 
-if not controller2.block and not controller2.left and not controller2.right and  not controller2.a1 and not controller2.start and not controller2.a2 and not controller2.a3 and not controller2.a4 then
+if not controller2.block and not controller2.left and not controller2.right and  not controller2.a1 and not controller2.start and not controller2.a2 and not controller2.a3 and not controller2.a4 and not controller2.up and not controller2.down then
 	yns = true
 	end
 
 if youchooseface then
 
 
-if controller2.a1 or controller2.a2 or controller2.a3 then 
+if controller2.a1 or controller2.a2 or controller2.a3 or controller2.a4 then 
 		if youfaceselector == 0 and yns then
 			you.face = face1 
 			yf1r, yf1g, yf1b = a22r,a22g,a22b
@@ -655,11 +655,11 @@ if controller2.a1 or controller2.a2 or controller2.a3 then
 
 
 
-if controller2.left and yns and youfaceselector > 0 
+if controller2.up and yns and youfaceselector > 0 
 	then youfaceselector = youfaceselector - 1
 	yns = false
 	mov2:play()
-elseif controller2.right and yns and youfaceselector < 5 
+elseif controller2.down and yns and youfaceselector < 5 
 	then youfaceselector = youfaceselector + 1
 	yns = false
 	mov2:play()
@@ -1470,10 +1470,18 @@ end
 end
 
 if me.landing then
-  mcombofalsify()
+ meblue = false
+mepurple = false
+megreen = false
+meyellow = false
+mesand = false
 end
 if you.landing then
-  ycombofalsify()
+  youblue = false
+youpurple = false
+yougreen = false
+youyellow = false
+yousand = false
 end
 
 end

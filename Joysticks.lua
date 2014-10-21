@@ -270,19 +270,41 @@ if not justone then
 end
 
 
-    controller2.leftdeadzone = math.abs(j2lx/math.cos(math.atan(-j2ly/j2lx))) > .4
+    controller2.leftdeadzone = math.abs(j2lx/math.cos(math.atan(-j2ly/j2lx))) < .3
 
 
-if controller2.leftdeadzone then
+if not controller2.leftdeadzone then
 youangle = math.atan(-joystick2:getGamepadAxis("lefty")/(math.abs(joystick2:getGamepadAxis("leftx"))))
+else youangle = 0
+end
+
+
 yougupv = boltspeed*math.sin(youangle)
 yougv = boltspeed*math.cos(youangle)
-end
+
+
+if ((youangle >= math.rad(0) and you.g) or not you.g) then
+yougpupv = pboltspeed*math.sin(math.max(youangle, math.rad(-40)))
+yougpv = pboltspeed*math.cos(math.max(youangle, math.rad(-40)))
+else
+yougpupv = pboltspeed*math.sin(0)
+yougpv = pboltspeed*math.cos(0)
+
 end
 
 
 
+   
+
+
+
+
+
 end
+
+
+
+
 
 
    controller1.a4 = false
@@ -292,11 +314,10 @@ end
 
 
  
-
     j1ry = joystick:getGamepadAxis("righty")
     j1rx = joystick:getGamepadAxis("rightx")
     
-
+    
     length1 = math.abs(j1rx/math.cos(math.atan(-j1ry/j1rx)))
 
     if length1 > .8 then
@@ -426,21 +447,32 @@ end
     j1ly = joystick:getGamepadAxis("lefty")
     j1lx = joystick:getGamepadAxis("leftx")
     
-   controller1.leftdeadzone = math.abs(j1lx/math.cos(math.atan(-j1ly/j1lx))) > .4
+   controller1.leftdeadzone = math.abs(j1lx/math.cos(math.atan(-j1ly/j1lx))) < .3
     
 
     
-if controller1.leftdeadzone then
+if not controller1.leftdeadzone then
 meangle = math.atan(-joystick:getGamepadAxis("lefty")/(math.abs(joystick:getGamepadAxis("leftx"))))
+else meangle = 0
+end
+
 megupv = boltspeed*math.sin(meangle)
 megv = boltspeed*math.cos(meangle)
+
+if ((meangle >= math.rad(0) and me.g) or not me.g) then
+megpupv = pboltspeed*math.sin(math.max(meangle, math.rad(-40)))
+megpv = pboltspeed*math.cos(math.max(meangle, math.rad(-40)))
+else
+megpupv = pboltspeed*math.sin(0)
+megpv = pboltspeed*math.cos(0)
+
 end
 
 
 
 
 
-
+end
   
 
 end
