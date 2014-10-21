@@ -261,7 +261,7 @@ megur = false
 mebpc = 0
 mebpready = false
 mebpcd = 0
-mebur = false
+me.bur = false
 
 mebgc = 0
 mebgready = false
@@ -272,7 +272,7 @@ bgcatch = false
 youbpc = 0
 youbpready = false
 youbpcd = 0
-youbur = false
+you.bur = false
 
 
 
@@ -287,7 +287,7 @@ youbgcd = 0
 youbre = false
 ybgcatch = false
 
-function youbluegreen(x)
+function you.bluegreen(x)
 
 if you.flinch or mbgcancel then youbgready = false
 	youbgc = 0 
@@ -528,7 +528,7 @@ end
 
 
 
-function youbluepurple(x)
+function you.bluepurple(x)
 if you.flinch or ybpcancel then youbpready = false
 	youbpc = 0 
 end
@@ -536,8 +536,8 @@ end
 if youbpc < 0 then
 youbpc = youbpc + 1 
 elseif youbpc > 0 then youbpc = youbpc - 1 
-youbur = true
-else youbur = false
+you.bur = true
+else you.bur = false
 end
 
 if youbpcd > 0 then youbpcd = youbpcd - 1 end
@@ -553,7 +553,7 @@ elseif youbpc > 0
 
 	you.stop = true
 	you.jstop = true
-	youbur = true
+	you.bur = true
 
 elseif not x and youbpready then
 
@@ -566,7 +566,7 @@ elseif not x and youbpready then
 	you.stop = true
 	you.jstop = true
 	youbpcd = 110
-	youbur = true
+	you.bur = true
 	table.insert(youspikes, {x = you.mid + 30*you.lr, y = spikecheck(you.mid + 30*you.lr, you.y) - 140, lr = you.lr, t = 40, s = -200})
   
   repplay(bpurp2hit)
@@ -595,8 +595,8 @@ end
 if mebpc < 0 then
 mebpc = mebpc + 1 
 elseif mebpc > 0 then mebpc = mebpc - 1 
-mebur = true
-else mebur = false
+me.bur = true
+else me.bur = false
 end
 
 if mebpcd > 0 then mebpcd = mebpcd - 1 end
@@ -612,7 +612,7 @@ elseif mebpc > 0
 
 	me.stop = true
 	me.jstop = true
-	mebur = true 
+	me.bur = true 
 
 elseif not x and mebpready then
 
@@ -627,7 +627,7 @@ elseif not x and mebpready then
 	mebpcd = 110
 	table.insert(spikes, {x = me.mid + 30*me.lr, y = spikecheck(me.mid + 30*me.lr, me.y) - 140, lr = me.lr, t = 40, s = -200})
   repplay(bpurp1hit)
-	mebur = true
+	me.bur = true
 
 elseif x and mebpc == 0 and mebpcd == 0 
 then 
@@ -646,7 +646,7 @@ end
 
 
 
-function yougreenpurple(x)
+function you.greenpurple(x)
 if you.flinch or ygpcancel then yougpready = false
 	yougpc = 0 
 end

@@ -746,15 +746,15 @@ end
 
 
 function colorcontrol(x,y,z,x2,y2,z2,a,a2)
-meblue = x
-megreen = y
-mepurple = z
-meyellow = a
+me.blue = x
+me.green = y
+me.purple = z
+me.yellow = a
 
-youblue = x2
-yougreen = y2
-youpurple = z2
-youyellow = a2
+you.blue = x2
+you.green = y2
+you.purple = z2
+you.yellow = a2
 
 
 
@@ -775,13 +775,13 @@ if mebur
  -- or mepurp
  -- or meyell
  then
-meblue = false
-mepurple = false
-megreen = false
-meyellow = false
+me.blue = false
+me.purple = false
+me.green = false
+me.yellow = false
 end
 
-if  youbur 
+if  you.bur 
  or yougur
  or youbre
 or youpell
@@ -791,23 +791,23 @@ or youbell
  -- or youpurp
  -- or youyell
   then
-youblue = false
-youpurple = false
-yougreen = false
-youyellow = false
+you.blue = false
+you.purple = false
+you.green = false
+you.yellow = false
 end
 
 
 
-if youblue and yougreen and not yougree and not youblu then 
+if you.blue and you.green and not yougree and not youblu then 
 	youbreen = true
 	ygcancel = true
 	ypcancel = true
-	youpurple = false
-	yougreen = false
-	youblue = false 
+	you.purple = false
+	you.green = false
+	you.blue = false 
 	ybcancel = true
-	youyellow = false
+	you.yellow = false
 	yycancel = true
 
 	yougurple = false
@@ -815,19 +815,19 @@ if youblue and yougreen and not yougree and not youblu then
 	youbellow = false
 	yougellow = false
 	youpellow = false
-elseif not yougreen and not youblue then youbreen = false
+elseif not you.green and not you.blue then youbreen = false
 end
 
 
-if meblue and megreen and not megree and not meblu then 
+if me.blue and me.green and not megree and not meblu then 
 	mebreen = true
 	mgcancel = true
 	mpcancel = true
-	mepurple = false
-	megreen = false
-	meblue = false 
+	me.purple = false
+	me.green = false
+	me.blue = false 
 	mbcancel = true
-	meyellow = false
+	me.yellow = false
 	mycancel = true
 
 	megurple = false
@@ -835,18 +835,18 @@ if meblue and megreen and not megree and not meblu then
 	mebellow = false
 	megellow = false
 	mepellow = false
-elseif not megreen and not meblue then mebreen = false
+elseif not me.green and not me.blue then mebreen = false
 end
 
-if meblue and mepurple and not mepurp and not meblu then 
+if me.blue and me.purple and not me.purp and not meblu then 
 	meburple = true
 	mgcancel = true
 	mpcancel = true
-	mepurple = false
-	megreen = false
-	meblue = false 
+	me.purple = false
+	me.green = false
+	me.blue = false 
 	mbcancel = true
-	meyellow = false
+	me.yellow = false
 	mycancel = true
 
 	megurple = false
@@ -854,19 +854,19 @@ if meblue and mepurple and not mepurp and not meblu then
 	mebellow = false
 	megellow = false
 	mepellow = false
-elseif not mepurple and not meblue then meburple = false
+elseif not me.purple and not me.blue then meburple = false
 end
 
 
-if youblue and youpurple and not youpurp and not youblu then 
+if you.blue and you.purple and not you.purp and not youblu then 
 	youburple = true
 	ygcancel = true
 	ypcancel = true
-	youpurple = false
-	yougreen = false
-	youblue = false 
+	you.purple = false
+	you.green = false
+	you.blue = false 
 	ybcancel = true
-	youyellow = false
+	you.yellow = false
 	yycancel = true
 
 	youbreen = false
@@ -876,22 +876,22 @@ if youblue and youpurple and not youpurp and not youblu then
 	youpellow = false
 
 
-elseif not youpurple and not youblue then youburple = false
+elseif not you.purple and not you.blue then youburple = false
 end
 
 
 
 
 --add and not megree?is this causing trouble?
-if megreen and mepurple and not mepurp then 
+if me.green and me.purple and not me.purp then 
 	megurple = true
 	mgcancel = true
 	mpcancel = true
-	mepurple = false
-	megreen = false
-	meblue = false 
+	me.purple = false
+	me.green = false
+	me.blue = false 
 	mbcancel = true
-	meyellow = false
+	me.yellow = false
 	mycancel = true
 
 	meburple = false
@@ -899,18 +899,18 @@ if megreen and mepurple and not mepurp then
 	mebellow = false
 	megellow = false
 	mepellow = false
-elseif not mepurple and not megreen then megurple = false
+elseif not me.purple and not me.green then megurple = false
 end
 
-if yougreen and youpurple and not youpurp then 
+if you.green and you.purple and not you.purp then 
 	yougurple = true
 	ygcancel = true
 	ypcancel = true
-	youpurple = false
-	yougreen = false
-	youblue = false 
+	you.purple = false
+	you.green = false
+	you.blue = false 
 	ybcancel = true
-	youyellow = false
+	you.yellow = false
 	yycancel = true
 
 	youbreen = false
@@ -918,13 +918,13 @@ if yougreen and youpurple and not youpurp then
 	youbellow = false
 	yougellow = false
 	youpellow = false
-elseif not youpurple and not yougreen then yougurple = false
+elseif not you.purple and not you.green then yougurple = false
 end
 
 
 
 
-if youyellow and youblue and not youblu and not youyell then 
+if you.yellow and you.blue and not youblu and not youyell then 
 	youbellow = true
 
 	yycancel = true
@@ -932,21 +932,21 @@ if youyellow and youblue and not youblu and not youyell then
 	ybcancel = true
 	ygcancel = true
 
-	youpurple = false
-	yougreen = false
-	youblue = false
-	youyellow = false 
+	you.purple = false
+	you.green = false
+	you.blue = false
+	you.yellow = false 
 
 	youbreen = false
 	yougurple = false
 	youburple = false
 	yougellow = false
 	youpellow = false
-elseif not youblue and not youyellow then youbellow = false
+elseif not you.blue and not you.yellow then youbellow = false
 end
 
 
-if meyellow and meblue and not meblu and not meyell then 
+if me.yellow and me.blue and not meblu and not meyell then 
 	mebellow = true
 
 	mycancel = true
@@ -954,32 +954,32 @@ if meyellow and meblue and not meblu and not meyell then
 	mbcancel = true
 	mgcancel = true
 
-	mepurple = false
-	megreen = false
-	meblue = false
-	meyellow = false 
+	me.purple = false
+	me.green = false
+	me.blue = false
+	me.yellow = false 
 
 	meburple = false
 	megurple = false
 	mebreen = false
 	megellow = false
 	mepellow = false
-elseif not meblue and not meyellow then mebellow = false
+elseif not me.blue and not me.yellow then mebellow = false
 end
 
 
 
 
-if youyellow and youpurple and not youpurp then 
+if you.yellow and you.purple and not you.purp then 
 	youpellow = true
 	yycancel = true
 	ypcancel = true
-	youpurple = false
-	yougreen = false
-	youblue = false
-	youyellow = false 
+	you.purple = false
+	you.green = false
+	you.blue = false
+	you.yellow = false 
 	ybcancel = true
-	youyellow = false
+	you.yellow = false
 	ygcancel = true
 
 	youbreen = false
@@ -987,20 +987,20 @@ if youyellow and youpurple and not youpurp then
 	youburple = false
 	youbellow = false
 	yougellow = false
-elseif not youpurple and not youyellow then youpellow = false
+elseif not you.purple and not you.yellow then youpellow = false
 end
 
 
-if meyellow and mepurple and not mepurp then 
+if me.yellow and me.purple and not me.purp then 
 	mepellow = true
 	mycancel = true
 	mpcancel = true
-	mepurple = false
-	megreen = false
-	meblue = false
-	meyellow = false 
+	me.purple = false
+	me.green = false
+	me.blue = false
+	me.yellow = false 
 	mbcancel = true
-	meyellow = false
+	me.yellow = false
 	mgcancel = true
 
 	meburple = false
@@ -1008,31 +1008,31 @@ if meyellow and mepurple and not mepurp then
 	mebreen = false
 	mebellow = false
 	megellow = false
-elseif not mepurple and not meyellow then mepellow = false
+elseif not me.purple and not me.yellow then mepellow = false
 end
 
-if meyellow and megreen then 
+if me.yellow and me.green then 
 	megellow = true
 
 	mycancel = true
 	mpcancel = true
 	mbcancel = true
 	mgcancel = true
-	mepurple = false
-	megreen = false
-	meblue = false
-	meyellow = false 
+	me.purple = false
+	me.green = false
+	me.blue = false
+	me.yellow = false 
 
 	meburple = false
 	megurple = false
 	mebreen = false
 	mebellow = false
 	mepellow = false
-elseif not megreen and not meyellow then megellow = false
+elseif not me.green and not me.yellow then megellow = false
 end
 
 
-if youyellow and yougreen and not yougree and not youyell then 
+if you.yellow and you.green and not yougree and not youyell then 
 	yougellow = true
 
 	yycancel = true
@@ -1040,51 +1040,51 @@ if youyellow and yougreen and not yougree and not youyell then
 	ybcancel = true
 	ygcancel = true
 
-	youpurple = false
-	yougreen = false
-	youblue = false
-	youyellow = false 
+	you.purple = false
+	you.green = false
+	you.blue = false
+	you.yellow = false 
 
 	youbreen = false
 	yougurple = false
 	youburple = false
 	youbellow = false
 	youpellow = false
-elseif not yougreen and not youyellow then yougellow = false
+elseif not you.green and not you.yellow then yougellow = false
 end
 
 
 
 
-if meyell or meyellow then
+if meyell or me.yellow then
 	--add you bree = false?
-meblue = false
-megreen = false
-mepurple = false
+me.blue = false
+me.green = false
+me.purple = false
 mycancel = false
 end
 
-if youyell or youyellow then
+if youyell or you.yellow then
 	--add you bree = false?
-youblue = false
-yougreen = false
-youpurple = false
+you.blue = false
+you.green = false
+you.purple = false
 yycancel = false
 end
 
 
 
-if mepurp or mepurple then
+if me.purp or me.purple then
 	--add you bree = false?
-meblue = false
-megreen = false
-meyellow = false
+me.blue = false
+me.green = false
+me.yellow = false
 mpcancel = false
 end
 
-if meblu or meblue then
-	mepurple = false
-	megreen = false
+if meblu or me.blue then
+	me.purple = false
+	me.green = false
 	mbcancel = false
 
 	--optional
@@ -1092,36 +1092,36 @@ if meblu or meblue then
 	mepellow = false
 	megellow = false
 
-	meyellow = false
+	me.yellow = false
 end
 
-if megree or megreen then
-	mepurple = false
-	meblue = false
-	meyellow = false
+if megree or me.green then
+	me.purple = false
+	me.blue = false
+	me.yellow = false
 	mgcancel = false
 end
 
 
-if youpurp or youpurple then
-youblue = false
-yougreen = false
+if you.purp or you.purple then
+you.blue = false
+you.green = false
 ypcancel = false
-youyellow = false
+you.yellow = false
 end
 
-if youblu or youblue then
-	youpurple = false
-	yougreen = false
+if youblu or you.blue then
+	you.purple = false
+	you.green = false
 	ybcancel = false
-	youyellow = false
+	you.yellow = false
 end
 
-if yougree or yougreen then
-	youpurple = false
-	youblue = false
+if yougree or you.green then
+	you.purple = false
+	you.blue = false
 	ygcancel = false
-	youyellow = false
+	you.yellow = false
 end
 
 
@@ -1133,26 +1133,26 @@ or megurple or megur
 or mepellow or mepell
 or mebellow or mebell
 or megellow or megell  then
-meblue = false
-mepurple = false
-megreen = false
-meyellow = false
+me.blue = false
+me.purple = false
+me.green = false
+me.yellow = false
 mycancel = true
 mgcancel = true
 mpcancel = true
 mbcancel = true
 end
 
-if youburple or youbur 
+if youburple or you.bur 
 or yougurple or yougur
 or youbreen or youbre
 or youpellow or youpell
 or youbellow or youbell
 or yougellow or yougell then
-youblue = false
-youpurple = false
-yougreen = false
-youyellow = false
+you.blue = false
+you.purple = false
+you.green = false
+you.yellow = false
 yycancel = true
 ygcancel = true
 ypcancel = true

@@ -2,15 +2,15 @@
 
 
 
-youbluechargetimer = 0
-youbluepause = 0
+you.bluechargetimer = 0
+you.bluepause = 0
 younext = 0
 ybp = 0
 yd = 0
-youbluechargetime = 50
+you.bluechargetime = 50
 
 
-function youblueblade(x)
+function you.blueblade(x)
 
 	if you.g then youairready = true
 end
@@ -23,9 +23,9 @@ end
 	end
 
 
-	if youbluepause <= 0 or you.flinch or ybcancel then 
+	if you.bluepause <= 0 or you.flinch or ybcancel then 
 		younext = 0
-		youbluechargetimer = 0
+		you.bluechargetimer = 0
 		youblu = false
 		yd = 0
 
@@ -116,11 +116,11 @@ end
 		end
 		younext = 200
 		yd = 24
-		youbluepause = 30
+		you.bluepause = 30
 		youblu = false
 
 	else yd = 0
-		youbluechargetimer = 0
+		you.bluechargetimer = 0
 		youbjstop = false
 	end
 
@@ -155,9 +155,9 @@ else
 		
 
 
-	elseif youbluechargetimer > bluechargetime and x and younext <= 19
+	elseif you.bluechargetimer > bluechargetime and x and younext <= 19
 		then you.im = bluecharging
-		youbluepause = 30
+		you.bluepause = 30
 		youblu = false
 		yd = 24
 		ybp = 24
@@ -178,7 +178,7 @@ elseif younext == 11 then
 elseif younext == 10 and not x
 		then you.im = blue33
 		yd = 12
-		youbluechargetimer = 0
+		you.bluechargetimer = 0
     if youarmsreach(160) and sameheight() and not me.dodge 
 			then 
         
@@ -194,25 +194,25 @@ elseif younext == 10 and not x
 elseif younext == 9 and not x
 		then you.im = blue32
 		yd = 24
-		youbluechargetimer = 0
+		you.bluechargetimer = 0
 	
 	repplay(blues2)
 elseif younext == 8 and not x
 		then you.im = blue32
 		yd = 24
-		youbluechargetimer = 0
+		you.bluechargetimer = 0
 elseif younext == 7 and not x
 		then you.im = blue31
 		yd = 12
-		youbluechargetimer = 0
+		you.bluechargetimer = 0
 
 		
 elseif x and younext == 6 or younext == 7 then 
 		you.im = blue3start
 		younext = 7
-		youbluepause = 25
+		you.bluepause = 25
 		youblu = false
-		youbluechargetimer = youbluechargetimer + 1
+		you.bluechargetimer = you.bluechargetimer + 1
 
 
 
@@ -249,13 +249,13 @@ elseif x and younext == 6 or younext == 7 then
 		you.v = you.v + (4 * you.lr)
 		end
 		yd = 12
-		youbluechargetimer = 0
+		you.bluechargetimer = 0
 	elseif x and younext == 3 or younext == 4 then 
 		you.im = blue2start
 		younext = 4
-		youbluepause = 25
+		you.bluepause = 25
 		youblu = false
-		youbluechargetimer = youbluechargetimer + 1
+		you.bluechargetimer = you.bluechargetimer + 1
 
 
 
@@ -283,13 +283,13 @@ elseif x and younext == 6 or younext == 7 then
 		you.v = you.v + (6 * you.lr)
 
 		end
-		youbluechargetimer = 0
+		you.bluechargetimer = 0
 	elseif x and younext == 0 or younext == 1 then 
 		you.im = blue1start
 		younext = 1
-		youbluepause = 23
+		you.bluepause = 23
 		youblu = false
-		youbluechargetimer = youbluechargetimer + 1
+		you.bluechargetimer = you.bluechargetimer + 1
 		yd = 0
 
 		if walktimery< 7 then 
@@ -309,7 +309,7 @@ elseif x and younext == 6 or younext == 7 then
 
 
 	else yd = 0
-		youbluechargetimer = 0
+		you.bluechargetimer = 0
 		youbjstop = false
 			
 	
@@ -335,9 +335,9 @@ if ybp > -10000000000
 	
 
 
-	if youbluepause > 0
+	if you.bluepause > 0
 		then
-	youbluepause = youbluepause - 1
+	you.bluepause = you.bluepause - 1
 	you.stop = true
 	end
 
@@ -359,7 +359,7 @@ end
 
 
 bluechargetimer = 0
-mebluepause = 0
+me.bluepause = 0
 menext = 0
 mbp = 0
 md = 0
@@ -379,7 +379,7 @@ end
 	end
 
 
-	if mebluepause <= 0 or me.flinch or mbcancel then 
+	if me.bluepause <= 0 or me.flinch or mbcancel then 
 		menext = 0
 		bluechargetimer = 0
 		meblu = false
@@ -468,7 +468,7 @@ end
 		end
 		menext = 200
 		md = 24
-		mebluepause = 25
+		me.bluepause = 25
 		meblu = false
 
 	else md = 0
@@ -513,7 +513,7 @@ else
 
 	elseif bluechargetimer > bluechargetime and x and menext <= 19
 		then me.im = bluecharging
-		mebluepause = 30
+		me.bluepause = 30
 		md = 24
 		menext = 18
 		meblu = false
@@ -531,7 +531,7 @@ elseif menext == 11 then
 elseif menext == 10 and not x
 		then me.im = blue33
 		md = 12
-		mebluechargetimer = 0
+		me.bluechargetimer = 0
 		if mearmsreach(250) and sameheight() and not you.dodge 
 			then 
 			you.v = me.lr * 20
@@ -561,7 +561,7 @@ elseif menext == 7 and not x
 elseif x and menext == 6 or menext == 7 then 
 		me.im = blue3start
 		menext = 7
-		mebluepause = 25
+		me.bluepause = 25
 		meblu = false
 		bluechargetimer = bluechargetimer + 1
 
@@ -603,7 +603,7 @@ elseif x and menext == 6 or menext == 7 then
 	elseif x and menext == 3 or menext == 4 then 
 		me.im = blue2start
 		menext = 4
-		mebluepause = 28
+		me.bluepause = 28
 		bluechargetimer = bluechargetimer + 1
 		meblu = false
 
@@ -649,7 +649,7 @@ elseif x and menext == 6 or menext == 7 then
 	elseif x and menext == 0 or menext == 1 then 
 		me.im = blue1start
 		menext = 1
-		mebluepause = 23
+		me.bluepause = 23
 		meblu = false
 		bluechargetimer = bluechargetimer + 1
 		md = 0
@@ -694,9 +694,9 @@ if mbp > -1000000000
 	
 
 
-	if mebluepause > 0
+	if me.bluepause > 0
 		then
-	mebluepause = mebluepause - 1
+	me.bluepause = me.bluepause - 1
 	me.stop = true
 	end
 

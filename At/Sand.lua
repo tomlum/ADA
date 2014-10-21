@@ -68,7 +68,7 @@ yousywait = 0
 yousyhold = 0
 
 
-function yousandmines(x)
+function you.sandmines(x)
 if you.flinch or msycancel then 
 	
 	yousyct = false 
@@ -133,7 +133,7 @@ end
 end
 
 
-function mesandmines(x)
+function me.sandmines(x)
 if me.flinch or msycancel then 
 	
 	mesyct = false 
@@ -435,7 +435,7 @@ ygsrr = false
 ygswwait = 0
 ygshhold = 0
 
-function yougreensand(x)
+function you.greensand(x)
 
 
 if you.flinch or mygscancel then 
@@ -529,7 +529,7 @@ end
 
 
 
-function megreensand(x)
+function me.greensand(x)
 
 
 if me.flinch or mgscancel then 
@@ -641,7 +641,7 @@ ybsxend = 0
 mbslr = 0
 ybslr = 0
 
-function youbluesand(x)
+function you.bluesand(x)
 if you.flinch or ybscancel then 
 	youbsct = false
 	youbshold = 0
@@ -805,7 +805,7 @@ end
 end
 
 
-function mebluesand(x)
+function me.bluesand(x)
 if me.flinch or mbscancel then 
 	mebsct = false
 	mebshold = 0
@@ -1023,7 +1023,7 @@ elseif xx.sct > sandchargetime and x and xx.tt == 0 then
 	end
 
 elseif xx.sct > 0 and not x then
-	repplay(flapsnd2)
+	repplay(xx.flapsnd)
 	xx.shold = 20
 	xx.jstop = true
 	if xx.g then 
@@ -1054,9 +1054,11 @@ elseif xx.sct > 0 and not x then
 		end
 		if z.right or z.left then
 		xx.v = xx.v + xx.lr * 10
-		xx.j = 25	
+		xx.j = 20	
+    xx.jt = 10
 		else
-		xx.j = 30
+		xx.j = 25
+    xx.jt = 10
 		end
 	end
 	

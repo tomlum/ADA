@@ -122,10 +122,11 @@ mute = true
 
 
 
-require "Music"
+
 require "DamageTable"
 require "camera"
 require "meandyou"
+require "Music"
 require "Hits"
 require "FIZIX"
 require "Animation"
@@ -717,9 +718,8 @@ function love.update()
 
         platforming()
 
-
-        moveme()
-        moveyou()
+        movex(me,controller1)
+        movex(you,controller2)
 
         walljump()
 
@@ -777,27 +777,27 @@ function love.update()
         youlimitbreak = false
 
         bluegreen(mebreen)
-        youbluegreen(youbreen)
+        you.bluegreen(youbreen)
 
         bluepurple(meburple)
-        youbluepurple(youburple)
+        you.bluepurple(youburple)
 
-        blueblade(meblue)
-        youblueblade(youblue)
+        blueblade(me.blue)
+        you.blueblade(you.blue)
 
-        bolts.shoot(megreen)
+        bolts.shoot(me.green)
         bolts.update()
-        youbolts.shoot(yougreen)
+        youbolts.shoot(you.green)
         youbolts.update()
 
-        spikes.shoot(mepurple)
-        youspikes.shoot(youpurple)
+        spikes.shoot(me.purple)
+        youspikes.shoot(you.purple)
 
-        yougreenpurple(yougurple)
+        you.greenpurple(yougurple)
         greenpurple(megurple)
 
-        memines(meyellow)
-        youmines(youyellow)
+        memines(me.yellow)
+        youmines(you.yellow)
 
         youpy(youpellow)
         mepy(mepellow)
@@ -810,20 +810,20 @@ function love.update()
 
 
 
-        spikes.update(mepurple)
-        youspikes.update(youpurple)
+        spikes.update(me.purple)
+        youspikes.update(you.purple)
 
-        wings(mesand, me, you, controller1)
-        mebluesand(mebland)
-        megreensand(megrand)
+        wings(me.sand, me, you, controller1)
+        me.bluesand(mebland)
+        me.greensand(megrand)
         mepurpsand(mepund)
-        mesandmines(meyend)
+        me.sandmines(meyend)
 
-        wings(yousand, you, me, controller2)
-        youbluesand(youbland)
-        yougreensand(yougrand)
+        wings(you.sand, you, me, controller2)
+        you.bluesand(youbland)
+        you.greensand(yougrand)
         youpurpsand(youpund)
-        yousandmines(youyend)
+        you.sandmines(youyend)
 
         flinchingyou()
         flinchingme()

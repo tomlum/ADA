@@ -993,39 +993,39 @@ end
 
 function mclearprimarys(x)
 
-if x ~= meblue then meblue = false end
-if x ~= megreen then megreen = false end
-if x ~= meyellow then meyellow = false end
-if x ~= mepurple then mepurple = false end
-if x ~= mesand then mesand = false end
+if x ~= me.blue then me.blue = false end
+if x ~= me.green then me.green = false end
+if x ~= me.yellow then me.yellow = false end
+if x ~= me.purple then me.purple = false end
+if x ~= me.sand then me.sand = false end
 end
 
 
 function yclearprimarys(x)
-if x ~= youblue then youblue = false end
-if x ~= yougreen then yougreen = false end
-if x ~= youyellow then youyellow = false end
-if x ~= youpurple then youpurple = false end
-if x ~= yousand then yousand = false end
+if x ~= you.blue then you.blue = false end
+if x ~= you.green then you.green = false end
+if x ~= you.yellow then you.yellow = false end
+if x ~= you.purple then you.purple = false end
+if x ~= you.sand then you.sand = false end
 end
 
 function anyofmyprimes()
-if meblue or meblu
-or meyellow or meyell
-or megreen or megree
-or mepurple or mepurp
-or mesand or mesan
+if me.blue or meblu
+or me.yellow or meyell
+or me.green or megree
+or me.purple or mepurp
+or me.sand or mesan
 then return true
   else return false
 end
 end
 
 function anyofyourprimes()
-if youblue or youblu
-or youyellow or youyell
-or yougreen or yougree
-or youpurple or youpurp
-or yousand or yousan
+if you.blue or youblu
+or you.yellow or youyell
+or you.green or yougree
+or you.purple or youpurp
+or you.sand or yousan
 then return true
   else return false
 end
@@ -1073,11 +1073,11 @@ function ycombofalsify()
 	yycancel = true
 	you.scancel = true
 
-	youpurple = false
-	yougreen = false
-	youblue = false 
-	youyellow = false
-	yousand = false
+	you.purple = false
+	you.green = false
+	you.blue = false 
+	you.yellow = false
+	you.sand = false
 
 	yougurple = false
 	youburple = false
@@ -1099,11 +1099,11 @@ function mcombofalsify()
 	mycancel = true
 	me.scancel = true
 
-	mepurple = false
-	megreen = false
-	meblue = false 
-	meyellow = false
-	mesand = false
+	me.purple = false
+	me.green = false
+	me.blue = false 
+	me.yellow = false
+	me.sand = false
 
 	megurple = false
 	meburple = false
@@ -1126,19 +1126,19 @@ end
 --transfer
 function colorcontrol(x,y,z,x2,y2,z2,a,a2,b,b2)
 	if me.dodgetype == "none" then
-meblue = x
-megreen = y
-mepurple = z
-meyellow = a
-mesand = b
+me.blue = x
+me.green = y
+me.purple = z
+me.yellow = a
+me.sand = b
 end
 if you.dodgetype == "none" then
 
-youblue = x2
-yougreen = y2
-youpurple = z2
-youyellow = a2
-yousand = b2
+you.blue = x2
+you.green = y2
+you.purple = z2
+you.yellow = a2
+you.sand = b2
 end
 
 
@@ -1167,17 +1167,17 @@ if mebur
  -- or mepurp
  -- or meyell
  then
-meblue = false
-mepurple = false
-megreen = false
-meyellow = false
-mesand = false
+me.blue = false
+me.purple = false
+me.green = false
+me.yellow = false
+me.sand = false
 nomedodge = true
 else
 nomedodge = false
 end
 
-if  youbur 
+if  you.bur 
  or yougur
  or youbre
 or youpell
@@ -1194,11 +1194,11 @@ or you.running
  -- or youpurp
  -- or youyell
   then
-youblue = false
-youpurple = false
-yougreen = false
-youyellow = false
-yousand = false
+you.blue = false
+you.purple = false
+you.green = false
+you.yellow = false
+you.sand = false
 noyoudodge = true
 else 
 noyoudodge = false
@@ -1206,61 +1206,61 @@ end
 
 
 
-if meblue and mesand and not me.san and not meblu then 
+if me.blue and me.sand and not me.san and not meblu then 
 	mcombofalsify()
 	mebland = true
-elseif not mesand and not meblue then mebland = false
+elseif not me.sand and not me.blue then mebland = false
 end
 
-if youblue and yousand and not you.san and not youblu then 
+if you.blue and you.sand and not you.san and not youblu then 
 	ycombofalsify()
 	youbland = true
-elseif not yousand and not youblue then youbland = false
+elseif not you.sand and not you.blue then youbland = false
 end
 
 
-if megreen and mesand and not me.san and not megree then 
+if me.green and me.sand and not me.san and not megree then 
 	mcombofalsify()
 	megrand = true
-elseif not mesand and not megreen then megrand = false
+elseif not me.sand and not me.green then megrand = false
 end
 
 
-if meyellow and mesand and not me.san and not meyell then 
+if me.yellow and me.sand and not me.san and not meyell then 
 	mcombofalsify()
 	meyend = true
-elseif not mesand and not meyellow then meyend = false
+elseif not me.sand and not me.yellow then meyend = false
 end
 
 
-if mepurple and mesand and not me.san and not mepurp then 
+if me.purple and me.sand and not me.san and not me.purp then 
 	mcombofalsify()
 	mepund = true
-elseif not mesand and not mepurple then mepund = false
+elseif not me.sand and not me.purple then mepund = false
 end
 
 
 
 
 
-if yougreen and yousand and not you.san and not yougree then 
+if you.green and you.sand and not you.san and not yougree then 
 	ycombofalsify()
 	yougrand = true
-elseif not yousand and not yougreen then yougrand = false
+elseif not you.sand and not you.green then yougrand = false
 end
 
 
-if youyellow and yousand and not you.san and not youyell then 
+if you.yellow and you.sand and not you.san and not youyell then 
 	ycombofalsify()
 	youyend = true
-elseif not yousand and not youyellow then youyend = false
+elseif not you.sand and not you.yellow then youyend = false
 end
 
 
-if youpurple and yousand and not you.san and not youpurp then 
+if you.purple and you.sand and not you.san and not you.purp then 
 	ycombofalsify()
 	youpund = true
-elseif not yousand and not youpurple then youpund = false
+elseif not you.sand and not you.purple then youpund = false
 end
 
 
@@ -1271,101 +1271,101 @@ end
 
 
 
-if youblue and yougreen and not yougree and not youblu then 
+if you.blue and you.green and not yougree and not youblu then 
 	ycombofalsify()
 	youbreen = true
-elseif not yougreen and not youblue then youbreen = false
+elseif not you.green and not you.blue then youbreen = false
 end
 
 
-if meblue and megreen and not megree and not meblu then 
+if me.blue and me.green and not megree and not meblu then 
 	mcombofalsify()
 	mebreen = true
-elseif not megreen and not meblue then mebreen = false
+elseif not me.green and not me.blue then mebreen = false
 end
 
-if meblue and mepurple and not mepurp and not meblu then 
+if me.blue and me.purple and not me.purp and not meblu then 
 	mcombofalsify()
 	meburple = true
-elseif not mepurple and not meblue then meburple = false
+elseif not me.purple and not me.blue then meburple = false
 end
 
 
-if youblue and youpurple and not youpurp and not youblu then 
+if you.blue and you.purple and not you.purp and not youblu then 
 	ycombofalsify()
 	youburple = true
 	
 
-elseif not youpurple and not youblue then youburple = false
+elseif not you.purple and not you.blue then youburple = false
 end
 
 
 
 
 --add and not megree?is this causing trouble?
-if megreen and mepurple and not mepurp then 
+if me.green and me.purple and not me.purp then 
 	mcombofalsify()
 	megurple = true
 	
-elseif not mepurple and not megreen then megurple = false
+elseif not me.purple and not me.green then megurple = false
 end
 
-if yougreen and youpurple and not youpurp then 
+if you.green and you.purple and not you.purp then 
 	ycombofalsify()
 	yougurple = true
 	
-elseif not youpurple and not yougreen then yougurple = false
+elseif not you.purple and not you.green then yougurple = false
 end
 
 
 
 
-if youyellow and youblue and not youblu and not youyell then 
+if you.yellow and you.blue and not youblu and not youyell then 
 	ycombofalsify()
 	youbellow = true
 
-elseif not youblue and not youyellow then youbellow = false
+elseif not you.blue and not you.yellow then youbellow = false
 end
 
 
-if meyellow and meblue and not meblu and not meyell then 
+if me.yellow and me.blue and not meblu and not meyell then 
 	mcombofalsify()
 	mebellow = true
 
-elseif not meblue and not meyellow then mebellow = false
+elseif not me.blue and not me.yellow then mebellow = false
 end
 
 
 
 
-if youyellow and youpurple and not youpurp then 
+if you.yellow and you.purple and not you.purp then 
 	ycombofalsify()
 	youpellow = true
 	
-elseif not youpurple and not youyellow then youpellow = false
+elseif not you.purple and not you.yellow then youpellow = false
 end
 
 
-if meyellow and mepurple and not mepurp then 
+if me.yellow and me.purple and not me.purp then 
 	mcombofalsify()
 	mepellow = true
 	
-elseif not mepurple and not meyellow then mepellow = false
+elseif not me.purple and not me.yellow then mepellow = false
 end
 
-if meyellow and megreen then 
+if me.yellow and me.green then 
 	mcombofalsify()
 	megellow = true
 
-elseif not megreen and not meyellow then megellow = false
+elseif not me.green and not me.yellow then megellow = false
 end
 
 
-if youyellow and yougreen and not yougree and not youyell then 
+if you.yellow and you.green and not yougree and not youyell then 
 	ycombofalsify()
 	yougellow = true
 
-elseif not yougreen and not youyellow then yougellow = false
+elseif not you.green and not you.yellow then yougellow = false
 end
 
 
@@ -1374,27 +1374,27 @@ end
 
 
 
-if meyell or meyellow then
+if meyell or me.yellow then
 	--add you bree = false?
-mclearprimarys(meyellow)
+mclearprimarys(me.yellow)
 mycancel = false
 end
 
-if youyell or youyellow then
+if youyell or you.yellow then
 	--add you bree = false?
-yclearprimarys(youyellow)
+yclearprimarys(you.yellow)
 yycancel = false
 end
 
-if me.san or mesand then
+if me.san or me.sand then
 	--add you bree = false?
-mclearprimarys(mesand)
+mclearprimarys(me.sand)
 me.scancel = false
 end
 
-if you.san or yousand then
+if you.san or you.sand then
 	--add you bree = false?
-yclearprimarys(yousand)
+yclearprimarys(you.sand)
 you.scancel = false
 end
 
@@ -1402,35 +1402,35 @@ end
 
 
 
-if mepurp or mepurple then
+if me.purp or me.purple then
 	--add you bree = false?
-mclearprimarys(mepurple)
+mclearprimarys(me.purple)
 mpcancel = false
 end
 
-if meblu or meblue then
-	mclearprimarys(meblue)
+if meblu or me.blue then
+	mclearprimarys(me.blue)
 	mbcancel = false
 end
 
-if megree or megreen then
-	mclearprimarys(megreen)
+if megree or me.green then
+	mclearprimarys(me.green)
 	mgcancel = false
 end
 
 
-if youpurp or youpurple then
-yclearprimarys(youpurple)
+if you.purp or you.purple then
+yclearprimarys(you.purple)
 ypcancel = false
 end
 
-if youblu or youblue then
-	yclearprimarys(youblue)
+if youblu or you.blue then
+	yclearprimarys(you.blue)
 	ybcancel = false
 end
 
-if yougree or yougreen then
-	yclearprimarys(yougreen)
+if yougree or you.green then
+	yclearprimarys(you.green)
 	ygcancel = false
 end
 
@@ -1439,11 +1439,11 @@ end
 --TRANSFER
 --this is for when you activate a combo but then let go of one
 if nomedodge or anyofmycombos() then
-meblue = false
-mepurple = false
-megreen = false
-meyellow = false
-mesand = false
+me.blue = false
+me.purple = false
+me.green = false
+me.yellow = false
+me.sand = false
 mycancel = true
 mgcancel = true
 mpcancel = true
@@ -1452,11 +1452,11 @@ me.scancel = true
 end
 
 if noyoudodge or anyofyourcombos() then
-youblue = false
-youpurple = false
-yougreen = false
-youyellow = false
-yousand = false
+you.blue = false
+you.purple = false
+you.green = false
+you.yellow = false
+you.sand = false
 yycancel = true
 ygcancel = true
 ypcancel = true
@@ -1470,18 +1470,18 @@ end
 end
 
 if me.landing then
- meblue = false
-mepurple = false
-megreen = false
-meyellow = false
-mesand = false
+ me.blue = false
+me.purple = false
+me.green = false
+me.yellow = false
+me.sand = false
 end
 if you.landing then
-  youblue = false
-youpurple = false
-yougreen = false
-youyellow = false
-yousand = false
+  you.blue = false
+you.purple = false
+you.green = false
+you.yellow = false
+you.sand = false
 end
 
 end

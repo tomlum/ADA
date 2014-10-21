@@ -6,7 +6,7 @@
 
 floor = 1900 - 3
 tempyfloor = floor
-tempmefloor = floor
+tempme.floor = floor
 
 --slowdown rate
 adecrate = .5
@@ -124,30 +124,30 @@ end
 
 function platforming()
 
-mefloor = floor
-youfloor = floor
+me.floor = floor
+you.floor = floor
 
 if themap == "library" then 
 
-if you.mid >= 1407 then youfloor = 1900 - 63 end
-if me.mid >= 1407 then mefloor = 1900 - 63 end
+if you.mid >= 1407 then you.floor = 1900 - 63 end
+if me.mid >= 1407 then me.floor = 1900 - 63 end
 
 end
 
 
 tempyfloor = platformy(you.mid, you.feet)
-tempmefloor = platformy(me.mid, me.feet)
-if tempmefloor < mefloor 
+tempme.floor = platformy(me.mid, me.feet)
+if tempme.floor < me.floor 
 	then me.onplat = true
 else me.onplat = false
-	if me.feet + 10 < mefloor
+	if me.feet + 10 < me.floor
 		then me.g = false
 	end
 end
-if tempyfloor < youfloor 
+if tempyfloor < you.floor 
 	then you.onplat = true
 else you.onplat = false
-	if you.feet + 10 < youfloor
+	if you.feet + 10 < you.floor
 		then you.g = false
 	end
 end
@@ -404,15 +404,15 @@ me.jmax = 20
 
 moveyou = function ()
 	you.feet = you.y + 60
-	if you.feet > youfloor
-	then you.y = youfloor - 60
+	if you.feet > you.floor
+	then you.y = you.floor - 60
 end
 
 	if you.g 
 	then 
 	you.j = 0
 			if controller2.up and not you.flinch and not you.block and not you.jstop and not youbjstop and not you.busy
-				and not controller2.a1 and not controller2.a2 and not controller2.a3 and not youbur and not youpurp
+				and not controller2.a1 and not controller2.a2 and not controller2.a3 and not you.bur and not youpurp
 				then 
 				you.j = 17
 				you.jt = 5
@@ -461,7 +461,7 @@ end
 				you.slowdown = false
 			
 			elseif controller2.down
-				then tempyfloor = youfloor
+				then tempyfloor = you.floor
 
 
 			
@@ -517,15 +517,15 @@ moveme = function ()
 	me.feet = me.y + 60
 
 	me.feet = me.y + 60
-	if me.feet > mefloor
-	then me.y = mefloor - 60
+	if me.feet > me.floor
+	then me.y = me.floor - 60
 end
 
 	if me.g 
 	then 
 	me.j = 0
 			if controller1.up and not me.flinch and not me.block and not me.jstop and not mebjstop and not me.busy
-				and not controller1.a1 and not controller1.a2 and not controller1.a3 and not mebur and not mepurp
+				and not controller1.a1 and not controller1.a2 and not controller1.a3 and not me.bur and not mepurp
 				then 
 				me.j = 17
 				me.jt = 5
@@ -576,16 +576,16 @@ end
 				me.slowdown = false
 
 			elseif controller1.down
-				then tempmefloor = mefloor
+				then tempme.floor = me.floor
 
 			
 			end
 			
 			--landing
-			if me.feet - me.j >= tempmefloor
+			if me.feet - me.j >= tempme.floor
 			then
 			me.j = 0
-			me.y = tempmefloor - 60
+			me.y = tempme.floor - 60
 			me.g = true
 			me.landing = true
 			land1:play()

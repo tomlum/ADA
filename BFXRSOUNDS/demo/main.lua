@@ -518,27 +518,27 @@ lights()
 blocknbusy()
 
 bluegreen(mebreen)
-youbluegreen(youbreen)
+you.bluegreen(youbreen)
 
 bluepurple(meburple)
-youbluepurple(youburple)
+you.bluepurple(youburple)
 
-blueblade(meblue)
-youblueblade(youblue)
+blueblade(me.blue)
+you.blueblade(you.blue)
 
-bolts.shoot(megreen)
+bolts.shoot(me.green)
 bolts.update()
-youbolts.shoot(yougreen)
+youbolts.shoot(you.green)
 youbolts.update()
 
-spikes.shoot(mepurple)
-youspikes.shoot(youpurple)
+spikes.shoot(me.purple)
+youspikes.shoot(you.purple)
 
-yougreenpurple(yougurple)
+you.greenpurple(yougurple)
 greenpurple(megurple)
 
-memines(meyellow)
-youmines(youyellow)
+memines(me.yellow)
+youmines(you.yellow)
 
 youpy(youpellow)
 mepy(mepellow)
@@ -551,8 +551,8 @@ youby(youbellow)
 
 
 
-spikes.update(mepurple)
-youspikes.update(youpurple)
+spikes.update(me.purple)
+youspikes.update(you.purple)
 
 flinchingyou()
 flinchingme()

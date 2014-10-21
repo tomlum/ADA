@@ -5,8 +5,8 @@
 
 
 floor = 1900 - 2
-tempyfloor = floor
-tempmefloor = floor
+you.tempfloor = floor
+me.tempfloor = floor
 
 
 you.jmax = jmax
@@ -294,13 +294,13 @@ end
 
 function platforming()
 
-mefloor = floor
-youfloor = floor
+me.floor = floor
+you.floor = floor
 
 if themap == "library" then 
 
-if you.mid >= 1400 then youfloor = 1900 - 65 end
-if me.mid >= 1400 then mefloor = 1900 - 65 end
+if you.mid >= 1400 then you.floor = 1900 - 65 end
+if me.mid >= 1400 then me.floor = 1900 - 65 end
 
 --slope attempt
 -- if themap == "library" then 
@@ -308,34 +308,34 @@ if me.mid >= 1400 then mefloor = 1900 - 65 end
 
 
 -- if me.mid > 1207 and me.mid < 1407 then
--- 		mefloor = 1900-(((me.mid-1207)/200)*(63)) end
+-- 		me.floor = 1900-(((me.mid-1207)/200)*(63)) end
 -- if you.mid > 1207 and you.mid < 1407 then
--- 		youfloor = 1900-(((you.mid-1207)/200)*(63)) end
+-- 		you.floor = 1900-(((you.mid-1207)/200)*(63)) end
 -- 	if me.mid > 1207 and me.mid < 1407 then
--- 		mefloor = 1900-(((me.mid-1207)/200)*(63)) end
+-- 		me.floor = 1900-(((me.mid-1207)/200)*(63)) end
 -- if you.mid > 1207 and you.mid < 1407 then
--- 		youfloor = 1900-(((you.mid-1207)/200)*(63)) end
--- if you.mid >= 1407 then youfloor = 1900 - 63 end
--- if me.mid >= 1407 then mefloor = 1900 - 63 end
+-- 		you.floor = 1900-(((you.mid-1207)/200)*(63)) end
+-- if you.mid >= 1407 then you.floor = 1900 - 63 end
+-- if me.mid >= 1407 then me.floor = 1900 - 63 end
 
 -- end
 
 end
 
 
-tempyfloor = platformy(you.mid, you.feet)
-tempmefloor = platformy(me.mid, me.feet)
-if tempmefloor < mefloor 
+you.tempfloor = platformy(you.mid, you.feet)
+me.tempfloor = platformy(me.mid, me.feet)
+if me.tempfloor < me.floor 
 	then me.onplat = true
 else me.onplat = false
-	if me.feet + 10 < mefloor
+	if me.feet + 10 < me.floor
 		then me.g = false
 	end
 end
-if tempyfloor < youfloor 
+if you.tempfloor < you.floor 
 	then you.onplat = true
 else you.onplat = false
-	if you.feet + 10 < youfloor
+	if you.feet + 10 < you.floor
 		then you.g = false
 	end
 end
@@ -732,7 +732,7 @@ walls = function ()
 end
 
 --FRICTION FUNCTION TO SLOW DOWN
-fricy = function (base) 
+you.fric = function (base) 
 	if you.v > 1 +base
 		then you.v = you.v - fricrate
 			
@@ -758,7 +758,7 @@ fricy = function (base)
 end
 
 
-fricme = function (base) 
+me.fric = function (base) 
 	if me.v > 1 +base
 		then me.v = me.v - fricrate
 			
@@ -787,7 +787,7 @@ end
 
 
 
-function vroomrighty(base)
+function you.vroomright(base)
 	if you.v == 0+base
 	then you.v = 1.5+base
 	elseif you.v >0+base and you.v < speedminit -accel+base
@@ -796,7 +796,7 @@ function vroomrighty(base)
 	end
 end 
 
-function vroomlefty(base)
+function you.vroomleft(base)
 	if you.v == 0+base
 	then you.v = -1.5+base
 	elseif you.v < 0+base and you.v > -speedminit + accel+base
@@ -805,7 +805,7 @@ function vroomlefty(base)
 	end
 end 
 
-function vroomrightme(base)
+function me.vroomright(base)
 	if me.v == 0+base
 	then me.v = 1.5+base
 	elseif me.v >0+base and me.v < speedminit -accel+base
@@ -814,7 +814,7 @@ function vroomrightme(base)
 	end
 end 
 
-function vroomleftme(base)
+function me.vroomleft(base)
 	if me.v == 0+base
 	then me.v = -1.5+base
 	elseif me.v < 0+base and me.v > -speedminit +accel+base
@@ -830,8 +830,8 @@ end
 
 
 
-mctim = 0
-yctim = 0
+me.ctim = 0
+you.ctim = 0
 
 me.running = false
 you.running = false
@@ -946,17 +946,17 @@ climbs = function()
 
 
 
-if me.flinch then mctim = 0 end
+if me.flinch then me.ctim = 0 end
 
-	if mctim > 0 then mctim = mctim + 1
+	if me.ctim > 0 then me.ctim = me.ctim + 1
 		me.busy = true
 		
-		if mctim > 11 then
-				mctim = 0
+		if me.ctim > 11 then
+				me.ctim = 0
 				if controller1.up then 
 					me.g = false
 					me.j = hopj
-					repplay(jumpd) 
+					repplay(me.jumpd) 
 				elseif controller1.left then 
 					me.g = false
 					me.j = hopj2
@@ -967,30 +967,30 @@ if me.flinch then mctim = 0 end
 					me.v = hopv2
 				end
 
-		elseif mctim > 7 then
+		elseif me.ctim > 7 then
 				me.im = climb3
-		elseif mctim > 4 then
+		elseif me.ctim > 4 then
 				me.im = climb2
 
-		elseif mctim > 0 then
+		elseif me.ctim > 0 then
 				me.im = climb
-				if mctim == 2 then
+				if me.ctim == 2 then
 				repplay(climbsound) 
 			end
 		end
       
 	end
 
-if you.flinch then yctim = 0 end
+if you.flinch then you.ctim = 0 end
 
-	if yctim > 0 then yctim = yctim + 1
+	if you.ctim > 0 then you.ctim = you.ctim + 1
 		you.busy = true
-		if yctim > 11 then
-				yctim = 0
+		if you.ctim > 11 then
+				you.ctim = 0
 				if controller2.up then 
 					you.g = false
 					you.j = hopj
-					repplay(jumpd2) 
+					repplay(you.jumpd) 
 				elseif controller2.left then 
 					you.g = false
 					you.j = hopj2
@@ -1002,14 +1002,14 @@ if you.flinch then yctim = 0 end
 				end
 
 
-		elseif yctim > 7 then
+		elseif you.ctim > 7 then
 				you.im = climb3
-		elseif yctim > 4 then
+		elseif you.ctim > 4 then
 				you.im = climb2
 
-		elseif yctim > 0 then
+		elseif you.ctim > 0 then
 				you.im = climb
-				if yctim == 2 then
+				if you.ctim == 2 then
 				repplay(climbsound2) 
 			end
 		end
@@ -1019,288 +1019,132 @@ if you.flinch then yctim = 0 end
 end
 
 
-
-
-moveyou = function ()
-	you.feet = you.y + 60
-	if you.feet > youfloor
-	then you.y = youfloor - 60
+function movex(xx,z)
+xx.feet = xx.y + 60
+	if xx.feet > xx.floor
+	then xx.y = xx.floor - 60
 end
-
-	if you.g 
+	if xx.g 
 	then 
-	you.j = 0
-			if controller2.up and not you.flinch and not you.block and not you.jstop and not youbjstop and not you.busy
-				and not controller2.a1 and not controller2.a2 and not controller2.a3 and not youbur and not youpurp
+	xx.j = 0
+			if z.up and not xx.flinch and not xx.block and not xx.jstop and not xxbjstop and not xx.busy
+				and not z.a1 and not z.a2 and not z.a3 and not xx.bur and not xxpurp
 				then 
-        if you.running then
-          you.jt = runjt
-          you.jmax = runjmax
-          you.j = runj
+        if xx.running then
+          xx.jt = runjt
+          xx.jmax = runjmax
+          xx.j = runj
           else
-				you.jt = jt
-				you.jmax = jmax
-        you.j = jumpj
+				xx.jt = jt
+				xx.jmax = jmax
+        xx.j = jumpj
       end
-				you.ht = 7
-				you.firstjump = true
-				you.g = false
-				repplay(jumpd2)
-			elseif controller2.right and you.v >= you.push and you.stop == false and not you.flinch
-				and not controller2.left
+				xx.ht = 7
+				xx.firstjump = true
+				xx.g = false
+				repplay(xx.jumpd)
+			elseif z.right and xx.v >= xx.push and xx.stop == false and not xx.flinch
+				and not z.left
 				then 
-				vroomrighty(you.push)
-			elseif controller2.left and you.v <= you.push and you.stop == false and not you.flinch
-				and not controller2.right
+				xx.vroomright(xx.push)
+			elseif z.left and xx.v <= xx.push and xx.stop == false and not xx.flinch
+				and not z.right
 				then 
-				vroomlefty(you.push)
-			elseif controller2.down and you.onplat and not you.busy and not you.dodge
-				and not controller2.a1 and not controller2.a2 and not controller2.a3
+				xx.vroomleft(xx.push)
+			elseif z.down and xx.onplat and not xx.busy and not xx.dodge
+				and not z.a1 and not z.a2 and not z.a3
 			then
 			--fall through the floor panel-- maybe add a crashing animation to break through
-			you.y = you.y + 4
+			xx.y = xx.y + 4
 			else
-	 		fricy(you.push)
+	 		xx.fric(xx.push)
 			end
-
 	else
 			
-			if you.landingcounter > 0
+			if xx.landingcounter > 0
 			then
-			you.landingcounter = you.landingcounter - 1
+			xx.landingcounter = xx.landingcounter - 1
 			end
-
-			if controller2.block and platformy(you.mid+(you.v/2)+you.lr*15,you.feet-40) ~= platformy(you.mid+(you.v/2)+you.lr*15,you.y) and platformy(you.mid,you.y-40)-62 ~= youfloor
+			if z.block and platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.feet-40) ~= platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.y) and platformy(xx.mid,xx.y-40)-62 ~= xx.floor
 				then 
-				   if platformy(you.mid+(you.v/2)+you.lr*15,you.feet-50) ~= platformy(you.mid+(you.v/2)+you.lr*15,you.y) then
-				yctim = 7
-      else yctim = 1
+				   if platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.feet-50) ~= platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.y) then
+				xx.ctim = 7
+      else xx.ctim = 1
         end
-				you.im = climb
-				you.onplat = true
-				you.j = climbv
-				you.v = you.v/2
-			elseif controller2.left and you.v >= 1 + you.push*1.5
-			then you.v = you.v - adecrate
-				you.slowdown = true
+				xx.im = climb
+				xx.onplat = true
+				xx.j = climbv
+				xx.v = xx.v/2
+			elseif z.left and xx.v >= 1 + xx.push*1.5
+			then xx.v = xx.v - adecrate
+				xx.slowdown = true
 				
-			elseif controller2.right and you.v <= -1 + you.push*1.5
-			then you.v = you.v + adecrate
-				you.slowdown = true
-
-			elseif controller2.left and you.v > - maxairmove + you.push*1.5
-				then you.v = you.v -amovrate
-				you.slowdown = false
-
-			elseif controller2.right and you.v < maxairmove + you.push*1.5
-				then you.v = you.v +amovrate
-				you.slowdown = false
+			elseif z.right and xx.v <= -1 + xx.push*1.5
+			then xx.v = xx.v + adecrate
+				xx.slowdown = true
+			elseif z.left and xx.v > - maxairmove + xx.push*1.5
+				then xx.v = xx.v -amovrate
+				xx.slowdown = false
+			elseif z.right and xx.v < maxairmove + xx.push*1.5
+				then xx.v = xx.v +amovrate
+				xx.slowdown = false
 			
-			elseif controller2.down
-				then tempyfloor = youfloor
-      elseif you.push > 0 then
-             if you.v > you.push*1.5 then 
-             you.v = you.v - 1
-             elseif you.v < you.push*1.5 then 
-             you.v = you.v + 1
+			elseif z.down
+				then xx.tempfloor = xx.floor
+      elseif xx.push > 0 then
+             if xx.v > xx.push*1.5 then 
+             xx.v = xx.v - 1
+             elseif xx.v < xx.push*1.5 then 
+             xx.v = xx.v + 1
              end
-
 
 			
 			end
 			
 			--landing
-			if you.feet - you.j >= tempyfloor
+			if xx.feet - xx.j >= xx.tempfloor
 			then 
-			if you.j < -jforlanding then 
-				you.landingcounter = landingwait
+			if xx.j < -jforlanding then 
+				xx.landingcounter = landingwait
 			else
-				you.landingcounter = 0
+				xx.landingcounter = 0
 			end
-			you.j = 0
-			you.y = tempyfloor - 60
-			you.g = true
-			you.landing = true 
-      you.v = you.v * landingfric
+			xx.j = 0
+			xx.y = xx.tempfloor - 60
+			xx.g = true
+			xx.landing = true 
+      xx.v = xx.v * landingfric
 			land2:play()
-			you.slowdown = false
+			xx.slowdown = false
 			
 			--long jump
-    elseif controller2.up and you.j > 0 
-    and you.jmax > 0 
-												and you.firstjump
-					then you.jmax = you.jmax - .7
-
+    elseif z.up and xx.j > 0 
+    and xx.jmax > 0 
+												and xx.firstjump
+					then xx.jmax = xx.jmax - .7
 			--the end arc/fall of any jump or the mini jump
-
 			else
-
-				you.firstjump = false
-
-				if you.jt > 4
-				then you.jt = you.jt -  grav
-				elseif you.jt <= 4 and you.j > - maxgravity
-				then you.jt = you.jt -  grav
-					you.j = you.j - grav
-				--elseif you.jt <= 0 and you.ht > 0
-				--then you.j = 0
-				--	you.ht = you.ht - 1	
+				xx.firstjump = false
+				if xx.jt > 4
+				then xx.jt = xx.jt -  grav
+				elseif xx.jt <= 4 and xx.j > - maxgravity
+				then xx.jt = xx.jt -  grav
+					xx.j = xx.j - grav
+				--elseif xx.jt <= 0 and xx.ht > 0
+				--then xx.j = 0
+				--	xx.ht = xx.ht - 1	
 				else
-					you.j = you.j
+					xx.j = xx.j
 				end
-
 				
-
 			end
-
 	end
 end
 
 
 
 
-moveme = function ()
-	me.feet = me.y + 60
 
-	me.feet = me.y + 60
-	if me.feet > mefloor
-	then me.y = mefloor - 60
-end
-
-	if me.g 
-	then 
-	me.j = 0
-			if controller1.up and not me.flinch and not me.block and not me.jstop and not mebjstop and not me.busy
-				and not controller1.a1 and not controller1.a2 and not controller1.a3 and not mebur and not mepurp
-				then 
-        if me.running then
-         me.jt = runjt
-				me.jmax = runjmax
-        me.j = runj
-          else
-			me.jt = jt 
-				me.jmax = jmax
-        me.j = jumpj
-        end
-				me.ht = 7
-				me.firstjump = true
-				me.g = false
-				repplay(jumpd)
-			elseif controller1.right and me.v >= me.push and me.stop == false and not me.flinch
-				and not controller1.left
-				then 
-				vroomrightme(me.push)
-			elseif controller1.left and me.v <= me.push and me.stop == false and not me.flinch
-				and not controller1.right
-				then
-				vroomleftme(me.push)
-			
-			else
-	 		fricme(me.push)
-			end
-			if controller1.down and me.onplat and not me.busy and not me.dodge
-				and not controller1.a1 and not controller1.a2 and not controller1.a3
-			then
-			--fall through the floor panel-- maybe add a crashing animation to break through
-			me.y = me.y + 4
-		end
-
-	else
-			
-
-      
-
-			if me.landingcounter > 0
-			then
-			me.landingcounter = me.landingcounter - 1
-			end
-
-			if controller1.block and platformy(me.mid+(me.v/2)+me.lr*15,me.feet-40) ~= platformy(me.mid+(me.v/2)+me.lr*15,me.y) and platformy(me.mid,me.y-40)-62 ~= mefloor
-				then 
-          if platformy(me.mid+(me.v/2)+me.lr*15,me.feet-50) == platformy(me.mid+(me.v/2)+me.lr*15,me.y) then
-				mctim = 7
-      else mctim = 1
-        end
-				me.im = climb
-				me.onplat = true
-				me.j = climbv
-				me.v = me.v/2
-				me.landingcounter = 0
-			elseif controller1.left and me.v >= 1 + me.push*1.5
-			then me.v = me.v - adecrate
-				me.slowdown = true
-				
-			elseif controller1.right and me.v <= -1 + me.push*1.5
-			then me.v = me.v + adecrate
-				me.slowdown = true
-
-			elseif controller1.left and me.v > - maxairmove + me.push*1.5
-				then me.v = me.v - amovrate
-				me.slowdown = false
-
-			elseif controller1.right and me.v < maxairmove + me.push*1.5
-				then me.v = me.v + amovrate
-				me.slowdown = false
-
-			elseif controller1.down
-				then tempmefloor = mefloor
-      elseif me.push > 0 then
-             if me.v > me.push*1.5 then 
-             me.v = me.v - 1
-             elseif me.v > me.push*1.5 then 
-             me.v = me.v + 1
-             end
-
-			
-			end
-			
-			--landing
-			if me.feet - me.j >= tempmefloor
-			then
-			if me.j < -jforlanding then 
-			me.landingcounter = landingwait
-			else me.landingcounter = 0
-			end
-			me.j = 0
-			me.y = tempmefloor - 60
-			me.g = true
-			me.landing = true
-      me.v = me.v*landingfric
-			land1:play()
-			me.slowdown = false
-			
-			--long jump
-			elseif controller1.up and me.j > 0 and me.jmax > 0 
-												and me.firstjump
-					then me.jmax = me.jmax - .7
-
-			--the end arc/fall of any jump or the mini jump
-
-			else
-
-				me.firstjump = false
-
-				if me.jt > 4
-				then me.jt = me.jt - grav 
-				elseif me.jt <= 4 and me.j > - maxgravity
-				then me.jt = me.jt - grav 
-					me.j = me.j - grav
-				--elseif you.jt <= 0 and you.ht > 0
-				--then you.j = 0
-				--	you.ht = you.ht - 1	
-				else
-					me.j = me.j
-				end
-
-				
-
-			end
-
-	end
-
-
-
-end
 
 
 

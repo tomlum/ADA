@@ -318,7 +318,7 @@ for i, v in ipairs(youspikes) do
 elseif youwaittoaim > 0 then youwaittoaim = youwaittoaim - 1
   end
 
-if yougree or yougreen or youwaittoaim > 0 then you.stop = true you.jstop = true
+if yougree or you.green or youwaittoaim > 0 then you.stop = true you.jstop = true
 end
 	
 		
@@ -726,7 +726,7 @@ if methrowanimatecounter == 1 then
 elseif waittoaim > 0 then waittoaim = waittoaim - 1
   end
 
-if megree or megreen or waittoaim > 0 then me.stop = true me.jstop = true
+if megree or me.green or waittoaim > 0 then me.stop = true me.jstop = true
 end
 	
 end

@@ -225,7 +225,7 @@ elseif v.s == -200 and v.t >= 63 and math.abs((v.x + (85 * v.lr)) - you.mid) < 8
 end
 end
 
-mepurp = false
+me.purp = false
 mespikepause = 0
 medig = 0
 
@@ -374,7 +374,7 @@ elseif me.g and mespikeairprime
 	end
 
 
-	elseif not x and spikechargetimer > spikechargetime and tempmefloor == floor
+	elseif not x and spikechargetimer > spikechargetime and tempme.floor == floor
 	then
 	me.attack = "chargespike"
 	me.stop = true
@@ -391,7 +391,7 @@ elseif me.g and mespikeairprime
 	me.invince = true
 
 
-	elseif spikechargetimer > spikechargetime and tempmefloor == floor
+	elseif spikechargetimer > spikechargetime and tempme.floor == floor
 	then me.stop = true
 	me.im = stomps
 	me.attack = "chargespike"
@@ -469,16 +469,16 @@ elseif mespikeprime
 	me.attack = "spike"
 	spikechargetimer = -80
 	me.v = 0
-	table.insert(spikes, {x = me.mid + (0 ) * me.lr, y = tempmefloor , lr = me.lr, t = 0, s = 0})
-	table.insert(spikes, {x = me.mid + (30 ) * me.lr, y = tempmefloor , lr = me.lr, t = -6, s = 0})
-	table.insert(spikes, {x = me.mid + (65 ) * me.lr, y = tempmefloor , lr = me.lr, t = -12, s = 0})
-	table.insert(spikes, {x = me.mid + (100 ) * me.lr, y = tempmefloor , lr = me.lr, t = -18, s = 0})
-	table.insert(spikes, {x = me.mid + (135 ) * me.lr, y = tempmefloor , lr = me.lr, t = -24, s = 0})
-	table.insert(spikes, {x = me.mid + (170 ) * me.lr, y = tempmefloor , lr = me.lr, t = -30, s = 0})
-	table.insert(spikes, {x = me.mid + (205 ) * me.lr, y = tempmefloor , lr = me.lr, t = -36, s = 0})
-	table.insert(spikes, {x = me.mid + (240 ) * me.lr, y = tempmefloor , lr = me.lr, t = -42, s = 0})
-	table.insert(spikes, {x = me.mid + (275 ) * me.lr, y = tempmefloor , lr = me.lr, t = -48, s = 0})
-	table.insert(spikes, {x = me.mid + (310 ) * me.lr, y = tempmefloor , lr = me.lr, t = -54, s = 0})
+	table.insert(spikes, {x = me.mid + (0 ) * me.lr, y = tempme.floor , lr = me.lr, t = 0, s = 0})
+	table.insert(spikes, {x = me.mid + (30 ) * me.lr, y = tempme.floor , lr = me.lr, t = -6, s = 0})
+	table.insert(spikes, {x = me.mid + (65 ) * me.lr, y = tempme.floor , lr = me.lr, t = -12, s = 0})
+	table.insert(spikes, {x = me.mid + (100 ) * me.lr, y = tempme.floor , lr = me.lr, t = -18, s = 0})
+	table.insert(spikes, {x = me.mid + (135 ) * me.lr, y = tempme.floor , lr = me.lr, t = -24, s = 0})
+	table.insert(spikes, {x = me.mid + (170 ) * me.lr, y = tempme.floor , lr = me.lr, t = -30, s = 0})
+	table.insert(spikes, {x = me.mid + (205 ) * me.lr, y = tempme.floor , lr = me.lr, t = -36, s = 0})
+	table.insert(spikes, {x = me.mid + (240 ) * me.lr, y = tempme.floor , lr = me.lr, t = -42, s = 0})
+	table.insert(spikes, {x = me.mid + (275 ) * me.lr, y = tempme.floor , lr = me.lr, t = -48, s = 0})
+	table.insert(spikes, {x = me.mid + (310 ) * me.lr, y = tempme.floor , lr = me.lr, t = -54, s = 0})
 
 	for i, v in ipairs(spikes) do
 
@@ -515,8 +515,8 @@ else
 
 end
 
-if spikechargetimer < 0 or mespikespecial then mepurp = true
-	else mepurp = false
+if spikechargetimer < 0 or mespikespecial then me.purp = true
+	else me.purp = false
 	end
 
 
@@ -758,7 +758,7 @@ elseif v.s == -200 and v.t >= 63 and math.abs((v.x + (85 * v.lr)) - me.mid) < 85
 end
 end
 
-youpurp = false
+you.purp = false
 mespikepause = 0
 youdig = 0
 
@@ -1043,8 +1043,8 @@ else youspikeprime = false
 
 end
 
-if youspikechargetimer < 0 or youspikespecial then youpurp = true
-	else youpurp = false
+if youspikechargetimer < 0 or youspikespecial then you.purp = true
+	else you.purp = false
 	end
 
 

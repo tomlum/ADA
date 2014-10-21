@@ -848,7 +848,7 @@ end
 
 
 armanimatey = function ()
-	if you.slowdown and not you.dodge and not you.pause and not you.stop and not youpurp and not youblu 
+	if you.slowdown and not you.dodge and not you.pause and not you.stop and not you.purp and not youblu 
 	then 
 	if you.leftface then
 	love.graphics.draw(arm, you.x + 21, you.y + 20)
@@ -862,7 +862,7 @@ end
 
 
 armanimateme = function ()
-	if me.slowdown and not me.dodge and not me.pause and not me.stop and not mepurp and not meblu 
+	if me.slowdown and not me.dodge and not me.pause and not me.stop and not me.purp and not meblu 
 	then 
 	if me.leftface then
 	love.graphics.draw(arm, me.x + 21, me.y + 20)
