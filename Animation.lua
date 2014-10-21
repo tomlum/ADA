@@ -607,10 +607,10 @@ then v.v = v.v + you.v*.025
   v.j = v.j + you.j*.01 + .1
  end
  
- for p,q in ipairs(mytornado)  do
+ for p,q in ipairs(me.tornado)  do
  if math.abs(q.x-v.x) < 25 and math.abs(q.y - v.y) < 50 
 then 
-  if v.x < methecenter then
+  if v.x < me.thecenter then
   v.v = math.random(-1,10)
   else
   v.v = math.random(-10,1)
@@ -618,9 +618,9 @@ then
   v.j = math.random(5,10)
  end
 end
-for p,q in ipairs(yourtornado) do
+for p,q in ipairs(you.tornado) do
  if math.abs(q.x-v.x) < 25 and math.abs(q.y - v.y) < 50 
-then if v.x < youthecenter then
+then if v.x < you.thecenter then
   v.v = math.random(-1,10)
   else
   v.v = math.random(-10,1)
@@ -1241,7 +1241,7 @@ if findxIntersect(1558,5573,1581,5590,you.mid+you.v,you.y-you.j+30,you.mid,you.y
     makepapers(you.mid,you.y,you.v,you.j, 1)
 end
 
-for p,q in ipairs(mytornado) do
+for p,q in ipairs(me.tornado) do
 if math.random()>.5 then
 if findxIntersect(600,4419,633,4455,q.x+q.v,q.y,q.x,q.y) then
     makepapers(q.x,q.y,q.v,windpush,1)
@@ -1271,7 +1271,7 @@ if findxIntersect(1558,5573,1581,5590,q.x+q.v,q.y,q.x,q.y) then
     makepapers(q.x,q.y,q.v,windpush,1)
 end
 end
-for p,q in ipairs(yourtornado) do
+for p,q in ipairs(you.tornado) do
  
  if findxIntersect(600,4419,633,4455,q.x+q.v,q.y,q.x,q.y) then
     makepapers(q.x,q.y,q.v,windpush,1)
@@ -2016,6 +2016,7 @@ animate = function ()
     makeslidedust(you.y+50,you.mid + 15 * you.lr,you.v)
 	elseif you.slowdown
 	then you.im = slowdown
+    you.xoffset = 10
    
     
 	elseif you.landing
@@ -2038,6 +2039,7 @@ elseif you.g and aboutso(you.v, you.push) and not you.slide
   makeslidedust(me.y+50,me.mid + 20 * me.lr,me.v)
 	elseif me.slowdown
 	then me.im = slowdown
+    me.xoffset = 10
  
 	elseif me.landing
 	then me.im = landing
@@ -2267,61 +2269,72 @@ end
 
 
 
-crestmovement = function ()
+crestmovementhelper = function (x)
 	
-	if you.im == dodge21
+	if x.im == dodge21
 		then
-		you.crestdis = 15
-	elseif you.im == sready or you.im == bigwings or you.im == purpwings  or you.im == sandboltready  or you.im == purpwings  or you.im == bsstart  or you.im == bigflap
-		or you.im == wingslam or you.im == wingswing1 or you.im == wingswing2 or you.im == wingswing3 or you.im == upflap
-		then you.crestdis = 1
-
-elseif you.im == landing or you.im == spikeland or you.im == bcend
-or you.im==walk1 or you.im==walk2 or you.im==walk3 or you.im==walk4 or you.im==walk5 
-	then you.crestdis = -1
-    elseif you.im == wallgrab then
-    you.crestdis = -30
-	else you.crestdis = - 2
+		x.crestdis = 15
+	elseif x.im == sready or x.im == bigwings or x.im == purpwings  or x.im == sandboltready  or x.im == purpwings  or x.im == bsstart  or x.im == bigflap
+		or x.im == wingslam or x.im == wingswing1 or x.im == wingswing2 or x.im == wingswing3 or x.im == upflap
+		then x.crestdis = 1
+elseif x.im == landing or x.im == spikeland or x.im == bcend
+or x.im==walk1 or x.im==walk2 or x.im==walk3 or x.im==walk4 or x.im==walk5 
+	then x.crestdis = -1
+    elseif x.im == wallgrab then
+    x.crestdis = -30
+	else x.crestdis = - 2
 	end
-
 	
-	if you.im == idle2 
-	then you.cresty = you.y + 28
+	if x.im == idle2 
+	then x.cresty = x.y + 28
 	
-	elseif you.im==walk1 or you.im==walk2 or you.im==walk3 or you.im==walk4 or you.im==walk5 
-		or you.im==slide or you.im == idle1 or you.im==idle3 or you.im==idle4 or you.im == jumprise or you.im==jumpfalling or you.im == slowdown
-		or you.im==boltthrow or you.im == airbolt or you.im == airboltslow
-		or you.im == stomp2  or you.im==airspike 
-		or you.im==blue12 or you.im == blue1end or you.im == bluecharging or you.im == bcend or you.im==briseend or you.im==bfallend or you.im==bfallprep or you.im==bfall3 
-		or you.im==greenpurpprep
-		or you.im==airbluepurphit
- or you.im == wallgrab
-		or you.im == ythrow or you.im ==jythrow
-		or you.im ==jpythrow
-		or you.im==yblue or you.im==yblue2 or you.im == yblue3 or you.im==yblue3 or you.im == yblue4 or you.im == yblue5 or you.im == yblueend or you.im == yblueend2
-		or you.im==aby2 or you.im==aby3 or you.im==aby4
-		or you.im == gythrow or you.im == jgythrow or you.im == gyready or you.im == jgyready 
-		or you.im == ycthrow or you.im == jycthrow 
-		or you.im == sready or you.im == bigwings or you.im == purpwings  or you.im == sandboltready  or you.im == purpwings  or you.im == bsstart  or you.im == bigflap
-		or you.im == wingslam or you.im == wingswing1 or you.im == wingswing2 or you.im == wingswing3 or you.im == upflap
-	then you.cresty = you.y + 27
-	elseif you.im==spikeland or you.im==bluepurphit
-		then you.cresty = you.y + 36
-	elseif you.im == stomp1 or you.im==stomps
-		then you.cresty = you.y + 26
-		you.crestdis = -5
-	elseif you.im==dig then you.cresty = you.y + 53
-	elseif you.im == dodge
+	elseif x.im==walk1 or x.im==walk2 or x.im==walk3 or x.im==walk4 or x.im==walk5 
+		or x.im==slide or x.im == idle1 or x.im==idle3 or x.im==idle4 or x.im == jumprise or x.im==jumpfalling or x.im == slowdown or x.im == jsflap
+		or x.im==boltthrow or x.im == airbolt or x.im == airboltslow
+		or x.im == stomp2  or x.im==airspike 
+		or x.im==blue12 or x.im == blue1end or x.im == bluecharging or x.im == bcend or x.im==briseend or x.im==bfallend or x.im==bfallprep or x.im==bfall3 
+		or x.im==greenpurpprep
+		or x.im==airbluepurphit
+ or x.im == wallgrab
+		or x.im == ythrow or x.im ==jythrow
+		or x.im ==jpythrow
+		or x.im==yblue or x.im==yblue2 or x.im == yblue3 or x.im==yblue3 or x.im == yblue4 or x.im == yblue5 or x.im == yblueend or x.im == yblueend2
+		or x.im==aby2 or x.im==aby3 or x.im==aby4
+		or x.im == gythrow or x.im == jgythrow or x.im == gyready or x.im == jgyready 
+		or x.im == ycthrow or x.im == jycthrow 
+		or x.im == sready or x.im == bigwings or x.im == purpwings  or x.im == sandboltready  or x.im == purpwings  or x.im == bsstart  or x.im == bigflap
+		or x.im == wingslam or x.im == wingswing1 or x.im == wingswing2 or x.im == wingswing3 
+	then x.cresty = x.y + 27
+	elseif x.im==spikeland or x.im==bluepurphit
+		then x.cresty = x.y + 36
+	elseif x.im == stomp1 or x.im==stomps
+		then x.cresty = x.y + 26
+		x.crestdis = -5
+	elseif x.im==dig then x.cresty = x.y + 53
+	elseif x.im == dodge
 		then 
-		you.crestdis = 0
-		you.cresty = you.y + 46
-	elseif you.im == dodge21
-		then you.cresty = you.y + 43
-		you.crestdis = 14
-	elseif you.landing
-	then you.cresty = you.y + 37
-	else you.cresty = 100000
+		x.crestdis = 0
+		x.cresty = x.y + 46
+	elseif x.im == dodge21
+		then x.cresty = x.y + 43
+		x.crestdis = 14
+	elseif x.landing
+	then x.cresty = x.y + 37
+	else x.cresty = 100000
 	end
+
+	if x.leftface 
+		then x.crestx = x.mid - x.crestdis - 3
+	else 
+	x.crestx = x.mid + x.crestdis
+	end
+
+
+if me.leftface 
+		then me.crestx = me.mid - me.crestdis - 3
+	else 
+	me.crestx = me.mid + me.crestdis
+end
 
 
 	if you.leftface 
@@ -2330,83 +2343,13 @@ or you.im==walk1 or you.im==walk2 or you.im==walk3 or you.im==walk4 or you.im==w
 	you.crestx = you.mid + you.crestdis
 	end
 
-
-
-
-	
-	if me.im == dodge21
-		then
-		me.crestdis = 15
-	elseif me.im == sready or me.im == bigwings or me.im == purpwings  or me.im == sandboltready  or me.im == purpwings  or me.im == bsstart  or me.im == bigflap
-		or me.im == wingslam or me.im == wingswing1 or me.im == wingswing2 or me.im == wingswing3 or me.im == upflap
-		then me.crestdis = 1
-	elseif me.im == gettingup2 then me.crestdis = 11
-	elseif me.im == gettingup1 then me.crestdis = -6
-	elseif me.im == fallforward1 then me.crestdis = 8
-	elseif me.im == fallback1 then me.crestdis = -2
-
-elseif me.im == landing or me.im == spikeland or me.im == bcend
-or me.im==walk1 or me.im==walk2 or me.im==walk3 or me.im==walk4 or me.im==walk5 
-	then me.crestdis = -1
-    elseif me.im == wallgrab then
-    me.crestdis = -30
-	else me.crestdis = - 2
-	end
-
-	
-	if me.im == idle2 
-	then me.cresty = me.y + 28
-	
-	elseif me.im==walk1 or me.im==walk2 or me.im==walk3 or me.im==walk4 or me.im==walk5 
-		or me.im==slide or me.im == idle1 or me.im==idle3 or me.im==idle4 or me.im == jumprise or me.im==jumpfalling or me.im == slowdown
-		or me.im==boltthrow or me.im == airbolt or me.im == airboltslow
-		or me.im == stomp2  or me.im==airspike 
-		or me.im==blue12 or me.im == blue1end or me.im == bluecharging or me.im == bcend or me.im==briseend or me.im==bfallend or me.im==bfallprep or me.im==bfall3 
-		or me.im==greenpurpprep
-		or me.im==airbluepurphit
-    or me.im == wallgrab
-		or me.im == ythrow or me.im ==jythrow
-		or me.im ==jpythrow
-		or me.im==yblue or me.im==yblue2 or me.im == yblue3 or me.im==yblue3 or me.im == yblue4 or me.im == yblue5 or me.im == yblueend or me.im == yblueend2
-		or me.im==aby2 or me.im==aby3 or me.im==aby4
-		or me.im == gythrow or me.im == jgythrow or me.im == gyready or me.im == jgyready 
-		or me.im == ycthrow or me.im == jycthrow 
-		or me.im == sready or me.im == bigwings or me.im == purpwings  or me.im == sandboltready  or me.im == purpwings  or me.im == bsstart  or me.im == bigflap
-		or me.im == wingslam or me.im == wingswing1 or me.im == wingswing2 or me.im == wingswing3 or me.im == upflap
-	then me.cresty = me.y + 27
-	elseif me.im==spikeland or me.im==bluepurphit
-		then me.cresty = me.y + 36
-	elseif me.im == stomp1 or me.im==stomps
-		then me.cresty = me.y + 26
-		me.crestdis = -5
-	elseif me.im==dig then me.cresty = me.y + 53
-	elseif me.im == dodge
-		then 
-		me.crestdis = 0
-		me.cresty = me.y + 46
-		elseif me.im == gettingup2 then me.cresty = me.y + 28
-	elseif me.im == gettingup1 then me.cresty = me.y + 32
-	elseif me.im == fallforward1 then me.cresty = me.y + 26
-	elseif me.im == fallback1 then me.cresty = me.y + 25
-
-	elseif me.im == dodge21
-		then me.cresty = me.y + 43
-		me.crestdis = 14
-	elseif me.landing
-	then me.cresty = me.y + 37
-	else me.cresty = 100000
-	end
-
-
-	if me.leftface 
-		then me.crestx = me.mid - me.crestdis - 3
-	else 
-	me.crestx = me.mid + me.crestdis
-	end
-if me.im == slowdown then mexoffset = 10 end
-if you.im == slowdown then youxoffset = 10 end
-
-
 end
+
+crestmovement = function ()
+  crestmovementhelper(me)
+  crestmovementhelper(you)
+  
+  
+  end
 
 			

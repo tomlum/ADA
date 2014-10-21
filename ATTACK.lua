@@ -228,6 +228,8 @@ function mearmsreach(range)
 end
 end
 
+me.armsreach = mearmsreach
+
 function youarmsreach(range)
 	if ((me.mid - you.mid) * you.lr) < range
 		and (me.mid - you.mid) * you.lr > 0
@@ -236,12 +238,15 @@ function youarmsreach(range)
 end
 end
 
+you.armsreach = youarmsreach
+
 function sameheight()
 if math.abs(me.y - you.y) < 40 then
 	return true 
 else return false
 end
 end
+
 
 yougpc = 0
 yougpready = false
@@ -878,7 +883,7 @@ dodgey = function ()
 		you.block = true
 	elseif you.block and controller2.right and dodgeycounter == 0 and not you.slide and	not noyoudodge and not you.landing
    and not 
-  (yousan
+  (you.san
   or yougree
  or youblu
  or youpurp
@@ -895,7 +900,7 @@ dodgey = function ()
 		end
 	elseif you.block and controller2.left and dodgeycounter == 0 and not you.slide and 	not noyoudodge and not you.landing
   and not 
-  (yousan
+  (you.san
   or yougree
  or youblu
  or youpurp
@@ -1071,7 +1076,7 @@ if you.flinch
 		delaymecounter = delaytime
 	elseif me.block and controller1.right and dodgemecounter == 0 and not me.slide and not nomedodge and not me.landing
   and not 
-  (mesan
+  (me.san
  or megree
  or meblu
  or mepurp
@@ -1088,7 +1093,7 @@ if you.flinch
 		end
 	elseif me.block and controller1.left and dodgemecounter == 0 and not me.slide and not nomedodge and not me.landing
   and not 
-  (mesan
+  (me.san
  or megree
  or meblu
  or mepurp
@@ -1293,15 +1298,15 @@ if not oldyg and you.g then gflinchyleft = you.ft-you.flinchtimer end
       if you.g and gflinchyleft>fallflinchtime then
         youfalltimer = youfalltimer + 1
         if youfalltimer <= 5 then you.im = fallback1
-          youxoffset = 4
+          you.xoffset = 4
         elseif you.ft - you.flinchtimer < 2 then you.im = gettingup1
-          youxoffset = 6
+          you.xoffset = 6
         elseif youfalltimer >5 then you.im = fallback
-          youxoffset = 20
+          you.xoffset = 20
         end
       elseif inityflinch > fallflinchtime and not you.g then
       you.im = fallback1
-      youxoffset = 4
+      you.xoffset = 4
       else you.im = flinch
       end
 		end
@@ -1344,15 +1349,15 @@ if not oldmeg and me.g then gflinchmeleft = me.ft-me.flinchtimer end
       if me.g and gflinchmeleft>fallflinchtime then
         mefalltimer = mefalltimer + 1
         if mefalltimer <= 5 then me.im = fallback1
-          mexoffset = 4
+          me.xoffset = 4
         elseif me.ft - me.flinchtimer < 2 then me.im = gettingup1
-          mexoffset = 6
+          me.xoffset = 6
         elseif mefalltimer >5 then me.im = fallback
-          mexoffset = 20
+          me.xoffset = 20
         end
       elseif initmeflinch > fallflinchtime and not me.g then
       me.im = fallback1
-      mexoffset = 4
+      me.xoffset = 4
       else me.im = flinch
       end
 		end

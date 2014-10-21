@@ -28,26 +28,26 @@ tornadowidth = 20
 
 
 
-mesct = 0
-meshold = 0
-mswait = 0
+me.sct = 0
+me.shold = 0
+me.swait = 0
 
 mebsct = false
 mebshold = 0
 mebspause = 0
 
-mytornado = {}
+me.tornado = {}
 
 
-yousct = 0
-youshold = 0
-yswait = 0
+you.sct = 0
+you.shold = 0
+you.swait = 0
 
 youbsct = false
 youbshold = 0
 youbspause = 0
 
-yourtornado = {}
+you.tornado = {}
 
 ypsrr = false
 ypswwait = 0
@@ -265,15 +265,15 @@ elseif ypshhold > 0 then
 	if ypshhold > 42 then
 	you.im = wingswing1
 	you.yoffset = 40
-	youxoffset = 166
+	you.xoffset = 166
 	elseif ypshhold > 41 then
 	you.im = wingswing2
 	you.yoffset = 40
-	youxoffset = 166
+	you.xoffset = 166
 	elseif ypshhold > 0 then
 	you.im = wingswing3
 	you.yoffset = 40
-	youxoffset = 166
+	you.xoffset = 166
 
 	if ypshhold == 40 then
 		shakeyou = true
@@ -282,13 +282,13 @@ elseif ypshhold > 0 then
 		and me.y < you.feet and me.feet > you.y then 
 		me.v = -you.lr*30
 		me.g = false
-		me.j = 30
+		me.j = 25
 		me.flinch = true
 		me.ft = psft
 		me.health = me.health - psdam * 3
 	elseif checkalong(me.mid,me.feet,you.mid,you.feet) then
 	me.g = false
-	me.j = 40
+	me.j = 35
 	me.flinch = true
 	me.ft = psft
 	me.health = me.health - psdam
@@ -302,7 +302,7 @@ elseif ypsrr and not x then
 
 	you.im = purpwings
 	you.yoffset = 40
-	youxoffset = 26
+	you.xoffset = 26
 	ypshhold = 43
 	you.stop = true
 	you.jstop = true
@@ -315,7 +315,7 @@ elseif x and ypswwait == 0 and you.g then
 
 	you.im = purpwings
 	you.yoffset = 40
-	youxoffset = 26
+	you.xoffset = 26
 
 
 	ypsrr = true
@@ -357,15 +357,15 @@ elseif mpshhold > 0 then
 	if mpshhold > 42 then
 	me.im = wingswing1
 	me.yoffset = 40
-	mexoffset = 166
+	me.xoffset = 166
 	elseif mpshhold > 41 then
 	me.im = wingswing2
 	me.yoffset = 40
-	mexoffset = 166
+	me.xoffset = 166
 	elseif mpshhold > 0 then
 	me.im = wingswing3
 	me.yoffset = 40
-	mexoffset = 166
+	me.xoffset = 166
 
 	if mpshhold == 40 then
 		shakeme = true
@@ -374,13 +374,13 @@ elseif mpshhold > 0 then
 		and you.y < me.feet and you.feet > me.y then 
 		you.v = -me.lr*30
 		you.g = false
-		you.j = 30
+		you.j = 25
 		you.flinch = true
 		you.ft = psft
 		you.health = you.health - psdam * 3
 	elseif checkalong(you.mid,you.feet,me.mid,me.feet) then
 	you.g = false
-	you.j = 40
+	you.j = 35
 	you.flinch = true
 	you.ft = psft
 	you.health = you.health - psdam
@@ -394,7 +394,7 @@ elseif mpsrr and not x then
 
 	me.im = purpwings
 	me.yoffset = 40
-	mexoffset = 26
+	me.xoffset = 26
 	mpshhold = 43
 	me.stop = true
 	me.jstop = true
@@ -407,7 +407,7 @@ elseif x and mpswwait == 0 and me.g then
 
 	me.im = purpwings
 	me.yoffset = 40
-	mexoffset = 26
+	me.xoffset = 26
 
 
 	mpsrr = true
@@ -453,15 +453,15 @@ if ygswwait > 0 and ygshhold == 0 then
 
 elseif ygshhold > 0 then 
 
-	if not yupgs and not you.g then
+	if yupgs == 1 then
 		you.im = jsflap
-		youxoffset = 29
+		you.xoffset = 29
 		you.yoffset = 14
-	elseif yupgs then
+	elseif yupgs == 2 then
 		you.im = upflap
 		you.yoffset = 30
-		youxoffset = 26
-	elseif you.g then
+		you.xoffset = 26
+	elseif yupgs == 0 then
 	you.im = sbackflap
 	
 
@@ -477,10 +477,17 @@ elseif ygsrr and not x then
 
 	ygshhold = 45
 
+  if you.g then yupgs = 0
+   elseif you.j > 0 then
+	yupgs = 1
+elseif you.j < 0 then 
+  yupgs = 2
+  else yupgs = 0
+  end
 
 		you.im = sbackflap
-		you.j = -yougupv*.9
-    you.v = -yougv*.9
+		you.j = -yougupv*.8
+    you.v = -yougv*.8
 		yupgs = true
     	table.insert(youbolts, {x = you.mid -23 * you.lr , y = you.y + 40, lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
 	table.insert(youbolts, {x = you.mid, y = you.y + 40, lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
@@ -504,7 +511,7 @@ elseif ygsrr and not x then
 elseif x and ygswwait == 0 then 
 
 	you.yoffset = 20
-	youxoffset = 26
+	you.xoffset = 26
 
 	you.im = sandboltready
 
@@ -540,16 +547,16 @@ if gswwait > 0 and gshhold == 0 then
 
 elseif gshhold > 0 then 
 
-
-	if not mupgs and not me.g then
+if me.g then mupgs = 0
+	elseif mupgs == 1 then
 		me.im = jsflap
-		mexoffset = 29
+		me.xoffset = 29
 		me.yoffset = 14
-	elseif mupgs then
+	elseif mupgs == 2 then
 		me.im = upflap
 		me.yoffset = 30
-		mexoffset = 26
-	elseif me.g then
+		me.xoffset = 26
+	elseif mupgs == 0 then
 	me.im = sbackflap
 	
 	end
@@ -565,9 +572,14 @@ elseif gsrr and not x then
 	gshhold = 45
 
 	me.im = sbackflap
-	me.j = -megupv*.9
-  me.v = -megv*.9
-	mupgs = true
+	me.j = -megupv*.8
+  me.v = -megv*.8
+  if me.j > 0 then
+	mupgs = 1
+elseif me.j < 0 then 
+  mupgs = 2
+  else mupgs = 0
+  end
   
   
 	table.insert(bolts, {x = me.mid -23 * me.lr , y = me.y + 40, lr = me.lr, time = 0, v = megv, s = -202, upv = megupv})	
@@ -591,7 +603,7 @@ elseif gsrr and not x then
 elseif x and gswwait == 0 then 
 
 	me.yoffset = 20
-	mexoffset = 26
+	me.xoffset = 26
 
 	me.im = sandboltready
 
@@ -657,7 +669,7 @@ end
 
 
 if youbshold < 0 then 
-	youxoffset = 26
+	you.xoffset = 26
 	you.yoffset = 20
 
 	youbshold = youbshold + 1
@@ -702,7 +714,7 @@ elseif youbshold > 0 then
 
 
 
-	youxoffset = 26
+	you.xoffset = 26
 	you.yoffset = 20
 
 	youbshold = youbshold - 1
@@ -724,7 +736,7 @@ elseif youbshold > 0 then
 
 elseif youbsct and not x then
 	repplay(blueflap2)
-	youxoffset = 26
+	you.xoffset = 26
 	you.yoffset = 20
 
 	youbslevel = you.y
@@ -781,7 +793,7 @@ elseif youbsct and not x then
 elseif x and youbshold == 0 then 
 
 	you.yoffset = 20
-	youxoffset = 26
+	you.xoffset = 26
 
 	you.im = bsstart
 	youbsct = true
@@ -820,7 +832,7 @@ elseif mebsind > 0 then
 end
 
 if mebshold < 0 then 
-	mexoffset = 26
+	me.xoffset = 26
 	me.yoffset = 20
 
 	mebshold = mebshold + 1
@@ -866,7 +878,7 @@ elseif mebshold > 0 then
 
 
 
-	mexoffset = 26
+	me.xoffset = 26
 	me.yoffset = 20
 
 	mebshold = mebshold - 1
@@ -887,7 +899,7 @@ elseif mebshold > 0 then
 elseif mebsct and not x then
 	repplay(blueflap)
 
-	mexoffset = 26
+	me.xoffset = 26
 	me.yoffset = 20
 
 	mebslevel = me.y
@@ -943,7 +955,7 @@ elseif mebsct and not x then
 elseif x and mebshold == 0 then 
 
 	me.yoffset = 20
-	mexoffset = 26
+	me.xoffset = 26
 
 	me.im = bsstart
 	mebsct = true
@@ -958,250 +970,108 @@ end
 
 
 
-function youwings(x) 
 
-	if ytt < 0 then ytt = ytt + 1 end
 
-	if you.flinch or yscancel then 
-	yousct = 0 
-	youshold = 0
-	yswait = 0
+function wings(x,xx,y,z)
+if xx.tt < 0 then xx.tt = xx.tt + 1 end
+	if xx.flinch or xx.scancel then 
+	xx.sct = 0 
+	xx.shold = 0
+	xx.swait = 0
 end
 
+if xx.shold > 0 then xx.san = true else xx.san = false  end
 
-if youshold > 0 then yousan = true else yousan = false  end
-
-
-if youshold == 0 and yswait > 0 then 
-	yswait = yswait - 1
-
-elseif youshold > 0 then 
-	you.jstop = true
-	yswait = swaittime
-	youshold = youshold - 1
-	yousct = 0
-	youlimitbreak=true
-	if you.g then 
-		if (you.v > 0 and you.lr > 0) or (you.v < 0 and you.lr < 0) then
-		you.im = sflap
-		you.yoffset = 20
-		youxoffset = 26
+if xx.shold == 0 and xx.swait > 0 then 
+	xx.swait = xx.swait - 1
+elseif xx.shold > 0 then 
+	xx.jstop = true
+	xx.swait = swaittime
+	xx.shold = xx.shold - 1
+	xx.sct = 0
+	xxlimitbreak=true
+	if xx.g then 
+		if (xx.v > 0 and xx.lr > 0) or (xx.v < 0 and xx.lr < 0) then
+		xx.im = sflap
+		xx.yoffset = 20
+		xx.xoffset = 26
 		else
-		you.im = sbackflap
-
+		xx.im = sbackflap
 		end
-	else you.im = jsflap
-		youxoffset = 29
-		you.yoffset = 14
+	else xx.im = jsflap
+		xx.xoffset = 29
+		xx.yoffset = 14
 	end
 
-
-elseif yousct > sandchargetime and not x and ytt == 0 then
-	youshold = 20
-	you.stop = true
-	you.v = you.v - (you.lr*33)
-	youthecenter = you.x + 40 * you.lr
-	table.insert(yourtornado, {x = youthecenter - 1, y = floor, t = 0,s = 1,v = 1})
-	if you.g then
-	you.im = bigflap
+elseif xx.sct > sandchargetime and not x and xx.tt == 0 then
+	xx.shold = 20
+	xx.stop = true
+	xx.v = xx.v - (xx.lr*33)
+	xx.thecenter = xx.x + 40 * xx.lr
+	table.insert(xx.tornado, {x = xx.thecenter - 1, y = floor, t = 0,s = 1,v = 1})
+	if xx.g then
+	xx.im = bigflap
 	end
 
-
-elseif yousct > sandchargetime and x and ytt == 0 then
-	you.stop = true
-	you.jstop = true
-	if you.g then
-	you.im = bigwings
-	you.yoffset = 40
-	youxoffset = 26
+elseif xx.sct > sandchargetime and x and xx.tt == 0 then
+	xx.stop = true
+	xx.jstop = true
+	if xx.g then
+	xx.im = bigwings
+	xx.yoffset = 40
+	xx.xoffset = 26
 	end
 
-
-
-elseif yousct > 0 and not x then
+elseif xx.sct > 0 and not x then
 	repplay(flapsnd2)
-	youshold = 20
-	msready = false
-	you.jstop = true
-	if you.g then 
-
-		youlimitbreak=true
-	you.im = sflap
-	if (controller2.right and you.lr > 0) or (controller2.left and you.lr < 0) then 
-	you.v = you.v + (you.lr*23)
-	youxoffset = 26
-	you.yoffset = 20
-	you.g = false
-	you.j = 20
+	xx.shold = 20
+	xx.jstop = true
+	if xx.g then 
+		xxlimitbreak=true
+	xx.im = sflap
+	if (z.right and xx.lr > 0) or (z.left and xx.lr < 0) then 
+	xx.v = xx.v + (xx.lr*23)
+	xx.xoffset = 26
+	xx.yoffset = 20
+	xx.g = false
+	xx.j = 20
 	else 
-	you.g = false
-	you.j = 20
-	you.im = sbackflap
-	you.v = you.v - (you.lr*23)	
-	if youarmsreach(100) and math.abs(me.y - you.y) <= 150 then
-		if you.v > you.v then me.v = me.v + 20
+	xx.g = false
+	xx.j = 20
+	xx.im = sbackflap
+	xx.v = xx.v - (xx.lr*23)	
+	if xx.armsreach(100) and math.abs(me.y - xx.y) <= 150 then
+		if xx.v > xx.v then me.v = me.v + 20
 			else me.v = me.v - 20
 		end
 	end
 	end
 	
-	else you.im = jsflap
-		youxoffset = 29
-		you.yoffset = 14
-		if me.y - you.y < 200 and math.abs(me.x - you.x) <= 100 then me.j = me.j - 10
+	else xx.im = jsflap
+		xx.xoffset = 29
+		xx.yoffset = 14
+		if me.y - xx.y < 200 and math.abs(me.x - xx.x) <= 100 then me.j = me.j - 10
 		end
-		if controller2.right or controller2.left then
-		you.v = you.v + you.lr * 10
-		you.j = 25	
+		if z.right or z.left then
+		xx.v = xx.v + xx.lr * 10
+		xx.j = 25	
 		else
-		you.j = 35
+		xx.j = 30
 		end
-
 	end
 	
-
-elseif x and yswait == 0
+elseif x and xx.swait == 0
 	then 
-	you.stop = true
-	if you.g then you.im = sready
-	you.yoffset = 20
-	youxoffset = 26
-	else you.im = jsready
-		you.yoffset = 22
-		youxoffset = 29
+	xx.stop = true
+	if xx.g then xx.im = sready
+	xx.yoffset = 20
+	xx.xoffset = 26
+	else xx.im = jsready
+		xx.yoffset = 22
+		xx.xoffset = 29
 	end
-	yousct = yousct + 1
-
-else yousan = false
-
-end
-end
-
-
-
-
-
-function mewings(x) 
-
-	if mtt < 0 then mtt = mtt + 1 end
-
-	if me.flinch or mscancel then 
-	mesct = 0 
-	meshold = 0
-	mswait = 0
-end
-
-
-if meshold > 10 then mesan = true else mesan = false end
-
-
-
-if meshold == 0 and mswait > 0 then 
-	mswait = mswait - 1
-
-elseif meshold > 0 then 
-	me.jstop = true
-	mswait = swaittime
-	meshold = meshold - 1
-	mesct = 0
-	melimitbreak=true
-	if me.g then 
-		if (me.v > 0 and me.lr > 0) or (me.v < 0 and me.lr < 0) then
-		me.im = sflap
-		me.yoffset = 20
-		mexoffset = 26
-		else
-		me.im = sbackflap
-
-		end
-	else me.im = jsflap
-		mexoffset = 29
-		me.yoffset = 14
-	end
-
-
-elseif mesct > sandchargetime and not x and mtt == 0 then
-	meshold = 20
-	me.stop = true
-	me.v = me.v - (me.lr*33)
-	methecenter = me.x + 40 * me.lr
-	table.insert(mytornado, {x = methecenter - 1, y = floor, t = 0,s = 1,v = 1,lr = 1})
-	
-	if me.g then
-	me.im = bigflap
-	end
-
-
-elseif mesct > sandchargetime and x and mtt == 0 then
-	me.stop = true
-	me.jstop = true
-	if me.g then
-	me.im = bigwings
-	me.yoffset = 40
-	mexoffset = 26
-	end
-
-
-
-elseif mesct > 0 and not x then
-	repplay(flapsnd)
-	meshold = 20
-	msready = false
-	me.jstop = true
-	if me.g then 
-
-		melimitbreak=true
-	me.im = sflap
-	if (controller1.right and me.lr > 0) or (controller1.left and me.lr < 0) then 
-	me.v = me.v + (me.lr*23)
-	mexoffset = 26
-	me.yoffset = 20
-	me.g = false
-	me.j = 20
-
-	else 
-	me.im = sbackflap
-	me.v = me.v - (me.lr*23)
-	me.g = false
-	me.j = 20	
-	if mearmsreach(100) and math.abs(me.y - you.y) <= 150 then
-		if you.v > me.v then you.v = you.v + 20
-			else you.v = you.v - 20
-
-		end
-	end
-	end
-	
-	else me.im = jsflap
-		mexoffset = 29
-		me.yoffset = 14
-		if you.y - me.y < 200 and math.abs(me.x - you.x) <= 100 then you.j = you.j - 10
-		end
-
-		if controller1.right or controller1.left then
-		me.v = me.v + me.lr * 10
-		me.j = 25	
-		else
-		me.j = 35
-		end
-
-	end
-	
-
-elseif x and mswait == 0
-	then 
-	me.stop = true
-	if me.g then me.im = sready
-	me.yoffset = 20
-	mexoffset = 26
-	else me.im = jsready
-		me.yoffset = 22
-		mexoffset = 29
-	end
-	mesct = mesct + 1
-
-else mesan = false
-
+	xx.sct = xx.sct + 1
+else xx.san = false
 end
 end
 
@@ -1212,10 +1082,13 @@ end
 
 
 
-mtt = 0
+
+
+
+me.tt = 0
 torfado = 255
 
-ytt = 0
+you.tt = 0
 ytorfado = 255
 
 
@@ -1228,35 +1101,35 @@ youdrawtornado = function()
 
 
 
-if ytt > 10 then 
-if me.mid > youthecenter + 30 then me.push = -windpush
-elseif me.mid < youthecenter - 30 then  me.push = windpush
+if you.tt > 10 then 
+if me.mid > you.thecenter + 30 then me.push = -windpush
+elseif me.mid < you.thecenter - 30 then  me.push = windpush
 end
-if math.abs(youthecenter - me.mid) < 50 and me.j < 4 then me.j = me.j + 10 me.g = false
-end
-
-
-
+if math.abs(you.thecenter - me.mid) < 50 and me.j < 4 then me.j = me.j + 10 me.g = false
 end
 
 
-if table.getn(yourtornado) > 0 and ytt < tornadodur then
-ytt = ytt + 1 
-	ynnn = table.getn(yourtornado)
-  if #yourtornado<450 then
-	table.insert(yourtornado, {x = youthecenter - ynnn, y = floor - (ynnn*15), v = ynnn})
+
+end
+
+
+if table.getn(you.tornado) > 0 and you.tt < tornadodur then
+you.tt = you.tt + 1 
+	ynnn = table.getn(you.tornado)
+  if #you.tornado<450 then
+	table.insert(you.tornado, {x = you.thecenter - ynnn, y = floor - (ynnn*15), v = ynnn})
   end
-	if ytt >= tornadodur - 50 then 
+	if you.tt >= tornadodur - 50 then 
 	ytorfado = ytorfado - 5
 	end
-elseif ytt >= tornadodur then 
-	yourtornado = {}
-ytt = -100
+elseif you.tt >= tornadodur then 
+	you.tornado = {}
+you.tt = -100
 ytorfado = 255
 
 end
 
-for i,v in ipairs(yourtornado) do
+for i,v in ipairs(you.tornado) do
 if ytorfado == 255 and math.abs(me.mid - v.x)<10 and v.y + 10 < me.feet and v.y > me.y 
 	then me.flinch = true
     me.v = me.v/2
@@ -1265,21 +1138,21 @@ if ytorfado == 255 and math.abs(me.mid - v.x)<10 and v.y + 10 < me.feet and v.y 
 end
 
 
-if v.x < youthecenter + v.v*(v.v/(tornadowidth*2)) then
+if v.x < you.thecenter + v.v*(v.v/(tornadowidth*2)) then
 v.x = v.x + v.v/tornadowidth
-else v.x = youthecenter - v.v*(v.v/(tornadowidth*2))
+else v.x = you.thecenter - v.v*(v.v/(tornadowidth*2))
 	end
 	love.graphics.setColor(255,255,255,ytorfado)
   
-love.graphics.draw(tor,youthecenter + (youthecenter-v.x)+20,v.y,0,-1,1)
+love.graphics.draw(tor,you.thecenter + (you.thecenter-v.x)+20,v.y,0,-1,1)
 love.graphics.draw(tor,v.x,v.y,0,1.5,1.5)
 
 
 
 end
 
-if #yourtornado>3 then
-if ytt%10 == 2 then repplay(tornadosound2) end
+if #you.tornado>3 then
+if you.tt%10 == 2 then repplay(tornadosound2) end
 tornadosound2:setPitch(ytorfado/230)
 end
 
@@ -1295,35 +1168,35 @@ drawtornado = function()
 
 
 
-if mtt > 10 then 
-if you.mid > methecenter + 30 then you.push = -windpush
-elseif you.mid < methecenter - 30 then you.push = windpush
+if me.tt > 10 then 
+if you.mid > me.thecenter + 30 then you.push = -windpush
+elseif you.mid < me.thecenter - 30 then you.push = windpush
 end
-if math.abs(methecenter - you.mid) < 50 and you.j < 4 then you.j = you.j + 10 you.g = false
-end
-
-
-
+if math.abs(me.thecenter - you.mid) < 50 and you.j < 4 then you.j = you.j + 10 you.g = false
 end
 
 
-if table.getn(mytornado) > 0 and mtt < tornadodur then
-mtt = mtt + 1 
-	nnn = table.getn(mytornado)
-  if #mytornado<450 then
-	table.insert(mytornado, {x = methecenter - nnn, y = floor - (nnn*15), v = nnn})
+
+end
+
+
+if table.getn(me.tornado) > 0 and me.tt < tornadodur then
+me.tt = me.tt + 1 
+	nnn = table.getn(me.tornado)
+  if #me.tornado<450 then
+	table.insert(me.tornado, {x = me.thecenter - nnn, y = floor - (nnn*15), v = nnn})
   end
-	if mtt >= tornadodur - 50 then 
+	if me.tt >= tornadodur - 50 then 
 	torfado = torfado - 5
 	end
-elseif mtt >= tornadodur then 
-	mytornado = {}
-mtt = -100
+elseif me.tt >= tornadodur then 
+	me.tornado = {}
+me.tt = -100
 torfado = 255
 
 end
 
-for i,v in ipairs(mytornado) do
+for i,v in ipairs(me.tornado) do
 if torfado == 255 and math.abs(you.mid - v.x)<10 and v.y + 15 < you.feet and v.y > you.y 
 	then you.flinch = true
     you.v = you.v/2
@@ -1332,22 +1205,22 @@ if torfado == 255 and math.abs(you.mid - v.x)<10 and v.y + 15 < you.feet and v.y
 end
 
 
-if v.x < methecenter + v.v*(v.v/(tornadowidth*2))  then
+if v.x < me.thecenter + v.v*(v.v/(tornadowidth*2))  then
 v.x = v.x + v.v/tornadowidth
-else v.x = methecenter - v.v*(v.v/(tornadowidth*2))
+else v.x = me.thecenter - v.v*(v.v/(tornadowidth*2))
 end
 
   
 	love.graphics.setColor(255,255,255,torfado)
-love.graphics.draw(tor,methecenter + (methecenter-v.x)+20,v.y,0,-1,1)
+love.graphics.draw(tor,me.thecenter + (me.thecenter-v.x)+20,v.y,0,-1,1)
 love.graphics.draw(tor,v.x,v.y,0,1.5,1.5)
 
 
 
 
 end
-if #mytornado>3 then
-if mtt%10 == 2 then repplay(tornadosound1) end
+if #me.tornado>3 then
+if me.tt%10 == 2 then repplay(tornadosound1) end
 tornadosound1:setPitch(torfado/230)
 end
 end

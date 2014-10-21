@@ -26,8 +26,7 @@ end
 
 maxhealth = 380
 
-mexoffset = 0
-youxoffset = 0
+
 
 me = {}
 	me.health = maxhealth
@@ -595,6 +594,11 @@ startsfade = false
 	me.busygreen = false
 
 end
+
+
+me.xoffset = 0
+you.xoffset = 0
+
 
 
 controller1 = {}

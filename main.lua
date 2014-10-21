@@ -813,13 +813,13 @@ function love.update()
         spikes.update(mepurple)
         youspikes.update(youpurple)
 
-        mewings(mesand)
+        wings(mesand, me, you, controller1)
         mebluesand(mebland)
         megreensand(megrand)
         mepurpsand(mepund)
         mesandmines(meyend)
 
-        youwings(yousand)
+        wings(yousand, you, me, controller2)
         youbluesand(youbland)
         yougreensand(yougrand)
         youpurpsand(youpund)
@@ -874,8 +874,8 @@ function love.update()
 
     --love.graphics.setShader(myShader)
 
-    mexoffset = mexoffset * me.lr
-    youxoffset = youxoffset * you.lr
+    me.xoffset = me.xoffset * me.lr
+    you.xoffset = you.xoffset * you.lr
 
 
 
@@ -1213,12 +1213,12 @@ end
 
         --22
         if youreadytoplay then
-          love.graphics.setColor(a22r, a22g, a22b, 255)
+          love.graphics.setColor(255, 255, 255, 255)
           love.graphics.draw(ready, ((267 + 720 +rn)/1440)*screenwidth, (107/900)*screenheight, 0, screenwidth/1440, screenheight/900)
         end
 
         if mereadytoplay then
-          love.graphics.setColor(a31r, a31g, a31b, 255)
+          love.graphics.setColor(255, 255, 255, 255)
           love.graphics.draw(ready, ((300-ln)/1440)*screenwidth, (107/900)*screenheight, 0, screenwidth/1440, screenheight/900)
         end
 
@@ -1279,12 +1279,12 @@ end
         love.graphics.setScissor(0, 0, screenwidth/2, enviro.screenheight)
         camera:set()
         love.graphics.setColor(a31r,a31g,a31b,255-playfadeout)
-        love.graphics.draw(me.im, me.xanimate-mexoffset, me.y-me.yoffset, 0, me.lr, 1)
+        love.graphics.draw(me.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 
         love.graphics.setColor(255,255,255)
 
         love.graphics.setColor(a22r,a22g,a22b,255-playfadeout)
-        love.graphics.draw(you.im, you.xanimate-youxoffset, you.y-you.yoffset, 0, you.lr, 1)
+        love.graphics.draw(you.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 
         love.graphics.setColor(255,255,255)
 
@@ -1301,12 +1301,12 @@ end
         camera2:set()
 
         love.graphics.setColor(a31r,a31g,a31b,255-playfadeout)
-        love.graphics.draw(me.im, me.xanimate-mexoffset, me.y-me.yoffset, 0, me.lr, 1)
+        love.graphics.draw(me.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 
         love.graphics.setColor(255,255,255)
 
         love.graphics.setColor(a22r,a22g,a22b,255-playfadeout)
-        love.graphics.draw(you.im, you.xanimate-youxoffset, you.y-you.yoffset, 0, you.lr, 1)
+        love.graphics.draw(you.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 
         love.graphics.setColor(255,255,255)
 
@@ -1404,8 +1404,8 @@ end
 
       you.yoffset = 0
       me.yoffset = 0
-      mexoffset = 0
-      youxoffset = 0
+      me.xoffset = 0
+      you.xoffset = 0
       mefacerot = 0
       youfacerot = 0
     end

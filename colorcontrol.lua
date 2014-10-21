@@ -1071,7 +1071,7 @@ function ycombofalsify()
 	ypcancel = true
 	ybcancel = true
 	yycancel = true
-	yscancel = true
+	you.scancel = true
 
 	youpurple = false
 	yougreen = false
@@ -1097,7 +1097,7 @@ function mcombofalsify()
 	mpcancel = true
 	mbcancel = true
 	mycancel = true
-	mscancel = true
+	me.scancel = true
 
 	mepurple = false
 	megreen = false
@@ -1206,34 +1206,34 @@ end
 
 
 
-if meblue and mesand and not mesan and not meblu then 
+if meblue and mesand and not me.san and not meblu then 
 	mcombofalsify()
 	mebland = true
 elseif not mesand and not meblue then mebland = false
 end
 
-if youblue and yousand and not yousan and not youblu then 
+if youblue and yousand and not you.san and not youblu then 
 	ycombofalsify()
 	youbland = true
 elseif not yousand and not youblue then youbland = false
 end
 
 
-if megreen and mesand and not mesan and not megree then 
+if megreen and mesand and not me.san and not megree then 
 	mcombofalsify()
 	megrand = true
 elseif not mesand and not megreen then megrand = false
 end
 
 
-if meyellow and mesand and not mesan and not meyell then 
+if meyellow and mesand and not me.san and not meyell then 
 	mcombofalsify()
 	meyend = true
 elseif not mesand and not meyellow then meyend = false
 end
 
 
-if mepurple and mesand and not mesan and not mepurp then 
+if mepurple and mesand and not me.san and not mepurp then 
 	mcombofalsify()
 	mepund = true
 elseif not mesand and not mepurple then mepund = false
@@ -1243,21 +1243,21 @@ end
 
 
 
-if yougreen and yousand and not yousan and not yougree then 
+if yougreen and yousand and not you.san and not yougree then 
 	ycombofalsify()
 	yougrand = true
 elseif not yousand and not yougreen then yougrand = false
 end
 
 
-if youyellow and yousand and not yousan and not youyell then 
+if youyellow and yousand and not you.san and not youyell then 
 	ycombofalsify()
 	youyend = true
 elseif not yousand and not youyellow then youyend = false
 end
 
 
-if youpurple and yousand and not yousan and not youpurp then 
+if youpurple and yousand and not you.san and not youpurp then 
 	ycombofalsify()
 	youpund = true
 elseif not yousand and not youpurple then youpund = false
@@ -1386,16 +1386,16 @@ yclearprimarys(youyellow)
 yycancel = false
 end
 
-if mesan or mesand then
+if me.san or mesand then
 	--add you bree = false?
 mclearprimarys(mesand)
-mscancel = false
+me.scancel = false
 end
 
-if yousan or yousand then
+if you.san or yousand then
 	--add you bree = false?
 yclearprimarys(yousand)
-yscancel = false
+you.scancel = false
 end
 
 
@@ -1448,7 +1448,7 @@ mycancel = true
 mgcancel = true
 mpcancel = true
 mbcancel = true
-mscancel = true
+me.scancel = true
 end
 
 if noyoudodge or anyofyourcombos() then
@@ -1461,7 +1461,7 @@ yycancel = true
 ygcancel = true
 ypcancel = true
 ybcancel = true
-yscancel = true
+you.scancel = true
 end
 
 
