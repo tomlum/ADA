@@ -217,13 +217,21 @@ for i, v in ipairs(youspikes) do
 	elseif point + v.v > enviro.rightwall-50 then
 		if v.s == -1 then v.stuckinwall = true end
 		v.y = v.y
+    if v.x~= enviro.rightwall-80 and (math.min(math.abs(v.x - you.x),math.abs(v.x - me.x)) < 200) then 
+    repplay(greenwallbreaks)
+    end
+ 	
 		v.x = enviro.rightwall - 80
+    
 		
 		if v.s == 1 or v.s == 2 then v.s = 0 end
 		v.time = v.time + 1
 	elseif point + v.v < 50 then
 		if v.s == -1 then v.stuckinwall = true end
 		 v.y = v.y
+    if v.x~= 80 and (math.min(math.abs(v.x - you.x),math.abs(v.x - me.x)) < 200) then
+    repplay(greenwallbreaks)
+    end
 		v.x = 80
 		
 		if v.s == 1 or v.s == 2 then v.s = 0 end
@@ -245,7 +253,7 @@ for i, v in ipairs(youspikes) do
 		
 		v.time = v.time + 1
 		v.s = 0
- 	
+    
 
 
 
@@ -264,7 +272,7 @@ for i, v in ipairs(youspikes) do
 	end
   
   
-  if v.s >= 0 and distan(me.mid,me.y+30, point,ypoint) < whiffradius and distan(me.mid,me.y+30, point+v.v,ypoint-v.upv) > whiffradius and math.abs(v.v + v.upv) > 2 then
+  if v.s >= 0 and distan(me.mid,me.y+30, point,ypoint) < whiffradius and distan(me.mid,me.y+30, point+v.v,ypoint-v.upv) > whiffradius and math.abs(v.v + v.upv) > 2 and (v.x < enviro.rightwall - 81 and v.x > 81)  then
     repplay(whiff2)
     end
   
@@ -631,6 +639,9 @@ elseif themap == "library" and v.y - v.upv + 4 >= floor -50	and point + v.v > 14
 	elseif point + v.v > enviro.rightwall-50 then
 		if v.s == -1 then v.stuckinwall = true end
 		v.y = v.y
+    if v.x~= enviro.rightwall-80 and (math.min(math.abs(v.x - you.x),math.abs(v.x - me.x)) < 200) then 
+    repplay(greenwallbreaks)
+    end
 		v.x = enviro.rightwall - 80
 		
 		if v.s == 1 or v.s == 2 then v.s = 0 end
@@ -638,7 +649,11 @@ elseif themap == "library" and v.y - v.upv + 4 >= floor -50	and point + v.v > 14
 	elseif point + v.v < 50 then
 		if v.s == -1 then v.stuckinwall = true end
 		 v.y = v.y
+     if v.x~= 80 and (math.min(math.abs(v.x - you.x),math.abs(v.x - me.x)) < 200) then 
+    repplay(greenwallbreaks)
+    end
 		v.x = 80
+    
 		
 		if v.s == 1 or v.s == 2 then v.s = 0 end
 		v.time = v.time + 1
@@ -673,9 +688,10 @@ elseif themap == "library" and v.y - v.upv + 4 >= floor -50	and point + v.v > 14
 	
 end
 
-if v.s >= 0 and distan(you.mid,you.y+30, point,ypoint) < whiffradius and distan(you.mid,you.y+30, point+v.v,ypoint-v.upv) > whiffradius and math.abs(v.v + v.upv) > 2 then
+if v.s >= 0 and distan(you.mid,you.y+30, point,ypoint) < whiffradius and distan(you.mid,you.y+30, point+v.v,ypoint-v.upv) > whiffradius and math.abs(v.v + v.upv) > 2 and (v.x < enviro.rightwall - 81 and v.x > 81) then
     repplay(whiff1)
-    end
+  end
+  
 
 	end
 

@@ -47,6 +47,7 @@ yourtriangles = {}
 
 
 whatlevel = function()
+  
 if placespeople then
 	placespeople = false
 finishedloading = false
@@ -61,8 +62,27 @@ end
 me.health = maxhealth
 you.health = maxhealth
 
-if themap == "street" then
+if themap == "fightclub" then
+  
+loader.start(function()
+    finishedLoading = true
+  end)
 
+enviro.rightwall = 2000
+
+loader.newImage(enviro,'floor', "enviro/fightclub.png")
+loader.newImage(enviro,"paralax","enviro/READY.png")
+loader.newImage(enviro,"sky","enviro/ready.png")
+		me.x = 1000
+		you.x = 1040
+		floor = 896
+		me.y = floor - 60
+		you.y = floor - 60
+
+
+
+elseif themap == "street" then
+loader.newImage(enviro,'floor', "enviro/astreet.png")
   loader.start(function()
     finishedLoading = true
   end)
@@ -402,6 +422,7 @@ function wch(x,v,wallx)
    return true 
 end
 end
+
 function wallcheck(ex,vee,why)
   if themap == "library" then
     if wch(ex, vee, 1610) and why > 893 and why < 1643 then 
@@ -417,6 +438,13 @@ function wallcheck(ex,vee,why)
     then return wallwalljump
     elseif wch(ex,vee,enviro.rightwall-40)  
     then return enviro.rightwall-40
+    else return -1000
+  end
+  elseif themap == "fightclub" then
+    if wch(ex,vee,wallwalljump) 
+    then return wallwalljump
+    elseif wch(ex,vee,enviro.rightwall)  
+    then return enviro.rightwall
     else return -1000
   end
   elseif themap == "floors" then

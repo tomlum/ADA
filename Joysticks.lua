@@ -4,7 +4,7 @@
 
 --341a000000000000005f7000000000000
 
-justone = true
+
 
 controller1.leftdeadzone = false
 controller2.leftdeadzone = false

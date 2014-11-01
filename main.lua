@@ -1,11 +1,18 @@
+--Tie health to color of crest, gets black
+--dude make walls organized like floors
 --add some grab only ledges, like the streetlights and the billboard
 --if not one screen then slowly decrease health?
+--so moveme i made into better justo ne function, do that for all i guess, make the yctt's whatever a you.ctt
+--animal color, become the emobidment of the other things?  Or as a special special?
+--should the edges induce a camera stop?  Why did I stop doing that?
+--deadly attack if hit major damage, if miss, super exposed, can't do any other attacks for a bit?
 --if falling and time the dodge you can do a roll land, if it follows qualifications of needing to crouch
 --one of the charge attacks lets you snipe by doing the above, sloep of x and y of stick
 --maybe do like, the black attack hits and hten throws in a direction?
 --for mines hc, dir is -you.lr? but what about them sliding backwards into it while blocking?
 --above the rightmost rafter there seems tobe an invisible grabbale edge
   --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
+  --have greenwallbreaks tied in volume to dis like purp use math.min
 ---maybe if at edge and other direction then stop?
 --error in shaking cam when top and bottom cam?
 --leafs from trees like paper from office
@@ -77,6 +84,8 @@ fightclub = true
 debug = false
 
 mute = true
+
+justone = false
 
 --colorcontrol, go, size,menu
 
@@ -281,7 +290,7 @@ else
   
    if fightclub then 
   MENU = "play"
-  themap = "street"
+  themap = "fightclub"
   placespeople = true
   mute = true
   while(not finishedLoading) do
@@ -523,10 +532,11 @@ function love.update()
         ms = controller1.a2
         mg = controller1.a1
         mp = controller1.a3
-        my = controller1.a4
+        mb = controller1.a4
         
         ys = controller2.a1
         yg = controller2.a2
+        yb = controller2.a3
         
       colorcontrol(mb,mg,mp,yb,yg,yp,my,yy,ms,ys)
       else
@@ -975,7 +985,7 @@ function love.update()
           end
 
 
-          love.graphics.draw(enviro.rselecter, ((tileoffset-ln-115-(meseleccurrent*9))/1440)*screenwidth, ((tileyoffset+10 + 64*(meseleccurrent+1))/900)*screenheight, 0, screenwidth/1440, screenheight/900)
+          --love.graphics.draw(enviro.rselecter, ((tileoffset-ln-115-(meseleccurrent*9))/1440)*screenwidth, ((tileyoffset+10 + 64*(meseleccurrent+1))/900)*screenheight, 0, screenwidth/1440, screenheight/900)
           if controller1.down and mr2c and msy < (screenheight * .46) then 
             msy = msy + (screenheight * .15)
             mr2c = false
@@ -1389,8 +1399,9 @@ end
         love.graphics.rectangle("fill",(screenwidth/2)-twidth,(enviro.screenheight/2)-bwidth/2,twidth*2,bwidth)
         love.graphics.setColor(255, 255, 255, 255)
 
-
+if not fightclub then
         go()
+        end
         drawroulettenumbers()
         mefacerot = 0
         youfacerot = 0

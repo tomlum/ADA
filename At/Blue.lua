@@ -269,7 +269,9 @@ elseif x and younext == 6 or younext == 7 then
 		you.im = blue12
 		yd = 12
 		repplay(blues2)		
-		hc(you.mid, you.y+30, you.mid+you.v+160*you.lr, you.y+30-you.j, true, you.lr, true, true, you.v + (4*you.lr), you.j, bluedam, true, bft, 0, 0, false, false, 2)
+   
+		hc(you.mid, you.y+30, you.mid+you.v+160*you.lr, you.y+30-you.j, true, you.lr, true, true, you.v + (4*you.lr), you.j, bluedam, true, bft/2, 0, 0, false, false, 2)
+    
     --hcCheck(you.mid, you.y+30, you.mid+you.v, you.y+30-you.j, 2)
 	elseif younext == 1 and not x then
 		you.im = blue11
@@ -619,18 +621,19 @@ elseif x and menext == 6 or menext == 7 then
 		me.im = blue12
 		md = 12
 		repplay(blues)		
-    if mearmsreach(160) and sameheight() and not you.dodge 
+    --[[if mearmsreach(160) and sameheight() and not you.dodge 
 			then 
---[[
+
 			you.v = me.v + (me.lr * 4)
 			if not (you.block and me.lr ~= you.lr) then
 			you.flinch = true
 			you.ft = bft
 			you.health = you.health - bluedam
 		end
-    ]]--
-    hc(me.mid, me.y+30, me.mid+me.v+160*me.lr, me.y+30-you.j, true, me.lr, true, true, me.v + (4*me.lr), me.j, bluedam, true, bft, 0, 0, false, false, 1)
-	end
+    end
+--    ]]--
+    hc(me.mid, me.y+30, me.mid+me.v+160*me.lr, me.y+30-you.j, true, me.lr, true, true, me.v + (4*me.lr), me.j, bluedam, true, bft/2, 0, 0, false, false, 1)
+	
 		
 		
 	elseif menext == 1 and not x then

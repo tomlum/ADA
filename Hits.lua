@@ -282,7 +282,7 @@ function hc(objx, objy, objx2, objy2, blockable, dir, dodgable, force, vee, jay,
     hitt[2].block = you.lr
   end
   for i,v in ipairs(hitt) do
-    if theid ~= v.i and hexcheck(objx, objy, objx2, objy2, v.x, v.y, v.width, v.height, v.v, v.j)
+    if theid ~= i and hexcheck(objx, objy, objx2, objy2, v.x, v.y, v.width, v.height, v.v, v.j)
       
     and not v.incince then
       if(not (dodgeable and v.dodge)) then
@@ -313,9 +313,7 @@ me.v = hitt[1].v
 me.flinch = hitt[1].flinch
 me.ft = hitt[1].ft
 me.health = hitt[1].health
-if hitt[1].block ~= 0 then
-  me.lr = me.block
-end
+
 
 you.x = hitt[2].x-5
 you.y = hitt[2].y-5
@@ -325,8 +323,6 @@ you.v = hitt[2].v
 you.flinch = hitt[2].flinch
 you.ft = hitt[2].ft
 you.health = hitt[2].health
-if hitt[2].block ~= 0 then
-  you.lr = you.block
-end
+
 
 end

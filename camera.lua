@@ -78,11 +78,7 @@ absdis = math.sqrt(((you.y-me.y)^2)+((you.x-me.x)^2))
 
 
 
-if xdif >= 2000
-  then speedlimit = minmaxdif+speedminit
-elseif xdif < 2000 then
-  speedlimit = (minmaxdif * ((xdif-500)/1500)) + speedminit
-end 
+
 
 
 

@@ -643,7 +643,7 @@ controller2 = {}
 	face5:setFilter("nearest")
 	face6:setFilter("nearest")
 
-
+if not fightclub then 
 	
 	enviro.v = love.graphics.newImage("enviro/v.png")
 
@@ -749,6 +749,7 @@ controller2 = {}
 	-- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
 	enviro.leftwall = 0
 	enviro.rightwall = 3700  --6600-20
+  end
 	enviro.wall = love.graphics.newImage("enviro/wall.png")
 	enviro.beige = love.graphics.newImage("enviro/beige.png")
 	enviro.beige:setFilter("nearest")

@@ -243,7 +243,7 @@ elseif v.s == -200 and v.t >= 63 and math.abs((v.x + (85 * v.lr)) - you.mid) < 8
 end
 end
 
-mepurp = false
+me.purp = false
 mespikepause = 0
 medig = 0
 
@@ -541,8 +541,8 @@ else
 
 end
 
-if spikechargetimer < 0 or mespikespecial or medig < 0 then mepurp = true
-	else mepurp = false
+if spikechargetimer < 0 or mespikespecial or medig < 0 then me.purp = true
+	else me.purp = false
 	end
 
 
@@ -799,7 +799,7 @@ elseif v.s == -200 and v.t >= 63 and math.abs((v.x + (85 * v.lr)) - me.mid) < 85
 end
 end
 
-youpurp = false
+you.purp = false
 mespikepause = 0
 youdig = 0
 
@@ -1090,8 +1090,8 @@ else youspikeprime = false
 
 end
 
-if youspikechargetimer < 0 or youspikespecial or youdig < 0 then youpurp = true
-	else youpurp = false
+if youspikechargetimer < 0 or youspikespecial or youdig < 0 then you.purp = true
+	else you.purp = false
 	end
 
 

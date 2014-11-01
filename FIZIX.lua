@@ -15,8 +15,21 @@ me.jmax = jmax
 
 function platformcheck(x, y, j)
 
+  if themap == "fightclub" then 
+    if x >= 4485-4453 and x <= 4689-4453 and y <= 1064+400-821 and y - j >= 1064+400-821
+		then return true
+	elseif x >= 5292-4453 and x <= 5469-4453 and y <= 1140+400-821 and y - j >= 1140+400 -821
+		then return true
+	elseif x >= 5654-4453 and x <= 5831-4453 and y <= 1140+400-821 and y - j >= 1140+400-821
+		then return true
+	elseif x >= 5108-4453 and x <= 6013-4453 and y <= 1318+400-821 and y - j >= 1318+400-821
+		then return true
+	elseif y - j >= floor
+		then return true
+	else return false
+end
 
-	if themap == "street" then
+	elseif themap == "street" then
 
 	if x >= 1118 and x <= 1528 and y <= 979+400 and y - j >= 979+400
 		then
@@ -141,8 +154,18 @@ end
 
 
 function platformy(x, y)
-
-	if themap == "street" then
+if themap == "fightclub" then 
+    if x >= 4485-4453 and x <= 4689-4453 and y <= 1064+400-821-178 and y >= 1064+400-821-30-178
+		then return 1064+400-821-178
+	elseif x >= 5292-4453 and x <= 5469-4453 and y <= 1140+400-821-178 and y >= 1140+400 -821-30-178
+		then return 1140+400-821-178
+	elseif x >= 5654-4453 and x <= 5831-4453 and y <= 1140+400-821-178 and y >= 1140+400-821-30-178
+		then return 1140+400-821-178
+	elseif x >= 5108-4453 and x <= 6013-4453 and y <= 1318+400-821-178 and y >= 1318+400-821-30-178
+		then return 1318+400-821-178
+	else return floor
+end
+	elseif themap == "street" then
 
 	if x >= 1118 and x <= 1528 and y <= 979+400 and y >= 949+400
 		then
@@ -346,7 +369,19 @@ end
 
 function spikecheck(x, y)
 
-if themap == "street" then
+if themap == "fightclub" then 
+    if x >= 4485-4453 and x <= 4689-4453 and y <= 1064+400-821-178 
+		then return 1064+400-821-178
+	elseif x >= 5292-4453 and x <= 5469-4453 and y <= 1140+400-821-178 
+		then return 1140+400-821-178
+	elseif x >= 5654-4453 and x <= 5831-4453 and y <= 1140+400-821-178 
+		then return 1140+400-821-178
+	elseif x >= 5108-4453 and x <= 6013-4453 and y <= 1318+400-821-178 
+		then return 1318+400-821-178
+	else return floor
+end
+
+elseif themap == "street" then
  
 if x >= 2879 and x <= 3143 and y <= 618+400 
 		then return 618+400
@@ -475,7 +510,19 @@ end
 
 minecheck = function(x, y)
 
-if themap == "street" then
+if themap == "fightclub" then 
+    if x >= 4485-4453 and x <= 4689-4453 and y <= 1064+400-821-178 
+		then return 1064+400-821-178
+	elseif x >= 5292-4453 and x <= 5469-4453 and y <= 1140+400-821-178 
+		then return 1140+400-821-178
+	elseif x >= 5654-4453 and x <= 5831-4453 and y <= 1140+400-821-178 
+		then return 1140+400-821-178
+	elseif x >= 5108-4453 and x <= 6013-4453 and y <= 1318+400-821-178 
+		then return 1318+400-821-178
+	else return floor
+end
+
+elseif themap == "street" then
  
 if x >= 2879 and x <= 3143 and y <= 618+400 
 		then return 618+400
@@ -787,38 +834,21 @@ end
 
 
 
-function you.vroomright(base)
-	if you.v == 0+base
-	then you.v = 1.5+base
-	elseif you.v >0+base and you.v < speedminit -accel+base
-	then you.v = you.v + accel
+function vroomright(xx, base)
+	if xx.v == 0+base
+	then xx.v = 1.5+base
+	elseif xx.v >0+base and xx.v < speedminit -accel+base
+	then xx.v = xx.v + accel
 	
 	end
 end 
 
-function you.vroomleft(base)
-	if you.v == 0+base
-	then you.v = -1.5+base
-	elseif you.v < 0+base and you.v > -speedminit + accel+base
-	then you.v = you.v - accel
+function vroomleft(xx, base)
+	if xx.v == 0+base
+	then xx.v = -1.5+base
+	elseif xx.v < 0+base and xx.v > -speedminit + accel+base
+	then xx.v = xx.v - accel
 	
-	end
-end 
-
-function me.vroomright(base)
-	if me.v == 0+base
-	then me.v = 1.5+base
-	elseif me.v >0+base and me.v < speedminit -accel+base
-	then me.v = me.v + accel
-	
-	end
-end 
-
-function me.vroomleft(base)
-	if me.v == 0+base
-	then me.v = -1.5+base
-	elseif me.v < 0+base and me.v > -speedminit +accel+base
-	then me.v = me.v - accel
 	end
 end 
 
@@ -1020,6 +1050,18 @@ end
 
 
 function movex(xx,z)
+  
+  xdif = math.abs((you.x) - (me.x))
+  
+  if xdif >= 2000
+  then speedlimit = minmaxdif+speedminit
+elseif xdif < 2000 then
+  speedlimit = (minmaxdif * ((xdif-500)/1500)) + speedminit
+end 
+
+
+
+
 xx.feet = xx.y + 60
 	if xx.feet > xx.floor
 	then xx.y = xx.floor - 60
@@ -1046,15 +1088,14 @@ end
 			elseif z.right and xx.v >= xx.push and xx.stop == false and not xx.flinch
 				and not z.left
 				then 
-				xx.vroomright(xx.push)
+				vroomright(xx, xx.push)
 			elseif z.left and xx.v <= xx.push and xx.stop == false and not xx.flinch
 				and not z.right
 				then 
-				xx.vroomleft(xx.push)
+				vroomleft(xx, xx.push)
 			elseif z.down and xx.onplat and not xx.busy and not xx.dodge
-				and not z.a1 and not z.a2 and not z.a3
+				and not z.a1 and not z.a2 and not z.a3 and not z.a4
 			then
-			--fall through the floor panel-- maybe add a crashing animation to break through
 			xx.y = xx.y + 4
 			else
 	 		xx.fric(xx.push)
@@ -1065,15 +1106,15 @@ end
 			then
 			xx.landingcounter = xx.landingcounter - 1
 			end
-			if z.block and platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.feet-40) ~= platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.y) and platformy(xx.mid,xx.y-40)-62 ~= xx.floor
+			if z.block and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-40) ~= platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.y) and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-40) ~= xx.floor
 				then 
-				   if platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.feet-50) ~= platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.y) then
+				   if platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-50) ~= platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.y) then
 				xx.ctim = 7
       else xx.ctim = 1
         end
 				xx.im = climb
 				xx.onplat = true
-				xx.j = climbv
+				xx.j = climbj
 				xx.v = xx.v/2
 			elseif z.left and xx.v >= 1 + xx.push*1.5
 			then xx.v = xx.v - adecrate
@@ -1104,16 +1145,16 @@ end
 			--landing
 			if xx.feet - xx.j >= xx.tempfloor
 			then 
-			if xx.j < -jforlanding then 
+			if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
 				xx.landingcounter = landingwait
+			xx.landing = true 
+      xx.v = xx.v * landingfric
 			else
 				xx.landingcounter = 0
 			end
 			xx.j = 0
 			xx.y = xx.tempfloor - 60
 			xx.g = true
-			xx.landing = true 
-      xx.v = xx.v * landingfric
 			land2:play()
 			xx.slowdown = false
 			

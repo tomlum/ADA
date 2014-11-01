@@ -886,7 +886,7 @@ dodgey = function ()
   (you.san
   or yougree
  or youblu
- or youpurp
+ or you.purp
  or youyell)
 		then
 		you.dodge = true
@@ -903,7 +903,7 @@ dodgey = function ()
   (you.san
   or yougree
  or youblu
- or youpurp
+ or you.purp
  or youyell)
 		then
 		you.dodge = true
@@ -1079,7 +1079,7 @@ if you.flinch
   (me.san
  or megree
  or meblu
- or mepurp
+ or me.purp
  or meyell)
 		then
 		me.dodge = true
@@ -1096,7 +1096,7 @@ if you.flinch
   (me.san
  or megree
  or meblu
- or mepurp
+ or me.purp
  or meyell)
 		then
 		me.dodge = true
@@ -1157,9 +1157,7 @@ function blocknbusy()
 	then me.im = block
 		me.block = true
 		me.stop = true
-		if me.v ~= math.abs(me.v) * me.lr then
-			blocksound:play()
-		end
+		
 
 	else me.block = false 
 		me.stop = false
@@ -1170,9 +1168,7 @@ function blocknbusy()
 	then you.im = block
 		you.block = true
 		you.stop = true
-		if you.v ~= math.abs(you.v) * you.lr then
-			blocksound2:play()
-		end
+		
 
 	else you.block = false
 		you.stop = false

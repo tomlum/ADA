@@ -45,7 +45,7 @@ gsft = 10
 hopj = 22
 hopj2 = 20
 hopv2 = 10
-climbv = 8
+climbj = 8.5
 
 purplefuse = -70
 

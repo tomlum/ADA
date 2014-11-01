@@ -214,82 +214,7 @@ if not controller1.block and not controller1.left and not controller1.right and 
 	mns = true
 	end
 
-if mechooseface then
 
-
-
-
-	if controller1.a1 or controller1.a2 or controller1.a3 or controller1.a4 then 
-
-
-		if mefaceselector == 0 and mns then
-			me.face = face1 
-			mf1r, mf1g, mf1b = a31r,a31g,a31b
-		elseif me.face ~= face1 then
-			mf1r,mf1g,mf1b = 255,255,255
-		end
-
-
-		if mefaceselector == 1 and mns then
-			me.face = face2 
-			mf2r, mf2g, mf2b = a31r,a31g,a31b
-					elseif me.face ~= face2 then
-			mf2r,mf2g,mf2b = 255,255,255
-		end
-
-		if mefaceselector == 2 and mns then
-			me.face = face3 
-			mf3r, mf3g, mf3b = a31r,a31g,a31b
-					elseif me.face ~= face3 then
-			mf3r,mf3g,mf3b = 255,255,255
-		end
-
-
-		if mefaceselector == 3 and mns then
-			me.face = face4 
-			mf4r, mf4g, mf4b = a31r,a31g,a31b
-					elseif me.face ~= face4 then
-			mf4r,mf4g,mf4b = 255,255,255
-		end
-
-		if mefaceselector == 4 and mns then
-			me.face = face5 
-			mf5r, mf5g, mf5b = a31r,a31g,a31b
-					elseif me.face ~= face5 then
-			mf5r,mf5g,mf5b = 255,255,255
-		end
-
-		if mefaceselector == 5 and mns then
-			me.face = face6 
-			mf6r, mf6g, mf6b = a31r,a31g,a31b
-					elseif me.face ~= face6 then
-			mf6r,mf6g,mf6b = 255,255,255
-		end
-		if mns then
-			if selected:isStopped() then
-			selected:play()
-		else selected:rewind()
-			selected:play()
-			end
-		end
-
-		mns = false
-
-	
-	end
-
-
-if controller1.up and mns and mefaceselector > 0 
-	then mefaceselector = mefaceselector - 1
-	mns = false
-	mov:play()
-elseif controller1.down and mns and mefaceselector < 5 
-	then mefaceselector = mefaceselector + 1
-	mns = false
-	mov:play()
-end
-
-end
 
 
 if mns and mechoosecolor and controller1.start
@@ -316,6 +241,72 @@ elseif mns and mereadytoplay and controller1.block then
 	replaced:play()
 end
 
+
+if mechooseface then
+
+if controller1.up and mns and mefaceselector > 0 
+	then mefaceselector = mefaceselector - 1
+	mns = false
+	mov:play()
+elseif controller1.down and mns and mefaceselector < 5 
+	then mefaceselector = mefaceselector + 1
+	mns = false
+	mov:play()
+end
+
+
+
+
+		if mefaceselector == 0 and mns then
+			me.face = face1 
+			mf1r, mf1g, mf1b = a31r,a31g,a31b
+		else 
+			mf1r,mf1g,mf1b = 255,255,255
+		end
+
+
+		if mefaceselector == 1 then
+			me.face = face2 
+			mf2r, mf2g, mf2b = a31r,a31g,a31b
+					else
+			mf2r,mf2g,mf2b = 255,255,255
+		end
+
+		if mefaceselector == 2 then
+			me.face = face3 
+			mf3r, mf3g, mf3b = a31r,a31g,a31b
+					else
+			mf3r,mf3g,mf3b = 255,255,255
+		end
+
+
+		if mefaceselector == 3 then
+			me.face = face4 
+			mf4r, mf4g, mf4b = a31r,a31g,a31b
+					else
+			mf4r,mf4g,mf4b = 255,255,255
+		end
+
+		if mefaceselector == 4 then
+			me.face = face5 
+			mf5r, mf5g, mf5b = a31r,a31g,a31b
+					else
+			mf5r,mf5g,mf5b = 255,255,255
+		end
+
+		if mefaceselector == 5 then
+			me.face = face6 
+			mf6r, mf6g, mf6b = a31r,a31g,a31b
+					else
+			mf6r,mf6g,mf6b = 255,255,255
+		end
+    
+		
+
+
+end
+
+
 if yns and youchoosecolor and controller2.start
 	 then youchooseface = true 
 	repplay(startb2)
@@ -337,6 +328,75 @@ elseif yns and youreadytoplay and controller2.block then
 	youchoosecolor = false
 	yns = false
 	replaced2:play()
+end
+
+
+if youchooseface then
+
+
+if controller2.up and yns and youfaceselector > 0 
+	then youfaceselector = youfaceselector - 1
+	yns = false
+	mov2:play()
+elseif controller2.down and yns and youfaceselector < 5 
+	then youfaceselector = youfaceselector + 1
+	yns = false
+	mov2:play()
+end
+
+
+		if youfaceselector == 0 then
+			you.face = face1 
+			yf1r, yf1g, yf1b = a22r,a22g,a22b
+		else
+			yf1r,yf1g,yf1b = 255,255,255
+		end
+
+		if youfaceselector == 1 then
+			you.face = face2 
+			yf2r, yf2g, yf2b = a22r,a22g,a22b
+		else
+			yf2r,yf2g,yf2b = 255,255,255
+		end
+
+		if youfaceselector == 2 then
+			you.face = face3 
+			yf3r, yf3g, yf3b = a22r,a22g,a22b
+		else
+			yf3r,yf3g,yf3b = 255,255,255
+		end
+
+
+		if youfaceselector == 3 then
+			you.face = face4 
+			yf4r, yf4g, yf4b = a22r,a22g,a22b
+		else
+			yf4r,yf4g,yf4b = 255,255,255
+		end
+
+		if youfaceselector == 4 then
+			you.face = face5 
+			yf5r, yf5g, yf5b = a22r,a22g,a22b
+		elseif you.face ~= face5 then
+			yf5r,yf5g,yf5b = 255,255,255
+		end
+
+		if youfaceselector == 5 then
+			you.face = face6 
+			yf6r, yf6g, yf6b = a22r,a22g,a22b
+		else
+			yf6r,yf6g,yf6b = 255,255,255
+		end
+
+	
+
+		
+	
+
+
+
+
+
 end
 
 
@@ -597,75 +657,6 @@ if not controller2.block and not controller2.left and not controller2.right and 
 	yns = true
 	end
 
-if youchooseface then
-
-
-if controller2.a1 or controller2.a2 or controller2.a3 or controller2.a4 then 
-		if youfaceselector == 0 and yns then
-			you.face = face1 
-			yf1r, yf1g, yf1b = a22r,a22g,a22b
-		elseif you.face ~= face1 then
-			yf1r,yf1g,yf1b = 255,255,255
-		end
-
-		if youfaceselector == 1 and yns then
-			you.face = face2 
-			yf2r, yf2g, yf2b = a22r,a22g,a22b
-		elseif you.face ~= face2 then
-			yf2r,yf2g,yf2b = 255,255,255
-		end
-
-		if youfaceselector == 2 and yns then
-			you.face = face3 
-			yf3r, yf3g, yf3b = a22r,a22g,a22b
-		elseif you.face ~= face3 then
-			yf3r,yf3g,yf3b = 255,255,255
-		end
-
-
-		if youfaceselector == 3 and yns then
-			you.face = face4 
-			yf4r, yf4g, yf4b = a22r,a22g,a22b
-		elseif you.face ~= face4 then
-			yf4r,yf4g,yf4b = 255,255,255
-		end
-
-		if youfaceselector == 4 and yns then
-			you.face = face5 
-			yf5r, yf5g, yf5b = a22r,a22g,a22b
-		elseif you.face ~= face5 then
-			yf5r,yf5g,yf5b = 255,255,255
-		end
-
-		if youfaceselector == 5 and yns then
-			you.face = face6 
-			yf6r, yf6g, yf6b = a22r,a22g,a22b
-		elseif you.face ~= face6 then
-			yf6r,yf6g,yf6b = 255,255,255
-		end
-
-		if yns then
-		repplay(selected2)		end
-
-		yns = false
-
-		
-	end
-
-
-
-
-if controller2.up and yns and youfaceselector > 0 
-	then youfaceselector = youfaceselector - 1
-	yns = false
-	mov2:play()
-elseif controller2.down and yns and youfaceselector < 5 
-	then youfaceselector = youfaceselector + 1
-	yns = false
-	mov2:play()
-end
-
-end
 
 
 
@@ -1013,7 +1004,7 @@ function anyofmyprimes()
 if me.blue or meblu
 or me.yellow or meyell
 or me.green or megree
-or me.purple or mepurp
+or me.purple or me.purp
 or me.sand or mesan
 then return true
   else return false

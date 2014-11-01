@@ -1030,35 +1030,33 @@ elseif xx.sct > 0 and not x then
 		xxlimitbreak=true
 	xx.im = sflap
 	if (z.right and xx.lr > 0) or (z.left and xx.lr < 0) then 
-	xx.v = xx.v + (xx.lr*23)
+	xx.v = xx.v + (xx.lr*19)
 	xx.xoffset = 26
 	xx.yoffset = 20
 	xx.g = false
-	xx.j = 20
+	xx.j = 18
 	else 
 	xx.g = false
-	xx.j = 20
+	xx.j = 18
 	xx.im = sbackflap
-	xx.v = xx.v - (xx.lr*23)	
-	if xx.armsreach(100) and math.abs(me.y - xx.y) <= 150 then
-		if xx.v > xx.v then me.v = me.v + 20
-			else me.v = me.v - 20
-		end
+	xx.v = xx.v - (xx.lr*19)	
+	if xx.armsreach(100) and math.abs(y.y - xx.y) <= 150 then
+		 y.v = y.v + 20*xx.lr
 	end
 	end
 	
 	else xx.im = jsflap
 		xx.xoffset = 29
 		xx.yoffset = 14
-		if me.y - xx.y < 200 and math.abs(me.x - xx.x) <= 100 then me.j = me.j - 10
+		if y.y - xx.y < 200 and math.abs(y.x - xx.x) <= 100 then y.j = y.j - 10
 		end
 		if z.right or z.left then
 		xx.v = xx.v + xx.lr * 10
-		xx.j = 20	
-    xx.jt = 10
+		xx.j = 18
+    xx.jt = 7
 		else
-		xx.j = 25
-    xx.jt = 10
+		xx.j = 23
+    xx.jt = 7
 		end
 	end
 	
