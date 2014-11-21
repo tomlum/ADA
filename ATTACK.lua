@@ -1223,6 +1223,8 @@ gflinchmeleft = -1
 
 
 flinchingyou = function ()
+you.ft = you.ft - 1
+
 camshakeflinch()
 
 
@@ -1268,7 +1270,7 @@ if not you.g then youfalltimer = 0 end
 if not oldyg and you.g then gflinchyleft = you.ft-you.flinchtimer end
 
 	if you.flinchtimer > you.ft
-	then you.stop = false
+	then 
 		you.flinch = false
 		you.flinchtimer = 0
 
@@ -1313,7 +1315,9 @@ if not oldyg and you.g then gflinchyleft = you.ft-you.flinchtimer end
 
   
 end
+
 flinchingme = function ()
+  me.ft = me.ft - 1
 
 
 if oldmeft < me.ft then
@@ -1322,7 +1326,7 @@ end
 if not me.g then mefalltimer = 0 end
 if not oldmeg and me.g then gflinchmeleft = me.ft-me.flinchtimer end
 	if me.flinchtimer > me.ft
-	then me.stop = false
+	then 
 		me.flinch = false
 		me.flinchtimer = 0
 	elseif me.flinch then

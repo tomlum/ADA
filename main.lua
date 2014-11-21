@@ -1,11 +1,17 @@
+--screen flash and flinch are weird
 --Tie health to color of crest, gets black
+--for buttons http://love2d.org/wiki/love.keypressed
+--glass&rubble flies out too fast, make it like 3/4 of me.v
+--blue would be cool
 --dude make walls organized like floors
 --add some grab only ledges, like the streetlights and the billboard
 --if not one screen then slowly decrease health?
 --so moveme i made into better justo ne function, do that for all i guess, make the yctt's whatever a you.ctt
+--illusory bolt, forms a whole bunch but only one of them is real, the rest or other is just a reflection
 --animal color, become the emobidment of the other things?  Or as a special special?
 --should the edges induce a camera stop?  Why did I stop doing that?
 --deadly attack if hit major damage, if miss, super exposed, can't do any other attacks for a bit?
+--cloud maker would be cool, maybe like a bunch of semitransparent square in a random distribution
 --if falling and time the dodge you can do a roll land, if it follows qualifications of needing to crouch
 --one of the charge attacks lets you snipe by doing the above, sloep of x and y of stick
 --maybe do like, the black attack hits and hten throws in a direction?
@@ -55,6 +61,7 @@
 --one of the colors gives you a streak of you's like right behind, a ribbon
 --one of the elec attacks an elec beam that randomly runs around, no controlling it, line segments grows in random direction
 --why does spine add a third color sometime, like a lone blue thing moving down the spine
+--select color with face buttons, direct attack/use with right stick?
 --flinchdir is different when it's a mine or purples from a distance or grappling hook etc, maybe implement flinch dir
 --if approach a corner just hope onto it naturall contextually
 --why does a third color appear in the spine?
@@ -74,6 +81,7 @@
 --Charge attack if it's a charge then me.charge and also you have to flip the stick in the opposite direction for it to work!
 
 flipfollow = false
+flash = false
 
 math.randomseed(os.clock())
 --success = love.window.setMode(1280, 800, {resizable=true, fullscreen = true, vsync=true})
@@ -86,7 +94,6 @@ debug = false
 mute = true
 
 justone = false
-
 --colorcontrol, go, size,menu
 
 
@@ -1420,7 +1427,30 @@ if not fightclub then
       mefacerot = 0
       youfacerot = 0
     end
-
+    if fightclub then
+      
+    if me.invince then
+    love.graphics.print("invince", 100, 100)
+  end
+  if you.invince then
+    love.graphics.print("invince", 100, 100)
+    end
+     love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+   end
+   if flash then
+--love.graphics.print("BAM", 100, 100, 0 ,10, 10)
+end
+--[[
+ testa = {x = 10,y = 10}
+ testb = {x = 20,y = 10}
+ testza = {x = 15,y = 5}
+ testzb = {x = 15,y = 50}
+ if pint(testa, testb, testza, testzb) then
+love.graphics.print("works", 100, 100, 0 ,10, 10)
+end
+]]--
+ 
+   flash = false
     --love.graphics.setShader()
 --[[
 boop = joystick:isVibrationSupported()

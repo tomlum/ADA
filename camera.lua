@@ -518,7 +518,7 @@ end
 	elseif themap == "floors" then
 		drawfloorsstuff()
 	end
-  
+  if fightclub then drawallhex() end
 end
 
 
@@ -594,5 +594,5 @@ end
 		drawfloorsstuff()
 
 	end
-  
+  if fightclub then drawallhex()end
 end

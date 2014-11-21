@@ -18,6 +18,42 @@ aimwait = 10
 waittoaim = 0
 youwaittoaim = 0
 
+function xpint(a,A,b,B)
+
+s1 = (a.y-A.y)/(a.x-A.x)
+s2 = (b.y-B.y)/(b.x-B.x)
+
+if A.x == a.x then
+  if (b.x < a.x and B.x > a.x) or
+  (B.x < a.x and b.x > a.x) then return true
+  else return false 
+end
+elseif B.x == b.x then
+  if (a.x < b.x and A.x > b.x) or
+  (A.x < b.x and a.x > b.x) then return true
+  else return false 
+  end
+end
+
+if math.abs(s1 - s2) < .01 then return false
+end
+
+thepy = ((-s1*s2*a.x)-(s1*s2*b.x)+(s1*b.y)-(s2*a.y))/(s1 - s2)
+thepx = ((thepy-a.y)/s1) + a.x 
+
+if thepx < math.max(math.max(a.x, A.x), math.max(b.x, B.x))
+and thepx > math.min(math.min(a.x, A.x), math.min(b.x, B.x))
+and thepy < math.max(math.max(a.y, A.y), math.max(b.y, B.y))
+and thepy > math.min(math.min(a.y, A.y), math.min(b.y, B.y))
+then return true
+else return false
+end
+end
+
+
+
+
+
 
 function findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, seg1, seg2)
     local a1,b1,a2,b2 = l1p2y-l1p1y, l1p1x-l1p2x, l2p2y-l2p1y, l2p1x-l2p2x
@@ -42,7 +78,11 @@ function findxIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y)
   else return false
   end
   
-  end
+end
+
+function pint(p11,p12,p21,p22)
+  return findIntersect(p11.x+.2,p11.y+.2,p12.x,p12.y,p21.x+.2,p21.y+.2,p22.x,p22.y,true,true)
+end
 
 
 

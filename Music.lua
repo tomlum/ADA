@@ -329,6 +329,10 @@ function distan(x,y,a,b)
 return math.sqrt(math.pow(x - a,2) + math.pow(y - b,2))
 end
 
+function distanc(x,y)
+return math.sqrt(math.pow(x.x - y.x,2) + math.pow(x.y - y.y,2))
+end
+
 disadj1 = 0
 disadj2 = 0
 

@@ -1051,6 +1051,7 @@ end
 
 function movex(xx,z)
   
+  
   xdif = math.abs((you.x) - (me.x))
   
   if xdif >= 2000
