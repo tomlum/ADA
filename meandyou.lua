@@ -3,7 +3,6 @@ themap = "none"
 placespeople = true
 
 
-
 mefacerot = 0
   youfacerot = 0
 
@@ -29,6 +28,8 @@ maxhealth = 380
 
 
 me = {}
+
+me.id = 1
 	me.health = maxhealth
 	me.dead = false
 	--boolean statuses
@@ -96,6 +97,8 @@ me = {}
 
 
 you = {}
+
+you.id = 2
 	you.health = maxhealth
 	you.dead = false
 	--boolean statuses

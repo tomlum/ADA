@@ -31,7 +31,7 @@ table.insert(hitt,
 
 
 --if worried about corner hitting do two points
-function boxcheck(X,A, B, C, D)
+function boxCheck(X,A, B, C, D)
   local pints = 0
   local Y = {x = 0, y = 0}
   if(pint(X, Y, A, B)) then 
@@ -244,6 +244,7 @@ you.v = hitt[2].v
 you.flinch = hitt[2].flinch
 you.ft = hitt[2].ft
 you.health = hitt[2].health
+
 
 
 end

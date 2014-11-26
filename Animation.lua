@@ -1823,8 +1823,8 @@ end
 idley = 0
 idleme = 0
 ay = 0
-walktimerme = 0
-walktimery = 0
+me.walktimer = 0
+you.walktimer = 0
 orient = function ()
 	if not you.slowdown and not you.slide and not you.stop and not you.pause
 		then
@@ -1909,39 +1909,39 @@ walky = function ()
   
   
   if you.running then 
-     walktimery = walktimery + 1
+     you.walktimer = you.walktimer + 1
     
-    if walktimery >= runpace+2 then you.im = run4 
-    walktimery = 0 
+    if you.walktimer >= runpace+2 then you.im = run4 
+    you.walktimer = 0 
      repplay(runsound2)
                makerunrubble(you.y+50,you.mid,-you.v)
-    elseif walktimery >= runpace+1 then you.im = run4 
+    elseif you.walktimer >= runpace+1 then you.im = run4 
                makerunrubble(you.y+50,you.mid,-you.v)
-    elseif walktimery >= runpace/2 + 2 then you.im = run3 
-  elseif walktimery >= runpace/2 then you.im = run2 
+    elseif you.walktimer >= runpace/2 + 2 then you.im = run3 
+  elseif you.walktimer >= runpace/2 then you.im = run2 
                makerunrubble(you.y+50,you.mid,-you.v)
                repplay(runsound2)
-    elseif walktimery >= 0 then you.im = run1 
+    elseif you.walktimer >= 0 then you.im = run1 
     end  
   else
   
-	if walktimery < 7 then 
+	if you.walktimer < 7 then 
 		you.im = walk1
-		walktimery = walktimery + 1
-	elseif walktimery >= 7 and walktimery < 14 then
+		you.walktimer = you.walktimer + 1
+	elseif you.walktimer >= 7 and you.walktimer < 14 then
 		you.im = walk2
-		walktimery = walktimery + 1
-	elseif walktimery >= 14 and walktimery < 21 then
+		you.walktimer = you.walktimer + 1
+	elseif you.walktimer >= 14 and you.walktimer < 21 then
 		you.im = walk3
-		walktimery = walktimery + 1
-	elseif walktimery >= 21 and walktimery < 28 then
+		you.walktimer = you.walktimer + 1
+	elseif you.walktimer >= 21 and you.walktimer < 28 then
 		you.im = walk4
-		walktimery = walktimery + 1
-	elseif walktimery >= 28 and walktimery < 35 then
+		you.walktimer = you.walktimer + 1
+	elseif you.walktimer >= 28 and you.walktimer < 35 then
 		you.im = walk5
-		walktimery = walktimery + 1
+		you.walktimer = you.walktimer + 1
 	else
-		walktimery = 0
+		you.walktimer = 0
 	end
   end
 end
@@ -1949,39 +1949,39 @@ walkme = function ()
   
   
   if me.running then 
-     walktimerme = walktimerme + 1
+     me.walktimer = me.walktimer + 1
     
-    if walktimerme >= runpace+2 then me.im = run4 
-    walktimerme = 0
+    if me.walktimer >= runpace+2 then me.im = run4 
+    me.walktimer = 0
     repplay(runsound)
     makerunrubble(me.y+50,me.mid,-me.v)
-    elseif walktimerme >= runpace + 1 then me.im = run4 
+    elseif me.walktimer >= runpace + 1 then me.im = run4 
     makerunrubble(me.y+50,me.mid,-me.v)
-  elseif walktimerme >= runpace/2 + 2 then me.im = run3 
-    elseif walktimerme >= runpace/2 then me.im = run2 
+  elseif me.walktimer >= runpace/2 + 2 then me.im = run3 
+    elseif me.walktimer >= runpace/2 then me.im = run2 
     makerunrubble(me.y+50,me.mid,-me.v)
     repplay(runsound)
-    elseif walktimerme >= 0 then me.im = run1 
+    elseif me.walktimer >= 0 then me.im = run1 
     end  
   else
   
-	if walktimerme < 7 then 
+	if me.walktimer < 7 then 
 		me.im = walk1
-		walktimerme = walktimerme + 1
-	elseif walktimerme >= 7 and walktimerme < 14 then
+		me.walktimer = me.walktimer + 1
+	elseif me.walktimer >= 7 and me.walktimer < 14 then
 		me.im = walk2
-		walktimerme = walktimerme + 1
-	elseif walktimerme >= 14 and walktimerme < 21 then
+		me.walktimer = me.walktimer + 1
+	elseif me.walktimer >= 14 and me.walktimer < 21 then
 		me.im = walk3
-		walktimerme = walktimerme + 1
-	elseif walktimerme >= 21 and walktimerme < 28 then
+		me.walktimer = me.walktimer + 1
+	elseif me.walktimer >= 21 and me.walktimer < 28 then
 		me.im = walk4
-		walktimerme = walktimerme + 1
-	elseif walktimerme >= 28 and walktimerme < 35 then
+		me.walktimer = me.walktimer + 1
+	elseif me.walktimer >= 28 and me.walktimer < 35 then
 		me.im = walk5
-		walktimerme = walktimerme + 1
+		me.walktimer = me.walktimer + 1
 	else
-		walktimerme = 0
+		me.walktimer = 0
 	end
   end
 end
@@ -2051,7 +2051,7 @@ animate = function ()
 	then you.im = landing
 elseif you.g and aboutso(you.v, you.push) and not you.slide 
 	then idleanimatey()
-	walktimery = 0
+	you.walktimer = 0
 	elseif not you.g
 	then
 	jumpy()
@@ -2073,7 +2073,7 @@ elseif you.g and aboutso(you.v, you.push) and not you.slide
 	then me.im = landing
 	elseif me.g and aboutso(me.v, me.push) and not me.slide 
 	then idleanimateme()
-	walktimerme = 0
+	me.walktimer = 0
 	elseif not me.g
 	then
 	jumpme()

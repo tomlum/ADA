@@ -1001,7 +1001,7 @@ if x ~= you.sand then you.sand = false end
 end
 
 function anyofmyprimes()
-if me.blue or meblu
+if me.blue or me.blu
 or me.yellow or meyell
 or me.green or megree
 or me.purple or me.purp
@@ -1012,7 +1012,7 @@ end
 end
 
 function anyofyourprimes()
-if you.blue or youblu
+if you.blue or you.blu
 or you.yellow or youyell
 or you.green or yougree
 or you.purple or youpurp
@@ -1060,7 +1060,7 @@ end
 function ycombofalsify()
 	ygcancel = true
 	ypcancel = true
-	ybcancel = true
+	you.bcancel = true
 	yycancel = true
 	you.scancel = true
 
@@ -1086,7 +1086,7 @@ end
 function mcombofalsify()
 	mgcancel = true
 	mpcancel = true
-	mbcancel = true
+	me.bcancel = true
 	mycancel = true
 	me.scancel = true
 
@@ -1154,7 +1154,7 @@ if mebur
 
 
  -- or megree
- -- or meblu
+ -- or me.blu
  -- or mepurp
  -- or meyell
  then
@@ -1181,7 +1181,7 @@ or youyen
 or you.running
 
  -- or yougree
- -- or youblu
+ -- or you.blu
  -- or youpurp
  -- or youyell
   then
@@ -1197,13 +1197,13 @@ end
 
 
 
-if me.blue and me.sand and not me.san and not meblu then 
+if me.blue and me.sand and not me.san and not me.blu then 
 	mcombofalsify()
 	mebland = true
 elseif not me.sand and not me.blue then mebland = false
 end
 
-if you.blue and you.sand and not you.san and not youblu then 
+if you.blue and you.sand and not you.san and not you.blu then 
 	ycombofalsify()
 	youbland = true
 elseif not you.sand and not you.blue then youbland = false
@@ -1262,27 +1262,27 @@ end
 
 
 
-if you.blue and you.green and not yougree and not youblu then 
+if you.blue and you.green and not yougree and not you.blu then 
 	ycombofalsify()
 	youbreen = true
 elseif not you.green and not you.blue then youbreen = false
 end
 
 
-if me.blue and me.green and not megree and not meblu then 
+if me.blue and me.green and not megree and not me.blu then 
 	mcombofalsify()
 	mebreen = true
 elseif not me.green and not me.blue then mebreen = false
 end
 
-if me.blue and me.purple and not me.purp and not meblu then 
+if me.blue and me.purple and not me.purp and not me.blu then 
 	mcombofalsify()
 	meburple = true
 elseif not me.purple and not me.blue then meburple = false
 end
 
 
-if you.blue and you.purple and not you.purp and not youblu then 
+if you.blue and you.purple and not you.purp and not you.blu then 
 	ycombofalsify()
 	youburple = true
 	
@@ -1311,7 +1311,7 @@ end
 
 
 
-if you.yellow and you.blue and not youblu and not youyell then 
+if you.yellow and you.blue and not you.blu and not youyell then 
 	ycombofalsify()
 	youbellow = true
 
@@ -1319,7 +1319,7 @@ elseif not you.blue and not you.yellow then youbellow = false
 end
 
 
-if me.yellow and me.blue and not meblu and not meyell then 
+if me.yellow and me.blue and not me.blu and not meyell then 
 	mcombofalsify()
 	mebellow = true
 
@@ -1399,9 +1399,9 @@ mclearprimarys(me.purple)
 mpcancel = false
 end
 
-if meblu or me.blue then
+if me.blu or me.blue then
 	mclearprimarys(me.blue)
-	mbcancel = false
+	me.bcancel = false
 end
 
 if megree or me.green then
@@ -1415,9 +1415,9 @@ yclearprimarys(you.purple)
 ypcancel = false
 end
 
-if youblu or you.blue then
+if you.blu or you.blue then
 	yclearprimarys(you.blue)
-	ybcancel = false
+	you.bcancel = false
 end
 
 if yougree or you.green then
@@ -1438,7 +1438,7 @@ me.sand = false
 mycancel = true
 mgcancel = true
 mpcancel = true
-mbcancel = true
+me.bcancel = true
 me.scancel = true
 end
 
@@ -1451,7 +1451,7 @@ you.sand = false
 yycancel = true
 ygcancel = true
 ypcancel = true
-ybcancel = true
+you.bcancel = true
 you.scancel = true
 end
 

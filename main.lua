@@ -191,7 +191,7 @@ function love.load()
   }
   ]]
 if debug then 
-  if arg[#arg] == "-debug" then require("mobdebug").start() end
+  require("mobdebug").start() 
 end
   finishedLoading = false
 
@@ -796,11 +796,12 @@ function love.update()
         bluegreen(mebreen)
         you.bluegreen(youbreen)
 
+        
         bluepurple(meburple)
         you.bluepurple(youburple)
 
-        blueblade(me.blue)
-        you.blueblade(you.blue)
+        blueblade(me.blue, me, you, controller1, controller2)
+        blueblade(you.blue, you, me, controller2, controller1)
 
         bolts.shoot(me.green)
         bolts.update()
@@ -1437,8 +1438,8 @@ if not fightclub then
     end
      love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
    end
-   if flash then
---love.graphics.print("BAM", 100, 100, 0 ,10, 10)
+   if you.flinch then
+love.graphics.print("BAM", 100, 100, 0 ,10, 10)
 end
 --[[
  testa = {x = 10,y = 10}
