@@ -45,14 +45,6 @@ gythrow = love.graphics.newImage("me/attack/gythrow.png")
 jgyready = love.graphics.newImage("me/attack/jgyready.png")
 jgythrow = love.graphics.newImage("me/attack/jgythrow.png")
 
-airbomb = love.graphics.newImage("me/attack/airbomb.png")
-bombdet1 = love.graphics.newImage("me/attack/bombdet1.png")
-bombdet2 = love.graphics.newImage("me/attack/bombdet2.png")
-bombdet3 = love.graphics.newImage("me/attack/bombdet3.png")
-bombdet4 = love.graphics.newImage("me/attack/bombdet4.png")
-bombdet5 = love.graphics.newImage("me/attack/bombdet5.png")
-bombdet6 = love.graphics.newImage("me/attack/bombdet6.png")
-
 
 megyhold = 0
 megyct = false
@@ -87,6 +79,7 @@ function yougy(x)
 if you.flinch or mgycancel then 
 	yougyct = false
 	yougyhold = 0
+	you.jstop = false
 end
 
 
@@ -133,6 +126,7 @@ function megy(x)
 if me.flinch or mgycancel then 
 	megyct = false
 	megyhold = 0
+	me.jstop = false
 end
 
 
@@ -185,6 +179,7 @@ function youby(x)
 	youbyready = false
 	youbyct = 0 
 	youbyhold = 0
+	you.jstop = false
 	youbexpc = 0
 	youbyready = true
 end
@@ -196,14 +191,14 @@ if youbyhold > 0 then
 	you.jstop = true
 	youbyct = 0
 	youbell = true
-	if youarmsreach(55) and sameheight() and youbexpc < 100 and not you.dodge and youbexpc == 0
+	if youarmsreach(55) and sameheight() and youbexpc < 100 and not you.dodge
 	then youbexpc = 1
 	youactionshot = true
 	me.flinch = true
 	me.ft = byft
 	me.v = you.lr * 50
-	me.health = me.health - bydam
-	youbyhold = 55
+me.health = me.health - bydam
+	mebyhold = 55
 	end
 
 	if youbexpc > 0 then youbexpc = youbexpc + 1
@@ -214,7 +209,7 @@ if youbyhold > 0 then
 	if youbexpc > 206 then you.im = aby2end 
 	elseif youbexpc > 204 then you.im = aby24 you.j = 36
 	elseif youbexpc > 202 then you.im = aby23 you.j = 1
-		repplay(yellow2)
+		yellowplay2()
 		if (math.abs(me.mid - you.mid))<18 and me.y > you.y and me.y < you.y + 160 then
 			me.flinch = true
 		me.ft = byft
@@ -229,7 +224,7 @@ if youbyhold > 0 then
 	elseif youbexpc > 106 then you.im = abyend you.yoffset = 132	
 	elseif youbexpc > 104 then you.im = aby4 you.yoffset = 132	you.j = -20
 	elseif youbexpc > 102 then you.im = aby3 you.yoffset = 132	you.j = 1
-		repplay(yellow2)
+		yellowplay2()
 		if (math.abs(me.mid - you.mid))<18 and me.y < you.y and me.y > you.y - 160 then
 			me.flinch = true
 		me.ft = byft
@@ -308,6 +303,7 @@ function meby(x)
 	mebyready = false
 	mebyct = 0 
 	mebyhold = 0
+	me.jstop = false
 	mebexpc = 0
 	mebyready = true
 end
@@ -319,7 +315,7 @@ if mebyhold > 0 then
 	me.jstop = true
 	mebyct = 0
 	mebell = true
-	if mearmsreach(55) and sameheight() and mebexpc < 100 and not you.dodge and mebexpc == 0
+	if mearmsreach(55) and sameheight() and mebexpc < 100 and not you.dodge
 	then mebexpc = 1
 	actionshot = true
 	you.flinch = true
@@ -337,7 +333,7 @@ if mebyhold > 0 then
 	if mebexpc > 206 then me.im = aby2end 
 	elseif mebexpc > 204 then me.im = aby24 me.j = 36
 	elseif mebexpc > 202 then me.im = aby23 me.j = 1
-		repplay(yellow1)
+		yellowplay()
 		if (math.abs(me.mid - you.mid))<18 and you.y > me.y and you.y < me.y + 160 then
 			you.flinch = true
 		you.ft = byft
@@ -352,7 +348,7 @@ if mebyhold > 0 then
 	elseif mebexpc > 106 then me.im = abyend me.yoffset = 132	
 	elseif mebexpc > 104 then me.im = aby4 me.yoffset = 132	me.j = -20
 	elseif mebexpc > 102 then me.im = aby3 me.yoffset = 132	me.j = 1
-		repplay(yellow1)
+		yellowplay()
 		if (math.abs(me.mid - you.mid))<18 and you.y < me.y and you.y > me.y - 160 then
 			you.flinch = true
 		you.ft = byft
@@ -430,6 +426,7 @@ function mepy(x)
 	mepyready = false
 	mepyct = 0 
 	mepyhold = 0
+	me.jstop = false
 end
 
 if mepyhold > 0 then 
@@ -449,10 +446,10 @@ elseif mepyct > 0 and not x then
 	me.im = ythrow
 else me.im = jythrow
 	end
-	mepyhold = 25
+	mepyhold = 45
 	me.stop = true
 	me.jstop = true
-	table.insert(mymines, {x = me.mid, y = me.y+30, s = -1,explode = purplefuse})
+	table.insert(mymines, {x = me.mid, y = me.y+30, s = -1,explode = 0})
 	mepyct = 0
 
 elseif x 
@@ -477,6 +474,7 @@ function youpy(x)
 	youpyready = false
 	youpyct = 0 
 	youpyhold = 0
+	you.jstop = false
 end
 
 if youpyhold > 0 then 
@@ -496,10 +494,10 @@ elseif youpyct > 0 and not x then
 	you.im = ythrow
 else you.im = jythrow
 	end
-	youpyhold = 25
+	youpyhold = 45
 	you.stop = true
 	you.jstop = true
-	table.insert(yourmines, {x = you.mid, y = you.y+30, s = -1,explode = purplefuse})
+	table.insert(yourmines, {x = you.mid, y = you.y+30, s = -1,explode = 0})
 	youpyct = 0
 elseif x 
 	then 
@@ -524,24 +522,12 @@ end
 end
 
 
-
-
-
-
-
 function youmines(x)
-
-youatleastonemine = false
-for i,v in ipairs(yourmines)do
-		if v.s == 0 then youatleastonemine = true end
-	end
-
-
-
 if you.flinch or you.ycancel then 
 	youyready = false
 	youyct = 0 
 	youyhold = 0
+	you.jstop = false
 end
 
 
@@ -567,7 +553,7 @@ elseif youyhold > 0 then
 else you.im = jythrow
 	end
 
-elseif youyct > ychargetime and not x and youatleastonemine then
+elseif youyct > ychargetime and not x then
 	if you.g then
 	you.im = ycthrow
 	else you.im = jycthrow
@@ -578,16 +564,15 @@ elseif youyct > ychargetime and not x and youatleastonemine then
 	for i,v in ipairs(yourmines)do
 		if v.s == 0 then v.s = 1 v.explode = 1 end
 	end
+	cyellowplay2()
 	youyct = 0
 
 
-elseif youyct > ychargetime and youatleastonemine then
+elseif youyct > ychargetime then
 	if you.g then
 	you.im = ycready
 	else you.im = jycready
 	end
-	you.stop = true
-	you.jstop = true
 
 elseif youyct > 0 and not x then
 	if you.g then 
@@ -635,9 +620,9 @@ for i,v in ipairs(yourmines) do
 
 
 	if v.s == 1 or v.s == 0 or v.s == -1 then
-	if v.y + minedropgrav < minecheck(v.x, v.y) then v.y = v.y + minedropgrav
+	if v.y + minedropgrav < spikecheck(v.x, v.y) then v.y = v.y + minedropgrav
 		-- if + minegrav * 2 then sound of it landing
-	else v.y = minecheck(v.x,v.y)
+	else v.y = spikecheck(v.x,v.y)
 	end
 	end
 
@@ -648,17 +633,12 @@ for i,v in ipairs(yourmines) do
 		v.j = v.j - .15
 		end
 
-		if v.x + v.v >= enviro.rightwall-38 
-			then v.x = enviro.rightwall-38 v.rotate = -1.57 v.v = 0 v.j = 0
 
-		elseif v.x + v.v <= 60 
-			then v.x = 60 v.rotate = 1.57 v.v = 0 v.j = 0
-
-		elseif v.y - v.j < minecheck(v.x + v.v, v.y) 
+		if v.y - v.j < spikecheck(v.x + v.v, v.y) 
 			then v.y = v.y - v.j
 			v.rotate = v.rotate + .1
 		-- if + minegrav * 2 then sound of it landing
-		else v.y = minecheck(v.x + v.v,v.y)
+		else v.y = spikecheck(v.x + v.v,v.y)
 			v.rotate = 0
 			v.j = 0
 			v.v = 0
@@ -668,41 +648,52 @@ for i,v in ipairs(yourmines) do
 		v.fuse = v.fuse - 1
 
 		if v.fuse < 0 then 
-			repplay(grenade2)
 			table.remove(yourmines, i)
 	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 0, s = 0, v = boltspeed * 1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 1, s = 0, v = boltspeed * 1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -1, s = 0, v = boltspeed * 1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 2, s = 0, v = boltspeed * 1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -2, s = 0, v = boltspeed * 1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 3, s = 0, v = boltspeed * 1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -3, s = 0, v = boltspeed * 1})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -3, s = 0, v = boltspeed * 1})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 6, s = 0, v = boltspeed * .96})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -6, s = 0, v = boltspeed * .96})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -12, s = 0, v = boltspeed * .93})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 12, s = 0, v = boltspeed * .93})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -18, s = 0, v = boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 18, s = 0, v = boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -24, s = 0, v = boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 24, s = 0, v = boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -30, s = 0, v = boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 30, s = 0, v = boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -36, s = 0, v = boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 36, s = 0, v = boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -42, s = 0, v = boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 42, s = 0, v = boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -48, s = 0, v = boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 48, s = 0, v = boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -54, s = 0, v = boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 54, s = 0, v = boltspeed * .9})
 
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 0, s = 0, v = -boltspeed * 1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 1, s = 0, v = -boltspeed * 1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -1, s = 0, v = -boltspeed * 1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 2, s = 0, v = -boltspeed * 1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -2, s = 0, v = -boltspeed * 1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 3, s = 0, v = -boltspeed * 1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -3, s = 0, v = -boltspeed * 1})
 
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = .000001})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = 1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = 2})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = -1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = -2})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = 3})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = -3})
 
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = .000001})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = 1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = 2})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = -1})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = -2})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = 3})
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = -3})
 
-	
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 0, s = 0, v = -boltspeed * 1})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -3, s = 0, v = -boltspeed * 1})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 6, s = 0, v = -boltspeed * .96})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -6, s = 0, v = -boltspeed * .96})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -12, s = 0, v = -boltspeed * .93})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 12, s = 0, v = -boltspeed * .93})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -18, s = 0, v = -boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 18, s = 0, v = -boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -24, s = 0, v = -boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 24, s = 0, v = -boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -30, s = 0, v = -boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 30, s = 0, v = -boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -36, s = 0, v = -boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 36, s = 0, v = -boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -42, s = 0, v = -boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 42, s = 0, v = -boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -48, s = 0, v = -boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 48, s = 0, v = -boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -54, s = 0, v = -boltspeed * .9})
+		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 54, s = 0, v = -boltspeed * .9})
+
 
 		end
 
@@ -717,8 +708,8 @@ for i,v in ipairs(yourmines) do
 
 
 if v.s == -1 then
-	if math.abs(me.mid-v.x) < 300 and me.feet >= v.y - 200 and me.y < v.y and v.explode >= 0 then 
-		
+	if math.abs(me.mid-v.x) < 400 and me.feet >= v.y - 200 and me.y < v.y
+		then
 		table.remove(yourmines,i)
 		
 	table.insert(youspikes, {x = v.x + (0 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = 0, s = 0, ss = 2})
@@ -726,12 +717,24 @@ if v.s == -1 then
 	table.insert(youspikes, {x = v.x + (-65 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -12, s = 0, ss = 2})
 	table.insert(youspikes, {x = v.x + (-100 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -18, s = 0, ss = 2})
 	table.insert(youspikes, {x = v.x + (-135 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -24, s = 0, ss = 2})
+	table.insert(youspikes, {x = v.x + (-170 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -30, s = 0, ss = 2})
+	table.insert(youspikes, {x = v.x + (-205 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -36, s = 0, ss = 2})
+	table.insert(youspikes, {x = v.x + (-240 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -42, s = 0, ss = 2})
+	table.insert(youspikes, {x = v.x + (-275 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -48, s = 0, ss = 2})
+	table.insert(youspikes, {x = v.x + (-310 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -54, s = 0, ss = 2})
 	
+
 table.insert(youspikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = 0, s = 0, ss =1})
 	table.insert(youspikes, {x = v.x + (30 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -6, s = 0, ss =1})
 	table.insert(youspikes, {x = v.x + (65 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -12, s = 0, ss =1})
 	table.insert(youspikes, {x = v.x + (100 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -18, s = 0, ss =1})
 	table.insert(youspikes, {x = v.x + (135 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -24, s = 0, ss =1})
+	table.insert(youspikes, {x = v.x + (170 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -30, s = 0, ss =1})
+	table.insert(youspikes, {x = v.x + (205 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -36, s = 0, ss =1})
+	table.insert(youspikes, {x = v.x + (240 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -42, s = 0, ss =1})
+	table.insert(youspikes, {x = v.x + (275 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -48, s = 0, ss =1})
+	table.insert(youspikes, {x = v.x + (310 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -54, s = 0, ss =1})
+
 
 
 
@@ -781,16 +784,14 @@ table.insert(youspikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math
 
 
 	else love.graphics.draw(pmine, v.x - 5, v.y - 10)
-		if v.explode < 1 then
-		v.explode = v.explode + 1
-		end
 	end
 
 
-	
+
+
 
 	elseif v.s == 1 then 
-		if v.explode == 2 then repplay(cyellow2) end
+		if v.explode == 2 then cyellowplay2() end
 	if math.abs(me.mid-v.x) < 180 and v.explode == 5 and me.feet >= v.y - 200 and me.y < v.y
 		then
 
@@ -808,33 +809,8 @@ table.insert(youspikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math
 	
 
 
-	
-	elseif v.s == -10 then 
-		if math.abs(me.mid-v.x) < 100 and v.explode == 0 and me.feet >= v.y - 100 and me.y < v.y + 100
-		then v.explode = 1
-		end
-		if v.explode == 2 then repplay(cyellow2) end
-	if math.abs(me.mid-v.x) < 150 and v.explode == 5 and me.feet >= v.y - 150 and me.y < v.y + 150
-		then
-
-		if me.mid - v.x > 0 then 
-		me.v = 25
-		else me.v = -25
-		end
-		if me.y < v.y then 
-			me.j = 30
-		elseif me.y >= v.y then 
-			me.j = -30
-		end
-			me.g = false
-			me.flinch = true
-			me.ft = cyft
-			me.health = me.health - sminedam
-
-	end
-
 	elseif v.s == 0 then 
-		if v.explode == 2 then repplay(yellow2) end
+		if v.explode == 2 then yellowplay2() end
 	if math.abs(me.mid-v.x) < 20 and v.explode == 0 and me.feet >= v.y and me.y < v.y
 		then v.explode = v.explode + 1 
 			if me.mid - v.x > 0 then 
@@ -878,26 +854,6 @@ table.insert(youspikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math
 		elseif v.explode == 0 then love.graphics.draw(mine, v.x - 5, v.y - 10)
 		end
 
-	elseif v.s == -10 then
-		if v.explode > 0 then v.explode = v.explode + 1 end
-		if v.explode == 12 then 
-		table.remove(yourmines,i)
-
-		elseif v.explode > 10 then love.graphics.draw(bombdet6, v.x - 150, v.y - 150)
-
-		elseif v.explode > 8 then love.graphics.draw(bombdet5, v.x - 150, v.y - 150)
-		
-		elseif v.explode > 6 then love.graphics.draw(bombdet4, v.x - 150, v.y - 150)
-		
-		elseif v.explode >4 then love.graphics.draw(bombdet3, v.x - 150, v.y - 150)
-		
-		elseif v.explode > 2  then love.graphics.draw(bombdet2, v.x - 150, v.y - 150)
-		
-		elseif v.explode >= 1 then love.graphics.draw(bombdet1, v.x - 150, v.y - 150)
-		repplay(cyellow2)
-		elseif v.explode == 0 then love.graphics.draw(airbomb, v.x - 15, v.y - 15)
-
-	end
 
 	elseif v.s == 0 then
 		if v.explode > 0 then v.explode = v.explode + 1 end
@@ -929,17 +885,11 @@ end
 
 
 function memines(x)
-
-meatleastonemine = false
-for i,v in ipairs(mymines)do
-		if v.s == 0 then meatleastonemine = true end
-	end
-
-
-if me.flinch or me.ycancel then 
+if me.flinch or mycancel then 
 	
 	meyct = 0 
 	meyhold = 0
+	me.jstop = false
 end
 
 
@@ -966,7 +916,7 @@ elseif meyhold > 0 then
 else me.im = jythrow
 	end
 
-elseif meyct > ychargetime and not x and meatleastonemine then
+elseif meyct > ychargetime and not x then
 	if me.g then
 	me.im = ycthrow
 	else me.im = jycthrow
@@ -981,13 +931,11 @@ elseif meyct > ychargetime and not x and meatleastonemine then
 
 
 
-elseif meyct > ychargetime and meatleastonemine then
+elseif meyct > ychargetime then
 	if me.g then
 	me.im = ycready
 	else me.im = jycready
 	end
-	me.stop = true
-	me.jstop = true
 
 elseif meyct > 0 and not x then
 	if me.g then 
@@ -1027,6 +975,7 @@ for i,v in ipairs(mymines) do
 
 
 
+
 	if table.getn(mymines) >= 6 then table.remove(mymines, i-5) end
 
 
@@ -1048,10 +997,10 @@ for i,v in ipairs(mymines) do
 
 
 if v.s == 1 or v.s == 0 or v.s == -1 then
-	if v.y + minedropgrav < minecheck(v.x, v.y) 
+	if v.y + minedropgrav < spikecheck(v.x, v.y) 
 		then v.y = v.y + minedropgrav
 		-- if + minegrav * 2 then sound of it landing
-	else v.y = minecheck(v.x,v.y)
+	else v.y = spikecheck(v.x,v.y)
 	end
 	end
 
@@ -1068,19 +1017,11 @@ if v.s == 1 or v.s == 0 or v.s == -1 then
 		end
 
 
-	
-		if v.x + v.v >= enviro.rightwall-38 
-			then v.x = enviro.rightwall-38 v.rotate = -1.57 v.v = 0 v.j = 0
-
-		elseif v.x + v.v <= 60 
-			then v.x = 60 v.rotate = 1.57 v.v = 0 v.j = 0
-
-
-		elseif v.y - v.j < minecheck(v.x + v.v, v.y) 
+		if v.y - v.j < spikecheck(v.x + v.v, v.y) 
 			then v.y = v.y - v.j
 			v.rotate = v.rotate + .2
 		-- if + minegrav * 2 then sound of it landing
-		else v.y = minecheck(v.x + v.v,v.y)
+		else v.y = spikecheck(v.x + v.v,v.y)
 			v.j = 0
 			v.v = 0
 			v.rotate = 0
@@ -1090,41 +1031,52 @@ if v.s == 1 or v.s == 0 or v.s == -1 then
 		v.fuse = v.fuse - 1
 
 		if v.fuse < 0 then 
-			repplay(grenade1)
 			table.remove(mymines, i)
 		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 0, s = 0, v = boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 1, s = 0, v = boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -1, s = 0, v = boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 2, s = 0, v = boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -2, s = 0, v = boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 3, s = 0, v = boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -3, s = 0, v = boltspeed * 1})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -3, s = 0, v = boltspeed * 1})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 6, s = 0, v = boltspeed * .96})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -6, s = 0, v = boltspeed * .96})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -12, s = 0, v = boltspeed * .93})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 12, s = 0, v = boltspeed * .93})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -18, s = 0, v = boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 18, s = 0, v = boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -24, s = 0, v = boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 24, s = 0, v = boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -30, s = 0, v = boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 30, s = 0, v = boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -36, s = 0, v = boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 36, s = 0, v = boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -42, s = 0, v = boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 42, s = 0, v = boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -48, s = 0, v = boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 48, s = 0, v = boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -54, s = 0, v = boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 54, s = 0, v = boltspeed * .9})
 
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 0, s = 0, v = -boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 1, s = 0, v = -boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -1, s = 0, v = -boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 2, s = 0, v = -boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -2, s = 0, v = -boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 3, s = 0, v = -boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -3, s = 0, v = -boltspeed * 1})
 
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = .000001})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = 2})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = -1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = -2})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = 3})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = -3})
 
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = .000001})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = 2})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = -1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = -2})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = 3})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = -3})
 
-	
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 0, s = 0, v = -boltspeed * 1})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -3, s = 0, v = -boltspeed * 1})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 6, s = 0, v = -boltspeed * .96})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -6, s = 0, v = -boltspeed * .96})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -12, s = 0, v = -boltspeed * .93})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 12, s = 0, v = -boltspeed * .93})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -18, s = 0, v = -boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 18, s = 0, v = -boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -24, s = 0, v = -boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 24, s = 0, v = -boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -30, s = 0, v = -boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 30, s = 0, v = -boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -36, s = 0, v = -boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 36, s = 0, v = -boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -42, s = 0, v = -boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 42, s = 0, v = -boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -48, s = 0, v = -boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 48, s = 0, v = -boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -54, s = 0, v = -boltspeed * .9})
+		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 54, s = 0, v = -boltspeed * .9})
+
 
 
 		end
@@ -1140,7 +1092,7 @@ if v.s == 1 or v.s == 0 or v.s == -1 then
 
 
 if v.s == -1 then
-	if math.abs(you.mid-v.x) < 300 and you.feet >= v.y - 200 and you.y < v.y and v.explode >= 0
+	if math.abs(you.mid-v.x) < 400 and you.feet >= v.y - 200 and you.y < v.y
 		then
 		table.remove(mymines,i)
 		
@@ -1149,12 +1101,25 @@ if v.s == -1 then
 	table.insert(spikes, {x = v.x + (-65 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -12, s = 0, ss = 2})
 	table.insert(spikes, {x = v.x + (-100 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -18, s = 0, ss = 2})
 	table.insert(spikes, {x = v.x + (-135 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -24, s = 0, ss = 2})
+	table.insert(spikes, {x = v.x + (-170 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -30, s = 0, ss = 2})
+	table.insert(spikes, {x = v.x + (-205 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -36, s = 0, ss = 2})
+	table.insert(spikes, {x = v.x + (-240 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -42, s = 0, ss = 2})
+	table.insert(spikes, {x = v.x + (-275 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -48, s = 0, ss = 2})
+	table.insert(spikes, {x = v.x + (-310 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -54, s = 0, ss = 2})
+	
 
 table.insert(spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = 0, s = 0, ss =1})
 	table.insert(spikes, {x = v.x + (30 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -6, s = 0, ss =1})
 	table.insert(spikes, {x = v.x + (65 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -12, s = 0, ss =1})
 	table.insert(spikes, {x = v.x + (100 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -18, s = 0, ss =1})
 	table.insert(spikes, {x = v.x + (135 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -24, s = 0, ss =1})
+	table.insert(spikes, {x = v.x + (170 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -30, s = 0, ss =1})
+	table.insert(spikes, {x = v.x + (205 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -36, s = 0, ss =1})
+	table.insert(spikes, {x = v.x + (240 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -42, s = 0, ss =1})
+	table.insert(spikes, {x = v.x + (275 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -48, s = 0, ss =1})
+	table.insert(spikes, {x = v.x + (310 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -54, s = 0, ss =1})
+
+
 
 
 
@@ -1203,16 +1168,13 @@ table.insert(spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math.ra
 
 
 	else love.graphics.draw(pmine, v.x - 5, v.y - 10)
-		if v.explode < 1 then
-		v.explode = v.explode + 1
-		end
 	end
 
 
 
 
 	elseif v.s == 1 then 
-		if v.explode == 2 then repplay(cyellow1) end
+		if v.explode == 2 then cyellowplay() end
 	if math.abs(you.mid-v.x) < 180 and v.explode == 5 and you.feet >= v.y - 200 and you.y < v.y
 			
 		then
@@ -1229,34 +1191,8 @@ table.insert(spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math.ra
 	end
 
 
-
-
-	elseif v.s == -10 then 
-		if math.abs(you.mid-v.x) < 100 and v.explode == 0 and you.feet >= v.y - 100 and you.y < v.y + 100
-		then v.explode = 1
-		end
-		if v.explode == 2 then repplay(cyellow1) end
-	if math.abs(you.mid-v.x) < 150 and v.explode == 5 and you.feet >= v.y - 150 and you.y < v.y + 150
-		then
-
-		if you.mid - v.x > 0 then 
-		you.v = 25
-		else you.v = -25
-		end
-		if you.y < v.y then 
-			you.j = 30
-		elseif you.y >= v.y then 
-			you.j = -30
-		end
-			you.g = false
-			you.flinch = true
-			you.ft = cyft
-			you.health = you.health - sminedam
-
-	end
-
 	elseif v.s == 0 then 
-		if v.explode == 2 then repplay(yellow1) end
+		if v.explode == 2 then yellowplay() end
 		if math.abs(you.mid-v.x) < 20 and v.explode == 0 and you.feet >= v.y and you.y < v.y
 		then v.explode = v.explode + 1 
 			if you.mid - v.x > 0 then 
@@ -1307,26 +1243,6 @@ table.insert(spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math.ra
 		elseif v.explode == 0 then love.graphics.draw(mine, v.x - 5, v.y - 10)
 		end
 
-	elseif v.s == -10 then
-		if v.explode > 0 then v.explode = v.explode + 1 end
-		if v.explode == 12 then 
-		table.remove(mymines,i)
-
-		elseif v.explode > 10 then love.graphics.draw(bombdet6, v.x - 150, v.y - 150)
-
-		elseif v.explode > 8 then love.graphics.draw(bombdet5, v.x - 150, v.y - 150)
-		
-		elseif v.explode > 6 then love.graphics.draw(bombdet4, v.x - 150, v.y - 150)
-		
-		elseif v.explode >4 then love.graphics.draw(bombdet3, v.x - 150, v.y - 150)
-		
-		elseif v.explode > 2  then love.graphics.draw(bombdet2, v.x - 150, v.y - 150)
-		
-		elseif v.explode >= 1 then love.graphics.draw(bombdet1, v.x - 150, v.y - 150)
-		repplay(cyellow1)
-		elseif v.explode == 0 then love.graphics.draw(airbomb, v.x - 15, v.y - 15)
-
-	end
 
 	elseif v.s == 0 then
 		if v.explode > 0 then v.explode = v.explode + 1 end
@@ -1352,4 +1268,3 @@ end
 
 
 end
-

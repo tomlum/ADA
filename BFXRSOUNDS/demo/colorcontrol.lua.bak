@@ -820,7 +820,7 @@ end
 
 
 if me.blue and me.green and not megree and not meblu then 
-	me.breen = true
+	mebreen = true
 	me.gcancel = true
 	me.pcancel = true
 	me.purple = false
@@ -835,7 +835,7 @@ if me.blue and me.green and not megree and not meblu then
 	me.bellow = false
 	me.gellow = false
 	me.pellow = false
-elseif not me.green and not me.blue then me.breen = false
+elseif not me.green and not me.blue then mebreen = false
 end
 
 if me.blue and me.purple and not me.purp and not meblu then 
@@ -850,7 +850,7 @@ if me.blue and me.purple and not me.purp and not meblu then
 	me.ycancel = true
 
 	me.gurple = false
-	me.breen = false
+	mebreen = false
 	me.bellow = false
 	me.gellow = false
 	me.pellow = false
@@ -895,7 +895,7 @@ if me.green and me.purple and not me.purp then
 	me.ycancel = true
 
 	me.burple = false
-	me.breen = false
+	mebreen = false
 	me.bellow = false
 	me.gellow = false
 	me.pellow = false
@@ -961,7 +961,7 @@ if me.yellow and me.blue and not meblu and not meyell then
 
 	me.burple = false
 	me.gurple = false
-	me.breen = false
+	mebreen = false
 	me.gellow = false
 	me.pellow = false
 elseif not me.blue and not me.yellow then me.bellow = false
@@ -1005,7 +1005,7 @@ if me.yellow and me.purple and not me.purp then
 
 	me.burple = false
 	me.gurple = false
-	me.breen = false
+	mebreen = false
 	me.bellow = false
 	me.gellow = false
 elseif not me.purple and not me.yellow then me.pellow = false
@@ -1025,7 +1025,7 @@ if me.yellow and me.green then
 
 	me.burple = false
 	me.gurple = false
-	me.breen = false
+	mebreen = false
 	me.bellow = false
 	me.pellow = false
 elseif not me.green and not me.yellow then me.gellow = false
@@ -1128,7 +1128,7 @@ end
 
 
 if me.burple or mebur
-or me.breen or mebre
+or mebreen or mebre
 or me.gurple or megur 
 or me.pellow or mepell
 or me.bellow or mebell

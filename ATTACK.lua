@@ -755,7 +755,7 @@ chargecounteryou = 0
 delayycounter = 0
 dodgeycounter = 0
 delaymecounter = 0
-dodgemecounter = 0
+me.dodgecounter = 0
 dodgetime = 27
 delaytime = 17
 dodgespeed = 13
@@ -774,10 +774,11 @@ dodgey = function ()
 
 
 	if you.flinch 
-			then me.dodgecounter = 0
+			then you.dodgecounter = 0
 		you.dodge = false
 		you.dodgetype = "none"
 		you.pause = false
+    delayycounter = 0
 	end
 
 	if dodgeycounter == 0 and delayycounter > 0
@@ -971,14 +972,15 @@ dodgeme = function ()
 
 
 
-if you.flinch 
+if me.flinch 
 			then me.dodgecounter = 0
-		you.dodge = false
-		you.dodgetype = "none"
-		you.pause = false
+		me.dodge = false
+		me.dodgetype = "none"
+		me.pause = false
+    delaymecounter = 0
 	end
 
-	if dodgemecounter == 0 and delaymecounter > 0
+	if me.dodgecounter == 0 and delaymecounter > 0
 		then
 		
 		me.stop = true
@@ -999,7 +1001,7 @@ if you.flinch
 
 
 
-	elseif dodgemecounter > 0
+	elseif me.dodgecounter > 0
 		then 
 
 		if me.dodgetype == "front"
@@ -1008,7 +1010,7 @@ if you.flinch
 			then me.dodgetype = "front2"
 			me.im = dodge2
 			me.pause = true
-			dodgemecounter = 5
+			me.dodgecounter = 5
 		end
 		elseif me.dodgetype == "front2"
 		then
@@ -1033,11 +1035,11 @@ if you.flinch
 
 
 		me.v = dodgespeed
-		dodgemecounter = dodgemecounter - 1
+		me.dodgecounter = me.dodgecounter - 1
 		me.dodge = true
 		delaymecounter = delaytime
 		me.block = true
-	elseif dodgemecounter < 0
+	elseif me.dodgecounter < 0
 		then 
 
 		if me.dodgetype == "front"
@@ -1045,7 +1047,7 @@ if you.flinch
 			if rightmeme and not leftmeme
 			then me.dodgetype = "front2"
 			me.im = dodge2
-			dodgemecounter = -5
+			me.dodgecounter = -5
 			end
 		elseif me.dodgetype == "front2"
 		then
@@ -1070,11 +1072,11 @@ if you.flinch
 		
 		
 		me.v = -dodgespeed
-		dodgemecounter = dodgemecounter + 1
+		me.dodgecounter = me.dodgecounter + 1
 		me.dodge = true
 		me.block = true
 		delaymecounter = delaytime
-	elseif me.block and controller1.right and dodgemecounter == 0 and not me.slide and not nomedodge and not me.landing
+	elseif me.block and controller1.right and me.dodgecounter == 0 and not me.slide and not nomedodge and not me.landing
   and not 
   (me.san
  or megree
@@ -1084,14 +1086,14 @@ if you.flinch
 		then
 		me.dodge = true
 		me.stop = false
-		dodgemecounter = dodgetime
+		me.dodgecounter = dodgetime
 		if me.leftface
 			then
 			me.dodgetype = "back"
-			dodgemecounter = dodgemecounter - 11
+			me.dodgecounter = me.dodgecounter - 11
 			else me.dodgetype = "front"
 		end
-	elseif me.block and controller1.left and dodgemecounter == 0 and not me.slide and not nomedodge and not me.landing
+	elseif me.block and controller1.left and me.dodgecounter == 0 and not me.slide and not nomedodge and not me.landing
   and not 
   (me.san
  or megree
@@ -1101,11 +1103,11 @@ if you.flinch
 		then
 		me.dodge = true
 		me.stop = false
-		dodgemecounter = -dodgetime
+		me.dodgecounter = -dodgetime
 		if not me.leftface
 			then
 			me.dodgetype = "back"
-			dodgemecounter = dodgemecounter + 11
+			me.dodgecounter = me.dodgecounter + 11
 			else me.dodgetype = "front"
 		end
 	else 

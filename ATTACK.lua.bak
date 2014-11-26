@@ -1,5 +1,3 @@
---green and purple based on controller up or down
-
 
 --if you.flinch and wall then bounce, switch the flinch direction
 --also if hit floor and greatenough time then falls down
@@ -14,9 +12,45 @@
 --or something, that might not fix it
 --maybe if in close range the green attack pushes you back
 --maybe rotate bolts so they look better, use trig
---can go down while air spike
---temp unable to use attacks?
 
+
+
+
+
+
+
+
+
+-- objects = {}
+-- table.insert(objects, {mid = 0, midy = 0, })
+
+-- function updateobjects()
+-- objects[1]
+-- end
+
+--player id is 1 or 2
+-- function objectattack(id,x,y,left,right,top,bottom)
+--   for i = #objects, 1, -1 do
+-- 		local v = objects[i]
+--     if id ~= i then
+--      
+      
+      
+      
+      
+--     end
+    
+--   end
+  
+  
+-- end
+
+
+shakeme = false
+shakeyou = false
+
+nomedodge = false
+noyoudodge = false
 
 
 
@@ -26,11 +60,22 @@ airdying = love.graphics.newImage("me/attack/airdying.png")
 flinch = love.graphics.newImage("me/attack/risepunching.png")
 bolt = love.graphics.newImage("me/attack/bolt.png")
 
+climb = love.graphics.newImage("me/attack/climb.png")
+climb2 = love.graphics.newImage("me/attack/climb2.png")
+climb3 = love.graphics.newImage("me/attack/climb3.png")
+
+
 hookhead = love.graphics.newImage("me/attack/hookhead.png")
 boltup1 = love.graphics.newImage("me/attack/boltup2.png")
 boltup1left = love.graphics.newImage("me/attack/boltup2left.png")
 boltthrow = love.graphics.newImage("me/attack/boltthrow.png")
 flinch = love.graphics.newImage("me/attack/flinch.png")
+fallback = love.graphics.newImage("me/attack/fallback.png")
+fallforward = love.graphics.newImage("me/attack/fallforward.png")
+fallback1 = love.graphics.newImage("me/attack/fallback1.png")
+fallforward1 = love.graphics.newImage("me/attack/fallforward1.png")
+gettingup1 = love.graphics.newImage("me/attack/gettingup1.png")
+gettingup2 = love.graphics.newImage("me/attack/gettingup2.png")
 flinchback = love.graphics.newImage("me/attack/flinchback.png")
 block = love.graphics.newImage("me/attack/block.png")
 boltcharged = love.graphics.newImage("me/attack/boltcharging.png")
@@ -115,9 +160,46 @@ bsm = love.graphics.newImage("me/attack/bluespikeprep.png")
 bluepurphit = love.graphics.newImage("me/attack/bp.png")
 airbluepurphit = love.graphics.newImage("me/attack/bpup.png")
 
+youprevhealth = 0
+meprevhealth = 0
 
+
+
+function camshakeflinch()
+	yhdif = youprevhealth-you.health
+	mhdif = meprevhealth-me.health
+
+	if not (actionshot or youactionshot) then
+if ((youprevhealth > you.health or shakeyou) and you.x >= me.x)  then 
+	camera2.x = camera2.x + math.ceil(math.random()) * (shakedis + yhdif/2)
+		camera2.y = camera2.y + math.ceil(math.random()) * (shakedis + yhdif/2)
+    --joystick2:setVibration(1,1)
+elseif ((youprevhealth > you.health  or shakeyou) and you.x < me.x) then 
+	camera.x = camera.x + math.ceil(math.random()) * (shakedis + yhdif/2)
+		camera.y = camera.y + math.ceil(math.random()) * (shakedis + yhdif/2)
+    --joystick2:setVibration(1,1)
+end
+
+if ((meprevhealth > me.health  or shakeme) and me.x < you.x) or shakeboth then 
+	camera.x = camera.x + math.ceil(math.random()) * (shakedis + mhdif/2)
+		camera.y = camera.y + math.ceil(math.random()) * (shakedis + mhdif/2)
+    --joystick:setVibration(1,1)
+elseif ((meprevhealth > me.health  or shakeme) and me.x >= me.x) then 
+	camera2.x = camera2.x + math.ceil(math.random()) * (shakedis + mhdif/2)
+		camera2.y = camera2.y + math.ceil(math.random()) * (shakedis + mhdif/2)
+    --joystick:setVibration(1,1)
+
+
+end
+end
+
+shakeme = false
+shakeyou = false
+
+end
 
 function isanyonedead()
+
 	if me.health <= 0 then 
 		me.stop = true
 		me.jstop = true
@@ -146,6 +228,8 @@ function mearmsreach(range)
 end
 end
 
+me.armsreach = mearmsreach
+
 function youarmsreach(range)
 	if ((me.mid - you.mid) * you.lr) < range
 		and (me.mid - you.mid) * you.lr > 0
@@ -154,12 +238,15 @@ function youarmsreach(range)
 end
 end
 
+you.armsreach = youarmsreach
+
 function sameheight()
 if math.abs(me.y - you.y) < 40 then
 	return true 
 else return false
 end
 end
+
 
 yougpc = 0
 yougpready = false
@@ -204,23 +291,12 @@ function you.bluegreen(x)
 
 if you.flinch or mbgcancel then youbgready = false
 	youbgc = 0 
-	you.jstop = false
-	for i,v in ipairs(youbolts) do
-	if v.s == -200 or v.s == -201 then table.remove(youbolts, i)
+	for i = #youbolts, 1, -1 do
+		local v = youbolts[i]
+	if v.s == -200 or v.s == -201 then table.remove(youbolts)
 	end
 	end
-	for i,v in ipairs(youbolts) do
-	if v.s == -200 or v.s == -201 then table.remove(youbolts, i)
-	end
-	end 
-	for i,v in ipairs(youbolts) do
-	if v.s == -200 or v.s == -201 then table.remove(youbolts, i)
-	end
-	end 
-	for i,v in ipairs(youbolts) do
-	if v.s == -200 or v.s == -201 then table.remove(youbolts, i)
-	end
-	end 
+	
 end
 
 if youbgc < 0 then
@@ -238,22 +314,7 @@ if youbgc == "ble" then youbgc = "bleh!"
 elseif youbgc < 10 and youbgc > 0 then
 	you.im = reelin
 	youbre = true
-	for i,v in ipairs(youbolts) do
-	if v.s == -200 or v.s == -201 then table.remove(youbolts, i)
-	end
-	end
-	for i,v in ipairs(youbolts) do
-	if v.s == -200 or v.s == -201 then table.remove(youbolts, i)
-	end
-	end 
-	for i,v in ipairs(youbolts) do
-	if v.s == -200 or v.s == -201 then table.remove(youbolts, i)
-	end
-	end 
-	for i,v in ipairs(youbolts) do
-	if v.s == -200 or v.s == -201 then table.remove(youbolts, i)
-	end
-	end 
+	
 
 	
 
@@ -262,6 +323,11 @@ elseif ybgcatch then
 	youbre = true
 	youbgc = 9
 	ybgcatch = false
+  for i = #youbolts, 1, -1 do
+		local v = youbolts[i]
+	if v.s == -200 or v.s == -201 then table.remove(youbolts)
+	end
+	end
 	if reel2:isStopped() then
 			reel2:play()
 		else reel2:rewind()
@@ -329,7 +395,6 @@ then
 	youbgready = true
 	you.stop = true
 	you.jstop = true
-elseif youbgc == 0 then you.jstop = false
 
 
 
@@ -349,23 +414,11 @@ function bluegreen(x)
 
 if me.flinch or mbgcancel then mebgready = false
 	mebgc = 0 
-	me.jstop = false
-	for i,v in ipairs(bolts) do
-	if v.s == -200 or v.s == -201 then table.remove(bolts, i)
+	for i = #bolts, 1, -1 do
+		local v = bolts[i]
+	if v.s == -200 or v.s == -201 then table.remove(bolts)
 	end
 	end
-	for i,v in ipairs(bolts) do
-	if v.s == -200 or v.s == -201 then table.remove(bolts, i)
-	end
-	end 
-	for i,v in ipairs(bolts) do
-	if v.s == -200 or v.s == -201 then table.remove(bolts, i)
-	end
-	end 
-	for i,v in ipairs(bolts) do
-	if v.s == -200 or v.s == -201 then table.remove(bolts, i)
-	end
-	end 
 end
 
 if mebgc < 0 then
@@ -383,22 +436,7 @@ if mebgc == "ble" then mebgc = "bleh!"
 elseif mebgc < 10 and mebgc > 0 then
 	me.im = reelin
 	mebre = true
-	for i,v in ipairs(bolts) do
-	if v.s == -200 or v.s == -201 then table.remove(bolts, i)
-	end
-	end
-	for i,v in ipairs(bolts) do
-	if v.s == -200 or v.s == -201 then table.remove(bolts, i)
-	end
-	end 
-	for i,v in ipairs(bolts) do
-	if v.s == -200 or v.s == -201 then table.remove(bolts, i)
-	end
-	end 
-	for i,v in ipairs(bolts) do
-	if v.s == -200 or v.s == -201 then table.remove(bolts, i)
-	end
-	end 
+	
 
 	
 
@@ -407,6 +445,11 @@ elseif bgcatch then
 	mebre = true
 	mebgc = 9
 	bgcatch = false
+  for i = #bolts, 1, -1 do
+		local v = bolts[i]
+	if v.s == -200 or v.s == -201 then table.remove(bolts)
+	end
+	end
 		if reel1:isStopped() then
 			reel1:play()
 		else reel1:rewind()
@@ -435,6 +478,7 @@ elseif mebgc > 0
 	table.insert(bolts, {x = me.mid -23 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = -(memidupv/2) * 2, s = -200, v = bboltspeed * me.lr + me.v})	
 	else
 	memidupv = me.j
+	
 	if hook1:isStopped() then
 			hook1:play()
 		else hook1:rewind()
@@ -473,7 +517,6 @@ then
 	mebgready = true
 	me.stop = true
 	me.jstop = true
-elseif mebgc == 0 then me.jstop = false
 
 
 
@@ -488,7 +531,6 @@ end
 function you.bluepurple(x)
 if you.flinch or ybpcancel then youbpready = false
 	youbpc = 0 
-	you.jstop = false
 end
 
 if youbpc < 0 then
@@ -525,7 +567,9 @@ elseif not x and youbpready then
 	you.jstop = true
 	youbpcd = 110
 	you.bur = true
-	table.insert(youspikes, {x = you.mid + 30*you.lr, y = spikecheck(you.mid + 30*you.lr, you.y) - 140, lr = you.lr, t = 55, s = -200})
+	table.insert(youspikes, {x = you.mid + 30*you.lr, y = spikecheck(you.mid + 30*you.lr, you.y) - 140, lr = you.lr, t = 40, s = -200})
+  
+  repplay(bpurp2hit)
 
 elseif x and youbpc == 0 and youbpcd == 0 
 then 
@@ -536,7 +580,6 @@ end
 	youbpready = true
 	you.stop = true
 	you.jstop = true
-elseif youbpc == 0 then you.jstop = false
 
 
 
@@ -547,7 +590,6 @@ end
 function bluepurple(x)
 if me.flinch or mbpcancel then mebpready = false
 	mebpc = 0 
-	me.jstop = false
 end
 
 if mebpc < 0 then
@@ -583,7 +625,8 @@ elseif not x and mebpready then
 	me.stop = true
 	me.jstop = true
 	mebpcd = 110
-	table.insert(spikes, {x = me.mid + 30*me.lr, y = spikecheck(me.mid + 30*me.lr, me.y) - 140, lr = me.lr, t = 55, s = -200})
+	table.insert(spikes, {x = me.mid + 30*me.lr, y = spikecheck(me.mid + 30*me.lr, me.y) - 140, lr = me.lr, t = 40, s = -200})
+  repplay(bpurp1hit)
 	me.bur = true
 
 elseif x and mebpc == 0 and mebpcd == 0 
@@ -595,7 +638,6 @@ end
 	mebpready = true
 	me.stop = true
 	me.jstop = true
-elseif mebpc == 0 then me.jstop = false
 
 
 
@@ -607,7 +649,6 @@ end
 function you.greenpurple(x)
 if you.flinch or ygpcancel then yougpready = false
 	yougpc = 0 
-	you.jstop = false
 end
 
 if yougpc < 0 then
@@ -633,7 +674,7 @@ elseif not x and yougpready then
 	you.stop = true
 	you.jstop = true
 	yougpcd = 90
-	table.insert(youbolts, {x = you.mid - 30 + 35 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = 0, s = -1, v = pboltspeed * you.lr + you.v, time = 0})
+	table.insert(youbolts, {x = you.mid + 5 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = yougpupv, s = -1, v = yougpv* you.lr + you.v, time = 0,stuckinwall = false})
 	if gp2:isStopped() then
 			gp2:play()
 		else gp2:rewind()
@@ -647,7 +688,6 @@ then you.im = greenpurpprep
 	you.stop = true
 	you.jstop = true
 
-elseif yougpc == 0 then you.jstop = false
 
 
 
@@ -660,7 +700,6 @@ end
 function greenpurple(x)
 if me.flinch or mgpcancel then megpready = false
 	megpc = 0 
-	me.jstop = false
 end
 
 if megpc < 0 then
@@ -686,7 +725,7 @@ elseif not x and megpready then
 	me.stop = true
 	me.jstop = true
 	megpcd = 90
-	table.insert(bolts, {x = me.mid - 30 + 35 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = 0, s = -1, v = pboltspeed * me.lr + me.v, time = 0})
+	table.insert(bolts, {x = me.mid + 5 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = megpupv, s = -1, v = megpv* me.lr + me.v, time = 0, stuckinwall = false})
 	if gp1:isStopped() then
 			gp1:play()
 		else gp1:rewind()
@@ -699,7 +738,6 @@ then me.im = greenpurpprep
 	megpready = true
 	me.stop = true
 	me.jstop = true
-elseif megpc == 0 then me.jstop = false
 
 
 
@@ -717,7 +755,7 @@ chargecounteryou = 0
 delayycounter = 0
 dodgeycounter = 0
 delaymecounter = 0
-me.dodgecounter = 0
+dodgemecounter = 0
 dodgetime = 27
 delaytime = 17
 dodgespeed = 13
@@ -736,11 +774,11 @@ dodgey = function ()
 
 
 	if you.flinch 
-			then me.dodgecounter = 0
-			you.jstop = false
+			then you.dodgecounter = 0
 		you.dodge = false
 		you.dodgetype = "none"
 		you.pause = false
+    delayycounter = 0
 	end
 
 	if dodgeycounter == 0 and delayycounter > 0
@@ -762,7 +800,6 @@ dodgey = function ()
 
 		if you.flinch 
 			then me.dodgecounter = 0
-			you.jstop = false
 		you.dodge = false
 		you.dodgetype = "none"
 		you.pause = false
@@ -845,7 +882,13 @@ dodgey = function ()
 		you.dodge = true
 		delayycounter = delaytime
 		you.block = true
-	elseif you.block and controller2.right and dodgeycounter == 0 and not you.slide and	not (youblu or yougree or you.purp or youbre or you.bur or yougur)
+	elseif you.block and controller2.right and dodgeycounter == 0 and not you.slide and	not noyoudodge and not you.landing
+   and not 
+  (you.san
+  or yougree
+ or youblu
+ or you.purp
+ or youyell)
 		then
 		you.dodge = true
 		you.stop = false
@@ -856,7 +899,13 @@ dodgey = function ()
 			dodgeycounter = dodgeycounter - 11
 			else you.dodgetype = "front"
 		end
-	elseif you.block and controller2.left and dodgeycounter == 0 and not you.slide and 	not (youblu or yougree or you.purp or youbre or you.bur or yougur)
+	elseif you.block and controller2.left and dodgeycounter == 0 and not you.slide and 	not noyoudodge and not you.landing
+  and not 
+  (you.san
+  or yougree
+ or youblu
+ or you.purp
+ or youyell)
 		then
 		you.dodge = true
 		you.stop = false
@@ -923,15 +972,15 @@ dodgeme = function ()
 
 
 
-if you.flinch 
+if me.flinch 
 			then me.dodgecounter = 0
-			you.jstop = false
-		you.dodge = false
-		you.dodgetype = "none"
-		you.pause = false
+		me.dodge = false
+		me.dodgetype = "none"
+		me.pause = false
+    delaymecounter = 0
 	end
 
-	if me.dodgecounter == 0 and delaymecounter > 0
+	if dodgemecounter == 0 and delaymecounter > 0
 		then
 		
 		me.stop = true
@@ -952,7 +1001,7 @@ if you.flinch
 
 
 
-	elseif me.dodgecounter > 0
+	elseif dodgemecounter > 0
 		then 
 
 		if me.dodgetype == "front"
@@ -961,7 +1010,7 @@ if you.flinch
 			then me.dodgetype = "front2"
 			me.im = dodge2
 			me.pause = true
-			me.dodgecounter = 5
+			dodgemecounter = 5
 		end
 		elseif me.dodgetype == "front2"
 		then
@@ -986,11 +1035,11 @@ if you.flinch
 
 
 		me.v = dodgespeed
-		me.dodgecounter = me.dodgecounter - 1
+		dodgemecounter = dodgemecounter - 1
 		me.dodge = true
 		delaymecounter = delaytime
 		me.block = true
-	elseif me.dodgecounter < 0
+	elseif dodgemecounter < 0
 		then 
 
 		if me.dodgetype == "front"
@@ -998,7 +1047,7 @@ if you.flinch
 			if rightmeme and not leftmeme
 			then me.dodgetype = "front2"
 			me.im = dodge2
-			me.dodgecounter = -5
+			dodgemecounter = -5
 			end
 		elseif me.dodgetype == "front2"
 		then
@@ -1023,32 +1072,42 @@ if you.flinch
 		
 		
 		me.v = -dodgespeed
-		me.dodgecounter = me.dodgecounter + 1
+		dodgemecounter = dodgemecounter + 1
 		me.dodge = true
 		me.block = true
 		delaymecounter = delaytime
-	elseif me.block and controller1.right and me.dodgecounter == 0 and not me.slide and not (meblu or megree or me.purp or mebre or me.bur or megur)
-
+	elseif me.block and controller1.right and dodgemecounter == 0 and not me.slide and not nomedodge and not me.landing
+  and not 
+  (me.san
+ or megree
+ or meblu
+ or me.purp
+ or meyell)
 		then
 		me.dodge = true
 		me.stop = false
-		me.dodgecounter = dodgetime
+		dodgemecounter = dodgetime
 		if me.leftface
 			then
 			me.dodgetype = "back"
-			me.dodgecounter = me.dodgecounter - 11
+			dodgemecounter = dodgemecounter - 11
 			else me.dodgetype = "front"
 		end
-	elseif me.block and controller1.left and me.dodgecounter == 0 and not me.slide and not (meblu or megree or me.purp or mebre or me.bur or megur)
-
+	elseif me.block and controller1.left and dodgemecounter == 0 and not me.slide and not nomedodge and not me.landing
+  and not 
+  (me.san
+ or megree
+ or meblu
+ or me.purp
+ or meyell)
 		then
 		me.dodge = true
 		me.stop = false
-		me.dodgecounter = -dodgetime
+		dodgemecounter = -dodgetime
 		if not me.leftface
 			then
 			me.dodgetype = "back"
-			me.dodgecounter = me.dodgecounter + 11
+			dodgemecounter = dodgemecounter + 11
 			else me.dodgetype = "front"
 		end
 	else 
@@ -1096,20 +1155,22 @@ end
 
 function blocknbusy()
 
-	if controller1.block and delaymecounter == 0 and not controller1.a1 and not controller1.a2 and not controller1.a3 and me.g and not me.dodge
+	if controller1.block and delaymecounter == 0 and not controller1.a1 and not controller1.a2 and not controller1.a3 and me.g and not me.dodge and not me.landing
 	then me.im = block
 		me.block = true
 		me.stop = true
+		
 
 	else me.block = false 
 		me.stop = false
 	end
 
 
-	if controller2.block and delayycounter == 0 and not controller2.a1 and not controller2.a2 and not controller2.a3 and you.g and not me.dodge
+	if controller2.block and delayycounter == 0 and not controller2.a1 and not controller2.a2 and not controller2.a3 and you.g and not you.dodge and not you.landing
 	then you.im = block
 		you.block = true
 		you.stop = true
+		
 
 	else you.block = false
 		you.stop = false
@@ -1148,101 +1209,166 @@ end
 
 
 
-
-
-
+oldyft = 0
+oldyg = 0
+oldmeft = 0
+oldmeg = 0
+mefalltimer = 0
+youfalltimer = 0
+youflinchway = 1
+meflinchway = 1
+gflinchyleft = 1
+gflinchmeleft = -1
 
 
 
 
 
 flinchingyou = function ()
+if you.ft > 0 then you.ft = you.ft - 1
+  end
+
+camshakeflinch()
 
 
-
-	if youprevhealth > you.health and me.im ~= bc2 then 
+	if youprevhealth > you.health then 
+    youflinchway = me.lr * you.lr
 		if you.flinch then 
-
-		if flinch2:isStopped() then
-			flinch2:play()
-		else flinch2:rewind()
-			flinch2:play()
-		end
-		
-
+    
+      if you.g then gflinchyleft = you.ft end
+      if you.flinchtimer == 0 then
+    youfalltimer = 0
+    end
+    repplay(flinch2)
 		else 
-
-		if minch2:isStopped() then
-			minch2:play()
-		else minch2:rewind()
-			minch2:play()
-		end
+		repplay(minch2)
+	  end
 	end
-end
 
 
-if meprevhealth > me.health and you.im ~= bc2 then 
+
+if meprevhealth > me.health then 
+    meflinchway = me.lr * you.lr
 		if me.flinch then 
-
-		if flinch1:isStopped() then
-			flinch1:play()
-		else flinch1:rewind()
-			flinch1:play()
-		end
-		
+    meflinchway = me.lr * you.lr
+      if me.g then gflinchmeleft = me.ft end
+      if me.flinchtimer == 0 then
+    mefalltimer = 0
+    end
+    repplay(flinch1)
+    
 
 		else 
-
-		if minch1:isStopped() then
-			minch1:play()
-		else minch1:rewind()
-			minch1:play()
-		end
+		repplay(minch1)
 	end
 end
 
 
 
+if oldyft < you.ft then
+inityflinch = you.ft
+end
 
-
-
+if not you.g then youfalltimer = 0 end
+if not oldyg and you.g then gflinchyleft = you.ft-you.flinchtimer end
 
 	if you.flinchtimer > you.ft
-	then you.stop = false
+	then 
 		you.flinch = false
 		you.flinchtimer = 0
 
 	elseif you.flinch then
 	you.flinchtimer = you.flinchtimer + 1
 	you.stop = true
-		if you.lr * me.lr < 0
-		then
-		you.im = flinch
-		else you.im = flinchback
+		if youflinchway > 0 then 
+
+      if you.g and gflinchyleft>fallflinchtime then
+        youfalltimer = youfalltimer + 1
+        if youfalltimer <= 5 then you.im = fallforward1
+        elseif you.ft - you.flinchtimer < 2 then you.im = gettingup2
+      elseif youfalltimer >5 then you.im = fallforward
+        youfacerot = 1.57 * me.lr
+        end
+      elseif inityflinch > fallflinchtime and not you.g then
+      you.im = fallforward1
+      else you.im = flinch
+    end
+    
+    
+		elseif youflinchway < 0 then 
+      if you.g and gflinchyleft>fallflinchtime then
+        youfalltimer = youfalltimer + 1
+        if youfalltimer <= 5 then you.im = fallback1
+          you.xoffset = 4
+        elseif you.ft - you.flinchtimer < 2 then you.im = gettingup1
+          you.xoffset = 6
+        elseif youfalltimer >5 then you.im = fallback
+          you.xoffset = 20
+        end
+      elseif inityflinch > fallflinchtime and not you.g then
+      you.im = fallback1
+      you.xoffset = 4
+      else you.im = flinch
+      end
 		end
 	end
+  
+  oldyft = you.ft
+  oldyg = you.g
+
+  
 end
 
 flinchingme = function ()
+ if me.ft > 0 then me.ft = me.ft - 1
+  end
 
 
-
+if oldmeft < me.ft then
+initmeflinch = me.ft
+end
+if not me.g then mefalltimer = 0 end
+if not oldmeg and me.g then gflinchmeleft = me.ft-me.flinchtimer end
 	if me.flinchtimer > me.ft
-	then me.stop = false
+	then 
 		me.flinch = false
 		me.flinchtimer = 0
-
 	elseif me.flinch then
 	me.flinchtimer = me.flinchtimer + 1
 	me.stop = true
-		if me.lr * you.lr < 0
-		then
-		me.im = flinch
-		else me.im = flinchback
+		if meflinchway > 0 then 
+      if me.g and gflinchmeleft>fallflinchtime then
+        mefalltimer = mefalltimer + 1
+        if mefalltimer <= 5 then me.im = fallforward1
+        elseif me.ft - me.flinchtimer < 2 then me.im = gettingup2
+        elseif mefalltimer >5 then me.im = fallforward
+        end
+      elseif initmeflinch > fallflinchtime and not me.g then
+      me.im = fallforward1
+      else me.im = flinch
+    end
+    
+    
+		elseif meflinchway < 0 then 
+      if me.g and gflinchmeleft>fallflinchtime then
+        mefalltimer = mefalltimer + 1
+        if mefalltimer <= 5 then me.im = fallback1
+          me.xoffset = 4
+        elseif me.ft - me.flinchtimer < 2 then me.im = gettingup1
+          me.xoffset = 6
+        elseif mefalltimer >5 then me.im = fallback
+          me.xoffset = 20
+        end
+      elseif initmeflinch > fallflinchtime and not me.g then
+      me.im = fallback1
+      me.xoffset = 4
+      else me.im = flinch
+      end
 		end
 	end
+    oldmeft = me.ft
+    oldmeg = me.g
 end
-
 
 
 

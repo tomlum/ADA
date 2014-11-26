@@ -11,7 +11,7 @@ methrowanimatecounter = 0
 you.throwcounter = 0
 
 
-you.boltcombocount = 0
+youboltcombocount = 0
 youthrowanimatecounter = 0
 
 aimwait = 10
@@ -342,16 +342,16 @@ for i, v in ipairs(youspikes) do
 
 
 	if you.throwcounter > 50
-	then you.boltcombocount = 0
+	then youboltcombocount = 0
 		you.throwcounter = 0
 		you.prime = false
-	elseif you.boltcombocount < 3 and you.throwcounter > 30
-		then you.boltcombocount = 0
+	elseif youboltcombocount < 3 and you.throwcounter > 30
+		then youboltcombocount = 0
 			you.throwcounter = 0
 
-	elseif you.boltcombocount < 3 and you.boltcombocount > 0 then
+	elseif youboltcombocount < 3 and youboltcombocount > 0 then
 		you.throwcounter = you.throwcounter + 1
-	elseif you.boltcombocount >= 3
+	elseif youboltcombocount >= 3
 		then
 		you.throwcounter = you.throwcounter + 1
 	end
@@ -434,7 +434,7 @@ if you.landing
 	
 
 
-	elseif you.prime == true and you.boltcombocount < 5 and not youfired
+	elseif you.prime == true and youboltcombocount < 5 and not youfired
 		then
 		you.prime = false
 		table.insert(youbolts, {x = you.mid  , y = you.y + 24, lr = you.lr, time = 0, upv = yougupv, s = 0, v = yougv * you.lr + you.v})
@@ -449,7 +449,7 @@ if you.landing
 		table.insert(youbolts, {x = you.mid +12  * you.lr , y = you.y + 38, lr = you.lr, time = 0, upv = yougupv, s = 0, v = yougv * you.lr + you.v})
 		end
 		youfired = true
-		you.boltcombocount = you.boltcombocount + 1
+		youboltcombocount = youboltcombocount + 1
 		you.throwcounter = 0
 		youboltchargecounter = 0
 		

@@ -29,7 +29,7 @@ sandboltdam = 8
 sandboltknockup = 20
 gsft = 15
 
-fallflinchtime = 45
+fallflinchtime = 55
 
 psft = 75
 psdam = 5

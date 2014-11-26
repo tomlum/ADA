@@ -523,7 +523,7 @@ end
 
 
 function youmines(x)
-if you.flinch or yycancel then 
+if you.flinch or you.ycancel then 
 	youyready = false
 	youyct = 0 
 	youyhold = 0
@@ -885,7 +885,7 @@ end
 
 
 function memines(x)
-if me.flinch or mycancel then 
+if me.flinch or me.ycancel then 
 	
 	meyct = 0 
 	meyhold = 0

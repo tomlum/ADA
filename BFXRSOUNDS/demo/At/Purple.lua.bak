@@ -233,7 +233,7 @@ medig = 0
 function spikes.shoot(x)
 me.jstop = true
 
-if me.flinch or me.pcancel then 
+if me.flinch or mpcancel then 
 	spikechargetimer = 0
 	me.attack = "none"
 	mespikeairprime = false

@@ -936,7 +936,7 @@ for i,v in ipairs(mymines)do
 	end
 
 
-if me.flinch or me.ycancel then 
+if me.flinch or mycancel then 
 	
 	meyct = 0 
 	meyhold = 0

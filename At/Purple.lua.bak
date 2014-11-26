@@ -6,11 +6,17 @@ spikecooldown = 15
 
 mespikeprime = false
 mespikeairprime = false
+metopspeed = 0
+youtopspeed = 0
+
+spikespace = 10
+
+
 function spikes.draw()
 
 for i, v in ipairs(spikes) do
 	
-
+	if v.y < 0 then table.remove(spikes,i) end
 
 
 	if v.t >= 38 and v.s == 2 
@@ -108,8 +114,20 @@ elseif v.s == -1 and spikechargetimer > -chargespikedur-2  then
 
 
 	if v.t == 3 and v.s == 0 then
-	if purp1:isStopped() then
 
+		if distan(v.x,v.y,me.x,me.y) < distan(v.x,v.y,you.x,you.y) then
+				closestp1 = distan(v.x,v.y,me.x,me.y)
+			else closestp1 = distan(v.x,v.y,you.x,you.y)
+			end
+
+			if closestp1 >= 2000 then disadj1 = .54
+			else disadj1 = .54 - ((math.abs(closestp1-2000)/2000) * .54)
+			end
+			purp1:setVolume(SFXV-.3-adj-disadj1)
+
+
+
+	if purp1:isStopped() then
 			purp1:setPitch(.8 + (math.random() * .4) )
 			purp1:play()
 		else purp1:rewind()
@@ -194,7 +212,7 @@ elseif v.s == -200 and v.t >= 63 and math.abs((v.x + (85 * v.lr)) - you.mid) < 8
 				you.ft = bpft
 				end
 
-	elseif v.s == 0 and math.abs((v.x + (58 * v.lr)) - you.mid) < 18 and you.feet > v.y + 15 and v.y > you.y -40
+	elseif v.s == 0 and math.abs((v.x + (16 * v.lr)) - you.mid) < 31 and you.feet > v.y + 15 and v.y > you.y -40
 				and v.t > 2
 				then
 				you.v = v.lr * 5
@@ -231,9 +249,8 @@ medig = 0
 
 
 function spikes.shoot(x)
-me.jstop = true
 
-if me.flinch or me.pcancel then 
+if me.flinch or mpcancel then 
 	spikechargetimer = 0
 	me.attack = "none"
 	mespikeairprime = false
@@ -244,7 +261,6 @@ if me.flinch or me.pcancel then
 	mespikeairprime = false
 	mespikespecial = false
 	medig = 0
-	me.jstop = false
 
 -- -150
 elseif mespikespecial
@@ -269,42 +285,43 @@ elseif mespikespecial
 	pw = 20
 
 		blatime = 10
-		table.insert(spikes, {x = me.mid - 30, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
-	table.insert(spikes, {x = me.mid - 100, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -2})
-	table.insert(spikes, {x = me.mid - 75, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
-	table.insert(spikes, {x = me.mid - 75, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
-	table.insert(spikes, {x = me.mid - 75, y = floor - 70, lr = 1, t = - pw * math.random() - blatime, s = -5})
-	table.insert(spikes, {x = me.mid - 75, y = floor - 70, lr = 1, t = - pw * math.random() - blatime, s = -6})
-	table.insert(spikes, {x = me.mid + 30, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -1})
-	table.insert(spikes, {x = me.mid + 75, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -3})
-	table.insert(spikes, {x = me.mid + 75, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -4})
-	table.insert(spikes, {x = me.mid + 75, y = floor - 70, lr = -1, t = - pw * math.random() - blatime, s = -5})
-	table.insert(spikes, {x = me.mid + 75, y = floor - 70, lr = -1, t = - pw * math.random() - blatime, s = -6})
+		table.insert(spikes, {x = me.mid - 30, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
+	table.insert(spikes, {x = me.mid - 100, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -2})
+	table.insert(spikes, {x = me.mid - 75, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
+	table.insert(spikes, {x = me.mid - 75, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
+	table.insert(spikes, {x = me.mid - 75, y = me.floor - 70, lr = 1, t = - pw * math.random() - blatime, s = -5})
+	table.insert(spikes, {x = me.mid - 75, y = me.floor - 70, lr = 1, t = - pw * math.random() - blatime, s = -6})
+	table.insert(spikes, {x = me.mid + 30, y = me.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -1})
+	table.insert(spikes, {x = me.mid + 75, y = me.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -3})
+	table.insert(spikes, {x = me.mid + 75, y = me.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -4})
+	table.insert(spikes, {x = me.mid + 75, y = me.floor - 70, lr = -1, t = - pw * math.random() - blatime, s = -5})
+	table.insert(spikes, {x = me.mid + 75, y = me.floor - 70, lr = -1, t = - pw * math.random() - blatime, s = -6})
 
-	table.insert(spikes, {x = me.mid - 25, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
-	table.insert(spikes, {x = me.mid + 80, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
+	table.insert(spikes, {x = me.mid - 25, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
+	table.insert(spikes, {x = me.mid + 80, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
 
-table.insert(spikes, {x = me.mid - 80, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
-	table.insert(spikes, {x = me.mid - 20, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -2})
-	table.insert(spikes, {x = me.mid - 25, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
+table.insert(spikes, {x = me.mid - 80, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
+	table.insert(spikes, {x = me.mid - 20, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -2})
+	table.insert(spikes, {x = me.mid - 25, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
 
-table.insert(spikes, {x = me.mid - 60, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
-	table.insert(spikes, {x = me.mid + 30, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
+table.insert(spikes, {x = me.mid - 60, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
+	table.insert(spikes, {x = me.mid + 30, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
 	
 
-	table.insert(spikes, {x = me.mid - 200, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
-	table.insert(spikes, {x = me.mid - 300, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -2})
-	table.insert(spikes, {x = me.mid - 200, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
-	table.insert(spikes, {x = me.mid - 205, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
-	table.insert(spikes, {x = me.mid - 205, y = floor - 70, lr = 1, t = - pw * math.random() - blatime, s = -5})
-	table.insert(spikes, {x = me.mid - 230, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
-	table.insert(spikes, {x = me.mid + 230, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -1})
-	table.insert(spikes, {x = me.mid + 240, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -2})
-	table.insert(spikes, {x = me.mid + 300, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -3})
-	table.insert(spikes, {x = me.mid + 275, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -4})
-	table.insert(spikes, {x = me.mid + 275, y = floor - 70, lr = -1, t = - pw * math.random() - blatime, s = -5})
-	table.insert(spikes, {x = me.mid + 275, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -4})
-	spikechargetimer = -150
+	table.insert(spikes, {x = me.mid - 200, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
+	table.insert(spikes, {x = me.mid - 300, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -2})
+	table.insert(spikes, {x = me.mid - 200, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
+	table.insert(spikes, {x = me.mid - 205, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
+	table.insert(spikes, {x = me.mid - 205, y = me.floor - 70, lr = 1, t = - pw * math.random() - blatime, s = -5})
+	table.insert(spikes, {x = me.mid - 230, y = me.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
+	table.insert(spikes, {x = me.mid + 230, y = me.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -1})
+	table.insert(spikes, {x = me.mid + 240, y = me.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -2})
+	table.insert(spikes, {x = me.mid + 300, y = me.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -3})
+	table.insert(spikes, {x = me.mid + 275, y = me.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -4})
+	table.insert(spikes, {x = me.mid + 275, y = me.floor - 70, lr = -1, t = - pw * math.random() - blatime, s = -5})
+	table.insert(spikes, {x = me.mid + 275, y = me.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -4})
+	
+spikechargetimer = -150
 	mespikeprime = false
 	me.im = invis
 
@@ -343,13 +360,17 @@ elseif me.g and mespikeairprime
 
 	if me.onplat
 		then
-	table.insert(spikes, {x = me.mid - 18, y = floor - 60, lr = 1, t = -10, s = 4} )
-	table.insert(spikes, {x = me.mid + 18, y = floor - 60, lr = -1, t = -10, s = 4} )
+	table.insert(spikes, {x = me.mid - 18, y = me.floor - 60, lr = 1, t = -10, s = 4} )
+	table.insert(spikes, {x = me.mid + 18, y = me.floor - 60, lr = -1, t = -10, s = 4} )
 	end
-	table.insert(spikes, {x = me.mid + 40, y = floor - 80, lr = 1, t = -23, s = 3} )
-	table.insert(spikes, {x = me.mid - 40, y = floor - 80, lr = -1, t = -23, s = 3} )
-	table.insert(spikes, {x = me.mid + 5, y = floor - 80, lr = 1, t = -18, s = 2} )
-	table.insert(spikes, {x = me.mid - 5, y = floor - 80, lr = -1, t = -18, s = 2} )
+	table.insert(spikes, {x = me.mid + 40, y = me.floor - 80, lr = 1, t = -23, s = 3} )
+	table.insert(spikes, {x = me.mid - 40, y = me.floor - 80, lr = -1, t = -23, s = 3} )
+	table.insert(spikes, {x = me.mid + 5, y = me.floor - 80, lr = 1, t = -18, s = 2} )
+	table.insert(spikes, {x = me.mid - 5, y = me.floor - 80, lr = -1, t = -18, s = 2} )
+	table.insert(spikes, {x = me.mid + 75, y = me.floor - 80, lr = 1, t = -28, s = 3} )
+	table.insert(spikes, {x = me.mid - 75, y = me.floor - 80, lr = -1, t = -28, s = 3} )
+	
+
 	me.stop = true
 	me.v = 0
 	me.jstop = true
@@ -374,7 +395,7 @@ elseif me.g and mespikeairprime
 	end
 
 
-	elseif not x and spikechargetimer > spikechargetime and tempme.floor == floor
+	elseif not x and spikechargetimer > spikechargetime and me.tempfloor == me.floor
 	then
 	me.attack = "chargespike"
 	me.stop = true
@@ -391,7 +412,7 @@ elseif me.g and mespikeairprime
 	me.invince = true
 
 
-	elseif spikechargetimer > spikechargetime and tempme.floor == floor
+	elseif spikechargetimer > spikechargetime and me.tempfloor == me.floor
 	then me.stop = true
 	me.im = stomps
 	me.attack = "chargespike"
@@ -469,32 +490,38 @@ elseif mespikeprime
 	me.attack = "spike"
 	spikechargetimer = -80
 	me.v = 0
-	table.insert(spikes, {x = me.mid + (0 ) * me.lr, y = tempme.floor , lr = me.lr, t = 0, s = 0})
-	table.insert(spikes, {x = me.mid + (30 ) * me.lr, y = tempme.floor , lr = me.lr, t = -6, s = 0})
-	table.insert(spikes, {x = me.mid + (65 ) * me.lr, y = tempme.floor , lr = me.lr, t = -12, s = 0})
-	table.insert(spikes, {x = me.mid + (100 ) * me.lr, y = tempme.floor , lr = me.lr, t = -18, s = 0})
-	table.insert(spikes, {x = me.mid + (135 ) * me.lr, y = tempme.floor , lr = me.lr, t = -24, s = 0})
-	table.insert(spikes, {x = me.mid + (170 ) * me.lr, y = tempme.floor , lr = me.lr, t = -30, s = 0})
-	table.insert(spikes, {x = me.mid + (205 ) * me.lr, y = tempme.floor , lr = me.lr, t = -36, s = 0})
-	table.insert(spikes, {x = me.mid + (240 ) * me.lr, y = tempme.floor , lr = me.lr, t = -42, s = 0})
-	table.insert(spikes, {x = me.mid + (275 ) * me.lr, y = tempme.floor , lr = me.lr, t = -48, s = 0})
-	table.insert(spikes, {x = me.mid + (310 ) * me.lr, y = tempme.floor , lr = me.lr, t = -54, s = 0})
+	table.insert(spikes, {x = me.mid + (0 + math.random(spikespace)) * me.lr, y = me.tempfloor , lr = me.lr, t = 0, s = 0})
+	table.insert(spikes, {x = me.mid + (30 + math.random(spikespace)) * me.lr, y = me.tempfloor , lr = me.lr, t = -6, s = 0})
+	table.insert(spikes, {x = me.mid + (65 + math.random(spikespace)) * me.lr, y = me.tempfloor , lr = me.lr, t = -12, s = 0})
+	table.insert(spikes, {x = me.mid + (100 + math.random(spikespace)) * me.lr, y = me.tempfloor , lr = me.lr, t = -18, s = 0})
+	table.insert(spikes, {x = me.mid + (135 + math.random(spikespace)) * me.lr, y = me.tempfloor , lr = me.lr, t = -24, s = 0})
+	table.insert(spikes, {x = me.mid + (170 + math.random(spikespace)) * me.lr, y = me.tempfloor , lr = me.lr, t = -30, s = 0})
+	table.insert(spikes, {x = me.mid + (205 + math.random(spikespace)) * me.lr, y = me.tempfloor , lr = me.lr, t = -36, s = 0})
+	table.insert(spikes, {x = me.mid + (240 + math.random(spikespace)) * me.lr, y = me.tempfloor , lr = me.lr, t = -42, s = 0})
+	table.insert(spikes, {x = me.mid + (275 + math.random(spikespace)) * me.lr, y = me.tempfloor , lr = me.lr, t = -48, s = 0})
+	table.insert(spikes, {x = me.mid + (310 + math.random(spikespace)) * me.lr, y = me.tempfloor , lr = me.lr, t = -54, s = 0})
 
-	for i, v in ipairs(spikes) do
+	for i,v in ipairs(spikes) do
 
-		
 
-		-- if i > 1 and spikes[i - 1].y > 0
-		-- 		then
-		-- spikes[i].y = spikes[i - 1].y - 60 
-		-- end
-		
-		
-	v.y = spikecheck(v.x + (80 * v.lr), v.y - 8) - 60
-	if v.y < 0 then table.remove(spikes,i) end
-if spikecheck(v.x + (80 * v.lr), v.y) ~= spikecheck(v.x, v.y)
-		then table.remove(spikes,i)
+	
+
+	
+		if v.s == 0 and spikecheck(v.x + (80 * v.lr), v.y-1) ~= spikecheck(v.x, v.y-1)
+		then 
+		v.y = -100
 	end
+
+	if v.s == 0 and v.y > 0 then v.y = spikecheck(v.x + (80 * v.lr), v.y - 1) - 60 end
+
+
+
+	if themap == "library" and v.y >= 1900 - 100 and v.x >= 1407 then table.remove(spikes,i) end
+if themap == "library" and v.y >= 1900 - 100 and v.x >= 1407 then table.remove(spikes,i) end
+if themap == "library" and v.y >= 1900 - 100 and v.x >= 1407 then table.remove(spikes,i) end
+if themap == "library" and v.y >= 1900 - 100 and v.x >= 1407 then table.remove(spikes,i) end
+if themap == "library" and v.y >= 1900 - 100 and v.x >= 1407 then table.remove(spikes,i) end
+if themap == "library" and v.y >= 1900 - 100 and v.x >= 1407 then table.remove(spikes,i) end
 end
 
 	mespikeprime = false
@@ -507,7 +534,6 @@ else
 	mespikeairprime = false
 	mespikespecial = false
 	medig = 0
-	me.jstop = false
 
 
 
@@ -515,7 +541,7 @@ else
 
 end
 
-if spikechargetimer < 0 or mespikespecial then me.purp = true
+if spikechargetimer < 0 or mespikespecial or medig < 0 then me.purp = true
 	else me.purp = false
 	end
 
@@ -545,6 +571,7 @@ youspikeairprime = false
 function youspikes.draw()
 for i, v in ipairs(youspikes) do
 	
+	if v.y < 0 then table.remove(youspikes,i) end
 	
 	if v.t >= 38 and v.s == 2 
 		then
@@ -643,6 +670,20 @@ elseif v.s == -1 and youspikechargetimer > -chargespikedur-2  then
 	end
 
 	if v.t == 3 and v.s == 0 then
+
+			if distan(v.x,v.y,me.x,me.y) < distan(v.x,v.y,you.x,you.y) then
+				closestp2 = distan(v.x,v.y,me.x,me.y)
+			else closestp2 = distan(v.x,v.y,you.x,you.y)
+			end
+
+			if closestp2 >= 2000 then disadj2 = .54
+			else disadj2 = .54 - ((math.abs(closestp2-2000)/2000) * .54)
+			end
+			purp2:setVolume(SFXV-.3-adj-disadj2)
+
+
+
+
 	if purp2:isStopped() then
 		purp2:setPitch(.8 + (math.random() * .4) )
 			purp2:play()
@@ -727,7 +768,7 @@ elseif v.s == -200 and v.t >= 63 and math.abs((v.x + (85 * v.lr)) - me.mid) < 85
 
 
 
-	elseif v.s == 0 and math.abs((v.x + (58 * v.lr)) - me.mid) < 18 and me.feet > v.y + 15 and v.y > me.y - 40
+	elseif v.s == 0 and math.abs((v.x + (16 * v.lr)) - me.mid) < 31 and me.feet > v.y + 15 and v.y > me.y - 40
 				and v.t > 2
 				then
 				me.v = v.lr * 5
@@ -764,7 +805,6 @@ youdig = 0
 
 
 function youspikes.shoot(x)
-you.jstop = true
 
 if you.flinch or you.pcancel then 
 	youspikechargetimer = 0
@@ -777,7 +817,6 @@ if you.flinch or you.pcancel then
 	youspikeairprime = false
 	youspikespecial = false
 	youdig = 0
-	you.jstop = false
 
 -- -150
 elseif youspikespecial
@@ -802,41 +841,42 @@ you.im = invis
 
 		pw = 20
 		blatime = 10
-		table.insert(youspikes, {x = you.mid - 30, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
-	table.insert(youspikes, {x = you.mid - 100, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -2})
-	table.insert(youspikes, {x = you.mid - 75, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
-	table.insert(youspikes, {x = you.mid - 75, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
-	table.insert(youspikes, {x = you.mid - 75, y = floor - 70, lr = 1, t = - pw * math.random() - blatime, s = -5})
-	table.insert(youspikes, {x = you.mid - 75, y = floor - 70, lr = 1, t = - pw * math.random() - blatime, s = -6})
-	table.insert(youspikes, {x = you.mid + 30, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -1})
-	table.insert(youspikes, {x = you.mid + 75, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -3})
-	table.insert(youspikes, {x = you.mid + 75, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -4})
-	table.insert(youspikes, {x = you.mid + 75, y = floor - 70, lr = -1, t = - pw * math.random() - blatime, s = -5})
-	table.insert(youspikes, {x = you.mid + 75, y = floor - 70, lr = -1, t = - pw * math.random() - blatime, s = -6})
+		table.insert(youspikes, {x = you.mid - 30, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
+	table.insert(youspikes, {x = you.mid - 100, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -2})
+	table.insert(youspikes, {x = you.mid - 75, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
+	table.insert(youspikes, {x = you.mid - 75, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
+	table.insert(youspikes, {x = you.mid - 75, y = you.floor - 70, lr = 1, t = - pw * math.random() - blatime, s = -5})
+	table.insert(youspikes, {x = you.mid - 75, y = you.floor - 70, lr = 1, t = - pw * math.random() - blatime, s = -6})
+	table.insert(youspikes, {x = you.mid + 30, y = you.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -1})
+	table.insert(youspikes, {x = you.mid + 75, y = you.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -3})
+	table.insert(youspikes, {x = you.mid + 75, y = you.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -4})
+	table.insert(youspikes, {x = you.mid + 75, y = you.floor - 70, lr = -1, t = - pw * math.random() - blatime, s = -5})
+	table.insert(youspikes, {x = you.mid + 75, y = you.floor - 70, lr = -1, t = - pw * math.random() - blatime, s = -6})
 
-	table.insert(youspikes, {x = you.mid - 25, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
-	table.insert(youspikes, {x = you.mid + 80, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
+	table.insert(youspikes, {x = you.mid - 25, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
+	table.insert(youspikes, {x = you.mid + 80, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
 
-table.insert(youspikes, {x = you.mid - 80, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
-	table.insert(youspikes, {x = you.mid - 20, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -2})
-	table.insert(youspikes, {x = you.mid - 25, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
+table.insert(youspikes, {x = you.mid - 80, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
+	table.insert(youspikes, {x = you.mid - 20, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -2})
+	table.insert(youspikes, {x = you.mid - 25, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
 
-table.insert(youspikes, {x = you.mid - 60, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
-	table.insert(youspikes, {x = you.mid + 30, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
+table.insert(youspikes, {x = you.mid - 60, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
+	table.insert(youspikes, {x = you.mid + 30, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
 	
 
-	table.insert(youspikes, {x = you.mid - 200, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
-	table.insert(youspikes, {x = you.mid - 300, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -2})
-	table.insert(youspikes, {x = you.mid - 200, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
-	table.insert(youspikes, {x = you.mid - 205, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
-	table.insert(youspikes, {x = you.mid - 205, y = floor - 70, lr = 1, t = - pw * math.random() - blatime, s = -5})
-	table.insert(youspikes, {x = you.mid - 230, y = floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
-	table.insert(youspikes, {x = you.mid + 230, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -1})
-	table.insert(youspikes, {x = you.mid + 240, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -2})
-	table.insert(youspikes, {x = you.mid + 300, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -3})
-	table.insert(youspikes, {x = you.mid + 275, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -4})
-	table.insert(youspikes, {x = you.mid + 275, y = floor - 70, lr = -1, t = - pw * math.random() - blatime, s = -5})
-	table.insert(youspikes, {x = you.mid + 275, y = floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -4})
+	table.insert(youspikes, {x = you.mid - 200, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -1})
+	table.insert(youspikes, {x = you.mid - 300, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -2})
+	table.insert(youspikes, {x = you.mid - 200, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
+	table.insert(youspikes, {x = you.mid - 205, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -4})
+	table.insert(youspikes, {x = you.mid - 205, y = you.floor - 70, lr = 1, t = - pw * math.random() - blatime, s = -5})
+	table.insert(youspikes, {x = you.mid - 230, y = you.floor - 140, lr = 1, t = - pw * math.random() - blatime, s = -3})
+	table.insert(youspikes, {x = you.mid + 230, y = you.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -1})
+	table.insert(youspikes, {x = you.mid + 240, y = you.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -2})
+	table.insert(youspikes, {x = you.mid + 300, y = you.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -3})
+	table.insert(youspikes, {x = you.mid + 275, y = you.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -4})
+	table.insert(youspikes, {x = you.mid + 275, y = you.floor - 70, lr = -1, t = - pw * math.random() - blatime, s = -5})
+	table.insert(youspikes, {x = you.mid + 275, y = you.floor - 140, lr = -1, t = - pw * math.random() - blatime, s = -4})
+
 	youspikechargetimer = -150
 	youspikeprime = false
 	you.im = invis
@@ -874,14 +914,18 @@ you.jstop = true
 	you.stop = true
 	if you.onplat
 		then
-	table.insert(youspikes, {x = you.mid - 18, y = floor - 60, lr = 1, t = -10, s = 4} )
-	table.insert(youspikes, {x = you.mid + 18, y = floor - 60, lr = -1, t = -10, s = 4} )
+	table.insert(youspikes, {x = you.mid - 18, y = you.floor - 60, lr = 1, t = -10, s = 4} )
+	table.insert(youspikes, {x = you.mid + 18, y = you.floor - 60, lr = -1, t = -10, s = 4} )
 	end
-	table.insert(youspikes, {x = you.mid + 40, y = floor - 80, lr = 1, t = -23, s = 3} )
-	table.insert(youspikes, {x = you.mid - 40, y = floor - 80, lr = -1, t = -23, s = 3} )
-	table.insert(youspikes, {x = you.mid + 5, y = floor - 80, lr = 1, t = -18, s = 2} )
-	table.insert(youspikes, {x = you.mid - 5, y = floor - 80, lr = -1, t = -18, s = 2} )
-	you.stop = true
+	table.insert(youspikes, {x = you.mid + 40, y = you.floor - 80, lr = 1, t = -23, s = 3} )
+	table.insert(youspikes, {x = you.mid - 40, y = you.floor - 80, lr = -1, t = -23, s = 3} )
+	table.insert(youspikes, {x = you.mid + 5, y = you.floor - 80, lr = 1, t = -18, s = 2} )
+	table.insert(youspikes, {x = you.mid - 5, y = you.floor - 80, lr = -1, t = -18, s = 2} )
+	table.insert(youspikes, {x = you.mid + 75, y = you.floor - 80, lr = 1, t = -28, s = 3} )
+	table.insert(youspikes, {x = you.mid - 75, y = you.floor - 80, lr = -1, t = -28, s = 3} )
+	
+
+you.stop = true
 	you.v = 0
 	you.jstop = true
 	you.busy = true
@@ -904,7 +948,7 @@ you.jstop = true
 	end
 
 
-	elseif not x and youspikechargetimer > spikechargetime and tempyfloor == floor
+	elseif not x and youspikechargetimer > spikechargetime and you.tempfloor == you.floor
 	then
 	you.attack = "chargespike"
 	you.stop = true
@@ -923,7 +967,7 @@ you.jstop = true
 	you.invince = true
 
 
-	elseif youspikechargetimer > spikechargetime and tempyfloor == floor
+	elseif youspikechargetimer > spikechargetime and you.tempfloor == you.floor
 	then you.stop = true
 	you.im = stomps
 	you.attack = "chargespike"
@@ -1000,32 +1044,36 @@ elseif youspikeprime
 	you.attack = "spike"
 	youspikechargetimer = -80
 	you.v = 0
-	table.insert(youspikes, {x = you.mid + (0 ) * you.lr, y = tempyfloor , lr = you.lr, t = 0, s = 0})
-	table.insert(youspikes, {x = you.mid + (30 ) * you.lr, y = tempyfloor , lr = you.lr, t = -6, s = 0})
-	table.insert(youspikes, {x = you.mid + (65 ) * you.lr, y = tempyfloor , lr = you.lr, t = -12, s = 0})
-	table.insert(youspikes, {x = you.mid + (100 ) * you.lr, y = tempyfloor , lr = you.lr, t = -18, s = 0})
-	table.insert(youspikes, {x = you.mid + (135 ) * you.lr, y = tempyfloor , lr = you.lr, t = -24, s = 0})
-	table.insert(youspikes, {x = you.mid + (170 ) * you.lr, y = tempyfloor , lr = you.lr, t = -30, s = 0})
-	table.insert(youspikes, {x = you.mid + (205 ) * you.lr, y = tempyfloor , lr = you.lr, t = -36, s = 0})
-	table.insert(youspikes, {x = you.mid + (240 ) * you.lr, y = tempyfloor , lr = you.lr, t = -42, s = 0})
-	table.insert(youspikes, {x = you.mid + (275 ) * you.lr, y = tempyfloor , lr = you.lr, t = -48, s = 0})
-	table.insert(youspikes, {x = you.mid + (310 ) * you.lr, y = tempyfloor , lr = you.lr, t = -54, s = 0})
+	table.insert(youspikes, {x = you.mid + (0 + math.random(spikespace)) * you.lr, y = you.tempfloor , lr = you.lr, t = 0, s = 0})
+	table.insert(youspikes, {x = you.mid + (30 + math.random(spikespace)) * you.lr, y = you.tempfloor , lr = you.lr, t = -6, s = 0})
+	table.insert(youspikes, {x = you.mid + (65 + math.random(spikespace)) * you.lr, y = you.tempfloor , lr = you.lr, t = -12, s = 0})
+	table.insert(youspikes, {x = you.mid + (100 + math.random(spikespace)) * you.lr, y = you.tempfloor , lr = you.lr, t = -18, s = 0})
+	table.insert(youspikes, {x = you.mid + (135 + math.random(spikespace)) * you.lr, y = you.tempfloor , lr = you.lr, t = -24, s = 0})
+	table.insert(youspikes, {x = you.mid + (170 + math.random(spikespace)) * you.lr, y = you.tempfloor , lr = you.lr, t = -30, s = 0})
+	table.insert(youspikes, {x = you.mid + (205 + math.random(spikespace)) * you.lr, y = you.tempfloor , lr = you.lr, t = -36, s = 0})
+	table.insert(youspikes, {x = you.mid + (240 + math.random(spikespace)) * you.lr, y = you.tempfloor , lr = you.lr, t = -42, s = 0})
+	table.insert(youspikes, {x = you.mid + (275 + math.random(spikespace)) * you.lr, y = you.tempfloor , lr = you.lr, t = -48, s = 0})
+	table.insert(youspikes, {x = you.mid + (310 + math.random(spikespace)) * you.lr, y = you.tempfloor , lr = you.lr, t = -54, s = 0})
 
 	for i, v in ipairs(youspikes) do
 
-	
-		-- if i > 1 and youspikes[i - 1].y > 0
-		-- 		then
-		-- youspikes[i].y = youspikes[i - 1].y - 60 
-		-- end
 		
-		
-	v.y = spikecheck(v.x + (80 * v.lr), v.y - 8) - 60
-	if v.y < 0 then table.remove(youspikes,i) end
-if spikecheck(v.x + (80 * v.lr), v.y) ~= spikecheck(v.x, v.y)
-	then	table.remove(youspikes,i)
-	--formerly then v.y = - 100
+	if spikecheck(v.x + (80 * v.lr), v.y-1) ~= spikecheck(v.x, v.y-1)
+	then v.y = -100
 	end
+
+	if v.s == 0 and v.y > 0 then v.y = spikecheck(v.x + (80 * v.lr), v.y - 1) - 60 end
+	
+
+	if themap == "library" and v.y >= 1900 - 100 and v.x >= 1407 then table.remove(youspikes,i) end
+		if themap == "library" and v.y >= 1900 - 100 and v.x >= 1407 then table.remove(youspikes,i) end
+		if themap == "library" and v.y >= 1900 - 100 and v.x >= 1407 then table.remove(youspikes,i) end
+		if themap == "library" and v.y >= 1900 - 100 and v.x >= 1407 then table.remove(youspikes,i) end
+		if themap == "library" and v.y >= 1900 - 100 and v.x >= 1407 then table.remove(youspikes,i) end
+		if themap == "library" and v.y >= 1900 - 100 and v.x >= 1407 then table.remove(youspikes,i) end
+	
+
+
 end
 
 	youspikeprime = false
@@ -1035,7 +1083,6 @@ else youspikeprime = false
 	youspikeairprime = false
 	youspikespecial = false
 	youdig = 0
-	you.jstop = false
 
 
 
@@ -1043,7 +1090,7 @@ else youspikeprime = false
 
 end
 
-if youspikechargetimer < 0 or youspikespecial then you.purp = true
+if youspikechargetimer < 0 or youspikespecial or youdig < 0 then you.purp = true
 	else you.purp = false
 	end
 
@@ -1051,4 +1098,3 @@ if youspikechargetimer < 0 or youspikespecial then you.purp = true
 
 
 end
-

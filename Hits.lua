@@ -173,7 +173,7 @@ end
 
 
 --the big hit check
-function hc(objx, objy, objx2, objy2, blockable, dir, dodgable, force, vee, jay, dam, flinching, efftee, xjump, yjump, misc1, misc2, theid)
+function hc(objx, objy, objx2, objy2, blockable, dir, dodgeable, force, vee, jay, dam, flinching, efftee, xjump, yjump, misc1, misc2, theid)
   hitt[1].x = me.x+5
   hitt[1].y = me.y+5
   hitt[1].j = me.j
@@ -207,7 +207,9 @@ function hc(objx, objy, objx2, objy2, blockable, dir, dodgable, force, vee, jay,
    then
       flash = true
       
-      if(not v.dodge and not dodgeable) then
+      if not (v.dodge and dodgeable) then
+          v.dodge = false
+        
       if force then
         v.v = vee
         v.j = jay
@@ -218,7 +220,7 @@ function hc(objx, objy, objx2, objy2, blockable, dir, dodgable, force, vee, jay,
       end
       v.x = v.x + xjump
       v.y = v.y - yjump
-      if(not ((v.block~=0) and blockable)) then
+      if(not ((v.block~=dir) and blockable)) then
         v.flinch = flinching
         v.ft = v.ft + efftee
         v.health = v.health - dam
@@ -234,7 +236,7 @@ me.v = hitt[1].v
 me.flinch = hitt[1].flinch
 me.ft = hitt[1].ft
 me.health = hitt[1].health
-
+me.dodge = hitt[1].dodge
 
 
 you.x = hitt[2].x-5
@@ -244,13 +246,14 @@ you.v = hitt[2].v
 you.flinch = hitt[2].flinch
 you.ft = hitt[2].ft
 you.health = hitt[2].health
+you.dodge = hitt[2].dodge
 
 
 
 end
 
 
-function hboxc(P1, P2, P3, P4, blockable, dir, dodgable, force, vee, jay, dam, flinching, efftee, xjump, yjump, misc1, misc2, theid)
+function hboxc(P1, P2, P3, P4, blockable, dir, dodgeable, force, vee, jay, dam, flinching, efftee, xjump, yjump, misc1, misc2, theid)
   hitt[1].x = me.x+5
   hitt[1].y = me.y+5
   hitt[1].j = me.j
@@ -288,7 +291,7 @@ function hboxc(P1, P2, P3, P4, blockable, dir, dodgable, force, vee, jay, dam, f
    then
       --flash = true
       
-      if(not (dodgeable and v.dodge)) then
+      if not (dodgeable and v.dodge) then
       if force then
         v.v = vee
         v.j = jay
@@ -301,7 +304,11 @@ function hboxc(P1, P2, P3, P4, blockable, dir, dodgable, force, vee, jay, dam, f
       v.y = v.y - yjump
       if (not ((v.block~=0) and blockable)) then
         v.flinch = flinching
-        v.ft = v.ft + efftee
+        if v.ft == 0 then 
+          v.ft = efftee
+          else
+        v.ft = v.ft + efftee/5
+        end
         v.health = v.health - dam
       end
     end
@@ -315,7 +322,6 @@ me.v = hitt[1].v
 me.flinch = hitt[1].flinch
 me.ft = hitt[1].ft
 me.health = hitt[1].health
-me.dodge = hitt[1].dodge
 
 
 you.x = hitt[2].x-5
@@ -325,7 +331,6 @@ you.v = hitt[2].v
 you.flinch = hitt[2].flinch
 you.ft = hitt[2].ft
 you.health = hitt[2].health
-you.dodge = hitt[2].dodge
 
 
 end

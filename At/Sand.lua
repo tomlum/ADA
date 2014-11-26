@@ -473,7 +473,7 @@ elseif ygshhold > 0 then
 	you.jstop = true
 
 elseif ygsrr and not x then
-	repplay(flapsnd2)
+	repplay(you.flapsnd)
 
 	ygshhold = 45
 
@@ -567,7 +567,7 @@ if me.g then mupgs = 0
 	me.jstop = true
 
 elseif gsrr and not x then
-	repplay(flapsnd)
+	repplay(me.flapsnd)
 
 	gshhold = 45
 
@@ -651,8 +651,8 @@ end
 
 if youbsind > 30 then
   youbsind = 0
+    repplay(you.flapblues)
   if me.mid*ybslr < ybsxend*you.lr and ybslr*me.mid > ybslr*(ybssx) and me.feet >= youbslevel and me.y <= youbslevel + 60 then
-    repplay(flapblues2)
 		me.v = you.lr * 15
 		if not (me.block and you.lr ~= me.lr) then
 		me.j = 30
@@ -815,9 +815,9 @@ end
 
 if mebsind > 30 then
   mebsind = 0
+    repplay(me.flapblues)
   if you.mid*mbslr < mbsxend*mbslr and mbslr*you.mid > mbslr*(mbssx) and you.feet >= mebslevel and you.y <= mebslevel + 60 then
 		you.v = me.lr * 15
-    repplay(flapblues)
 		if not (you.block and you.lr ~= me.lr) then
 		you.j = 30
 		you.g = false

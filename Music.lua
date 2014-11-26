@@ -122,9 +122,13 @@ blueflap = love.audio.newSource("sounds/flap.wav", "stream")
 blueflap:setVolume(SFXV)
 blueflap:setPitch(1.5)
 
-flapblues = love.audio.newSource("sounds/blue.mp3", "static")
-flapblues:setVolume(SFXV-adj-.6)
-flapblues:setPitch(1.5)
+me.flapblues = love.audio.newSource("sounds/blue.mp3", "static")
+me.flapblues:setVolume(SFXV-adj-.6)
+me.flapblues:setPitch(1.5)
+
+you.flapblues = love.audio.newSource("sounds/blue.mp3", "static")
+you.flapblues:setVolume(SFXV-adj-.6)
+you.flapblues:setPitch(1.5)
 
 flapyoublues = love.audio.newSource("sounds/blue.mp3", "static")
 flapyoublues:setVolume(SFXV-adj-.6)

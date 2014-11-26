@@ -1,16 +1,16 @@
 
 
-methrowcounter = 0
+me.throwcounter = 0
 
 
-meboltcombocount = 0
+me.boltcombocount = 0
 methrowanimatecounter = 0
 
 
-youthrowcounter = 0
+you.throwcounter = 0
 
 
-youboltcombocount = 0
+you.boltcombocount = 0
 youthrowanimatecounter = 0
 
 
@@ -198,19 +198,19 @@ for i, v in ipairs(youspikes) do
 		else yougree = false
 	end
 
-	if youthrowcounter > 50
-	then youboltcombocount = 0
-		youthrowcounter = 0
+	if you.throwcounter > 50
+	then you.boltcombocount = 0
+		you.throwcounter = 0
 		you.prime = false
-	elseif youboltcombocount < 3 and youthrowcounter > 30
-		then youboltcombocount = 0
-			youthrowcounter = 0
+	elseif you.boltcombocount < 3 and you.throwcounter > 30
+		then you.boltcombocount = 0
+			you.throwcounter = 0
 
-	elseif youboltcombocount < 3 and youboltcombocount > 0 then
-		youthrowcounter = youthrowcounter + 1
-	elseif youboltcombocount >= 3
+	elseif you.boltcombocount < 3 and you.boltcombocount > 0 then
+		you.throwcounter = you.throwcounter + 1
+	elseif you.boltcombocount >= 3
 		then
-		youthrowcounter = youthrowcounter + 1
+		you.throwcounter = you.throwcounter + 1
 	end
 
 
@@ -229,7 +229,7 @@ if you.landing
 		then youboltchargecounter = 0
 	end
 
-	if you.flinch or ygcancel then
+	if you.flinch or you.gcancel then
 		you.attack = "none"
 		youboltchargehold = 20
 		youboltchargecounter = 0
@@ -281,7 +281,7 @@ if you.landing
 	
 
 
-	elseif you.prime == true and youboltcombocount < 5 and not youfired
+	elseif you.prime == true and you.boltcombocount < 5 and not youfired
 		then
 		you.prime = false
 		table.insert(youbolts, {x = you.mid -10  * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = you.j, s = 0, v = boltspeed * you.lr + you.v})
@@ -296,8 +296,8 @@ if you.landing
 		table.insert(youbolts, {x = you.mid -10  * you.lr , y = you.y + 38, lr = you.lr, time = 0, upv = you.j, s = 0, v = boltspeed * you.lr + you.v})
 		end
 		youfired = true
-		youboltcombocount = youboltcombocount + 1
-		youthrowcounter = 0
+		you.boltcombocount = you.boltcombocount + 1
+		you.throwcounter = 0
 		youboltchargecounter = 0
 		
 	else you.prime = false
@@ -533,19 +533,19 @@ function bolts.update()
 	end
 
 
-	if methrowcounter > 50
-	then meboltcombocount = 0
-		methrowcounter = 0
+	if me.throwcounter > 50
+	then me.boltcombocount = 0
+		me.throwcounter = 0
 		me.prime = false
-	elseif meboltcombocount < 3 and methrowcounter > 30
-		then meboltcombocount = 0
-			methrowcounter = 0
+	elseif me.boltcombocount < 3 and me.throwcounter > 30
+		then me.boltcombocount = 0
+			me.throwcounter = 0
 
-	elseif meboltcombocount < 3 and meboltcombocount > 0 then
-		methrowcounter = methrowcounter + 1
-	elseif meboltcombocount >= 3
+	elseif me.boltcombocount < 3 and me.boltcombocount > 0 then
+		me.throwcounter = me.throwcounter + 1
+	elseif me.boltcombocount >= 3
 		then
-		methrowcounter = methrowcounter + 1
+		me.throwcounter = me.throwcounter + 1
 	end
 
 
@@ -565,7 +565,7 @@ if me.landing
 		then meboltchargecounter = 0
 	end
 
-	if me.flinch or mgcancel then
+	if me.flinch or me.gcancel then
 		me.attack = "none"
 		meboltchargehold = 20
 		meboltchargecounter = 0
@@ -614,7 +614,7 @@ if me.landing
 	
 
 
-	elseif me.prime == true and meboltcombocount < 5 and not mefired
+	elseif me.prime == true and me.boltcombocount < 5 and not mefired
 		then
 		me.prime = false
 
@@ -633,8 +633,8 @@ if me.landing
 		table.insert(bolts, {x = me.mid -10 * me.lr , y = me.y + 38, lr = me.lr, time = 0, upv = me.j, s = 0, v = boltspeed * me.lr + me.v})
 	end
 		mefired = true
-		meboltcombocount = meboltcombocount + 1
-		methrowcounter = 0
+		me.boltcombocount = me.boltcombocount + 1
+		me.throwcounter = 0
 		meboltchargecounter = 0
 		
 	else me.prime = false

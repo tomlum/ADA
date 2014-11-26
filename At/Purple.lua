@@ -250,7 +250,7 @@ medig = 0
 
 function spikes.shoot(x)
 
-if me.flinch or mpcancel then 
+if me.flinch or me.pcancel then 
 	spikechargetimer = 0
 	me.attack = "none"
 	mespikeairprime = false
@@ -806,7 +806,7 @@ youdig = 0
 
 function youspikes.shoot(x)
 
-if you.flinch or ypcancel then 
+if you.flinch or you.pcancel then 
 	youspikechargetimer = 0
 	you.attack = "none"
 	youspikeairprime = false

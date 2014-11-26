@@ -1,5 +1,4 @@
 
-sandbolt = love.graphics.newImage("me/attack/sandbolt.png")
 
 me.throwcounter = 0
 
@@ -11,82 +10,8 @@ methrowanimatecounter = 0
 you.throwcounter = 0
 
 
-you.boltcombocount = 0
+youboltcombocount = 0
 youthrowanimatecounter = 0
-
-aimwait = 10
-waittoaim = 0
-youwaittoaim = 0
-
-function xpint(a,A,b,B)
-
-s1 = (a.y-A.y)/(a.x-A.x)
-s2 = (b.y-B.y)/(b.x-B.x)
-
-if A.x == a.x then
-  if (b.x < a.x and B.x > a.x) or
-  (B.x < a.x and b.x > a.x) then return true
-  else return false 
-end
-elseif B.x == b.x then
-  if (a.x < b.x and A.x > b.x) or
-  (A.x < b.x and a.x > b.x) then return true
-  else return false 
-  end
-end
-
-if math.abs(s1 - s2) < .01 then return false
-end
-
-thepy = ((-s1*s2*a.x)-(s1*s2*b.x)+(s1*b.y)-(s2*a.y))/(s1 - s2)
-thepx = ((thepy-a.y)/s1) + a.x 
-
-if thepx < math.max(math.max(a.x, A.x), math.max(b.x, B.x))
-and thepx > math.min(math.min(a.x, A.x), math.min(b.x, B.x))
-and thepy < math.max(math.max(a.y, A.y), math.max(b.y, B.y))
-and thepy > math.min(math.min(a.y, A.y), math.min(b.y, B.y))
-then return true
-else return false
-end
-end
-
-
-
-
-
-
-function findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, seg1, seg2)
-    local a1,b1,a2,b2 = l1p2y-l1p1y, l1p1x-l1p2x, l2p2y-l2p1y, l2p1x-l2p2x
-    local c1,c2 = a1*l1p1x+b1*l1p1y, a2*l2p1x+b2*l2p1y
-    local det,x,y = a1*b2 - a2*b1
-    if det==0 then return false end
-    x,y = (b2*c1-b1*c2)/det, (a1*c2-a2*c1)/det
-    if seg1 or seg2 then
-        local min,max = math.min, math.max
-        if seg1 and not (min(l1p1x,l1p2x) <= x and x <= max(l1p1x,l1p2x) and min(l1p1y,l1p2y) <= y and y <= max(l1p1y,l1p2y)) or
-           seg2 and not (min(l2p1x,l2p2x) <= x and x <= max(l2p1x,l2p2x) and min(l2p1y,l2p2y) <= y and y <= max(l2p1y,l2p2y)) then
-            return false
-        end
-    end
-    return true
-end
-
-function findxIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y)
-  
-  if findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, true, true) or findIntersect(l1p2x,l1p2y,l1p1x,l1p1y,l2p1x,l2p1y, l2p2x,l2p2y, true, true) then
-    return true
-  else return false
-  end
-  
-end
-
-function pint(p11,p12,p21,p22)
-  return findIntersect(p11.x+.2,p11.y+.2,p12.x,p12.y,p21.x+.2,p21.y+.2,p22.x,p22.y,true,true)
-end
-
-
-
-
 
 
 
@@ -95,13 +20,10 @@ youbolts = {}
 function youbolts.draw()
 			for i,v in ipairs(youbolts) do
 			
-				if v.s == -1 then love.graphics.draw(purpbolt, v.x, v.y, v.lr* math.atan(-v.upv/math.abs(v.v)), v.lr, 1)
-			elseif v.s >= 0 then love.graphics.draw(bolt, v.x, v.y, v.lr * math.atan(-v.upv/math.abs(v.v)), v.lr, 1)
-			elseif v.s == -200 then love.graphics.draw(bolt, v.x, v.y, v.lr*math.atan(-v.upv/math.abs(v.v)), v.lr, 1)
-			elseif v.s == -201 then love.graphics.draw(hookhead, v.x, v.y, v.lr*math.atan(-v.upv/math.abs(v.v)), v.lr, 1)
-			elseif v.s == -202 then love.graphics.draw(sandbolt, v.x, v.y, v.lr*math.atan(-v.upv/math.abs(v.v)), v.lr, 1)
-		
-
+			if v.s == -1 then love.graphics.draw(purpbolt, v.x, v.y, math.asin((-v.upv*v.lr)/80), v.lr, 1)
+			elseif v.s >= 0 then love.graphics.draw(bolt, v.x, v.y, math.asin((-v.upv*v.lr)/65), v.lr, 1)
+			elseif v.s == -200 then love.graphics.draw(bolt, v.x, v.y, math.asin((-v.upv*v.lr )/65), v.lr, 1)
+			elseif v.s == -201 then love.graphics.draw(hookhead, v.x, v.y, math.asin((-v.upv*v.lr)/80), v.lr, 1)
 
 		
 
@@ -113,23 +35,18 @@ end
 
 
 function youbolts.update()
+	for i, v in ipairs(youbolts) do
 
 	
 
-	for i = #youbolts, 1, -1 do
-		local v = youbolts[i]
-	
 
+		local sangle = math.asin(math.abs(v.upv)/80)
+		local shalfwidth = (80*math.cos(sangle)) 
 
-		local sangle = v.lr*math.atan(-v.upv/math.abs(v.v))
-		local sboltwidth = (80*math.cos(sangle))
-
-		local angle = v.lr*math.atan(-v.upv/math.abs(v.v))
-		local boltwidth = (65*math.cos(sangle))
-		local spoint = v.x + (sboltwidth *v.lr)
-		local point = v.x + (boltwidth *v.lr)
-		local ypoint = v.y + (65*math.sin(sangle))*v.lr
-		local sypoint = v.y + (80*math.sin(sangle))*v.lr
+		local angle = math.asin(math.abs(v.upv)/65)
+		local halfwidth = (60*math.cos(sangle)) 
+		local spoint = v.x + (shalfwidth *v.lr)
+		local point = v.x + (halfwidth *v.lr)
 
 		if v.s == 1 and v.upv~=0 and v.y - v.upv < floor and (v.time%chboltmultrate) == chboltmultrate-1 then table.insert(youbolts, {x = v.x , y = v.y, lr = v.lr, time = v.time + chboltmultrate*.3, upv = -v.upv, s = 2, v = v.v})
 		end
@@ -137,7 +54,7 @@ function youbolts.update()
 		end
 
 
-		if v.s == -1 and v.time > timetodrop and v.y - v.upv < floor and v.upv < 80 and not v.stuckinwall
+		if v.s == -1 and v.time > timetodrop and v.y - v.upv < floor and v.upv < 80 
 		then
 		v.upv = v.upv - 1
 		
@@ -145,7 +62,7 @@ function youbolts.update()
 
 
 	if v.s == -1 and spoint * v.lr < (me.mid) * v.lr and (spoint + v.v) * v.lr  +1 > (me.mid + me.v) * v.lr
-	and not me.dodge and v.y - v.upv + 7 > me.y and v.y - v.upv + 7 < me.feet
+	and v.y - v.upv + 7 > me.y and v.y - v.upv + 7 < me.feet
 			then 
 			me.v = me.v + v.lr * 32
 				if not (me.block and v.lr~=me.lr)
@@ -154,23 +71,8 @@ function youbolts.update()
 				
 				end	
 
-	elseif v.s == -202 and v.v ~= 0 and not me.dodge and (findIntersect(point,ypoint,point+v.v,ypoint-v.upv,me.x+me.v,me.y-me.j,me.x+30,me.y+60,true,true)
-										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,me.x+me.v+30,me.y-me.j,me.x,me.y+60,true,true)
-										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,me.x+me.v,me.y-me.j+60,me.x+30,me.y,true,true)
-										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,me.x+me.v+30,me.y-me.j+60,me.x,me.y,true,true))
-			then 
-			table.remove(youbolts, i)
-			me.v = me.v + v.v
-			me.g = false
-			me.j = me.j + sandboltknockup
-				if not (me.block and v.lr~=me.lr)
-				then
-				me.health = me.health - sandboltdam
-				me.ft = gsft
-				end	
 
-
-	elseif v.s == -201 and spoint * v.lr < (me.mid) * v.lr and (spoint + v.v) * v.lr +1> (me.mid + me.v) * v.lr
+	elseif v.s == -201 and spoint * v.lr < (me.mid) * v.lr and (spoint + v.v) * v.lr  +1> (me.mid + me.v) * v.lr
 	and not me.dodge
 	and v.y - v.upv + 7 > me.y and v.y - v.upv + 7 < me.feet
 			then table.remove(youbolts, i)
@@ -183,13 +85,10 @@ function youbolts.update()
 				
 
 
-	elseif v.s >= 0 and v.v ~= 0  and not me.dodge and (findIntersect(point,ypoint,point+v.v,ypoint-v.upv,me.x+me.v,me.y-me.j,me.x+30,me.y+60,true,true)
-										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,me.x+me.v+30,me.y-me.j,me.x,me.y+60,true,true)
-										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,me.x+me.v,me.y-me.j+60,me.x+30,me.y,true,true)
-										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,me.x+me.v+30,me.y-me.j+60,me.x,me.y,true,true))
+	elseif v.s >= 0 and point * v.lr < (me.mid) * v.lr and (point + v.v) * v.lr  +1> (me.mid + me.v) * v.lr
+	and v.y - v.upv + 7 > me.y and v.y - v.upv + 7 < me.feet
 			then table.remove(youbolts, i)
-			me.v = me.v + v.v/3
-			me.j = me.j + v.upv/3
+			me.v = me.v + v.lr * 4
 				if not (me.block and v.lr~=me.lr)
 				then
 				me.health = me.health - boltdamage
@@ -197,7 +96,6 @@ function youbolts.update()
 				end	
 
 	end
-
 
 
 		if v.time > boltdespawntime
@@ -209,8 +107,7 @@ function youbolts.update()
 
 
 
-
-	elseif v.s == -1 and platformcheck((v.x + (v.lr*sboltwidth)), v.y-v.upv+7, v.upv-2)
+	elseif v.s == -1 and platformcheck((v.x + (v.lr*shalfwidth)), v.y - v.upv - 7)
 		 then table.remove(youbolts, i)
 			
 	table.insert(youspikes, {x = v.x + (0 + math.random(8)) * v.lr, y = v.y , lr = v.lr, t = 0, s = 0})
@@ -237,7 +134,11 @@ for i, v in ipairs(youspikes) do
 
 		
 
-
+		if i > 1 and youspikes[i - 1].y > 0 and youspikes[i - 1].s ~= -200 
+				then
+		youspikes[i].y = youspikes[i - 1].y - 60 
+		end
+		
 		
 	v.y = spikecheck(v.x + (80 * v.lr), v.y - 8) - 60
 
@@ -248,52 +149,14 @@ for i, v in ipairs(youspikes) do
 
 
 
-	elseif themap == "library" and v.y - v.upv + 4 >= floor -50	and point + v.v > 1407 and v.lr > 0 then
-		v.y = v.y
-		v.x = 1407 - 20
-		
-		v.s = 0
-		v.time = v.time + 1
-	elseif point + v.v > enviro.rightwall-50 then
-		if v.s == -1 then v.stuckinwall = true end
-		v.y = v.y
-    if v.x~= enviro.rightwall-80 and (math.min(math.abs(v.x - you.x),math.abs(v.x - me.x)) < 200) then 
-    repplay(greenwallbreaks)
-    end
- 	
-		v.x = enviro.rightwall - 80
-    
-		
-		if v.s == 1 or v.s == 2 then v.s = 0 end
-		v.time = v.time + 1
-	elseif point + v.v < 50 then
-		if v.s == -1 then v.stuckinwall = true end
-		 v.y = v.y
-    if v.x~= 80 and (math.min(math.abs(v.x - you.x),math.abs(v.x - me.x)) < 200) then
-    repplay(greenwallbreaks)
-    end
-		v.x = 80
-		
-		if v.s == 1 or v.s == 2 then v.s = 0 end
-		v.time = v.time + 1
-
 
 	elseif v.y - v.upv + 4 >= floor
 		then v.y = floor + (v.upv*.7) 
-		
-		
+		v.x = v.x + v.v
+		v.v = 0
 		v.time = v.time + 1
-		if v.s == 1 or v.s == 2 then v.s = 0 end
 
-
-	elseif v.y - v.upv + 4 >= floor - 60 and point > 1407 and themap == "library"
-		then v.y = floor - 60 + (v.upv*.7) 
-		if v.s == -1 then v.stuckinwall = true end
-		
-		
-		v.time = v.time + 1
-		v.s = 0
-    
+ 	
 
 
 
@@ -310,17 +173,9 @@ for i, v in ipairs(youspikes) do
 		v.y = v.y - v.upv
 		end
 	end
-  
-  
-  if v.s >= 0 and distan(me.mid,me.y+30, point,ypoint) < whiffradius and distan(me.mid,me.y+30, point+v.v,ypoint-v.upv) > whiffradius and math.abs(v.v + v.upv) > 2 and (v.x < enviro.rightwall - 81 and v.x > 81)  then
-    repplay(whiff2)
-    end
-  
-  
-  
 	end
 
-	if youfired and youthrowanimatecounter < pauseforgreen
+	if youfired and youthrowanimatecounter < 5
 	then youthrowanimatecounter = youthrowanimatecounter + 1
 
 	if you.j ~= 0
@@ -339,36 +194,28 @@ for i, v in ipairs(youspikes) do
 		youthrowanimatecounter = 0
 	end
 
-
+	if youfired and youthrowanimatecounter < 5 or youboltchargecounter>=50 or you.im==boltrelease then yougree=true
+		else yougree = false
+	end
 
 	if you.throwcounter > 50
-	then you.boltcombocount = 0
+	then youboltcombocount = 0
 		you.throwcounter = 0
 		you.prime = false
-	elseif you.boltcombocount < 3 and you.throwcounter > 30
-		then you.boltcombocount = 0
+	elseif youboltcombocount < 3 and you.throwcounter > 30
+		then youboltcombocount = 0
 			you.throwcounter = 0
 
-	elseif you.boltcombocount < 3 and you.boltcombocount > 0 then
+	elseif youboltcombocount < 3 and youboltcombocount > 0 then
 		you.throwcounter = you.throwcounter + 1
-	elseif you.boltcombocount >= 3
+	elseif youboltcombocount >= 3
 		then
 		you.throwcounter = you.throwcounter + 1
 	end
 
 
-	if youfired and youthrowanimatecounter < pauseforgreen or youboltchargecounter>=50 or you.im==boltrelease then yougree=true
-		else yougree = false
-	end
-		
-    if youthrowanimatecounter == 1 then 
-  youwaittoaim = aimwait
-elseif youwaittoaim > 0 then youwaittoaim = youwaittoaim - 1
-  end
-
-if yougree or you.green or youwaittoaim > 0 then you.stop = true you.jstop = true
-end
 	
+		
 		
 end
 
@@ -434,10 +281,10 @@ if you.landing
 	
 
 
-	elseif you.prime == true and you.boltcombocount < 5 and not youfired
+	elseif you.prime == true and youboltcombocount < 5 and not youfired
 		then
 		you.prime = false
-		table.insert(youbolts, {x = you.mid  , y = you.y + 24, lr = you.lr, time = 0, upv = yougupv, s = 0, v = yougv * you.lr + you.v})
+		table.insert(youbolts, {x = you.mid -10  * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = you.j, s = 0, v = boltspeed * you.lr + you.v})
 		
 		if gr2:isStopped() then
 			gr2:play()
@@ -446,10 +293,10 @@ if you.landing
 		end
 
 		if not you.g then
-		table.insert(youbolts, {x = you.mid +12  * you.lr , y = you.y + 38, lr = you.lr, time = 0, upv = yougupv, s = 0, v = yougv * you.lr + you.v})
+		table.insert(youbolts, {x = you.mid -10  * you.lr , y = you.y + 38, lr = you.lr, time = 0, upv = you.j, s = 0, v = boltspeed * you.lr + you.v})
 		end
 		youfired = true
-		you.boltcombocount = you.boltcombocount + 1
+		youboltcombocount = youboltcombocount + 1
 		you.throwcounter = 0
 		youboltchargecounter = 0
 		
@@ -479,12 +326,12 @@ bolts = {}
 function bolts.draw()
 			for i,v in ipairs(bolts) do
 			
-			if v.s == -1 then love.graphics.draw(purpbolt, v.x, v.y, v.lr* math.atan(-v.upv/math.abs(v.v)), v.lr, 1)
-			elseif v.s >= 0 then love.graphics.draw(bolt, v.x, v.y, v.lr * math.atan(-v.upv/math.abs(v.v)), v.lr, 1)
-			elseif v.s == -200 then love.graphics.draw(bolt, v.x, v.y, v.lr*math.atan(-v.upv/math.abs(v.v)), v.lr, 1)
-			elseif v.s == -201 then love.graphics.draw(hookhead, v.x, v.y, v.lr*math.atan(-v.upv/math.abs(v.v)), v.lr, 1)
-			elseif v.s == -202 then love.graphics.draw(sandbolt, v.x, v.y, v.lr*math.atan(-v.upv/math.abs(v.v)), v.lr, 1)
-		
+			if v.s == -1 then love.graphics.draw(purpbolt, v.x, v.y, math.asin((-v.upv*v.lr)/80), v.lr, 1)
+			elseif v.s >= 0 then love.graphics.draw(bolt, v.x, v.y, math.asin((-v.upv*v.lr)/65), v.lr, 1)
+			elseif v.s == -200 then love.graphics.draw(bolt, v.x, v.y, math.asin((-v.upv*v.lr )/65), v.lr, 1)
+			elseif v.s == -201 then love.graphics.draw(hookhead, v.x, v.y, math.asin((-v.upv*v.lr)/80), v.lr, 1)
+
+
 
 
 	end
@@ -504,19 +351,17 @@ end
 
 
 function bolts.update()
-	for i = #bolts, 1, -1 do
-		local v = bolts[i]
+	for i, v in ipairs(bolts) do
 
 
-		local sangle = v.lr*math.atan(-v.upv/math.abs(v.v))
-		local sboltwidth = (80*math.cos(sangle))
 
-		local angle = v.lr*math.atan(-v.upv/math.abs(v.v))
-		local boltwidth = (65*math.cos(sangle))
-		local spoint = v.x + (sboltwidth *v.lr)
-		local point = v.x + (boltwidth *v.lr)
-		local ypoint = v.y + (65*math.sin(sangle))*v.lr
-		local sypoint = v.y + (80*math.sin(sangle))*v.lr
+		local sangle = math.asin(math.abs(v.upv)/80)
+		local shalfwidth = (80*math.cos(sangle))
+
+		local angle = math.asin(math.abs(v.upv)/65)
+		local halfwidth = (65*math.cos(sangle))
+		local spoint = v.x + (shalfwidth *v.lr)
+		local point = v.x + (halfwidth *v.lr)
 
 
 		if v.s == 1 and v.upv~=0 and v.y - v.upv < floor and (v.time%chboltmultrate) == chboltmultrate-1 then table.insert(bolts, {x = v.x , y = v.y, lr = v.lr, time = v.time + chboltmultrate*.3, upv = -v.upv, s = 2, v = v.v})
@@ -526,7 +371,7 @@ function bolts.update()
 
 
 
-		if v.s == -1 and v.time > timetodrop and v.y - v.upv < floor and v.upv < 80 and not v.stuckinwall
+		if v.s == -1 and v.time > timetodrop and v.y - v.upv < floor and v.upv < 80 
 		then
 		v.upv = v.upv - 1
 		
@@ -545,24 +390,6 @@ function bolts.update()
 			end
 
 
-	elseif v.s == -202 and v.v ~= 0 and not you.dodge and (findIntersect(point,ypoint,point+v.v,ypoint-v.upv,you.x+you.v,you.y-you.j,you.x+30,you.y+60,true,true)
-										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,you.x+you.v+30,you.y-you.j,you.x,you.y+60,true,true)
-										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,you.x+you.v,you.y-you.j+60,you.x+30,you.y,true,true)
-										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,you.x+you.v+30,you.y-you.j+60,you.x,you.y,true,true))
-			then
-		 	table.remove(bolts, i)
-
-			you.v = you.v + v.v
-			you.g = false
-			you.j = you.j + sandboltknockup
-
-				if not (you.block and v.lr~=you.lr)
-				then
-				you.health = you.health - sandboltdam
-				you.ft = gsft
-				end	
-
-
 	elseif v.s == -1 and spoint * v.lr < (you.mid) * v.lr and (spoint + v.v) * v.lr  +1 > (you.mid + you.v) * v.lr
 	and not you.dodge
 	and v.y - v.upv + 7 > you.y and v.y - v.upv + 7 < you.feet then
@@ -574,13 +401,10 @@ function bolts.update()
 				end	
 
 
-	elseif v.s >= 0 and v.v ~= 0 and not you.dodge and (findIntersect(point,ypoint,point+v.v,ypoint-v.upv,you.x+you.v,you.y-you.j,you.x+30,you.y+60,true,true)
-										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,you.x+you.v+30,you.y-you.j,you.x,you.y+60,true,true)
-										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,you.x+you.v,you.y-you.j+60,you.x+30,you.y,true,true)
-										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,you.x+you.v+30,you.y-you.j+60,you.x,you.y,true,true))
+	elseif v.s >= 0 and point * v.lr < (you.mid) * v.lr and (point + v.v) * v.lr  +1 > (you.mid + you.v) * v.lr
+	and v.y - v.upv + 7 > you.y and v.y - v.upv + 7 < you.feet
 			then table.remove(bolts, i)
-			you.v = you.v + v.v/3
-			you.j = you.j + v.upv/3
+			you.v = you.v + v.lr * 4
 				if not (you.block and v.lr~=you.lr)
 				then
 				you.health = you.health - boltdamage
@@ -597,26 +421,12 @@ function bolts.update()
 
 		elseif v.x < -100 or v.x > enviro.rightwall + 100
 		then table.remove(bolts, i)
-		table.remove(bolts, i)
-		table.remove(bolts, i)
-		table.remove(bolts, i)
-		table.remove(bolts, i)
-		table.remove(bolts, i)
-		table.remove(bolts, i)
-		table.remove(bolts, i)
-		table.remove(bolts, i)
-		table.remove(bolts, i)
-		table.remove(bolts, i)
-		table.remove(bolts, i)
-		table.remove(bolts, i)
-		table.remove(bolts, i)
-		table.remove(bolts, i)
 
 
 
 
 
-	elseif v.s == -1 and platformcheck((v.x + (v.lr*sboltwidth)), v.y-v.upv+7, v.upv-2)
+	elseif v.s == -1 and platformcheck((v.x + (v.lr*shalfwidth)), v.y - v.upv - 7)
 		 then table.remove(bolts, i)
 			
 	table.insert(spikes, {x = v.x + (0 + math.random(8)) * v.lr, y = v.y , lr = v.lr, t = 0, s = 0})
@@ -642,6 +452,10 @@ function bolts.update()
 
 		
 
+		if i > 1 and spikes[i - 1].y > 0 and spikes[i - 1].s ~= -200
+				then
+		spikes[i].y = spikes[i - 1].y - 60 
+		end
 		
 		
 	v.y = spikecheck(v.x + (80 * v.lr), v.y - 8) - 60
@@ -669,50 +483,15 @@ function bolts.update()
 
 
 
-elseif themap == "library" and v.y - v.upv + 4 >= floor -50	and point + v.v > 1407 and v.lr > 0 then
 
-		v.y = v.y
-		v.x = 1407 - 20
-		
-		v.s = 0
-		v.time = v.time + 1
-	elseif point + v.v > enviro.rightwall-50 then
-		if v.s == -1 then v.stuckinwall = true end
-		v.y = v.y
-    if v.x~= enviro.rightwall-80 and (math.min(math.abs(v.x - you.x),math.abs(v.x - me.x)) < 200) then 
-    repplay(greenwallbreaks)
-    end
-		v.x = enviro.rightwall - 80
-		
-		if v.s == 1 or v.s == 2 then v.s = 0 end
-		v.time = v.time + 1
-	elseif point + v.v < 50 then
-		if v.s == -1 then v.stuckinwall = true end
-		 v.y = v.y
-     if v.x~= 80 and (math.min(math.abs(v.x - you.x),math.abs(v.x - me.x)) < 200) then 
-    repplay(greenwallbreaks)
-    end
-		v.x = 80
-    
-		
-		if v.s == 1 or v.s == 2 then v.s = 0 end
-		v.time = v.time + 1
-		
 
-	elseif v.y - v.upv + 4 >= floor
+
+	elseif v.s >= 0 and v.y - v.upv + 4 >= floor
 		then v.y = floor + (v.upv*.7) 
-		
-		
+		v.x = v.x + v.v
+		v.v = 0
 		v.time = v.time + 1
-		if v.s == 1 or v.s == 2 then v.s = 0 end
 
-	elseif v.y - v.upv + 4 >= floor - 60 and point > 1407 and themap == "library"
-		then v.y = floor - 60 + (v.upv*.7) 
-		if v.s == -1 then v.stuckinwall = true end
-		
-		
-		v.time = v.time + 1
-		v.s = 0
  	
 
 
@@ -726,16 +505,10 @@ elseif themap == "library" and v.y - v.upv + 4 >= floor -50	and point + v.v > 14
 		v.y = v.y - v.upv
 		end
 	
-end
-
-if v.s >= 0 and distan(you.mid,you.y+30, point,ypoint) < whiffradius and distan(you.mid,you.y+30, point+v.v,ypoint-v.upv) > whiffradius and math.abs(v.v + v.upv) > 2 and (v.x < enviro.rightwall - 81 and v.x > 81) then
-    repplay(whiff1)
-  end
-  
-
+	end
 	end
 
-	if mefired and methrowanimatecounter < pauseforgreen
+	if mefired and methrowanimatecounter < 5
 	then 
 		methrowanimatecounter = methrowanimatecounter + 1
 
@@ -755,7 +528,9 @@ if v.s >= 0 and distan(you.mid,you.y+30, point,ypoint) < whiffradius and distan(
 		methrowanimatecounter = 0
 	end
 
-
+	if mefired and methrowanimatecounter < 5 or meboltchargecounter>=50 or me.im==boltrelease then megree=true
+		else megree = false
+	end
 
 
 	if me.throwcounter > 50
@@ -773,17 +548,9 @@ if v.s >= 0 and distan(you.mid,you.y+30, point,ypoint) < whiffradius and distan(
 		me.throwcounter = me.throwcounter + 1
 	end
 
-if mefired and methrowanimatecounter < pauseforgreen or meboltchargecounter>=50 or me.im==boltrelease then megree=true
-		else megree = false
-	end
 
-if methrowanimatecounter == 1 then 
-  waittoaim = aimwait
-elseif waittoaim > 0 then waittoaim = waittoaim - 1
-  end
 
-if megree or me.green or waittoaim > 0 then me.stop = true me.jstop = true
-end
+
 	
 end
 
@@ -793,8 +560,6 @@ meboltchargecounter = 0
 meboltchargehold = 20
 
 function bolts.shoot(x)
-  
-  
 	
 if me.landing
 		then meboltchargecounter = 0
@@ -852,9 +617,9 @@ if me.landing
 	elseif me.prime == true and me.boltcombocount < 5 and not mefired
 		then
 		me.prime = false
-table.insert(bolts, {x = me.mid, y = me.y +24, lr = me.lr, time = 0, upv = megupv, s = 0, v = megv * me.lr + me.v})
-	
 
+		table.insert(bolts, {x = me.mid -10 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = me.j, s = 0, v = boltspeed * me.lr + me.v})
+		
 		if gr1:isStopped() then
 			gr1:play()
 		else gr1:rewind()
@@ -865,8 +630,8 @@ table.insert(bolts, {x = me.mid, y = me.y +24, lr = me.lr, time = 0, upv = megup
 
 
 		if not me.g then
-		table.insert(bolts, {x = me.mid +12 * me.lr , y = me.y + 38, lr = me.lr, time = 0, upv = megupv, s = 0, v = megv * me.lr + me.v})		mefired = true
-		end
+		table.insert(bolts, {x = me.mid -10 * me.lr , y = me.y + 38, lr = me.lr, time = 0, upv = me.j, s = 0, v = boltspeed * me.lr + me.v})
+	end
 		mefired = true
 		me.boltcombocount = me.boltcombocount + 1
 		me.throwcounter = 0
@@ -876,14 +641,9 @@ table.insert(bolts, {x = me.mid, y = me.y +24, lr = me.lr, time = 0, upv = megup
 		meboltchargecounter = 0
 		me.attack = "none"
 
+
+
+	end
 end
 
 
-
-
-
-
-
-
-
-end

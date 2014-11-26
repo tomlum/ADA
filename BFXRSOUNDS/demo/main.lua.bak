@@ -517,7 +517,7 @@ lights()
 
 blocknbusy()
 
-bluegreen(me.breen)
+bluegreen(mebreen)
 you.bluegreen(you.breen)
 
 bluepurple(me.burple)
