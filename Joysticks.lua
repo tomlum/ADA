@@ -130,6 +130,10 @@ yougupv = 0
 megupv = 0
 yougv = boltspeed
 megv = boltspeed
+yougpv = boltspeed/2
+megpv = boltspeed/2
+megpupv = 0
+yougpupv = 0
 
 
 

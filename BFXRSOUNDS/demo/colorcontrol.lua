@@ -770,7 +770,7 @@ if mebur
  or megur 
  or mepell
  or mebell  
- -- or megree
+ -- or me.gree
  -- or meblu
  -- or mepurp
  -- or meyell
@@ -786,7 +786,7 @@ if  you.bur
  or youbre
 or youpell
 or youbell
- -- or yougree
+ -- or you.gree
  -- or youblu
  -- or youpurp
  -- or youyell
@@ -799,7 +799,7 @@ end
 
 
 
-if you.blue and you.green and not yougree and not youblu then 
+if you.blue and you.green and not you.gree and not youblu then 
 	you.breen = true
 	you.gcancel = true
 	you.pcancel = true
@@ -819,7 +819,7 @@ elseif not you.green and not you.blue then you.breen = false
 end
 
 
-if me.blue and me.green and not megree and not meblu then 
+if me.blue and me.green and not me.gree and not meblu then 
 	me.breen = true
 	me.gcancel = true
 	me.pcancel = true
@@ -882,7 +882,7 @@ end
 
 
 
---add and not megree?is this causing trouble?
+--add and not me.gree?is this causing trouble?
 if me.green and me.purple and not me.purp then 
 	me.gurple = true
 	me.gcancel = true
@@ -1032,7 +1032,7 @@ elseif not me.green and not me.yellow then me.gellow = false
 end
 
 
-if you.yellow and you.green and not yougree and not youyell then 
+if you.yellow and you.green and not you.gree and not youyell then 
 	you.gellow = true
 
 	you.ycancel = true
@@ -1095,7 +1095,7 @@ if meblu or me.blue then
 	me.yellow = false
 end
 
-if megree or me.green then
+if me.gree or me.green then
 	me.purple = false
 	me.blue = false
 	me.yellow = false
@@ -1117,7 +1117,7 @@ if youblu or you.blue then
 	you.yellow = false
 end
 
-if yougree or you.green then
+if you.gree or you.green then
 	you.purple = false
 	you.blue = false
 	you.gcancel = false

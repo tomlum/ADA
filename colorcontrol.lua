@@ -1003,7 +1003,7 @@ end
 function anyofmyprimes()
 if me.blue or me.blu
 or me.yellow or meyell
-or me.green or megree
+or me.green or me.gree
 or me.purple or me.purp
 or me.sand or mesan
 then return true
@@ -1014,7 +1014,7 @@ end
 function anyofyourprimes()
 if you.blue or you.blu
 or you.yellow or youyell
-or you.green or yougree
+or you.green or you.gree
 or you.purple or youpurp
 or you.sand or yousan
 then return true
@@ -1153,7 +1153,7 @@ if mebur
 
 
 
- -- or megree
+ -- or me.gree
  -- or me.blu
  -- or mepurp
  -- or meyell
@@ -1180,7 +1180,7 @@ or yougran
 or youyen
 or you.running
 
- -- or yougree
+ -- or you.gree
  -- or you.blu
  -- or youpurp
  -- or youyell
@@ -1210,7 +1210,7 @@ elseif not you.sand and not you.blue then you.bland = false
 end
 
 
-if me.green and me.sand and not me.san and not megree then 
+if me.green and me.sand and not me.san and not me.gree then 
 	mcombofalsify()
 	me.grand = true
 elseif not me.sand and not me.green then me.grand = false
@@ -1234,7 +1234,7 @@ end
 
 
 
-if you.green and you.sand and not you.san and not yougree then 
+if you.green and you.sand and not you.san and not you.gree then 
 	ycombofalsify()
 	you.grand = true
 elseif not you.sand and not you.green then you.grand = false
@@ -1262,14 +1262,14 @@ end
 
 
 
-if you.blue and you.green and not yougree and not you.blu then 
+if you.blue and you.green and not you.gree and not you.blu then 
 	ycombofalsify()
 	you.breen = true
 elseif not you.green and not you.blue then you.breen = false
 end
 
 
-if me.blue and me.green and not megree and not me.blu then 
+if me.blue and me.green and not me.gree and not me.blu then 
 	mcombofalsify()
 	me.breen = true
 elseif not me.green and not me.blue then me.breen = false
@@ -1293,7 +1293,7 @@ end
 
 
 
---add and not megree?is this causing trouble?
+--add and not me.gree?is this causing trouble?
 if me.green and me.purple and not me.purp then 
 	mcombofalsify()
 	me.gurple = true
@@ -1352,7 +1352,7 @@ elseif not me.green and not me.yellow then me.gellow = false
 end
 
 
-if you.yellow and you.green and not yougree and not youyell then 
+if you.yellow and you.green and not you.gree and not youyell then 
 	ycombofalsify()
 	you.gellow = true
 
@@ -1404,7 +1404,7 @@ if me.blu or me.blue then
 	me.bcancel = false
 end
 
-if megree or me.green then
+if me.gree or me.green then
 	mclearprimarys(me.green)
 	me.gcancel = false
 end
@@ -1420,7 +1420,7 @@ if you.blu or you.blue then
 	you.bcancel = false
 end
 
-if yougree or you.green then
+if you.gree or you.green then
 	yclearprimarys(you.green)
 	you.gcancel = false
 end

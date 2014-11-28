@@ -11,7 +11,7 @@
 --for combo attacks, make sure the solo attacks say "controller1.a1 and not controller1.a2-3"
 --or something, that might not fix it
 --maybe if in close range the green attack pushes you back
---maybe rotate bolts so they look better, use trig
+--maybe rotate me.bolts so they look better, use trig
 
 
 
@@ -267,7 +267,7 @@ mebgc = 0
 mebgready = false
 mebgcd = 0
 mebre = false
-bgcatch = false
+me.bgcatch = false
 
 youbpc = 0
 youbpready = false
@@ -285,15 +285,15 @@ youbgc = 0
 youbgready = false
 youbgcd = 0
 youbre = false
-ybgcatch = false
+you.bgcatch = false
 
 function you.bluegreen(x)
 
 if you.flinch or mbgcancel then youbgready = false
 	youbgc = 0 
-	for i = #youbolts, 1, -1 do
-		local v = youbolts[i]
-	if v.s == -200 or v.s == -201 then table.remove(youbolts)
+	for i = #you.bolts, 1, -1 do
+		local v = you.bolts[i]
+	if v.s == -200 or v.s == -201 then table.remove(you.bolts)
 	end
 	end
 	
@@ -318,14 +318,14 @@ elseif youbgc < 10 and youbgc > 0 then
 
 	
 
-elseif ybgcatch then 
+elseif you.bgcatch then 
 	you.im = reelin
 	youbre = true
 	youbgc = 9
-	ybgcatch = false
-  for i = #youbolts, 1, -1 do
-		local v = youbolts[i]
-	if v.s == -200 or v.s == -201 then table.remove(youbolts)
+	you.bgcatch = false
+  for i = #you.bolts, 1, -1 do
+		local v = you.bolts[i]
+	if v.s == -200 or v.s == -201 then table.remove(you.bolts)
 	end
 	end
 	if reel2:isStopped() then
@@ -353,7 +353,7 @@ elseif youbgc > 0
 	if you.g and youblehfuck then
 	youblehfuck = false
 
-	table.insert(youbolts, {x = you.mid -23 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = -(youmidupv/2) * 2, s = -200, v = bboltspeed * you.lr + you.v})	
+	table.insert(you.bolts, {x = you.mid -23 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = -(youmidupv/2) * 2, s = -200, v = bboltspeed * you.lr + you.v})	
 	if hook2:isStopped() then
 			hook2:play()
 		else hook2:rewind()
@@ -362,7 +362,7 @@ elseif youbgc > 0
 
 	else
 	youmidupv = you.j
-	table.insert(youbolts, {x = you.mid -23 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = -you.j*1.5, s = -200, v = bboltspeed * you.lr + you.v})	
+	table.insert(you.bolts, {x = you.mid -23 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = -you.j*1.5, s = -200, v = bboltspeed * you.lr + you.v})	
 	if chain2:isStopped() then
 			chain2:play()
 		else chain2:rewind()
@@ -374,7 +374,7 @@ elseif youbgc > 0
 
 elseif not x and youbgready then
 
-	ybgcatch = false
+	you.bgcatch = false
 	you.im = boltthrow
 	
 	youbgready = false
@@ -384,7 +384,7 @@ elseif not x and youbgready then
 	youbgcd = 120
 	--this is the head
 
-	table.insert(youbolts, {x = you.mid -23 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = 0, s = -201, v = bboltspeed * you.lr + you.v})	
+	table.insert(you.bolts, {x = you.mid -23 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = 0, s = -201, v = bboltspeed * you.lr + you.v})	
 	youbre = true
 	youblehfuck = true
 
@@ -414,9 +414,9 @@ function bluegreen(x)
 
 if me.flinch or mbgcancel then mebgready = false
 	mebgc = 0 
-	for i = #bolts, 1, -1 do
-		local v = bolts[i]
-	if v.s == -200 or v.s == -201 then table.remove(bolts)
+	for i = #me.bolts, 1, -1 do
+		local v = me.bolts[i]
+	if v.s == -200 or v.s == -201 then table.remove(me.bolts)
 	end
 	end
 end
@@ -440,14 +440,14 @@ elseif mebgc < 10 and mebgc > 0 then
 
 	
 
-elseif bgcatch then 
+elseif me.bgcatch then 
 	me.im = reelin
 	mebre = true
 	mebgc = 9
-	bgcatch = false
-  for i = #bolts, 1, -1 do
-		local v = bolts[i]
-	if v.s == -200 or v.s == -201 then table.remove(bolts)
+	me.bgcatch = false
+  for i = #me.bolts, 1, -1 do
+		local v = me.bolts[i]
+	if v.s == -200 or v.s == -201 then table.remove(me.bolts)
 	end
 	end
 		if reel1:isStopped() then
@@ -475,7 +475,7 @@ elseif mebgc > 0
 	if me.g and meblehfuck then
 	meblehfuck = false
 
-	table.insert(bolts, {x = me.mid -23 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = -(memidupv/2) * 2, s = -200, v = bboltspeed * me.lr + me.v})	
+	table.insert(me.bolts, {x = me.mid -23 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = -(memidupv/2) * 2, s = -200, v = bboltspeed * me.lr + me.v})	
 	else
 	memidupv = me.j
 	
@@ -485,7 +485,7 @@ elseif mebgc > 0
 			hook1:play()
 		end
 	
-	table.insert(bolts, {x = me.mid -23 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = -me.j*1.5, s = -200, v = bboltspeed * me.lr + me.v})	
+	table.insert(me.bolts, {x = me.mid -23 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = -me.j*1.5, s = -200, v = bboltspeed * me.lr + me.v})	
 	if chain1:isStopped() then
 			chain1:play()
 		else chain1:rewind()
@@ -496,7 +496,7 @@ elseif mebgc > 0
 
 elseif not x and mebgready then
 
-	bgcatch = false
+	me.bgcatch = false
 	me.im = boltthrow
 	
 	mebgready = false
@@ -506,7 +506,7 @@ elseif not x and mebgready then
 	mebgcd = 120
 	--this is the head
 
-	table.insert(bolts, {x = me.mid -23 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = 0, s = -201, v = bboltspeed * me.lr + me.v})	
+	table.insert(me.bolts, {x = me.mid -23 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = 0, s = -201, v = bboltspeed * me.lr + me.v})	
 	mebre = true
 	meblehfuck = true
 
@@ -674,7 +674,7 @@ elseif not x and yougpready then
 	you.stop = true
 	you.jstop = true
 	yougpcd = 90
-	table.insert(youbolts, {x = you.mid + 5 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = yougpupv, s = -1, v = yougpv* you.lr + you.v, time = 0,stuckinwall = false})
+	table.insert(you.bolts, {x = you.mid + 5 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = yougpupv, s = -1, v = yougpv* you.lr + you.v, time = 0,stuckinwall = false})
 	if gp2:isStopped() then
 			gp2:play()
 		else gp2:rewind()
@@ -725,7 +725,7 @@ elseif not x and megpready then
 	me.stop = true
 	me.jstop = true
 	megpcd = 90
-	table.insert(bolts, {x = me.mid + 5 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = megpupv, s = -1, v = megpv* me.lr + me.v, time = 0, stuckinwall = false})
+	table.insert(me.bolts, {x = me.mid + 5 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = megpupv, s = -1, v = megpv* me.lr + me.v, time = 0, stuckinwall = false})
 	if gp1:isStopped() then
 			gp1:play()
 		else gp1:rewind()
@@ -885,7 +885,7 @@ dodgey = function ()
 	elseif you.block and controller2.right and dodgeycounter == 0 and not you.slide and	not noyoudodge and not you.landing
    and not 
   (you.san
-  or yougree
+  or you.gree
  or youblu
  or you.purp
  or youyell)
@@ -902,7 +902,7 @@ dodgey = function ()
 	elseif you.block and controller2.left and dodgeycounter == 0 and not you.slide and 	not noyoudodge and not you.landing
   and not 
   (you.san
-  or yougree
+  or you.gree
  or youblu
  or you.purp
  or youyell)
@@ -1079,7 +1079,7 @@ if me.flinch
 	elseif me.block and controller1.right and me.dodgecounter == 0 and not me.slide and not nomedodge and not me.landing
   and not 
   (me.san
- or megree
+ or me.gree
  or meblu
  or me.purp
  or meyell)
@@ -1096,7 +1096,7 @@ if me.flinch
 	elseif me.block and controller1.left and me.dodgecounter == 0 and not me.slide and not nomedodge and not me.landing
   and not 
   (me.san
- or megree
+ or me.gree
  or meblu
  or me.purp
  or meyell)

@@ -2042,9 +2042,6 @@ animate = function ()
 	if you.slide 
 	then you.im = slide
     makeslidedust(you.y+50,you.mid + 15 * you.lr,you.v)
-	elseif you.slowdown
-	then you.im = slowdown
-    you.xoffset = 10
    
     
 	elseif you.landing
@@ -2065,9 +2062,6 @@ elseif you.g and aboutso(you.v, you.push) and not you.slide
 	if me.slide 
 	then me.im = slide
   makeslidedust(me.y+50,me.mid + 20 * me.lr,me.v)
-	elseif me.slowdown
-	then me.im = slowdown
-    me.xoffset = 10
  
 	elseif me.landing
 	then me.im = landing

@@ -517,7 +517,7 @@ lights()
 
 blocknbusy()
 
-bluegreen(mebreen)
+bluegreen(me.breen)
 you.bluegreen(you.breen)
 
 bluepurple(me.burple)
@@ -526,8 +526,8 @@ you.bluepurple(you.burple)
 blueblade(me.blue)
 you.blueblade(you.blue)
 
-bolts.shoot(me.green)
-bolts.update()
+me.bolts.shoot(me.green)
+me.bolts.update()
 youbolts.shoot(you.green)
 youbolts.update()
 
@@ -982,7 +982,7 @@ end
 	
 	medrawmines()
 	spikes.draw()
-	bolts.draw()
+	me.bolts.draw()
 
 
 	love.graphics.setColor(220,220,220)
@@ -1060,7 +1060,7 @@ end
 end
 	medrawmines()
 	spikes.draw()
-	bolts.draw()
+	me.bolts.draw()
 	love.graphics.setColor(220,220,220)
 	youdrawmines()
 

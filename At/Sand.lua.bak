@@ -489,9 +489,9 @@ elseif you.j < 0 then
 		you.j = -yougupv*.8
     you.v = -yougv*.8
 		yupgs = true
-    	table.insert(you.bolts, {x = you.mid -23 * you.lr , y = you.y + 40, lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
-	table.insert(you.bolts, {x = you.mid, y = you.y + 40, lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
-	table.insert(you.bolts, {x = you.mid + 23 * you.lr , y = you.y + 40 , lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
+    	table.insert(youbolts, {x = you.mid -23 * you.lr , y = you.y + 40, lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
+	table.insert(youbolts, {x = you.mid, y = you.y + 40, lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
+	table.insert(youbolts, {x = you.mid + 23 * you.lr , y = you.y + 40 , lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
 
 
 

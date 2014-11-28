@@ -936,7 +936,7 @@ for i,v in ipairs(mymines)do
 	end
 
 
-if me.flinch or mycancel then 
+if me.flinch or me.ycancel then 
 	
 	meyct = 0 
 	meyhold = 0
@@ -1092,37 +1092,37 @@ if v.s == 1 or v.s == 0 or v.s == -1 then
 		if v.fuse < 0 then 
 			repplay(grenade1)
 			table.remove(mymines, i)
-		table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 0, s = 0, v = boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 1, s = 0, v = boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -1, s = 0, v = boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 2, s = 0, v = boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -2, s = 0, v = boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 3, s = 0, v = boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -3, s = 0, v = boltspeed * 1})
+		table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 0, s = 0, v = boltspeed * 1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 1, s = 0, v = boltspeed * 1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -1, s = 0, v = boltspeed * 1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 2, s = 0, v = boltspeed * 1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -2, s = 0, v = boltspeed * 1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 3, s = 0, v = boltspeed * 1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -3, s = 0, v = boltspeed * 1})
 
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 0, s = 0, v = -boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 1, s = 0, v = -boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -1, s = 0, v = -boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 2, s = 0, v = -boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -2, s = 0, v = -boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 3, s = 0, v = -boltspeed * 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -3, s = 0, v = -boltspeed * 1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 0, s = 0, v = -boltspeed * 1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 1, s = 0, v = -boltspeed * 1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -1, s = 0, v = -boltspeed * 1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 2, s = 0, v = -boltspeed * 1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -2, s = 0, v = -boltspeed * 1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 3, s = 0, v = -boltspeed * 1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -3, s = 0, v = -boltspeed * 1})
 
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = .000001})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = 2})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = -1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = -2})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = 3})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = -3})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = .000001})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = 1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = 2})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = -1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = -2})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = 3})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = boltspeed, s = 0, v = -3})
 
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = .000001})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = 1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = 2})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = -1})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = -2})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = 3})
-	table.insert(bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = -3})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = .000001})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = 1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = 2})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = -1})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = -2})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = 3})
+	table.insert(me.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -boltspeed, s = 0, v = -3})
 
 	
 

@@ -526,10 +526,10 @@ you.bluepurple(you.burple)
 blueblade(me.blue)
 you.blueblade(you.blue)
 
-bolts.shoot(me.green)
-bolts.update()
-youbolts.shoot(you.green)
-youbolts.update()
+me.bolts.shoot(me.green)
+me.bolts.update()
+you.bolts.shoot(you.green)
+you.bolts.update()
 
 spikes.shoot(me.purple)
 youspikes.shoot(you.purple)
@@ -982,14 +982,14 @@ end
 	
 	medrawmines()
 	spikes.draw()
-	bolts.draw()
+	me.bolts.draw()
 
 
 	love.graphics.setColor(220,220,220)
 	youdrawmines()
 	love.graphics.setColor(155,155,155)
 	youspikes.draw()
-	youbolts.draw()
+	you.bolts.draw()
 	love.graphics.setColor(255, 255, 255, 255)
 	
 
@@ -1060,13 +1060,13 @@ end
 end
 	medrawmines()
 	spikes.draw()
-	bolts.draw()
+	me.bolts.draw()
 	love.graphics.setColor(220,220,220)
 	youdrawmines()
 
 	love.graphics.setColor(155,155,155)
 	youspikes.draw()
-	youbolts.draw()
+	you.bolts.draw()
 	love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.draw(enviro.floorfloor, 0, floor-1, 0, 1, 20)
 	love.graphics.draw(enviro.rafters,5608-500, 1536)

@@ -1003,7 +1003,7 @@ end
 function anyofmyprimes()
 if me.blue or me.blu
 or me.yellow or meyell
-or me.green or megree
+or me.green or me.gree
 or me.purple or me.purp
 or me.sand or mesan
 then return true
@@ -1032,7 +1032,7 @@ function anyofmycombos()
 	me.bland or
 	me.grand or
 	me.yend or
-	mepund
+	me.pund
 	then return
 	true
 	else return false
@@ -1107,7 +1107,7 @@ function mcombofalsify()
 	me.bland = false
 	me.grand = false
 	me.yend = false
-	mepund = false
+	me.pund = false
 
 
 end
@@ -1153,7 +1153,7 @@ if mebur
 
 
 
- -- or megree
+ -- or me.gree
  -- or me.blu
  -- or mepurp
  -- or meyell
@@ -1210,7 +1210,7 @@ elseif not you.sand and not you.blue then you.bland = false
 end
 
 
-if me.green and me.sand and not me.san and not megree then 
+if me.green and me.sand and not me.san and not me.gree then 
 	mcombofalsify()
 	me.grand = true
 elseif not me.sand and not me.green then me.grand = false
@@ -1226,8 +1226,8 @@ end
 
 if me.purple and me.sand and not me.san and not me.purp then 
 	mcombofalsify()
-	mepund = true
-elseif not me.sand and not me.purple then mepund = false
+	me.pund = true
+elseif not me.sand and not me.purple then me.pund = false
 end
 
 
@@ -1269,7 +1269,7 @@ elseif not you.green and not you.blue then you.breen = false
 end
 
 
-if me.blue and me.green and not megree and not me.blu then 
+if me.blue and me.green and not me.gree and not me.blu then 
 	mcombofalsify()
 	me.breen = true
 elseif not me.green and not me.blue then me.breen = false
@@ -1293,7 +1293,7 @@ end
 
 
 
---add and not megree?is this causing trouble?
+--add and not me.gree?is this causing trouble?
 if me.green and me.purple and not me.purp then 
 	mcombofalsify()
 	me.gurple = true
@@ -1404,7 +1404,7 @@ if me.blu or me.blue then
 	me.bcancel = false
 end
 
-if megree or me.green then
+if me.gree or me.green then
 	mclearprimarys(me.green)
 	me.gcancel = false
 end

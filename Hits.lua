@@ -19,14 +19,14 @@ table.insert(hitt,
     j = 0, y = 0, 
     flinch = false, ft = 0, 
     block = 0, dodge = false, invince = false,
-    width = 20, height = 50})
+    width = 20, height = 50, g = true})
 table.insert(hitt, 
   {i = 2,
     x = 0, v = 0, 
     j = 0, y = 0, 
     flinch = false, ft = 0, 
     block = 0, dodge = false, invince = false,
-    width = 20, height = 50})
+    width = 20, height = 50, g = true})
 
 
 
@@ -170,7 +170,97 @@ function drawhexcheck(ex, why, w, h, v, j)
 
 end
 
+function ghc(objx, objy, objx2, objy2, blockable, dir, dodgeable, force, vee, jay, dam, flinching, efftee, xjump, yjump, misc1, misc2, theid)
+  local bloopy = false
+ hitt[1].x = me.x+5
+  hitt[1].y = me.y+5
+  hitt[1].j = me.j
+  hitt[1].v = me.v
+  hitt[1].flinch = me.flinch
+  hitt[1].ft = me.ft
+  hitt[1].health = me.health
+  hitt[1].invince = me.invince
+  hitt[1].dodge = me.dodge
+  hitt[1].g = me.g
+  hitt[2].x = you.x+5
+  hitt[2].y = you.y+5
+  hitt[2].j = you.j
+  hitt[2].v = you.v
+  hitt[2].flinch = you.flinch
+  hitt[2].ft = you.ft
+  hitt[2].health = you.health
+  hitt[2].invince = you.invince
+  hitt[2].dodge = you.dodge
+  hitt[2].g = you.g
+  
+  if not me.block then
+    hitt[1].block = 0
+  else
+    hitt[1].block = me.lr
+  end
+  if not you.block then
+    hitt[2].block = 0
+  else
+    hitt[2].block = you.lr
+  end
+  for i,v in ipairs(hitt) do
+    if theid ~= i and hexcheck(objx, objy, objx2, objy2, v.x, v.y, v.width, v.height, v.v, v.j)
+   then
+     bloopy = true
+      flash = true
+      
+      if not (v.dodge and dodgeable) then
+          if misc2 then v.g = false end
+        
+      if force then
+        v.v = vee
+        v.j = jay
+      else
+        --push, not force
+        v.v = v.v +  vee
+        v.j = v.j + jay
+      end
+      v.x = v.x + xjump
+      v.y = v.y - yjump
+      if(not ((v.block==-dir) and blockable)) then
+        v.flinch = flinching
+        v.ft = v.ft + efftee
+        v.health = v.health - dam
+      end
+    end
+  end
+end
 
+
+
+me.x = hitt[1].x-5
+me.y = hitt[1].y-5
+me.j = hitt[1].j
+me.v = hitt[1].v
+me.g = hitt[1].g
+me.flinch = hitt[1].flinch
+me.ft = hitt[1].ft
+me.health = hitt[1].health
+me.dodge = hitt[1].dodge
+
+
+you.x = hitt[2].x-5
+you.y = hitt[2].y-5
+you.j = hitt[2].j
+you.v = hitt[2].v
+you.g = hitt[2].g
+you.flinch = hitt[2].flinch
+you.ft = hitt[2].ft
+you.health = hitt[2].health
+you.dodge = hitt[2].dodge
+
+
+if bloopy then 
+    return true
+  else return false
+    end
+
+end
 
 --the big hit check
 function hc(objx, objy, objx2, objy2, blockable, dir, dodgeable, force, vee, jay, dam, flinching, efftee, xjump, yjump, misc1, misc2, theid)
@@ -183,6 +273,7 @@ function hc(objx, objy, objx2, objy2, blockable, dir, dodgeable, force, vee, jay
   hitt[1].health = me.health
   hitt[1].invince = me.invince
   hitt[1].dodge = me.dodge
+  hitt[1].g = me.g
   hitt[2].x = you.x+5
   hitt[2].y = you.y+5
   hitt[2].j = you.j
@@ -192,6 +283,8 @@ function hc(objx, objy, objx2, objy2, blockable, dir, dodgeable, force, vee, jay
   hitt[2].health = you.health
   hitt[2].invince = you.invince
   hitt[2].dodge = you.dodge
+  hitt[2].g = you.g
+  
   if not me.block then
     hitt[1].block = 0
   else
@@ -208,7 +301,7 @@ function hc(objx, objy, objx2, objy2, blockable, dir, dodgeable, force, vee, jay
       flash = true
       
       if not (v.dodge and dodgeable) then
-          v.dodge = false
+          if misc2 then v.g = false end
         
       if force then
         v.v = vee
@@ -220,7 +313,7 @@ function hc(objx, objy, objx2, objy2, blockable, dir, dodgeable, force, vee, jay
       end
       v.x = v.x + xjump
       v.y = v.y - yjump
-      if(not ((v.block~=dir) and blockable)) then
+      if(not ((v.block==-dir) and blockable)) then
         v.flinch = flinching
         v.ft = v.ft + efftee
         v.health = v.health - dam
@@ -233,6 +326,7 @@ me.x = hitt[1].x-5
 me.y = hitt[1].y-5
 me.j = hitt[1].j
 me.v = hitt[1].v
+me.g = hitt[1].g
 me.flinch = hitt[1].flinch
 me.ft = hitt[1].ft
 me.health = hitt[1].health
@@ -243,6 +337,7 @@ you.x = hitt[2].x-5
 you.y = hitt[2].y-5
 you.j = hitt[2].j
 you.v = hitt[2].v
+you.g = hitt[2].g
 you.flinch = hitt[2].flinch
 you.ft = hitt[2].ft
 you.health = hitt[2].health
@@ -262,6 +357,7 @@ function hboxc(P1, P2, P3, P4, blockable, dir, dodgeable, force, vee, jay, dam, 
   hitt[1].ft = me.ft
   hitt[1].health = me.health
   hitt[1].invince = you.invince
+  hitt[1].g = me.g
   hitt[2].x = you.x+5
   hitt[2].y = you.y+5
   hitt[2].j = you.j
@@ -270,6 +366,7 @@ function hboxc(P1, P2, P3, P4, blockable, dir, dodgeable, force, vee, jay, dam, 
   hitt[2].ft = you.ft
   hitt[2].health = you.health
   hitt[2].invince = you.invince
+  hitt[2].g = you.g
   if not me.block then
     hitt[1].block = 0
   else
@@ -292,6 +389,7 @@ function hboxc(P1, P2, P3, P4, blockable, dir, dodgeable, force, vee, jay, dam, 
       --flash = true
       
       if not (dodgeable and v.dodge) then
+          if misc2 then v.g = false end
       if force then
         v.v = vee
         v.j = jay
@@ -302,7 +400,7 @@ function hboxc(P1, P2, P3, P4, blockable, dir, dodgeable, force, vee, jay, dam, 
       end
       v.x = v.x + xjump
       v.y = v.y - yjump
-      if (not ((v.block~=0) and blockable)) then
+      if (not ((v.block==-dir) and blockable)) then
         v.flinch = flinching
         if v.ft == 0 then 
           v.ft = efftee
@@ -322,6 +420,7 @@ me.v = hitt[1].v
 me.flinch = hitt[1].flinch
 me.ft = hitt[1].ft
 me.health = hitt[1].health
+me.g = hitt[1].g
 
 
 you.x = hitt[2].x-5
@@ -331,6 +430,7 @@ you.v = hitt[2].v
 you.flinch = hitt[2].flinch
 you.ft = hitt[2].ft
 you.health = hitt[2].health
+you.ft = hitt[2].ft
 
 
 end

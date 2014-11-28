@@ -1,3 +1,5 @@
+--fix chain grab, it makes sound when hit wall, doesnt dissear if no hit, should instant stop if hit wall? yeah.
+--green isn't working with ghc
 --Tie health to color of crest, gets black
 --for buttons http://love2d.org/wiki/love.keypressed
 --glass&rubble flies out too fast, make it like 3/4 of me.v
@@ -802,10 +804,10 @@ function love.update()
         blueblade(me.blue, me, you, controller1, controller2)
         blueblade(you.blue, you, me, controller2, controller1)
 
-        bolts.shoot(me.green)
-        bolts.update()
-        youbolts.shoot(you.green)
-        youbolts.update()
+        me.bolts.shoot(me.green)
+        me.bolts.update()
+        you.bolts.shoot(you.green)
+        you.bolts.update()
 
         spikes.shoot(me.purple)
         youspikes.shoot(you.purple)
@@ -878,7 +880,13 @@ function love.update()
 
     end
 
-
+if me.im == slowdown then
+    me.xoffset = 10
+  end
+  
+  if you.im == slowdown then 
+    you.xoffset = 10
+    end
 
     facemovement()
 
