@@ -1,4 +1,5 @@
 --fix chain grab, it makes sound when hit wall, doesnt dissear if no hit, should instant stop if hit wall? yeah.
+--bolts can hit other bolts? knock them out of the air?
 --green isn't working with ghc
 --Tie health to color of crest, gets black
 --for buttons http://love2d.org/wiki/love.keypressed
@@ -542,7 +543,7 @@ function love.update()
         mp = controller1.a3
         mb = controller1.a4
         
-        ys = controller2.a1
+        yp = controller2.a1
         yg = controller2.a2
         yb = controller2.a3
         

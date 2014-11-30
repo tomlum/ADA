@@ -155,30 +155,14 @@ function you.bolts.update()
 		end
 
 
-	if v.s == -1 and spoint * v.lr < (me.mid) * v.lr and (spoint + v.v) * v.lr  +1 > (me.mid + me.v) * v.lr
-	and not me.dodge and v.y - v.upv + 7 > me.y and v.y - v.upv + 7 < me.feet
+	if v.s == -1 and 
+  ghc(spoint, sypoint, spoint + v.v, sypoint -v.upv, true, v.lr, true, true, v.lr*30, 0, pboltdam, 0, 0, 0, 0, you.id)
 			then 
-			me.v = me.v + v.lr * 32
-				if not (me.block and v.lr~=me.lr)
-				then
-				me.health = me.health - pboltdam
-				
-				end	
 
-	elseif v.s == -202 and v.v ~= 0 and not me.dodge and (findIntersect(point,ypoint,point+v.v,ypoint-v.upv,me.x+me.v,me.y-me.j,me.x+30,me.y+60,true,true)
-										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,me.x+me.v+30,me.y-me.j,me.x,me.y+60,true,true)
-										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,me.x+me.v,me.y-me.j+60,me.x+30,me.y,true,true)
-										or findIntersect(point,ypoint,point+v.v,ypoint-v.upv,me.x+me.v+30,me.y-me.j+60,me.x,me.y,true,true))
+elseif v.s == -202 and v.v ~= 0 and
+ghc(point, ypoint, point+v.v,ypoint-v.upv, true, v.lr, true, false, v.v, sandboltknockup, sandboltdam, gsft, 0, 0, "air", v.id)
 			then 
 			table.remove(you.bolts, i)
-			me.v = me.v + v.v
-			me.g = false
-			me.j = me.j + sandboltknockup
-				if not (me.block and v.lr~=me.lr)
-				then
-				me.health = me.health - sandboltdam
-				me.ft = gsft
-				end	
 
 
 	elseif v.s == -201 and spoint * v.lr < (me.mid) * v.lr and (spoint + v.v) * v.lr +1> (me.mid + me.v) * v.lr
@@ -195,7 +179,7 @@ function you.bolts.update()
 
 
 elseif v.s >= 0 and not v.stuckinwall and
-ghc(point, ypoint, point+v.v, ypoint-v.upv, true, v.lr, true, false, v.v, 0, boltdamage*10, true, 10, 0, 0, true, true, you.id)
+ghc(point, ypoint, point+v.v, ypoint-v.upv, true, v.lr, true, false, v.v/4, 0, boltdamage, 0, 0, 0, 0, you.id)
 			then table.remove(you.bolts, i)
 			
 	end

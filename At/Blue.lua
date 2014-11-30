@@ -60,7 +60,7 @@ function blueblade(x, yy, mm, cy, cm)
         hboxc({x = yy.mid, y= yy.y+30}, 
           {x = yy.mid, y= yy.y-200-yy.j},
           {x = yy.mid+200*yy.lr+yy.v, y= yy.y-200-yy.j},
-          {x = yy.mid+yy.v, y= yy.y+30}, true, yy.lr, true, true, yy.v + (5*yy.lr), yy.j+6, airbluedam, true, abft*3, 0, 0, false, true, yy.id)
+          {x = yy.mid+yy.v, y= yy.y+30}, true, yy.lr, true, true, yy.v + (5*yy.lr), yy.j+6, airbluedam, true, abft*3, 0, 0, "air", yy.id)
 
 
         yy.d = 8
@@ -85,7 +85,7 @@ function blueblade(x, yy, mm, cy, cm)
         hboxc({x = yy.mid, y= yy.y+30}, 
           {x = yy.mid, y= yy.y+200-yy.j},
           {x = yy.mid+200*yy.lr+yy.v, y= yy.y+200-yy.j},
-          {x = yy.mid+yy.v, y= yy.y+30}, true, yy.lr, true, true, yy.v + (10*yy.lr), yy.j-20, airbluedam, true, abft/3, 0, 0, false, false, yy.id)
+          {x = yy.mid+yy.v, y= yy.y+30}, true, yy.lr, true, true, yy.v + (10*yy.lr), yy.j-20, airbluedam, true, abft/3, 0, 0, 0, yy.id)
 
 
 
@@ -112,7 +112,7 @@ function blueblade(x, yy, mm, cy, cm)
   else
     if yy.bnext==20 then yy.im = bc2 
       yy.d = 24
-      hc(yy.mid, yy.y+30, yy.mid+yy.v+170*yy.lr, yy.y+30-yy.j, false, yy.lr, false, true, yy.v + (80*yy.lr), yy.j, bluechargedam, true, bcft, 0, 0, false, false, yy.id)
+      hc(yy.mid, yy.y+30, yy.mid+yy.v+170*yy.lr, yy.y+30-yy.j, false, yy.lr, false, true, yy.v + (80*yy.lr), yy.j, bluechargedam, bcft, 0, 0, 0, yy.id)
 
     elseif yy.bnext==21 then yy.im = bc2 
       yy.d = 24
@@ -149,7 +149,7 @@ function blueblade(x, yy, mm, cy, cm)
     then yy.im = blue33
       yy.d = 12
       yy.bluechargetimer = 0
-      hc(yy.mid, yy.y+30, yy.mid+yy.v+250*yy.lr, yy.y+30-yy.j, false, yy.lr, true, true, yy.v + (20*yy.lr), yy.j, bluedam, true, bft/2, 0, 0, false, false, yy.id)
+      hc(yy.mid, yy.y+30, yy.mid+yy.v+250*yy.lr, yy.y+30-yy.j, false, yy.lr, true, true, yy.v + (20*yy.lr), yy.j, bluedam, bft/2, 0, 0,0, yy.id)
     elseif yy.bnext == 9 and not x
     then yy.im = blue32
       yy.d = 24
@@ -182,8 +182,7 @@ function blueblade(x, yy, mm, cy, cm)
       yy.d = 8
       repplay(yy.blues)	
       
-      hc(yy.mid, yy.y+30, yy.mid+yy.v+160*yy.lr, yy.y+30-yy.j, true, yy.lr, true, true, yy.v + (4*yy.lr), yy.j, bluedam, true, bft/3, 0, 0, false, false, yy.id)
-      --hc(you.mid, you.y+30, you.mid+yy.v+160*yy.lr, you.y+30-yy.j, true, yy.lr, true, true, yy.v + (4*yy.lr), yy.j, bluedam, true, bft, 0, 0, false, false, 2)
+      hc(yy.mid, yy.y+30, yy.mid+yy.v+160*yy.lr, yy.y+30-yy.j, true, yy.lr, true, true, yy.v + (4*yy.lr), yy.j, bluedam, bft/3, 0, 0, 0, yy.id)
     elseif yy.bnext == 4 and not x
     then yy.im = blue21
       if controller2.right and yy.lr > 0 then
@@ -214,9 +213,8 @@ function blueblade(x, yy, mm, cy, cm)
       yy.d = 12
       repplay(yy.blues)		
 
-      hc(yy.mid, yy.y+30, yy.mid+yy.v+160*yy.lr, yy.y+30-yy.j, true, yy.lr, false, true, yy.v + (4*yy.lr), yy.j, bluedam, true, bft/2, 0, 0, false, false, yy.id)
+      hc(yy.mid, yy.y+30, yy.mid+yy.v+160*yy.lr, yy.y+30-yy.j, true, yy.lr, false, true, yy.v + (4*yy.lr), yy.j, bluedam, bft/2, 0, 0, 0, yy.id)
 
-      --hcCheck(you.mid, you.y+30, you.mid+yy.v, you.y+30-yy.j, 2)
     elseif yy.bnext == 1 and not x then
       yy.im = blue11
       yy.d = 24
