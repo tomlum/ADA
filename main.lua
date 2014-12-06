@@ -1,3 +1,4 @@
+--paper makes a sound
 --fix chain grab, it makes sound when hit wall, doesnt dissear if no hit, should instant stop if hit wall? yeah.
 --bolts can hit other bolts? knock them out of the air?
 --green isn't working with ghc
