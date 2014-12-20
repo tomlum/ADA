@@ -353,7 +353,7 @@ elseif youbgc > 0
 	if you.g and youblehfuck then
 	youblehfuck = false
 
-	table.insert(you.bolts, {x = you.mid -23 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = -(youmidupv/2) * 2, s = -200, v = bboltspeed * you.lr + you.v})	
+	table.insert(you.bolts, {x = you.mid -23 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = -youmidupv, s = -200, v = bboltspeed * you.lr + you.v})	
 	if hook2:isStopped() then
 			hook2:play()
 		else hook2:rewind()
@@ -362,7 +362,7 @@ elseif youbgc > 0
 
 	else
 	youmidupv = you.j
-	table.insert(you.bolts, {x = you.mid -23 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = -you.j*1.5, s = -200, v = bboltspeed * you.lr + you.v})	
+	table.insert(you.bolts, {x = you.mid -23 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = -you.j, s = -200, v = bboltspeed * you.lr + you.v})	
 	if chain2:isStopped() then
 			chain2:play()
 		else chain2:rewind()
@@ -485,7 +485,7 @@ elseif mebgc > 0
 			hook1:play()
 		end
 	
-	table.insert(me.bolts, {x = me.mid -23 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = -me.j*1.5, s = -200, v = bboltspeed * me.lr + me.v})	
+	table.insert(me.bolts, {x = me.mid -23 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = -me.j, s = -200, v = bboltspeed * me.lr + me.v})	
 	if chain1:isStopped() then
 			chain1:play()
 		else chain1:rewind()

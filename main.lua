@@ -1,7 +1,18 @@
 --paper makes a sound
+--debug shows healths and ft etc.
+--if me.im dodgefoward and ft causes knockback, straight to back
+--AIR PURPLE ON THE UPPER EDGE OF THE LIBRARY, THE BOUNDARY, DOESN'T WORK BLEH MAKE A BETTER FUNCTION DUDE, LIKE A WHEREISFLOOR FUNCTION AND PLUG THE PURP THROUGH THAT THEN - TO GET PROPER Y HEIGHT
+--glass and wall breaking work on hc, and like the dis between the two inter points causes the h to be yeah, careful of like... people though, those objects, especially a vertical line.  hm.  
+--green isn't working with ghc?
+--SOUND WHEN FULLY CHARGED AND YOU HAVE TO SLAM DOWN, ELSE CANCEL
+--maybe each color while holding has a tone, the sound version of the color's waelength?
+--control stuff can be just one and apply to c1 and c2
 --fix chain grab, it makes sound when hit wall, doesnt dissear if no hit, should instant stop if hit wall? yeah.
+--maybe all rectangles/shapes, no lines, if hit walls  -
+--make walls a hittable hc thing
+--  -then do like, the dist between the two hitty things causes how much bla to be release with a minimum of 1.
 --bolts can hit other bolts? knock them out of the air?
---green isn't working with ghc
+--condense controller to just one function applied to controllers
 --Tie health to color of crest, gets black
 --for buttons http://love2d.org/wiki/love.keypressed
 --glass&rubble flies out too fast, make it like 3/4 of me.v
@@ -61,6 +72,7 @@
 --maybe vine or whatever, anyway, a poison attack that makes you weaker to other attacks
 --while bla do, else do increase increment by the value of the array that we're on, is that random?  or something?  multiply it by?
 --allow blue up air reset if you wall jump?
+--warping color from blue to white is awesome
 --one of the colors gives you a streak of you's like right behind, a ribbon
 --one of the elec attacks an elec beam that randomly runs around, no controlling it, line segments grows in random direction
 --why does spine add a third color sometime, like a lone blue thing moving down the spine
@@ -99,7 +111,8 @@ mute = true
 justone = false
 --colorcontrol, go, size,menu
 
-
+pauseonhit = false
+pausedonhit = false
 
 
 --when dead, flash white, background cuts to black, characters are stark white
@@ -323,7 +336,7 @@ end
 
 function love.update()
   
- 
+ if not (pauseonhit and pausedonhit) then
   
   --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
 
@@ -896,6 +909,7 @@ if me.im == slowdown then
 
   end
 
+end
 
   function love.draw()
 
@@ -1448,9 +1462,11 @@ if not fightclub then
     end
      love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
    end
+   --[[
    if me.flinch or you.flinch then
 love.graphics.print("BAM", 100, 100, 0 ,10, 10)
 end
+]]--
 --[[
  testa = {x = 10,y = 10}
  testb = {x = 20,y = 10}

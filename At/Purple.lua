@@ -11,6 +11,10 @@ youtopspeed = 0
 
 spikespace = 10
 
+spikedraw()
+
+
+end
 
 function spikes.draw()
 

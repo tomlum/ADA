@@ -23,7 +23,6 @@ end
 
 
 
-maxhealth = 380
 
 
 

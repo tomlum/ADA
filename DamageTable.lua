@@ -1,4 +1,5 @@
 
+maxhealth = 280
 shakedis = 5
 
 thebug = 0

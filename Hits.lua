@@ -274,6 +274,9 @@ end
 
 --the big hit check
 function hc(objx, objy, objx2, objy2, blockable, dir, dodgeable, force, vee, jay, dam, efftee, xjump, yjump, misc, theid)
+  
+      pausedonhit = true
+      
   hitt[1].x = me.x+5
   hitt[1].y = me.y+5
   hitt[1].j = me.j
