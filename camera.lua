@@ -10,10 +10,13 @@ maxzdis = 4500
 
 cscale = .7
 
+   enviro.screenheight = 0
+    
 
 
 cammovement = function ()
   
+beigedif = (enviro.screenheight - head2ceiling - feet2bottom - 90)*cscale
 jumpj = initjumpj * cscale/minzoom
 --
 jmax = initjmax * cscale/minzoom
@@ -21,14 +24,14 @@ jmax = initjmax * cscale/minzoom
   
 ydif = math.abs((you.y) - (me.y))
 
-  if ydif <= enviro.screenheight*cscale - head2ceiling - feet2bottom - 60 then
+  if ydif <= beigedif then
   vertone = true
   else vertone = false
 end
 
 if me.y <= you.y then 
-midypoint = me.y + (ydif/2) + 30
-else midypoint = you.y + (ydif/2) + 30
+midypoint = me.y + (ydif/2) + 30*cscale
+else midypoint = you.y + (ydif/2) + 30*cscale
 end
 
 
@@ -46,7 +49,7 @@ end
   --   youcamlwall = false
   -- end
 
-  if midypoint >= floor - (enviro.screenheight*cscale/2) + (feet2bottom)*cscale
+  if midypoint >= floor - ((enviro.screenheight/2) + (feet2bottom)-30)*cscale
     then
     youcamfloor = true
     mecamfloor = true
@@ -114,8 +117,8 @@ end
 
 
 if me.y <= you.y then 
-midypoint = me.y + (ydif/2) + 30
-else midypoint = you.y + (ydif/2) + 30
+midypoint = me.y + (ydif/2) + 30*cscale
+else midypoint = you.y + (ydif/2) + 30*cscale
 end
 
 
@@ -130,22 +133,22 @@ mexrig = me.mid - (screenwidth*cscale*.25)
 youxrig = you.mid - (screenwidth*cscale*.75)
 
 if not mecamfloor and you.y > me.y then 
-  youyrig = you.feet - enviro.screenheight*cscale + feet2bottom 
+  youyrig = you.feet - enviro.screenheight*cscale + feet2bottom*cscale
 
 elseif youcamfloor 
   then
-youyrig = floor - enviro.screenheight*cscale + feet2bottom 
+youyrig = floor - enviro.screenheight*cscale + feet2bottom*cscale 
 elseif not vertone and you.y < me.y then
   youyrig = you.y - head2ceiling*cscale
 end
 
 
 if not youcamfloor and you.y < me.y then 
-  meyrig = me.feet - enviro.screenheight*cscale + feet2bottom
+  meyrig = me.feet - enviro.screenheight*cscale + feet2bottom*cscale
 
 elseif mecamfloor 
   then
-meyrig = floor - enviro.screenheight*cscale + feet2bottom 
+meyrig = floor - enviro.screenheight*cscale + feet2bottom*cscale
 elseif not vertone and me.y < you.y then
   meyrig = me.y - head2ceiling*cscale
 end
@@ -286,7 +289,6 @@ end
 
 bheight = (head2ceiling + 60 + 60)/24
 bbheight = (feet2bottom + 60 + 60)/24
-beigedif = (enviro.screenheight - head2ceiling - feet2bottom - 60)*cscale
 if ydif > beigedif*4 then 
  bwidth = 15
  beigex = (screenwidth/2-6) + ((1-bwidth) * 6)

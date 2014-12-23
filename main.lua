@@ -162,8 +162,8 @@ pausedonhit = false
 
 
 require "DamageTable"
-require "camera"
 require "meandyou"
+require "camera"
 require "Music"
 require "Hits"
 require "FIZIX"
