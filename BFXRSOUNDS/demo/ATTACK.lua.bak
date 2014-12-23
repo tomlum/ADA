@@ -7,7 +7,7 @@
 --charge blue isn't a big punch, but like a big sword slice where like, big slash
 --add groudn flying up fro blue swipes?
 
---speed + purple = surf on the spikes
+--speed + purple = surf on the me.spikes
 --JUST THE PERSON KNOCKS THEM THROUGH THE FLOOR for air attack
 --TEST MAKE SURE YOU CAN'T USE ATTACKS AT THE SAME TIME, ESPECIALLY IN AIR
 --for combo attacks, make sure the solo attacks say "controller1.a1 and not controller1.a2-3"
@@ -198,7 +198,7 @@ youbgc = 0
 youbgready = false
 youbgcd = 0
 youbre = false
-you.me.bgcatch = false
+you.bgcatch = false
 
 function you.bluegreen(x)
 
@@ -257,11 +257,11 @@ elseif youbgc < 10 and youbgc > 0 then
 
 	
 
-elseif you.me.bgcatch then 
+elseif you.bgcatch then 
 	you.im = reelin
 	youbre = true
 	youbgc = 9
-	you.me.bgcatch = false
+	you.bgcatch = false
 	if reel2:isStopped() then
 			reel2:play()
 		else reel2:rewind()
@@ -308,7 +308,7 @@ elseif youbgc > 0
 
 elseif not x and youbgready then
 
-	you.me.bgcatch = false
+	you.bgcatch = false
 	you.im = boltthrow
 	
 	youbgready = false
@@ -583,7 +583,7 @@ elseif not x and mebpready then
 	me.stop = true
 	me.jstop = true
 	mebpcd = 110
-	table.insert(spikes, {x = me.mid + 30*me.lr, y = spikecheck(me.mid + 30*me.lr, me.y) - 140, lr = me.lr, t = 55, s = -200})
+	table.insert(me.spikes, {x = me.mid + 30*me.lr, y = spikecheck(me.mid + 30*me.lr, me.y) - 140, lr = me.lr, t = 55, s = -200})
 	me.bur = true
 
 elseif x and mebpc == 0 and mebpcd == 0 

@@ -447,3 +447,74 @@ function hboxc(P1, P2, P3, P4, blockable, dir, dodgeable, force, vee, jay, dam, 
 
 
 end
+
+
+function hboxcs(theid, P1, P2, P3, P4, special)
+  hitt[1].x = me.x+5
+  hitt[1].y = me.y+5
+  hitt[1].j = me.j
+  hitt[1].v = me.v
+  hitt[1].flinch = me.flinch
+  hitt[1].ft = me.ft
+  hitt[1].health = me.health
+  hitt[1].invince = you.invince
+  hitt[1].g = me.g
+  hitt[2].x = you.x+5
+  hitt[2].y = you.y+5
+  hitt[2].j = you.j
+  hitt[2].v = you.v
+  hitt[2].flinch = you.flinch
+  hitt[2].ft = you.ft
+  hitt[2].health = you.health
+  hitt[2].invince = you.invince
+  hitt[2].g = you.g
+  if not me.block then
+    hitt[1].block = 0
+  else
+    hitt[1].block = me.lr
+  end
+  if not you.block then
+    hitt[2].block = 0
+  else
+    hitt[2].block = you.lr
+  end
+  
+  for i,p in ipairs(hitt) do
+    if theid ~= i and 
+    (hexcheck(P1.x, P1.y, P2.x, P2.y, p.x, p.y, p.width, p.height, p.v, p.j) 
+      or hexcheck(P2.x, P2.y, P3.x, P3.y, p.x, p.y, p.width, p.height, p.v, p.j)
+      or hexcheck(P3.x, P3.y, P4.x, P4.y, p.x, p.y, p.width, p.height, p.v, p.j)
+      or hexcheck(P4.x, P4.y, P1.x, P1.y, p.x, p.y, p.width, p.height, p.v, p.j)
+      or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
+    )
+    then
+      --flash = true
+special(p)
+      
+    end
+  end
+
+  me.x = hitt[1].x-5
+  me.y = hitt[1].y-5
+  me.j = hitt[1].j
+  me.v = hitt[1].v
+  me.flinch = hitt[1].flinch
+  me.ft = hitt[1].ft
+  me.health = hitt[1].health
+  me.g = hitt[1].g
+
+
+  you.x = hitt[2].x-5
+  you.y = hitt[2].y-5
+  you.j = hitt[2].j
+  you.v = hitt[2].v
+  you.flinch = hitt[2].flinch
+  you.ft = hitt[2].ft
+  you.health = hitt[2].health
+  you.ft = hitt[2].ft
+
+
+end
+
+
+

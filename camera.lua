@@ -4,8 +4,8 @@
 --partition, the hole in the ceiling, the right edge of the apartment
 
 minzoom = .7
-maxzoom = .63
-minzdis = 1000
+maxzoom = .55
+minzdis = love.graphics.getWidth()
 maxzdis = 4500
 
 cscale = .7
@@ -13,6 +13,12 @@ cscale = .7
 
 
 cammovement = function ()
+  
+jumpj = initjumpj * cscale/minzoom
+--
+jmax = initjmax * cscale/minzoom
+--basically min j
+  
 ydif = math.abs((you.y) - (me.y))
 
   if ydif <= enviro.screenheight*cscale - head2ceiling - feet2bottom - 60 then
@@ -495,17 +501,21 @@ function drawleft()
 	love.graphics.setColor(255, 255, 255, 255)
 	
 end
+  if fightclub then
+    
+  drawdust()
+  end
 	
 	medrawmines()
-	spikes.draw()
+	spikedraw(me,you)
 	boltsdraw(me.bolts)
 	drawtornado()
-
+  
 
 	love.graphics.setColor(220,220,220)
 	youdrawmines()
 	love.graphics.setColor(155,155,155)
-	youspikes.draw()
+	spikedraw(you, me)
 	boltsdraw(you.bolts)
 	youdrawtornado()
 	love.graphics.setColor(255, 255, 255, 255)
@@ -574,15 +584,19 @@ function drawright()
 	love.graphics.setColor(255, 255, 255, 255)
 	
 end
+if fightclub then
+    
+  drawdust()
+  end
 	medrawmines()
-	spikes.draw()
+	spikedraw(me,you)
 	boltsdraw(me.bolts)
 	drawtornado()
 	love.graphics.setColor(220,220,220)
 	youdrawmines()
 
 	love.graphics.setColor(155,155,155)
-	youspikes.draw()
+	spikedraw(you, me)
 	boltsdraw(you.bolts)
 	youdrawtornado()
 	love.graphics.setColor(255, 255, 255, 255)

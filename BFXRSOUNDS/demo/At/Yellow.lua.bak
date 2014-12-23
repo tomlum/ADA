@@ -611,7 +611,7 @@ for i,v in ipairs(yourmines) do
 	if table.getn(yourmines) >= 6 then table.remove(yourmines, i-5) end
 
 
-	for n,spike in ipairs(spikes) do 
+	for n,spike in ipairs(me.spikes) do 
 	if spike.t > 0 and math.abs((spike.x + 15) - v.x) < 30 and v.explode == 0 then
 		v.explode = 1
 
@@ -649,50 +649,50 @@ for i,v in ipairs(yourmines) do
 
 		if v.fuse < 0 then 
 			table.remove(yourmines, i)
-	table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 0, s = 0, v = boltspeed * 1})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -3, s = 0, v = boltspeed * 1})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 6, s = 0, v = boltspeed * .96})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -6, s = 0, v = boltspeed * .96})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -12, s = 0, v = boltspeed * .93})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 12, s = 0, v = boltspeed * .93})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -18, s = 0, v = boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 18, s = 0, v = boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -24, s = 0, v = boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 24, s = 0, v = boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -30, s = 0, v = boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 30, s = 0, v = boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -36, s = 0, v = boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 36, s = 0, v = boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -42, s = 0, v = boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 42, s = 0, v = boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -48, s = 0, v = boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 48, s = 0, v = boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -54, s = 0, v = boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 54, s = 0, v = boltspeed * .9})
+	table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 0, s = 0, v = boltspeed * 1})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -3, s = 0, v = boltspeed * 1})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 6, s = 0, v = boltspeed * .96})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -6, s = 0, v = boltspeed * .96})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -12, s = 0, v = boltspeed * .93})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 12, s = 0, v = boltspeed * .93})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -18, s = 0, v = boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 18, s = 0, v = boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -24, s = 0, v = boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 24, s = 0, v = boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -30, s = 0, v = boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 30, s = 0, v = boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -36, s = 0, v = boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 36, s = 0, v = boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -42, s = 0, v = boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 42, s = 0, v = boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -48, s = 0, v = boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 48, s = 0, v = boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = -54, s = 0, v = boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = 1, time = 0, upv = 54, s = 0, v = boltspeed * .9})
 
 
 
 
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 0, s = 0, v = -boltspeed * 1})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -3, s = 0, v = -boltspeed * 1})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 6, s = 0, v = -boltspeed * .96})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -6, s = 0, v = -boltspeed * .96})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -12, s = 0, v = -boltspeed * .93})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 12, s = 0, v = -boltspeed * .93})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -18, s = 0, v = -boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 18, s = 0, v = -boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -24, s = 0, v = -boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 24, s = 0, v = -boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -30, s = 0, v = -boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 30, s = 0, v = -boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -36, s = 0, v = -boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 36, s = 0, v = -boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -42, s = 0, v = -boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 42, s = 0, v = -boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -48, s = 0, v = -boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 48, s = 0, v = -boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -54, s = 0, v = -boltspeed * .9})
-		table.insert(youbolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 54, s = 0, v = -boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 0, s = 0, v = -boltspeed * 1})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -3, s = 0, v = -boltspeed * 1})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 6, s = 0, v = -boltspeed * .96})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -6, s = 0, v = -boltspeed * .96})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -12, s = 0, v = -boltspeed * .93})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 12, s = 0, v = -boltspeed * .93})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -18, s = 0, v = -boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 18, s = 0, v = -boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -24, s = 0, v = -boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 24, s = 0, v = -boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -30, s = 0, v = -boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 30, s = 0, v = -boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -36, s = 0, v = -boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 36, s = 0, v = -boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -42, s = 0, v = -boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 42, s = 0, v = -boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -48, s = 0, v = -boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 48, s = 0, v = -boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = -54, s = 0, v = -boltspeed * .9})
+		table.insert(you.bolts, {x = v.x   * 1 , y = v.y - 20, lr = -1, time = 0, upv = 54, s = 0, v = -boltspeed * .9})
 
 
 		end
@@ -1096,40 +1096,40 @@ if v.s == -1 then
 		then
 		table.remove(mymines,i)
 		
-	table.insert(spikes, {x = v.x + (0 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = 0, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-30 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -6, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-65 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -12, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-100 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -18, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-135 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -24, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-170 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -30, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-205 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -36, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-240 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -42, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-275 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -48, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-310 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -54, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (0 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = 0, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-30 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -6, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-65 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -12, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-100 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -18, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-135 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -24, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-170 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -30, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-205 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -36, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-240 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -42, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-275 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -48, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-310 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -54, s = 0, ss = 2})
 	
 
-table.insert(spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = 0, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (30 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -6, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (65 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -12, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (100 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -18, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (135 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -24, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (170 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -30, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (205 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -36, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (240 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -42, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (275 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -48, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (310 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -54, s = 0, ss =1})
+table.insert(me.spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = 0, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (30 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -6, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (65 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -12, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (100 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -18, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (135 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -24, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (170 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -30, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (205 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -36, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (240 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -42, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (275 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -48, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (310 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -54, s = 0, ss =1})
 
 
 
 
 
-	for p, spike in ipairs(spikes) do
+	for p, spike in ipairs(me.spikes) do
 
 		
 
-		if p > 1 and spikes[p - 1].y > 0 and spikes[p - 1].s ~= -200 and spike.ss == 2 and spikes[p-1].ss == 2
+		if p > 1 and me.spikes[p - 1].y > 0 and me.spikes[p - 1].s ~= -200 and spike.ss == 2 and me.spikes[p-1].ss == 2
 				then
-		spikes[p].y = spikes[p - 1].y - 60 
+		me.spikes[p].y = me.spikes[p - 1].y - 60 
 		end
 		
 		
@@ -1142,13 +1142,13 @@ table.insert(spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math.ra
 
 
 
-	for p, spike in ipairs(spikes) do
+	for p, spike in ipairs(me.spikes) do
 
 		
 
-		if p > 1 and spikes[p - 1].y > 0 and spikes[p - 1].s ~= -200 and spike.ss == 1 and spikes[p-1].ss == 1
+		if p > 1 and me.spikes[p - 1].y > 0 and me.spikes[p - 1].s ~= -200 and spike.ss == 1 and me.spikes[p-1].ss == 1
 				then
-		spikes[p].y = spikes[p - 1].y - 60 
+		me.spikes[p].y = me.spikes[p - 1].y - 60 
 		end
 		
 		

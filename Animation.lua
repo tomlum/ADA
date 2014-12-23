@@ -731,7 +731,7 @@ v.j = v.j - .2
 dustn = math.random(100,200)
 end
 love.graphics.setColor(dustn,dustn,dustn)
-love.graphics.draw(enviro.rubble,v.x,v.y,70/(v.v+v.y),1.2,1.2)
+love.graphics.draw(enviro.rubble,v.x,v.y-2,70/(v.v+v.y),1,1)
 love.graphics.setColor(255,255,255)
 
 end
@@ -774,10 +774,10 @@ function makerunrubble(why,ex,vee)
 end
 end
 function makeslidedust(why,ex,vee)
-  if vee > 3 and math.random() > .5 then
-  table.insert(dust,{x = ex, y = why, v=vee/3 + math.random(3), j = math.random(0,vee/4+2)})
-elseif vee < 3 and math.random() > .5 then
-   table.insert(dust,{x = ex, y = why, v=vee/3 - math.random(3), j = math.random(0,-vee/4+2)})
+  if vee > minvfordust and math.random() > .5 then
+  table.insert(dust,{x = ex, y = why, v=vee/3 + math.random(3), j = math.random(0,vee/5)})
+elseif vee < -minvfordust and math.random() > .5 then
+   table.insert(dust,{x = ex, y = why, v=vee/3 - math.random(3), j = math.random(0,-vee/5)})
 end
 end
 function makerubble(ex,why,vee,jay)

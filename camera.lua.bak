@@ -497,8 +497,8 @@ function drawleft()
 end
 	
 	medrawmines()
-	spikes.draw()
-	me.bolts.draw()
+	me.spikes.draw()
+	boltsdraw(me.bolts)
 	drawtornado()
 
 
@@ -506,7 +506,7 @@ end
 	youdrawmines()
 	love.graphics.setColor(155,155,155)
 	youspikes.draw()
-	youbolts.draw()
+	boltsdraw(you.bolts)
 	youdrawtornado()
 	love.graphics.setColor(255, 255, 255, 255)
 	
@@ -575,15 +575,15 @@ function drawright()
 	
 end
 	medrawmines()
-	spikes.draw()
-	me.bolts.draw()
+	me.spikes.draw()
+	boltsdraw(me.bolts)
 	drawtornado()
 	love.graphics.setColor(220,220,220)
 	youdrawmines()
 
 	love.graphics.setColor(155,155,155)
 	youspikes.draw()
-	youbolts.draw()
+	boltsdraw(you.bolts)
 	youdrawtornado()
 	love.graphics.setColor(255, 255, 255, 255)
 	if themap == "street" then

@@ -528,10 +528,10 @@ you.blueblade(you.blue)
 
 me.bolts.shoot(me.green)
 me.bolts.update()
-youbolts.shoot(you.green)
-youbolts.update()
+you.bolts.shoot(you.green)
+you.bolts.update()
 
-spikes.shoot(me.purple)
+me.spikes.shoot(me.purple)
 youspikes.shoot(you.purple)
 
 you.greenpurple(you.gurple)
@@ -551,7 +551,7 @@ youby(you.bellow)
 
 
 
-spikes.update(me.purple)
+me.spikes.update(me.purple)
 youspikes.update(you.purple)
 
 flinchingyou()
@@ -981,7 +981,7 @@ elseif MENU == "play"
 end
 	
 	medrawmines()
-	spikes.draw()
+	me.spikes.draw()
 	me.bolts.draw()
 
 
@@ -989,7 +989,7 @@ end
 	youdrawmines()
 	love.graphics.setColor(155,155,155)
 	youspikes.draw()
-	youbolts.draw()
+	you.bolts.draw()
 	love.graphics.setColor(255, 255, 255, 255)
 	
 
@@ -1059,14 +1059,14 @@ end
 	armanimateme()
 end
 	medrawmines()
-	spikes.draw()
+	me.spikes.draw()
 	me.bolts.draw()
 	love.graphics.setColor(220,220,220)
 	youdrawmines()
 
 	love.graphics.setColor(155,155,155)
 	youspikes.draw()
-	youbolts.draw()
+	you.bolts.draw()
 	love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.draw(enviro.floorfloor, 0, floor-1, 0, 1, 20)
 	love.graphics.draw(enviro.rafters,5608-500, 1536)

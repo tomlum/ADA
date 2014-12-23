@@ -336,8 +336,8 @@ rightme = true
 	
 	for i,v in ipairs(me.bolts) do table.remove(me.bolts,i) end
 	for i,v in ipairs(you.bolts) do table.remove(you.bolts,i) end
-	for i,v in ipairs(spikes) do table.remove(spikes,i) end
-	for i,v in ipairs(youspikes) do table.remove(youspikes,i) end
+	for i,v in ipairs(me.spikes) do table.remove(me.spikes,i) end
+	for i,v in ipairs(you.spikes) do table.remove(you.spikes,i) end
 	for i,v in ipairs(mymines) do table.remove(mymines,i) end
 	for i,v in ipairs(yourmines) do table.remove(yourmines,i) end
 

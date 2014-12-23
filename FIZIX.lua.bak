@@ -702,7 +702,7 @@ walls = function ()
 	if themap == "library" then
 
 		if me.x + me.v >= 1405-35+10 and me.feet > floor - 63 and me.x <= 1405-30+10 and me.dig == 0 then me.x = 1405-35+10 me.v = 0 end
-		if you.x + you.v >= 1405-35+10 and you.feet > floor - 63 and you.x <= 1405-30+10 and you.dig == 0 then you.x = 1405-35+10 you.v = 0 end
+		if you.x + you.v >= 1405-35+10 and you.feet > floor - 63 and you.x <= 1405-30+10 and youdig == 0 then you.x = 1405-35+10 you.v = 0 end
 
 
 
@@ -837,20 +837,18 @@ end
 function vroomright(xx, base)
 	if xx.v == 0+base
 	then xx.v = 1.5+base
-	elseif xx.v >0+base and xx.v < speedlimit -accel+base
+	elseif xx.v >0+base and xx.v < speedminit -accel+base
 	then xx.v = xx.v + accel
-elseif xx.v >0+base and xx.v >= speedlimit -accel+base
-then xx.v = speedlimit -accel+base
+	
 	end
 end 
 
 function vroomleft(xx, base)
 	if xx.v == 0+base
 	then xx.v = -1.5+base
-	elseif xx.v < 0+base and xx.v > -speedlimit + accel+base
+	elseif xx.v < 0+base and xx.v > -speedminit + accel+base
 	then xx.v = xx.v - accel
-elseif xx.v < 0+base and xx.v <= -speedlimit + accel+base
-then xx.v = -speedlimit + accel+base
+	
 	end
 end 
 
@@ -930,7 +928,7 @@ if you.running and math.abs(you.push) > 0 then  you.j = 14 you.g = false
  
 end
 
-if you.flinch or math.abs(you.v) <= speedlimit then 
+if you.flinch or math.abs(you.v) <= speedminit then 
        you.running = false
   elseif you.running then 
      controller2.a1 = false
@@ -952,7 +950,7 @@ if you.flinch or math.abs(you.v) <= speedlimit then
     
     
     
-  elseif math.abs(you.v) > speedlimit-accel*2 and (controller2.left or controller2.right) and you.g and not c1accept() and controller2.run and not controller2.block and not anyofyourcombos() and not anyofyourprimes() and not you.slide and not you.dodge then
+  elseif math.abs(you.v) > speedminit-accel*2 and (controller2.left or controller2.right) and you.g and not c1accept() and controller2.run and not controller2.block and not anyofyourcombos() and not anyofyourprimes() and not you.slide and not you.dodge then
      controller2.a1 = false
      controller2.a2 = false
      controller2.a3 = false
@@ -1054,25 +1052,12 @@ end
 function movex(xx,z)
   
   
-  ------?????--------
-   if xx.flinch then
-          xx.jt = 0
-        end
-  
-  
-  
-  
   xdif = math.abs((you.x) - (me.x))
   
-  if xdif >= 2100
+  if xdif >= 2000
   then speedlimit = minmaxdif+speedminit
-    runspeed = initrunspeed+minmaxdif
-elseif xdif < 700 then
-  speedlimit = speedminit
-    runspeed = initrunspeed
-  else
-  speedlimit = (minmaxdif * ((xdif-700)/1400)) + speedminit
-  runspeed = (minmaxdif * ((xdif-700)/1400)) + initrunspeed
+elseif xdif < 2000 then
+  speedlimit = (minmaxdif * ((xdif-500)/1500)) + speedminit
 end 
 
 
@@ -1084,8 +1069,7 @@ xx.feet = xx.y + 60
 end
 	if xx.g 
 	then 
-	if xx.j < 0 then xx.j = 0
-    end
+	xx.j = 0
 			if z.up and not xx.flinch and not xx.block and not xx.jstop and not xxbjstop and not xx.busy
 				and not z.a1 and not z.a2 and not z.a3 and not xx.bur and not xxpurp
 				then 
@@ -1183,24 +1167,18 @@ end
 			--the end arc/fall of any jump or the mini jump
 			else
 				xx.firstjump = false
-				if xx.jt > 0
-				then xx.jt = xx.jt -  1
-				elseif xx.jt <= 0 and xx.j > - maxgravity
-				then xx.jt = xx.jt -  1
-          if xx.j >= 0 then
-            xx.j = xx.j - risegrav
-          else
-            
-					xx.j = xx.j - dropgrav
-          end
+				if xx.jt > 4
+				then xx.jt = xx.jt -  grav
+				elseif xx.jt <= 4 and xx.j > - maxgravity
+				then xx.jt = xx.jt -  grav
+					xx.j = xx.j - grav
 				--elseif xx.jt <= 0 and xx.ht > 0
 				--then xx.j = 0
 				--	xx.ht = xx.ht - 1	
+				else
+					xx.j = xx.j
 				end
 				
-       
-        
-        
 			end
 	end
 end

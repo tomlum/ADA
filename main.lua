@@ -1,3 +1,9 @@
+--adjust vroom so that it slows down to the speed limit on approach
+--camera jumping alignment isn't right, test based on both on middle platform, jump up with one
+
+--dodge is click in on run, roll down then direction (if down and right or left)
+--make speed change on dis greater slower at yeah
+--block is run click and down
 --paper makes a sound
 --debug shows healths and ft etc.
 --if me.im dodgefoward and ft causes knockback, straight to back
@@ -100,7 +106,7 @@ flash = false
 
 math.randomseed(os.clock())
 --success = love.window.setMode(1280, 800, {resizable=true, fullscreen = true, vsync=true})
-success = love.window.setMode(480, 300, {resizable=true, fullscreen = false, vsync=true})
+success = love.window.setMode(600, 600, {resizable=true, fullscreen = false, vsync=true})
 
 
 fightclub = true
@@ -824,8 +830,8 @@ function love.update()
         you.bolts.shoot(you.green)
         you.bolts.update()
 
-        spikes.shoot(me.purple)
-        youspikes.shoot(you.purple)
+        me.spikes.shoot(me.purple)
+        you.spikes.shoot(you.purple)
 
         you.greenpurple(you.gurple)
         greenpurple(me.gurple)
@@ -844,8 +850,8 @@ function love.update()
 
 
 
-        spikes.update(me.purple)
-        youspikes.update(you.purple)
+        me.spikes.update(me.purple)
+        you.spikes.update(you.purple)
 
         wings(me.sand, me, you, controller1)
         me.bluesand(me.bland)

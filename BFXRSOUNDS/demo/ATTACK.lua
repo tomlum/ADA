@@ -7,7 +7,7 @@
 --charge blue isn't a big punch, but like a big sword slice where like, big slash
 --add groudn flying up fro blue swipes?
 
---speed + purple = surf on the spikes
+--speed + purple = surf on the me.spikes
 --JUST THE PERSON KNOCKS THEM THROUGH THE FLOOR for air attack
 --TEST MAKE SURE YOU CAN'T USE ATTACKS AT THE SAME TIME, ESPECIALLY IN AIR
 --for combo attacks, make sure the solo attacks say "controller1.a1 and not controller1.a2-3"
@@ -525,7 +525,7 @@ elseif not x and youbpready then
 	you.jstop = true
 	youbpcd = 110
 	you.bur = true
-	table.insert(youspikes, {x = you.mid + 30*you.lr, y = spikecheck(you.mid + 30*you.lr, you.y) - 140, lr = you.lr, t = 55, s = -200})
+	table.insert(you.spikes, {x = you.mid + 30*you.lr, y = spikecheck(you.mid + 30*you.lr, you.y) - 140, lr = you.lr, t = 55, s = -200})
 
 elseif x and youbpc == 0 and youbpcd == 0 
 then 
@@ -583,7 +583,7 @@ elseif not x and mebpready then
 	me.stop = true
 	me.jstop = true
 	mebpcd = 110
-	table.insert(spikes, {x = me.mid + 30*me.lr, y = spikecheck(me.mid + 30*me.lr, me.y) - 140, lr = me.lr, t = 55, s = -200})
+	table.insert(me.spikes, {x = me.mid + 30*me.lr, y = spikecheck(me.mid + 30*me.lr, me.y) - 140, lr = me.lr, t = 55, s = -200})
 	me.bur = true
 
 elseif x and mebpc == 0 and mebpcd == 0 

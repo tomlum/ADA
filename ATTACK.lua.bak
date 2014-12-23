@@ -5,7 +5,7 @@
 --charge blue isn't a big punch, but like a big sword slice where like, big slash
 --add groudn flying up fro blue swipes?
 
---speed + purple = surf on the spikes
+--speed + purple = surf on the me.spikes
 --JUST THE PERSON KNOCKS THEM THROUGH THE FLOOR for air attack
 --TEST MAKE SURE YOU CAN'T USE ATTACKS AT THE SAME TIME, ESPECIALLY IN AIR
 --for combo attacks, make sure the solo attacks say "controller1.a1 and not controller1.a2-3"
@@ -285,7 +285,7 @@ youbgc = 0
 youbgready = false
 youbgcd = 0
 youbre = false
-you.me.bgcatch = false
+you.bgcatch = false
 
 function you.bluegreen(x)
 
@@ -318,11 +318,11 @@ elseif youbgc < 10 and youbgc > 0 then
 
 	
 
-elseif you.me.bgcatch then 
+elseif you.bgcatch then 
 	you.im = reelin
 	youbre = true
 	youbgc = 9
-	you.me.bgcatch = false
+	you.bgcatch = false
   for i = #you.bolts, 1, -1 do
 		local v = you.bolts[i]
 	if v.s == -200 or v.s == -201 then table.remove(you.bolts)
@@ -353,7 +353,7 @@ elseif youbgc > 0
 	if you.g and youblehfuck then
 	youblehfuck = false
 
-	table.insert(you.bolts, {x = you.mid -23 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = -(youmidupv/2) * 2, s = -200, v = bboltspeed * you.lr + you.v})	
+	table.insert(you.bolts, {x = you.mid -23 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = -youmidupv, s = -200, v = bboltspeed * you.lr + you.v})	
 	if hook2:isStopped() then
 			hook2:play()
 		else hook2:rewind()
@@ -362,7 +362,7 @@ elseif youbgc > 0
 
 	else
 	youmidupv = you.j
-	table.insert(you.bolts, {x = you.mid -23 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = -you.j*1.5, s = -200, v = bboltspeed * you.lr + you.v})	
+	table.insert(you.bolts, {x = you.mid -23 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = -you.j, s = -200, v = bboltspeed * you.lr + you.v})	
 	if chain2:isStopped() then
 			chain2:play()
 		else chain2:rewind()
@@ -374,7 +374,7 @@ elseif youbgc > 0
 
 elseif not x and youbgready then
 
-	you.me.bgcatch = false
+	you.bgcatch = false
 	you.im = boltthrow
 	
 	youbgready = false
@@ -485,7 +485,7 @@ elseif mebgc > 0
 			hook1:play()
 		end
 	
-	table.insert(me.bolts, {x = me.mid -23 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = -me.j*1.5, s = -200, v = bboltspeed * me.lr + me.v})	
+	table.insert(me.bolts, {x = me.mid -23 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = -me.j, s = -200, v = bboltspeed * me.lr + me.v})	
 	if chain1:isStopped() then
 			chain1:play()
 		else chain1:rewind()
@@ -625,7 +625,7 @@ elseif not x and mebpready then
 	me.stop = true
 	me.jstop = true
 	mebpcd = 110
-	table.insert(spikes, {x = me.mid + 30*me.lr, y = spikecheck(me.mid + 30*me.lr, me.y) - 140, lr = me.lr, t = 40, s = -200})
+	table.insert(me.spikes, {x = me.mid + 30*me.lr, y = spikecheck(me.mid + 30*me.lr, me.y) - 140, lr = me.lr, t = 40, s = -200})
   repplay(bpurp1hit)
 	me.bur = true
 

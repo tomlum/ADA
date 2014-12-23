@@ -134,28 +134,31 @@ runj = 10
 runjt = 3
 runjmax = 8
 
-jumpj = 12
---
-jmax = 19
---basically min j
-jt = 8
-grav = .9
+minvfordust = 3
 
-jforlanding = 18
+initjumpj = 12+2+1
+--
+initjmax = 17+2
+--basically min j
+jt = 0
+risegrav = 1.3
+dropgrav = .6
+
+jforlanding = 20
 landingfric = .3
 landingwait = 10
 
 maxgravity = 27
---technically not the speed limit
-speedminit = 10
+speedminit = 7
+speedlimit = speedminit
 accel = .5
-minmaxdif = 7
+minmaxdif = 4
 
 --higher means more fric
-fricrate = .7
+fricrate = .75
 
-runspeed = 14
-runpace = 20
+initrunspeed = 12
+runpace = 19
 
 --slowdown rate
 adecrate = .3

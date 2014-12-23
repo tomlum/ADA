@@ -611,7 +611,7 @@ for i,v in ipairs(yourmines) do
 	if table.getn(yourmines) >= 6 then table.remove(yourmines, i-5) end
 
 
-	for n,spike in ipairs(spikes) do 
+	for n,spike in ipairs(me.spikes) do 
 	if spike.t > 0 and math.abs((spike.x + 15) - v.x) < 30 and v.explode == 0 then
 		v.explode = 1
 
@@ -712,40 +712,40 @@ if v.s == -1 then
 		then
 		table.remove(yourmines,i)
 		
-	table.insert(youspikes, {x = v.x + (0 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = 0, s = 0, ss = 2})
-	table.insert(youspikes, {x = v.x + (-30 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -6, s = 0, ss = 2})
-	table.insert(youspikes, {x = v.x + (-65 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -12, s = 0, ss = 2})
-	table.insert(youspikes, {x = v.x + (-100 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -18, s = 0, ss = 2})
-	table.insert(youspikes, {x = v.x + (-135 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -24, s = 0, ss = 2})
-	table.insert(youspikes, {x = v.x + (-170 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -30, s = 0, ss = 2})
-	table.insert(youspikes, {x = v.x + (-205 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -36, s = 0, ss = 2})
-	table.insert(youspikes, {x = v.x + (-240 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -42, s = 0, ss = 2})
-	table.insert(youspikes, {x = v.x + (-275 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -48, s = 0, ss = 2})
-	table.insert(youspikes, {x = v.x + (-310 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -54, s = 0, ss = 2})
+	table.insert(you.spikes, {x = v.x + (0 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = 0, s = 0, ss = 2})
+	table.insert(you.spikes, {x = v.x + (-30 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -6, s = 0, ss = 2})
+	table.insert(you.spikes, {x = v.x + (-65 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -12, s = 0, ss = 2})
+	table.insert(you.spikes, {x = v.x + (-100 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -18, s = 0, ss = 2})
+	table.insert(you.spikes, {x = v.x + (-135 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -24, s = 0, ss = 2})
+	table.insert(you.spikes, {x = v.x + (-170 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -30, s = 0, ss = 2})
+	table.insert(you.spikes, {x = v.x + (-205 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -36, s = 0, ss = 2})
+	table.insert(you.spikes, {x = v.x + (-240 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -42, s = 0, ss = 2})
+	table.insert(you.spikes, {x = v.x + (-275 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -48, s = 0, ss = 2})
+	table.insert(you.spikes, {x = v.x + (-310 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -54, s = 0, ss = 2})
 	
 
-table.insert(youspikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = 0, s = 0, ss =1})
-	table.insert(youspikes, {x = v.x + (30 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -6, s = 0, ss =1})
-	table.insert(youspikes, {x = v.x + (65 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -12, s = 0, ss =1})
-	table.insert(youspikes, {x = v.x + (100 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -18, s = 0, ss =1})
-	table.insert(youspikes, {x = v.x + (135 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -24, s = 0, ss =1})
-	table.insert(youspikes, {x = v.x + (170 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -30, s = 0, ss =1})
-	table.insert(youspikes, {x = v.x + (205 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -36, s = 0, ss =1})
-	table.insert(youspikes, {x = v.x + (240 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -42, s = 0, ss =1})
-	table.insert(youspikes, {x = v.x + (275 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -48, s = 0, ss =1})
-	table.insert(youspikes, {x = v.x + (310 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -54, s = 0, ss =1})
+table.insert(you.spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = 0, s = 0, ss =1})
+	table.insert(you.spikes, {x = v.x + (30 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -6, s = 0, ss =1})
+	table.insert(you.spikes, {x = v.x + (65 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -12, s = 0, ss =1})
+	table.insert(you.spikes, {x = v.x + (100 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -18, s = 0, ss =1})
+	table.insert(you.spikes, {x = v.x + (135 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -24, s = 0, ss =1})
+	table.insert(you.spikes, {x = v.x + (170 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -30, s = 0, ss =1})
+	table.insert(you.spikes, {x = v.x + (205 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -36, s = 0, ss =1})
+	table.insert(you.spikes, {x = v.x + (240 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -42, s = 0, ss =1})
+	table.insert(you.spikes, {x = v.x + (275 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -48, s = 0, ss =1})
+	table.insert(you.spikes, {x = v.x + (310 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -54, s = 0, ss =1})
 
 
 
 
 
-	for p, spike in ipairs(youspikes) do
+	for p, spike in ipairs(you.spikes) do
 
 		
 
-		if p > 1 and youspikes[p - 1].y > 0 and youspikes[p - 1].s ~= -200 and spike.ss == 2 and youspikes[p-1].ss == 2
+		if p > 1 and you.spikes[p - 1].y > 0 and you.spikes[p - 1].s ~= -200 and spike.ss == 2 and you.spikes[p-1].ss == 2
 				then
-		youspikes[p].y = youspikes[p - 1].y - 60 
+		you.spikes[p].y = you.spikes[p - 1].y - 60 
 		end
 		
 		
@@ -758,13 +758,13 @@ table.insert(youspikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math
 
 
 
-	for p, spike in ipairs(youspikes) do
+	for p, spike in ipairs(you.spikes) do
 
 		
 
-		if p > 1 and youspikes[p - 1].y > 0 and youspikes[p - 1].s ~= -200 and spike.ss == 1 and youspikes[p-1].ss == 1
+		if p > 1 and you.spikes[p - 1].y > 0 and you.spikes[p - 1].s ~= -200 and spike.ss == 1 and you.spikes[p-1].ss == 1
 				then
-		youspikes[p].y = youspikes[p - 1].y - 60 
+		you.spikes[p].y = you.spikes[p - 1].y - 60 
 		end
 		
 		
@@ -985,7 +985,7 @@ for i,v in ipairs(mymines) do
 
 
 
-	for n,spike in ipairs(youspikes) do 
+	for n,spike in ipairs(you.spikes) do 
 	if spike.t > 0 and math.abs((spike.x + 15) - v.x) < 30 and v.explode == 0 then
 		v.explode = 1
 
@@ -1096,40 +1096,40 @@ if v.s == -1 then
 		then
 		table.remove(mymines,i)
 		
-	table.insert(spikes, {x = v.x + (0 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = 0, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-30 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -6, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-65 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -12, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-100 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -18, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-135 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -24, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-170 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -30, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-205 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -36, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-240 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -42, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-275 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -48, s = 0, ss = 2})
-	table.insert(spikes, {x = v.x + (-310 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -54, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (0 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = 0, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-30 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -6, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-65 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -12, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-100 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -18, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-135 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -24, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-170 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -30, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-205 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -36, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-240 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -42, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-275 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -48, s = 0, ss = 2})
+	table.insert(me.spikes, {x = v.x + (-310 - math.random(8)) , y = v.y - 10 - math.random(8), lr = -1, t = -54, s = 0, ss = 2})
 	
 
-table.insert(spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = 0, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (30 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -6, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (65 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -12, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (100 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -18, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (135 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -24, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (170 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -30, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (205 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -36, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (240 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -42, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (275 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -48, s = 0, ss =1})
-	table.insert(spikes, {x = v.x + (310 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -54, s = 0, ss =1})
+table.insert(me.spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = 0, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (30 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -6, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (65 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -12, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (100 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -18, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (135 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -24, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (170 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -30, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (205 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -36, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (240 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -42, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (275 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -48, s = 0, ss =1})
+	table.insert(me.spikes, {x = v.x + (310 + math.random(8)) * 1, y = v.y - 10 + math.random(8), lr = 1, t = -54, s = 0, ss =1})
 
 
 
 
 
-	for p, spike in ipairs(spikes) do
+	for p, spike in ipairs(me.spikes) do
 
 		
 
-		if p > 1 and spikes[p - 1].y > 0 and spikes[p - 1].s ~= -200 and spike.ss == 2 and spikes[p-1].ss == 2
+		if p > 1 and me.spikes[p - 1].y > 0 and me.spikes[p - 1].s ~= -200 and spike.ss == 2 and me.spikes[p-1].ss == 2
 				then
-		spikes[p].y = spikes[p - 1].y - 60 
+		me.spikes[p].y = me.spikes[p - 1].y - 60 
 		end
 		
 		
@@ -1142,13 +1142,13 @@ table.insert(spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math.ra
 
 
 
-	for p, spike in ipairs(spikes) do
+	for p, spike in ipairs(me.spikes) do
 
 		
 
-		if p > 1 and spikes[p - 1].y > 0 and spikes[p - 1].s ~= -200 and spike.ss == 1 and spikes[p-1].ss == 1
+		if p > 1 and me.spikes[p - 1].y > 0 and me.spikes[p - 1].s ~= -200 and spike.ss == 1 and me.spikes[p-1].ss == 1
 				then
-		spikes[p].y = spikes[p - 1].y - 60 
+		me.spikes[p].y = me.spikes[p - 1].y - 60 
 		end
 		
 		
