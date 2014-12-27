@@ -4,7 +4,7 @@
 --partition, the hole in the ceiling, the right edge of the apartment
 
 minzoom = .7
-maxzoom = .55
+maxzoom = .5
 minzdis = love.graphics.getWidth()
 maxzdis = 4500
 
@@ -472,8 +472,8 @@ function drawleft()
 	drawmyroulette()
 	love.graphics.draw(me.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 	love.graphics.setColor(a31r,a31g,a31b,255)
-	love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
-	love.graphics.draw(me.crest, me.crestx, me.cresty)
+	--love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
+	--love.graphics.draw(me.crest, me.crestx, me.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 	
 
@@ -482,8 +482,8 @@ function drawleft()
 	love.graphics.draw(you.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	
 	love.graphics.setColor(a22r,a22g,a22b,255)
-	love.graphics.draw(you.face, you.facex, you.feet + you.facey,youfacerot)
-	love.graphics.draw(you.crest, you.crestx, you.cresty)
+	--love.graphics.draw(you.face, you.facex, you.feet + you.facey,youfacerot)
+	--love.graphics.draw(you.crest, you.crestx, you.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 
 	else
@@ -492,22 +492,19 @@ function drawleft()
 	love.graphics.draw(you.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	
 	love.graphics.setColor(a22r,a22g,a22b,255)
-	love.graphics.draw(you.face, you.facex, you.feet + you.facey, youfacerot)
-	love.graphics.draw(you.crest, you.crestx, you.cresty)
+	--love.graphics.draw(you.face, you.facex, you.feet + you.facey, youfacerot)
+	--love.graphics.draw(you.crest, you.crestx, you.cresty)
 	drawmyroulette()
 	love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.draw(me.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 	love.graphics.setColor(a31r,a31g,a31b,255)
-	love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
-	love.graphics.draw(me.crest, me.crestx, me.cresty)
+	--love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
+	--love.graphics.draw(me.crest, me.crestx, me.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 	
 end
-  if fightclub then
-    
   drawdust()
-  end
-	
+drawsparks()
 	medrawmines()
 	spikedraw(me,you)
 	boltsdraw(me.bolts)
@@ -553,8 +550,8 @@ function drawright()
 	drawmyroulette()
 	love.graphics.draw(me.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 	love.graphics.setColor(a31r,a31g,a31b,255)
-	love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
-	love.graphics.draw(me.crest, me.crestx, me.cresty)
+	--love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
+	--love.graphics.draw(me.crest, me.crestx, me.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 	
 
@@ -563,8 +560,8 @@ function drawright()
 	love.graphics.draw(you.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	
 	love.graphics.setColor(a22r,a22g,a22b,255)
-	love.graphics.draw(you.face, you.facex, you.feet + you.facey,youfacerot)
-	love.graphics.draw(you.crest, you.crestx, you.cresty)
+	--love.graphics.draw(you.face, you.facex, you.feet + you.facey,youfacerot)
+	--love.graphics.draw(you.crest, you.crestx, you.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 
 	else
@@ -574,22 +571,21 @@ function drawright()
 	love.graphics.draw(you.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	
 	love.graphics.setColor(a22r,a22g,a22b,255)
-	love.graphics.draw(you.face, you.facex, you.feet + you.facey,youfacerot)
-	love.graphics.draw(you.crest, you.crestx, you.cresty)
+	--love.graphics.draw(you.face, you.facex, you.feet + you.facey,youfacerot)
+	--love.graphics.draw(you.crest, you.crestx, you.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 
 	drawmyroulette()
 	love.graphics.draw(me.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 	love.graphics.setColor(a31r,a31g,a31b,255)
-	love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
-	love.graphics.draw(me.crest, me.crestx, me.cresty)
+	--love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
+	--love.graphics.draw(me.crest, me.crestx, me.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 	
 end
-if fightclub then
-    
-  drawdust()
-  end
+
+drawdust()
+drawsparks()
 	medrawmines()
 	spikedraw(me,you)
 	boltsdraw(me.bolts)

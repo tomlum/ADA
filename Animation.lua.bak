@@ -287,20 +287,20 @@ love.graphics.setColor(255,255,255)
 end
 if themode == "classic" and not you.dead then
   
-   if you.a1 then ya1fade = 255 else ya1fade = basefade end
+   if controller2.a1 then ya1fade = 255 else ya1fade = basefade end
    
 if flip2 > 0 then
    
-  if you.a2 then ya2fade = 255 else ya2fade = basefade end
-  if you.a3 then ya3fade = 255 else ya3fade = basefade end
+  if controller2.a2 then ya2fade = 255 else ya2fade = basefade end
+  if controller2.a3 then ya3fade = 255 else ya3fade = basefade end
   
 elseif flip2 < 0 then 
-  if you.a2 then ya3fade = 255 else ya3fade = basefade end
-  if you.a3 then ya2fade = 255 else ya2fade = basefade end
+  if controller2.a2 then ya3fade = 255 else ya3fade = basefade end
+  if controller2.a3 then ya2fade = 255 else ya2fade = basefade end
   
  end
   
-  if you.a4 then ya4fade = 255 else ya4fade = basefade end
+  if controller2.a4 then ya4fade = 255 else ya4fade = basefade end
   
 if not(r2 == 255 and g2 == 255 and b2 == 255) then  
 love.graphics.setColor(r2,g2,b2,ya1fade)
@@ -519,8 +519,8 @@ if mwjt > 0 then
   end
 end
 
-if you.flinch or you.a1 or you.a2 or you.a3 or you.a4 then ywjt = 0 end
-  if wallcheck(you.mid+15*you.lr,you.v,you.y+ 30-you.j) > -10 and ((you.left and you.v > minvforwalljump) or (you.right and you.v < -minvforwalljump)) and ywjt == 0 and not anyofyourprimes() and not anyofyourcombos() and math.abs(you.j) > 0 and not you.flinch
+if you.flinch or controller2.a1 or controller2.a2 or controller2.a3 or controller2.a4 then ywjt = 0 end
+  if wallcheck(you.mid+15*you.lr,you.v,you.y+ 30-you.j) > -10 and ((controller2.left and you.v > minvforwalljump) or (controller2.right and you.v < -minvforwalljump)) and ywjt == 0 and not anyofyourprimes() and not anyofyourcombos() and math.abs(you.j) > 0 and not you.flinch
   then
    ywjt = 1 
    yinitwy = you.y - you.j
@@ -537,7 +537,7 @@ if ywjt > 0 then
   elseif ywjt > 7 then 
     ywjt = 0 
     you.lr = ywalllr
-    if you.up then
+    if controller2.up then
     you.jt = you.jt + walljumpjt2
     you.j = walljumpvv2
     you.v = walljumpv2 *-ywalllr
@@ -568,6 +568,7 @@ end
 drawstreetstuff = function()
 love.graphics.draw(enviro.floorfloor, 0, floor-1, 0, 1, 20)
 	drawrubble()
+  drawdust()
 	love.graphics.draw(enviro.rafters,5608-502, 1536)
 	love.graphics.draw(enviro.buildingwall,-1500, 0)
 	love.graphics.draw(enviro.partitionwall,7027-510, 0)
@@ -575,6 +576,7 @@ love.graphics.draw(enviro.floorfloor, 0, floor-1, 0, 1, 20)
 end
 drawlibrarystuff = function()
 		drawrubble()
+    drawdust()
 		love.graphics.draw(enviro.plibrary,0,0)
 		love.graphics.draw(enviro.librarylpartition,-1630, -61)
 		love.graphics.draw(enviro.libraryrpartition,enviro.rightwall-200, -61)
@@ -583,6 +585,7 @@ end
 
 drawfloorsstuff = function()
 		drawrubble()
+drawdust()
     drawglass()
     drawpapers()
 		love.graphics.draw(enviro.pfloors,0,0)
@@ -777,8 +780,6 @@ elseif vee < -minvfordust and math.random() > .5 then
    table.insert(dust,{x = ex, y = why, v=vee/3 - math.random(3), j = math.random(0,-vee/5)})
 end
 end
-
-
 function makerubble(ex,why,vee,jay)
   if vee > 0 then
 			table.insert(rubble,{x = ex, y = why, v=vee + math.random(5), j = jay+1*math.random(5)})
@@ -1355,10 +1356,10 @@ retryupdate = function()
 	me.a3 = love.keyboard.isDown("h")
 	me.block = love.keyboard.isDown("e")
 
-	you.a1 = love.keyboard.isDown("left")
-	you.a2 = love.keyboard.isDown("up")
-	you.a3 = love.keyboard.isDown("right")
-	you.block = love.keyboard.isDown("o")
+	controller2.a1 = love.keyboard.isDown("left")
+	controller2.a2 = love.keyboard.isDown("up")
+	controller2.a3 = love.keyboard.isDown("right")
+	controller2.block = love.keyboard.isDown("o")
 	joystickss()
 
 if waitforitplay > 0 then waitforitplay = waitforitplay - 1
@@ -1378,9 +1379,9 @@ elseif fadeupretry == 2 then retryfade = retryfade - 5
 	playfadeout = playfadeout + 5
 elseif fadeupretry == 3 then retryfade = retryfade - 5
 	playfadeout = playfadeout + 5
-elseif (me.block or you.block) and retryfade >= 250
+elseif (me.block or controller2.block) and retryfade >= 250
 then fadeupretry = 2
-elseif (me.a1 or you.a1 or me.a2 or you.a2 or me.a3 or you.a3) and retryfade >= 250
+elseif (me.a1 or controller2.a1 or me.a2 or controller2.a2 or me.a3 or controller2.a3) and retryfade >= 250
 then fadeupretry = 3
 elseif fadeupretry == 1 and retryfade <255 then 
 	retryfade = retryfade + 1
@@ -1397,14 +1398,14 @@ end
 	me.a3 = false
 	me.block = false
 
-	you.up = false
-	you.down = false
-	you.left = false
-	you.right = false
-	you.a1 = false
-	you.a2 = false
-	you.a3 = false
-	you.block = false
+	controller2.up = false
+	controller2.down = false
+	controller2.left = false
+	controller2.right = false
+	controller2.a1 = false
+	controller2.a2 = false
+	controller2.a3 = false
+	controller2.block = false
 
 end
 
@@ -1827,8 +1828,8 @@ you.walktimer = 0
 orient = function ()
 	if not you.slowdown and not you.slide and not you.stop and not you.pause
 		then
-	rightyy = you.right
-	leftyy = you.left
+	rightyy = controller2.right
+	leftyy = controller2.left
 end
 	if rightyy and not leftyy then righty = true
 				lefty = false
@@ -2371,62 +2372,6 @@ crestmovement = function ()
   crestmovementhelper(you)
   
   
-end
-
-
---SPARKS COLOR BASED ON ATTACK COLOR?!?!?!?!?!?
-
-sparks = {}
-
-function makesparks(why,ex,vee, jay, arr,gee,bee)
-  table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay),r=arr,g=gee,b=bee})
-  table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(-jay,0),r=arr,g=gee,b=bee})
-  table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee})
-  
-  table.insert(sparks,{x = ex, y = why, v=-vee, j = math.random(0,jay),r=arr,g=gee,b=bee})
-  table.insert(sparks,{x = ex, y = why, v=-vee, j = math.random(-jay,0),r=arr,g=gee,b=bee})
-  table.insert(sparks,{x = ex, y = why, v=-vee, j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee})
-  
-   table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay),r=arr,g=gee,b=bee})
-  table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(-jay,0),r=arr,g=gee,b=bee})
-  table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee})
-  
-  table.insert(sparks,{x = ex, y = why, v=-vee, j = math.random(0,jay),r=arr,g=gee,b=bee})
-  table.insert(sparks,{x = ex, y = why, v=-vee, j = math.random(-jay,0),r=arr,g=gee,b=bee})
-  table.insert(sparks,{x = ex, y = why, v=-vee, j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee})
-  
-   table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay),r=arr,g=gee,b=bee})
-  table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(-jay,0),r=arr,g=gee,b=bee})
-  table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee})
-  
-  table.insert(sparks,{x = ex, y = why, v=-vee, j = math.random(0,jay),r=arr,g=gee,b=bee})
-  table.insert(sparks,{x = ex, y = why, v=-vee, j = math.random(-jay,0),r=arr,g=gee,b=bee})
-  table.insert(sparks,{x = ex, y = why, v=-vee, j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee})
-
-  
-end
-
-
-function drawsparks()
-  
- for i = #sparks, 1, -1 do
-  local temp = sparks[i]
-if platformcheck(temp.x,temp.y,temp.j) or temp.y > 100000 or temp.x < -10 or temp.x > 10000 then table.remove(dust,i) end
- 
-end
-  
-for i,v in ipairs(sparks)do
-if not actionshot and not youactionshot and not pause then
-v.y = v.y - v.j
-v.x = v.x + v.v
-v.j = v.j - .1
-end
-love.graphics.setColor(v.r,v.g,v.b)
-love.graphics.draw(enviro.rubble,v.x,v.y-2,70/(v.v+v.y),math.random(),1,1)
-love.graphics.setColor(255,255,255)
-
-end
-end
-
+  end
 
 			

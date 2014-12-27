@@ -603,8 +603,6 @@ you.xoffset = 0
 
 
 
-controller1 = {}
-controller2 = {}
 
 
 	numofcolors = 4

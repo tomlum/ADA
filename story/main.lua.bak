@@ -27,7 +27,7 @@ paralax1 = love.graphics.newImage("backs/paralax1.png")
 paralax1:setFilter("nearest")
 
 me={}
-you={}
+controller2={}
 
 if chapter == 1 then 
 	me = {}
@@ -70,9 +70,9 @@ if chapter == 1 then
 	me.a1 = love.keyboard.isDown("t")
 
 
-	you.left = love.keyboard.isDown("j")
-	you.right = love.keyboard.isDown("l")
-  you.a1 = love.keyboard.isDown("up")
+	controller2.left = love.keyboard.isDown("j")
+	controller2.right = love.keyboard.isDown("l")
+  controller2.a1 = love.keyboard.isDown("up")
   
 
 if me.up then me.y = me.y - 10
@@ -81,10 +81,10 @@ elseif me.right then me.x = me.x + 10
 elseif me.left then me.x = me.x - 10
 end
 
-if you.up then you.y = you.y - 10
-elseif you.down then you.y = you.y + 10
-elseif you.right then you.x = you.x + 10
-elseif you.left then you.x = you.x - 10
+if controller2.up then you.y = you.y - 10
+elseif controller2.down then you.y = you.y + 10
+elseif controller2.right then you.x = you.x + 10
+elseif controller2.left then you.x = you.x - 10
 end
 
 me.feet = me.y + 10

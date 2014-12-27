@@ -1,6 +1,16 @@
+
+--SPARKS COLOR BASED ON ATTACK COLOR?!?!?!?!?!?
+--mine throw lob doesn't explode until activated on ground
+--dodge slide turn around speed not the same as slide, it's faster
+
+--if chargin up then time slows or stops, easy combo chain, camera zoom too? then zoom back out, the color hums
+bloop = 10
+
+--plane overhead night city veins simmulator for loading screens? or just a scene
+
+--push is weird
 --adjust vroom so that it slows down to the speed limit on approach
 --camera jumping alignment isn't right, test based on both on middle platform, jump up with one
-
 --dodge is click in on run, roll down then direction (if down and right or left)
 --make speed change on dis greater slower at yeah
 --block is run click and down
@@ -176,6 +186,7 @@ require "At/Blue"
 require "At/Yellow"
 require "At/Sand"
 require "colorcontrol"
+require "BB"
 loader = require "love-loader"
 
 
@@ -362,23 +373,23 @@ function love.update()
 
 
 
-      controller2.start = love.keyboard.isDown("u")
+      you.start = love.keyboard.isDown("u")
       if joystick then
-        controller1.start = joystick:isGamepadDown("start")
+        me.start = joystick:isGamepadDown("start")
         if not justone then
-        controller2.start = joystick2:isGamepadDown("start") 
+        you.start = joystick2:isGamepadDown("start") 
         end
       end 
 
-      if r2unpause and (controller1.start or controller2.start) and pause 
+      if r2unpause and (me.start or you.start) and pause 
       then pause = false
         r2unpause = false
         thesong:resume()
-      elseif (controller1.start or controller2.start) and r2unpause then 
+      elseif (me.start or you.start) and r2unpause then 
         pause = true
         r2unpause = false
         thesong:pause()
-      elseif not (controller1.start or controller2.start) then r2unpause = true 
+      elseif not (me.start or you.start) then r2unpause = true 
       end
     end
 
@@ -400,9 +411,6 @@ function love.update()
 
     if me.flinch then me.jstop = false mebjstop = false end
     if you.flinch then you.jstop = false youbjstop = false end
-
-
-
 
 
 
@@ -463,63 +471,67 @@ function love.update()
 
       if me.health<0 or you.health<0 then
 
-        controller1.up = false
-        controller1.down = false
-        controller1.left = false
-        controller1.right = false
-        controller1.a1 = false
-        controller1.a2 = false
-        controller1.a3 = false
-        controller1.block = false
+        me.up = false
+        me.down = false
+        me.left = false
+        me.right = false
+        me.a1 = false
+        me.a2 = false
+        me.a3 = false
+        me.block = false
 
 
 
-        controller2.up = false
-        controller2.down = false
-        controller2.left = false
-        controller2.right = false
-        controller2.a1 = false
-        controller2.a2 = false
-        controller2.a3 = false
-        controller2.block = false
+        you.up = false
+        you.down = false
+        you.left = false
+        you.right = false
+        you.a1 = false
+        you.a2 = false
+        you.a3 = false
+        you.block = false
 
       else
 
-        controller1.start = love.keyboard.isDown("q")
-        controller1.up = love.keyboard.isDown("w")
-        controller1.down = love.keyboard.isDown("s")
-        controller1.left = love.keyboard.isDown("a")
-        controller1.right = love.keyboard.isDown("d")
-        controller1.a1 = love.keyboard.isDown("t")
+        me.start = love.keyboard.isDown("q")
+        me.up = love.keyboard.isDown("w")
+        me.down = love.keyboard.isDown("s")
+        me.left = love.keyboard.isDown("a")
+        me.right = love.keyboard.isDown("d")
+        me.a1 = love.keyboard.isDown("t")
         if flip1 > 0 then
-          controller1.a2 = love.keyboard.isDown("f")
-          controller1.a3 = love.keyboard.isDown("h")
+          me.a2 = love.keyboard.isDown("f")
+          me.a3 = love.keyboard.isDown("h")
         elseif flip1 < 0 then
-          controller1.a2 = love.keyboard.isDown("h")
-          controller1.a3 = love.keyboard.isDown("f")
+          me.a2 = love.keyboard.isDown("h")
+          me.a3 = love.keyboard.isDown("f")
         end
-        controller1.a4 = love.keyboard.isDown("g")
-        controller1.block = love.keyboard.isDown("e")
-        controller1.run = love.keyboard.isDown("r")
+        me.a4 = love.keyboard.isDown("g")
+        me.block = love.keyboard.isDown("e")
+        me.run = love.keyboard.isDown("r")
+        me.r = love.keyboard.isDown("2")
+        me.l = love.keyboard.isDown("1")
 
 
 
-        controller2.up = love.keyboard.isDown("i")
-        controller2.down = love.keyboard.isDown("k")
-        controller2.left = love.keyboard.isDown("j")
-        controller2.right = love.keyboard.isDown("l")
-        controller2.a1 = love.keyboard.isDown("up")
-        controller2.a4 = love.keyboard.isDown("down")
+        you.up = love.keyboard.isDown("i")
+        you.down = love.keyboard.isDown("k")
+        you.left = love.keyboard.isDown("j")
+        you.right = love.keyboard.isDown("l")
+        you.a1 = love.keyboard.isDown("up")
+        you.a4 = love.keyboard.isDown("down")
         if flip2 > 0 then
-          controller2.a2 = love.keyboard.isDown("left")
-          controller2.a3 = love.keyboard.isDown("right")
+          you.a2 = love.keyboard.isDown("left")
+          you.a3 = love.keyboard.isDown("right")
         elseif flip2 < 0 then
-          controller2.a3 = love.keyboard.isDown("left")
-          controller2.a2 = love.keyboard.isDown("right")
+          you.a3 = love.keyboard.isDown("left")
+          you.a2 = love.keyboard.isDown("right")
         end
-        controller2.block = love.keyboard.isDown("o")
-        controller2.start = love.keyboard.isDown("u")
-        controller2.run = love.keyboard.isDown("p")
+        you.block = love.keyboard.isDown("o")
+        you.start = love.keyboard.isDown("u")
+        you.run = love.keyboard.isDown("p")
+        you.r = love.keyboard.isDown("0")
+        you.l = love.keyboard.isDown("9")
 
 
 
@@ -557,22 +569,6 @@ function love.update()
       colorassign()
 
 
-      if fightclub then 
-        ms = controller1.a2
-        mg = controller1.a1
-        mp = controller1.a3
-        mb = controller1.a4
-        
-        yp = controller2.a1
-        yg = controller2.a2
-        yb = controller2.a3
-        
-      colorcontrol(mb,mg,mp,yb,yg,yp,my,yy,ms,ys)
-      else
-
-      colorcontrol(mb,mg,mp,yb,yg,yp,my,yy,ms,ys)
-      end
-
       clicks()
 
 
@@ -598,8 +594,8 @@ function love.update()
         mov:setVolume(SFXV - .3)
         openingsong:setPitch(sfade/255)
 
-        if (controller1.right or controller2.right) and modenum < 1 then modenum = modenum + 1 mov:play()
-        elseif (controller1.left or controller2.left) and modenum > 0 then modenum = modenum - 1 mov:play()	
+        if (me.right or you.right) and modenum < 1 then modenum = modenum + 1 mov:play()
+        elseif (me.left or you.left) and modenum > 0 then modenum = modenum - 1 mov:play()	
         end
 
         if modenum == 0 then 
@@ -635,11 +631,11 @@ function love.update()
 
         end
 
-        if not controller1.left and not controller1.right and not controller2.left and not controller2.right then r2ss = true
+        if not me.left and not me.right and not you.left and not you.right then r2ss = true
         end
 
-        if (controller1.left or controller2.left) and MENU == "stage" and not startsfade and stagenum > 0 and r2ss then stagenum = stagenum - 1	mov:play() r2ss = false
-        elseif (controller1.right or controller2.right) and MENU == "stage" and not startsfade and stagenum < 2 and r2ss then stagenum = stagenum + 1	 mov:play() r2ss = false
+        if (me.left or you.left) and MENU == "stage" and not startsfade and stagenum > 0 and r2ss then stagenum = stagenum - 1	mov:play() r2ss = false
+        elseif (me.right or you.right) and MENU == "stage" and not startsfade and stagenum < 2 and r2ss then stagenum = stagenum + 1	 mov:play() r2ss = false
         end
 
         if sfade - 10 <= 0 then MENU = "prechoose" 
@@ -736,12 +732,12 @@ function love.update()
         elseif streetfade <= 0 then streetfadehold = streetfadehold - 1
         elseif streetfadestart then streetfade = streetfade - 5
         elseif enviro.dolly + screenwidth > enviro.rightwall/2
-        or controller1.a1
-        or controller1.a2
-        or controller1.a3
-        or controller2.a1
-        or controller2.a2
-        or controller2.a3 
+        or me.a1
+        or me.a2
+        or me.a3
+        or you.a1
+        or you.a2
+        or you.a3 
         then 
           streetfadestart = true	
         end
@@ -757,8 +753,8 @@ function love.update()
 
         platforming()
 
-        movex(me,controller1)
-        movex(you,controller2)
+        movex(me,me)
+        movex(you,you)
 
         walljump()
 
@@ -814,59 +810,26 @@ function love.update()
         you.jstop = false
         melimitbreak= false
         youlimitbreak = false
-
-        bluegreen(me.breen)
-        you.bluegreen(you.breen)
-
         
-        bluepurple(me.burple)
-        you.bluepurple(you.burple)
-
-        blueblade(me.blue, me, you, controller1, controller2)
-        blueblade(you.blue, you, me, controller2, controller1)
-
-        me.bolts.shoot(me.green)
-        me.bolts.update()
-        you.bolts.shoot(you.green)
-        you.bolts.update()
-
-        me.spikes.shoot(me.purple)
-        you.spikes.shoot(you.purple)
-
-        you.greenpurple(you.gurple)
-        greenpurple(me.gurple)
-
-        memines(me.yellow)
-        youmines(you.yellow)
-
-        youpy(you.pellow)
-        mepy(me.pellow)
-
-        megy(me.gellow)
-        yougy(you.gellow)
-
-        meby(me.bellow)
-        youby(you.bellow)
-
-
-
-        me.spikes.update(me.purple)
-        you.spikes.update(you.purple)
-
-        wings(me.sand, me, you, controller1)
-        me.bluesand(me.bland)
-        me.greensand(me.grand)
-        mepurpsand(me.pund)
-        me.sandmines(me.yend)
-
-        wings(you.sand, you, me, controller2)
-        you.bluesand(you.bland)
-        you.greensand(you.grand)
-        youpurpsand(you.pund)
-        you.sandmines(you.yend)
+        combomanage(me)
+        combomanage(you)
+        breadandbutter(me, true)
 
         flinchingyou()
         flinchingme()
+
+        if math.abs(me.v) > math.abs(you.v) then
+        bump(me)
+      elseif math.abs(me.v) < math.abs(you.v) then
+        
+        bump(you)
+      else
+          if math.random()>.5
+          then bump(me)
+          else bump(you)
+            end
+        
+        end
 
         dodgeme()
         dodgey()
@@ -884,6 +847,7 @@ function love.update()
 
         miscsounds()
 
+        
 
 
         if (themode == "classic" and (you.dead or me.dead))or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
@@ -1023,17 +987,17 @@ end
 
 
           --love.graphics.draw(enviro.rselecter, ((tileoffset-ln-115-(meseleccurrent*9))/1440)*screenwidth, ((tileyoffset+10 + 64*(meseleccurrent+1))/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-          if controller1.down and mr2c and msy < (screenheight * .46) then 
+          if me.down and mr2c and msy < (screenheight * .46) then 
             msy = msy + (screenheight * .15)
             mr2c = false
             meseleccurrent = meseleccurrent + 1
             mov:play()
-          elseif controller1.up and mr2c and msy > (screenheight * .14)  then 
+          elseif me.up and mr2c and msy > (screenheight * .14)  then 
             msy = msy - (screenheight * .15)
             meseleccurrent = meseleccurrent - 1
             mr2c = false
             mov:play()
-          elseif not controller1.down and not controller1.up then mr2c = true
+          elseif not me.down and not me.up then mr2c = true
           end
         end
 
@@ -1092,17 +1056,17 @@ end
           elseif youseleccurrent == 4 then ysindent = 20
           end
 
-          if controller2.down and yr2c and ysy < (screenheight * .46) then 
+          if you.down and yr2c and ysy < (screenheight * .46) then 
             ysy = ysy + (screenheight * .15)
             yr2c = false
             youseleccurrent = youseleccurrent+1
             mov2:play()
-          elseif controller2.up and yr2c and ysy > (screenheight * .14) then 
+          elseif you.up and yr2c and ysy > (screenheight * .14) then 
             ysy = ysy - (screenheight * .15)
             yr2c = false
             youseleccurrent = youseleccurrent - 1
             mov2:play()
-          elseif not controller2.down and not controller2.up then yr2c = true
+          elseif not you.down and not you.up then yr2c = true
           end
         end
 
@@ -1466,7 +1430,7 @@ if not fightclub then
   if you.invince then
     love.graphics.print("invince", 100, 100)
     end
-     love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+     love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( ))..tostring(me.animcounter), 10, 10)
    end
    --[[
    if me.flinch or you.flinch then

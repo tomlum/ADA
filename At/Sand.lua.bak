@@ -489,9 +489,9 @@ elseif you.j < 0 then
 		you.j = -yougupv*.8
     you.v = -yougv*.8
 		yupgs = true
-    	table.insert(youbolts, {x = you.mid -23 * you.lr , y = you.y + 40, lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
-	table.insert(youbolts, {x = you.mid, y = you.y + 40, lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
-	table.insert(youbolts, {x = you.mid + 23 * you.lr , y = you.y + 40 , lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
+    	table.insert(you.bolts, {x = you.mid -23 * you.lr , y = you.y + 40, lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
+	table.insert(you.bolts, {x = you.mid, y = you.y + 40, lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
+	table.insert(you.bolts, {x = you.mid + 23 * you.lr , y = you.y + 40 , lr = you.lr, time = 0, v = yougv, s = -202, upv = yougupv})	
 
 
 
@@ -905,7 +905,7 @@ elseif mebsct and not x then
 	mebslevel = me.y
 
 	me.im = bsend
-	if (me.g and not controller1.up) or controller1.right or controller1.left then
+	if (me.g and not me.up) or me.right or me.left then
     mebsind = 1
     mbsxend = me.mid
     mbslr = me.lr
@@ -914,7 +914,7 @@ elseif mebsct and not x then
 	me.jstop = true
 	mebsct = false
 	me.v = 100 *me.lr
-	elseif controller1.up or (me.j >= 0 and not controller1.down) then
+	elseif me.up or (me.j >= 0 and not me.down) then
 	repplay(flapblues2)
 	mebshold = -45
 	me.g = false
@@ -932,7 +932,7 @@ elseif mebsct and not x then
 			you.ft = bsft
 			end
 		end
-	elseif (not me.g and controller1.down) or me.j < 0 then
+	elseif (not me.g and me.down) or me.j < 0 then
 	repplay(flapblues2)
 	mebshold = -45
 	me.g = false

@@ -7,7 +7,7 @@ yournumbers = {1,2,3,4}
 function onlytwoattacks()
 
 
-if not controller1.a1 and not controller1.a2 and not controller1.a3 and not controller1.a4
+if not me.a1 and not me.a2 and not me.a3 and not me.a4
 then mynumbers = {1,2,3,4}
 end
 
@@ -15,28 +15,28 @@ if not controller2.a1 and not controller2.a2 and not controller2.a3 and not cont
 then yournumbers = {1,2,3,4}
 end
 
-if controller1.a1 and table.getn(mynumbers) > 2 then
+if me.a1 and table.getn(mynumbers) > 2 then
 for i,v in ipairs(mynumbers) do 
 	if v == 1 then table.remove(mynumbers, i)
 	end
 end
 end
 
-if controller1.a2 and table.getn(mynumbers) > 2 then
+if me.a2 and table.getn(mynumbers) > 2 then
 for i,v in ipairs(mynumbers) do 
 	if v == 2 then table.remove(mynumbers, i)
 	end
 end
 end
 
-if controller1.a3 and table.getn(mynumbers) > 2 then
+if me.a3 and table.getn(mynumbers) > 2 then
 for i,v in ipairs(mynumbers) do 
 	if v == 3 then table.remove(mynumbers, i)
 	end
 end
 end
 
-if controller1.a4 and table.getn(mynumbers) > 2 then
+if me.a4 and table.getn(mynumbers) > 2 then
 for i,v in ipairs(mynumbers) do 
 	if v == 4 then table.remove(mynumbers, i)
 	end
@@ -74,10 +74,10 @@ end
 
 for i,v in ipairs(mynumbers) do 
 	if table.getn(mynumbers) <= 2 then
-	if v == 1 then controller1.a1 = false end
-	if v == 2 then controller1.a2 = false end
-	if v == 3 then controller1.a3 = false end
-	if v == 4 then controller1.a4 = false end
+	if v == 1 then me.a1 = false end
+	if v == 2 then me.a2 = false end
+	if v == 3 then me.a3 = false end
+	if v == 4 then me.a4 = false end
 end
 end
 
@@ -197,43 +197,43 @@ if collides:isStopped() then
 collide = false
 end
 
-if mereadytoplay and youreadytoplay and ((controller1.start and mns) or (controller2.start and yns)) then MENU = "postchoose"
+if mereadytoplay and youreadytoplay and ((me.start and mns) or (controller2.start and yns)) then MENU = "postchoose"
 selecsong:stop()
 readysound:play()
 end
 
 
 
-if controller1.a1 then controller1.a2, controller1.a3, controller1.a4 = false, false, false
-		elseif controller1.a2 then controller1.a1, controller1.a3, controller1.a4 = false, false, false
-		elseif controller1.a3 then controller1.a2, controller1.a1, controller1.a4 = false, false, false
-		elseif controller1.a4 then controller1.a2, controller1.a1, controller1.a3 = false, false, false
+if me.a1 then me.a2, me.a3, me.a4 = false, false, false
+		elseif me.a2 then me.a1, me.a3, me.a4 = false, false, false
+		elseif me.a3 then me.a2, me.a1, me.a4 = false, false, false
+		elseif me.a4 then me.a2, me.a1, me.a3 = false, false, false
 			end
 
-if not controller1.block and not controller1.left and not controller1.right and not controller1.a1 and not controller1.a2 and not controller1.a3 and not controller1.start and not controller1.a4 and not controller1.up and not controller1.down then
+if not me.block and not me.left and not me.right and not me.a1 and not me.a2 and not me.a3 and not me.start and not me.a4 and not me.up and not me.down then
 	mns = true
 	end
 
 
 
 
-if mns and mechoosecolor and controller1.start
+if mns and mechoosecolor and me.start
 	 then mechooseface = true 
 	 	repplay(startb)
 
 	 mechoosecolor = false
 	mns = false
-elseif mns and mechooseface and controller1.block then
+elseif mns and mechooseface and me.block then
 	mechooseface = false
 	mechoosecolor = true
 	mns = false
 	replaced:play()
-elseif mns and mechooseface and controller1.start
+elseif mns and mechooseface and me.start
 	 then mechooseface = false 
 	 repplay(startb)
 	mns = false
 	mereadytoplay = true
-elseif mns and mereadytoplay and controller1.block then 
+elseif mns and mereadytoplay and me.block then 
 	mereadytoplay = false
 	mechooseface = true
 	mns = false
@@ -244,11 +244,11 @@ end
 
 if mechooseface then
 
-if controller1.up and mns and mefaceselector > 0 
+if me.up and mns and mefaceselector > 0 
 	then mefaceselector = mefaceselector - 1
 	mns = false
 	mov:play()
-elseif controller1.down and mns and mefaceselector < 5 
+elseif me.down and mns and mefaceselector < 5 
 	then mefaceselector = mefaceselector + 1
 	mns = false
 	mov:play()
@@ -409,24 +409,24 @@ if meseleccurrent == 0
 
 
 	if mns then
-	if controller1.a1 
+	if me.a1 
 	then 
 	mbselec = true
 	mns = false
 		mbb = 1
-		repplay(selected)	elseif controller1.a2 
+		repplay(selected)	elseif me.a2 
 	then mbselec = true
 	mns = false
 		mbb = 2
-		repplay(selected)	elseif controller1.a3
+		repplay(selected)	elseif me.a3
 	then mbselec = true
 	mns = false
 		mbb = 3
-		repplay(selected)	elseif controller1.a4
+		repplay(selected)	elseif me.a4
 	then mbselec = true
 	mns = false
 		mbb = 4
-		repplay(selected)	elseif controller1.block
+		repplay(selected)	elseif me.block
 	then mbselec = false
 	mns = false
 		mbb = 0	
@@ -456,23 +456,23 @@ elseif meseleccurrent == 1
 
 
 	if mns then
-	if controller1.a1 
+	if me.a1 
 	then mgselec = true
 	mns = false
 		mgg = 1
-		repplay(selected)	elseif controller1.a2 
+		repplay(selected)	elseif me.a2 
 	then mgselec = true
 	mns = false
 		mgg = 2
-		repplay(selected)	elseif controller1.a3
+		repplay(selected)	elseif me.a3
 	then mgselec = true
 	mns = false
 		mgg = 3
-		repplay(selected)	elseif controller1.a4
+		repplay(selected)	elseif me.a4
 	then mgselec = true
 	mns = false
 		mgg = 4
-		repplay(selected)	elseif controller1.block
+		repplay(selected)	elseif me.block
 	then mgselec = false
 	mns = false
 		mgg = 0	
@@ -501,23 +501,23 @@ mecurrentframe = enviro.pframe
 
 
 	if mns then
-	if controller1.a1 
+	if me.a1 
 	then mpselec = true
 	mns = false
 		mpp = 1
-		repplay(selected)	elseif controller1.a2 
+		repplay(selected)	elseif me.a2 
 	then mpselec = true
 	mns = false
 		mpp = 2
-		repplay(selected)	elseif controller1.a3
+		repplay(selected)	elseif me.a3
 	then mpselec = true
 	mns = false
 		mpp = 3
-		repplay(selected)	elseif controller1.a4
+		repplay(selected)	elseif me.a4
 	then mpselec = true
 	mns = false
 		mpp = 4
-		repplay(selected)	elseif controller1.block
+		repplay(selected)	elseif me.block
 	then mpselec = false
 	mns = false
 		mpp = 0	
@@ -543,23 +543,23 @@ elseif meseleccurrent == 3
 
 
 	if mns then
-	if controller1.a1 
+	if me.a1 
 	then
 	mns = false
 		myy = 1
-		repplay(selected)	elseif controller1.a2 
+		repplay(selected)	elseif me.a2 
 	then 
 	mns = false
 		myy = 2
-		repplay(selected)	elseif controller1.a3
+		repplay(selected)	elseif me.a3
 	then 
 	mns = false
 		myy = 3
-		repplay(selected)	elseif controller1.a4
+		repplay(selected)	elseif me.a4
 	then 
 	mns = false
 		myy = 4
-		repplay(selected)	elseif controller1.block
+		repplay(selected)	elseif me.block
 	then
 	mns = false
 		myy = 0	
@@ -588,27 +588,27 @@ mecurrentframe = enviro.sframe
 	
 
 	if mns then
-	if controller1.a1 
+	if me.a1 
 	then 
 	mns = false
 		mss = 1
 		repplay(selected)	
-	elseif controller1.a2 
+	elseif me.a2 
 	then 
 	mns = false
 		mss = 2
 		repplay(selected)	
-	elseif controller1.a3
+	elseif me.a3
 	then 
 	mns = false
 		mss = 3
 		repplay(selected)	
-	elseif controller1.a4
+	elseif me.a4
 	then 
 	mns = false
 		mss = 4
 		repplay(selected)	
-	elseif controller1.block
+	elseif me.block
 	then mpselec = false
 	mns = false
 		mss = 0	
@@ -909,35 +909,35 @@ end
 
 
 
-if mbb == 1 then mb = controller1.a1 r1,g1,b1 = br,bg,bb
-elseif mgg == 1 then mg = controller1.a1 r1,g1,b1 = gr,gg,gb
-elseif mpp == 1 then mp = controller1.a1 r1,g1,b1 = pr,pg,pb
-elseif myy == 1 then my = controller1.a1 r1,g1,b1 = yer,yeg,yeb
-elseif mss == 1 then ms = controller1.a1 r1,g1,b1 = sr,sg,sb
+if mbb == 1 then mb = me.a1 r1,g1,b1 = br,bg,bb
+elseif mgg == 1 then mg = me.a1 r1,g1,b1 = gr,gg,gb
+elseif mpp == 1 then mp = me.a1 r1,g1,b1 = pr,pg,pb
+elseif myy == 1 then my = me.a1 r1,g1,b1 = yer,yeg,yeb
+elseif mss == 1 then ms = me.a1 r1,g1,b1 = sr,sg,sb
 else r1,g1,b1 = 255,255,255
 end
 
-if mbb == 2 then mb = controller1.a2 a21r,a21g,a21b = br,bg,bb
-elseif mgg == 2 then mg = controller1.a2 a21r,a21g,a21b = gr,gg,gb
-elseif mpp == 2 then mp = controller1.a2 a21r,a21g,a21b = pr,pg,pb
-elseif myy == 2 then my = controller1.a2 a21r,a21g,a21b = yer,yeg,yeb
-elseif mss == 2 then ms = controller1.a2 a21r,a21g,a21b = sr,sg,sb
+if mbb == 2 then mb = me.a2 a21r,a21g,a21b = br,bg,bb
+elseif mgg == 2 then mg = me.a2 a21r,a21g,a21b = gr,gg,gb
+elseif mpp == 2 then mp = me.a2 a21r,a21g,a21b = pr,pg,pb
+elseif myy == 2 then my = me.a2 a21r,a21g,a21b = yer,yeg,yeb
+elseif mss == 2 then ms = me.a2 a21r,a21g,a21b = sr,sg,sb
 else a21r,a21g,a21b = 255,255,255
 end
 
-if mbb == 3 then mb = controller1.a3 a31r,a31g,a31b = br,bg,bb
-elseif mgg == 3 then mg = controller1.a3 a31r,a31g,a31b = gr,gg,gb
-elseif mpp == 3 then mp = controller1.a3 a31r,a31g,a31b = pr,pg,pb
-elseif myy == 3 then my = controller1.a3 a31r,a31g,a31b = yer,yeg,yeb
-elseif mss == 3 then ms = controller1.a3 a31r,a31g,a31b = sr,sg,sb
+if mbb == 3 then mb = me.a3 a31r,a31g,a31b = br,bg,bb
+elseif mgg == 3 then mg = me.a3 a31r,a31g,a31b = gr,gg,gb
+elseif mpp == 3 then mp = me.a3 a31r,a31g,a31b = pr,pg,pb
+elseif myy == 3 then my = me.a3 a31r,a31g,a31b = yer,yeg,yeb
+elseif mss == 3 then ms = me.a3 a31r,a31g,a31b = sr,sg,sb
 else a31r,a31g,a31b = 255,255,255
 end
 
-if mbb == 4 then mb = controller1.a4 a41r,a41g,a41b = br,bg,bb
-elseif mgg == 4 then mg = controller1.a4 a41r,a41g,a41b = gr,gg,gb
-elseif mpp == 4 then mp = controller1.a4 a41r,a41g,a41b = pr,pg,pb
-elseif myy == 4 then my = controller1.a4 a41r,a41g,a41b = yer,yeg,yeb
-elseif mss == 4 then ms = controller1.a4 a41r,a41g,a41b = sr,sg,sb
+if mbb == 4 then mb = me.a4 a41r,a41g,a41b = br,bg,bb
+elseif mgg == 4 then mg = me.a4 a41r,a41g,a41b = gr,gg,gb
+elseif mpp == 4 then mp = me.a4 a41r,a41g,a41b = pr,pg,pb
+elseif myy == 4 then my = me.a4 a41r,a41g,a41b = yer,yeg,yeb
+elseif mss == 4 then ms = me.a4 a41r,a41g,a41b = sr,sg,sb
 else a41r,a41g,a41b = 255,255,255
 end
 
@@ -1014,7 +1014,7 @@ end
 function anyofyourprimes()
 if you.blue or you.blu
 or you.yellow or youyell
-or you.green or yougree
+or you.green or you.gree
 or you.purple or youpurp
 or you.sand or yousan
 then return true
@@ -1180,7 +1180,7 @@ or yougran
 or youyen
 or you.running
 
- -- or yougree
+ -- or you.gree
  -- or you.blu
  -- or youpurp
  -- or youyell
@@ -1234,7 +1234,7 @@ end
 
 
 
-if you.green and you.sand and not you.san and not yougree then 
+if you.green and you.sand and not you.san and not you.gree then 
 	ycombofalsify()
 	you.grand = true
 elseif not you.sand and not you.green then you.grand = false
@@ -1262,7 +1262,7 @@ end
 
 
 
-if you.blue and you.green and not yougree and not you.blu then 
+if you.blue and you.green and not you.gree and not you.blu then 
 	ycombofalsify()
 	you.breen = true
 elseif not you.green and not you.blue then you.breen = false
@@ -1352,7 +1352,7 @@ elseif not me.green and not me.yellow then me.gellow = false
 end
 
 
-if you.yellow and you.green and not yougree and not youyell then 
+if you.yellow and you.green and not you.gree and not youyell then 
 	ycombofalsify()
 	you.gellow = true
 
@@ -1420,7 +1420,7 @@ if you.blu or you.blue then
 	you.bcancel = false
 end
 
-if yougree or you.green then
+if you.gree or you.green then
 	yclearprimarys(you.green)
 	you.gcancel = false
 end

@@ -742,7 +742,7 @@ elseif youbsct and not x then
 	youbslevel = you.y
 
 	you.im = bsend
-	if (you.g and not controller2.up) or controller2.right or controller2.left then
+	if (you.g and not you.up) or you.right or you.left then
     ybsxend = you.mid
 	ybssx = you.mid
   ybslr = you.lr
@@ -751,7 +751,7 @@ elseif youbsct and not x then
 	youbsct = false
 	you.v = 100 *you.lr
   youbsind = 1
-	elseif controller2.up or (you.j >= 0 and not controller2.down) then
+	elseif you.up or (you.j >= 0 and not you.down) then
 	repplay(flapblues2)
 	youbshold = -45
 	you.g = false
@@ -769,7 +769,7 @@ elseif youbsct and not x then
 			me.ft = bsft
 			end
 		end
-	elseif (not you.g and controller2.down) or you.j < 0 then
+	elseif (not you.g and you.down) or you.j < 0 then
 	repplay(flapblues2)
 	youbshold = -45
 	you.g = false
@@ -905,7 +905,7 @@ elseif mebsct and not x then
 	mebslevel = me.y
 
 	me.im = bsend
-	if (me.g and not controller1.up) or controller1.right or controller1.left then
+	if (me.g and not me.up) or me.right or me.left then
     mebsind = 1
     mbsxend = me.mid
     mbslr = me.lr
@@ -914,7 +914,7 @@ elseif mebsct and not x then
 	me.jstop = true
 	mebsct = false
 	me.v = 100 *me.lr
-	elseif controller1.up or (me.j >= 0 and not controller1.down) then
+	elseif me.up or (me.j >= 0 and not me.down) then
 	repplay(flapblues2)
 	mebshold = -45
 	me.g = false
@@ -932,7 +932,7 @@ elseif mebsct and not x then
 			you.ft = bsft
 			end
 		end
-	elseif (not me.g and controller1.down) or me.j < 0 then
+	elseif (not me.g and me.down) or me.j < 0 then
 	repplay(flapblues2)
 	mebshold = -45
 	me.g = false

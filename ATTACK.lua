@@ -8,7 +8,7 @@
 --speed + purple = surf on the me.spikes
 --JUST THE PERSON KNOCKS THEM THROUGH THE FLOOR for air attack
 --TEST MAKE SURE YOU CAN'T USE ATTACKS AT THE SAME TIME, ESPECIALLY IN AIR
---for combo attacks, make sure the solo attacks say "controller1.a1 and not controller1.a2-3"
+--for combo attacks, make sure the solo attacks say "me.a1 and not me.a2-3"
 --or something, that might not fix it
 --maybe if in close range the green attack pushes you back
 --maybe rotate me.bolts so they look better, use trig
@@ -758,7 +758,7 @@ delaymecounter = 0
 me.dodgecounter = 0
 dodgetime = 27
 delaytime = 17
-dodgespeed = 13
+dodgespeed = 10
 
 
 
@@ -882,7 +882,7 @@ dodgey = function ()
 		you.dodge = true
 		delayycounter = delaytime
 		you.block = true
-	elseif you.block and controller2.right and dodgeycounter == 0 and not you.slide and	not noyoudodge and not you.landing
+	elseif you.block and you.right and dodgeycounter == 0 and not you.slide and	not noyoudodge and not you.landing
    and not 
   (you.san
   or you.gree
@@ -899,7 +899,7 @@ dodgey = function ()
 			dodgeycounter = dodgeycounter - 11
 			else you.dodgetype = "front"
 		end
-	elseif you.block and controller2.left and dodgeycounter == 0 and not you.slide and 	not noyoudodge and not you.landing
+	elseif you.block and you.left and dodgeycounter == 0 and not you.slide and 	not noyoudodge and not you.landing
   and not 
   (you.san
   or you.gree
@@ -1076,7 +1076,7 @@ if me.flinch
 		me.dodge = true
 		me.block = true
 		delaymecounter = delaytime
-	elseif me.block and controller1.right and me.dodgecounter == 0 and not me.slide and not nomedodge and not me.landing
+	elseif me.block and me.right and me.dodgecounter == 0 and not me.slide and not nomedodge and not me.landing
   and not 
   (me.san
  or me.gree
@@ -1093,7 +1093,7 @@ if me.flinch
 			me.dodgecounter = me.dodgecounter - 11
 			else me.dodgetype = "front"
 		end
-	elseif me.block and controller1.left and me.dodgecounter == 0 and not me.slide and not nomedodge and not me.landing
+	elseif me.block and me.left and me.dodgecounter == 0 and not me.slide and not nomedodge and not me.landing
   and not 
   (me.san
  or me.gree
@@ -1155,7 +1155,7 @@ end
 
 function blocknbusy()
 
-	if controller1.block and delaymecounter == 0 and not controller1.a1 and not controller1.a2 and not controller1.a3 and me.g and not me.dodge and not me.landing
+	if me.block and delaymecounter == 0 and not me.a1 and not me.a2 and not me.a3 and me.g and not me.dodge and not me.landing
 	then me.im = block
 		me.block = true
 		me.stop = true
@@ -1166,7 +1166,7 @@ function blocknbusy()
 	end
 
 
-	if controller2.block and delayycounter == 0 and not controller2.a1 and not controller2.a2 and not controller2.a3 and you.g and not you.dodge and not you.landing
+	if you.block and delayycounter == 0 and not you.a1 and not you.a2 and not you.a3 and you.g and not you.dodge and not you.landing
 	then you.im = block
 		you.block = true
 		you.stop = true
@@ -1240,6 +1240,7 @@ camshakeflinch()
     youfalltimer = 0
     end
     repplay(flinch2)
+    repplay(flinch22)
 		else 
 		repplay(minch2)
 	  end
@@ -1256,6 +1257,7 @@ if meprevhealth > me.health then
     mefalltimer = 0
     end
     repplay(flinch1)
+    repplay(flinch12)
     
 
 		else 

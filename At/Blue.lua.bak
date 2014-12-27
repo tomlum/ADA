@@ -185,10 +185,10 @@ function blueblade(x, yy, mm, cy, cm)
       hc(yy.mid, yy.y+30, yy.mid+yy.v+160*yy.lr, yy.y+30-yy.j, true, yy.lr, true, true, yy.v + (4*yy.lr), yy.j, bluedam, bft/3, 0, 0, 0, yy.id)
     elseif yy.bnext == 4 and not x
     then yy.im = blue21
-      if you.right and yy.lr > 0 then
+      if controller2.right and yy.lr > 0 then
         yy.v = yy.v + 8
       elseif
-      you.left and yy.lr < 0 then 
+      controller2.left and yy.lr < 0 then 
         yy.v = yy.v - 8
       else
         yy.v = yy.v + (4 * yy.lr)
@@ -218,10 +218,10 @@ function blueblade(x, yy, mm, cy, cm)
     elseif yy.bnext == 1 and not x then
       yy.im = blue11
       yy.d = 24
-      if you.right and yy.lr > 0 then
+      if controller2.right and yy.lr > 0 then
         yy.v = yy.v + 7
       elseif
-      you.left and yy.lr < 0 then 
+      controller2.left and yy.lr < 0 then 
         yy.v = yy.v - 7
       else
         yy.v = yy.v + (6 * yy.lr)

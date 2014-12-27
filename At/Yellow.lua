@@ -260,13 +260,13 @@ if youbyhold > 0 then
 elseif youbyct > 0 and not x and not you.g then
 	youbyready = false
 
-	if (you.j >= 0 and not controller2.down) or (controller2.up and you.j < 0) then
+	if (you.j >= 0 and not you.down) or (you.up and you.j < 0) then
 	youbyhold = 25
 	youbexpc = 100
 	you.im = aby2 
 	you.yoffset = 132
 	you.j = 1
-	elseif (you.j < 0 and not controller2.up) or (controller2.down and you.j >= 0) then
+	elseif (you.j < 0 and not you.up) or (you.down and you.j >= 0) then
 	youbyhold = 25
 	youbexpc = 200
 	you.im = aby22 
@@ -383,13 +383,13 @@ if mebyhold > 0 then
 elseif mebyct > 0 and not x and not me.g then
 	mebyready = false
 
-	if (me.j >= 0 and not controller1.down) or (controller1.up and me.j < 0) then
+	if (me.j >= 0 and not me.down) or (me.up and me.j < 0) then
 	mebyhold = 25
 	mebexpc = 100
 	me.im = aby2 
 	me.yoffset = 132
 	me.j = 1
-	elseif (me.j < 0 and not controller1.up) or (controller1.down and me.j >= 0) then
+	elseif (me.j < 0 and not me.up) or (me.down and me.j >= 0) then
 	mebyhold = 25
 	mebexpc = 200
 	me.im = aby22 

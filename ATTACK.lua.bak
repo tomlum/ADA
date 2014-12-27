@@ -8,7 +8,7 @@
 --speed + purple = surf on the me.spikes
 --JUST THE PERSON KNOCKS THEM THROUGH THE FLOOR for air attack
 --TEST MAKE SURE YOU CAN'T USE ATTACKS AT THE SAME TIME, ESPECIALLY IN AIR
---for combo attacks, make sure the solo attacks say "controller1.a1 and not controller1.a2-3"
+--for combo attacks, make sure the solo attacks say "me.a1 and not me.a2-3"
 --or something, that might not fix it
 --maybe if in close range the green attack pushes you back
 --maybe rotate me.bolts so they look better, use trig
@@ -567,7 +567,7 @@ elseif not x and youbpready then
 	you.jstop = true
 	youbpcd = 110
 	you.bur = true
-	table.insert(youspikes, {x = you.mid + 30*you.lr, y = spikecheck(you.mid + 30*you.lr, you.y) - 140, lr = you.lr, t = 40, s = -200})
+	table.insert(you.spikes, {x = you.mid + 30*you.lr, y = spikecheck(you.mid + 30*you.lr, you.y) - 140, lr = you.lr, t = 40, s = -200})
   
   repplay(bpurp2hit)
 
@@ -758,7 +758,7 @@ delaymecounter = 0
 me.dodgecounter = 0
 dodgetime = 27
 delaytime = 17
-dodgespeed = 13
+dodgespeed = 10
 
 
 
@@ -1076,7 +1076,7 @@ if me.flinch
 		me.dodge = true
 		me.block = true
 		delaymecounter = delaytime
-	elseif me.block and controller1.right and me.dodgecounter == 0 and not me.slide and not nomedodge and not me.landing
+	elseif me.block and me.right and me.dodgecounter == 0 and not me.slide and not nomedodge and not me.landing
   and not 
   (me.san
  or me.gree
@@ -1093,7 +1093,7 @@ if me.flinch
 			me.dodgecounter = me.dodgecounter - 11
 			else me.dodgetype = "front"
 		end
-	elseif me.block and controller1.left and me.dodgecounter == 0 and not me.slide and not nomedodge and not me.landing
+	elseif me.block and me.left and me.dodgecounter == 0 and not me.slide and not nomedodge and not me.landing
   and not 
   (me.san
  or me.gree
@@ -1155,7 +1155,7 @@ end
 
 function blocknbusy()
 
-	if controller1.block and delaymecounter == 0 and not controller1.a1 and not controller1.a2 and not controller1.a3 and me.g and not me.dodge and not me.landing
+	if me.block and delaymecounter == 0 and not me.a1 and not me.a2 and not me.a3 and me.g and not me.dodge and not me.landing
 	then me.im = block
 		me.block = true
 		me.stop = true
