@@ -2,10 +2,11 @@
 --SPARKS COLOR BASED ON ATTACK COLOR?!?!?!?!?!?
 --mine throw lob doesn't explode until activated on ground
 --dodge slide turn around speed not the same as slide, it's faster
-
+--ON HIT GLASS/WALL WHILE FLINCHED OR BOUNCE OFF EDGE WALL SLOW DOWN TIME OR PAUSE
 --if chargin up then time slows or stops, easy combo chain, camera zoom too? then zoom back out, the color hums
 bloop = 10
-
+love.graphics.setDefaultFilter("nearest","nearest",1)
+--maybe if slow then walkrate decreases so you can walk slowly if using controller
 --plane overhead night city veins simmulator for loading screens? or just a scene
 
 --push is weird
@@ -70,7 +71,6 @@ bloop = 10
 --dodge then hold run and move right, it goes weird
 --make flinch sound more solid
 --why is there that one stray color in the spine when they seperate??
---MATH.MAX!!!!!
 --also have a special case fo rwall jumping off edge barriers? or...
 --standardize the barriers
 --grapple function? it's click in on right stick and move in a direction
@@ -187,6 +187,7 @@ require "At/Yellow"
 require "At/Sand"
 require "colorcontrol"
 require "BB"
+require "pp"
 loader = require "love-loader"
 
 
@@ -509,8 +510,8 @@ function love.update()
         me.a4 = love.keyboard.isDown("g")
         me.block = love.keyboard.isDown("e")
         me.run = love.keyboard.isDown("r")
-        me.r = love.keyboard.isDown("2")
-        me.l = love.keyboard.isDown("1")
+        me.rightb = love.keyboard.isDown("2")
+        me.leftb = love.keyboard.isDown("1")
 
 
 
@@ -530,8 +531,8 @@ function love.update()
         you.block = love.keyboard.isDown("o")
         you.start = love.keyboard.isDown("u")
         you.run = love.keyboard.isDown("p")
-        you.r = love.keyboard.isDown("0")
-        you.l = love.keyboard.isDown("9")
+        you.rightb = love.keyboard.isDown("0")
+        you.leftb = love.keyboard.isDown("9")
 
 
 
@@ -810,10 +811,12 @@ function love.update()
         you.jstop = false
         melimitbreak= false
         youlimitbreak = false
-        
+        NCC(me)
+        NCC(you)
         combomanage(me)
         combomanage(you)
-        breadandbutter(me, true)
+        breadandbutter(me, false)
+        pandp(me, true)
 
         flinchingyou()
         flinchingme()
@@ -836,9 +839,6 @@ function love.update()
 
         climbs()
 
-        facemovement()
-
-        crestmovement()
 
         walls()
 
@@ -873,9 +873,6 @@ if me.im == slowdown then
     you.xoffset = 10
     end
 
-    facemovement()
-
-    crestmovement()
 
   end
 

@@ -1,18 +1,43 @@
 
 idle1 = love.graphics.newImage("me/idle/idle1.png")
+idle1c = love.graphics.newImage("me/idle/idle1c.png")
 idle2 = love.graphics.newImage("me/idle/idle2.png")
+idle2c = love.graphics.newImage("me/idle/idle2c.png")
 idle3 = love.graphics.newImage("me/idle/idle3.png")
+idle3c = love.graphics.newImage("me/idle/idle3c.png")
 idle4 = love.graphics.newImage("me/idle/idle4.png")
-walk1 = love.graphics.newImage("me/walk/walk51.png")
-walk2 = love.graphics.newImage("me/walk/walk52.png")
-walk3 = love.graphics.newImage("me/walk/walk53.png")
-walk4 = love.graphics.newImage("me/walk/walk54.png")
-walk5 = love.graphics.newImage("me/walk/walk55.png")
-run1 = love.graphics.newImage("me/walk/run1.png")
-run2 = love.graphics.newImage("me/walk/run2.png")
-run3 = love.graphics.newImage("me/walk/run3.png")
-run4 = love.graphics.newImage("me/walk/run4.png")
-slide = love.graphics.newImage("me/walk/slide.png")
+idle4c = love.graphics.newImage("me/idle/idle4c.png")
+walk1im = love.graphics.newImage("me/walk/walk51.png")
+walk2im = love.graphics.newImage("me/walk/walk52.png")
+walk3im = love.graphics.newImage("me/walk/walk53.png")
+walk4im = love.graphics.newImage("me/walk/walk54.png")
+walk5im = love.graphics.newImage("me/walk/walk55.png")
+walk1c = love.graphics.newImage("me/walk/walk51c.png")
+walk2c = love.graphics.newImage("me/walk/walk52c.png")
+walk3c = love.graphics.newImage("me/walk/walk53c.png")
+walk4c = love.graphics.newImage("me/walk/walk54c.png")
+walk5c = love.graphics.newImage("me/walk/walk55c.png")
+walk1 = {im = walk1im, c = walk1c}
+walk2 = {im = walk2im, c = walk2c}
+walk3 = {im = walk3im, c = walk3c}
+walk4 = {im = walk4im, c = walk4c}
+walk5 = {im = walk5im, c = walk5c}
+run1im = love.graphics.newImage("me/walk/run1.png")
+run2im = love.graphics.newImage("me/walk/run2.png")
+run3im = love.graphics.newImage("me/walk/run3.png")
+run4im = love.graphics.newImage("me/walk/run4.png")
+run1c = love.graphics.newImage("me/walk/run1c.png")
+run2c = love.graphics.newImage("me/walk/run2c.png")
+run3c = love.graphics.newImage("me/walk/run3c.png")
+run4c = love.graphics.newImage("me/walk/run4c.png")
+run1 = {im = run1im, c = run1c}
+run2 = {im = run2im, c = run2c}
+run3 = {im = run3im, c = run3c}
+run4 = {im = run4im, c = run4c}
+slideim = love.graphics.newImage("me/walk/slide.png")
+slidec = love.graphics.newImage("me/walk/slidec.png")
+slide = {im = slideim, c = slidec}
+
 fade1 = love.graphics.newImage("me/attack/fade1.png")
 fade2 = love.graphics.newImage("me/attack/fade2.png")
 fade3 = love.graphics.newImage("me/attack/fade3.png")
@@ -33,10 +58,18 @@ wallgrab = love.graphics.newImage("me/attack/wallgrab.png")
 partition = love.graphics.newImage("enviro/partition2.png")
 partition:setFilter("nearest")
 
-jumprise = love.graphics.newImage("me/jump/jumprise.png")
-jumpfalling = love.graphics.newImage("me/jump/jumpfalling.png")
-landing = love.graphics.newImage("me/jump/landing.png")
-slowdown = love.graphics.newImage("me/jump/slowdown.png")
+jumpriseim = love.graphics.newImage("me/jump/jumprise.png")
+jumprisec = love.graphics.newImage("me/jump/jumprisec.png")
+jumprise = {im = jumpriseim, c = jumprisec}
+jumpfallingim = love.graphics.newImage("me/jump/jumpfalling.png")
+jumpfallingc = love.graphics.newImage("me/jump/jumpfallingc.png")
+jumpfalling = {im = jumpfallingim, c = jumpfallingc}
+landingim = love.graphics.newImage("me/jump/landing.png")
+landingc = love.graphics.newImage("me/jump/landingc.png")
+landing = {im = landingim, c = landingc}
+slowdownim = love.graphics.newImage("me/jump/slowdown.png")
+slowdownc = love.graphics.newImage("me/jump/slowdownc.png")
+slowdown = {im = slowdownim, c = slowdownc}
 paper1 = love.graphics.newImage("enviro/paper1.png")
 paper2 = love.graphics.newImage("enviro/paper2.png")
 paper3 = love.graphics.newImage("enviro/paper3.png")
@@ -1869,16 +1902,18 @@ idleanimatey = function ()
 	if idley < 17 then 
 		idley = idley + 1
 		if you.health<maxhealth/2 then
-		you.im = idle3
+		you.im = {im = idle3, c = idle3c}
 		else
-		you.im = idle1
+		you.im = {im = idle1, c = idle1c}
 		end
 	elseif idley >= 17 and idley < 33 then
 		idley = idley + 1
 		if you.health<maxhealth/2 then
-		you.im = idle4
+		
+		you.im = {im = idle4, c = idle4c}
 		else
-		you.im = idle2
+		
+		you.im = {im = idle2, c = idle2c}
 		end
 	elseif idley >=33 then
 		idley = 0
@@ -1888,16 +1923,19 @@ idleanimateme = function ()
 	if idleme < 17 then 
 		idleme = idleme + 1
 		if me.health<maxhealth/2 then
-		me.im = idle3
+		
+		me.im = {im = idle3, c = idle3c}
 		else
-		me.im = idle1
+		
+		me.im = {im = idle1, c = idle1c}
 		end
 	elseif idleme >= 17 and idleme < 33 then
 		idleme = idleme + 1
 		if me.health<maxhealth/2 then
-		me.im = idle4
+		
+		me.im = {im = idle4, c = idle4c}
 		else
-		me.im = idle2
+		me.im = {im = idle2, c = idle2c}
 		end
 	elseif idleme >=33 then
 		idleme = 0
@@ -2075,304 +2113,6 @@ elseif you.g and aboutso(you.v, you.push) and not you.slide
 	end
 
 end
-
-bla = 10
---can add me
-facemovement = function ()
-	
-
-
-
-	if you.im == slide
-	then you.facedis = 1
-	elseif you.im == blue33 
-	then you.facedis = 0 
-  elseif you.im == run3
-  then you.facedis = 9
-elseif you.im == run1 or you.im == run2 or you.im == run4
-then you.facedis = 8
-elseif you.im == bsend
-		then you.facedis = 10
-
-		elseif you.im == fallback
-		then you.facedis = -18 +3
-      elseif you.im == fallback1
-		then you.facedis = -12 + 15
-		elseif you.im == fallforward1
-		then you.facedis = 16 - 2 
-		elseif you.im == gettingup2
-		then you.facedis = 11 + 8
-      elseif you.im == gettingup1
-		then you.facedis = 11 - 8
-		elseif you.im == fallforward
-		then you.facedis = 37 + 4.5 + 4.5*you.lr 
-  elseif you.im == wallgrab then
-    you.facedis = -20
-	elseif you.im == dodgeback 
-		then you.facedis = 7
-	elseif you.im == dodgeback then you.facedis = 10
-	elseif you.im == bluecharging or you.im == invis then you.facedis = 100000000
-	elseif you.im == bc1 or you.im==bc2 or you.im==bc3 or you.im==bcend 
-		or you.im == boltcharged or you.im == spikeland 
-		or you.im == dodge
-    or you.im==walk1 or you.im==walk2 or you.im==walk3 or you.im==walk4 or you.im==walk5 
-		then you.facedis = 4
-	elseif you.im == blue21 or you.im == stomp2 or you.im == dig or you.im==idle3 or you.im==idle4
-		then you.facedis = 3
-	elseif you.im == blue22 or you.im == blue23 
-		or you.im == landing 
-		or you.im == sready or you.im == bigwings or you.im == purpwings  or you.im == sandboltready  or you.im == purpwings  or you.im == bsstart  or you.im == bigflap
-		or you.im == wingslam or you.im == wingswing1 or you.im == wingswing2 or you.im == wingswing3 or you.im == upflap
-		then you.facedis = 5 
-	elseif you.im == stomp1 or you.im == stomps 
-		then you.facedis = -1
-	elseif you.im==boltrelease then 
-		you.facedis = -2
-	elseif you.im==dodge21 then you.facedis = 20
-		elseif you.im==dodge2 then you.facedis = 19
-	
-	
-	else you.facedis = 2
-	end
-
-
-	if you.im == brise 
-		then you.facey = -54
-	elseif you.im == briseend or you.im==aby2 or you.im==aby3 or you.im==aby4 or you.im == dying or you.im == fade1
-	or you.im == fade2 or you.im == fade3 or you.im == fade4 or you.im == fade5 or you.im == fade6 or you.im == fade7 or you.im == fade8
-	or you.im == airdying
-	then you.facey = 1000000000
-	elseif you.im == dig 
-		then you.facey = -26
-	elseif you.im == dodge 
-		then you.facey = -31
-		elseif you.im == fallback
-		then you.facey = -54 + 23
-		elseif you.im == gettingup1
-		then you.facey = -45
-		elseif you.im == gettingup2 then 
-			you.facey = -50
-			elseif you.im == fallforward then 
-			you.facey = -54 + 37.5 - you.lr*4.5
-
-	elseif you.im == dodge2
-		then you.facey = -37
-	elseif you.im == dodge21
-		then you.facey = -34
-	elseif you.im == bsend
-		then you.facey = -45
-	elseif you.im == bluepurphit
-		then you.facey = -44
-	elseif you.im == spikeland
-		then you.facey = -42
-	elseif you.im == idle2 or you.im == bc1 or you.im == idle4 or you.j < 0 or you.im ==stomp2 or you.im == sready or you.im == bigwings or you.im == purpwings  or you.im == sandboltready  or you.im == bsstart or you.im == bigflap
-		or you.im == wingslam or you.im == wingswing1 or you.im == wingswing2 or you.im == wingswing3 or you.im == upflap
-		then you.facey = - 53
-	elseif you.im == landing
-	then you.facey = - 42
-elseif you.im==bc2 or you.im==bc3 or you.im==bcend 
-or you.im == run2 or you.im == run4
-then you.facey = - 51
-	elseif you.j > 0 then you.facey = - 56
-	else you.facey = - 54
-	end
-
-
-
-	if me.im == slide
-	then me.facedis = 1
-	elseif me.im == blue33 
-	then me.facedis = 0 
-  elseif me.im == run3
-  then me.facedis = 9
-elseif me.im == run1 or me.im == run2 or me.im == run4
-then me.facedis = 8
-elseif me.im == bsend
-		then me.facedis = 10
-
-		elseif me.im == fallback
-		then me.facedis = -18 +3
-      elseif me.im == fallback1
-		then me.facedis = -12 + 15
-		elseif me.im == fallforward1
-		then me.facedis = 16 - 2 
-		elseif me.im == gettingup2
-		then me.facedis = 11 + 8
-      elseif me.im == gettingup1
-		then me.facedis = 11 - 8
-		elseif me.im == fallforward
-		then me.facedis = 37 + 4.5 + 4.5*me.lr 
-  elseif me.im == wallgrab then
-    me.facedis = -20
-
-	elseif me.im == dodgeback 
-		then me.facedis = 7
-	elseif me.im == dodgeback then me.facedis = 10
-	elseif me.im == bluecharging or me.im == invis then me.facedis = 100000000
-	elseif me.im == bc1 or me.im==bc2 or me.im==bc3 or me.im==bcend 
-		or me.im == boltcharged or me.im == spikeland 
-		or me.im == dodge
-    or me.im==walk1 or me.im==walk2 or me.im==walk3 or me.im==walk4 or me.im==walk5 
-		then me.facedis = 4
-	elseif me.im == blue21 or me.im == stomp2 or me.im == dig or me.im==idle3 or me.im==idle4
-		then me.facedis = 3
-	elseif me.im == blue22 or me.im == blue23 
-		or me.im == landing 
-		or me.im == sready or me.im == bigwings or me.im == purpwings  or me.im == sandboltready  or me.im == purpwings  or me.im == bsstart  or me.im == bigflap
-		or me.im == wingslam or me.im == wingswing1 or me.im == wingswing2 or me.im == wingswing3 or me.im == upflap
-		then me.facedis = 5 
-	elseif me.im == stomp1 or me.im == stomps 
-		then me.facedis = -1
-	elseif me.im==boltrelease then 
-		me.facedis = -2
-	elseif me.im==dodge21 then me.facedis = 20
-		elseif me.im==dodge2 then me.facedis = 19
-	
-	
-	else me.facedis = 2
-	end
-
-
-	if me.im == brise 
-		then me.facey = -54
-	elseif me.im == briseend or me.im==aby2 or me.im==aby3 or me.im==aby4 or me.im == dying or me.im == fade1
-	or me.im == fade2 or me.im == fade3 or me.im == fade4 or me.im == fade5 or me.im == fade6 or me.im == fade7 or me.im == fade8
-	or me.im == airdying
-	then me.facey = 1000000000
-	elseif me.im == dig 
-		then me.facey = -26
-	elseif me.im == dodge 
-		then me.facey = -31
-		elseif me.im == fallback
-		then me.facey = -54 + 23
-		elseif me.im == gettingup1
-		then me.facey = -45
-		elseif me.im == gettingup2 then 
-			me.facey = -50
-			elseif me.im == fallforward then 
-			me.facey = -54 + 37.5 - me.lr*4.5
-
-
-	elseif me.im == dodge2
-		then me.facey = -37
-	elseif me.im == dodge21
-		then me.facey = -34
-	elseif me.im == bsend
-		then me.facey = -45
-	elseif me.im == bluepurphit
-		then me.facey = -44
-	elseif me.im == spikeland
-		then me.facey = -42
-	elseif me.im == idle2 or me.im == bc1 or me.im == idle4 or me.j < 0 or me.im ==stomp2 or me.im == sready or me.im == bigwings or me.im == purpwings  or me.im == sandboltready  or me.im == bsstart or me.im == bigflap
-		or me.im == wingslam or me.im == wingswing1 or me.im == wingswing2 or me.im == wingswing3 or me.im == upflap
-		then me.facey = - 53
-	elseif me.im == landing
-	then me.facey = - 42
-elseif me.im==bc2 or me.im==bc3 or me.im==bcend 
-or me.im == run2 or me.im == run4
-then me.facey = - 51
-	elseif me.j > 0 then me.facey = - 56
-	else me.facey = - 54
-	end
-
-
-
-	if you.leftface
-	then you.facex = you.mid - you.facedis - 3  
-	else you.facex = you.mid + you.facedis - 6
-	end
-	if me.leftface
-	then me.facex = me.mid - me.facedis - 3  
-	else me.facex = me.mid + me.facedis - 6
-	end
-
-end
-
-
-
-crestmovementhelper = function (x)
-	
-	if x.im == dodge21
-		then
-		x.crestdis = 15
-	elseif x.im == sready or x.im == bigwings or x.im == purpwings  or x.im == sandboltready  or x.im == purpwings  or x.im == bsstart  or x.im == bigflap
-		or x.im == wingslam or x.im == wingswing1 or x.im == wingswing2 or x.im == wingswing3 or x.im == upflap
-		then x.crestdis = 1
-elseif x.im == landing or x.im == spikeland or x.im == bcend
-or x.im==walk1 or x.im==walk2 or x.im==walk3 or x.im==walk4 or x.im==walk5 
-	then x.crestdis = -1
-    elseif x.im == wallgrab then
-    x.crestdis = -30
-	else x.crestdis = - 2
-	end
-	
-	if x.im == idle2 
-	then x.cresty = x.y + 28
-	
-	elseif x.im==walk1 or x.im==walk2 or x.im==walk3 or x.im==walk4 or x.im==walk5 
-		or x.im==slide or x.im == idle1 or x.im==idle3 or x.im==idle4 or x.im == jumprise or x.im==jumpfalling or x.im == slowdown or x.im == jsflap
-		or x.im==boltthrow or x.im == airbolt or x.im == airboltslow
-		or x.im == stomp2  or x.im==airspike 
-		or x.im==blue12 or x.im == blue1end or x.im == bluecharging or x.im == bcend or x.im==briseend or x.im==bfallend or x.im==bfallprep or x.im==bfall3 
-		or x.im==greenpurpprep
-		or x.im==airbluepurphit
- or x.im == wallgrab
-		or x.im == ythrow or x.im ==jythrow
-		or x.im ==jpythrow
-		or x.im==yblue or x.im==yblue2 or x.im == yblue3 or x.im==yblue3 or x.im == yblue4 or x.im == yblue5 or x.im == yblueend or x.im == yblueend2
-		or x.im==aby2 or x.im==aby3 or x.im==aby4
-		or x.im == gythrow or x.im == jgythrow or x.im == gyready or x.im == jgyready 
-		or x.im == ycthrow or x.im == jycthrow 
-		or x.im == sready or x.im == bigwings or x.im == purpwings  or x.im == sandboltready  or x.im == purpwings  or x.im == bsstart  or x.im == bigflap
-		or x.im == wingslam or x.im == wingswing1 or x.im == wingswing2 or x.im == wingswing3 
-	then x.cresty = x.y + 27
-	elseif x.im==spikeland or x.im==bluepurphit
-		then x.cresty = x.y + 36
-	elseif x.im == stomp1 or x.im==stomps
-		then x.cresty = x.y + 26
-		x.crestdis = -5
-	elseif x.im==dig then x.cresty = x.y + 53
-	elseif x.im == dodge
-		then 
-		x.crestdis = 0
-		x.cresty = x.y + 46
-	elseif x.im == dodge21
-		then x.cresty = x.y + 43
-		x.crestdis = 14
-	elseif x.landing
-	then x.cresty = x.y + 37
-	else x.cresty = 100000
-	end
-
-	if x.leftface 
-		then x.crestx = x.mid - x.crestdis - 3
-	else 
-	x.crestx = x.mid + x.crestdis
-	end
-
-
-if me.leftface 
-		then me.crestx = me.mid - me.crestdis - 3
-	else 
-	me.crestx = me.mid + me.crestdis
-end
-
-
-	if you.leftface 
-		then you.crestx = you.mid - you.crestdis - 3
-	else 
-	you.crestx = you.mid + you.crestdis
-	end
-
-end
-
-crestmovement = function ()
-  crestmovementhelper(me)
-  crestmovementhelper(you)
-  
-  
-end
-
 
 --SPARKS COLOR BASED ON ATTACK COLOR?!?!?!?!?!?
 

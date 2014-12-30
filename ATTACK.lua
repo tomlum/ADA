@@ -14,13 +14,6 @@
 --maybe rotate me.bolts so they look better, use trig
 
 
-
-
-
-
-
-
-
 -- objects = {}
 -- table.insert(objects, {mid = 0, midy = 0, })
 
@@ -28,22 +21,6 @@
 -- objects[1]
 -- end
 
---player id is 1 or 2
--- function objectattack(id,x,y,left,right,top,bottom)
---   for i = #objects, 1, -1 do
--- 		local v = objects[i]
---     if id ~= i then
---      
-      
-      
-      
-      
---     end
-    
---   end
-  
-  
--- end
 
 
 shakeme = false
@@ -77,7 +54,9 @@ fallforward1 = love.graphics.newImage("me/attack/fallforward1.png")
 gettingup1 = love.graphics.newImage("me/attack/gettingup1.png")
 gettingup2 = love.graphics.newImage("me/attack/gettingup2.png")
 flinchback = love.graphics.newImage("me/attack/flinchback.png")
-block = love.graphics.newImage("me/attack/block.png")
+blockc = love.graphics.newImage("me/attack/blockc.png")
+blockim = love.graphics.newImage("me/attack/block.png")
+block = {im = blockim, c = blockc}
 boltcharged = love.graphics.newImage("me/attack/boltcharging.png")
 boltrelease = love.graphics.newImage("me/attack/boltrelease.png")
 airbolt = love.graphics.newImage("me/attack/airbolt.png")
@@ -220,32 +199,6 @@ end
 end
 
 
-function mearmsreach(range)
-	if ((you.mid - me.mid) * me.lr) < range
-		and (you.mid - me.mid) * me.lr > 0
-		then return true
-	else return false
-end
-end
-
-me.armsreach = mearmsreach
-
-function youarmsreach(range)
-	if ((me.mid - you.mid) * you.lr) < range
-		and (me.mid - you.mid) * you.lr > 0
-		then return true
-	else return false
-end
-end
-
-you.armsreach = youarmsreach
-
-function sameheight()
-if math.abs(me.y - you.y) < 40 then
-	return true 
-else return false
-end
-end
 
 
 yougpc = 0
@@ -646,103 +599,6 @@ end
 
 
 
-function you.greenpurple(x)
-if you.flinch or ygpcancel then yougpready = false
-	yougpc = 0 
-end
-
-if yougpc < 0 then
-yougpc = yougpc + 1 
-elseif yougpc > 0 then yougpc = yougpc - 1 
-yougur = true
-else yougur = false
-end
-
-if yougpcd > 0 then yougpcd = yougpcd - 1 end
-
-if yougpc == "ble" then yougpc = "bleh!"
-
-elseif yougpc > 0 
-	then you.im = greenpurpthrow
-	you.stop = true
-	you.jstop = true
-
-elseif not x and yougpready then
-	you.im = greenpurpthrow
-	yougpready = false
-	yougpc = 40
-	you.stop = true
-	you.jstop = true
-	yougpcd = 90
-	table.insert(you.bolts, {x = you.mid + 5 * you.lr , y = you.y + 24, lr = you.lr, time = 0, upv = yougpupv, s = -1, v = yougpv* you.lr + you.v, time = 0,stuckinwall = false})
-	if gp2:isStopped() then
-			gp2:play()
-		else gp2:rewind()
-			gp2:play()
-		end
-	
-
-elseif x and yougpc == 0 and yougpcd == 0 
-then you.im = greenpurpprep
-	yougpready = true
-	you.stop = true
-	you.jstop = true
-
-
-
-
-end
-end
-
-
-
-
-function greenpurple(x)
-if me.flinch or mgpcancel then megpready = false
-	megpc = 0 
-end
-
-if megpc < 0 then
-megpc = megpc + 1 
-elseif megpc > 0 then megpc = megpc - 1 
-megur = true
-else megur = false
-end
-
-if megpcd > 0 then megpcd = megpcd - 1 end
-
-if megpc == "ble" then megpc = "bleh!"
-
-elseif megpc > 0 
-	then me.im = greenpurpthrow
-	me.stop = true
-	me.jstop = true
-
-elseif not x and megpready then
-	me.im = greenpurpthrow
-	megpready = false
-	megpc = 40
-	me.stop = true
-	me.jstop = true
-	megpcd = 90
-	table.insert(me.bolts, {x = me.mid + 5 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = megpupv, s = -1, v = megpv* me.lr + me.v, time = 0, stuckinwall = false})
-	if gp1:isStopped() then
-			gp1:play()
-		else gp1:rewind()
-			gp1:play()
-		
-	end
-
-elseif x and megpc == 0 and megpcd == 0 
-then me.im = greenpurpprep
-	megpready = true
-	me.stop = true
-	me.jstop = true
-
-
-
-end
-end
 
 
 

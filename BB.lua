@@ -10,15 +10,15 @@ bbpkb = 7
 bbkkb = 20
 bbft = 15
 
-me.color = 0
-you.color = 0
+me.color = 1
+you.color = 2
 
 sparkspeed = 3
 
 maxcombo = 4
 me.maxcombo = maxcombo
 you.maxcombo = maxcombo
-me.combo = 0q
+me.combo = 0
 you.combo = 0
 me.anibusy = false
 you.anibusy = false
@@ -83,15 +83,15 @@ function combo(xx)
         xx.type = -xx.type
       end
     end
-    end
-    if xx.a4 then
-      if me.color==0 then
-        xx.combo = xx.combo + 1
-        xx.animcounter = 1
-        xx.type = 2
-      end
+  end
+  if xx.a4 then
+    if me.color==0 then
+      xx.combo = xx.combo + 1
+      xx.animcounter = 1
+      xx.type = 2
     end
   end
+end
 
 
 function cancelas(xx) 
@@ -107,7 +107,7 @@ function bump(xx)
       {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+5},
       {x=xx.mid+((8 * (-xx.v/(math.abs(xx.v))))), y = xx.y+5},
       function(z)
-        z.x = z.x + (xx.lr * xx.v/2)
+        z.x = z.x + (xx.v*2/3)
       end)
   end
 end
@@ -230,7 +230,7 @@ function breadandbutter(xx, inuse)
               z.v = xx.lr*bbkkb
               z.flinch = true
               z.ft = bbft
-              makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, 255,255,255)
+              makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.c.r,xx.c.g,xx.c.b)
 
             end)
         elseif xx.animcounter < 43 then
