@@ -77,7 +77,7 @@ paper4 = love.graphics.newImage("enviro/paper4.png")
 mytriangles = {}
 yourtriangles = {}
 
-
+me.j = 0
 
 whatlevel = function()
   
@@ -216,10 +216,10 @@ basefade = 80
 function drawmyroulette()
 --swaps the a2r and a3r if both 
 if MENU == "play" then
-  if flip1 < 0 then 
+  if me.flip < 0 then 
     a21r, a31r, a21g, a31g, a21b, a31b  = a31r, a21r, a31g, a21g, a31b, a21b
     end
-  if flip2 < 0 then
+  if you.flip < 0 then
     a22r, a32r, a22g, a32g, a22b, a32b  = a32r, a22r, a32g, a22g, a32b, a22b
 end
 end
@@ -248,11 +248,11 @@ if themode == "classic" and not me.dead then
   
   if me.a1 then ma1fade = 255 else ma1fade = basefade end
   
-  if flip1 > 0 then
+  if me.flip > 0 then
   
   if me.a2 then ma2fade = 255 else ma2fade = basefade end
   if me.a3 then ma3fade = 255 else ma3fade = basefade end
-elseif flip1 < 0 then
+elseif me.flip < 0 then
   if me.a3 then ma2fade = 255 else ma2fade = basefade end
   if me.a2 then ma3fade = 255 else ma3fade = basefade end
  end
@@ -280,10 +280,10 @@ love.graphics.setColor(255,255,255)
 end
 --swaps the a2r and a3r if both 
 if MENU == "play" then
-  if flip1 < 0 then 
+  if me.flip < 0 then 
     a21r, a31r, a21g, a31g, a21b, a31b  = a31r, a21r, a31g, a21g, a31b, a21b
   end
-  if flip2 < 0 then
+  if you.flip < 0 then
     a22r, a32r, a22g, a32g, a22b, a32b  = a32r, a22r, a32g, a22g, a32b, a22b
 end
 end
@@ -292,10 +292,10 @@ end
 function drawyourroulette()
 --swaps the a2r and a3r if both 
 if MENU == "play" then
-  if flip1 < 0 then 
+  if me.flip < 0 then 
     a21r, a31r, a21g, a31g, a21b, a31b  = a31r, a21r, a31g, a21g, a31b, a21b
     end
-  if flip2 < 0 then
+  if you.flip < 0 then
     a22r, a32r, a22g, a32g, a22b, a32b  = a32r, a22r, a32g, a22g, a32b, a22b
 end
 end
@@ -322,12 +322,12 @@ if themode == "classic" and not you.dead then
   
    if you.a1 then ya1fade = 255 else ya1fade = basefade end
    
-if flip2 > 0 then
+if you.flip > 0 then
    
   if you.a2 then ya2fade = 255 else ya2fade = basefade end
   if you.a3 then ya3fade = 255 else ya3fade = basefade end
   
-elseif flip2 < 0 then 
+elseif you.flip < 0 then 
   if you.a2 then ya3fade = 255 else ya3fade = basefade end
   if you.a3 then ya2fade = 255 else ya2fade = basefade end
   
@@ -356,10 +356,10 @@ end
 
 --swaps the a2r and a3r if both 
 if MENU == "play" then
-  if flip1 < 0 then 
+  if me.flip < 0 then 
     a21r, a31r, a21g, a31g, a21b, a31b  = a31r, a21r, a31g, a21g, a31b, a21b
     end
-  if flip2 < 0 then
+  if you.flip < 0 then
     a22r, a32r, a22g, a32g, a22b, a32b  = a32r, a22r, a32g, a22g, a32b, a22b
 end
 end
@@ -760,8 +760,8 @@ v.x = v.x + v.v
 v.j = v.j - .2
 dustn = math.random(100,200)
 end
-love.graphics.setColor(dustn,dustn,dustn)
-love.graphics.draw(enviro.rubble,v.x,v.y-2,70/(v.v+v.y),1,1)
+love.graphics.setColor(dustn,dustn,dustn,150)
+love.graphics.draw(enviro.rubble,v.x,v.y-2,70/(v.v+v.y),1.5,1.5)
 love.graphics.setColor(255,255,255)
 
 end
@@ -1392,7 +1392,8 @@ retryupdate = function()
 	you.a2 = love.keyboard.isDown("up")
 	you.a3 = love.keyboard.isDown("right")
 	you.block = love.keyboard.isDown("o")
-	joystickss()
+	jjstick(me,joystick)
+	jjstick(you,joystick2)
 
 if waitforitplay > 0 then waitforitplay = waitforitplay - 1
 elseif fadeupretry == 2 and waitforitplay == 0 then
@@ -1860,23 +1861,23 @@ you.walktimer = 0
 orient = function ()
 	if not you.slowdown and not you.slide and not you.stop and not you.pause
 		then
-	rightyy = you.right
-	leftyy = you.left
+	you.righty = you.right
+	you.lefty = you.left
 end
-	if rightyy and not leftyy then righty = true
+	if you.righty and not you.lefty then righty = true
 				lefty = false
-		elseif leftyy and not rightyy then lefty = true
+		elseif you.lefty and not you.righty then lefty = true
 				righty = false
 	end
 
 	if not me.slowdown and not me.slide and not me.stop and not me.pause
 		then
-	rightmeme = me.right
-	leftmeme = me.left
+	me.righty = me.right
+	me.lefty = me.left
 end
-	if rightmeme and not leftmeme then rightme = true
+	if me.righty and not me.lefty then rightme = true
 				leftme = false
-		elseif leftmeme and not rightmeme then leftme = true
+		elseif me.lefty and not me.righty then leftme = true
 				rightme = false
 	end
 

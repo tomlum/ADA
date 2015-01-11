@@ -933,18 +933,18 @@ function runrunrun()
   if you.flinch or math.abs(you.v) <= speedlimit then 
     you.running = false
   elseif you.running then 
-    controller2.a1 = false
-    controller2.a2 = false
-    controller2.a3 = false
-    controller2.a4 = false
+    you.a1 = false
+    you.a2 = false
+    you.a3 = false
+    you.a4 = false
 
 
   end
 
-  if controller2.run and you.running and (controller2.right or controller2.left) and controller2.run and not controller2.block and not anyofyourcombos() and not anyofyourprimes() and not you.slide and not you.dodge then         
-    if controller2.right and you.v > 0 then
+  if you.run and you.running and (you.right or you.left) and you.run and not you.block and not anyofyourcombos() and not anyofyourprimes() and not you.slide and not you.dodge then         
+    if you.right and you.v > 0 then
       you.v = runspeed
-    elseif controller2.left and you.v < 0 then
+    elseif you.left and you.v < 0 then
       you.v = -runspeed
     end
 
@@ -952,16 +952,16 @@ function runrunrun()
 
 
 
-  elseif math.abs(you.v) > speedlimit-accel*2 and (controller2.left or controller2.right) and you.g and not c1accept() and controller2.run and not controller2.block and not anyofyourcombos() and not anyofyourprimes() and not you.slide and not you.dodge then
-    controller2.a1 = false
-    controller2.a2 = false
-    controller2.a3 = false
-    controller2.a4 = false
+  elseif math.abs(you.v) > speedlimit-accel*2 and (you.left or you.right) and you.g and not c1accept() and you.run and not you.block and not anyofyourcombos() and not anyofyourprimes() and not you.slide and not you.dodge then
+    you.a1 = false
+    you.a2 = false
+    you.a3 = false
+    you.a4 = false
     you.running = true
     youlimitbreak = true
-    if controller2.right and you.v > 0 then
+    if you.right and you.v > 0 then
       you.v = runspeed
-    elseif controller2.left and you.v < 0 then
+    elseif you.left and you.v < 0 then
       you.v = -runspeed
     end
 
@@ -983,7 +983,7 @@ climbs = function()
   if me.ctim > 0 then me.ctim = me.ctim + 1
     me.busy = true
 
-    if me.ctim > 11 then
+    if me.ctim > 20 then
       me.ctim = 0
       if me.up then 
         me.g = false
@@ -1007,7 +1007,7 @@ climbs = function()
     elseif me.ctim > 0 then
       me.im = climb
       if me.ctim == 2 then
-        repplay(climbsound) 
+        repplay(me.climbsound) 
       end
     end
 
@@ -1019,15 +1019,15 @@ climbs = function()
     you.busy = true
     if you.ctim > 11 then
       you.ctim = 0
-      if controller2.up then 
+      if you.up then 
         you.g = false
         you.j = hopj
         repplay(you.jumpd) 
-      elseif controller2.left then 
+      elseif you.left then 
         you.g = false
         you.j = hopj2
         you.v = -hopv2
-      elseif controller2.right then 
+      elseif you.right then 
         you.g = false
         you.j = hopj2
         you.v = hopv2
@@ -1123,9 +1123,9 @@ function movex(xx,z)
     then
       xx.landingcounter = xx.landingcounter - 1
     end
-    if z.block and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-40) ~= platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.y) and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-40) ~= xx.floor
+    if z.block and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet) ~= platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-65) and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-65) ~= xx.floor
     then 
-      if platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-50) ~= platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.y) then
+      if platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-35) ~= platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.feet) then
         xx.ctim = 7
       else xx.ctim = 1
       end

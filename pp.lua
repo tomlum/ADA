@@ -1,7 +1,15 @@
+--ppunch3 inserts some p's around
+ppunch1im = love.graphics.newImage("me/attack/ppunch1.png")
+ppunch2im = love.graphics.newImage("me/attack/ppunch2.png")
+ppunch3im = love.graphics.newImage("me/attack/ppunch3.png")
+ppunch1c = love.graphics.newImage("me/attack/ppunch1c.png")
+ppunch2c = love.graphics.newImage("me/attack/ppunch2c.png")
+ppunch3c = love.graphics.newImage("me/attack/ppunch3c.png")
+ppunch1 = {im = ppunch1im, c = ppunch1c}
+ppunch2 = {im = ppunch2im, c = ppunch2c}
+ppunch3 = {im = ppunch3im, c = ppunch3c}
 
-ppunch1 = love.graphics.newImage("me/attack/ppunch1.png")
-ppunch2 = love.graphics.newImage("me/attack/ppunch2.png")
-ppunch3 = love.graphics.newImage("me/attack/ppunch3.png")
+ppft = 20
 
 function pandp(xx, inuse)
 
@@ -31,10 +39,10 @@ function pandp(xx, inuse)
             xx.im = ppunch1
           xx.xoffset = 15
 
-        elseif xx.animcounter < 17 then
+      elseif xx.animcounter < 17 then
+        
             xx.im = ppunch2
           xx.xoffset = 45
-          repplay(xx.blues)
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y+35},
             {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+26},
@@ -48,9 +56,11 @@ function pandp(xx, inuse)
                 z.v = xx.lr*bbpkb
               end
               z.flinch = true
-              z.ft = bbft
+              z.ft = ppft
+minzoom = defaultminzoom - .06
+maxzoom = defaultmaxzoom - .06
 
-              makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, 255,255,255)
+              makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.c.r,xx.c.g,xx.c.b)
 
             end)
           xx.v = xx.v + (xx.lr*4)

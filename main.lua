@@ -1,11 +1,17 @@
-
+--smooth slowmo, each frame split it up before going to next, when applying v to x, split it up depending on how many slwo mini frames, apply to drawn stuff
+--in case it bugs, have a temp balue each frame that resets to zero once the actual number is added on
+--maybe default color is gray, not white
+--general rule - attacks that take in an input (you.v) vs just outputting something offer my dynamicism, even if not immediately apparent
+--make joystick 
+--ACTIVATE COMBO CINEMATIC IF CHANGE COLOR AND NEW ATTACK KIND, not just color change, if attack right after color change then fast color change
+--ON COMBO CINEMATIC, PITCH CHANGE, COLOR CHANGE, ZOOM OUT A BIT
 --SPARKS COLOR BASED ON ATTACK COLOR?!?!?!?!?!?
 --mine throw lob doesn't explode until activated on ground
 --dodge slide turn around speed not the same as slide, it's faster
 --ON HIT GLASS/WALL WHILE FLINCHED OR BOUNCE OFF EDGE WALL SLOW DOWN TIME OR PAUSE
 --if chargin up then time slows or stops, easy combo chain, camera zoom too? then zoom back out, the color hums
 bloop = 10
-love.graphics.setDefaultFilter("nearest","nearest",1)
+love.graphics.setDefaultFilter("linear","nearest",1)
 --maybe if slow then walkrate decreases so you can walk slowly if using controller
 --plane overhead night city veins simmulator for loading screens? or just a scene
 
@@ -173,6 +179,7 @@ pausedonhit = false
 
 require "DamageTable"
 require "meandyou"
+require "colorcontrol"
 require "camera"
 require "Music"
 require "Hits"
@@ -185,7 +192,6 @@ require "At/Green"
 require "At/Blue"
 require "At/Yellow"
 require "At/Sand"
-require "colorcontrol"
 require "BB"
 require "pp"
 loader = require "love-loader"
@@ -282,11 +288,11 @@ end
   ybindent, ygindent, ypindent, yyindent, ysindent = 0,0,0,0,0
 
   if flipfollow then
-  flip1 = me.lr
-  flip2 = you.lr
+  me.flip = me.lr
+  you.flip = you.lr
 else 
-    flip1 = 1
-  flip2 = 1
+    me.flip = 1
+  you.flip = 1
   end
 
 
@@ -317,9 +323,12 @@ else
 
 
   joysticks = love.joystick.getJoysticks()
+  if #joysticks > 0 then
   joystick = joysticks[1]
+end
+if #joysticks > 1 then
   joystick2 = joysticks[2]
-
+end
 
   x = 11
   lefty = true
@@ -375,9 +384,13 @@ function love.update()
 
 
       you.start = love.keyboard.isDown("u")
-      if joystick then
+      if #joysticks > 0 then
+      jjstick(me,joystick)
+        success = joystick:setVibration(1,1)
         me.start = joystick:isGamepadDown("start")
-        if not justone then
+        if #joysticks > 1 then
+          
+      jjstick(you,joystick2)
         you.start = joystick2:isGamepadDown("start") 
         end
       end 
@@ -500,10 +513,10 @@ function love.update()
         me.left = love.keyboard.isDown("a")
         me.right = love.keyboard.isDown("d")
         me.a1 = love.keyboard.isDown("t")
-        if flip1 > 0 then
+        if me.flip > 0 then
           me.a2 = love.keyboard.isDown("f")
           me.a3 = love.keyboard.isDown("h")
-        elseif flip1 < 0 then
+        elseif me.flip < 0 then
           me.a2 = love.keyboard.isDown("h")
           me.a3 = love.keyboard.isDown("f")
         end
@@ -521,10 +534,10 @@ function love.update()
         you.right = love.keyboard.isDown("l")
         you.a1 = love.keyboard.isDown("up")
         you.a4 = love.keyboard.isDown("down")
-        if flip2 > 0 then
+        if you.flip > 0 then
           you.a2 = love.keyboard.isDown("left")
           you.a3 = love.keyboard.isDown("right")
-        elseif flip2 < 0 then
+        elseif you.flip < 0 then
           you.a3 = love.keyboard.isDown("left")
           you.a2 = love.keyboard.isDown("right")
         end
@@ -539,36 +552,33 @@ function love.update()
       end
 
 
-      joystickss()
-
-
-      onlytwoattacks()
-
-
 
       --makes it towards and away not left and right
 
       --if MENU == "play" and towardaway then
-      --  if (me.mid + me.v) > (you.mid + you.v) and not c2accept() then flip2 = -1
-      --elseif (me.mid + me.v) <= (you.mid + you.v) and not c2accept() then flip2 = 1
+      --  if (me.mid + me.v) > (you.mid + you.v) and not c2accept() then you.flip = -1
+      --elseif (me.mid + me.v) <= (you.mid + you.v) and not c2accept() then you.flip = 1
       --end
-      --if (me.mid + me.v) > (you.mid + you.v) and not c1accept() then flip1 = -1
-      --elseif (me.mid + me.v) <= (you.mid + you.v) and not c1accept() then flip1 = 1
+      --if (me.mid + me.v) > (you.mid + you.v) and not c1accept() then me.flip = -1
+      --elseif (me.mid + me.v) <= (you.mid + you.v) and not c1accept() then me.flip = 1
       --end
-      --else flip1 = 1
-      --flip2 = 1
+      --else me.flip = 1
+      --you.flip = 1
       --end
 
-      flip1 = 1
-      flip2 = 1
+      me.flip = 1
+      you.flip = 1
 
 
       runrunrun()
 
 
-
-      colorassign()
-
+      if #joysticks > 0 then
+      jjstick(me,joystick)
+      elseif #joysticks > 1 then
+      jjstick(me,joystick)
+      jjstick(you,joystick2)
+      end
 
       clicks()
 
@@ -811,12 +821,16 @@ function love.update()
         you.jstop = false
         melimitbreak= false
         youlimitbreak = false
-        NCC(me)
-        NCC(you)
+        
+         ColorChange(me)
+         ColorChanging(me)
+        
         combomanage(me)
         combomanage(you)
         breadandbutter(me, false)
-        pandp(me, true)
+        pandp(me, false)
+        breadandbutter(you, false)
+        pandp(you, false)
 
         flinchingyou()
         flinchingme()
@@ -834,10 +848,11 @@ function love.update()
         
         end
 
-        dodgeme()
-        dodgey()
+       newforwarddodge(me)
+        dodgex(you)
 
-        climbs()
+        climbs(me)
+        climbs(you)
 
 
         walls()
@@ -1426,23 +1441,11 @@ if not fightclub then
   end
   if you.invince then
     love.graphics.print("invince", 100, 100)
-    end
-     love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( ))..tostring(me.animcounter), 10, 10)
+  end
+  love.graphics.setColor(20,20,20)
+     love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( ))..tostring(me.dodgetype).."||vibration supporter?: "..tostring(joystick:isVibrationSupported( )).."||vibration: "..joystick:getVibration().."||number of controllers: "..tostring(#joysticks), 10, 10)
    end
-   --[[
-   if me.flinch or you.flinch then
-love.graphics.print("BAM", 100, 100, 0 ,10, 10)
-end
-]]--
---[[
- testa = {x = 10,y = 10}
- testb = {x = 20,y = 10}
- testza = {x = 15,y = 5}
- testzb = {x = 15,y = 50}
- if pint(testa, testb, testza, testzb) then
-love.graphics.print("works", 100, 100, 0 ,10, 10)
-end
-]]--
+
  
    flash = false
     --love.graphics.setShader()

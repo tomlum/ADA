@@ -1,6 +1,26 @@
 
+initjumpj = 12+2+1
+--
+initjmax = 17+2
+--basically min j
+jt = 0
+risegrav = 1.3
+dropgrav = .4
+
+jforlanding = 20
+landingfric = .3
+landingwait = 10
+shortlandwait = 7
+
+maxgravity = 28
+speedminit = 7
+speedlimit = speedminit
+accel = .5
+minmaxdif = 4
+
+
 maxhealth = 280
-shakedis = 5
+shakedis = 0
 
 thebug = 0
 
@@ -45,8 +65,8 @@ gsft = 10
 
 hopj = 22
 hopj2 = 20
-hopv2 = 10
-climbj = 8.5
+hopv2 = speedlimit + 2
+climbj = 6
 
 purplefuse = -70
 
@@ -136,23 +156,6 @@ runjmax = 8
 
 minvfordust = 3
 
-initjumpj = 12+2+1
---
-initjmax = 17+2
---basically min j
-jt = 0
-risegrav = 1.3
-dropgrav = .6
-
-jforlanding = 20
-landingfric = .3
-landingwait = 10
-
-maxgravity = 27
-speedminit = 7
-speedlimit = speedminit
-accel = .5
-minmaxdif = 4
 
 --higher means more fric
 fricrate = .75
@@ -161,9 +164,9 @@ initrunspeed = 12
 runpace = 19
 
 --slowdown rate
-adecrate = .3
+adecrate = .5
 --move rate
-amovrate = .5
+amovrate = .7
 maxairmove = speedminit*.6
 
 

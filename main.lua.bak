@@ -1,11 +1,18 @@
-
+--smooth slowmo, each frame split it up before going to next, when applying v to x, split it up depending on how many slwo mini frames, apply to drawn stuff
+--in case it bugs, have a temp balue each frame that resets to zero once the actual number is added on
+--maybe default color is gray, not white
+--general rule - attacks that take in an input (you.v) vs just outputting something offer my dynamicism, even if not immediately apparent
+--make joystick 
+--ACTIVATE COMBO CINEMATIC IF CHANGE COLOR AND NEW ATTACK KIND, not just color change, if attack right after color change then fast color change
+--ON COMBO CINEMATIC, PITCH CHANGE, COLOR CHANGE, ZOOM OUT A BIT
 --SPARKS COLOR BASED ON ATTACK COLOR?!?!?!?!?!?
 --mine throw lob doesn't explode until activated on ground
 --dodge slide turn around speed not the same as slide, it's faster
 --ON HIT GLASS/WALL WHILE FLINCHED OR BOUNCE OFF EDGE WALL SLOW DOWN TIME OR PAUSE
 --if chargin up then time slows or stops, easy combo chain, camera zoom too? then zoom back out, the color hums
 bloop = 10
-
+love.graphics.setDefaultFilter("linear","nearest",1)
+--maybe if slow then walkrate decreases so you can walk slowly if using controller
 --plane overhead night city veins simmulator for loading screens? or just a scene
 
 --push is weird
@@ -70,7 +77,6 @@ bloop = 10
 --dodge then hold run and move right, it goes weird
 --make flinch sound more solid
 --why is there that one stray color in the spine when they seperate??
---MATH.MAX!!!!!
 --also have a special case fo rwall jumping off edge barriers? or...
 --standardize the barriers
 --grapple function? it's click in on right stick and move in a direction
@@ -173,6 +179,7 @@ pausedonhit = false
 
 require "DamageTable"
 require "meandyou"
+require "colorcontrol"
 require "camera"
 require "Music"
 require "Hits"
@@ -185,7 +192,6 @@ require "At/Green"
 require "At/Blue"
 require "At/Yellow"
 require "At/Sand"
-require "colorcontrol"
 require "BB"
 require "pp"
 loader = require "love-loader"
@@ -282,10 +288,10 @@ end
   ybindent, ygindent, ypindent, yyindent, ysindent = 0,0,0,0,0
 
   if flipfollow then
-  flip1 = me.lr
+  me.flip = me.lr
   flip2 = you.lr
 else 
-    flip1 = 1
+    me.flip = 1
   flip2 = 1
   end
 
@@ -500,10 +506,10 @@ function love.update()
         me.left = love.keyboard.isDown("a")
         me.right = love.keyboard.isDown("d")
         me.a1 = love.keyboard.isDown("t")
-        if flip1 > 0 then
+        if me.flip > 0 then
           me.a2 = love.keyboard.isDown("f")
           me.a3 = love.keyboard.isDown("h")
-        elseif flip1 < 0 then
+        elseif me.flip < 0 then
           me.a2 = love.keyboard.isDown("h")
           me.a3 = love.keyboard.isDown("f")
         end
@@ -531,7 +537,7 @@ function love.update()
         you.block = love.keyboard.isDown("o")
         you.start = love.keyboard.isDown("u")
         you.run = love.keyboard.isDown("p")
-        you.r = love.keyboard.isDown("0")
+        you.rightb = love.keyboard.isDown("0")
         you.leftb = love.keyboard.isDown("9")
 
 
@@ -542,24 +548,20 @@ function love.update()
       joystickss()
 
 
-      onlytwoattacks()
-
-
-
       --makes it towards and away not left and right
 
       --if MENU == "play" and towardaway then
       --  if (me.mid + me.v) > (you.mid + you.v) and not c2accept() then flip2 = -1
       --elseif (me.mid + me.v) <= (you.mid + you.v) and not c2accept() then flip2 = 1
       --end
-      --if (me.mid + me.v) > (you.mid + you.v) and not c1accept() then flip1 = -1
-      --elseif (me.mid + me.v) <= (you.mid + you.v) and not c1accept() then flip1 = 1
+      --if (me.mid + me.v) > (you.mid + you.v) and not c1accept() then me.flip = -1
+      --elseif (me.mid + me.v) <= (you.mid + you.v) and not c1accept() then me.flip = 1
       --end
-      --else flip1 = 1
+      --else me.flip = 1
       --flip2 = 1
       --end
 
-      flip1 = 1
+      me.flip = 1
       flip2 = 1
 
 
@@ -567,7 +569,6 @@ function love.update()
 
 
 
-      colorassign()
 
 
       clicks()
@@ -812,10 +813,15 @@ function love.update()
         melimitbreak= false
         youlimitbreak = false
         
+         ColorChange(me)
+         ColorChanging(me)
+        
         combomanage(me)
         combomanage(you)
         breadandbutter(me, false)
-        pandp(me, true)
+        pandp(me, false)
+        breadandbutter(you, false)
+        pandp(you, false)
 
         flinchingyou()
         flinchingme()
@@ -833,14 +839,12 @@ function love.update()
         
         end
 
-        dodgeme()
-        dodgey()
+       newforwarddodge(me)
+        dodgex(you)
 
-        climbs()
+        climbs(me)
+        climbs(you)
 
-        facemovement()
-
-        crestmovement()
 
         walls()
 
@@ -875,9 +879,6 @@ if me.im == slowdown then
     you.xoffset = 10
     end
 
-    facemovement()
-
-    crestmovement()
 
   end
 
@@ -1432,22 +1433,9 @@ if not fightclub then
   if you.invince then
     love.graphics.print("invince", 100, 100)
     end
-     love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( ))..tostring(me.animcounter), 10, 10)
+     love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( ))..tostring(me.dodgetype).."    "..tostring(me.cct).." "..tostring(me.changeto.n)..tostring(me.rightb), 10, 10)
    end
-   --[[
-   if me.flinch or you.flinch then
-love.graphics.print("BAM", 100, 100, 0 ,10, 10)
-end
-]]--
---[[
- testa = {x = 10,y = 10}
- testb = {x = 20,y = 10}
- testza = {x = 15,y = 5}
- testzb = {x = 15,y = 50}
- if pint(testa, testb, testza, testzb) then
-love.graphics.print("works", 100, 100, 0 ,10, 10)
-end
-]]--
+
  
    flash = false
     --love.graphics.setShader()

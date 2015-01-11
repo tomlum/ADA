@@ -7,7 +7,7 @@
 
 
 me.leftdeadzone = false
-controller2.leftdeadzone = false
+you.leftdeadzone = false
 
 love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "start", "button", 10)
 love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "leftx", "axis", 1)
@@ -53,7 +53,7 @@ function c1accept()
 end    
 
 function c2accept()    
-    if (controller2.a1 or controller2.a2 or controller2.a3 or controller2.a4 or controller2.block or controller2.start) then
+    if (you.a1 or you.a2 or you.a3 or you.a4 or you.block or you.start) then
         return true
     else return false
     end
@@ -61,7 +61,7 @@ end
 
 function clicks()
 
-    if MENU == "choose" and (me.block or controller2.block) then
+    if MENU == "choose" and (me.block or you.block) then
         backtimer = backtimer + 1
         if backtimer > 50 then backtostage() 
         end
@@ -84,24 +84,24 @@ function clicks()
     else ns1 = false
     end
 
-    if ns2 and (controller2.a1 or controller2.a2 or controller2.a3 or controller2.a4 or controller2.block or controller2.start) then
-        controller2.a1 = false
-        controller2.a2 = false
-        controller2.a3 = false
-        controller2.a4 = false
-        controller2.block = false
-        controller2.start = false
-    elseif (controller2.a1 or controller2.a2 or controller2.a3 or controller2.a4 or controller2.block or controller2.start) then
+    if ns2 and (you.a1 or you.a2 or you.a3 or you.a4 or you.block or you.start) then
+        you.a1 = false
+        you.a2 = false
+        you.a3 = false
+        you.a4 = false
+        you.block = false
+        you.start = false
+    elseif (you.a1 or you.a2 or you.a3 or you.a4 or you.block or you.start) then
         ns2 = true
     else ns2 = false
     end
 
-     if ns22 and (controller2.left or controller2.right or controller2.up or controller2.down) then
-        controller2.up = false
-        controller2.down = false
-        controller2.left = false
-        controller2.right = false
-    elseif (controller2.left or controller2.right or controller2.up or controller2.down) then
+     if ns22 and (you.left or you.right or you.up or you.down) then
+        you.up = false
+        you.down = false
+        you.left = false
+        you.right = false
+    elseif (you.left or you.right or you.up or you.down) then
         ns22 = true
     else ns22 = false
     end
@@ -122,18 +122,18 @@ end
 end
 
 
+you.gupv = 0
+me.gupv = 0
+you.gv = boltspeed
+me.gv = boltspeed
 
 
-function joystickss()
+
+
+function joystickss(xx,jj)
 stupid = 1
-yougupv = 0
-megupv = 0
-yougv = boltspeed
-megv = boltspeed
-yougpv = boltspeed/2
-megpv = boltspeed/2
-megpupv = 0
-yougpupv = 0
+xx.gupv = 0
+xx.gv = boltspeed
 
 
 
@@ -142,87 +142,87 @@ else
 
 if not justone then
 
-    if joystick2:isGamepadDown("dpleft") then
-       controller2.left = true
-    elseif joystick2:isGamepadDown("dpright") then
-        controller2.right = true
+    if jj:isGamepadDown("dpleft") then
+       you.left = true
+    elseif jj:isGamepadDown("dpright") then
+        you.right = true
     end
 
-    if joystick2:isGamepadDown("dpup") then
-       controller2.up = true
-    elseif joystick2:isGamepadDown("dpdown") then
-        controller2.down = true
+    if jj:isGamepadDown("dpup") then
+       you.up = true
+    elseif jj:isGamepadDown("dpdown") then
+        you.down = true
     end
  
-    if joystick2:isGamepadDown("a") then
-        controller2.up = true
+    if jj:isGamepadDown("a") then
+        you.up = true
     end
 
-    if joystick2:isGamepadDown("x") then
-        controller2.a1 = true
+    if jj:isGamepadDown("x") then
+        you.a1 = true
     end
 
-    if joystick2:isGamepadDown("leftshoulder") then
-        controller2.a2 = true
+    if jj:isGamepadDown("leftshoulder") then
+        you.a2 = true
     end
 
-    if joystick2:isGamepadDown("rightshoulder") then
-        controller2.a3 = true
+    if jj:isGamepadDown("rightshoulder") then
+        you.a3 = true
     end 
 
-    if joystick2:isGamepadDown("rightstick") then
-        controller2.block = true
+    if jj:isGamepadDown("rightstick") then
+        you.block = true
     end 
     
-    if joystick2:isGamepadDown("leftstick") then
-        controller2.run = true
+    if jj:isGamepadDown("leftstick") then
+        you.run = true
     end 
-      if joystick2:isGamepadDown("start") then
-        controller2.start = true
+      if jj:isGamepadDown("start") then
+        you.start = true
     end 
 
 
-    if joystick2:getGamepadAxis("leftx") < -.4 then
-        controller2.left = true
+    if jj:getGamepadAxis("leftx") < -.4 then
+        you.left = true
     elseif 
-         joystick2:getGamepadAxis("leftx") > .4 then
-        controller2.right = true
+         jj:getGamepadAxis("leftx") > .4 then
+        you.right = true
     end 
 
-  if controller2.run then
+  if you.run then
     
      if 
-         joystick2:getGamepadAxis("lefty") < -.58 then
-        controller2.up = true
+         jj:getGamepadAxis("lefty") < -.58 then
+        you.up = true
     elseif 
-         joystick2:getGamepadAxis("lefty") > .58 then
-        controller2.down = true
+         jj:getGamepadAxis("lefty") > .58 then
+        you.down = true
     end 
     
     else
 
      if 
-         joystick2:getGamepadAxis("lefty") < -.5 then
-        controller2.up = true
+         jj:getGamepadAxis("lefty") < -.5 then
+        you.up = true
     elseif 
-         joystick2:getGamepadAxis("lefty") > .5 then
-        controller2.down = true
+         jj:getGamepadAxis("lefty") > .5 then
+        you.down = true
     end 
     end
 
-    j2ry = joystick2:getGamepadAxis("righty")
-    j2rx = joystick2:getGamepadAxis("rightx")
+    you.jry = jj:getGamepadAxis("righty")
+    you.jrx = jj:getGamepadAxis("rightx")
     
-     j2ly = joystick2:getGamepadAxis("lefty")
-    j2lx = joystick2:getGamepadAxis("leftx")
+     you.jly =jj:getGamepadAxis("lefty")
+    you.jlx = jj:getGamepadAxis("leftx")
 
-    length2 = math.abs(j2rx/math.cos(math.atan(-j2ry/j2rx)))
+    length2 = math.abs(you.jrx/math.cos(math.atan(-you.jry/you.jrx)))
 
 
-    controller2.a1 = false
-    controller2.a2 = false
-    controller2.a3 = false
-    controller2.a4 = false
+    you.a1 = false
+    you.a2 = false
+    you.a3 = false
+    you.a4 = false
     
     
     
@@ -230,43 +230,40 @@ if not justone then
    if length2 > .8 then
      
 
-        --if (j2ry/j2rx >= 0.41421356237
-       --or j2ry/j2rx <= -0.41421356237)
-
-        if (j2ry/j2rx >= 0.45421356237
-        or j2ry/j2rx <= -0.45421356237)
-        and j2ry < 0
+        if (you.jry/you.jrx >= 0.45421356237
+        or you.jry/you.jrx <= -0.45421356237)
+        and you.jry < 0
            then
-        controller2.a1 = true
+        you.a1 = true
         end
 
-        if j2ry/j2rx >= -1.75
-        and j2ry/j2rx <= 1.75
-        and j2rx < 0
+        if you.jry/you.jrx >= -1.75
+        and you.jry/you.jrx <= 1.75
+        and you.jrx < 0
            then
              if flip2 > 0 then
-        controller2.a2 = true
+        you.a2 = true
       elseif flip2 < 0 then 
-        controller2.a3 = true
+        you.a3 = true
         end
         end
 
-        if j2ry/j2rx >= -1.75
-        and j2ry/j2rx <= 1.75
-        and j2rx > 0
+        if you.jry/you.jrx >= -1.75
+        and you.jry/you.jrx <= 1.75
+        and you.jrx > 0
            then
         if flip2 > 0 then
-        controller2.a3 = true
+        you.a3 = true
       elseif flip2 < 0 then 
-        controller2.a2 = true
+        you.a2 = true
         end
         end
 
-        if (j2ry/j2rx >= 0.45421356237
-        or j2ry/j2rx <= -0.45421356237)
-        and j2ry > 0
+        if (you.jry/you.jrx >= 0.45421356237
+        or you.jry/you.jrx <= -0.45421356237)
+        and you.jry > 0
            then
-        controller2.a4 = true
+        you.a4 = true
       end
       
       
@@ -274,10 +271,10 @@ if not justone then
 end
 
 
-    controller2.leftdeadzone = math.abs(j2lx/math.cos(math.atan(-j2ly/j2lx))) < .3
+    you.leftdeadzone = math.abs(you.jlx/math.cos(math.atan(-you.jly/you.jlx))) < .3
 
 
-if not controller2.leftdeadzone then
+if not you.leftdeadzone then
 youangle = math.atan(-joystick2:getGamepadAxis("lefty")/(math.abs(joystick2:getGamepadAxis("leftx"))))
 else youangle = 0
 end
@@ -318,47 +315,47 @@ end
 
 
  
-    j1ry = joystick:getGamepadAxis("righty")
-    j1rx = joystick:getGamepadAxis("rightx")
+    me.jry = joystick:getGamepadAxis("righty")
+    me.jrx = joystick:getGamepadAxis("rightx")
     
     
-    length1 = math.abs(j1rx/math.cos(math.atan(-j1ry/j1rx)))
+    length1 = math.abs(me.jrx/math.cos(math.atan(-me.jry/me.jrx)))
 
     if length1 > .8 then
       
 
-        if (j1ry/j1rx >= 0.45411356137
-        or j1ry/j1rx <= -0.45411356137)
-        and j1ry < 0
+        if (me.jry/me.jrx >= 0.45411356137
+        or me.jry/me.jrx <= -0.45411356137)
+        and me.jry < 0
            then
         me.a1 = true
         end
 
-        if j1ry/j1rx >= -1.75
-        and j1ry/j1rx <= 1.75
-        and j1rx < 0
+        if me.jry/me.jrx >= -1.75
+        and me.jry/me.jrx <= 1.75
+        and me.jrx < 0
            then
-        if flip1 > 0 then
+        if me.flip > 0 then
         me.a2 = true
-      elseif flip1 < 0 then 
+      elseif me.flip < 0 then 
         me.a3 = true
         end
         end
 
-        if j1ry/j1rx >= -1.75
-        and j1ry/j1rx <= 1.75
-        and j1rx > 0
+        if me.jry/me.jrx >= -1.75
+        and me.jry/me.jrx <= 1.75
+        and me.jrx > 0
            then
-        if flip1 > 0 then
+        if me.flip > 0 then
         me.a3 = true
-      elseif flip1 < 0 then 
+      elseif me.flip < 0 then 
         me.a2 = true
         end
         end
 
-        if (j1ry/j1rx >= 0.45411356137
-        or j1ry/j1rx <= -0.45411356137)
-        and j1ry > 0
+        if (me.jry/me.jrx >= 0.45411356137
+        or me.jry/me.jrx <= -0.45411356137)
+        and me.jry > 0
            then
         me.a4 = true
         end
@@ -448,10 +445,10 @@ end
     end
     
     
-    j1ly = joystick:getGamepadAxis("lefty")
-    j1lx = joystick:getGamepadAxis("leftx")
+    me.jly = joystick:getGamepadAxis("lefty")
+    me.jlx = joystick:getGamepadAxis("leftx")
     
-   me.leftdeadzone = math.abs(j1lx/math.cos(math.atan(-j1ly/j1lx))) < .3
+   me.leftdeadzone = math.abs(me.jlx/math.cos(math.atan(-me.jly/me.jlx))) < .3
     
 
     
@@ -460,17 +457,9 @@ meangle = math.atan(-joystick:getGamepadAxis("lefty")/(math.abs(joystick:getGame
 else meangle = 0
 end
 
-megupv = boltspeed*math.sin(meangle)
 megv = boltspeed*math.cos(meangle)
 
-if ((meangle >= math.rad(0) and me.g) or not me.g) then
-megpupv = pboltspeed*math.sin(math.max(meangle, math.rad(-40)))
-megpv = pboltspeed*math.cos(math.max(meangle, math.rad(-40)))
-else
-megpupv = pboltspeed*math.sin(0)
-megpv = pboltspeed*math.cos(0)
 
-end
 
 
 

@@ -3,26 +3,48 @@
 
 --partition, the hole in the ceiling, the right edge of the apartment
 
-minzoom = .7
-maxzoom = .63
-minzdis = 1000
+defaultminzoom = .7
+defaultmaxzoom = .5
+minzoom = defaultminzoom
+    maxzoom = defaultmaxzoom
+minzdis = love.graphics.getWidth()
 maxzdis = 4500
 
 cscale = .7
 
+growrate = .02
+shrinkrate = .02
 
+   enviro.screenheight = 0
+    
+
+function camreturntozoom()
+  if minzoom + shrinkrate > defaultminzoom then
+    minzoom = defaultminzoom
+    maxzoom = defaultmaxzoom
+  else minzoom = minzoom + shrinkrate
+    maxzoom = maxzoom + shrinkrate
+  end
+  end
 
 cammovement = function ()
+  camreturntozoom()
+beigedif = (enviro.screenheight - head2ceiling - feet2bottom - 90)*cscale
+jumpj = initjumpj * cscale/minzoom
+--
+jmax = initjmax * cscale/minzoom
+--basically min j
+  
 ydif = math.abs((you.y) - (me.y))
 
-  if ydif <= enviro.screenheight*cscale - head2ceiling - feet2bottom - 60 then
+  if ydif <= beigedif then
   vertone = true
   else vertone = false
 end
 
 if me.y <= you.y then 
-midypoint = me.y + (ydif/2) + 30
-else midypoint = you.y + (ydif/2) + 30
+midypoint = me.y + (ydif/2) + 30*cscale
+else midypoint = you.y + (ydif/2) + 30*cscale
 end
 
 
@@ -40,7 +62,7 @@ end
   --   youcamlwall = false
   -- end
 
-  if midypoint >= floor - (enviro.screenheight*cscale/2) + (feet2bottom)*cscale
+  if midypoint >= floor - ((enviro.screenheight/2) + (feet2bottom)-30)*cscale
     then
     youcamfloor = true
     mecamfloor = true
@@ -108,8 +130,8 @@ end
 
 
 if me.y <= you.y then 
-midypoint = me.y + (ydif/2) + 30
-else midypoint = you.y + (ydif/2) + 30
+midypoint = me.y + (ydif/2) + 30*cscale
+else midypoint = you.y + (ydif/2) + 30*cscale
 end
 
 
@@ -124,22 +146,22 @@ mexrig = me.mid - (screenwidth*cscale*.25)
 youxrig = you.mid - (screenwidth*cscale*.75)
 
 if not mecamfloor and you.y > me.y then 
-  youyrig = you.feet - enviro.screenheight*cscale + feet2bottom 
+  youyrig = you.feet - enviro.screenheight*cscale + feet2bottom*cscale
 
 elseif youcamfloor 
   then
-youyrig = floor - enviro.screenheight*cscale + feet2bottom 
+youyrig = floor - enviro.screenheight*cscale + feet2bottom*cscale 
 elseif not vertone and you.y < me.y then
   youyrig = you.y - head2ceiling*cscale
 end
 
 
 if not youcamfloor and you.y < me.y then 
-  meyrig = me.feet - enviro.screenheight*cscale + feet2bottom
+  meyrig = me.feet - enviro.screenheight*cscale + feet2bottom*cscale
 
 elseif mecamfloor 
   then
-meyrig = floor - enviro.screenheight*cscale + feet2bottom 
+meyrig = floor - enviro.screenheight*cscale + feet2bottom*cscale
 elseif not vertone and me.y < you.y then
   meyrig = me.y - head2ceiling*cscale
 end
@@ -280,7 +302,6 @@ end
 
 bheight = (head2ceiling + 60 + 60)/24
 bbheight = (feet2bottom + 60 + 60)/24
-beigedif = (enviro.screenheight - head2ceiling - feet2bottom - 60)*cscale
 if ydif > beigedif*4 then 
  bwidth = 15
  beigex = (screenwidth/2-6) + ((1-bwidth) * 6)
@@ -462,50 +483,59 @@ function drawleft()
 
 	if me.flinch then 
 	drawmyroulette()
-	love.graphics.draw(me.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
+	love.graphics.draw(me.im.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
+	love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b,255)
+	love.graphics.draw(me.im.c, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 	love.graphics.setColor(a31r,a31g,a31b,255)
-	love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
-	love.graphics.draw(me.crest, me.crestx, me.cresty)
+	--love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
+	--love.graphics.draw(me.crest, me.crestx, me.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 	
 
 	drawyourroulette()
 	love.graphics.setColor(155, 155, 155, 255)
-	love.graphics.draw(you.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
+	love.graphics.draw(you.im.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
+	love.graphics.setColor(you.c.r,you.c.g,you.c.b,255)
+	love.graphics.draw(you.im.c, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	
 	love.graphics.setColor(a22r,a22g,a22b,255)
-	love.graphics.draw(you.face, you.facex, you.feet + you.facey,youfacerot)
-	love.graphics.draw(you.crest, you.crestx, you.cresty)
+	--love.graphics.draw(you.face, you.facex, you.feet + you.facey,youfacerot)
+	--love.graphics.draw(you.crest, you.crestx, you.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 
 	else
 	drawyourroulette()
 	love.graphics.setColor(155, 155, 155, 255)
-	love.graphics.draw(you.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
+	love.graphics.draw(you.im.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
+	love.graphics.setColor(you.c.r,you.c.g,you.c.b,255)
+	love.graphics.draw(you.im.c, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	
 	love.graphics.setColor(a22r,a22g,a22b,255)
-	love.graphics.draw(you.face, you.facex, you.feet + you.facey, youfacerot)
-	love.graphics.draw(you.crest, you.crestx, you.cresty)
+	--love.graphics.draw(you.face, you.facex, you.feet + you.facey, youfacerot)
+	--love.graphics.draw(you.crest, you.crestx, you.cresty)
 	drawmyroulette()
 	love.graphics.setColor(255, 255, 255, 255)
-	love.graphics.draw(me.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
+	love.graphics.draw(me.im.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
+	love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b,255)
+	love.graphics.draw(me.im.c, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 	love.graphics.setColor(a31r,a31g,a31b,255)
-	love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
-	love.graphics.draw(me.crest, me.crestx, me.cresty)
+	--love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
+	--love.graphics.draw(me.crest, me.crestx, me.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 	
 end
-	
+  drawdust()
+drawsparks()
 	medrawmines()
-	me.spikes.draw()
+	spikedraw(me,you)
 	boltsdraw(me.bolts)
 	drawtornado()
-
+  
 
 	love.graphics.setColor(220,220,220)
 	youdrawmines()
 	love.graphics.setColor(155,155,155)
-	youspikes.draw()
+	spikedraw(you, me)
 	boltsdraw(you.bolts)
 	youdrawtornado()
 	love.graphics.setColor(255, 255, 255, 255)
@@ -539,50 +569,61 @@ function drawright()
 
 	if me.flinch then 
 	drawmyroulette()
-	love.graphics.draw(me.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
+	love.graphics.draw(me.im.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
+	love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b,255)
+	love.graphics.draw(me.im.c, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 	love.graphics.setColor(a31r,a31g,a31b,255)
-	love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
-	love.graphics.draw(me.crest, me.crestx, me.cresty)
+	--love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
+	--love.graphics.draw(me.crest, me.crestx, me.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 	
 
 	drawyourroulette()
 	love.graphics.setColor(155, 155, 155, 255)
-	love.graphics.draw(you.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
+	love.graphics.draw(you.im.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
+	love.graphics.setColor(you.c.r,you.c.g,you.c.b,255)
+	love.graphics.draw(you.im.c, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	
 	love.graphics.setColor(a22r,a22g,a22b,255)
-	love.graphics.draw(you.face, you.facex, you.feet + you.facey,youfacerot)
-	love.graphics.draw(you.crest, you.crestx, you.cresty)
+	--love.graphics.draw(you.face, you.facex, you.feet + you.facey,youfacerot)
+	--love.graphics.draw(you.crest, you.crestx, you.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 
 	else
 
 	drawyourroulette()
 	love.graphics.setColor(155, 155, 155, 255)
-	love.graphics.draw(you.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
+	love.graphics.draw(you.im.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
+	love.graphics.setColor(you.c.r,you.c.g,you.c.b,255)
+	love.graphics.draw(you.im.c, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	
 	love.graphics.setColor(a22r,a22g,a22b,255)
-	love.graphics.draw(you.face, you.facex, you.feet + you.facey,youfacerot)
-	love.graphics.draw(you.crest, you.crestx, you.cresty)
+	--love.graphics.draw(you.face, you.facex, you.feet + you.facey,youfacerot)
+	--love.graphics.draw(you.crest, you.crestx, you.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 
 	drawmyroulette()
-	love.graphics.draw(me.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
+	love.graphics.draw(me.im.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
+	love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b,255)
+	love.graphics.draw(me.im.c, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 	love.graphics.setColor(a31r,a31g,a31b,255)
-	love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
-	love.graphics.draw(me.crest, me.crestx, me.cresty)
+	--love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
+	--love.graphics.draw(me.crest, me.crestx, me.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 	
 end
+
+drawdust()
+drawsparks()
 	medrawmines()
-	me.spikes.draw()
+	spikedraw(me,you)
 	boltsdraw(me.bolts)
 	drawtornado()
 	love.graphics.setColor(220,220,220)
 	youdrawmines()
 
 	love.graphics.setColor(155,155,155)
-	youspikes.draw()
+	spikedraw(you, me)
 	boltsdraw(you.bolts)
 	youdrawtornado()
 	love.graphics.setColor(255, 255, 255, 255)

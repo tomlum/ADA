@@ -10,8 +10,6 @@ bbpkb = 7
 bbkkb = 20
 bbft = 15
 
-me.color = 1
-you.color = 2
 
 sparkspeed = 3
 
@@ -59,6 +57,7 @@ function combomanage(xx)
   xx.anibusy = false
 
   if xx.animcounter > 0 then
+    xx.block = false
     xx.animcounter = xx.animcounter + 1
   elseif xx.animcounter == 0 then xx.combo = 0
   end
@@ -76,7 +75,7 @@ end
 
 function combo(xx)
   if xx.a2 or xx.a3 then
-    if me.color==0 then
+    if xx.color.n==0 then
       if xx.bbpc < bbnumpunch then
         xx.bbpc = xx.bbpc+1
         xx.animcounter = 1
@@ -85,7 +84,7 @@ function combo(xx)
     end
   end
   if xx.a4 then
-    if me.color==0 then
+    if xx.color.n==0 then
       xx.combo = xx.combo + 1
       xx.animcounter = 1
       xx.type = 2
@@ -186,7 +185,7 @@ function breadandbutter(xx, inuse)
               z.flinch = true
               z.ft = bbft
 
-              makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, 255,255,255)
+              makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.c.r,xx.c.g,xx.c.b)
 
             end)
           xx.v = xx.v + (xx.lr*3)

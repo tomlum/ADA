@@ -3,19 +3,34 @@
 
 --partition, the hole in the ceiling, the right edge of the apartment
 
-minzoom = .7
-maxzoom = .5
+
+
+defaultminzoom = .7
+defaultmaxzoom = .5
+minzoom = defaultminzoom
+    maxzoom = defaultmaxzoom
 minzdis = love.graphics.getWidth()
 maxzdis = 4500
 
 cscale = .7
 
+growrate = .02
+shrinkrate = .02
+
    enviro.screenheight = 0
     
 
+function camreturntozoom()
+  if minzoom + shrinkrate > defaultminzoom then
+    minzoom = defaultminzoom
+    maxzoom = defaultmaxzoom
+  else minzoom = minzoom + shrinkrate
+    maxzoom = maxzoom + shrinkrate
+  end
+  end
 
 cammovement = function ()
-  
+  camreturntozoom()
 beigedif = (enviro.screenheight - head2ceiling - feet2bottom - 90)*cscale
 jumpj = initjumpj * cscale/minzoom
 --
@@ -471,7 +486,7 @@ function drawleft()
 	if me.flinch then 
 	drawmyroulette()
 	love.graphics.draw(me.im.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
-	love.graphics.setColor(me.c.r,me.c.g,me.c.b,255)
+	love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b,255)
 	love.graphics.draw(me.im.c, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 	love.graphics.setColor(a31r,a31g,a31b,255)
 	--love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
@@ -482,7 +497,7 @@ function drawleft()
 	drawyourroulette()
 	love.graphics.setColor(155, 155, 155, 255)
 	love.graphics.draw(you.im.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
-	love.graphics.setColor(you.c.r,you.c.g,you.c.b,255)
+	love.graphics.setColor(you.color.c.r,you.color.c.g,you.color.c.b,255)
 	love.graphics.draw(you.im.c, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	
 	love.graphics.setColor(a22r,a22g,a22b,255)
@@ -494,18 +509,16 @@ function drawleft()
 	drawyourroulette()
 	love.graphics.setColor(155, 155, 155, 255)
 	love.graphics.draw(you.im.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
-	love.graphics.setColor(you.c.r,you.c.g,you.c.b,255)
+	love.graphics.setColor(you.color.c.r,you.color.c.g,you.color.c.b,255)
 	love.graphics.draw(you.im.c, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	
-	love.graphics.setColor(a22r,a22g,a22b,255)
 	--love.graphics.draw(you.face, you.facex, you.feet + you.facey, youfacerot)
 	--love.graphics.draw(you.crest, you.crestx, you.cresty)
 	drawmyroulette()
 	love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.draw(me.im.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
-	love.graphics.setColor(me.c.r,me.c.g,me.c.b,255)
+	love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b,255)
 	love.graphics.draw(me.im.c, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
-	love.graphics.setColor(a31r,a31g,a31b,255)
 	--love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
 	--love.graphics.draw(me.crest, me.crestx, me.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
@@ -557,7 +570,7 @@ function drawright()
 	if me.flinch then 
 	drawmyroulette()
 	love.graphics.draw(me.im.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
-	love.graphics.setColor(me.c.r,me.c.g,me.c.b,255)
+	love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b,255)
 	love.graphics.draw(me.im.c, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 	love.graphics.setColor(a31r,a31g,a31b,255)
 	--love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
@@ -568,7 +581,7 @@ function drawright()
 	drawyourroulette()
 	love.graphics.setColor(155, 155, 155, 255)
 	love.graphics.draw(you.im.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
-	love.graphics.setColor(you.c.r,you.c.g,you.c.b,255)
+	love.graphics.setColor(you.color.c.r,you.color.c.g,you.color.c.b,255)
 	love.graphics.draw(you.im.c, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	
 	love.graphics.setColor(a22r,a22g,a22b,255)
@@ -581,19 +594,17 @@ function drawright()
 	drawyourroulette()
 	love.graphics.setColor(155, 155, 155, 255)
 	love.graphics.draw(you.im.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
-	love.graphics.setColor(you.c.r,you.c.g,you.c.b,255)
+	love.graphics.setColor(you.color.c.r,you.color.c.g,you.color.c.b,255)
 	love.graphics.draw(you.im.c, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	
-	love.graphics.setColor(a22r,a22g,a22b,255)
 	--love.graphics.draw(you.face, you.facex, you.feet + you.facey,youfacerot)
 	--love.graphics.draw(you.crest, you.crestx, you.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 
 	drawmyroulette()
 	love.graphics.draw(me.im.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
-	love.graphics.setColor(me.c.r,me.c.g,me.c.b,255)
+	love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b,255)
 	love.graphics.draw(me.im.c, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
-	love.graphics.setColor(a31r,a31g,a31b,255)
 	--love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
 	--love.graphics.draw(me.crest, me.crestx, me.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
