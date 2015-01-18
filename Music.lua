@@ -39,10 +39,10 @@ gp1:setPitch(.3 + (math.random() * .3) )
 gp2:setPitch(.3 + (math.random() * .3) )
 land1:setPitch(.8 + (math.random() * .3) )
 land2:setPitch(.8 + (math.random() * .3) )
-flinch1:setPitch(.3 + (math.random() * .3) )
-flinch2:setPitch(.3 + (math.random() * .3) )
-flinch12:setPitch(.9 + (math.random() * .3) )
-flinch22:setPitch(.9 + (math.random() * .3) )
+me.flinch1:setPitch(.3 + (math.random() * .3) )
+you.flinch1:setPitch(.3 + (math.random() * .3) )
+me.flinch2:setPitch(.9 + (math.random() * .3) )
+you.flinch2:setPitch(.9 + (math.random() * .3) )
 chain1:setPitch(1.3 + (math.random() * .3) )
 chain2:setPitch(1.3 + (math.random() * .3) )
 me.airpurp:setPitch(.3 + (math.random() * .3) )
@@ -78,6 +78,12 @@ tornadosound2:setPitch(1.6 + (math.random() * .3) )
 end
 
 
+me.blocksound = love.audio.newSource("sounds/blocksound.wav", "stream")
+me.blocksound:setVolume(.1)
+me.blocksound:setPitch(1.2)
+you.blocksound = love.audio.newSource("sounds/blocksound.wav", "stream")
+you.blocksound:setVolume(.1)
+
 
 miscsounds = function()
 
@@ -95,6 +101,8 @@ end
 
 
 end
+
+
 
 readysound = love.audio.newSource("sounds/ready.wav", "stream")
 readysound:setVolume(SFXV - .7)
@@ -290,15 +298,15 @@ you.airpurp = love.audio.newSource("sounds/airpurp.wav", "static")
 you.airpurp:setVolume(SFXV-.7-adj)
 you.airpurp:setPitch(.7)
 
-flinch1 = love.audio.newSource("sounds/flinch3.wav", "static")
-flinch1:setVolume(SFXV-.7-adj)
-flinch2 = love.audio.newSource("sounds/flinch3.wav", "static")
-flinch2:setVolume(SFXV-.7-adj)
+me.flinch1 = love.audio.newSource("sounds/flinch3.wav", "static")
+me.flinch1:setVolume(SFXV-.7-adj)
+you.flinch1 = love.audio.newSource("sounds/flinch3.wav", "static")
+you.flinch1:setVolume(SFXV-.7-adj)
 
-flinch12 = love.audio.newSource("sounds/flinch2.wav", "static")
-flinch12:setVolume(SFXV-.8-adj)
-flinch22 = love.audio.newSource("sounds/flinch2.wav", "static")
-flinch22:setVolume(SFXV-.8-adj)
+me.flinch2 = love.audio.newSource("sounds/flinch2.wav", "static")
+me.flinch2:setVolume(SFXV-.8-adj)
+you.flinch2 = love.audio.newSource("sounds/flinch2.wav", "static")
+you.flinch2:setVolume(SFXV-.8-adj)
 
 minch1 = love.audio.newSource("sounds/greenhit.wav", "static")
 minch1:setVolume(SFXV-.7-adj)

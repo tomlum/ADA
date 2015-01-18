@@ -716,7 +716,7 @@ walls = function ()
       you.v = -you.v/3
       you.j = math.abs(you.v)
       makerubble(you.mid, you.y,you.v, you.j)
-      youflinchway = -youflinchway
+      you.flinchway = -you.flinchway
       repplay(wallhit2)
       you.g = false
       you.y = you.y - 10
@@ -731,7 +731,7 @@ walls = function ()
       you.v = -you.v/3
       you.j = math.abs(you.v)
       makerubble(you.mid, you.y,you.v, you.j)
-      youflinchway = -youflinchway
+      you.flinchway = -you.flinchway
 
       repplay(wallhit2)
       you.g = false
@@ -748,7 +748,7 @@ walls = function ()
       me.v = -me.v/3
       me.j = math.abs(me.v)
       makerubble(me.mid, me.y,me.v, me.j)
-      meflinchway = -meflinchway
+      me.flinchway = -me.flinchway
 
       me.g = false
       me.y = me.y - 10
@@ -765,7 +765,7 @@ walls = function ()
       me.v = -me.v/3
       me.j = math.abs(me.v)
       makerubble(me.mid, me.y,me.v, me.j)
-      meflinchway = -meflinchway
+      me.flinchway = -me.flinchway
 
       repplay(wallhit1)
       me.g = false
@@ -1055,7 +1055,7 @@ function movex(xx,z)
   then 
     if xx.j < 0 then xx.j = 0
     end
-    if z.up and not xx.flinch and not xx.block and not xx.jstop and not xxbjstop and not xx.busy
+    if z.up and not xx.flinch and not xx.block and not xx.jstop and not xx.busy
     and not z.a1 and not z.a2 and not z.a3 and not xx.bur and not xxpurp
     then 
       if xx.running then
@@ -1092,7 +1092,7 @@ function movex(xx,z)
     then
       xx.landingcounter = xx.landingcounter - 1
     end
-    if z.block and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet+5) ~= platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-65) and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-65) ~= xx.floor
+    if z.blockb and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet+5) ~= platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-65) and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-65) ~= xx.floor
     then 
       if platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-35) ~= platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.feet+5) then
         xx.ctim = 7

@@ -1,9 +1,28 @@
+--todo
+--string together combos not desigining each ocmbination
+--quickfix - bump allows you to pull people if walk in while in their box
+--holding down attack makes it repeat the attack, make you have to reset to center
+--doing kick as p2 makes you look like p1????
+--dodgeturn around is faster than dodge...
+--make it so that turnaound doesn't add V!!!!!, maybe it does it with a low v if you do it late as opposed to not permitting you to do it if it's late, add time but let v stay or even slow down if anything 
+--if during the dodge whatsitcalled forward and delay, stay in a certain image?
+--fix make it so that animate follows through even if BB isn't yeah
+--allow faster punchs
+--fix dodge
+--fix flinch? make it one at least
+--make vibration a function, give it parameters of duration and intensity
+--at end of each update then call joystickvibrate else throw to vibrate function/variables
+--
+
+--on up attack, can jump in the air during combo window
+--when negative 1 hum sound hold on the changetocolor but when it hits do a ding
+--some water effects would be awesome
 --smooth slowmo, each frame split it up before going to next, when applying v to x, split it up depending on how many slwo mini frames, apply to drawn stuff
+--maybe color should just be transparent and vary that rather than color
 --in case it bugs, have a temp balue each frame that resets to zero once the actual number is added on
 --maybe default color is gray, not white
 --general rule - attacks that take in an input (you.v) vs just outputting something offer my dynamicism, even if not immediately apparent
 --make joystick 
---ACTIVATE COMBO CINEMATIC IF CHANGE COLOR AND NEW ATTACK KIND, not just color change, if attack right after color change then fast color change
 --ON COMBO CINEMATIC, PITCH CHANGE, COLOR CHANGE, ZOOM OUT A BIT
 --SPARKS COLOR BASED ON ATTACK COLOR?!?!?!?!?!?
 --mine throw lob doesn't explode until activated on ground
@@ -54,8 +73,8 @@ love.graphics.setDefaultFilter("linear","nearest",1)
 --maybe do like, the black attack hits and hten throws in a direction?
 --for mines hc, dir is -you.lr? but what about them sliding backwards into it while blocking?
 --above the rightmost rafter there seems tobe an invisible grabbale edge
-  --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
-  --have greenwallbreaks tied in volume to dis like purp use math.min
+--FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
+--have greenwallbreaks tied in volume to dis like purp use math.min
 ---maybe if at edge and other direction then stop?
 --error in shaking cam when top and bottom cam?
 --leafs from trees like paper from office
@@ -69,6 +88,7 @@ love.graphics.setDefaultFilter("linear","nearest",1)
 --sound for spines passing by?
 --have leaves come out of trees like paper
 --if approach edge of a floor, climb up it, or if flinched, bounce off? or not.... maybe just fall through
+
 --can aim the green sand upwards
 --more paralx?  and blur it
 --ding/sound for fully charged of an attack?
@@ -128,6 +148,7 @@ success = love.window.setMode(600, 600, {resizable=true, fullscreen = false, vsy
 fightclub = true
 debug = false
 
+musicmute = true
 mute = true
 
 justone = false
@@ -189,7 +210,6 @@ require "Joysticks"
 require "ATTACK"
 require "At/Purple"
 require "At/Green"
-require "At/Blue"
 require "At/Yellow"
 require "At/Sand"
 require "BB"
@@ -205,7 +225,7 @@ moop = 0
 
 function love.load()
 
-  
+
 
   myShader = love.graphics.newShader[[
   vec4 effect(vec4 color, Image texture, vec2 vTexCoord, vec2 pixel_coords)
@@ -230,9 +250,9 @@ function love.load()
     return sum;
   }
   ]]
-if debug then 
-  require("mobdebug").start() 
-end
+  if debug then 
+    require("mobdebug").start() 
+  end
   finishedLoading = false
 
   stagey = 0
@@ -288,11 +308,11 @@ end
   ybindent, ygindent, ypindent, yyindent, ysindent = 0,0,0,0,0
 
   if flipfollow then
-  me.flip = me.lr
-  you.flip = you.lr
-else 
+    me.flip = me.lr
+    you.flip = you.lr
+  else 
     me.flip = 1
-  you.flip = 1
+    you.flip = 1
   end
 
 
@@ -324,11 +344,12 @@ else
 
   joysticks = love.joystick.getJoysticks()
   if #joysticks > 0 then
-  joystick = joysticks[1]
-end
-if #joysticks > 1 then
-  joystick2 = joysticks[2]
-end
+    me.joystick = joysticks[1]
+  end
+  if #joysticks > 1 then
+    you.joystick = joysticks[2]
+  end
+
 
   x = 11
   lefty = true
@@ -337,19 +358,19 @@ end
   actionshot = false
   actiontimer = 0
   youactiontimer = 0
-  
-   if fightclub then 
-  MENU = "play"
-  themap = "fightclub"
-  placespeople = true
-  mute = true
-  while(not finishedLoading) do
-    whatlevel()
-    loader.update() 
+
+  if fightclub then 
+    MENU = "play"
+    themap = "fightclub"
+    placespeople = true
+    mute = true
+    while(not finishedLoading) do
+      whatlevel()
+      loader.update() 
+    end
+
+
   end
-    
-    
-end
 
 end
 
@@ -362,536 +383,505 @@ end
 
 
 function love.update()
-  
- if not (pauseonhit and pausedonhit) then
-  
-  --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
+  if not (pauseonhit and pausedonhit) then
 
-  if not finishedLoading then
-    loader.update()   end
+    --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
 
+    if not finishedLoading then
+      loader.update()   end
 
 
 
 
-    whatlevel()
+
+      whatlevel()
 
 
 
-    if MENU == "play" then 
-      spines={}
+      if MENU == "play" then 
+        spines={}
 
 
 
-      you.start = love.keyboard.isDown("u")
-      if #joysticks > 0 then
-      jjstick(me,joystick)
-        success = joystick:setVibration(1,1)
-        me.start = joystick:isGamepadDown("start")
-        if #joysticks > 1 then
-          
-      jjstick(you,joystick2)
-        you.start = joystick2:isGamepadDown("start") 
-        end
-      end 
-
-      if r2unpause and (me.start or you.start) and pause 
-      then pause = false
-        r2unpause = false
-        thesong:resume()
-      elseif (me.start or you.start) and r2unpause then 
-        pause = true
-        r2unpause = false
-        thesong:pause()
-      elseif not (me.start or you.start) then r2unpause = true 
-      end
-    end
-
-
-
-
-    meprevhealth = me.health
-    youprevhealth = you.health
-
-
-    screenwidth = love.graphics.getWidth()
-    screenheight = love.graphics.getHeight()
-    enviro.screenheight = screenheight - barheight
-    healthratio = (screenwidth/2)/maxhealth
-
-
-    randomizepitch()
-
-
-    if me.flinch then me.jstop = false mebjstop = false end
-    if you.flinch then you.jstop = false youbjstop = false end
-
-
-
-
-    if 
-    love.keyboard.isDown("z")
-    then slowt = slowt + 1
-      if slowt > SlowRate then slowt = 0
-      end
-    else 
-      SlowRate = 10
-      slowt = SlowRate
-    end
-
-
-
-    if actiontimer == 1 
-    then actionshot = false actiontimer = 0
-      thesong:setPitch(1)
-
-
-      if not pause then
-        deathsound:play()
-        collides:play()
-        bcs:play()
-
-
-
-
-      end
-    elseif actionshot == true and actiontimer == 0 
-    then actiontimer = 60
-    elseif actiontimer > 0 
-    then actiontimer = actiontimer - 1
-      thesong:setPitch(actiontimer/60)
-    else actiontimer = 0
-    end
-
-    if youactiontimer == 1 
-    then youactionshot = false youactiontimer = 0
-      thesong:setPitch(1)
-      deathsound:play()
-      collides:play()
-    elseif youactionshot == true and youactiontimer == 0 
-    then youactiontimer = 60
-    elseif youactiontimer > 0 
-    then youactiontimer = youactiontimer - 1
-      thesong:setPitch(youactiontimer/60)
-    else youactiontimer = 0
-    end
-
-
-
-    if slowt == SlowRate and not actionshot and not youactionshot and not pause
-    then
-
-
-
-      if me.health<0 or you.health<0 then
-
-        me.up = false
-        me.down = false
-        me.left = false
-        me.right = false
-        me.a1 = false
-        me.a2 = false
-        me.a3 = false
-        me.block = false
-
-
-
-        you.up = false
-        you.down = false
-        you.left = false
-        you.right = false
-        you.a1 = false
-        you.a2 = false
-        you.a3 = false
-        you.block = false
-
-      else
-
-        me.start = love.keyboard.isDown("q")
-        me.up = love.keyboard.isDown("w")
-        me.down = love.keyboard.isDown("s")
-        me.left = love.keyboard.isDown("a")
-        me.right = love.keyboard.isDown("d")
-        me.a1 = love.keyboard.isDown("t")
-        if me.flip > 0 then
-          me.a2 = love.keyboard.isDown("f")
-          me.a3 = love.keyboard.isDown("h")
-        elseif me.flip < 0 then
-          me.a2 = love.keyboard.isDown("h")
-          me.a3 = love.keyboard.isDown("f")
-        end
-        me.a4 = love.keyboard.isDown("g")
-        me.block = love.keyboard.isDown("e")
-        me.run = love.keyboard.isDown("r")
-        me.rightb = love.keyboard.isDown("2")
-        me.leftb = love.keyboard.isDown("1")
-
-
-
-        you.up = love.keyboard.isDown("i")
-        you.down = love.keyboard.isDown("k")
-        you.left = love.keyboard.isDown("j")
-        you.right = love.keyboard.isDown("l")
-        you.a1 = love.keyboard.isDown("up")
-        you.a4 = love.keyboard.isDown("down")
-        if you.flip > 0 then
-          you.a2 = love.keyboard.isDown("left")
-          you.a3 = love.keyboard.isDown("right")
-        elseif you.flip < 0 then
-          you.a3 = love.keyboard.isDown("left")
-          you.a2 = love.keyboard.isDown("right")
-        end
-        you.block = love.keyboard.isDown("o")
         you.start = love.keyboard.isDown("u")
-        you.run = love.keyboard.isDown("p")
-        you.rightb = love.keyboard.isDown("0")
-        you.leftb = love.keyboard.isDown("9")
+        if #joysticks > 0 then
+          me.start = me.joystick:isGamepadDown("start")
+          if #joysticks > 1 then
+            you.start = you.joystick:isGamepadDown("start") 
+          end
+        end 
 
-
-
+        if r2unpause and (me.start or you.start) and pause 
+        then pause = false
+          r2unpause = false
+          thesong:resume()
+        elseif (me.start or you.start) and r2unpause then 
+          pause = true
+          r2unpause = false
+          thesong:pause()
+        elseif not (me.start or you.start) then r2unpause = true 
+        end
       end
 
 
 
-      --makes it towards and away not left and right
 
-      --if MENU == "play" and towardaway then
-      --  if (me.mid + me.v) > (you.mid + you.v) and not c2accept() then you.flip = -1
-      --elseif (me.mid + me.v) <= (you.mid + you.v) and not c2accept() then you.flip = 1
-      --end
-      --if (me.mid + me.v) > (you.mid + you.v) and not c1accept() then me.flip = -1
-      --elseif (me.mid + me.v) <= (you.mid + you.v) and not c1accept() then me.flip = 1
-      --end
-      --else me.flip = 1
-      --you.flip = 1
-      --end
-
-      me.flip = 1
-      you.flip = 1
+      me.prevhealth = me.health
+      you.prevhealth = you.health
 
 
-      runrunrun()
+      screenwidth = love.graphics.getWidth()
+      screenheight = love.graphics.getHeight()
+      enviro.screenheight = screenheight - barheight
+      healthratio = (screenwidth/2)/maxhealth
 
 
-      if #joysticks > 0 then
-      jjstick(me,joystick)
-      elseif #joysticks > 1 then
-      jjstick(me,joystick)
-      jjstick(you,joystick2)
+      randomizepitch()
+
+
+      if me.flinch then me.jstop = false end
+      if you.flinch then you.jstop = false end
+
+
+
+
+      if 
+      love.keyboard.isDown("z")
+      then slowt = slowt + 1
+        if slowt > SlowRate then slowt = 0
+        end
+      else 
+        SlowRate = 10
+        slowt = SlowRate
       end
 
-      clicks()
+      actionshotstuff()
 
 
 
 
-      if MENU == "title" then
-        openingsong:play()
-
-        openingsong:setPitch(sfade/255)
+      if slowt == SlowRate and not actionshot and not youactionshot and not pause
+      then
 
 
 
-        if c1accept() or c2accept() then
-          MENU = "modes"
-          modesound:play()
+        if me.health<0 or you.health<0 then
 
+          me.up = false
+          me.down = false
+          me.left = false
+          me.right = false
+          me.a1 = false
+          me.a2 = false
+          me.a3 = false
+          me.block = false
+
+
+
+          you.up = false
+          you.down = false
+          you.left = false
+          you.right = false
+          you.a1 = false
+          you.a2 = false
+          you.a3 = false
+          you.block = false
+
+        else
+
+          me.start = love.keyboard.isDown("q")
+          me.up = love.keyboard.isDown("w")
+          me.down = love.keyboard.isDown("s")
+          me.left = love.keyboard.isDown("a")
+          me.right = love.keyboard.isDown("d")
+          me.a1b = love.keyboard.isDown("t")
+          me.a2b = love.keyboard.isDown("f")
+          me.a3b = love.keyboard.isDown("h")
+          me.a4b = love.keyboard.isDown("g")
+          me.blockb = love.keyboard.isDown("e")
+          me.run = love.keyboard.isDown("r")
+          me.rightb = love.keyboard.isDown("2")
+          me.leftb = love.keyboard.isDown("1")
+
+
+
+          you.up = love.keyboard.isDown("i")
+          you.down = love.keyboard.isDown("k")
+          you.left = love.keyboard.isDown("j")
+          you.right = love.keyboard.isDown("l")
+          you.a1b = love.keyboard.isDown("up")
+          you.a4b = love.keyboard.isDown("down")
+          you.a2b = love.keyboard.isDown("left")
+          you.a3b = love.keyboard.isDown("right")
+          you.blockb = love.keyboard.isDown("o")
+          you.start = love.keyboard.isDown("u")
+          you.run = love.keyboard.isDown("p")
+          you.rightb = love.keyboard.isDown("0")
+          you.leftb = love.keyboard.isDown("9")
+
+          you.a1 = you.a1b
+          you.a2 = you.a2b
+          you.a3 = you.a3b
+          you.a4 = you.a4b
+          me.a1 = me.a1b
+          me.a2 = me.a2b
+          me.a3 = me.a3b
+          me.a4 = me.a4b
 
         end
 
 
-      elseif MENU == "modes"
-      then 
-        mov:setVolume(SFXV - .3)
-        openingsong:setPitch(sfade/255)
 
-        if (me.right or you.right) and modenum < 1 then modenum = modenum + 1 mov:play()
-        elseif (me.left or you.left) and modenum > 0 then modenum = modenum - 1 mov:play()	
+        --makes it towards and away not left and right
+
+        --if MENU == "play" and towardaway then
+        --  if (me.mid + me.v) > (you.mid + you.v) and not c2accept() then you.flip = -1
+        --elseif (me.mid + me.v) <= (you.mid + you.v) and not c2accept() then you.flip = 1
+        --end
+        --if (me.mid + me.v) > (you.mid + you.v) and not c1accept() then me.flip = -1
+        --elseif (me.mid + me.v) <= (you.mid + you.v) and not c1accept() then me.flip = 1
+        --end
+        --else me.flip = 1
+        --you.flip = 1
+        --end
+
+        me.flip = 1
+        you.flip = 1
+
+
+
+        if #joysticks > 0 then
+          jjstick(me,joystick)
+        elseif #joysticks > 1 then
+          jjstick(me,joystick)
+          jjstick(you,you.joystick)
         end
 
-        if modenum == 0 then 
-          themode = "roulette"
-          facade = mode2
-
-        elseif modenum == 1 then 
-          themode = "classic"
-          facade = mode1
+        if me.dodge or me.block
+        then me.a1, me.a2, me.a3, me.a4, me.up = false,false,false,false,false
+      end
+      
+      if you.dodge or you.block
+        then you.a1, you.a2, you.a3, you.a4, you.up = false,false,false,false,false
         end
 
-        if c1accept() or c2accept() then 
-          MENU ="prestage"
-          wavesound:play()
-        end
 
-      elseif MENU == "prestage" or MENU == "stage" then
-        mov:setVolume(SFXV - .3)
-        openingsong:setPitch(sfade/255)
-        if MENU == "prestage" then 
-          if stagey == 0 then adastartfade = true end
-          if stagey > 80 then stagey = stagey + .5
-            oscillator = -screenheight/90
-          elseif stagey > 50 then stagey = stagey + 1
-            oscillator = -screenheight/100
-          else
-            stagey = stagey + 1.5
-            oscillator = -screenheight/90
+        runrunrun()
+
+        clicks()
+
+
+
+
+        if MENU == "title" then
+          openingsong:play()
+
+          openingsong:setPitch(sfade/255)
+
+
+
+          if c1accept() or c2accept() then
+            MENU = "modes"
+            modesound:play()
+
+
           end
 
-          if stagey > 100 then MENU = "stage" oscillator = 5
+
+        elseif MENU == "modes"
+        then 
+          mov:setVolume(SFXV - .3)
+          openingsong:setPitch(sfade/255)
+
+          if (me.right or you.right) and modenum < 1 then modenum = modenum + 1 mov:play()
+          elseif (me.left or you.left) and modenum > 0 then modenum = modenum - 1 mov:play()	
           end
 
-        end
+          if modenum == 0 then 
+            themode = "roulette"
+            facade = mode2
 
-        if not me.left and not me.right and not you.left and not you.right then r2ss = true
-        end
+          elseif modenum == 1 then 
+            themode = "classic"
+            facade = mode1
+          end
 
-        if (me.left or you.left) and MENU == "stage" and not startsfade and stagenum > 0 and r2ss then stagenum = stagenum - 1	mov:play() r2ss = false
-        elseif (me.right or you.right) and MENU == "stage" and not startsfade and stagenum < 2 and r2ss then stagenum = stagenum + 1	 mov:play() r2ss = false
-        end
+          if c1accept() or c2accept() then 
+            MENU ="prestage"
+            wavesound:play()
+          end
 
-        if sfade - 10 <= 0 then MENU = "prechoose" 
-          sfade = 0
-          mov:setVolume(SFXV - .7)
-        elseif startsfade then sfade = sfade - 10
-        elseif (c1accept() or c2accept()) and MENU == "stage" then
+        elseif MENU == "prestage" or MENU == "stage" then
+          mov:setVolume(SFXV - .3)
+          openingsong:setPitch(sfade/255)
+          if MENU == "prestage" then 
+            if stagey == 0 then adastartfade = true end
+            if stagey > 80 then stagey = stagey + .5
+              oscillator = -screenheight/90
+            elseif stagey > 50 then stagey = stagey + 1
+              oscillator = -screenheight/100
+            else
+              stagey = stagey + 1.5
+              oscillator = -screenheight/90
+            end
+
+            if stagey > 100 then MENU = "stage" oscillator = 5
+            end
+
+          end
+
+          if not me.left and not me.right and not you.left and not you.right then r2ss = true
+          end
+
+          if (me.left or you.left) and MENU == "stage" and not startsfade and stagenum > 0 and r2ss then stagenum = stagenum - 1	mov:play() r2ss = false
+          elseif (me.right or you.right) and MENU == "stage" and not startsfade and stagenum < 2 and r2ss then stagenum = stagenum + 1	 mov:play() r2ss = false
+          end
+
+          if sfade - 10 <= 0 then MENU = "prechoose" 
+            sfade = 0
+            mov:setVolume(SFXV - .7)
+          elseif startsfade then sfade = sfade - 10
+          elseif (c1accept() or c2accept()) and MENU == "stage" then
+            if stagenum == 0 then themap = "street"
+            elseif stagenum == 1 then themap = "library"
+            elseif stagenum == 2 then themap = "floors"
+            end
+            startsfade = true
+            startb:play()
+          end
+
           if stagenum == 0 then themap = "street"
           elseif stagenum == 1 then themap = "library"
           elseif stagenum == 2 then themap = "floors"
           end
-          startsfade = true
-          startb:play()
-        end
-
-        if stagenum == 0 then themap = "street"
-        elseif stagenum == 1 then themap = "library"
-        elseif stagenum == 2 then themap = "floors"
-        end
 
 
-      elseif MENU == "prechoose" or MENU == "choose" or MENU == "postchoose" then
-        if MENU == "prechoose" then MENU = "choose"
+        elseif MENU == "prechoose" or MENU == "choose" or MENU == "postchoose" then
+          if MENU == "prechoose" then MENU = "choose"
 
-        end
-
-        openingsong:stop()
-
-
-
-
-
-        if cflicker == 255 then cfhold = cfhold + 1
-        elseif cflicker <= 0 then cfup = true
-        end
-
-        if cfhold > 60 then cfhold = 0 cfup = false
-        end
-
-
-        if cfup and cfhold == 0 then cflicker = cflicker + 15
-        elseif not cfup then cflicker = cflicker - 15
-        end
-
-        icflicker = cflicker
-
-        if MENU == "postchoose" then
-          rset = true
-          lset = true
-          if juststartedpost then juststartedpost = false
-            placespeople = true
-
-
-            rn = 1
-            ln = 1
-          elseif not juststartedpost then 
-            rn = rn + (rn*.08)
-            ln = ln + (ln*.08)
           end
-        end
 
-        if not lset and lcx  + screenwidth/30 < 0 then lcx = lcx + screenwidth/30
-        else lset = true
-          lcx = 0
-        end 
-
-        if not rset and rcx - screenwidth/30 > screenwidth/2 then rcx = rcx - screenwidth/30
-        else rset = true
-          rcx = screenwidth/2
-        end
-
-        if rn > 1000020 and ln > 1000020 and math.abs(soscillator)>400 
-        then MENU = "prepan"
-          yoffset = 0
-          finishedLoading = false
-          seperateSpines = false
-        end
+          openingsong:stop()
 
 
 
 
-      elseif MENU == "prepan" or MENU == "pan" then 
-        MENU = "pan"
-        rset = false
-        lset = false
 
-
-        if enviro.dolly == 0 then
-          if not mute then
-            thesong:rewind()
-            thesong:play()
+          if cflicker == 255 then cfhold = cfhold + 1
+          elseif cflicker <= 0 then cfup = true
           end
-        elseif streetfadehold <= 0 then MENU = "preplay"
-        elseif streetfade <= 0 then streetfadehold = streetfadehold - 1
-        elseif streetfadestart then streetfade = streetfade - 5
-        elseif enviro.dolly + screenwidth > enviro.rightwall/2
-        or me.a1
-        or me.a2
-        or me.a3
-        or you.a1
-        or you.a2
-        or you.a3 
-        then 
-          streetfadestart = true	
-        end
 
-        enviro.dolly = enviro.dolly + enviro.ds
+          if cfhold > 60 then cfhold = 0 cfup = false
+          end
 
 
-      elseif MENU == "preplay" or MENU == "play" then 
-        MENU = "play"
+          if cfup and cfhold == 0 then cflicker = cflicker + 15
+          elseif not cfup then cflicker = cflicker - 15
+          end
+
+          icflicker = cflicker
+
+          if MENU == "postchoose" then
+            rset = true
+            lset = true
+            if juststartedpost then juststartedpost = false
+              placespeople = true
 
 
-
-
-        platforming()
-
-        movex(me,me)
-        movex(you,you)
-
-        walljump()
-
-
-        fallthroughglassfloor()
-
-
-        if themap == "library" then libwallbreak() 
-        elseif themap == "floors" then floorswallbreak() 
-        end
-
-
-
-        you.y = you.y - you.j*.9
-        me.y = me.y - me.j*.9
-        you.x = you.x + you.v
-        me.x = me.x + me.v
-        you.next = you.feet - you.j*.9
-        me.next = me.feet - me.j*.9
-
-
-        if you.push > 0 then you.push = you.push - 1
-        elseif you.push < 0 then you.push = you.push + 1
-        end
-
-        if me.push > 0 then me.push = me.push - 1
-        elseif me.push < 0 then me.push = me.push + 1
-        end
-
-
-
-
-        cammovement()
-
-        animate()
-
-
-
-        orient()
-
-        meyoux()
-
-        you.feet = you.y + 60
-        me.feet = me.y + 60
-
-        camerafol()
-
-
-
-        blocknbusy()
-
-        me.jstop = false
-        you.jstop = false
-        melimitbreak= false
-        youlimitbreak = false
-        
-         ColorChange(me)
-         ColorChanging(me)
-        
-        combomanage(me)
-        combomanage(you)
-        breadandbutter(me, false)
-        pandp(me, false)
-        breadandbutter(you, false)
-        pandp(you, false)
-
-        flinchingyou()
-        flinchingme()
-
-        if math.abs(me.v) > math.abs(you.v) then
-        bump(me)
-      elseif math.abs(me.v) < math.abs(you.v) then
-        
-        bump(you)
-      else
-          if math.random()>.5
-          then bump(me)
-          else bump(you)
+              rn = 1
+              ln = 1
+            elseif not juststartedpost then 
+              rn = rn + (rn*.08)
+              ln = ln + (ln*.08)
             end
-        
+          end
+
+          if not lset and lcx  + screenwidth/30 < 0 then lcx = lcx + screenwidth/30
+          else lset = true
+            lcx = 0
+          end 
+
+          if not rset and rcx - screenwidth/30 > screenwidth/2 then rcx = rcx - screenwidth/30
+          else rset = true
+            rcx = screenwidth/2
+          end
+
+          if rn > 1000020 and ln > 1000020 and math.abs(soscillator)>400 
+          then MENU = "prepan"
+            yoffset = 0
+            finishedLoading = false
+            seperateSpines = false
+          end
+
+
+
+
+        elseif MENU == "prepan" or MENU == "pan" then 
+          MENU = "pan"
+          rset = false
+          lset = false
+
+
+          if enviro.dolly == 0 then
+            if not mute then
+              thesong:rewind()
+              thesong:play()
+            end
+          elseif streetfadehold <= 0 then MENU = "preplay"
+          elseif streetfade <= 0 then streetfadehold = streetfadehold - 1
+          elseif streetfadestart then streetfade = streetfade - 5
+          elseif enviro.dolly + screenwidth > enviro.rightwall/2
+          or me.a1
+          or me.a2
+          or me.a3
+          or you.a1
+          or you.a2
+          or you.a3 
+          then 
+            streetfadestart = true	
+          end
+
+          enviro.dolly = enviro.dolly + enviro.ds
+
+
+        elseif MENU == "preplay" or MENU == "play" then 
+          MENU = "play"
+
+
+
+
+          platforming()
+
+          movex(me,me)
+          movex(you,you)
+
+          walljump()
+
+
+          fallthroughglassfloor()
+
+
+          if themap == "library" then libwallbreak() 
+          elseif themap == "floors" then floorswallbreak() 
+          end
+
+
+          you.y = you.y - you.j*.9
+          me.y = me.y - me.j*.9
+          you.x = you.x + you.v
+          me.x = me.x + me.v
+          you.next = you.feet - you.j*.9
+          me.next = me.feet - me.j*.9
+
+
+          if you.push > 0 then you.push = you.push - 1
+          elseif you.push < 0 then you.push = you.push + 1
+          end
+
+          if me.push > 0 then me.push = me.push - 1
+          elseif me.push < 0 then me.push = me.push + 1
+          end
+
+
+
+          cammovement()
+
+          animate()
+
+
+
+          orient()
+
+          meyoux()
+
+          you.feet = you.y + 60
+          me.feet = me.y + 60
+
+          camerafol()
+
+
+
+          blocknbusy()
+
+          me.jstop = false
+          you.jstop = false
+          melimitbreak= false
+          youlimitbreak = false
+
+          ColorChange(me)
+          ColorChanging(me)
+          
+          
+
+          combomanage(me)
+          combomanage(you)
+          
+
+          attackmanage(me)
+          attackmanage(you)
+
+          flinchingyou()
+          flinchingme()
+
+          if math.abs(me.v) > math.abs(you.v) then
+            bump(me)
+          elseif math.abs(me.v) < math.abs(you.v) then
+
+            bump(you)
+          else
+            if math.random()>.5
+            then bump(me)
+            else bump(you)
+            end
+
+          end
+
+          newforwarddodge(me)
+          newforwarddodge(you)
+
+
+          climbs(me)
+          climbs(you)
+
+
+          walls()
+
+          isanyonedead()
+          death()
+
+          miscsounds()
+          holdmanage(me)
+          holdmanage(you)
+
+
+
+          if (themode == "classic" and (you.dead or me.dead))or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
+            thesong:stop()
+            retryupdate()
+          end
+
+
         end
 
-       newforwarddodge(me)
-        dodgex(you)
-
-        climbs(me)
-        climbs(you)
+        --down here to allow facemovement even during actionshot
 
 
-        walls()
-
-        isanyonedead()
-        death()
-
-        miscsounds()
-
-        
-
-
-        if (themode == "classic" and (you.dead or me.dead))or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
-          thesong:stop()
-          retryupdate()
-        end
 
 
       end
 
-      --down here to allow facemovement even during actionshot
+      if me.im == slowdown then
+        me.xoffset = 10
+      end
 
-
+      if you.im == slowdown then 
+        you.xoffset = 10
+      end
 
 
     end
 
-if me.im == slowdown then
-    me.xoffset = 10
   end
-  
-  if you.im == slowdown then 
-    you.xoffset = 10
-    end
-
-
-  end
-
-end
 
   function love.draw()
 
@@ -1143,7 +1133,7 @@ end
         love.graphics.draw(enviro.vert, ((388 + 720+rn)/1440)*screenwidth, (145/900)*screenheight, 0, screenwidth/1440, screenheight/900)
         love.graphics.setColor(255,255,255,255)
 
-        
+
         love.graphics.setColor(a32r,a32g,a32b,a32flick)
         love.graphics.draw(enviro.a3, ((336 + 720+rn)/1440)*screenwidth, (85/900)*screenheight, 0, screenwidth/1440, screenheight/900)
         love.graphics.draw(enviro.vert, ((401 + 720+rn)/1440)*screenwidth, (145/900)*screenheight, 0, screenwidth/1440, screenheight/900)
@@ -1186,53 +1176,53 @@ end
 
 
 
-if youchooseface then
-  
-  --- -10
-  
+        if youchooseface then
+
+          --- -10
+
           love.graphics.draw(slantbar, screenwidth, 0, 0 ,-screenwidth/1440, screenheight/900) 
-        love.graphics.setColor(yf1r, yf1g, yf1b, 255)
-    love.graphics.draw(face1, ((1440 - 40-70)/1440)*screenwidth, ((tileyoffset+138)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-    love.graphics.setColor(yf2r, yf2g, yf2b, 255)
-    love.graphics.draw(face2, ((1440 - 40-70 - 8)/1440)*screenwidth, ((tileyoffset+138 + 56)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-    love.graphics.setColor(yf3r, yf3g, yf3b, 255)
-     love.graphics.draw(face3, ((1440 - 40-70 - 16)/1440)*screenwidth, ((tileyoffset+138 + 56*2)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-love.graphics.setColor(yf4r, yf4g, yf4b, 255)
- love.graphics.draw(face4, ((1440 - 40-70 - 8*3)/1440)*screenwidth, ((tileyoffset+138 + 56*3)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
- love.graphics.setColor(yf5r, yf5g, yf5b, 255)
-  love.graphics.draw(face5, ((1440 - 40-70 - 8*4)/1440)*screenwidth, ((tileyoffset+138 + 56*4)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-  love.graphics.setColor(yf6r, yf6g, yf6b, 255)
-   love.graphics.draw(face6, ((1440 - 40-70 - 8*5)/1440)*screenwidth, ((tileyoffset+138 + 56*5)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-  
-  
+          love.graphics.setColor(yf1r, yf1g, yf1b, 255)
+          love.graphics.draw(face1, ((1440 - 40-70)/1440)*screenwidth, ((tileyoffset+138)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+          love.graphics.setColor(yf2r, yf2g, yf2b, 255)
+          love.graphics.draw(face2, ((1440 - 40-70 - 8)/1440)*screenwidth, ((tileyoffset+138 + 56)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+          love.graphics.setColor(yf3r, yf3g, yf3b, 255)
+          love.graphics.draw(face3, ((1440 - 40-70 - 16)/1440)*screenwidth, ((tileyoffset+138 + 56*2)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+          love.graphics.setColor(yf4r, yf4g, yf4b, 255)
+          love.graphics.draw(face4, ((1440 - 40-70 - 8*3)/1440)*screenwidth, ((tileyoffset+138 + 56*3)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+          love.graphics.setColor(yf5r, yf5g, yf5b, 255)
+          love.graphics.draw(face5, ((1440 - 40-70 - 8*4)/1440)*screenwidth, ((tileyoffset+138 + 56*4)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+          love.graphics.setColor(yf6r, yf6g, yf6b, 255)
+          love.graphics.draw(face6, ((1440 - 40-70 - 8*5)/1440)*screenwidth, ((tileyoffset+138 + 56*5)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
 
-      love.graphics.setColor(a22r, a22g, a22b, 255)
-        love.graphics.draw(faceselector, ((1440 - 40 - 70 - 2 + 82 - (8 * youfaceselector))/1440)*screenwidth, ((tileyoffset+138 - 10 + 56*youfaceselector)/900)*screenheight, 0, -screenwidth/1440, screenheight/900)
 
-end
-if mechooseface then
-  
-   love.graphics.draw(slantbar, 0, 0, 0 ,screenwidth/1440, screenheight/900) 
-        
-  
-  love.graphics.setColor(mf1r, mf1g, mf1b, 255)
-    love.graphics.draw(face1, ((70)/1440)*screenwidth, ((tileyoffset+138)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-    love.graphics.setColor(mf2r, mf2g, mf2b, 255)
-    love.graphics.draw(face2, ((70 + 8)/1440)*screenwidth, ((tileyoffset+138 + 56)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-    love.graphics.setColor(mf3r, mf3g, mf3b, 255)
-     love.graphics.draw(face3, ((70 + 16)/1440)*screenwidth, ((tileyoffset+138 + 56*2)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-love.graphics.setColor(mf4r, mf4g, mf4b, 255)
- love.graphics.draw(face4, ((70 + 8*3)/1440)*screenwidth, ((tileyoffset+138 + 56*3)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
- love.graphics.setColor(mf5r, mf5g, mf5b, 255)
-  love.graphics.draw(face5, ((70 + 8*4)/1440)*screenwidth, ((tileyoffset+138 + 56*4)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-  love.graphics.setColor(mf6r, mf6g, mf6b, 255)
-   love.graphics.draw(face6, ((70 + 8*5)/1440)*screenwidth, ((tileyoffset+138 + 56*5)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-  
- love.graphics.setColor(a31r, a31g, a31b, 255)
-        love.graphics.draw(faceselector, ((30 + (8 * mefaceselector))/1440)*screenwidth, ((tileyoffset+138 - 10 + 56*mefaceselector)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-end
 
-      
+          love.graphics.setColor(a22r, a22g, a22b, 255)
+          love.graphics.draw(faceselector, ((1440 - 40 - 70 - 2 + 82 - (8 * youfaceselector))/1440)*screenwidth, ((tileyoffset+138 - 10 + 56*youfaceselector)/900)*screenheight, 0, -screenwidth/1440, screenheight/900)
+
+        end
+        if mechooseface then
+
+          love.graphics.draw(slantbar, 0, 0, 0 ,screenwidth/1440, screenheight/900) 
+
+
+          love.graphics.setColor(mf1r, mf1g, mf1b, 255)
+          love.graphics.draw(face1, ((70)/1440)*screenwidth, ((tileyoffset+138)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+          love.graphics.setColor(mf2r, mf2g, mf2b, 255)
+          love.graphics.draw(face2, ((70 + 8)/1440)*screenwidth, ((tileyoffset+138 + 56)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+          love.graphics.setColor(mf3r, mf3g, mf3b, 255)
+          love.graphics.draw(face3, ((70 + 16)/1440)*screenwidth, ((tileyoffset+138 + 56*2)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+          love.graphics.setColor(mf4r, mf4g, mf4b, 255)
+          love.graphics.draw(face4, ((70 + 8*3)/1440)*screenwidth, ((tileyoffset+138 + 56*3)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+          love.graphics.setColor(mf5r, mf5g, mf5b, 255)
+          love.graphics.draw(face5, ((70 + 8*4)/1440)*screenwidth, ((tileyoffset+138 + 56*4)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+          love.graphics.setColor(mf6r, mf6g, mf6b, 255)
+          love.graphics.draw(face6, ((70 + 8*5)/1440)*screenwidth, ((tileyoffset+138 + 56*5)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
+
+          love.graphics.setColor(a31r, a31g, a31b, 255)
+          love.graphics.draw(faceselector, ((30 + (8 * mefaceselector))/1440)*screenwidth, ((tileyoffset+138 - 10 + 56*mefaceselector)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
+        end
+
+
 
         --22
         if youreadytoplay then
@@ -1247,7 +1237,7 @@ end
 
 
 
-        
+
 
 
 
@@ -1372,32 +1362,32 @@ end
         love.graphics.setScissor()
 
         if onescreen and not vertone then
-        if me.x < you.x then 
+          if me.x < you.x then 
 
-          love.graphics.setScissor(screenwidth/2, topy,twidth, enviro.screenheight/2)
-          camera:set()
-          drawleft()
-          camera:unset()
-          love.graphics.setScissor()
+            love.graphics.setScissor(screenwidth/2, topy,twidth, enviro.screenheight/2)
+            camera:set()
+            drawleft()
+            camera:unset()
+            love.graphics.setScissor()
 
-          love.graphics.setScissor(screenwidth/2-twidth+1, bottomy,twidth, enviro.screenheight/2)
-          camera2:set()
-          drawright()
-          camera2:unset()
-          love.graphics.setScissor()
-        elseif me.x >= you.x then
-          love.graphics.setScissor(screenwidth/2-twidth+1, topy,twidth, enviro.screenheight/2)
-          camera2:set()
-          drawright()
-          camera2:unset()
-          love.graphics.setScissor()
+            love.graphics.setScissor(screenwidth/2-twidth+1, bottomy,twidth, enviro.screenheight/2)
+            camera2:set()
+            drawright()
+            camera2:unset()
+            love.graphics.setScissor()
+          elseif me.x >= you.x then
+            love.graphics.setScissor(screenwidth/2-twidth+1, topy,twidth, enviro.screenheight/2)
+            camera2:set()
+            drawright()
+            camera2:unset()
+            love.graphics.setScissor()
 
-          love.graphics.setScissor(screenwidth/2, bottomy,twidth, enviro.screenheight/2)
-          camera:set()
-          drawleft()
-          camera:unset()
-          love.graphics.setScissor()
-        end
+            love.graphics.setScissor(screenwidth/2, bottomy,twidth, enviro.screenheight/2)
+            camera:set()
+            drawleft()
+            camera:unset()
+            love.graphics.setScissor()
+          end
         end
 
         love.graphics.setColor(255, 255, 255)
@@ -1413,8 +1403,8 @@ end
         love.graphics.rectangle("fill",(screenwidth/2)-twidth,(enviro.screenheight/2)-bwidth/2,twidth*2,bwidth)
         love.graphics.setColor(255, 255, 255, 255)
 
-if not fightclub then
-        go()
+        if not fightclub then
+          go()
         end
         drawroulettenumbers()
         mefacerot = 0
@@ -1424,8 +1414,9 @@ if not fightclub then
       end
     end
 
-    if not actionshot and not youactionshot and not pause
+    if not actionshot and not youactionshot and not pause 
     then
+
 
       you.yoffset = 0
       me.yoffset = 0
@@ -1433,27 +1424,28 @@ if not fightclub then
       you.xoffset = 0
       mefacerot = 0
       youfacerot = 0
+
     end
     if fightclub then
-      
-    if me.invince then
-    love.graphics.print("invince", 100, 100)
-  end
-  if you.invince then
-    love.graphics.print("invince", 100, 100)
-  end
-  love.graphics.setColor(20,20,20)
-     love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( ))..tostring(me.dodgetype).."||vibration supporter?: "..tostring(joystick:isVibrationSupported( )).."||vibration: "..joystick:getVibration().."||number of controllers: "..tostring(#joysticks), 10, 10)
-   end
 
- 
-   flash = false
+      if me.invince then
+        love.graphics.print("invince", 100, 100)
+      end
+      if you.invince then
+        love.graphics.print("invince", 100, 100)
+      end
+      love.graphics.setColor(20,20,20)
+      love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( ))..tostring(me.dodgetype).."me.a3"..tostring(me.a3)..tostring(me.displa3), 10, 10)
+    end
+
+
+    flash = false
     --love.graphics.setShader()
---[[
-boop = joystick:isVibrationSupported()
-if boop then
-love.graphics.print("yeah",100,10,100)
-end
-]]--
+    --[[
+    boop = joystick:isVibrationSupported()
+    if boop then
+      love.graphics.print("yeah",100,10,100)
+    end
+    ]]--
 
   end

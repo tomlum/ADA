@@ -2,8 +2,9 @@
 --http://www.flutopedia.com/sound_color.htm
 
 
-colorchangetime = 30
+colorchangetime = 25
 colorfadetime = 10
+colorvib = .5
 
 thecolors = {}
 thecolors[0] = {n=0,c={r = 255, g = 255, b = 255}}
@@ -51,6 +52,7 @@ you.ctbi = 0
 me.cct = 0
 you.cct = 0
 
+
 function ColorChanging(xx)
   if xx.cchangeto.n > 0 then
     if xx.cct < colorchangetime then
@@ -75,6 +77,9 @@ function ColorChanging(xx)
     xx.color.c.g = thecolors[0].c.g-xx.ctgi * xx.cct
     xx.color.c.b = thecolors[0].c.b-xx.ctbi * xx.cct
 end
+    if xx.id <= #joysticks then 
+        xx.joystick:setVibration(0,(xx.cct/colorchangetime)*colorvib)
+        end
 end
 
 

@@ -716,7 +716,7 @@ walls = function ()
       you.v = -you.v/3
       you.j = math.abs(you.v)
       makerubble(you.mid, you.y,you.v, you.j)
-      youflinchway = -youflinchway
+      you.flinchway = -you.flinchway
       repplay(wallhit2)
       you.g = false
       you.y = you.y - 10
@@ -731,7 +731,7 @@ walls = function ()
       you.v = -you.v/3
       you.j = math.abs(you.v)
       makerubble(you.mid, you.y,you.v, you.j)
-      youflinchway = -youflinchway
+      you.flinchway = -you.flinchway
 
       repplay(wallhit2)
       you.g = false
@@ -973,79 +973,48 @@ function runrunrun()
 
 end
 
-climbs = function()
+climbs = function(xx)
 
 
 
 
-  if me.flinch then me.ctim = 0 end
+  if xx.flinch then xx.ctim = 0 end
 
-  if me.ctim > 0 then me.ctim = me.ctim + 1
-    me.busy = true
+  if xx.ctim > 0 then xx.ctim = xx.ctim + 1
+    xx.busy = true
 
-    if me.ctim > 20 then
-      me.ctim = 0
-      if me.up then 
-        me.g = false
-        me.j = hopj
-        repplay(me.jumpd) 
+    if xx.ctim > 10 then
+      xx.ctim = 0
+      if xx.up then 
+        xx.g = false
+        xx.j = hopj
+        repplay(xx.jumpd) 
       elseif me.left then 
-        me.g = false
-        me.j = hopj2
-        me.v = -hopv2
-      elseif me.right then 
-        me.g = false
-        me.j = hopj2
-        me.v = hopv2
+        xx.g = false
+        xx.j = hopj2
+        xx.v = -hopv2
+      elseif xx.right then 
+        xx.g = false
+        xx.j = hopj2
+        xx.v = hopv2
       end
 
-    elseif me.ctim > 7 then
-      me.im = climb3
-    elseif me.ctim > 4 then
-      me.im = climb2
+    elseif xx.ctim > 7 then
+      xx.im = climb3
+      xx.j = climbj
+    elseif xx.ctim > 4 then
+      xx.im = climb2
+      xx.j = climbj
 
-    elseif me.ctim > 0 then
-      me.im = climb
-      if me.ctim == 2 then
-        repplay(me.climbsound) 
+    elseif xx.ctim > 0 then
+      xx.im = climb
+      if xx.ctim == 4 then
+        repplay(xx.climbsound) 
       end
     end
 
   end
 
-  if you.flinch then you.ctim = 0 end
-
-  if you.ctim > 0 then you.ctim = you.ctim + 1
-    you.busy = true
-    if you.ctim > 11 then
-      you.ctim = 0
-      if you.up then 
-        you.g = false
-        you.j = hopj
-        repplay(you.jumpd) 
-      elseif you.left then 
-        you.g = false
-        you.j = hopj2
-        you.v = -hopv2
-      elseif you.right then 
-        you.g = false
-        you.j = hopj2
-        you.v = hopv2
-      end
-
-
-    elseif you.ctim > 7 then
-      you.im = climb3
-    elseif you.ctim > 4 then
-      you.im = climb2
-
-    elseif you.ctim > 0 then
-      you.im = climb
-      if you.ctim == 2 then
-        repplay(climbsound2) 
-      end
-    end
-  end
 
 
 end
@@ -1123,9 +1092,9 @@ function movex(xx,z)
     then
       xx.landingcounter = xx.landingcounter - 1
     end
-    if z.block and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet) ~= platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-65) and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-65) ~= xx.floor
+    if z.block and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet+5) ~= platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-65) and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-65) ~= xx.floor
     then 
-      if platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-35) ~= platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.feet) then
+      if platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-35) ~= platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.feet+5) then
         xx.ctim = 7
       else xx.ctim = 1
       end
@@ -1161,14 +1130,16 @@ function movex(xx,z)
     end
 
     --landing
-    if xx.feet - xx.j >= xx.tempfloor
+    if xx.feet +8 - xx.j >= xx.tempfloor
     then 
       if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
         xx.landingcounter = landingwait
         xx.landing = true 
         xx.v = xx.v * landingfric
       else
-        xx.landingcounter = 0
+        xx.landingcounter = shortlandwait
+        xx.landing = true 
+        xx.v = xx.v * landingfric
       end
       xx.j = 0
       xx.y = xx.tempfloor - 60

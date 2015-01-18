@@ -77,7 +77,7 @@ paper4 = love.graphics.newImage("enviro/paper4.png")
 mytriangles = {}
 yourtriangles = {}
 
-
+me.j = 0
 
 whatlevel = function()
   
@@ -213,13 +213,13 @@ ya2fade= 100
 ya3fade= 100
 ya4fade= 100
 basefade = 80
-function drawmyroulette()
+function ()
 --swaps the a2r and a3r if both 
 if MENU == "play" then
   if me.flip < 0 then 
     a21r, a31r, a21g, a31g, a21b, a31b  = a31r, a21r, a31g, a21g, a31b, a21b
     end
-  if flip2 < 0 then
+  if you.flip < 0 then
     a22r, a32r, a22g, a32g, a22b, a32b  = a32r, a22r, a32g, a22g, a32b, a22b
 end
 end
@@ -283,7 +283,7 @@ if MENU == "play" then
   if me.flip < 0 then 
     a21r, a31r, a21g, a31g, a21b, a31b  = a31r, a21r, a31g, a21g, a31b, a21b
   end
-  if flip2 < 0 then
+  if you.flip < 0 then
     a22r, a32r, a22g, a32g, a22b, a32b  = a32r, a22r, a32g, a22g, a32b, a22b
 end
 end
@@ -295,7 +295,7 @@ if MENU == "play" then
   if me.flip < 0 then 
     a21r, a31r, a21g, a31g, a21b, a31b  = a31r, a21r, a31g, a21g, a31b, a21b
     end
-  if flip2 < 0 then
+  if you.flip < 0 then
     a22r, a32r, a22g, a32g, a22b, a32b  = a32r, a22r, a32g, a22g, a32b, a22b
 end
 end
@@ -322,12 +322,12 @@ if themode == "classic" and not you.dead then
   
    if you.a1 then ya1fade = 255 else ya1fade = basefade end
    
-if flip2 > 0 then
+if you.flip > 0 then
    
   if you.a2 then ya2fade = 255 else ya2fade = basefade end
   if you.a3 then ya3fade = 255 else ya3fade = basefade end
   
-elseif flip2 < 0 then 
+elseif you.flip < 0 then 
   if you.a2 then ya3fade = 255 else ya3fade = basefade end
   if you.a3 then ya2fade = 255 else ya2fade = basefade end
   
@@ -359,7 +359,7 @@ if MENU == "play" then
   if me.flip < 0 then 
     a21r, a31r, a21g, a31g, a21b, a31b  = a31r, a21r, a31g, a21g, a31b, a21b
     end
-  if flip2 < 0 then
+  if you.flip < 0 then
     a22r, a32r, a22g, a32g, a22b, a32b  = a32r, a22r, a32g, a22g, a32b, a22b
 end
 end
@@ -626,6 +626,7 @@ end
 
 enviro.rubble = love.graphics.newImage("enviro/rubble.png")
 enviro.glass = love.graphics.newImage("enviro/glass.png")
+enviro.spark = love.graphics.newImage("enviro/spark.png")
 rubble = {}
 glasseses = {}
 dust = {}
@@ -1392,7 +1393,8 @@ retryupdate = function()
 	you.a2 = love.keyboard.isDown("up")
 	you.a3 = love.keyboard.isDown("right")
 	you.block = love.keyboard.isDown("o")
-	joystickss()
+	jjstick(me,joystick)
+	jjstick(you,you.joystick)
 
 if waitforitplay > 0 then waitforitplay = waitforitplay - 1
 elseif fadeupretry == 2 and waitforitplay == 0 then
@@ -2162,7 +2164,7 @@ v.x = v.x + v.v
 v.j = v.j - .1
 end
 love.graphics.setColor(v.r,v.g,v.b)
-love.graphics.draw(enviro.rubble,v.x,v.y-2,70/(v.v+v.y),math.random(),1,1)
+love.graphics.draw(enviro.spark,v.x,v.y-2,70/(v.v+v.y),math.random(),1,1)
 love.graphics.setColor(255,255,255)
 
 end

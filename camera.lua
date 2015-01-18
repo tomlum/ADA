@@ -484,37 +484,29 @@ function drawleft()
   end
 
 	if me.flinch then 
-	drawmyroulette()
+	
 	love.graphics.draw(me.im.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 	love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b,255)
 	love.graphics.draw(me.im.c, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
-	love.graphics.setColor(a31r,a31g,a31b,255)
-	--love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
-	--love.graphics.draw(me.crest, me.crestx, me.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 	
 
-	drawyourroulette()
+	
 	love.graphics.setColor(155, 155, 155, 255)
 	love.graphics.draw(you.im.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	love.graphics.setColor(you.color.c.r,you.color.c.g,you.color.c.b,255)
 	love.graphics.draw(you.im.c, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	
-	love.graphics.setColor(a22r,a22g,a22b,255)
-	--love.graphics.draw(you.face, you.facex, you.feet + you.facey,youfacerot)
-	--love.graphics.draw(you.crest, you.crestx, you.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 
 	else
-	drawyourroulette()
+	
 	love.graphics.setColor(155, 155, 155, 255)
 	love.graphics.draw(you.im.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	love.graphics.setColor(you.color.c.r,you.color.c.g,you.color.c.b,255)
 	love.graphics.draw(you.im.c, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
+  
 	
-	--love.graphics.draw(you.face, you.facex, you.feet + you.facey, youfacerot)
-	--love.graphics.draw(you.crest, you.crestx, you.cresty)
-	drawmyroulette()
 	love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.draw(me.im.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 	love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b,255)
@@ -524,8 +516,11 @@ function drawleft()
 	love.graphics.setColor(255, 255, 255, 255)
 	
 end
-  drawdust()
+  if fightclub then
+drawdust()
 drawsparks()
+		drawrubble()
+    end
 	medrawmines()
 	spikedraw(me,you)
 	boltsdraw(me.bolts)
@@ -568,30 +563,24 @@ function drawright()
   end
 
 	if me.flinch then 
-	drawmyroulette()
+	
 	love.graphics.draw(me.im.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 	love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b,255)
 	love.graphics.draw(me.im.c, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
-	love.graphics.setColor(a31r,a31g,a31b,255)
-	--love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
-	--love.graphics.draw(me.crest, me.crestx, me.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 	
 
-	drawyourroulette()
+	
 	love.graphics.setColor(155, 155, 155, 255)
 	love.graphics.draw(you.im.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	love.graphics.setColor(you.color.c.r,you.color.c.g,you.color.c.b,255)
 	love.graphics.draw(you.im.c, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	
-	love.graphics.setColor(a22r,a22g,a22b,255)
-	--love.graphics.draw(you.face, you.facex, you.feet + you.facey,youfacerot)
-	--love.graphics.draw(you.crest, you.crestx, you.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 
 	else
 
-	drawyourroulette()
+	
 	love.graphics.setColor(155, 155, 155, 255)
 	love.graphics.draw(you.im.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
 	love.graphics.setColor(you.color.c.r,you.color.c.g,you.color.c.b,255)
@@ -601,7 +590,6 @@ function drawright()
 	--love.graphics.draw(you.crest, you.crestx, you.cresty)
 	love.graphics.setColor(255, 255, 255, 255)
 
-	drawmyroulette()
 	love.graphics.draw(me.im.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
 	love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b,255)
 	love.graphics.draw(me.im.c, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
@@ -610,9 +598,11 @@ function drawright()
 	love.graphics.setColor(255, 255, 255, 255)
 	
 end
-
+if fightclub then
 drawdust()
 drawsparks()
+		drawrubble()
+    end
 	medrawmines()
 	spikedraw(me,you)
 	boltsdraw(me.bolts)
