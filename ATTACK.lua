@@ -25,7 +25,11 @@ me.currentanim = 0
 you.currentanim = 0
 
 function attackmanage(xx)
+  if xx.flinch then xx.animcounter = 0
+  end
   if xx.animcounter == 0 then
+    xx.ppnum = 0
+    xx.bbpc = 0
     xx.currentanim = xx.color.n
   end
   if xx.currentanim == 0 then
@@ -62,13 +66,19 @@ boltthrow = love.graphics.newImage("me/attack/boltthrow.png")
 flinchim = love.graphics.newImage("me/attack/flinch.png")
 flinchc = love.graphics.newImage("me/attack/flinchc.png")
 flinch = {im = flinchim, c = flinchc}
-fallback = love.graphics.newImage("me/attack/fallback.png")
-fallforward = love.graphics.newImage("me/attack/fallforward.png")
-fallback1 = love.graphics.newImage("me/attack/fallback1.png")
-fallforward1 = love.graphics.newImage("me/attack/fallforward1.png")
-gettingup1 = love.graphics.newImage("me/attack/gettingup1.png")
-gettingup2 = love.graphics.newImage("me/attack/gettingup2.png")
-flinchback = love.graphics.newImage("me/attack/flinchback.png")
+
+
+fallback = {im=love.graphics.newImage("me/attack/fallback.png"),c=love.graphics.newImage("me/attack/fallbackc.png")}
+fallbackbounce = {im=love.graphics.newImage("me/attack/fallbackbounce.png"),c=love.graphics.newImage("me/attack/fallbackbouncec.png")}
+fallbackbouncedown = {im=love.graphics.newImage("me/attack/fallbackbouncedown.png"),c=love.graphics.newImage("me/attack/fallbackbouncedownc.png")}
+fallforward = {im=love.graphics.newImage("me/attack/fallforward.png"),c=love.graphics.newImage("me/attack/fallforwardc.png")}
+fallback1 = {im=love.graphics.newImage("me/attack/fallback1.png"),c=love.graphics.newImage("me/attack/fallback1c.png")}
+fallforward1 = {im=love.graphics.newImage("me/attack/fallforward1.png"),c=love.graphics.newImage("me/attack/fallforward1c.png")}
+gettingup1 = {im=love.graphics.newImage("me/attack/gettingup1.png"),c=love.graphics.newImage("me/attack/gettingup1c.png")}
+gettingup2 = {im=love.graphics.newImage("me/attack/gettingup2.png"),c=love.graphics.newImage("me/attack/gettingup2c.png")}
+gettingup11 = {im=love.graphics.newImage("me/attack/gettingup11.png"),c=love.graphics.newImage("me/attack/gettingup11c.png")}
+
+flinchback = {im=love.graphics.newImage("me/attack/flinchback.png"),c=love.graphics.newImage("me/attack/flinchbackc.png")}
 blockc = love.graphics.newImage("me/attack/blockc.png")
 blockim = love.graphics.newImage("me/attack/block.png")
 block = {im = blockim, c = blockc}
@@ -131,18 +141,18 @@ function camshakeflinch()
   yhdif = you.prevhealth-you.health
   mhdif = me.prevhealth-me.health
 
-  if not (actionshot or youactionshot) then
+  if not (me.actionshot or you.actionshot) then
     if ((you.prevhealth > you.health or shakeyou) and you.x >= me.x)  or shakeboth then 
       camera2.x = camera2.x + math.ceil(math.random()) * (shakedis + yhdif/2)
       camera2.y = camera2.y + math.ceil(math.random()) * (shakedis + yhdif/2)
       if #joysticks>1 then
-      you.joystick:setVibration(1,1)
+        you.joystick:setVibration(1,1)
       end
     elseif ((you.prevhealth > you.health  or shakeyou) and you.x < me.x) then 
       camera.x = camera.x + math.ceil(math.random()) * (shakedis + yhdif/2)
       camera.y = camera.y + math.ceil(math.random()) * (shakedis + yhdif/2)
       if #joysticks>1 then
-      you.joystick:setVibration(1,1)
+        you.joystick:setVibration(1,1)
       end
     end
 
@@ -150,13 +160,13 @@ function camshakeflinch()
       camera.x = camera.x + math.ceil(math.random()) * (shakedis + mhdif/2)
       camera.y = camera.y + math.ceil(math.random()) * (shakedis + mhdif/2)
       if #joysticks>0 then
-      me.joystick:setVibration(1,1)
+        me.joystick:setVibration(1,1)
       end
     elseif ((me.prevhealth > me.health  or shakeme) and me.x >= me.x) then 
       camera2.x = camera2.x + math.ceil(math.random()) * (shakedis + mhdif/2)
       camera2.y = camera2.y + math.ceil(math.random()) * (shakedis + mhdif/2)
       if #joysticks>0 then
-      me.joystick:setVibration(1,1)
+        me.joystick:setVibration(1,1)
       end
 
 
@@ -660,14 +670,14 @@ newforwarddodge = function(xx)
     if xx.dodgecounter > 1 then 
       xx.dodgecounter = xx.dodgecounter-1 
     elseif xx.dodgecounter == 1 then
-        xx.dodgecounter = 0
+      xx.dodgecounter = 0
       if xx.dodgetype == 1 or xx.dodgetype == -1 then 
         xx.dodgedelaycounter = dodgedelay
         xx.dodgerefreshtimer = dodgerefreshtime
       elseif xx.dodgetype == 2 then
         xx.dodgedelaycounter = 2
         xx.dodgerefreshtimer = dodgerefreshtime
-      
+
       elseif xx.dodgetype == -2 then
         xx.dodgetype = 0
         xx.dodge = false
@@ -818,157 +828,262 @@ newforwarddodge = function(xx)
   you.gflinchleft = 1
   me.gflinchleft = -1
 
+  me.hittheground = false
+  you.hittheground = false
+
+  me.falling = false
+  you.falling = false
+
+  fttofall = 25
+  fallframes = 3
+  me.oldflinch = false
+  you.oldflinch = false
+  me.bouncej = 0
+  you.bouncej = 0
 
 
+  getuptime = 8
+  forgetuptime = 3
 
+  jforfallbackbounce = 4
 
-  flinchingyou = function ()
-    if you.ft > 0 then you.ft = you.ft - 1
+  function flinchingx(xx,yy)
+
+    if xx.ft > fttofall then
+      xx.falling = true
     end
 
-    camshakeflinch()
+    if (not xx.oldflinch and xx.flinch) or (xx.flinchway > 0 and not xx.g) then
+      xx.falltimer = fallframes
+    end
 
+    if xx.ft < fttofall and xx.falling and not xx.g and not xx.hittheground then xx.falling = false
+    end
 
-    if you.prevhealth > you.health then 
-      you.flinchway = me.lr * you.lr
-      if you.flinch then 
+    if xx.ft == 0 and not xx.falling and xx.falltimer == 0 then 
 
-        if you.g then you.gflinchleft = you.ft end
-        if you.flinchtimer == 0 then
-          you.falltimer = 0
-        end
-        repplay(you.flinch1)
-        repplay(you.flinch2)
-      else 
-        repplay(minch2)
+      xx.hittheground = false 
+    end
+
+    if xx.ft < 0 then xx.ft = xx.ft + 1
+    elseif xx.ft ==0 then 
+      xx.flinch = false end
+      if xx.ft > 0 then xx.ft = xx.ft - 1
       end
-    end
+      camshakeflinch()
 
 
 
-    if me.prevhealth > me.health then 
-      me.flinchway = me.lr * you.lr
-      if me.flinch then 
-        me.flinchway = me.lr * you.lr
-        if me.g then me.gflinchleft = me.ft end
-        if me.flinchtimer == 0 then
-          me.falltimer = 0
+      if xx.prevhealth > xx.health then 
+        xx.flinchway = yy.lr * xx.lr
+        if xx.flinch then 
+          if xx.g then xx.gflinchleft = xx.ft end
+          repplay(xx.flinch1)
+          repplay(xx.flinch2)
+        else 
+          repplay(xx.minch)
         end
-        repplay(me.flinch1)
-        repplay(me.flinch2)
-
-
-      else 
-        repplay(minch1)
       end
-    end
 
 
-
-    if you.oldft < you.ft then
-      inityflinch = you.ft
-    end
-
-    if not you.g then you.falltimer = 0 end
-    if not you.oldg and you.g then you.gflinchleft = you.ft-you.flinchtimer end
-
-    if you.flinchtimer > you.ft
-    then 
-      you.flinch = false
-      you.flinchtimer = 0
-
-    elseif you.flinch then
-      you.flinchtimer = you.flinchtimer + 1
-      you.stop = true
-      if you.flinchway > 0 then 
-
-        if you.g and you.gflinchleft>fallflinchtime then
-          you.falltimer = you.falltimer + 1
-          if you.falltimer <= 5 then you.im = fallforward1
-          elseif you.ft - you.flinchtimer < 2 then you.im = gettingup2
-          elseif you.falltimer >5 then you.im = fallforward
-            youfacerot = 1.57 * me.lr
+      if xx.falltimer < 0 then
+        xx.falltimer = xx.falltimer + 1
+        if xx.flinchway > 0 then 
+          xx.im = gettingup2
+        else
+          if xx.falltimer < -4 then 
+            xx.im = gettingup11
+          else xx.im = gettingup1
           end
-        elseif inityflinch > fallflinchtime and not you.g then
-          you.im = fallforward1
-        else you.im = flinch
+        end
+
+      elseif not xx.falling and xx.flinch then 
+        if xx.flinchway < 0 then xx.im = flinch
+        else xx.im = flinchback
+        end
+
+      elseif xx.falling then
+
+        if xx.ft == 0 and xx.falltimer == 0 then
+          xx.falling = false
+          if xx.flinchway > 0 then 
+            xx.falltimer = -forgetuptime
+          else
+            xx.falltimer = -getuptime
+          end
+        end
+
+        if xx.falltimer > 0 then xx.falltimer = xx.falltimer - 1
+        else 
+          xx.hittheground = true
+        end
+
+        if not xx.g then 
+          
+          if xx.j < -jforfallbackbounce then xx.bouncej = xx.j
+          else xx.bouncej = 0 
+          end
+          
+          xx.falltimer = fallframes
+          if not xx.hittheground then
+            if xx.flinchway > 0 then xx.im = fallforward1
+            else xx.im = fallback1
+            end
+          else
+            if xx.flinchway > 0 then 
+              xx.im = fallforward1
+            else 
+              if xx.j >=0 then xx.im = fallbackbounce
+              else xx.im = fallbackbouncedown
+              end
+            end
+          end
+
+        else 
+          
+
+          if xx.flinchway > 0 and not (xx.flinchway < 0 and xx.hittheground) then
+            if xx.falltimer > 0 then
+              xx.im = fallforward1
+            else
+              xx.im = fallforward
+            end
+          else
+            if xx.falltimer > 0 and not xx.hittheground then
+              xx.im = fallback1
+            else
+              if xx.bouncej < 0 then
+                xx.j = -xx.bouncej*.2
+              end
+              xx.im = fallback
+            end
+          end
         end
 
 
-      elseif you.flinchway < 0 then 
-        if you.g and you.gflinchleft>fallflinchtime then
-          you.falltimer = you.falltimer + 1
-          if you.falltimer <= 5 then you.im = fallback1
+
+      end
+
+
+      xx.oldflinch = xx.flinch
+      xx.oldft = xx.ft
+      xx.oldg = xx.g
+
+    end
+
+
+
+    flinchingyou = function ()
+
+
+
+
+
+      if you.oldft < you.ft then
+        inityflinch = you.ft
+      end
+
+      if not you.g then you.falltimer = 0 end
+      if not you.oldg and you.g then you.gflinchleft = you.ft-you.flinchtimer end
+
+      if you.flinchtimer > you.ft
+      then 
+        you.flinch = false
+        you.flinchtimer = 0
+
+      elseif you.flinch then
+        you.flinchtimer = you.flinchtimer + 1
+        you.stop = true
+        if you.flinchway > 0 then 
+
+          if you.g and you.gflinchleft>fallflinchtime then
+            you.falltimer = you.falltimer + 1
+            if you.falltimer <= 5 then you.im = fallforward1
+            elseif you.ft - you.flinchtimer < 2 then you.im = gettingup2
+            elseif you.falltimer >5 then you.im = fallforward
+              youfacerot = 1.57 * me.lr
+            end
+          elseif inityflinch > fallflinchtime and not you.g then
+            you.im = fallforward1
+          else you.im = flinch
+          end
+
+
+        elseif you.flinchway < 0 then 
+          if you.g and you.gflinchleft>fallflinchtime then
+            you.falltimer = you.falltimer + 1
+            if you.falltimer <= 5 then you.im = fallback1
+              you.xoffset = 4
+            elseif you.ft - you.flinchtimer < 2 then you.im = gettingup1
+              you.xoffset = 6
+            elseif you.falltimer >5 then
+              you.im = fallback
+              you.xoffset = 20
+            end
+          elseif inityflinch > fallflinchtime and not you.g then
+            you.im = fallback1
             you.xoffset = 4
-          elseif you.ft - you.flinchtimer < 2 then you.im = gettingup1
-            you.xoffset = 6
-          elseif you.falltimer >5 then you.im = fallback
-            you.xoffset = 20
+          else you.im = flinch
           end
-        elseif inityflinch > fallflinchtime and not you.g then
-          you.im = fallback1
-          you.xoffset = 4
-        else you.im = flinch
         end
       end
+
+      you.oldft = you.ft
+      you.oldg = you.g
+
+
     end
 
-    you.oldft = you.ft
-    you.oldg = you.g
+    flinchingme = function ()
+      if me.ft > 0 then me.ft = me.ft - 1
+      end
 
 
-  end
-
-  flinchingme = function ()
-    if me.ft > 0 then me.ft = me.ft - 1
-    end
-
-
-    if me.oldft < me.ft then
-      initmeflinch = me.ft
-    end
-    if not me.g then me.falltimer = 0 end
-    if not me.oldg and me.g then me.gflinchleft = me.ft-me.flinchtimer end
-    if me.flinchtimer > me.ft
-    then 
-      me.flinch = false
-      me.flinchtimer = 0
-    elseif me.flinch then
-      me.flinchtimer = me.flinchtimer + 1
-      me.stop = true
-      if me.flinchway > 0 then 
-        if me.g and me.gflinchleft>fallflinchtime then
-          me.falltimer = me.falltimer + 1
-          if me.falltimer <= 5 then me.im = fallforward1
-          elseif me.ft - me.flinchtimer < 2 then me.im = gettingup2
-          elseif me.falltimer >5 then me.im = fallforward
+      if me.oldft < me.ft then
+        initmeflinch = me.ft
+      end
+      if not me.g then me.falltimer = 0 end
+      if not me.oldg and me.g then me.gflinchleft = me.ft-me.flinchtimer end
+      if me.flinchtimer > me.ft
+      then 
+        me.flinch = false
+        me.flinchtimer = 0
+      elseif me.flinch then
+        me.flinchtimer = me.flinchtimer + 1
+        me.stop = true
+        if me.flinchway > 0 then 
+          if me.g and me.gflinchleft>fallflinchtime then
+            me.falltimer = me.falltimer + 1
+            if me.falltimer <= 5 then me.im = fallforward1
+            elseif me.ft - me.flinchtimer < 2 then me.im = gettingup2
+            elseif me.falltimer >5 then me.im = fallforward
+            end
+          elseif initmeflinch > fallflinchtime and not me.g then
+            me.im = fallforward1
+          else me.im = flinch
           end
-        elseif initmeflinch > fallflinchtime and not me.g then
-          me.im = fallforward1
-        else me.im = flinch
-        end
 
 
-      elseif me.flinchway < 0 then 
-        if me.g and me.gflinchleft>fallflinchtime then
-          me.falltimer = me.falltimer + 1
-          if me.falltimer <= 5 then me.im = fallback1
+        elseif me.flinchway < 0 then 
+          if me.g and me.gflinchleft>fallflinchtime then
+            me.falltimer = me.falltimer + 1
+            if me.falltimer <= 5 then me.im = fallback1
+              me.xoffset = 4
+            elseif me.ft - me.flinchtimer < 2 then me.im = gettingup1
+              me.xoffset = 6
+            elseif me.falltimer >5 then me.im = fallback
+              me.xoffset = 20
+            end
+          elseif initmeflinch > fallflinchtime and not me.g then
+            me.im = fallback1
             me.xoffset = 4
-          elseif me.ft - me.flinchtimer < 2 then me.im = gettingup1
-            me.xoffset = 6
-          elseif me.falltimer >5 then me.im = fallback
-            me.xoffset = 20
+          else me.im = flinch
           end
-        elseif initmeflinch > fallflinchtime and not me.g then
-          me.im = fallback1
-          me.xoffset = 4
-        else me.im = flinch
         end
       end
+      me.oldft = me.ft
+      me.oldg = me.g
     end
-    me.oldft = me.ft
-    me.oldg = me.g
-  end
 
 
 

@@ -217,44 +217,46 @@ basefade = 80
 
 
 function actionshotstuff(xx)
-  if actiontimer == 1 
-  then actionshot = false actiontimer = 0
+  if xx.actionshot then
+    if xx.color.n == xx.cchangeto.n and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) then
+    xx.currentanim = xx.color.n
+      combo(xx)
+      xx.actionshot = false
+      xx.actiontimer = 0
+    end
+    minzoom = minzoom + .022
+    maxzoom = maxzoom + .022
+    end
+  
+          ColorChange(xx)
+          ColorChanging(xx)
+  
+  if xx.actiontimer == 1 
+  then xx.actionshot = false xx.actiontimer = 0
     if not musicmute then
       thesong:setPitch(1)
     end
 
     if not pause then
-      deathsound:play()
+      --deathsound:play()
       collides:play()
-      bcs:play()
+      --bcs:play()
 
 
 
 
     end
 
-  elseif actionshot == true and actiontimer == 0 
-  then actiontimer = 60
-  elseif actiontimer > 0 
-  then actiontimer = actiontimer - 1
-    thesong:setPitch(actiontimer/60)
-  else actiontimer = 0
+  elseif xx.actionshot == true and xx.actiontimer == 0 
+  then xx.actiontimer = 60
+  elseif xx.actiontimer > 0 
+  then xx.actiontimer = xx.actiontimer - 1
+     if not musicmute then
+    thesong:setPitch(xx.actiontimer/60)
+    end
+  else xx.actiontimer = 0
   end
 
-  if youactiontimer == 1 
-  then youactionshot = false youactiontimer = 0
-    if not musicmute then
-      thesong:setPitch(1)
-    end
-    deathsound:play()
-    collides:play()
-  elseif youactionshot == true and youactiontimer == 0 
-  then youactiontimer = 60
-  elseif youactiontimer > 0 
-  then youactiontimer = youactiontimer - 1
-    thesong:setPitch(youactiontimer/60)
-  else youactiontimer = 0
-  end
 end
 
 
@@ -542,7 +544,7 @@ function drawpapers()
 
   end
   for i,v in ipairs(papers)do
-  if not actionshot and not youactionshot and not pause then
+  if not me.actionshot and not you.actionshot and not pause then
     v.y = v.y - v.j
     v.x = v.x + v.v
     if v.v > 1 then v.v = v.v - .2
@@ -626,7 +628,7 @@ function drawglass()
   end
   for i,v in ipairs(glasseses)do
   if #glasseses > 500 then table.remove(glasseses,500) end
-  if not actionshot and not youactionshot and not pause then
+  if not me.actionshot and not you.actionshot and not pause then
     v.y = v.y - v.j
     v.x = v.x + v.v
     v.j = v.j - .3
@@ -649,7 +651,7 @@ function drawdust()
   end
 
   for i,v in ipairs(dust)do
-  if not actionshot and not youactionshot and not pause then
+  if not me.actionshot and not you.actionshot and not pause then
     v.y = v.y - v.j
     v.x = v.x + v.v
     v.j = v.j - .2
@@ -671,7 +673,7 @@ function drawrubble()
 
   for i,v in ipairs(rubble)do
   if table.getn(rubble) > 500 then table.remove(rubble,500) end
-  if not actionshot and not youactionshot and not pause then
+  if not me.actionshot and not you.actionshot and not pause then
     v.y = v.y - v.j
     v.x = v.x + v.v
     v.j = v.j - .3
@@ -2054,7 +2056,7 @@ death = function()
     end
 
     for i,v in ipairs(sparks)do
-    if not actionshot and not youactionshot and not pause then
+    if not me.actionshot and not you.actionshot and not pause then
       v.y = v.y - v.j
       v.x = v.x + v.v
       v.j = v.j - .1

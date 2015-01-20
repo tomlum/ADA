@@ -367,6 +367,7 @@ function hboxc(P1, P2, P3, P4, blockable, dir, dodgeable, force, vee, jay, dam, 
   hitt[1].j = me.j
   hitt[1].v = me.v
   hitt[1].flinch = me.flinch
+  hitt[1].flinchway = me.flinchway
   hitt[1].ft = me.ft
   hitt[1].health = me.health
   hitt[1].invince = you.invince
@@ -376,6 +377,7 @@ function hboxc(P1, P2, P3, P4, blockable, dir, dodgeable, force, vee, jay, dam, 
   hitt[2].j = you.j
   hitt[2].v = you.v
   hitt[2].flinch = you.flinch
+  hitt[2].flinchway = you.flinchway
   hitt[2].ft = you.ft
   hitt[2].health = you.health
   hitt[2].invince = you.invince
@@ -431,6 +433,7 @@ function hboxc(P1, P2, P3, P4, blockable, dir, dodgeable, force, vee, jay, dam, 
   me.j = hitt[1].j
   me.v = hitt[1].v
   me.flinch = hitt[1].flinch
+  me.flinchway = hitt[1].flinchway
   me.ft = hitt[1].ft
   me.health = hitt[1].health
   me.g = hitt[1].g
@@ -441,6 +444,7 @@ function hboxc(P1, P2, P3, P4, blockable, dir, dodgeable, force, vee, jay, dam, 
   you.j = hitt[2].j
   you.v = hitt[2].v
   you.flinch = hitt[2].flinch
+  you.flinchway = hitt[2].flinchway
   you.ft = hitt[2].ft
   you.health = hitt[2].health
   you.ft = hitt[2].ft
@@ -455,6 +459,7 @@ function hboxcs(theid, P1, P2, P3, P4, special)
   hitt[1].j = me.j
   hitt[1].v = me.v
   hitt[1].flinch = me.flinch
+  hitt[1].flinchway = me.flinchway
   hitt[1].ft = me.ft
   hitt[1].health = me.health
   hitt[1].invince = you.invince
@@ -464,6 +469,7 @@ function hboxcs(theid, P1, P2, P3, P4, special)
   hitt[2].j = you.j
   hitt[2].v = you.v
   hitt[2].flinch = you.flinch
+  hitt[2].flinchway = you.flinchway
   hitt[2].ft = you.ft
   hitt[2].health = you.health
   hitt[2].invince = you.invince
@@ -499,6 +505,7 @@ special(p)
   me.j = hitt[1].j
   me.v = hitt[1].v
   me.flinch = hitt[1].flinch
+  me.flinchway = hitt[1].flinchway
   me.ft = hitt[1].ft
   me.health = hitt[1].health
   me.g = hitt[1].g
@@ -509,6 +516,7 @@ special(p)
   you.j = hitt[2].j
   you.v = hitt[2].v
   you.flinch = hitt[2].flinch
+  you.flinchway = hitt[2].flinchway
   you.ft = hitt[2].ft
   you.health = hitt[2].health
   you.ft = hitt[2].ft

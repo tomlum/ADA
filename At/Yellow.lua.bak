@@ -260,13 +260,13 @@ if youbyhold > 0 then
 elseif youbyct > 0 and not x and not you.g then
 	youbyready = false
 
-	if (you.j >= 0 and not controller2.down) or (controller2.up and you.j < 0) then
+	if (you.j >= 0 and not you.down) or (you.up and you.j < 0) then
 	youbyhold = 25
 	youbexpc = 100
 	you.im = aby2 
 	you.yoffset = 132
 	you.j = 1
-	elseif (you.j < 0 and not controller2.up) or (controller2.down and you.j >= 0) then
+	elseif (you.j < 0 and not you.up) or (you.down and you.j >= 0) then
 	youbyhold = 25
 	youbexpc = 200
 	you.im = aby22 
@@ -321,7 +321,7 @@ if mebyhold > 0 then
 	mebell = true
 	if mearmsreach(55) and sameheight() and mebexpc < 100 and not you.dodge and mebexpc == 0
 	then mebexpc = 1
-	actionshot = true
+	me.actionshot = true
 	you.flinch = true
 	you.ft = byft
 	you.v = me.lr * 50

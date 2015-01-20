@@ -21,8 +21,8 @@ you.rightc = thecolors[1]
 me.leftc = thecolors[2]
 you.leftc = thecolors[2]
 
-me.changeto = {n = 0, {r = 255, g = 255, b = 255}}
-you.changeto = {n = 0, {r = 255, g = 255, b = 255}}
+me.cchangeto = {n = 0, {r = 255, g = 255, b = 255}}
+you.cchangeto = {n = 0, {r = 255, g = 255, b = 255}}
 
 function ColorChange(xx)
 

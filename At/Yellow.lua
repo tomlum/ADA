@@ -198,7 +198,7 @@ if youbyhold > 0 then
 	youbell = true
 	if youarmsreach(55) and sameheight() and youbexpc < 100 and not you.dodge and youbexpc == 0
 	then youbexpc = 1
-	youactionshot = true
+	you.actionshot = true
 	me.flinch = true
 	me.ft = byft
 	me.v = you.lr * 50
@@ -321,7 +321,7 @@ if mebyhold > 0 then
 	mebell = true
 	if mearmsreach(55) and sameheight() and mebexpc < 100 and not you.dodge and mebexpc == 0
 	then mebexpc = 1
-	actionshot = true
+	me.actionshot = true
 	you.flinch = true
 	you.ft = byft
 	you.v = me.lr * 50

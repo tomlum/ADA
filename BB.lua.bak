@@ -41,9 +41,9 @@ you.holda = false
 bbnumpunch = 2
 
 function holdmanage(xx)
-  if (xx.a1b or xx.a2b or xx.a3b or xx.aa4) then
+  if (xx.a1b or xx.a2b or xx.a3b or xx.a4b) then
     if not xx.holda then
-    xx.holda = true
+      xx.holda = true
     end
   else xx.holda = false
   end
@@ -88,20 +88,25 @@ function combomanage(xx)
 end
 
 function combo(xx)
-  if xx.a2 or xx.a3 then
-    if xx.color.n==0 then
-      if xx.bbpc < bbnumpunch then
-        xx.bbpc = xx.bbpc+1
-        xx.animcounter = 1
-        xx.type = -xx.type
+  if xx.color.n ~= xx.changeto.n then
+    actionshot = true
+  end
+  if not xx.holda then
+    if xx.a2 or xx.a3 then
+      if xx.color.n==0 then
+        if xx.bbpc < bbnumpunch then
+          xx.bbpc = xx.bbpc+1
+          xx.animcounter = 1
+          xx.type = -xx.type
+        end
       end
     end
-  end
-  if xx.a4 then
-    if xx.color.n==0 then
-      xx.combo = xx.combo + 1
-      xx.animcounter = 1
-      xx.type = 2
+    if xx.a4 then
+      if xx.color.n==0 then
+        xx.combo = xx.combo + 1
+        xx.animcounter = 1
+        xx.type = 2
+      end
     end
   end
 end

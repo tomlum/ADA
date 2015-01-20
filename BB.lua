@@ -75,11 +75,12 @@ function combomanage(xx)
   if xx.animcounter > 0 then
     xx.block = false
     xx.animcounter = xx.animcounter + 1
-  elseif xx.animcounter == 0 then xx.combo = 0
+  elseif xx.animcounter == 0 then 
+    xx.combo = 0
+    xx.cancombo = false
   end
 
-  if xx.flinch then xx.animcounter = 0
-  end
+  
 
   if xx.combo > xx.maxcombo then
     cancelas(xx)
@@ -88,8 +89,9 @@ function combomanage(xx)
 end
 
 function combo(xx)
-  if xx.color.n ~= xx.changeto.n then
-    actionshot = true
+  if xx.color.n ~= xx.cchangeto.n and xx.cancombo then
+    xx.actionshot = true
+    xx.cancombo = false
   end
   if not xx.holda then
     if xx.a2 or xx.a3 then
@@ -99,6 +101,11 @@ function combo(xx)
           xx.animcounter = 1
           xx.type = -xx.type
         end
+      elseif xx.color.n==1 and xx.ppnum < numofps then
+        xx.type = 1
+        xx.animcounter = 1
+        xx.ppnum = xx.ppnum + 1
+        xx.combo = xx.combo + 1
       end
     end
     if xx.a4 then
@@ -194,6 +201,7 @@ function breadandbutter(xx)
           {x=xx.mid, y = me.y+30},
           {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32},
           function(z)
+            xx.cancombo = true
             z.health = z.health - bbpdam
             if xx.bbpc == animcounter then
               z.v = xx.lr*bbpkb*3
@@ -246,6 +254,7 @@ function breadandbutter(xx)
           {x=me.mid+me.v+(me.lr*28), y = me.y+39},
 
           function(z)
+            xx.cancombo = true
             z.health = z.health - bbkdam
             z.v = xx.lr*bbkkb
             z.flinch = true
@@ -260,7 +269,7 @@ function breadandbutter(xx)
         xx.im = kick3
         xx.xoffset = 15
         xx.yoffset = 10
-      elseif xx.animcounter == 43 then
+      elseif xx.animcounter >= 43 then
         xx.animcounter = 0
         xx.bbpc = 0
       end

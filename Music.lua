@@ -308,10 +308,10 @@ me.flinch2:setVolume(SFXV-.8-adj)
 you.flinch2 = love.audio.newSource("sounds/flinch2.wav", "static")
 you.flinch2:setVolume(SFXV-.8-adj)
 
-minch1 = love.audio.newSource("sounds/greenhit.wav", "static")
-minch1:setVolume(SFXV-.7-adj)
-minch2 = love.audio.newSource("sounds/greenhit.wav", "static")
-minch2:setVolume(SFXV-.7-adj)
+me.minch = love.audio.newSource("sounds/greenhit.wav", "static")
+me.minch:setVolume(SFXV-.7-adj)
+you.minch = love.audio.newSource("sounds/greenhit.wav", "static")
+you.minch:setVolume(SFXV-.7-adj)
 
 
 

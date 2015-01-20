@@ -148,6 +148,7 @@ success = love.window.setMode(600, 600, {resizable=true, fullscreen = false, vsy
 fightclub = true
 debug = false
 
+musicmute = true
 mute = true
 
 justone = false
@@ -354,9 +355,9 @@ function love.load()
   lefty = true
   rightme = true
   f = false
-  actionshot = false
-  actiontimer = 0
-  youactiontimer = 0
+  me.actionshot = false
+  me.actiontimer = 0
+  you.actiontimer = 0
 
   if fightclub then 
     MENU = "play"
@@ -438,8 +439,8 @@ function love.update()
       randomizepitch()
 
 
-      if me.flinch then me.jstop = false mebjstop = false end
-      if you.flinch then you.jstop = false youbjstop = false end
+      if me.flinch then me.jstop = false end
+      if you.flinch then you.jstop = false end
 
 
 
@@ -454,46 +455,12 @@ function love.update()
         slowt = SlowRate
       end
 
-
-
-      if actiontimer == 1 
-      then actionshot = false actiontimer = 0
-        thesong:setPitch(1)
-
-
-        if not pause then
-          deathsound:play()
-          collides:play()
-          bcs:play()
+      actionshotstuff()
 
 
 
 
-        end
-      elseif actionshot == true and actiontimer == 0 
-      then actiontimer = 60
-      elseif actiontimer > 0 
-      then actiontimer = actiontimer - 1
-        thesong:setPitch(actiontimer/60)
-      else actiontimer = 0
-      end
-
-      if youactiontimer == 1 
-      then youactionshot = false youactiontimer = 0
-        thesong:setPitch(1)
-        deathsound:play()
-        collides:play()
-      elseif youactionshot == true and youactiontimer == 0 
-      then youactiontimer = 60
-      elseif youactiontimer > 0 
-      then youactiontimer = youactiontimer - 1
-        thesong:setPitch(youactiontimer/60)
-      else youactiontimer = 0
-      end
-
-
-
-      if slowt == SlowRate and not actionshot and not youactionshot and not pause
+      if slowt == SlowRate and not me.actionshot and not youactionshot and not pause
       then
 
 
@@ -530,7 +497,7 @@ function love.update()
           me.a1b = love.keyboard.isDown("t")
           me.a2b = love.keyboard.isDown("f")
           me.a3b = love.keyboard.isDown("h")
-          me.aa4 = love.keyboard.isDown("g")
+          me.a4b = love.keyboard.isDown("g")
           me.blockb = love.keyboard.isDown("e")
           me.run = love.keyboard.isDown("r")
           me.rightb = love.keyboard.isDown("2")
@@ -543,7 +510,7 @@ function love.update()
           you.left = love.keyboard.isDown("j")
           you.right = love.keyboard.isDown("l")
           you.a1b = love.keyboard.isDown("up")
-          you.aa4 = love.keyboard.isDown("down")
+          you.a4b = love.keyboard.isDown("down")
           you.a2b = love.keyboard.isDown("left")
           you.a3b = love.keyboard.isDown("right")
           you.blockb = love.keyboard.isDown("o")
@@ -555,11 +522,11 @@ function love.update()
           you.a1 = you.a1b
           you.a2 = you.a2b
           you.a3 = you.a3b
-          you.a4 = you.aa4
+          you.a4 = you.a4b
           me.a1 = me.a1b
           me.a2 = me.a2b
           me.a3 = me.a3b
-          me.a4 = me.aa4
+          me.a4 = me.a4b
 
         end
 
@@ -896,7 +863,7 @@ function love.update()
 
         end
 
-        --down here to allow facemovement even during actionshot
+        --down here to allow facemovement even during me.actionshot
 
 
 
@@ -1447,7 +1414,7 @@ function love.update()
       end
     end
 
-    if not actionshot and not youactionshot and not pause 
+    if not me.actionshot and not youactionshot and not pause 
     then
 
 

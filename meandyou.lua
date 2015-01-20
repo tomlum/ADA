@@ -72,7 +72,7 @@ me.id = 1
 	--on the ground?
 	--attacking
 	me.flinch = false
-	me.ft = 30
+	me.ft = 0
 	me.flinchtimer = 0
 	me.busy = false
 	me.attacknumber = 0
@@ -140,7 +140,7 @@ you.id = 2
 	you.onplat = false
 	--attacking
 	you.flinch = false
-	you.ft = 30
+	you.ft = 0
 	you.flinchtimer = 0
 	you.attacking = false
 	you.stop = false
@@ -244,7 +244,7 @@ rightme = true
 	--on the ground?
 	--attacking
 	me.flinch = false
-	me.ft = 30
+	me.ft = 0
 	me.flinchtimer = 0
 	me.busy = false
 	me.attacknumber = 0
@@ -307,7 +307,7 @@ rightme = true
 	you.onplat = false
 	--attacking
 	you.flinch = false
-	you.ft = 30
+	you.ft = 0
 	you.flinchtimer = 0
 	you.attacking = false
 	you.stop = false
@@ -506,7 +506,7 @@ startsfade = false
 	--on the ground?
 	--attacking
 	me.flinch = false
-	me.ft = 30
+	me.ft = 0
 	me.flinchtimer = 0
 	me.busy = false
 	me.attacknumber = 0
@@ -570,7 +570,7 @@ startsfade = false
 	you.onplat = false
 	--attacking
 	you.flinch = false
-	you.ft = 30
+	you.ft = 0
 	you.flinchtimer = 0
 	you.attacking = false
 	you.stop = false

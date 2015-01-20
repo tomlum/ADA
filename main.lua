@@ -1,4 +1,6 @@
 --todo
+--if combo swap, still does follow through of that color, easy fix
+--make purple spike combo quicker
 --string together combos not desigining each ocmbination
 --quickfix - bump allows you to pull people if walk in while in their box
 --holding down attack makes it repeat the attack, make you have to reset to center
@@ -12,7 +14,7 @@
 --fix flinch? make it one at least
 --make vibration a function, give it parameters of duration and intensity
 --at end of each update then call joystickvibrate else throw to vibrate function/variables
---
+--maybe left stick can control purple spike direction
 
 --on up attack, can jump in the air during combo window
 --when negative 1 hum sound hold on the changetocolor but when it hits do a ding
@@ -34,7 +36,7 @@ love.graphics.setDefaultFilter("linear","nearest",1)
 --maybe if slow then walkrate decreases so you can walk slowly if using controller
 --plane overhead night city veins simmulator for loading screens? or just a scene
 
---push is weird
+--allow bounce off purple at high speeds like flinch off walls?
 --adjust vroom so that it slows down to the speed limit on approach
 --camera jumping alignment isn't right, test based on both on middle platform, jump up with one
 --dodge is click in on run, roll down then direction (if down and right or left)
@@ -355,9 +357,9 @@ function love.load()
   lefty = true
   rightme = true
   f = false
-  actionshot = false
-  actiontimer = 0
-  youactiontimer = 0
+  me.actionshot = false
+  me.actiontimer = 0
+  you.actiontimer = 0
 
   if fightclub then 
     MENU = "play"
@@ -455,13 +457,10 @@ function love.update()
         slowt = SlowRate
       end
 
-      actionshotstuff()
 
 
 
-
-      if slowt == SlowRate and not actionshot and not youactionshot and not pause
-      then
+  
 
 
 
@@ -545,10 +544,7 @@ function love.update()
         --you.flip = 1
         --end
 
-        me.flip = 1
-        you.flip = 1
-
-
+    
 
         if #joysticks > 0 then
           jjstick(me,joystick)
@@ -556,12 +552,15 @@ function love.update()
           jjstick(me,joystick)
           jjstick(you,you.joystick)
         end
+        
+            if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause
+      then
 
         if me.dodge or me.block
         then me.a1, me.a2, me.a3, me.a4, me.up = false,false,false,false,false
-      end
-      
-      if you.dodge or you.block
+        end
+
+        if you.dodge or you.block
         then you.a1, you.a2, you.a3, you.a4, you.up = false,false,false,false,false
         end
 
@@ -782,10 +781,15 @@ function love.update()
           elseif me.push < 0 then me.push = me.push + 1
           end
 
+  end
+  
+    end
+      
+        cammovement()
+        --if here then slideycling to person
+        camerafol()
 
-
-          cammovement()
-
+ if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
           animate()
 
 
@@ -796,8 +800,8 @@ function love.update()
 
           you.feet = you.y + 60
           me.feet = me.y + 60
-
-          camerafol()
+          --if here then non slideycling to person
+          --camerafol()
 
 
 
@@ -808,20 +812,27 @@ function love.update()
           melimitbreak= false
           youlimitbreak = false
 
-          ColorChange(me)
-          ColorChanging(me)
-          
-          
+
+
 
           combomanage(me)
           combomanage(you)
-          
 
+
+        end
+        
+      actionshotstuff(me)
+      actionshotstuff(you)
+      
+         if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
+ 
           attackmanage(me)
           attackmanage(you)
+          spikeupdate(me)
+ 
 
-          flinchingyou()
-          flinchingme()
+          flinchingx(me,you)
+          flinchingx(you,me)
 
           if math.abs(me.v) > math.abs(you.v) then
             bump(me)
@@ -863,13 +874,11 @@ function love.update()
 
         end
 
-        --down here to allow facemovement even during actionshot
+        --down here to allow facemovement even during me.actionshot
 
 
 
-
-      end
-
+    
       if me.im == slowdown then
         me.xoffset = 10
       end
@@ -1414,7 +1423,7 @@ function love.update()
       end
     end
 
-    if not actionshot and not youactionshot and not pause 
+    if not me.actionshot and not you.actionshot and not pause 
     then
 
 
@@ -1435,7 +1444,7 @@ function love.update()
         love.graphics.print("invince", 100, 100)
       end
       love.graphics.setColor(20,20,20)
-      love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( ))..tostring(me.dodgetype).."me.a3"..tostring(me.a3)..tostring(me.displa3), 10, 10)
+      love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( ))..tostring(me.dodgetype).."me.a3"..tostring(me.color.n).."ft: "..tostring(you.ft).." falltimer: "..tostring(you.falltimer).." hittheground: "..tostring(you.hittheground), 10, 10)
     end
 
 
