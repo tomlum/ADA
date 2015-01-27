@@ -1,6 +1,4 @@
 
-sandbolt = love.graphics.newImage("me/attack/sandbolt.png")
-
 me.throwcounter = 0
 
 

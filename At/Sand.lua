@@ -1,26 +1,4 @@
 
-sready = love.graphics.newImage("me/attack/s.png")
-sflap = love.graphics.newImage("me/attack/sflap.png")
-jsready = love.graphics.newImage("me/attack/js.png")
-jsflap = love.graphics.newImage("me/attack/jsflap.png")
-sbackflap = love.graphics.newImage("me/attack/sbackflap.png")
-bigflap = love.graphics.newImage("me/attack/bigflap.png")
-bigwings = love.graphics.newImage("me/attack/bigwings.png")
-tor = love.graphics.newImage("me/attack/tor.png")
-bsend = love.graphics.newImage("me/attack/bsend.png")
-bsstart = love.graphics.newImage("me/attack/bsstart.png")
-sandbolt = love.graphics.newImage("me/attack/sandbolt.png")
-sandboltready = love.graphics.newImage("me/attack/sandboltready.png")
-
-purpwings = love.graphics.newImage("me/attack/purpwings.png")
-wingswing1 = love.graphics.newImage("me/attack/wingswing1.png")
-wingswing2 = love.graphics.newImage("me/attack/wingswing2.png")
-wingswing3 = love.graphics.newImage("me/attack/wingswing3.png")
-upflap = love.graphics.newImage("me/attack/upflap.png")
-
-syready = love.graphics.newImage("me/attack/syready.png")
-jsyready = love.graphics.newImage("me/attack/jsyready.png")
-
 sandchargetime = 90
 tornadowidth = 20
 

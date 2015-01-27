@@ -492,7 +492,8 @@ function drawleft()
   end
 
   if me.flinch then 
-
+    
+    love.graphics.setColor(255, 255, 255, 255)
     love.graphics.draw(me.im.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
     love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b,255)
     love.graphics.draw(me.im.c, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
@@ -516,7 +517,9 @@ function drawleft()
 
 
     love.graphics.setColor(255, 255, 255, 255)
+    
     love.graphics.draw(me.im.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
+    
     love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b,255)
     love.graphics.draw(me.im.c, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
     --love.graphics.draw(me.face, me.facex, me.feet + me.facey,mefacerot)
@@ -571,7 +574,7 @@ function drawright()
   end
 
   if me.flinch then 
-
+    love.graphics.setColor(255, 255, 255, 255)
     love.graphics.draw(me.im.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
     love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b,255)
     love.graphics.draw(me.im.c, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)

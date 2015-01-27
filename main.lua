@@ -1,4 +1,6 @@
 --todo
+    blashader = love.graphics.newShader( "outline.glsl" )
+--can change lr during flinch
 --if combo swap, still does follow through of that color, easy fix
 --make purple spike combo quicker
 --string together combos not desigining each ocmbination
@@ -210,7 +212,6 @@ require "FIZIX"
 require "Animation"
 require "Joysticks"
 require "ATTACK"
-require "At/Purple"
 require "At/Green"
 require "At/Yellow"
 require "At/Sand"
@@ -829,6 +830,7 @@ function love.update()
           attackmanage(me)
           attackmanage(you)
           spikeupdate(me)
+          spikeupdate(you)
  
 
           flinchingx(me,you)
@@ -1444,7 +1446,10 @@ function love.update()
         love.graphics.print("invince", 100, 100)
       end
       love.graphics.setColor(20,20,20)
-      love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( ))..tostring(me.dodgetype).."me.a3"..tostring(me.color.n).."ft: "..tostring(you.ft).." falltimer: "..tostring(you.falltimer).." hittheground: "..tostring(you.hittheground), 10, 10)
+      love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( ))..tostring(me.animcounter).."me.color.n"..tostring(me.color.n).."ft: "..tostring(you.ft).." falltimer: "..tostring(you.falltimer).." hittheground: ", 10, 10)
+      if #me.spikes>0 then
+        love.graphics.print(tostring(me.spikes[1].t),10,20)
+        end
     end
 
 

@@ -658,7 +658,7 @@ function drawdust()
     dustn = math.random(100,200)
   end
   love.graphics.setColor(dustn,dustn,dustn,150)
-  love.graphics.draw(enviro.rubble,v.x,v.y-2,70/(v.v+v.y),1.5,1.5)
+  love.graphics.draw(enviro.rubble,v.x,v.y-2,70/(v.v+v.y),1,1)
   love.graphics.setColor(255,255,255)
 
 end
