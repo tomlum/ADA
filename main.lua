@@ -1446,10 +1446,10 @@ function love.update()
         love.graphics.print("invince", 100, 100)
       end
       love.graphics.setColor(20,20,20)
-      love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( ))..tostring(me.animcounter).."me.color.n"..tostring(me.color.n).."ft: "..tostring(you.ft).." falltimer: "..tostring(you.falltimer).." hittheground: ", 10, 10)
-      if #me.spikes>0 then
-        love.graphics.print(tostring(me.spikes[1].t),10,20)
-        end
+      love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+        love.graphics.print(tostring(me.combo),10,20)
+        love.graphics.print(tostring(me.color.n)..
+          "       animcounter: "..tostring(me.animcounter),10,30)
     end
 
 

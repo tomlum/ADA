@@ -44,7 +44,7 @@ you.holda = false
 
 
 
-bbnumpunch = 2
+bbnumpunch = 3
 
 function holdmanage(xx)
   if (xx.a1b or xx.a2b or xx.a3b or xx.a4b) then
@@ -80,6 +80,7 @@ function combomanage(xx)
 
   if xx.animcounter > 0 then
     xx.block = false
+    xx.jstop = true
     xx.animcounter = xx.animcounter + 1
   elseif xx.animcounter == 0 then 
     xx.combo = 0
@@ -106,22 +107,26 @@ function combo(xx, func)
   end
   if not xx.holda then
     if xx.a2 or xx.a3 then
-
-
       if xx.color.n==0 then
         if xx.bbpc < bbnumpunch then
           xx.bbpc = xx.bbpc+1
+          if xx.bbpc == 1 then xx.combo = xx.combo + 1 end
           xx.animcounter = 1
-          xx.type = -xx.type
+          if math.abs(xx.type) < 2 then
+            xx.type = -xx.type
+          else xx.type = 1
+          end
         end
       elseif xx.color.n==1 and xx.ppnum < numofps then
         xx.type = 1
         xx.animcounter = 1
         xx.ppnum = xx.ppnum + 1
-        xx.combo = xx.combo + 1
+          if xx.ppnum == 1 then xx.combo = xx.combo + 1 end
+        
+
       end
 
-    elseif xx.a4 then
+    elseif xx.a4 and xx.type ~= 2 then
       if xx.color.n==0 then
         xx.combo = xx.combo + 1
         xx.animcounter = 1
@@ -201,15 +206,16 @@ function breadandbutter(xx)
       end
       xx.type = -xx.type
       xx.animcounter = 1
-      xx.combo = xx.combo + 1
+        xx.combo = xx.combo + 1
+          xx.bbpc = 1
     elseif xx.a4 then
       xx.type = 2
       xx.animcounter = 1
-      xx.combo = xx.combo + 1
+        xx.combo = xx.combo + 1
     elseif xx.a1 then
       xx.type = 3
       xx.animcounter = 1
-      xx.combo = xx.combo + 1
+        xx.combo = xx.combo + 1
     end
 
   else

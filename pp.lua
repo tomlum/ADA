@@ -11,6 +11,18 @@ ppunch3 = {im = ppunch3im, c = ppunch3c}
 stomp1 = {im=love.graphics.newImage("me/attack/stomp1.png"),c=love.graphics.newImage("me/attack/stomp1c.png")}
 stomp2 = {im=love.graphics.newImage("me/attack/stomp2.png"),c=love.graphics.newImage("me/attack/stomp2c.png")}
 
+function spikegrow(vv, n)
+  if n == 1 then
+    vv[3] = vv[3]+(math.random(3, 9)+math.random()*(cur.t/5))*cur.lr
+    vv[4] = vv[4]-(math.random(10, 15)+math.random()*(cur.t/5))
+    vv[5] = vv[5]+(math.random(1.5,4)+math.random()*(cur.t/5))*cur.lr
+  elseif n == 2 then
+    vv[3] = vv[3]+(math.random(2, 5)+math.random()*(cur.t/5))*cur.lr
+    vv[4] = vv[4]-(math.random(10, 15)+math.random()*(cur.t/5))
+    vv[5] = vv[5]+(math.random(4, 10)+math.random()*(cur.t/5))*cur.lr
+  end
+
+end
 
 spikes = {}
 you.spikes = {}
@@ -168,12 +180,13 @@ function pandp(xx)
       xx.type = 1
       xx.animcounter = 1
       xx.ppnum = 1
-      xx.combo = xx.combo + 1
+      xx.ppnum = 1
+        xx.combo = xx.combo + 1
     elseif xx.a4 then
       xx.type = 2
       xx.animcounter = 1
       xx.ppnum = 1
-      xx.combo = xx.combo + 1
+        xx.combo = xx.combo + 1
     end
 
 
@@ -338,9 +351,9 @@ function pandp(xx)
         if xx.animcounter >= 17 then 
           combo(xx, function()
               if (xx.a1 or xx.a2 or xx.a3) and xx.combo < xx.maxcombo-1 then
-              xx.numofspikes = 0
+                xx.numofspikes = 0
               end
-              end)
+            end)
         end
         if xx.animcounter >= pa4busytime and xx.a4 and not xx.holda and xx.numofspikes< maxnumofspikes then 
           xx.animcounter = 1

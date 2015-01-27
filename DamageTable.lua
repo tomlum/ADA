@@ -21,6 +21,7 @@ minmaxdif = 4
 
 maxhealth = 280
 shakedis = 0
+noshake = true
 
 thebug = 0
 

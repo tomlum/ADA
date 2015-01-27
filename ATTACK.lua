@@ -30,12 +30,15 @@ function attackmanage(xx)
   if xx.animcounter == 0 then
     xx.ppnum = 0
     xx.bbpc = 0
+    xx.ggpc = 0
     xx.currentanim = xx.color.n
   end
   if xx.currentanim == 0 then
     breadandbutter(xx)
   elseif xx.currentanim == 1 then
     pandp(xx)
+    elseif xx.currentanim == 2 then
+    gandg(xx)
   end
 
 end
@@ -99,7 +102,7 @@ function camshakeflinch()
   yhdif = you.prevhealth-you.health
   mhdif = me.prevhealth-me.health
 
-  if not (me.actionshot or you.actionshot) then
+  if not (me.actionshot or you.actionshot) and not noshake then
     if ((you.prevhealth > you.health or shakeyou) and you.x >= me.x)  or shakeboth then 
       camera2.x = camera2.x + math.ceil(math.random()) * (shakedis + yhdif/2)
       camera2.y = camera2.y + math.ceil(math.random()) * (shakedis + yhdif/2)

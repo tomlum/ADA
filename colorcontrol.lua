@@ -2,9 +2,9 @@
 --http://www.flutopedia.com/sound_color.htm
 
 
-colorchangetime = 25
+colorchangetime = 20
 colorfadetime = 10
-colorvib = .5
+colorvib = .1
 
 thecolors = {}
 thecolors[0] = {n=0,c={r = 255, g = 255, b = 255}}
