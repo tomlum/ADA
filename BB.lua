@@ -17,7 +17,7 @@ uppercutft = 20
 
 sparkspeed = 3
 
-maxcombo = 4
+maxcombo = 5
 me.maxcombo = maxcombo
 you.maxcombo = maxcombo
 me.combo = 0
@@ -101,7 +101,8 @@ function combo(xx, func)
     func()
   end
 
-  if xx.color.n ~= xx.cchangeto.n and xx.cancombo then
+  if xx.color.n ~= xx.cchangeto.n and xx.cancombo
+  then
     xx.actionshot = true
     xx.cancombo = false
   end
@@ -121,8 +122,13 @@ function combo(xx, func)
         xx.type = 1
         xx.animcounter = 1
         xx.ppnum = xx.ppnum + 1
-          if xx.ppnum == 1 then xx.combo = xx.combo + 1 end
-        
+        if xx.ppnum == 1 then xx.combo = xx.combo + 1 end
+      elseif xx.color.n==2 and xx.ggpc < maxgps then
+        xx.type = 1
+        xx.animcounter = 1
+        xx.ggpc = xx.ggpc + 1
+        if xx.ggpc == 1 then xx.combo = xx.combo + 1 end
+
 
       end
 
@@ -175,12 +181,12 @@ function bump(xx)
   end
 end
 
-punch1 = {im=love.graphics.newImage("me/attack/punch1.png"),c=love.graphics.newImage("me/attack/punch1c.png")}
-punch2 = {im=love.graphics.newImage("me/attack/punch2.png"),c=love.graphics.newImage("me/attack/punch2c.png")}
-punch3 = {im=love.graphics.newImage("me/attack/punch3.png"),c=love.graphics.newImage("me/attack/punch3c.png")}
-punch4 = {im=love.graphics.newImage("me/attack/punch4.png"),c=love.graphics.newImage("me/attack/punch4c.png")}
-punch5 = {im=love.graphics.newImage("me/attack/punch5.png"),c=love.graphics.newImage("me/attack/punch5c.png")}
-punch6 = {im=love.graphics.newImage("me/attack/punch6.png"),c=love.graphics.newImage("me/attack/punch6c.png")}
+punch1 = {im=love.graphics.newImage("me/attack/punch1.png"),c=love.graphics.newImage("me/attack/punch1c.png"),xoff = 15}
+punch2 = {im=love.graphics.newImage("me/attack/punch2.png"),c=love.graphics.newImage("me/attack/punch2c.png"),xoff = 15}
+punch3 = {im=love.graphics.newImage("me/attack/punch3.png"),c=love.graphics.newImage("me/attack/punch3c.png"),xoff = 15}
+punch4 = {im=love.graphics.newImage("me/attack/punch4.png"),c=love.graphics.newImage("me/attack/punch4c.png"),xoff = 15}
+punch5 = {im=love.graphics.newImage("me/attack/punch5.png"),c=love.graphics.newImage("me/attack/punch5c.png"),xoff = 15}
+punch6 = {im=love.graphics.newImage("me/attack/punch6.png"),c=love.graphics.newImage("me/attack/punch6c.png"),xoff = 15}
 kick1 = {im = love.graphics.newImage("me/attack/kick1.png"), c = love.graphics.newImage("me/attack/kick1c.png")}
 kick2 = {im = love.graphics.newImage("me/attack/kick2.png"), c = love.graphics.newImage("me/attack/kick2c.png")}
 kick3 = {im = love.graphics.newImage("me/attack/kick3.png"), c = love.graphics.newImage("me/attack/kick3c.png")}
@@ -206,16 +212,16 @@ function breadandbutter(xx)
       end
       xx.type = -xx.type
       xx.animcounter = 1
-        xx.combo = xx.combo + 1
-          xx.bbpc = 1
+      xx.combo = xx.combo + 1
+      xx.bbpc = 1
     elseif xx.a4 then
       xx.type = 2
       xx.animcounter = 1
-        xx.combo = xx.combo + 1
+      xx.combo = xx.combo + 1
     elseif xx.a1 then
       xx.type = 3
       xx.animcounter = 1
-        xx.combo = xx.combo + 1
+      xx.combo = xx.combo + 1
     end
 
   else
@@ -227,7 +233,6 @@ function breadandbutter(xx)
         else
           xx.im = punch4
         end
-        xx.xoffset = 15
 
       elseif xx.animcounter < 10 then
         if xx.type>0 then
@@ -235,7 +240,6 @@ function breadandbutter(xx)
         else
           xx.im = punch5
         end
-        xx.xoffset = 15
         repplay(xx.blues)
         if xx.animcounter == 6 then
           hboxcs(xx.id, 

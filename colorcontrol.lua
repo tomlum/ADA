@@ -55,7 +55,7 @@ you.cct = 0
 
 function ColorChanging(xx)
   if xx.cchangeto.n > 0 then
-    if xx.cct < colorchangetime then
+    if xx.cct < colorchangetime and (xx.animcounter == 0 or xx.actionshot)  then
       xx.cct = xx.cct + 1
     end
       xx.ctri = (thecolors[0].c.r-xx.cchangeto.c.r)/colorchangetime
@@ -69,7 +69,7 @@ function ColorChanging(xx)
 
   if xx.cct == colorchangetime then 
     xx.color = xx.cchangeto
-  elseif xx.cct <= 0 then
+  elseif xx.cct <= 0  then
     
     xx.color = thecolors[0]
   else xx.color = thecolors[100]

@@ -1418,25 +1418,12 @@ function love.update()
           go()
         end
         drawroulettenumbers()
-        mefacerot = 0
-        youfacerot = 0
 
 
       end
     end
 
-    if not me.actionshot and not you.actionshot and not pause 
-    then
-
-
-      you.yoffset = 0
-      me.yoffset = 0
-      me.xoffset = 0
-      you.xoffset = 0
-      mefacerot = 0
-      youfacerot = 0
-
-    end
+    
     if fightclub then
 
       if me.invince then

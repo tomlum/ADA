@@ -4,11 +4,17 @@ greena22 = {im=love.graphics.newImage("me/attack/greena22.png"),c=love.graphics.
 greena22s = {im=love.graphics.newImage("me/attack/greena22s.png"),c=love.graphics.newImage("me/attack/greena22c.png")}
 greena1 = {im=love.graphics.newImage("me/attack/greena1.png"),c=love.graphics.newImage("me/attack/greena1c.png")}
 
-
+guppercutkb = 2
+guppercutdam = 4
+guppercutj = 22
+guppercutft = 20
 
 me.ggpc = 0
 you.ggpc = 0
-maxgs = 3
+maxgps = 2
+ggpdam = 4
+ggpkb = 2
+ggft = 5
 
 function gandg(xx)
 
@@ -39,16 +45,16 @@ function gandg(xx)
   else
 
     if xx.type <= 1 then
-      if xx.animcounter < 4 then
+      if xx.animcounter < 5 then
         xx.im = greena21
         xx.xoffset = 10
 
-      elseif xx.animcounter < 20 then
+      elseif xx.animcounter < 30 then
         xx.im = greena22
         xx.xoffset = 20
-        repplay(xx.blues)
-        if xx.animcounter == 4 then
+        if xx.animcounter == 5 then
         xx.im = greena22s
+        repplay(xx.greens)
         xx.v = xx.v + (xx.lr*3)
           
           hboxcs(xx.id, 
@@ -58,14 +64,14 @@ function gandg(xx)
             {x=xx.mid+xx.v+(xx.lr*111), y = xx.y+60-17},
             function(z)
               xx.cancombo = true
-              z.health = z.health - bbpdam
-              if xx.ggpc == animcounter then
-                z.v = xx.lr*bbpkb*3
+              z.health = z.health - ggpdam
+              if xx.ggpc == maxgps then
+                z.v = xx.lr*ggpkb*3
               else
-                z.v = xx.lr*bbpkb
+                z.v = xx.lr*ggpkb
               end
               z.flinch = true
-              z.ft = bbft
+              z.ft = ggft
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(.7,1)
               end
@@ -75,11 +81,11 @@ function gandg(xx)
             end)
         end
 
-        if xx.animcounter >= 5 then 
+        if xx.animcounter >= 6 then 
           combo(xx)
         end
 
-      elseif xx.animcounter >= 20 then
+      elseif xx.animcounter >= 30 then
         xx.animcounter = 0
         xx.ggpc = 0
       end
@@ -124,11 +130,11 @@ function gandg(xx)
         xx.ggpc = 0
       end
     elseif xx.type ==3 then
-      if xx.animcounter < 9 then
-        xx.im = punch6
+      if xx.animcounter < 5 then
+        xx.im = greena21
         xx.xoffset = 15
-      elseif xx.animcounter < 16 then
-        xx.im = uppercut
+      elseif xx.animcounter < 10 then
+        xx.im = greena1
         xx.xoffset = 15
         if xx.animcounter == 9 then
           hboxcs(xx.id, 
@@ -139,11 +145,11 @@ function gandg(xx)
 
             function(z)
               xx.cancombo = true
-              z.health = z.health - uppercutdam
-              z.v = uppercutkb
-              z.j = uppercutj
+              z.health = z.health - guppercutdam
+              z.v = guppercutkb
+              z.j = guppercutj
               z.flinch = true
-              z.ft = uppercutft
+              z.ft = guppercutft
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(1,1)
               end

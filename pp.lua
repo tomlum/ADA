@@ -10,12 +10,13 @@ ppunch2 = {im = ppunch2im, c = ppunch2c}
 ppunch3 = {im = ppunch3im, c = ppunch3c}
 stomp1 = {im=love.graphics.newImage("me/attack/stomp1.png"),c=love.graphics.newImage("me/attack/stomp1c.png")}
 stomp2 = {im=love.graphics.newImage("me/attack/stomp2.png"),c=love.graphics.newImage("me/attack/stomp2c.png")}
-
-function spikegrow(vv, n)
+spikesize = 20
+function spikegrow(cur, n)
+  local vv = cur.verts
   if n == 1 then
-    vv[3] = vv[3]+(math.random(3, 9)+math.random()*(cur.t/5))*cur.lr
-    vv[4] = vv[4]-(math.random(10, 15)+math.random()*(cur.t/5))
-    vv[5] = vv[5]+(math.random(1.5,4)+math.random()*(cur.t/5))*cur.lr
+    vv[3] = vv[3]+(math.random(3, 9)+math.random()*(spikesize))*cur.lr
+    vv[4] = vv[4]-(math.random(10, 15)+math.random()*(spikesize))
+    vv[5] = vv[5]+(math.random(0)+math.random()*(spikesize))*cur.lr
   elseif n == 2 then
     vv[3] = vv[3]+(math.random(2, 5)+math.random()*(cur.t/5))*cur.lr
     vv[4] = vv[4]-(math.random(10, 15)+math.random()*(cur.t/5))
@@ -47,10 +48,7 @@ function spikedraw(xx)
     local cur = xx.spikes[i] 
     if cur.t > 0 and cur.t<5  then
       local vv = xx.spikes[i].verts 
-      vv[3] = vv[3]+(math.random(3, 9)+math.random()*(cur.t/5))*cur.lr
-      vv[4] = vv[4]-(math.random(10, 15)+math.random()*(cur.t/5))
-      vv[5] = vv[5]+(math.random(1.5,4)+math.random()*(cur.t/5))*cur.lr
-
+      
       love.graphics.polygon("fill", vv)
 
     elseif cur.t >= 5 then
@@ -90,13 +88,16 @@ function spikeupdate(xx)
   for i = #xx.spikes, 1, -1 do
     local cur = xx.spikes[i] 
     local vv = cur.verts
-    if cur.t <=7 and cur.t >=5 then
+       if cur.t > 0 and cur.t<5  then
+            spikegrow(cur,1)
+    elseif cur.t <=7 and cur.t >=5 then
       hboxcs(xx.id, 
         {x=vv[1], y = vv[2]},
         {x=vv[3], y = vv[4]},
         {x=vv[5], y = vv[6]},
         {x=vv[1], y = vv[2]},
         function(z)
+              xx.cancombo = true
           z.x = z.x + 3*cur.lr
           z.v = z.v + math.abs((vv[3]-vv[1])/70)*cur.lr
           z.j = z.j + -(vv[4]-vv[2])/30
@@ -213,6 +214,7 @@ function pandp(xx)
           {x=xx.mid, y = me.y+6},
           {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+49},
           function(z)
+              xx.cancombo = true
             z.health = z.health - bbpdam
             z.v = xx.lr*bbpkb
             z.flinch = true

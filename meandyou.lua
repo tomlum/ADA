@@ -3,8 +3,6 @@ themap = "none"
 placespeople = true
 
 
-mefacerot = 0
-  youfacerot = 0
 
 backtostage = function()
 collide = true
