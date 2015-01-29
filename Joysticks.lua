@@ -11,9 +11,9 @@ you.leftdeadzone = false
 
 love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "start", "button", 10)
 love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "leftx", "axis", 1)
-love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "lefty", "axis", 2)
+love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "you.lefty", "axis", 2)
 love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "rightx", "axis", 6)
-love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "righty", "axis", 3)
+love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "you.righty", "axis", 3)
 love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "leftstick", "button", 5)
 love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "rightstick", "button", 6)
 
@@ -137,7 +137,7 @@ function jjstick(xx)
   xx.gupv = 0
   xx.gv = boltspeed
 
-  xx.jry = xx.joystick:getGamepadAxis("righty")
+  xx.jry = xx.joystick:getGamepadAxis("you.righty")
   xx.jrx = xx.joystick:getGamepadAxis("rightx")
 
 
@@ -227,9 +227,9 @@ function jjstick(xx)
   if xx.run then
 
     if 
-    xx.joystick:getGamepadAxis("lefty") > 2 then
+    xx.joystick:getGamepadAxis("you.lefty") > 2 then
       xx.down = true
-    elseif xx.joystick:getGamepadAxis("lefty") < - 2 then
+    elseif xx.joystick:getGamepadAxis("you.lefty") < - 2 then
       xx.up = true
     end 
 
@@ -237,16 +237,16 @@ function jjstick(xx)
   else
 
     if 
-    xx.joystick:getGamepadAxis("lefty") > .5 then
+    xx.joystick:getGamepadAxis("you.lefty") > .5 then
       xx.down = true
-    elseif xx.joystick:getGamepadAxis("lefty") < - .5 then
+    elseif xx.joystick:getGamepadAxis("you.lefty") < - .5 then
       xx.up = true
     end 
 
   end
 
   -- if 
-  --      xx.joystick:getGamepadAxis("righty") > .4 then
+  --      xx.joystick:getGamepadAxis("you.righty") > .4 then
   --     xx.block = true
   -- end 
 
@@ -255,7 +255,7 @@ function jjstick(xx)
     xx.rightb = xx.joystick:getGamepadAxis("triggerright") > .5
     xx.leftb = xx.joystick:getGamepadAxis("triggerleft") > .5
 
-  xx.jly = xx.joystick:getGamepadAxis("lefty")
+  xx.jly = xx.joystick:getGamepadAxis("you.lefty")
   xx.jlx = xx.joystick:getGamepadAxis("leftx")
 
   xx.leftdeadzone = math.abs(xx.jlx/math.cos(math.atan(-xx.jly/xx.jlx))) < .3
@@ -263,7 +263,7 @@ function jjstick(xx)
 
 
   if not xx.leftdeadzone then
-    xx.angle = math.atan(-xx.joystick:getGamepadAxis("lefty")/(math.abs(xx.joystick:getGamepadAxis("leftx"))))
+    xx.angle = math.atan(-xx.joystick:getGamepadAxis("you.lefty")/(math.abs(xx.joystick:getGamepadAxis("leftx"))))
   else xx.angle = 0
   end
 

@@ -192,7 +192,7 @@ you.yoffset = 0
 	youdeathclock = 0
 	medeathclock = 0
 
-lefty = true
+you.lefty = true
 rightme = true
 
 	gotimer = 0
@@ -391,7 +391,7 @@ you.yoffset = 0
 	youdeathclock = 0
 	medeathclock = 0
 
-	lefty = true
+	you.lefty = true
 rightme = true
 
 	gotimer = 0

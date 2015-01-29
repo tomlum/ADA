@@ -158,6 +158,10 @@ function combo(xx, func)
         xx.type = 3
         xx.animcounter = 1
         xx.combo = xx.combo + 1
+      elseif xx.color.n==2 then
+        xx.type = 3
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
       end
 
 

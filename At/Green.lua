@@ -17,7 +17,7 @@ at.g.p.max = 2
 at.g.u = {}
 at.g.u.dam = 2
 at.g.u.kb = 4
-at.g.u.j = 26q
+at.g.u.j = 26
 at.g.u.ft = 20
 
 
@@ -57,13 +57,20 @@ function gandg(xx)
     if xx.type <= 1 then
       if xx.animcounter < 5 then
         xx.im = greena21
+        
+        
 
       elseif xx.animcounter < 30 then
         xx.im = greena22
         if xx.animcounter == 5 then
+          
+          if xx.ggpc > 1 then
+          reverse
+          end
+          
           xx.im = greena22s
           repplay(xx.greens)
-          xx.v = xx.v + (xx.lr*3)
+          xx.v = xx.v + (xx.lr*17)
 
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y},
@@ -151,7 +158,7 @@ function gandg(xx)
             function(z)
               xx.cancombo = true
               z.health = z.health - at.g.u.dam
-              z.v = at.g.u.kb
+              z.v = at.g.u.kb*xx.lr
               z.j = at.g.u.j
               z.flinch = true
               z.ft = at.g.u.ft

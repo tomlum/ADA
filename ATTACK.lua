@@ -28,7 +28,7 @@ you.olda1 = false
 
 me.extratimer = 0
 you.extratimer = 0
-extrastayonthegroundtime = 6
+extrastayonthegroundtime = 8
 
 function nottoomanyuppercuts(xx)
 

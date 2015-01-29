@@ -1,6 +1,8 @@
 --todo
     blashader = love.graphics.newShader( "outline.glsl" )
+    --make spikes not be on not ground
 --can change lr during flinch
+--anytime glassbreak then slowmo
 --if combo swap, still does follow through of that color, easy fix
 --make purple spike combo quicker
 --string together combos not desigining each ocmbination
@@ -355,7 +357,7 @@ function love.load()
 
 
   x = 11
-  lefty = true
+  you.lefty = true
   rightme = true
   f = false
   me.actionshot = false
@@ -821,10 +823,10 @@ function love.update()
 
 
         end
-        
       actionshotstuff(me)
       actionshotstuff(you)
       
+        
          if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
  
           attackmanage(me)

@@ -227,24 +227,29 @@ function drawa(xx)
     love.graphics.setColor(255, 255, 255, 255)
 end
 
+wobbletimer = 0
 
 function actionshotstuff(xx)
   if xx.actionshot then
+    wobbletimer = wobbletimer + .1
+    
     if xx.color.n == xx.cchangeto.n and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) then
     xx.currentanim = xx.color.n
       combo(xx)
       xx.actionshot = false
       xx.actiontimer = 0
     end
-    minzoom = minzoom + .022
-    maxzoom = maxzoom + .022
+    minzoom = minzoom + .023 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
+    maxzoom = maxzoom + .023 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
     end
   
           ColorChange(xx)
           ColorChanging(xx)
   
   if xx.actiontimer == 1 
-  then xx.actionshot = false xx.actiontimer = 0
+  then xx.actionshot = false 
+    xx.actiontimer = 0
+wobbletimer = 0
     if not musicmute then
       thesong:setPitch(1)
     end
@@ -1745,10 +1750,10 @@ death = function()
     you.xleft = you.x + 30
     you.mid = you.x + 15
 
-    if lefty 
+    if you.lefty 
     then you.xanimate = you.xleft
       you.leftface = true
-    elseif righty 
+    elseif you.righty 
     then you.xanimate = you.x
       you.leftface = false
     end
@@ -1771,32 +1776,32 @@ death = function()
     if not you.slowdown and not you.slide and not you.stop and not you.pause
     and (you.dodgetype~=2 and you.dodgetype >-1)
     then
-      you.righty = you.right
-      you.lefty = you.left
+      you.you.righty = you.right
+      you.you.lefty = you.left
     end
-    if you.righty and not you.lefty then righty = true
-      lefty = false
-    elseif you.lefty and not you.righty then lefty = true
-      righty = false
+    if you.you.righty and not you.you.lefty then you.righty = true
+      you.lefty = false
+    elseif you.you.lefty and not you.you.righty then you.lefty = true
+      you.righty = false
     end
 
     if not me.slowdown and not me.slide and not me.stop and not me.pause
     and (me.dodgetype~=2 and me.dodgetype >-1)
     then
-      me.righty = me.right
-      me.lefty = me.left
+      me.you.righty = me.right
+      me.you.lefty = me.left
     end
-    if me.righty and not me.lefty then rightme = true
+    if me.you.righty and not me.you.lefty then rightme = true
       leftme = false
-    elseif me.lefty and not me.righty then leftme = true
+    elseif me.you.lefty and not me.you.righty then leftme = true
       rightme = false
     end
 
     if ywjt <= 1 then
-      if lefty
+      if you.lefty
       then 
         you.lr = -1
-      elseif righty
+      elseif you.righty
       then you.lr = 1
       end
     end

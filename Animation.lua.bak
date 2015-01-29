@@ -215,46 +215,65 @@ ya4fade= 100
 basefade = 80
 
 
+function drawa(xx)
+  if xx.im.xoff == nil then xx.im.xoff = 0 end
+  if xx.im.yoff == nil then xx.im.yoff = 0 end
+    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.draw(xx.im.im, xx.xanimate-xx.im.xoff*xx.lr, xx.y-xx.im.yoff, 0, xx.lr, 1)
+     if xx.im.c ~= nil then 
+    love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+    love.graphics.draw(xx.im.c, xx.xanimate-xx.im.xoff*xx.lr, xx.y-xx.im.yoff, 0, xx.lr, 1)
+    end
+    love.graphics.setColor(255, 255, 255, 255)
+end
+
+wobbletimer = 0
 
 function actionshotstuff(xx)
-  if me.actiontimer == 1 
-  then me.actionshot = false me.actiontimer = 0
+  if xx.actionshot then
+    wobbletimer = wobbletimer + .1
+    
+    if xx.color.n == xx.cchangeto.n and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) then
+    xx.currentanim = xx.color.n
+      combo(xx)
+      xx.actionshot = false
+      xx.actiontimer = 0
+    end
+    minzoom = minzoom + .023 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
+    maxzoom = maxzoom + .023 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
+    end
+  
+          ColorChange(xx)
+          ColorChanging(xx)
+  
+  if xx.actiontimer == 1 
+  then xx.actionshot = false 
+    xx.actiontimer = 0
+wobbletimer = 0
     if not musicmute then
       thesong:setPitch(1)
     end
 
     if not pause then
-      deathsound:play()
+      --deathsound:play()
       collides:play()
-      bcs:play()
+      --bcs:play()
 
 
 
 
     end
 
-  elseif me.actionshot == true and me.actiontimer == 0 
-  then me.actiontimer = 60
-  elseif me.actiontimer > 0 
-  then me.actiontimer = me.actiontimer - 1
-    thesong:setPitch(me.actiontimer/60)
-  else me.actiontimer = 0
+  elseif xx.actionshot == true and xx.actiontimer == 0 
+  then xx.actiontimer = 60
+  elseif xx.actiontimer > 0 
+  then xx.actiontimer = xx.actiontimer - 1
+     if not musicmute then
+    thesong:setPitch(xx.actiontimer/60)
+    end
+  else xx.actiontimer = 0
   end
 
-  if you.actiontimer == 1 
-  then youactionshot = false you.actiontimer = 0
-    if not musicmute then
-      thesong:setPitch(1)
-    end
-    deathsound:play()
-    collides:play()
-  elseif youactionshot == true and you.actiontimer == 0 
-  then you.actiontimer = 60
-  elseif you.actiontimer > 0 
-  then you.actiontimer = you.actiontimer - 1
-    thesong:setPitch(you.actiontimer/60)
-  else you.actiontimer = 0
-  end
 end
 
 
@@ -542,7 +561,7 @@ function drawpapers()
 
   end
   for i,v in ipairs(papers)do
-  if not me.actionshot and not youactionshot and not pause then
+  if not me.actionshot and not you.actionshot and not pause then
     v.y = v.y - v.j
     v.x = v.x + v.v
     if v.v > 1 then v.v = v.v - .2
@@ -626,7 +645,7 @@ function drawglass()
   end
   for i,v in ipairs(glasseses)do
   if #glasseses > 500 then table.remove(glasseses,500) end
-  if not me.actionshot and not youactionshot and not pause then
+  if not me.actionshot and not you.actionshot and not pause then
     v.y = v.y - v.j
     v.x = v.x + v.v
     v.j = v.j - .3
@@ -649,14 +668,14 @@ function drawdust()
   end
 
   for i,v in ipairs(dust)do
-  if not me.actionshot and not youactionshot and not pause then
+  if not me.actionshot and not you.actionshot and not pause then
     v.y = v.y - v.j
     v.x = v.x + v.v
     v.j = v.j - .2
     dustn = math.random(100,200)
   end
   love.graphics.setColor(dustn,dustn,dustn,150)
-  love.graphics.draw(enviro.rubble,v.x,v.y-2,70/(v.v+v.y),1.5,1.5)
+  love.graphics.draw(enviro.rubble,v.x,v.y-2,70/(v.v+v.y),1,1)
   love.graphics.setColor(255,255,255)
 
 end
@@ -671,7 +690,7 @@ function drawrubble()
 
   for i,v in ipairs(rubble)do
   if table.getn(rubble) > 500 then table.remove(rubble,500) end
-  if not me.actionshot and not youactionshot and not pause then
+  if not me.actionshot and not you.actionshot and not pause then
     v.y = v.y - v.j
     v.x = v.x + v.v
     v.j = v.j - .3
@@ -1731,7 +1750,7 @@ death = function()
     you.xleft = you.x + 30
     you.mid = you.x + 15
 
-    if lefty 
+    if you.lefty 
     then you.xanimate = you.xleft
       you.leftface = true
     elseif righty 
@@ -1758,11 +1777,11 @@ death = function()
     and (you.dodgetype~=2 and you.dodgetype >-1)
     then
       you.righty = you.right
-      you.lefty = you.left
+      you.you.lefty = you.left
     end
-    if you.righty and not you.lefty then righty = true
-      lefty = false
-    elseif you.lefty and not you.righty then lefty = true
+    if you.righty and not you.you.lefty then righty = true
+      you.lefty = false
+    elseif you.you.lefty and not you.righty then you.lefty = true
       righty = false
     end
 
@@ -1770,16 +1789,16 @@ death = function()
     and (me.dodgetype~=2 and me.dodgetype >-1)
     then
       me.righty = me.right
-      me.lefty = me.left
+      me.you.lefty = me.left
     end
-    if me.righty and not me.lefty then rightme = true
+    if me.righty and not me.you.lefty then rightme = true
       leftme = false
-    elseif me.lefty and not me.righty then leftme = true
+    elseif me.you.lefty and not me.righty then leftme = true
       rightme = false
     end
 
     if ywjt <= 1 then
-      if lefty
+      if you.lefty
       then 
         you.lr = -1
       elseif righty
@@ -2054,7 +2073,7 @@ death = function()
     end
 
     for i,v in ipairs(sparks)do
-    if not me.actionshot and not youactionshot and not pause then
+    if not me.actionshot and not you.actionshot and not pause then
       v.y = v.y - v.j
       v.x = v.x + v.v
       v.j = v.j - .1

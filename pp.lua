@@ -352,7 +352,7 @@ function pandp(xx)
         xx.im = stomp2
         if xx.animcounter >= 17 then 
           combo(xx, function()
-              if (xx.a1 or xx.a2 or xx.a3) and xx.combo < xx.maxcombo-1 then
+              if (xx.a1 or xx.a2 or xx.a3) and xx.combo < xx.maxcombo then
                 xx.numofspikes = 0
               end
             end)

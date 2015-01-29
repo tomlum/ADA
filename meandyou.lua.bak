@@ -3,8 +3,9 @@ themap = "none"
 placespeople = true
 
 
-mefacerot = 0
-  youfacerot = 0
+
+at = {}
+
 
 backtostage = function()
 collide = true
@@ -140,7 +141,7 @@ you.id = 2
 	you.onplat = false
 	--attacking
 	you.flinch = false
-	you.ft = 30
+	you.ft = 0
 	you.flinchtimer = 0
 	you.attacking = false
 	you.stop = false
@@ -307,7 +308,7 @@ rightme = true
 	you.onplat = false
 	--attacking
 	you.flinch = false
-	you.ft = 30
+	you.ft = 0
 	you.flinchtimer = 0
 	you.attacking = false
 	you.stop = false
@@ -570,7 +571,7 @@ startsfade = false
 	you.onplat = false
 	--attacking
 	you.flinch = false
-	you.ft = 30
+	you.ft = 0
 	you.flinchtimer = 0
 	you.attacking = false
 	you.stop = false
