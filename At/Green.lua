@@ -1,11 +1,12 @@
 
-greena21 = {im=love.graphics.newImage("me/attack/greena21.png"),c=love.graphics.newImage("me/attack/greena21c.png")}
-greena22 = {im=love.graphics.newImage("me/attack/greena22.png"),c=love.graphics.newImage("me/attack/greena22c.png")}
-greena22s = {im=love.graphics.newImage("me/attack/greena22s.png"),c=love.graphics.newImage("me/attack/greena22c.png")}
-greena1 = {im=love.graphics.newImage("me/attack/greena1.png"),c=love.graphics.newImage("me/attack/greena1c.png")}
+greena21 = {im=love.graphics.newImage("me/attack/greena21.png"),c=love.graphics.newImage("me/attack/greena21c.png"), xoff = 10}
+greena22 = {im=love.graphics.newImage("me/attack/greena22.png"),c=love.graphics.newImage("me/attack/greena22c.png"), xoff = 20}
+greena22s = {im=love.graphics.newImage("me/attack/greena22s.png"),c=love.graphics.newImage("me/attack/greena22c.png"), xoff = 20}
+greena1s = {im=love.graphics.newImage("me/attack/greena1s.png"),c=love.graphics.newImage("me/attack/greena1c.png"), xoff = 20, yoff = 60}
+greena1 = {im=love.graphics.newImage("me/attack/greena1.png"),c=love.graphics.newImage("me/attack/greena1c.png"), xoff = 20, yoff = 60}
 
-guppercutkb = 2
-guppercutdam = 4
+guppercutkb = 7
+guppercutdam = 2
 guppercutj = 22
 guppercutft = 20
 
@@ -32,11 +33,12 @@ function gandg(xx)
       xx.animcounter = 1
       xx.combo = xx.combo + 1
       xx.ggpc = 1
-    elseif xx.a4 then
+      xx.type = 1
+    elseif xx.a4 and not xx.holda then
       xx.type = 2
       xx.animcounter = 1
       xx.combo = xx.combo + 1
-    elseif xx.a1 then
+    elseif xx.a1 and not xx.holda then
       xx.type = 3
       xx.animcounter = 1
       xx.combo = xx.combo + 1
@@ -47,21 +49,19 @@ function gandg(xx)
     if xx.type <= 1 then
       if xx.animcounter < 5 then
         xx.im = greena21
-        xx.xoffset = 10
 
       elseif xx.animcounter < 30 then
         xx.im = greena22
-        xx.xoffset = 20
         if xx.animcounter == 5 then
-        xx.im = greena22s
-        repplay(xx.greens)
-        xx.v = xx.v + (xx.lr*3)
-          
+          xx.im = greena22s
+          repplay(xx.greens)
+          xx.v = xx.v + (xx.lr*3)
+
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y},
-            {x=xx.mid+xx.v+(xx.lr*111), y = xx.y+17},
+            {x=xx.mid+xx.v+(xx.lr*111), y = xx.y},
             {x=xx.mid, y = me.y+60},
-            {x=xx.mid+xx.v+(xx.lr*111), y = xx.y+60-17},
+            {x=xx.mid+xx.v+(xx.lr*111), y = xx.y+60},
             function(z)
               xx.cancombo = true
               z.health = z.health - ggpdam
@@ -95,17 +95,13 @@ function gandg(xx)
     elseif xx.type == 2 then
       if xx.animcounter < 12 then
         xx.im = kick1
-        xx.xoffset = 15
-        xx.yoffset = 10
       elseif xx.animcounter < 18 then
         xx.im = kick2
-        xx.xoffset = 15
-        xx.yoffset = 10
         hboxcs(xx.id, 
           {x=me.mid, y = me.y+31},
-          {x=me.mid+me.v+(me.lr*28), y = me.y+31},
-          {x=me.mid, y = me.y+37},
-          {x=me.mid+me.v+(me.lr*28), y = me.y+39},
+          {x=me.mid+me.v-(me.lr*3), y = me.y-56},
+          {x=me.mid+(me.lr*51), y = me.y-32},
+          {x=me.mid+me.v+(me.lr*22), y = me.y+32},
           function(z)
             xx.cancombo = true
             z.health = z.health - bbkdam
@@ -120,8 +116,6 @@ function gandg(xx)
           end)
       elseif xx.animcounter < 43 then
         xx.im = kick3
-        xx.xoffset = 15
-        xx.yoffset = 10
         if xx.animcounter >= 17 then 
           combo(xx)
         end
@@ -132,14 +126,17 @@ function gandg(xx)
     elseif xx.type ==3 then
       if xx.animcounter < 5 then
         xx.im = greena21
-        xx.xoffset = 15
-      elseif xx.animcounter < 10 then
+      elseif xx.animcounter < 14 then
         xx.im = greena1
-        xx.xoffset = 15
-        if xx.animcounter == 9 then
+        
+          if xx.animcounter >=5 and xx.animcounter < 7 then 
+            xx.im = greena1s
+            end
+        if xx.animcounter == 5 then
+          repplay(xx.greens)
           hboxcs(xx.id, 
-            {x=me.mid, y = me.y+30},
-            {x=me.mid+me.v+(me.lr*11), y = me.y+8},
+            {x=me.mid-(me.lr*-33), y = me.y+8},
+            {x=me.mid+me.v+(me.lr*3), y = me.y+8},
             {x=me.mid, y = me.y+20},
             {x=me.mid+me.v+(me.lr*17), y = me.y+8},
 
@@ -156,7 +153,7 @@ function gandg(xx)
               makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
             end)
         end
-      elseif xx.animcounter >= 16 then
+      elseif xx.animcounter >= 14 then
         xx.animcounter = 0
         xx.ggpc = 0
       end

@@ -220,8 +220,10 @@ function drawa(xx)
   if xx.im.yoff == nil then xx.im.yoff = 0 end
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.draw(xx.im.im, xx.xanimate-xx.im.xoff*xx.lr, xx.y-xx.im.yoff, 0, xx.lr, 1)
+     if xx.im.c ~= nil then 
     love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
     love.graphics.draw(xx.im.c, xx.xanimate-xx.im.xoff*xx.lr, xx.y-xx.im.yoff, 0, xx.lr, 1)
+    end
     love.graphics.setColor(255, 255, 255, 255)
 end
 

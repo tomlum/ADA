@@ -5,9 +5,9 @@ ppunch3im = love.graphics.newImage("me/attack/ppunch3.png")
 ppunch1c = love.graphics.newImage("me/attack/ppunch1c.png")
 ppunch2c = love.graphics.newImage("me/attack/ppunch2c.png")
 ppunch3c = love.graphics.newImage("me/attack/ppunch3c.png")
-ppunch1 = {im = ppunch1im, c = ppunch1c}
-ppunch2 = {im = ppunch2im, c = ppunch2c}
-ppunch3 = {im = ppunch3im, c = ppunch3c}
+ppunch1 = {im = ppunch1im, c = ppunch1c, xoff = 15}
+ppunch2 = {im = ppunch2im, c = ppunch2c, xoff = 45}
+ppunch3 = {im = ppunch3im, c = ppunch3c, xoff = 45}
 stomp1 = {im=love.graphics.newImage("me/attack/stomp1.png"),c=love.graphics.newImage("me/attack/stomp1c.png")}
 stomp2 = {im=love.graphics.newImage("me/attack/stomp2.png"),c=love.graphics.newImage("me/attack/stomp2c.png")}
 spikesize = 20
@@ -196,12 +196,10 @@ function pandp(xx)
     if xx.type == 1 then
       if xx.animcounter < 15 then
         xx.im = ppunch1
-        xx.xoffset = 15
 
       elseif xx.animcounter < 16 then
 
         xx.im = ppunch2
-        xx.xoffset = 45
         makerubble(xx.mid+xx.lr*20, xx.y+50,3*xx.lr,3)
         repplay(xx.purpsound)
         if #joysticks>=xx.id then
@@ -232,7 +230,6 @@ function pandp(xx)
 
       elseif xx.animcounter < 55 then
         xx.im = ppunch3
-        xx.xoffset = 45
         if xx.animcounter >= pa2busytime then 
           combo(xx)
         end
@@ -273,18 +270,18 @@ function pandp(xx)
             {verts = lverts2,
               t = 0, lr=1})
         elseif (xx.numofspikes <= 2 and xx.lr < 0) then
-          lverts[1]= xx.mid+(xx.lr*40*(sn-1))
+          lverts[1]= xx.mid+(xx.lr*70*(sn-1))
           lverts[2]= xx.feet
-          lverts[3]= xx.mid+(xx.lr*40*(sn-1))
+          lverts[3]= xx.mid+(xx.lr*70*(sn-1))
           lverts[4]= xx.feet
-          lverts[5]= xx.mid+(xx.lr*40*(sn-1))
+          lverts[5]= xx.mid+(xx.lr*70*(sn-1))
           lverts[6]= xx.feet
 
-          lverts2[1]= xx.mid+(xx.lr*25*(sn))
+          lverts2[1]= xx.mid+(xx.lr*30*(sn))
           lverts2[2]= xx.feet
-          lverts2[3]= xx.mid+(xx.lr*25*(sn))
+          lverts2[3]= xx.mid+(xx.lr*30*(sn))
           lverts2[4]= xx.feet
-          lverts2[5]= xx.mid+(xx.lr*25*(sn))
+          lverts2[5]= xx.mid+(xx.lr*30*(sn))
           lverts2[6]= xx.feet
 
           table.insert(xx.spikes, 

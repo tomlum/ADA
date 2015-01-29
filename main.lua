@@ -1436,7 +1436,10 @@ function love.update()
       love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
         love.graphics.print(tostring(me.combo),10,20)
         love.graphics.print(tostring(me.color.n)..
-          "       animcounter: "..tostring(me.animcounter),10,30)
+          "       animcounter: "..tostring(me.animcounter)
+          ..
+          "       type: "..tostring(me.type),10,30)
+      love.graphics.print("bleh"..tostring(you.extratimer).." "..tostring(you.falltimer).." "..tostring(you.ft), 10, 50)
     end
 
 

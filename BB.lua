@@ -3,6 +3,28 @@
 --WHILE COMBO, ANIMCOUNTER NEVER GOES BELOW 1 (USUALLY RESETS TO 1)
 --FLINCH IS RESPONSIBLE FOR LOWERING combo TO 0 and animcounter to 0
 --General combo funciton responsible for keeping track of combo and attacking, not individual functions
+
+at = {}
+at.bb = {}
+at.bb.p = {}
+at.bb.p.dam = 5
+at.bb.p.kb = 7
+at.bb.p.ft = 15
+
+at.bb.k = {}
+at.bb.k.dam = 10
+at.bb.k.kb = 12
+at.bb.k.ft = 30
+
+
+at.uppercut = {}
+at.uppercut.dam = 7
+at.uppercut.kb = 7
+at.uppercut.j = 22
+at.uppercut.ft = 20
+
+
+
 bbpdam = 6
 bbkdam = 12
 --knockback
@@ -11,7 +33,7 @@ bbkkb = 20
 bbft = 15
 
 uppercutkb = 2
-uppercutdam = 4
+uppercutdam = 7
 uppercutj = 22
 uppercutft = 20
 
@@ -85,6 +107,7 @@ function combomanage(xx)
   elseif xx.animcounter == 0 then 
     xx.combo = 0
     xx.cancombo = false
+    xx.type = 0
   end
 
 
@@ -113,7 +136,7 @@ function combo(xx, func)
           xx.bbpc = xx.bbpc+1
           if xx.bbpc == 1 then xx.combo = xx.combo + 1 end
           xx.animcounter = 1
-          if math.abs(xx.type) < 2 then
+          if math.abs(xx.type) < 2 and math.abs(xx.type) > 0 then
             xx.type = -xx.type
           else xx.type = 1
           end
@@ -187,10 +210,10 @@ punch3 = {im=love.graphics.newImage("me/attack/punch3.png"),c=love.graphics.newI
 punch4 = {im=love.graphics.newImage("me/attack/punch4.png"),c=love.graphics.newImage("me/attack/punch4c.png"),xoff = 15}
 punch5 = {im=love.graphics.newImage("me/attack/punch5.png"),c=love.graphics.newImage("me/attack/punch5c.png"),xoff = 15}
 punch6 = {im=love.graphics.newImage("me/attack/punch6.png"),c=love.graphics.newImage("me/attack/punch6c.png"),xoff = 15}
-kick1 = {im = love.graphics.newImage("me/attack/kick1.png"), c = love.graphics.newImage("me/attack/kick1c.png")}
-kick2 = {im = love.graphics.newImage("me/attack/kick2.png"), c = love.graphics.newImage("me/attack/kick2c.png")}
-kick3 = {im = love.graphics.newImage("me/attack/kick3.png"), c = love.graphics.newImage("me/attack/kick3c.png")}
-uppercut = {im=love.graphics.newImage("me/attack/uppercut.png"),c=love.graphics.newImage("me/attack/uppercutc.png")}
+kick1 = {im = love.graphics.newImage("me/attack/kick1.png"), c = love.graphics.newImage("me/attack/kick1c.png"), xoff = 15, yoff = 10}
+kick2 = {im = love.graphics.newImage("me/attack/kick2.png"), c = love.graphics.newImage("me/attack/kick2c.png"), xoff = 15, yoff = 10}
+kick3 = {im = love.graphics.newImage("me/attack/kick3.png"), c = love.graphics.newImage("me/attack/kick3c.png"), xoff = 15, yoff = 10}
+uppercut = {im=love.graphics.newImage("me/attack/uppercut.png"),c=love.graphics.newImage("me/attack/uppercutc.png"), xoff = 15}
 
 
 
@@ -214,11 +237,11 @@ function breadandbutter(xx)
       xx.animcounter = 1
       xx.combo = xx.combo + 1
       xx.bbpc = 1
-    elseif xx.a4 then
+    elseif xx.a4 and not xx.holda then
       xx.type = 2
       xx.animcounter = 1
       xx.combo = xx.combo + 1
-    elseif xx.a1 then
+    elseif xx.a1 and not xx.holda then
       xx.type = 3
       xx.animcounter = 1
       xx.combo = xx.combo + 1
@@ -289,12 +312,8 @@ function breadandbutter(xx)
     elseif xx.type == 2 then
       if xx.animcounter < 12 then
         xx.im = kick1
-        xx.xoffset = 15
-        xx.yoffset = 10
       elseif xx.animcounter < 18 then
         xx.im = kick2
-        xx.xoffset = 15
-        xx.yoffset = 10
         hboxcs(xx.id, 
           {x=me.mid, y = me.y+31},
           {x=me.mid+me.v+(me.lr*28), y = me.y+31},
@@ -305,7 +324,7 @@ function breadandbutter(xx)
             z.health = z.health - bbkdam
             z.v = xx.lr*bbkkb
             z.flinch = true
-            z.ft = bbft
+            z.ft = at.bb.k.ft
             if #joysticks>=xx.id then
               xx.joystick:setVibration(1,1)
             end
@@ -314,8 +333,6 @@ function breadandbutter(xx)
           end)
       elseif xx.animcounter < 43 then
         xx.im = kick3
-        xx.xoffset = 15
-        xx.yoffset = 10
         if xx.animcounter >= 17 then 
           combo(xx)
         end
@@ -329,7 +346,6 @@ function breadandbutter(xx)
         xx.xoffset = 15
       elseif xx.animcounter < 16 then
         xx.im = uppercut
-        xx.xoffset = 15
         if xx.animcounter == 9 then
           hboxcs(xx.id, 
             {x=me.mid, y = me.y+30},

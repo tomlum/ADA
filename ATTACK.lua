@@ -20,11 +20,36 @@
 -- function updateobjects()
 -- objects[1]
 -- end
+uppercutpause = 40
+me.uppercuttimer = 0
+you.uppercuttimer = 0
+me.olda1 = false
+you.olda1 = false
+
+me.extratimer = 0
+you.extratimer = 0
+extrastayonthegroundtime = 6
+
+function nottoomanyuppercuts(xx)
+
+  if xx.uppercuttimer > 0 then
+    xx.uppercuttimer = xx.uppercuttimer-1
+    xx.a1 = false
+  end
+
+  if xx.type==3 then xx.uppercuttimer = uppercutpause end
+
+end
+
 
 me.currentanim = 0
 you.currentanim = 0
 
 function attackmanage(xx)
+
+
+  nottoomanyuppercuts(xx)
+
   if xx.flinch then xx.animcounter = 0
   end
   if xx.animcounter == 0 then
@@ -37,9 +62,11 @@ function attackmanage(xx)
     breadandbutter(xx)
   elseif xx.currentanim == 1 then
     pandp(xx)
-    elseif xx.currentanim == 2 then
+  elseif xx.currentanim == 2 then
     gandg(xx)
   end
+
+
 
 end
 
@@ -391,7 +418,7 @@ newforwarddodge = function(xx)
   you.falling = false
 
   fttofall = 25
-  fallframes = 3
+  fallframes = 8
   me.oldflinch = false
   you.oldflinch = false
   me.bouncej = 0
@@ -401,7 +428,7 @@ newforwarddodge = function(xx)
   getuptime = 8
   forgetuptime = 3
 
-  jforfallbackbounce = 4
+  jforfallbackbounce = 5
 
   function flinchingx(xx,yy)
 
@@ -461,12 +488,24 @@ newforwarddodge = function(xx)
       elseif xx.falling then
 
         if xx.ft == 0 and xx.falltimer == 0 then
-          xx.falling = false
-          if xx.flinchway > 0 then 
-            xx.falltimer = -forgetuptime
+          if xx.flinchway > 0 then
+            xx.im = fallforward
           else
-            xx.falltimer = -getuptime
+            xx.im = fallback
           end
+          if xx.extratimer == 1 then
+          xx.falling = false
+            xx.extratimer = 0
+            if xx.flinchway > 0 then 
+              xx.falltimer = -forgetuptime
+            elseif xx.j==0 then
+              xx.falltimer = -getuptime
+            end
+          elseif xx.extratimer == 0 and xx.j==0 and xx.v==0 then xx.extratimer = extrastayonthegroundtime
+          elseif xx.extratimer > 0 then
+            xx.extratimer = xx.extratimer - 1
+          end
+
         end
 
         if xx.falltimer > 0 then xx.falltimer = xx.falltimer - 1
@@ -475,11 +514,11 @@ newforwarddodge = function(xx)
         end
 
         if not xx.g then 
-          
+
           if xx.j < -jforfallbackbounce then xx.bouncej = xx.j
           else xx.bouncej = 0 
           end
-          
+
           xx.falltimer = fallframes
           if not xx.hittheground then
             if xx.flinchway > 0 then xx.im = fallforward1
@@ -496,9 +535,11 @@ newforwarddodge = function(xx)
           end
 
         else 
-          
 
-          if xx.flinchway > 0 and not (xx.flinchway < 0 and xx.hittheground) then
+
+          if xx.flinchway > 0 
+          --and not (xx.flinchway < 0 and xx.hittheground) 
+          then
             if xx.falltimer > 0 then
               xx.im = fallforward1
             else
