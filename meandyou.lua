@@ -4,6 +4,9 @@ placespeople = true
 
 
 
+at = {}
+
+
 backtostage = function()
 collide = true
 ln = 1

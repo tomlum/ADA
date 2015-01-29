@@ -4,38 +4,24 @@
 --FLINCH IS RESPONSIBLE FOR LOWERING combo TO 0 and animcounter to 0
 --General combo funciton responsible for keeping track of combo and attacking, not individual functions
 
-at = {}
 at.bb = {}
 at.bb.p = {}
 at.bb.p.dam = 5
 at.bb.p.kb = 7
 at.bb.p.ft = 15
+at.bb.p.max = 15
 
 at.bb.k = {}
 at.bb.k.dam = 10
-at.bb.k.kb = 12
+at.bb.k.kb = 22
 at.bb.k.ft = 30
 
 
-at.uppercut = {}
-at.uppercut.dam = 7
-at.uppercut.kb = 7
-at.uppercut.j = 22
-at.uppercut.ft = 20
-
-
-
-bbpdam = 6
-bbkdam = 12
---knockback
-bbpkb = 7
-bbkkb = 20
-bbft = 15
-
-uppercutkb = 2
-uppercutdam = 7
-uppercutj = 22
-uppercutft = 20
+at.bb.u = {}
+at.bb.u.dam = 7
+at.bb.u.kb = 2
+at.bb.u.j = 22
+at.bb.u.ft = 20
 
 sparkspeed = 3
 
@@ -141,12 +127,12 @@ function combo(xx, func)
           else xx.type = 1
           end
         end
-      elseif xx.color.n==1 and xx.ppnum < numofps then
+      elseif xx.color.n==1 and xx.ppnum < at.bb.p.max then
         xx.type = 1
         xx.animcounter = 1
         xx.ppnum = xx.ppnum + 1
         if xx.ppnum == 1 then xx.combo = xx.combo + 1 end
-      elseif xx.color.n==2 and xx.ggpc < maxgps then
+      elseif xx.color.n==2 and xx.ggpc < at.g.p.max then
         xx.type = 1
         xx.animcounter = 1
         xx.ggpc = xx.ggpc + 1
@@ -161,7 +147,7 @@ function combo(xx, func)
         xx.animcounter = 1
         xx.type = 2
 
-      elseif xx.color.n==1 and xx.ppnum < numofps then
+      elseif xx.color.n==1 and xx.ppnum < at.bb.p.max then
         xx.type = 2
         xx.animcounter = 1
         xx.ppnum = xx.ppnum + 1
@@ -272,14 +258,14 @@ function breadandbutter(xx)
             {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32},
             function(z)
               xx.cancombo = true
-              z.health = z.health - bbpdam
+              z.health = z.health - at.bb.p.dam
               if xx.bbpc == animcounter then
-                z.v = xx.lr*bbpkb*3
+                z.v = xx.lr*at.bb.p.kb*3
               else
-                z.v = xx.lr*bbpkb
+                z.v = xx.lr*at.bb.p.kb
               end
               z.flinch = true
-              z.ft = bbft
+              z.ft = at.bb.p.ft
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(.7,1)
               end
@@ -321,8 +307,8 @@ function breadandbutter(xx)
           {x=me.mid+me.v+(me.lr*28), y = me.y+39},
           function(z)
             xx.cancombo = true
-            z.health = z.health - bbkdam
-            z.v = xx.lr*bbkkb
+            z.health = z.health - at.bb.k.dam
+            z.v = xx.lr*at.bb.k.kb
             z.flinch = true
             z.ft = at.bb.k.ft
             if #joysticks>=xx.id then
@@ -355,11 +341,11 @@ function breadandbutter(xx)
 
             function(z)
               xx.cancombo = true
-              z.health = z.health - uppercutdam
-              z.v = uppercutkb
-              z.j = uppercutj
+              z.health = z.health - at.bb.u.dam
+              z.v = at.bb.u.kb
+              z.j = at.bb.u.j
               z.flinch = true
-              z.ft = uppercutft
+              z.ft = at.bb.u.ft
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(1,1)
               end

@@ -1,17 +1,21 @@
 
-greena21 = {im=love.graphics.newImage("me/attack/greena21.png"),c=love.graphics.newImage("me/attack/greena21c.png")}
-greena22 = {im=love.graphics.newImage("me/attack/greena22.png"),c=love.graphics.newImage("me/attack/greena22c.png")}
-greena22s = {im=love.graphics.newImage("me/attack/greena22s.png"),c=love.graphics.newImage("me/attack/greena22c.png")}
-greena1 = {im=love.graphics.newImage("me/attack/greena1.png"),c=love.graphics.newImage("me/attack/greena1c.png")}
+greena21 = {im=love.graphics.newImage("me/attack/greena21.png"),c=love.graphics.newImage("me/attack/greena21c.png"), xoff = 10}
+greena22 = {im=love.graphics.newImage("me/attack/greena22.png"),c=love.graphics.newImage("me/attack/greena22c.png"), xoff = 20}
+greena22s = {im=love.graphics.newImage("me/attack/greena22s.png"),c=love.graphics.newImage("me/attack/greena22c.png"), xoff = 20}
+greena1s = {im=love.graphics.newImage("me/attack/greena1s.png"),c=love.graphics.newImage("me/attack/greena1c.png"), xoff = 20, yoff = 60}
+greena1 = {im=love.graphics.newImage("me/attack/greena1.png"),c=love.graphics.newImage("me/attack/greena1c.png"), xoff = 20, yoff = 60}
 
-
+at.g = {}
+at.g.p = {}
+at.g.p.dam = 4
+at.g.p.kb = 2
+at.g.p.ft = 5
+at.g.p.max = 2
 
 me.ggpc = 0
 you.ggpc = 0
-maxgs = 2
+
 ggpdam = 4
-ggpkb = 2
-ggft = 5
 
 function gandg(xx)
 
@@ -29,11 +33,12 @@ function gandg(xx)
       xx.animcounter = 1
       xx.combo = xx.combo + 1
       xx.ggpc = 1
-    elseif xx.a4 then
+      xx.type = 1
+    elseif xx.a4 and not xx.holda then
       xx.type = 2
       xx.animcounter = 1
       xx.combo = xx.combo + 1
-    elseif xx.a1 then
+    elseif xx.a1 and not xx.holda then
       xx.type = 3
       xx.animcounter = 1
       xx.combo = xx.combo + 1
@@ -44,31 +49,29 @@ function gandg(xx)
     if xx.type <= 1 then
       if xx.animcounter < 5 then
         xx.im = greena21
-        xx.xoffset = 10
 
-      elseif xx.animcounter < 20 then
+      elseif xx.animcounter < 30 then
         xx.im = greena22
-        xx.xoffset = 20
         if xx.animcounter == 5 then
-        xx.im = greena22s
-        repplay(xx.greens)
-        xx.v = xx.v + (xx.lr*3)
-          
+          xx.im = greena22s
+          repplay(xx.greens)
+          xx.v = xx.v + (xx.lr*3)
+
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y},
-            {x=xx.mid+xx.v+(xx.lr*111), y = xx.y+17},
+            {x=xx.mid+xx.v+(xx.lr*111), y = xx.y},
             {x=xx.mid, y = me.y+60},
-            {x=xx.mid+xx.v+(xx.lr*111), y = xx.y+60-17},
+            {x=xx.mid+xx.v+(xx.lr*111), y = xx.y+60},
             function(z)
               xx.cancombo = true
               z.health = z.health - ggpdam
-              if xx.ggpc == maxgps then
-                z.v = xx.lr*ggpkb*3
+              if xx.ggpc == at.g.p.max then
+                z.v = xx.lr*at.g.p.kb*3
               else
-                z.v = xx.lr*ggpkb
+                z.v = xx.lr*at.g.p.kb
               end
               z.flinch = true
-              z.ft = ggft
+              z.ft = at.g.p.ft
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(.7,1)
               end
@@ -82,7 +85,7 @@ function gandg(xx)
           combo(xx)
         end
 
-      elseif xx.animcounter >= 20 then
+      elseif xx.animcounter >= 30 then
         xx.animcounter = 0
         xx.ggpc = 0
       end
@@ -92,23 +95,19 @@ function gandg(xx)
     elseif xx.type == 2 then
       if xx.animcounter < 12 then
         xx.im = kick1
-        xx.xoffset = 15
-        xx.yoffset = 10
       elseif xx.animcounter < 18 then
         xx.im = kick2
-        xx.xoffset = 15
-        xx.yoffset = 10
         hboxcs(xx.id, 
           {x=me.mid, y = me.y+31},
-          {x=me.mid+me.v+(me.lr*28), y = me.y+31},
-          {x=me.mid, y = me.y+37},
-          {x=me.mid+me.v+(me.lr*28), y = me.y+39},
+          {x=me.mid+me.v-(me.lr*3), y = me.y-56},
+          {x=me.mid+(me.lr*51), y = me.y-32},
+          {x=me.mid+me.v+(me.lr*22), y = me.y+32},
           function(z)
             xx.cancombo = true
-            z.health = z.health - bbkdam
-            z.v = xx.lr*bbkkb
+            z.health = z.health - at.bb.k.dam
+            z.v = xx.lr*at.bb.k.kb
             z.flinch = true
-            z.ft = bbft
+            z.ft = at.bb.p.ft
             if #joysticks>=xx.id then
               xx.joystick:setVibration(1,1)
             end
@@ -117,8 +116,6 @@ function gandg(xx)
           end)
       elseif xx.animcounter < 43 then
         xx.im = kick3
-        xx.xoffset = 15
-        xx.yoffset = 10
         if xx.animcounter >= 17 then 
           combo(xx)
         end
@@ -127,33 +124,36 @@ function gandg(xx)
         xx.ggpc = 0
       end
     elseif xx.type ==3 then
-      if xx.animcounter < 9 then
-        xx.im = punch6
-        xx.xoffset = 15
-      elseif xx.animcounter < 16 then
-        xx.im = uppercut
-        xx.xoffset = 15
-        if xx.animcounter == 9 then
+      if xx.animcounter < 5 then
+        xx.im = greena21
+      elseif xx.animcounter < 14 then
+        xx.im = greena1
+        
+          if xx.animcounter >=5 and xx.animcounter < 7 then 
+            xx.im = greena1s
+            end
+        if xx.animcounter == 5 then
+          repplay(xx.greens)
           hboxcs(xx.id, 
-            {x=me.mid, y = me.y+30},
-            {x=me.mid+me.v+(me.lr*11), y = me.y+8},
+            {x=me.mid-(me.lr*-33), y = me.y+8},
+            {x=me.mid+me.v+(me.lr*3), y = me.y+8},
             {x=me.mid, y = me.y+20},
             {x=me.mid+me.v+(me.lr*17), y = me.y+8},
 
             function(z)
               xx.cancombo = true
-              z.health = z.health - uppercutdam
-              z.v = uppercutkb
-              z.j = uppercutj
+              z.health = z.health - at.bb.u.dam
+              z.v = at.bb.u.kb
+              z.j = at.bb.u.j
               z.flinch = true
-              z.ft = uppercutft
+              z.ft = at.bb.u.ft
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(1,1)
               end
               makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
             end)
         end
-      elseif xx.animcounter >= 16 then
+      elseif xx.animcounter >= 14 then
         xx.animcounter = 0
         xx.ggpc = 0
       end

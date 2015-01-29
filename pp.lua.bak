@@ -33,6 +33,7 @@ me.spikechargetimer = 0
 spikecooldown = 15
 
 p4ft = 10
+p4dam = 6
 
 mespikeprime = false
 mespikeairprime = false
@@ -98,7 +99,7 @@ function spikeupdate(xx)
           z.y = z.y-30
           z.flinch = true
           z.ft = z.ft + p4ft
-          z.health = z.health - at.p.k.dam
+          z.health = z.health - p4dam
         end)
     elseif cur.t >=6 then
       hboxcs(0, 
@@ -122,7 +123,7 @@ function spikeupdate(xx)
           z.j = z.j + 6
           z.flinch = true
           z.ft = z.ft + p4ft
-          z.health = z.health - at.p.k.dam/3
+          z.health = z.health - p4dam/3
         end)
     end
 
@@ -150,14 +151,16 @@ at.p.p.kb = 2
 at.p.k = {}
 at.p.k.max = 6
 at.p.k.kb = 6
-at.p.k.dam = 6
+at.p.p.ft = 10
 
 
+ppft = 10
 me.ppnum = 0
 you.ppnum = 0
 
 me.numofspikes = 0
 you.numofspikes = 0
+at.p.k.max = 6
 
 pa2busytime = 28
 pa4busytime = 10

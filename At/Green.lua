@@ -5,17 +5,25 @@ greena22s = {im=love.graphics.newImage("me/attack/greena22s.png"),c=love.graphic
 greena1s = {im=love.graphics.newImage("me/attack/greena1s.png"),c=love.graphics.newImage("me/attack/greena1c.png"), xoff = 20, yoff = 60}
 greena1 = {im=love.graphics.newImage("me/attack/greena1.png"),c=love.graphics.newImage("me/attack/greena1c.png"), xoff = 20, yoff = 60}
 
-guppercutkb = 7
-guppercutdam = 2
-guppercutj = 22
-guppercutft = 20
+at.g = {}
+at.g.p = {}
+at.g.p.dam = 4
+at.g.p.kb = 2
+at.g.p.ft = 5
+at.g.p.max = 2
+
+
+
+at.g.u = {}
+at.g.u.dam = 2
+at.g.u.kb = 4
+at.g.u.j = 26q
+at.g.u.ft = 20
+
 
 me.ggpc = 0
 you.ggpc = 0
-maxgps = 2
-ggpdam = 4
-ggpkb = 2
-ggft = 5
+
 
 function gandg(xx)
 
@@ -64,14 +72,14 @@ function gandg(xx)
             {x=xx.mid+xx.v+(xx.lr*111), y = xx.y+60},
             function(z)
               xx.cancombo = true
-              z.health = z.health - ggpdam
-              if xx.ggpc == maxgps then
-                z.v = xx.lr*ggpkb*3
+              z.health = z.health - at.g.p.dam
+              if xx.ggpc == at.g.p.max then
+                z.v = xx.lr*at.g.p.kb*3
               else
-                z.v = xx.lr*ggpkb
+                z.v = xx.lr*at.g.p.kb
               end
               z.flinch = true
-              z.ft = ggft
+              z.ft = at.g.p.ft
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(.7,1)
               end
@@ -104,10 +112,10 @@ function gandg(xx)
           {x=me.mid+me.v+(me.lr*22), y = me.y+32},
           function(z)
             xx.cancombo = true
-            z.health = z.health - bbkdam
-            z.v = xx.lr*bbkkb
+            z.health = z.health - at.bb.k.dam
+            z.v = xx.lr*at.bb.k.kb
             z.flinch = true
-            z.ft = bbft
+            z.ft = at.bb.p.ft
             if #joysticks>=xx.id then
               xx.joystick:setVibration(1,1)
             end
@@ -142,11 +150,11 @@ function gandg(xx)
 
             function(z)
               xx.cancombo = true
-              z.health = z.health - guppercutdam
-              z.v = guppercutkb
-              z.j = guppercutj
+              z.health = z.health - at.g.u.dam
+              z.v = at.g.u.kb
+              z.j = at.g.u.j
               z.flinch = true
-              z.ft = guppercutft
+              z.ft = at.g.u.ft
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(1,1)
               end
