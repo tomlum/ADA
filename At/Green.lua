@@ -79,7 +79,7 @@ function gandg(xx)
           xx.v = xx.v + (xx.lr*22)
           elseif xx.ggpc==5 then
           xx.lr=-xx.lr
-          xx.v = xx.v + (xx.lr*18)
+          xx.v = xx.v + (xx.lr*19)
           end
           
           xx.im = greena22s
@@ -211,78 +211,6 @@ you.throwanimatecounter = 0
 aimwait = 10
 me.waittoaim = 0
 you.waittoaim = 0
-
-function xpint(a,A,b,B)
-
-  s1 = (a.y-A.y)/(a.x-A.x)
-  s2 = (b.y-B.y)/(b.x-B.x)
-
-  if A.x == a.x then
-    if (b.x < a.x and B.x > a.x) or
-    (B.x < a.x and b.x > a.x) then return true
-    else return false 
-    end
-  elseif B.x == b.x then
-    if (a.x < b.x and A.x > b.x) or
-    (A.x < b.x and a.x > b.x) then return true
-    else return false 
-    end
-  end
-
-  if math.abs(s1 - s2) < .01 then return false
-  end
-
-  thepy = ((-s1*s2*a.x)-(s1*s2*b.x)+(s1*b.y)-(s2*a.y))/(s1 - s2)
-  thepx = ((thepy-a.y)/s1) + a.x 
-
-  if thepx < math.max(math.max(a.x, A.x), math.max(b.x, B.x))
-  and thepx > math.min(math.min(a.x, A.x), math.min(b.x, B.x))
-  and thepy < math.max(math.max(a.y, A.y), math.max(b.y, B.y))
-  and thepy > math.min(math.min(a.y, A.y), math.min(b.y, B.y))
-  then return true
-  else return false
-  end
-end
-
-
-
-
-
-
-function findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, seg1, seg2)
-  local a1,b1,a2,b2 = l1p2y-l1p1y, l1p1x-l1p2x, l2p2y-l2p1y, l2p1x-l2p2x
-  local c1,c2 = a1*l1p1x+b1*l1p1y, a2*l2p1x+b2*l2p1y
-  local det,x,y = a1*b2 - a2*b1
-  if det==0 then return false end
-  x,y = (b2*c1-b1*c2)/det, (a1*c2-a2*c1)/det
-  if seg1 or seg2 then
-    local min,max = math.min, math.max
-    if seg1 and not (min(l1p1x,l1p2x) <= x and x <= max(l1p1x,l1p2x) and min(l1p1y,l1p2y) <= y and y <= max(l1p1y,l1p2y)) or
-    seg2 and not (min(l2p1x,l2p2x) <= x and x <= max(l2p1x,l2p2x) and min(l2p1y,l2p2y) <= y and y <= max(l2p1y,l2p2y)) then
-      return false
-    end
-  end
-  return true
-end
-
-function findxIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y)
-
-  if findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, true, true) or findIntersect(l1p2x,l1p2y,l1p1x,l1p1y,l2p1x,l2p1y, l2p2x,l2p2y, true, true) then
-    return true
-  else return false
-  end
-
-end
-
-function pint(p11,p12,p21,p22)
-  return findIntersect(p11.x+.2,p11.y+.2,p12.x,p12.y,p21.x+.2,p21.y+.2,p22.x,p22.y,true,true)
-end
-
-
-
-
-
-
 
 you.bolts = {}
 
@@ -956,101 +884,75 @@ end
 
 
 
-me.boltchargecounter = 0
-me.boltchargehold = 20
+function xpint(a,A,b,B)
 
-function me.bolts.shoot(x)
+  s1 = (a.y-A.y)/(a.x-A.x)
+  s2 = (b.y-B.y)/(b.x-B.x)
 
-
-
-  if me.landing
-  then me.boltchargecounter = 0
+  if A.x == a.x then
+    if (b.x < a.x and B.x > a.x) or
+    (B.x < a.x and b.x > a.x) then return true
+    else return false 
+    end
+  elseif B.x == b.x then
+    if (a.x < b.x and A.x > b.x) or
+    (A.x < b.x and a.x > b.x) then return true
+    else return false 
+    end
   end
 
-  if me.flinch or me.gcancel then
-    me.attack = "none"
-    me.boltchargehold = 20
-    me.boltchargecounter = 0
-    me.prime = false
+  if math.abs(s1 - s2) < .01 then return false
   end
 
-  if me.boltchargehold < 17
-  then me.boltchargehold = me.boltchargehold + 1
-    me.im = boltrelease
-    me.stop = true
-    me.busy = true
+  thepy = ((-s1*s2*a.x)-(s1*s2*b.x)+(s1*b.y)-(s2*a.y))/(s1 - s2)
+  thepx = ((thepy-a.y)/s1) + a.x 
 
-  elseif (me.attack == "chargebolt" or me.boltchargecounter == greenchargetime) and not x
-  then
-    me.stop = true
-    me.attack = null
-    me.boltchargecounter = 0
-    if cg1:isStopped() then
-      cg1:play()
-    else cg1:rewind()
-      cg1:play()
-    end
-    table.insert(me.bolts, {x = me.mid -23 * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = 3, s = 1, v = boltspeed * me.lr})
-    table.insert(me.bolts, {x = me.mid -23  * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = 0, s = 1, v = boltspeed * me.lr})
-    table.insert(me.bolts, {x = me.mid -23  * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = -3, s = 1, v = boltspeed * me.lr})
-    table.insert(me.bolts, {x = me.mid -23  * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = 6, s = 1, v = boltspeed * me.lr})
-    table.insert(me.bolts, {x = me.mid -23  * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = -6, s = 1, v = boltspeed * me.lr})
-    table.insert(me.bolts, {x = me.mid -23  * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = -12, s = 1, v = boltspeed * me.lr})
-    table.insert(me.bolts, {x = me.mid -23  * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = 12, s = 1, v = boltspeed * me.lr})
-    table.insert(me.bolts, {x = me.mid -23  * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = -18, s = 1, v = boltspeed * me.lr})
-    table.insert(me.bolts, {x = me.mid -23  * me.lr , y = me.y + 24, lr = me.lr, time = 0, upv = 18, s = 1, v = boltspeed * me.lr})
-    me.im = boltrelease
-    me.prime = false
-    me.boltchargehold = 0
-    me.busy = true
-  elseif me.boltchargecounter == greenchargetime and me.g and x
-  then me.stop = true
-    me.attack = "chargebolt"
-    me.im = boltcharged
-    me.busy = true
-
-  elseif x
-  then
-    me.prime = true
-    me.boltchargecounter = me.boltchargecounter + 1
-
-
-
-  elseif me.prime == true and me.boltcombocount < 5 and not me.gfired
-  then
-    me.prime = false
-    table.insert(me.bolts, {x = me.mid, y = me.y +24, lr = me.lr, time = 0, upv = megupv, s = 0, v = megv * me.lr + me.v})
-
-
-    if gr1:isStopped() then
-      gr1:play()
-    else gr1:rewind()
-      gr1:play()
-    end
-
-
-
-
-    if not me.g then
-      table.insert(me.bolts, {x = me.mid +12 * me.lr , y = me.y + 38, lr = me.lr, time = 0, upv = megupv, s = 0, v = megv * me.lr + me.v})		me.gfired = true
-    end
-    me.gfired = true
-    me.boltcombocount = me.boltcombocount + 1
-    me.throwcounter = 0
-    me.boltchargecounter = 0
-
-  else me.prime = false
-    me.boltchargecounter = 0
-    me.attack = "none"
-
+  if thepx < math.max(math.max(a.x, A.x), math.max(b.x, B.x))
+  and thepx > math.min(math.min(a.x, A.x), math.min(b.x, B.x))
+  and thepy < math.max(math.max(a.y, A.y), math.max(b.y, B.y))
+  and thepy > math.min(math.min(a.y, A.y), math.min(b.y, B.y))
+  then return true
+  else return false
   end
+end
 
 
 
 
 
 
+function findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, seg1, seg2)
+  local a1,b1,a2,b2 = l1p2y-l1p1y, l1p1x-l1p2x, l2p2y-l2p1y, l2p1x-l2p2x
+  local c1,c2 = a1*l1p1x+b1*l1p1y, a2*l2p1x+b2*l2p1y
+  local det,x,y = a1*b2 - a2*b1
+  if det==0 then return false end
+  x,y = (b2*c1-b1*c2)/det, (a1*c2-a2*c1)/det
+  if seg1 or seg2 then
+    local min,max = math.min, math.max
+    if seg1 and not (min(l1p1x,l1p2x) <= x and x <= max(l1p1x,l1p2x) and min(l1p1y,l1p2y) <= y and y <= max(l1p1y,l1p2y)) or
+    seg2 and not (min(l2p1x,l2p2x) <= x and x <= max(l2p1x,l2p2x) and min(l2p1y,l2p2y) <= y and y <= max(l2p1y,l2p2y)) then
+      return false
+    end
+  end
+  return true
+end
 
+function findxIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y)
 
+  if findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, true, true) or findIntersect(l1p2x,l1p2y,l1p1x,l1p1y,l2p1x,l2p1y, l2p2x,l2p2y, true, true) then
+    return true
+  else return false
+  end
 
 end
+
+function pint(p11,p12,p21,p22)
+  return findIntersect(p11.x+.2,p11.y+.2,p12.x,p12.y,p21.x+.2,p21.y+.2,p22.x,p22.y,true,true)
+end
+
+
+
+
+
+
+
