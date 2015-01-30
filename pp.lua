@@ -146,6 +146,7 @@ at.p.p = {}
 at.p.p.dam = 12
 at.p.p.ft = 10
 at.p.p.kb = 2
+at.p.p.max = 3
 
 at.p.k = {}
 at.p.k.max = 6

@@ -10,7 +10,7 @@ at.g.p = {}
 at.g.p.dam = 4
 at.g.p.kb = 2
 at.g.p.ft = 5
-at.g.p.max = 2
+at.g.p.max = 5
 
 
 
@@ -64,13 +64,20 @@ function gandg(xx)
         xx.im = greena22
         if xx.animcounter == 5 then
           
-          if xx.ggpc > 1 then
-          --reverse
+          
+          
+          if xx.ggpc ==3 then
+          xx.v = xx.v + (xx.lr*17)
+          elseif xx.ggpc==4 then
+          xx.lr=-xx.lr
+          xx.v = xx.v + (xx.lr*22)
+          elseif xx.ggpc==5 then
+          xx.lr=-xx.lr
+          xx.v = xx.v + (xx.lr*16)
           end
           
           xx.im = greena22s
           repplay(xx.greens)
-          xx.v = xx.v + (xx.lr*17)
 
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y},

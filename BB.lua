@@ -127,7 +127,7 @@ function combo(xx, func)
           else xx.type = 1
           end
         end
-      elseif xx.color.n==1 and xx.ppnum < at.bb.p.max then
+      elseif xx.color.n==1 and xx.ppnum < at.p.p.max then
         xx.type = 1
         xx.animcounter = 1
         xx.ppnum = xx.ppnum + 1
