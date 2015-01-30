@@ -5,6 +5,79 @@
 --341a000000000000005f7000000000000
 
 
+function keyboardcontrols()
+
+
+
+
+        if me.health<0 or you.health<0 then
+
+          me.up = false
+          me.down = false
+          me.left = false
+          me.right = false
+          me.a1 = false
+          me.a2 = false
+          me.a3 = false
+          me.block = false
+
+
+
+          you.up = false
+          you.down = false
+          you.left = false
+          you.right = false
+          you.a1 = false
+          you.a2 = false
+          you.a3 = false
+          you.block = false
+
+        else
+
+          me.start = love.keyboard.isDown("q")
+          me.up = love.keyboard.isDown("w")
+          me.down = love.keyboard.isDown("s")
+          me.left = love.keyboard.isDown("a")
+          me.right = love.keyboard.isDown("d")
+          me.a1b = love.keyboard.isDown("t")
+          me.a2b = love.keyboard.isDown("f")
+          me.a3b = love.keyboard.isDown("h")
+          me.a4b = love.keyboard.isDown("g")
+          me.blockb = love.keyboard.isDown("e")
+          me.run = love.keyboard.isDown("r")
+          me.rightb = love.keyboard.isDown("2")
+          me.leftb = love.keyboard.isDown("1")
+
+
+
+          you.up = love.keyboard.isDown("i")
+          you.down = love.keyboard.isDown("k")
+          you.left = love.keyboard.isDown("j")
+          you.right = love.keyboard.isDown("l")
+          you.a1b = love.keyboard.isDown("up")
+          you.a4b = love.keyboard.isDown("down")
+          you.a2b = love.keyboard.isDown("left")
+          you.a3b = love.keyboard.isDown("right")
+          you.blockb = love.keyboard.isDown("o")
+          you.start = love.keyboard.isDown("u")
+          you.run = love.keyboard.isDown("p")
+          you.rightb = love.keyboard.isDown("0")
+          you.leftb = love.keyboard.isDown("9")
+
+          you.a1 = you.a1b
+          you.a2 = you.a2b
+          you.a3 = you.a3b
+          you.a4 = you.a4b
+          me.a1 = me.a1b
+          me.a2 = me.a2b
+          me.a3 = me.a3b
+          me.a4 = me.a4b
+
+        end
+
+end
+
+
 
 me.leftdeadzone = false
 you.leftdeadzone = false

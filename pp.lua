@@ -136,7 +136,7 @@ function spikeupdate(xx)
       end
     end
     if cur.t == 2 then 
-      makerubble(cur.verts[3], cur.verts[1], 3,3)
+      makerubble(cur.verts[3], cur.verts[2], 2*cur.lr,5)
     end
   end
 end
