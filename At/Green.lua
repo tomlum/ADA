@@ -55,14 +55,14 @@ function gandg(xx)
   else
 
     if xx.type <= 1 then
-      if xx.animcounter < 5 then
+      if xx.animcounter < 4 then
         xx.im = greena21
         
         
 
       elseif xx.animcounter < 30 then
         xx.im = greena22
-        if xx.animcounter == 5 then
+        if xx.animcounter == 4 then
           
           
           
@@ -73,7 +73,7 @@ function gandg(xx)
           xx.v = xx.v + (xx.lr*22)
           elseif xx.ggpc==5 then
           xx.lr=-xx.lr
-          xx.v = xx.v + (xx.lr*16)
+          xx.v = xx.v + (xx.lr*18)
           end
           
           xx.im = greena22s
@@ -85,6 +85,9 @@ function gandg(xx)
             {x=xx.mid, y = me.y+60},
             {x=xx.mid+xx.v+(xx.lr*111), y = xx.y+60},
             function(z)
+              
+              makeslashsparks(xx.y+30,xx.v+xx.x+xx.lr*(15),-xx.lr*slashsparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
+              
               xx.cancombo = true
               z.health = z.health - at.g.p.dam
               if xx.ggpc == at.g.p.max then
@@ -98,12 +101,10 @@ function gandg(xx)
                 xx.joystick:setVibration(.7,1)
               end
 
-              makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
-
             end)
         end
 
-        if xx.animcounter >= 6 then 
+        if xx.animcounter >= 4 then 
           combo(xx)
         end
 

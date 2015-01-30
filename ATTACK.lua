@@ -29,12 +29,21 @@ you.olda1 = false
 me.extratimer = 0
 you.extratimer = 0
 extrastayonthegroundtime = 8
-
+me.uppercuthit = false
+you.uppercuthit = false
 function nottoomanyuppercuts(xx)
 
+if xx.type == 3 and xx.cancombo then xx.uppercuthit = true end
+
   if xx.uppercuttimer > 0 then
+    if xx.color.n ~= xx.cchangeto.n and xx.uppercuthit and xx.uppercuttimer > 30
+    then
+      xx.actionshot = true
+      xx.cancombo = false
+    end
     xx.uppercuttimer = xx.uppercuttimer-1
     xx.a1 = false
+  else xx.uppercuthit = false
   end
 
   if xx.type==3 then xx.uppercuttimer = uppercutpause end
@@ -285,7 +294,7 @@ newforwarddodge = function(xx)
       end
 
     elseif xx.dodgetype == 2 then 
-      
+
       if xx.dodgecounter > turnaroundtime-7 then 
         xx.im = dodge21
         xx.v = xx.v - xx.lr*1
@@ -307,7 +316,7 @@ newforwarddodge = function(xx)
         xx.dodgetype = 1
         xx.dodgecounter = dodgetime
         xx.currentdodgev = xx.v
-      elseif((xx.lr < 0 and xx.right) or (xx.lr > 0 and xx.left)) and xx.block then
+      elseif((xx.lr < 0 and xx.right) or (xx.lr > 0 and xx.left)) and xx.block and not xx.running  then
         xx.dodgetype = -1
         xx.dodgecounter = backdodgetime
       end
@@ -493,7 +502,7 @@ newforwarddodge = function(xx)
             xx.im = fallback
           end
           if xx.extratimer == 1 then
-          xx.falling = false
+            xx.falling = false
             xx.extratimer = 0
             if xx.flinchway > 0 then 
               xx.falltimer = -forgetuptime

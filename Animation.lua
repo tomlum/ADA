@@ -215,6 +215,8 @@ ya4fade= 100
 basefade = 80
 
 
+actionshotdur = 70
+
 function drawa(xx)
   if xx.im.xoff == nil then xx.im.xoff = 0 end
   if xx.im.yoff == nil then xx.im.yoff = 0 end
@@ -227,11 +229,9 @@ function drawa(xx)
     love.graphics.setColor(255, 255, 255, 255)
 end
 
-wobbletimer = 0
 
 function actionshotstuff(xx)
   if xx.actionshot then
-    wobbletimer = wobbletimer + .1
     
     if xx.color.n == xx.cchangeto.n and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) then
     xx.currentanim = xx.color.n
@@ -239,8 +239,8 @@ function actionshotstuff(xx)
       xx.actionshot = false
       xx.actiontimer = 0
     end
-    minzoom = minzoom + .023 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
-    maxzoom = maxzoom + .023 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
+    minzoom = minzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
+    maxzoom = maxzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
     end
   
           ColorChange(xx)
@@ -249,7 +249,6 @@ function actionshotstuff(xx)
   if xx.actiontimer == 1 
   then xx.actionshot = false 
     xx.actiontimer = 0
-wobbletimer = 0
     if not musicmute then
       thesong:setPitch(1)
     end
@@ -265,11 +264,11 @@ wobbletimer = 0
     end
 
   elseif xx.actionshot == true and xx.actiontimer == 0 
-  then xx.actiontimer = 60
+  then xx.actiontimer = actionshotdur
   elseif xx.actiontimer > 0 
   then xx.actiontimer = xx.actiontimer - 1
      if not musicmute then
-    thesong:setPitch(xx.actiontimer/60)
+    thesong:setPitch(xx.actiontimer/actionshotdur)
     end
   else xx.actiontimer = 0
   end
@@ -2024,6 +2023,26 @@ death = function()
     table.insert(sparks,{x = ex, y = why, v=-vee, j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee})
 
 
+end
+
+
+  function makeslashsparks(why,ex,vee, jay, arr,gee,bee)
+    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+
+
   end
 
 
@@ -2042,7 +2061,7 @@ death = function()
       v.j = v.j - .1
     end
     love.graphics.setColor(v.r,v.g,v.b)
-    love.graphics.draw(enviro.spark,v.x,v.y-2,70/(v.v+v.y),math.random(),1,1)
+    love.graphics.draw(enviro.spark,v.x,v.y-2,math.random(0,10),.3,.3)
     love.graphics.setColor(255,255,255)
 
   end

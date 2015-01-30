@@ -24,6 +24,7 @@ at.bb.u.j = 22
 at.bb.u.ft = 20
 
 sparkspeed = 3
+slashsparkspeed = 7
 
 maxcombo = 5
 me.maxcombo = maxcombo
@@ -106,17 +107,17 @@ end
 
 function combo(xx, func)
 
-  if func ~= nil then
-    func()
-  end
+  
 
   if xx.color.n ~= xx.cchangeto.n and xx.cancombo
   then
+    if func~= nil then func() end
     xx.actionshot = true
     xx.cancombo = false
   end
   if not xx.holda then
     if xx.a2 or xx.a3 then
+      if func~= nil then func() end
       if xx.color.n==0 then
         if xx.bbpc < bbnumpunch then
           xx.bbpc = xx.bbpc+1
@@ -141,7 +142,8 @@ function combo(xx, func)
 
       end
 
-    elseif xx.a4 and xx.type ~= 2 then
+  elseif xx.a4 and xx.type ~= 2 then
+    if func~= nil then func() end
       if xx.color.n==0 then
         xx.combo = xx.combo + 1
         xx.animcounter = 1
@@ -154,6 +156,7 @@ function combo(xx, func)
         xx.combo = xx.combo + 1
       end
     elseif xx.a1 then
+      if func~= nil then func() end
       if xx.color.n==0 then
         xx.type = 3
         xx.animcounter = 1
