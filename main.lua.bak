@@ -357,7 +357,7 @@ function love.load()
 
 
   x = 11
-  lefty = true
+  you.lefty = true
   rightme = true
   f = false
   me.actionshot = false

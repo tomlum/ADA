@@ -95,9 +95,9 @@ flinchc = love.graphics.newImage("me/attack/flinchc.png")
 flinch = {im = flinchim, c = flinchc}
 
 
-fallback = {im=love.graphics.newImage("me/attack/fallback.png"),c=love.graphics.newImage("me/attack/fallbackc.png")}
-fallbackbounce = {im=love.graphics.newImage("me/attack/fallbackbounce.png"),c=love.graphics.newImage("me/attack/fallbackbouncec.png")}
-fallbackbouncedown = {im=love.graphics.newImage("me/attack/fallbackbouncedown.png"),c=love.graphics.newImage("me/attack/fallbackbouncedownc.png")}
+fallback = {im=love.graphics.newImage("me/attack/fallback.png"),c=love.graphics.newImage("me/attack/fallbackc.png"),xoff = 12}
+fallbackbounce = {im=love.graphics.newImage("me/attack/fallbackbounce.png"),c=love.graphics.newImage("me/attack/fallbackbouncec.png"),xoff = 12}
+fallbackbouncedown = {im=love.graphics.newImage("me/attack/fallbackbouncedown.png"),c=love.graphics.newImage("me/attack/fallbackbouncedownc.png"),xoff = 12}
 fallforward = {im=love.graphics.newImage("me/attack/fallforward.png"),c=love.graphics.newImage("me/attack/fallforwardc.png")}
 fallback1 = {im=love.graphics.newImage("me/attack/fallback1.png"),c=love.graphics.newImage("me/attack/fallback1c.png")}
 fallforward1 = {im=love.graphics.newImage("me/attack/fallforward1.png"),c=love.graphics.newImage("me/attack/fallforward1c.png")}
@@ -113,8 +113,8 @@ block = {im = blockim, c = blockc}
 dodgeback = {im = love.graphics.newImage("me/attack/dodgeback.png"), c=love.graphics.newImage("me/attack/dodgebackc.png")}
 dodgeback2 = {im = love.graphics.newImage("me/attack/dodgeback2.png"), c=love.graphics.newImage("me/attack/dodgeback2c.png")}
 dodge = {im=love.graphics.newImage("me/attack/dodge.png"), c=love.graphics.newImage("me/attack/dodgec.png")}
-dodge2 = {im=love.graphics.newImage("me/attack/dodge2.png"), c=love.graphics.newImage("me/attack/dodge2c.png")}
-dodge21 = {im=love.graphics.newImage("me/attack/dodge21.png"), c=love.graphics.newImage("me/attack/dodge21c.png")}
+dodge2 = {im=love.graphics.newImage("me/attack/dodge2.png"), c=love.graphics.newImage("me/attack/dodge2c.png"), xoff = 12}
+dodge21 = {im=love.graphics.newImage("me/attack/dodge21.png"), c=love.graphics.newImage("me/attack/dodge21c.png"), xoff = 12}
 
 invis = {im=love.graphics.newImage("me/attack/invis.png"),c=love.graphics.newImage("me/attack/invis.png")}
 
@@ -285,7 +285,7 @@ newforwarddodge = function(xx)
       end
 
     elseif xx.dodgetype == 2 then 
-      xx.xoffset = 12
+      
       if xx.dodgecounter > turnaroundtime-7 then 
         xx.im = dodge21
         xx.v = xx.v - xx.lr*1
@@ -301,7 +301,6 @@ newforwarddodge = function(xx)
         xx.dodgecounter = turnaroundtime
         xx.slidesound = true
         xx.im = dodge21
-        xx.xoffset = 12
       end
     elseif xx.dodgetype == 0 and xx.dodgerefreshtimer == 0 then
       if((xx.lr > 0 and xx.right) or (xx.lr < 0 and xx.left)) and xx.block then

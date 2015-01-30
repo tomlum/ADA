@@ -1744,74 +1744,37 @@ death = function()
   end
 
   --function that adjusts the x for flipping left and right
-  meyoux = function ()
-    me.xleft = me.x + 30
-    me.mid = me.x + 15
-    you.xleft = you.x + 30
-    you.mid = you.x + 15
 
-    if you.lefty 
-    then you.xanimate = you.xleft
-      you.leftface = true
-    elseif you.righty 
-    then you.xanimate = you.x
-      you.leftface = false
-    end
-
-
-    if leftme 
-    then me.xanimate = me.xleft
-      me.leftface = true
-    elseif rightme 
-    then me.xanimate = me.x
-      me.leftface = false
-    end
-  end
   idley = 0
   idleme = 0
   ay = 0
   me.walktimer = 0
   you.walktimer = 0
-  orient = function ()
-    if not you.slowdown and not you.slide and not you.stop and not you.pause
-    and (you.dodgetype~=2 and you.dodgetype >-1)
-    then
-      you.you.righty = you.right
-      you.you.lefty = you.left
-    end
-    if you.you.righty and not you.you.lefty then you.righty = true
-      you.lefty = false
-    elseif you.you.lefty and not you.you.righty then you.lefty = true
-      you.righty = false
-    end
+  
 
-    if not me.slowdown and not me.slide and not me.stop and not me.pause
-    and (me.dodgetype~=2 and me.dodgetype >-1)
+  orientlr = function(xx)
+    
+       me.xleft = me.x + 30
+    me.mid = me.x + 15
+    you.xleft = you.x + 30
+    you.mid = you.x + 15
+    
+    if not xx.slowdown and not xx.slide and not xx.stop and not xx.pause
+    and (xx.dodgetype~=2 and xx.dodgetype >-1)
     then
-      me.you.righty = me.right
-      me.you.lefty = me.left
-    end
-    if me.you.righty and not me.you.lefty then rightme = true
-      leftme = false
-    elseif me.you.lefty and not me.you.righty then leftme = true
-      rightme = false
-    end
+      if xx.right then xx.lr = 1
+      elseif xx.left then xx.lr = -1
+      end
+      end
+      if xx.lr > 0 then
+        
+        xx.xanimate = xx.x
+        else 
+        xx.xanimate = xx.xleft
+      end
+    
+ 
 
-    if ywjt <= 1 then
-      if you.lefty
-      then 
-        you.lr = -1
-      elseif you.righty
-      then you.lr = 1
-      end
-    end
-    if mwjt <= 1 then
-      if leftme 
-      then me.lr = -1
-      elseif rightme
-      then me.lr = 1
-      end
-    end
   end
 
 

@@ -358,7 +358,7 @@ function love.load()
 
   x = 11
   you.lefty = true
-  rightme = true
+  me.righty = true
   f = false
   me.actionshot = false
   me.actiontimer = 0
@@ -797,9 +797,8 @@ function love.update()
 
 
 
-          orient()
-
-          meyoux()
+          orientlr(me)
+          orientlr(you)
 
           you.feet = you.y + 60
           me.feet = me.y + 60

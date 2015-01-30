@@ -45,7 +45,6 @@ me.id = 1
 	me.yoffset = 0
 	me.feet = me.y + 60
 	--the face/crest image
-	me.leftface = false
 	me.face = love.graphics.newImage("me/face/face1.png")
 	me.facex = me.x + 12
 	me.facedis = 2
@@ -114,7 +113,6 @@ you.id = 2
 	you.yoffset = 0
 	you.feet = you.y + 60
 	--the face/crest image
-	you.leftface = true
 	you.face = love.graphics.newImage("me/face/face2.png")
 	you.facex = you.x + 12
 	you.facedis = 2
@@ -193,7 +191,7 @@ you.yoffset = 0
 	medeathclock = 0
 
 you.lefty = true
-rightme = true
+me.righty = true
 
 	gotimer = 0
 
@@ -218,7 +216,7 @@ rightme = true
 	me.y = 1500 - 3 - 60
 	me.feet = me.y + 60
 	--the face/crest image
-	me.leftface = false
+	me.lefty = false
 	me.face = love.graphics.newImage("me/face/face1.png")
 	me.facex = me.x + 12
 	me.facedis = 2
@@ -282,7 +280,7 @@ rightme = true
 	you.y = 1500 - 3 - 60
 	you.feet = you.y + 60
 	--the face/crest image
-	you.leftface = true
+	you.lefty = true
 	you.face = love.graphics.newImage("me/face/face2.png")
 	you.facex = you.x + 12
 	you.facedis = 2
@@ -392,7 +390,7 @@ you.yoffset = 0
 	medeathclock = 0
 
 	you.lefty = true
-rightme = true
+me.righty = true
 
 	gotimer = 0
 
@@ -480,7 +478,7 @@ startsfade = false
 	me.y = 1500 - 3 - 60
 	me.feet = me.y + 60
 	--the face/crest image
-	me.leftface = false
+	me.lefty = false
 	me.face = love.graphics.newImage("me/face/face1.png")
 	me.facex = me.x + 12
 	me.facedis = 2
@@ -545,7 +543,7 @@ startsfade = false
 	you.y = 1500 - 3 - 60
 	you.feet = you.y + 60
 	--the face/crest image
-	you.leftface = true
+	you.lefty = true
 	you.face = love.graphics.newImage("me/face/face2.png")
 	you.facex = you.x + 12
 	you.facedis = 2

@@ -1753,16 +1753,16 @@ death = function()
     if you.lefty 
     then you.xanimate = you.xleft
       you.leftface = true
-    elseif righty 
+    elseif you.righty 
     then you.xanimate = you.x
       you.leftface = false
     end
 
 
-    if leftme 
+    if me.lefty 
     then me.xanimate = me.xleft
       me.leftface = true
-    elseif rightme 
+    elseif me.righty 
     then me.xanimate = me.x
       me.leftface = false
     end
@@ -1777,38 +1777,38 @@ death = function()
     and (you.dodgetype~=2 and you.dodgetype >-1)
     then
       you.righty = you.right
-      you.you.lefty = you.left
+      you.lefty = you.left
     end
-    if you.righty and not you.you.lefty then righty = true
+    if you.righty and not you.lefty then you.righty = true
       you.lefty = false
-    elseif you.you.lefty and not you.righty then you.lefty = true
-      righty = false
+    elseif you.lefty and not you.righty then you.lefty = true
+      you.righty = false
     end
 
     if not me.slowdown and not me.slide and not me.stop and not me.pause
     and (me.dodgetype~=2 and me.dodgetype >-1)
     then
       me.righty = me.right
-      me.you.lefty = me.left
+      me.lefty = me.left
     end
-    if me.righty and not me.you.lefty then rightme = true
-      leftme = false
-    elseif me.you.lefty and not me.righty then leftme = true
-      rightme = false
+    if me.righty and not me.lefty then me.righty = true
+      me.lefty = false
+    elseif me.lefty and not me.righty then me.lefty = true
+      me.righty = false
     end
 
     if ywjt <= 1 then
       if you.lefty
       then 
         you.lr = -1
-      elseif righty
+      elseif you.righty
       then you.lr = 1
       end
     end
     if mwjt <= 1 then
-      if leftme 
+      if me.lefty 
       then me.lr = -1
-      elseif rightme
+      elseif me.righty
       then me.lr = 1
       end
     end

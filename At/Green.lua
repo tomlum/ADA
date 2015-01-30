@@ -65,7 +65,7 @@ function gandg(xx)
         if xx.animcounter == 5 then
           
           if xx.ggpc > 1 then
-          reverse
+          --reverse
           end
           
           xx.im = greena22s
