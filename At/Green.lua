@@ -62,6 +62,12 @@ function gandg(xx)
 
       elseif xx.animcounter < 30 then
         xx.im = greena22
+        if xx.ggpc>=3 then
+          table.insert(xx.trail, 
+            {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0;})
+          
+        end
+    
         if xx.animcounter == 4 then
           
           

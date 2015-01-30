@@ -220,6 +220,7 @@ require "At/Sand"
 require "BB"
 require "pp"
 loader = require "love-loader"
+require "menustuff"
 
 
 moop = 0
@@ -272,11 +273,6 @@ function love.load()
 
   collide = true
 
-  mechooseface = false
-  youchooseface = false
-  mechoosecolor = true
-  youchoosecolor = true
-
   mefaceselector = 0
   youfaceselector = 0
   juststartedpost = true
@@ -290,35 +286,8 @@ function love.load()
   cfhold = 0
   cfup = true
 
-  mbb,mgg,mpp,myy,ybb,ygg,ypp,yyy,mss,yss = 0,0,0,0,0,0,0,0,0,0
-  mb,mg,mp,yb,yg,yp,ms,ys = false,false,false,false,false,false,false,false
-  r1,r2,g1,g2,b1,b2 = 0,0,0,0,0,0
-
-  mf1r,mf1g,mf1b = 255,255,255
-  mf2r,mf2g,mf2b = 255,255,255
-  mf3r,mf3g,mf3b = 255,255,255
-  mf4r,mf4g,mf4b = 255,255,255
-  mf5r,mf5g,mf5b = 255,255,255
-  mf6r,mf6g,mf6b = 255,255,255
-
-  yf1r,yf1g,yf1b = 255,255,255
-  yf2r,yf2g,yf2b = 255,255,255
-  yf3r,yf3g,yf3b = 255,255,255
-  yf4r,yf4g,yf4b = 255,255,255
-  yf5r,yf5g,yf5b = 255,255,255
-  yf6r,yf6g,yf6b = 255,255,255
-
-
   mbindent, mgindent, mpindent, myindent, msindent = 0,0,0,0,0
   ybindent, ygindent, ypindent, yyindent, ysindent = 0,0,0,0,0
-
-  if flipfollow then
-    me.flip = me.lr
-    you.flip = you.lr
-  else 
-    me.flip = 1
-    you.flip = 1
-  end
 
 
 
@@ -388,15 +357,10 @@ end
 
 
 function love.update()
-  if not (pauseonhit and pausedonhit) then
-
     --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
 
     if not finishedLoading then
       loader.update()   end
-
-
-
 
 
       whatlevel()
@@ -405,9 +369,7 @@ function love.update()
 
       if MENU == "play" then 
         spines={}
-
-
-
+        
         you.start = love.keyboard.isDown("u")
         if #joysticks > 0 then
           me.start = me.joystick:isGamepadDown("start")
@@ -433,8 +395,8 @@ function love.update()
 
       me.prevhealth = me.health
       you.prevhealth = you.health
-
-
+      
+      
       screenwidth = love.graphics.getWidth()
       screenheight = love.graphics.getHeight()
       enviro.screenheight = screenheight - barheight
@@ -819,7 +781,9 @@ function love.update()
 
           combomanage(me)
           combomanage(you)
-
+          
+          updatemytrail(me)
+          updatemytrail(you)
 
         end
       actionshotstuff(me)
@@ -892,8 +856,6 @@ function love.update()
 
 
     end
-
-  end
 
   function love.draw()
 
