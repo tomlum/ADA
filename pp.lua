@@ -39,6 +39,7 @@ mespikeairprime = false
 me.ptopspeed = 0
 you.ptopspeed = 0
 
+
 spikespace = 10
 
 function spikedraw(xx)

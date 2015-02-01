@@ -17,6 +17,11 @@ cscale = .7
 growrate = .02
 shrinkrate = .02
 
+function drawcolorstuff(xx)
+  spikedraw(xx)
+  boltdraw(xx)
+end
+
 enviro.screenheight = 0
 
 
@@ -511,16 +516,14 @@ function drawleft()
     drawrubble()
   end
   medrawmines()
-  spikedraw(me)
-  boltsdraw(me.bolts)
+  drawcolorstuff(me)
   drawtornado()
 
 
   love.graphics.setColor(220,220,220)
   youdrawmines()
   love.graphics.setColor(155,155,155)
-  spikedraw(you)
-  boltsdraw(you.bolts)
+  drawcolorstuff(you)
   youdrawtornado()
   love.graphics.setColor(255, 255, 255, 255)
 
@@ -570,15 +573,13 @@ function drawright()
     drawrubble()
   end
   medrawmines()
-  spikedraw(me)
-  boltsdraw(me.bolts)
+  drawcolorstuff(me)
   drawtornado()
   love.graphics.setColor(220,220,220)
   youdrawmines()
 
   love.graphics.setColor(155,155,155)
-  spikedraw(you)
-  boltsdraw(you.bolts)
+  drawcolorstuff(you)
   youdrawtornado()
   love.graphics.setColor(255, 255, 255, 255)
   if themap == "street" then

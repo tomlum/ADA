@@ -1,7 +1,17 @@
 --todo
+
+floors = {name = "fightclub", 
+  plats = {}
+}
+table.insert(floors.plats, y = bla, x1 = bla, x2 = bla)
+me.plat = floors.plats[10]
+else me.plat = 0
+
+
 blashader = love.graphics.newShader( "outline.glsl" )
 --make spikes not be on not ground
 --can change lr during flinch
+--front paralax?
 --anytime glassbreak then slowmo
 --if combo swap, still does follow through of that color, easy fix
 --make purple spike combo quicker
@@ -580,7 +590,8 @@ function love.update()
       attackmanage(you)
       spikeupdate(me)
       spikeupdate(you)
-
+      boltupdate(me) 
+      boltupdate(you)   
 
       flinchingx(me,you)
       flinchingx(you,me)
