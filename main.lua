@@ -207,7 +207,6 @@ pausedonhit = false
 
 
 
-
 require "DamageTable"
 require "meandyou"
 require "colorcontrol"

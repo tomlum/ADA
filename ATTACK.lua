@@ -479,6 +479,8 @@ newforwarddodge = function(xx)
 
       if xx.falltimer < 0 then
         xx.falltimer = xx.falltimer + 1
+        xx.flinch = true
+        xx.stop = true
         if xx.flinchway > 0 then 
           xx.im = gettingup2
         else
@@ -504,13 +506,18 @@ newforwarddodge = function(xx)
           if xx.extratimer == 1 then
             xx.falling = false
             xx.extratimer = 0
+        xx.flinch = true
+        xx.stop = true
             if xx.flinchway > 0 then 
               xx.falltimer = -forgetuptime
             elseif xx.j==0 then
               xx.falltimer = -getuptime
             end
           elseif xx.extratimer == 0 and xx.j==0 and xx.v==0 then xx.extratimer = extrastayonthegroundtime
-          elseif xx.extratimer > 0 then
+        elseif xx.extratimer > 0 then
+          
+        xx.flinch = true
+        xx.stop = true
             xx.extratimer = xx.extratimer - 1
           end
 
