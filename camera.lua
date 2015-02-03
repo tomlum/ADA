@@ -487,12 +487,12 @@ function drawleft()
 
   love.graphics.draw(enviro.sky, camera.x, 0, 0, 500, 1.1)
   --love.graphics.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
-  if themap == "library" then 
+  if themap.name == "library" then 
     love.graphics.draw(enviro.paralax2, camera.x/1.5 + (screenwidth/4)/1.5 - 400,camera.y/1.2 + enviro.screenheight / 1.2 - 12 - paralaxoffset-940)
   end
   love.graphics.draw(enviro.paralax, camera.x / 2 + ((screenwidth/4)/2*cscale) - 200, (camera.y/2) + (enviro.screenheight/2*cscale) - 12 - paralaxoffset - 800)
   love.graphics.draw(enviro.floor, 0, 0)
-  if themap == "street" then
+  if themap.name == "street" then
     drawstreetprestuff()
   end
 
@@ -528,11 +528,11 @@ function drawleft()
   love.graphics.setColor(255, 255, 255, 255)
 
 
-  if themap == "street" then
+  if themap.name == "street" then
     drawstreetstuff()
-  elseif themap == "library" then
+  elseif themap.name == "library" then
     drawlibrarystuff()
-  elseif themap == "floors" then
+  elseif themap.name == "floors" then
     drawfloorsstuff()
   end
   if fightclub then drawallhex() end
@@ -544,13 +544,13 @@ function drawright()
 
   love.graphics.draw(enviro.sky, camera.x, 0, 0, 500, 1.1)
   --love.graphics.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
-  if themap == "library" then 
+  if themap.name == "library" then 
     love.graphics.draw(enviro.paralax2, camera2.x/1.5 + (screenwidth/4)/1.5 - 400,camera2.y/1.2 + enviro.screenheight / 1.2 - 12 - paralaxoffset-940)
   end
 
   love.graphics.draw(enviro.paralax, camera2.x / 2 + ((screenwidth/4)/2*cscale) - 200, camera2.y / 2 + (enviro.screenheight/2*cscale) - 12 - paralaxoffset - 800)
   love.graphics.draw(enviro.floor,0, 0)
-  if themap == "street" then
+  if themap.name == "street" then
     drawstreetprestuff()
   end
 
@@ -582,11 +582,11 @@ function drawright()
   drawcolorstuff(you)
   youdrawtornado()
   love.graphics.setColor(255, 255, 255, 255)
-  if themap == "street" then
+  if themap.name == "street" then
     drawstreetstuff()
-  elseif themap == "library" then
+  elseif themap.name == "library" then
     drawlibrarystuff()
-  elseif themap == "floors" then
+  elseif themap.name == "floors" then
     drawfloorsstuff()
 
   end

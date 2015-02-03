@@ -53,17 +53,17 @@ function stagestuff()
             mov:setVolume(SFXV - .7)
           elseif startsfade then sfade = sfade - 10
           elseif (c1accept() or c2accept()) and MENU == "stage" then
-            if stagenum == 0 then themap = "street"
-            elseif stagenum == 1 then themap = "library"
-            elseif stagenum == 2 then themap = "floors"
+            if stagenum == 0 then themap = maps.street
+            elseif stagenum == 1 then themap = maps.library
+            elseif stagenum == 2 then themap = maps.floors
             end
             startsfade = true
             startb:play()
           end
 
-          if stagenum == 0 then themap = "street"
-          elseif stagenum == 1 then themap = "library"
-          elseif stagenum == 2 then themap = "floors"
+          if stagenum == 0 then themap = maps.street
+          elseif stagenum == 1 then themap = maps.library
+          elseif stagenum == 2 then themap = maps.floors
           end
   
   

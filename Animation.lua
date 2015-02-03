@@ -133,7 +133,7 @@ function drawmytrail(xx)
       me.health = maxhealth
       you.health = maxhealth
 
-      if themap == "fightclub" then
+      if themap.name == "fightclub" then
 
         loader.start(function()
             finishedLoading = true
@@ -152,7 +152,7 @@ function drawmytrail(xx)
 
 
 
-      elseif themap == "street" then
+      elseif themap.name == "street" then
         loader.newImage(enviro,'floor', "enviro/astreet.png")
         loader.start(function()
             finishedLoading = true
@@ -194,7 +194,7 @@ function drawmytrail(xx)
       -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
       -- enviro.floor = love.graphics.newImage("enviro/library2.png")
 
-      if themap == "library" then
+      if themap.name == "library" then
         loader.start(function()
             finishedLoading = true
           end)
@@ -219,7 +219,7 @@ function drawmytrail(xx)
 
       end
 
-      if themap == "floors" then
+      if themap.name == "floors" then
         loader.start(function()
             finishedLoading = true
           end)
@@ -408,7 +408,7 @@ function drawmytrail(xx)
   end
 
   function wallcheck(ex,vee,why)
-    if themap == "library" then
+    if themap.name == "library" then
       if wch(ex, vee, 1610) and why > 893 and why < 1643 then 
         return 1610
       elseif wch(ex,vee,wallwalljump) 
@@ -417,21 +417,21 @@ function drawmytrail(xx)
       then return enviro.rightwall-40
       else return -1000
       end
-    elseif themap == "street" then
+    elseif themap.name == "street" then
       if wch(ex,vee,wallwalljump) 
       then return wallwalljump
       elseif wch(ex,vee,enviro.rightwall-40)  
       then return enviro.rightwall-40
       else return -1000
       end
-    elseif themap == "fightclub" then
+    elseif themap.name == "fightclub" then
       if wch(ex,vee,wallwalljump) 
       then return wallwalljump
       elseif wch(ex,vee,enviro.rightwall)  
       then return enviro.rightwall
       else return -1000
       end
-    elseif themap == "floors" then
+    elseif themap.name == "floors" then
       if wch(ex,vee,wallwalljump) 
       then return wallwalljump
       elseif wch(ex, vee, 2139) and ((why > 2763 and why < 5778) or(why > 1613 and why < 2183))  then 
@@ -1025,7 +1025,7 @@ function wallslowmevdown()
   end
 end
 function libraryveneer()
-  if themap == "library" then
+  if themap.name == "library" then
     if lvfade > 0  and ((me.mid > 1605 and me.mid < 3202 and me.feet > 874) or (you.mid > 1605 and you.mid < 3202 and you.feet > 874))
     then lvfade = lvfade - 5
     elseif lvfade < 255 then lvfade = lvfade + 5
@@ -1037,7 +1037,7 @@ function libraryveneer()
 end
 
 function floorsveneer()
-  if themap == "floors" then
+  if themap.name == "floors" then
     if lvfade > 0  and ((me.mid > 416 and me.mid < 2142 and me.feet > 1899) or (you.mid > 416 and you.mid < 2142 and you.feet > 1899))
     then lvfade = lvfade - 5
     elseif lvfade < 255 then lvfade = lvfade + 5
@@ -1706,11 +1706,11 @@ death = function()
           you.j = 0
           myroulettespin()
           yourroulettespin()
-          if themap == "street" then 
+          if themap.name == "street" then 
             if me.x > 3500 then you.x = 600 you.y = 600
             else you.x = 6000 you.y = 1000
             end
-          elseif themap == "library" then 
+          elseif themap.name == "library" then 
             if me.x > 1000 then you.x = 700 you.y = 600
             else you.x = 2000 you.y = 600
             end
@@ -1749,11 +1749,11 @@ death = function()
           me.j = 0
           myroulettespin()
           yourroulettespin()
-          if themap == "street" then 
+          if themap.name == "street" then 
             if me.x > 3500 then me.x = 600 me.y = 600
             else me.x = 6000 me.y = 1000
             end
-          elseif themap == "library" then 
+          elseif themap.name == "library" then 
             if me.x > 1000 then me.x = 700 me.y = 600
             else me.x = 2000 me.y = 600
             end

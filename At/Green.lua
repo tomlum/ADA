@@ -69,7 +69,7 @@ function gandg(xx)
         end
     
         if xx.animcounter == 4 then
-          table.insert(xx.bolts, {angle = 0, speed = boltspeed*xx.lr, x = xx.mid+(30*xx.lr), y = xx.y+30, t = 0, stuck = false})
+          table.insert(xx.bolts, {angle = 70*-xx.lr, speed = boltspeed*xx.lr, x = xx.mid+(30*xx.lr), y = xx.y+30, t = 0, stuck = false})
           
           
           if xx.ggpc ==3 then

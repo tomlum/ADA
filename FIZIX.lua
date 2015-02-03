@@ -12,10 +12,37 @@ me.tempfloor = floor
 you.jmax = jmax
 me.jmax = jmax
 
+maps = {}
+
+noplat = {}
+maps.fightclub = {name = "fightclub", 
+  plats = {},
+  floor = 896
+}
+table.insert(maps.fightclub.plats, {y = 896, x1 = 0, x2 = 100000})
+table.insert(maps.fightclub.plats, {y = 465, x1 = 32, x2 = 236})
+table.insert(maps.fightclub.plats, {y = 541, x1 = 839, x2 = 1016})
+table.insert(maps.fightclub.plats, {y = 719, x1 = 655, x2 = 1560})
+
+
+
+--glass = true option for some floors
+
+
+function platformcheckx()
+   for i = #themap.plats, 1, -1 do 
+     cur = themap.plats[i]
+     if hboxp(cur
+     ) then
+     break
+     end
+   end
+  
+end
 
 function platformcheck(x, y, j)
 
-  if themap == "fightclub" then 
+  if themap.name == "fightclub" then 
     if x >= 4485-4453 and x <= 4689-4453 and y <= 1064+400-821 and y - j >= 1064+400-821
     then return true
     elseif x >= 5292-4453 and x <= 5469-4453 and y <= 1140+400-821 and y - j >= 1140+400 -821
@@ -29,7 +56,7 @@ function platformcheck(x, y, j)
     else return false
     end
 
-  elseif themap == "street" then
+  elseif themap.name == "street" then
 
     if x >= 1118 and x <= 1528 and y <= 979+400 and y - j >= 979+400
     then
@@ -59,7 +86,7 @@ function platformcheck(x, y, j)
     else return false
     end
 
-  elseif themap == "library" then
+  elseif themap.name == "library" then
     if x >= 1535 and x < 3200 and y <= 871 and y - j >= 871 
     then return true
     elseif x >= 1616 and x < 3196 and y <= 1516 and y - j >= 1516 
@@ -71,7 +98,7 @@ function platformcheck(x, y, j)
     else return false
     end
 
-  elseif themap == "floors" then
+  elseif themap.name == "floors" then
     if x >= 418 and x <= 2140 then	
 
 
@@ -154,7 +181,7 @@ end
 
 
 function platformy(x, y)
-  if themap == "fightclub" then 
+  if themap.name == "fightclub" then 
     if x >= 4485-4453 and x <= 4689-4453 and y <= 1064+400-821-178 and y >= 1064+400-821-30-178
     then return 1064+400-821-178
     elseif x >= 5292-4453 and x <= 5469-4453 and y <= 1140+400-821-178 and y >= 1140+400 -821-30-178
@@ -165,7 +192,7 @@ function platformy(x, y)
     then return 1318+400-821-178
     else return floor
     end
-  elseif themap == "street" then
+  elseif themap.name == "street" then
 
     if x >= 1118 and x <= 1528 and y <= 979+400 and y >= 949+400
     then
@@ -195,7 +222,7 @@ function platformy(x, y)
     end
 
 
-  elseif themap == "library" then
+  elseif themap.name == "library" then
 
 
 
@@ -228,7 +255,7 @@ function platformy(x, y)
     else return floor
     end
 
-  elseif themap == "floors" then
+  elseif themap.name == "floors" then
 
     if x >= 418 and x <= 2140 then	
 
@@ -320,13 +347,13 @@ function platforming()
   me.floor = floor
   you.floor = floor
 
-  if themap == "library" then 
+  if themap.name == "library" then 
 
     if you.mid >= 1400 then you.floor = 1900 - 65 end
     if me.mid >= 1400 then me.floor = 1900 - 65 end
 
     --slope attempt
-    -- if themap == "library" then 
+    -- if themap.name == "library" then 
 
 
 
@@ -369,7 +396,7 @@ end
 
 function spikecheck(x, y)
 
-  if themap == "fightclub" then 
+  if themap.name == "fightclub" then 
     if x >= 4485-4453 and x <= 4689-4453 and y <= 1064+400-821-178 
     then return 1064+400-821-178
     elseif x >= 5292-4453 and x <= 5469-4453 and y <= 1140+400-821-178 
@@ -381,7 +408,7 @@ function spikecheck(x, y)
     else return floor
     end
 
-  elseif themap == "street" then
+  elseif themap.name == "street" then
 
     if x >= 2879 and x <= 3143 and y <= 618+400 
     then return 618+400
@@ -419,7 +446,7 @@ function spikecheck(x, y)
     else return floor
     end
 
-  elseif themap == "library" then
+  elseif themap.name == "library" then
 
     if x >= 1535 and x < 3200 and y <= 871 
     then return 871
@@ -431,7 +458,7 @@ function spikecheck(x, y)
     then return floor - 63
     else return floor
     end
-  elseif themap == "floors" then
+  elseif themap.name == "floors" then
 
     if x >= 418 and x <= 2140 then	
 
@@ -510,7 +537,7 @@ end
 
 minecheck = function(x, y)
 
-  if themap == "fightclub" then 
+  if themap.name == "fightclub" then 
     if x >= 4485-4453 and x <= 4689-4453 and y <= 1064+400-821-178 
     then return 1064+400-821-178
     elseif x >= 5292-4453 and x <= 5469-4453 and y <= 1140+400-821-178 
@@ -522,7 +549,7 @@ minecheck = function(x, y)
     else return floor
     end
 
-  elseif themap == "street" then
+  elseif themap.name == "street" then
 
     if x >= 2879 and x <= 3143 and y <= 618+400 
     then return 618+400
@@ -560,7 +587,7 @@ minecheck = function(x, y)
     else return floor
     end
 
-  elseif themap == "library" then
+  elseif themap.name == "library" then
 
     if x >= 1535 and x < 3200 and y <= 871 
     then return 871
@@ -595,7 +622,7 @@ minecheck = function(x, y)
     else return floor
     end
 
-  elseif themap == "floors" then 
+  elseif themap.name == "floors" then 
 
     if x >= 418 and x <= 2140 then	
 
@@ -699,7 +726,7 @@ end
 walls = function ()
 
 
-  if themap == "library" then
+  if themap.name == "library" then
 
     if me.x + me.v >= 1405-35+10 and me.feet > floor - 63 and me.x <= 1405-30+10 and me.dig == 0 then me.x = 1405-35+10 me.v = 0 end
     if you.x + you.v >= 1405-35+10 and you.feet > floor - 63 and you.x <= 1405-30+10 and you.dig == 0 then you.x = 1405-35+10 you.v = 0 end
@@ -872,7 +899,7 @@ you.running = false
 
 function fallthroughglassfloor()
 
-  if themap == "floors" and
+  if themap.name == "floors" and
   me.mid > 2154 and me.mid < 2726 and me.y < 3000 and me.y > 2000 and me.running
   then me.g = false me.y = me.y + 2 me.onplat = false
   end
@@ -1048,9 +1075,6 @@ function movex(xx,z)
 
 
   xx.feet = xx.y + 60
-  if xx.feet > xx.floor
-  then xx.y = xx.floor - 60
-  end
   if xx.g 
   then 
     if xx.j < 0 then xx.j = 0

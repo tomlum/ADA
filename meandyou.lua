@@ -340,14 +340,14 @@ me.righty = true
 	for i,v in ipairs(mymines) do table.remove(mymines,i) end
 	for i,v in ipairs(yourmines) do table.remove(yourmines,i) end
 
-if themap == "street" then 
+if themap.name == "street" then 
 	floor = 1900 - 3
 	me.x = 1000
 		you.x = 6000
 		floor = 1900 - 3
 		me.y = floor - 60
 		you.y = floor - 60
-elseif themap == "library" then 
+elseif themap.name == "library" then 
 	me.x = 700
 		you.x = 2000
 		me.y = 300

@@ -1,11 +1,5 @@
 --todo
 
-floors = {name = "fightclub", 
-  plats = {}
-}
-table.insert(floors.plats, y = bla, x1 = bla, x2 = bla)
-me.plat = floors.plats[10]
-else me.plat = 0
 
 
 blashader = love.graphics.newShader( "outline.glsl" )
@@ -345,7 +339,7 @@ function love.load()
 
   if fightclub then 
     MENU = "play"
-    themap = "fightclub"
+    themap = maps.fightclub
     placespeople = true
     mute = true
     while(not finishedLoading) do
@@ -508,8 +502,7 @@ function love.update()
 
 
 
-        platforming()
-
+        platformcheckx()
         movex(me,me)
         movex(you,you)
 
@@ -519,8 +512,8 @@ function love.update()
         fallthroughglassfloor()
 
 
-        if themap == "library" then libwallbreak() 
-        elseif themap == "floors" then floorswallbreak() 
+        if themap.name == "library" then libwallbreak() 
+        elseif themap.name == "floors" then floorswallbreak() 
         end
 
 
@@ -675,7 +668,7 @@ drawcity()
     elseif MENU == "pan" or MENU == "preplay" then 
       love.graphics.setColor(math.abs(streetfade),math.abs(streetfade),math.abs(streetfade,255))
       love.graphics.draw(enviro.sky, 0, 0, 0, 500, screenheight/1500)
-      if themap == "library" then 
+      if themap.name == "library" then 
         love.graphics.draw(enviro.paralax2, enviro.dolly/3 -100,((-floor-100)/2)/1.5 + screenheight-400, 0, .25, .25)
       end
       love.graphics.draw(enviro.paralax, -(enviro.dolly/2) -100, ((-floor-30)/4)/2 + screenheight - 655, 0, .5, .5)
