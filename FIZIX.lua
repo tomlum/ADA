@@ -765,7 +765,7 @@ function movex(xx,z)
     end
     if z.blockb and math.abs(z.j) + math.abs(z.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j)
     then 
-      if platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-35) ~= platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.feet+5) then
+      if climbplatcheck(xx.x, xx.y+xx.height/2, xx.lr, xx.height/2, xx.v, xx.j) then
         xx.ctim = 7
       else xx.ctim = 1
       end
