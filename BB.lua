@@ -349,7 +349,7 @@ function breadandbutter(xx)
             function(z)
               xx.cancombo = true
               z.health = z.health - at.bb.u.dam
-              z.v = at.bb.u.kb
+              z.v = at.bb.u.kb*xx.lr
               z.j = at.bb.u.j
               z.flinch = true
               z.ft = at.bb.u.ft

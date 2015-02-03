@@ -3,6 +3,18 @@ themap = "none"
 placespeople = true
 
 
+idle1im = love.graphics.newImage("me/idle/idle1.png")
+idle1c = love.graphics.newImage("me/idle/idle1c.png")
+idle2im = love.graphics.newImage("me/idle/idle2.png")
+idle2c = love.graphics.newImage("me/idle/idle2c.png")
+idle3im = love.graphics.newImage("me/idle/idle3.png")
+idle3c = love.graphics.newImage("me/idle/idle3c.png")
+idle4im = love.graphics.newImage("me/idle/idle4.png")
+idle4c = love.graphics.newImage("me/idle/idle4c.png")
+idle1 = {im = idle1im, c = idle1c}
+idle2 = {im = idle2im, c = idle2c}
+idle3 = {im = idle3im, c = idle3c}
+idle4 = {im = idle4im, c = idle4c}
 
 at = {}
 
@@ -36,7 +48,7 @@ me.id = 1
 	me.g = true
 	me.slide = false
 	--the image
-	me.im = idle
+	me.im =idle1
 	me.x = 1000
 	me.xleft = me.x + 30
 	me.xanimate = me.x
@@ -104,7 +116,7 @@ you.id = 2
 	you.g = true
 	you.slide = false
 	--the image
-	you.im = idle1
+	you.im =idle1
 	you.x = 6000 -- 4500
 	you.xleft = you.x + 30
 	you.mid = you.x / 2 + you.xleft / 2
@@ -172,8 +184,8 @@ function loadmeandyou2()
 backtowhite = false
 song1:rewind()
 
-me.im = idle
-you.im = idle
+me.im =idle1
+you.im =idle1
 
 me.yoffset = 0
 you.yoffset = 0
@@ -208,7 +220,7 @@ me.righty = true
 	me.g = true
 	me.slide = false
 	--the image
-	me.im = idle
+	me.im =idle1
 	me.x = 1000
 	me.xleft = me.x + 30
 	me.xanimate = me.x
@@ -272,7 +284,7 @@ me.righty = true
 	you.g = true
 	you.slide = false
 	--the image
-	you.im = idle1
+	you.im =idle1
 	you.x = 2000 --6000
 	you.xleft = you.x + 30
 	you.mid = you.x / 2 + you.xleft / 2
@@ -470,7 +482,7 @@ startsfade = false
 	me.g = true
 	me.slide = false
 	--the image
-	me.im = idle
+	me.im =idle1
 	me.x = 1000
 	me.xleft = me.x + 30
 	me.xanimate = me.x
@@ -535,7 +547,7 @@ startsfade = false
 	you.g = true
 	you.slide = false
 	--the image
-	you.im = idle1
+	you.im =idle1
 	you.x = 6000
 	you.xleft = you.x + 30
 	you.mid = you.x / 2 + you.xleft / 2

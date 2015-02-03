@@ -1,12 +1,4 @@
 
-idle1 = love.graphics.newImage("me/idle/idle1.png")
-idle1c = love.graphics.newImage("me/idle/idle1c.png")
-idle2 = love.graphics.newImage("me/idle/idle2.png")
-idle2c = love.graphics.newImage("me/idle/idle2c.png")
-idle3 = love.graphics.newImage("me/idle/idle3.png")
-idle3c = love.graphics.newImage("me/idle/idle3c.png")
-idle4 = love.graphics.newImage("me/idle/idle4.png")
-idle4c = love.graphics.newImage("me/idle/idle4c.png")
 walk1im = love.graphics.newImage("me/walk/walk51.png")
 walk2im = love.graphics.newImage("me/walk/walk52.png")
 walk3im = love.graphics.newImage("me/walk/walk53.png")
@@ -133,7 +125,7 @@ function drawmytrail(xx)
       me.health = maxhealth
       you.health = maxhealth
 
-      if themap == "fightclub" then
+      if themap.name == "fightclub" then
 
         loader.start(function()
             finishedLoading = true
@@ -147,12 +139,14 @@ function drawmytrail(xx)
         me.x = 1000
         you.x = 1040
         floor = 896
-        me.y = floor - 60
-        you.y = floor - 60
+        me.im =idle1
+        you.im =idle1
+        me.y = floor - 100
+        you.y = floor - 100
 
 
 
-      elseif themap == "street" then
+      elseif themap.name == "street" then
         loader.newImage(enviro,'floor', "enviro/astreet.png")
         loader.start(function()
             finishedLoading = true
@@ -194,7 +188,7 @@ function drawmytrail(xx)
       -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
       -- enviro.floor = love.graphics.newImage("enviro/library2.png")
 
-      if themap == "library" then
+      if themap.name == "library" then
         loader.start(function()
             finishedLoading = true
           end)
@@ -219,7 +213,7 @@ function drawmytrail(xx)
 
       end
 
-      if themap == "floors" then
+      if themap.name == "floors" then
         loader.start(function()
             finishedLoading = true
           end)
@@ -254,6 +248,9 @@ function drawmytrail(xx)
 
 
   actionshotdur = 70
+
+me.im = idle1
+you.im = idle1
 
   function drawa(xx)
     drawmytrail(xx)
@@ -408,7 +405,7 @@ function drawmytrail(xx)
   end
 
   function wallcheck(ex,vee,why)
-    if themap == "library" then
+    if themap.name == "library" then
       if wch(ex, vee, 1610) and why > 893 and why < 1643 then 
         return 1610
       elseif wch(ex,vee,wallwalljump) 
@@ -417,21 +414,21 @@ function drawmytrail(xx)
       then return enviro.rightwall-40
       else return -1000
       end
-    elseif themap == "street" then
+    elseif themap.name == "street" then
       if wch(ex,vee,wallwalljump) 
       then return wallwalljump
       elseif wch(ex,vee,enviro.rightwall-40)  
       then return enviro.rightwall-40
       else return -1000
       end
-    elseif themap == "fightclub" then
+    elseif themap.name == "fightclub" then
       if wch(ex,vee,wallwalljump) 
       then return wallwalljump
       elseif wch(ex,vee,enviro.rightwall)  
       then return enviro.rightwall
       else return -1000
       end
-    elseif themap == "floors" then
+    elseif themap.name == "floors" then
       if wch(ex,vee,wallwalljump) 
       then return wallwalljump
       elseif wch(ex, vee, 2139) and ((why > 2763 and why < 5778) or(why > 1613 and why < 2183))  then 
@@ -1025,7 +1022,7 @@ function wallslowmevdown()
   end
 end
 function libraryveneer()
-  if themap == "library" then
+  if themap.name == "library" then
     if lvfade > 0  and ((me.mid > 1605 and me.mid < 3202 and me.feet > 874) or (you.mid > 1605 and you.mid < 3202 and you.feet > 874))
     then lvfade = lvfade - 5
     elseif lvfade < 255 then lvfade = lvfade + 5
@@ -1037,7 +1034,7 @@ function libraryveneer()
 end
 
 function floorsveneer()
-  if themap == "floors" then
+  if themap.name == "floors" then
     if lvfade > 0  and ((me.mid > 416 and me.mid < 2142 and me.feet > 1899) or (you.mid > 416 and you.mid < 2142 and you.feet > 1899))
     then lvfade = lvfade - 5
     elseif lvfade < 255 then lvfade = lvfade + 5
@@ -1706,11 +1703,11 @@ death = function()
           you.j = 0
           myroulettespin()
           yourroulettespin()
-          if themap == "street" then 
+          if themap.name == "street" then 
             if me.x > 3500 then you.x = 600 you.y = 600
             else you.x = 6000 you.y = 1000
             end
-          elseif themap == "library" then 
+          elseif themap.name == "library" then 
             if me.x > 1000 then you.x = 700 you.y = 600
             else you.x = 2000 you.y = 600
             end
@@ -1749,11 +1746,11 @@ death = function()
           me.j = 0
           myroulettespin()
           yourroulettespin()
-          if themap == "street" then 
+          if themap.name == "street" then 
             if me.x > 3500 then me.x = 600 me.y = 600
             else me.x = 6000 me.y = 1000
             end
-          elseif themap == "library" then 
+          elseif themap.name == "library" then 
             if me.x > 1000 then me.x = 700 me.y = 600
             else me.x = 2000 me.y = 600
             end
@@ -1820,18 +1817,18 @@ death = function()
     if idley < 17 then 
       idley = idley + 1
       if you.health<maxhealth/2 then
-        you.im = {im = idle3, c = idle3c}
+        you.im = idle3
       else
-        you.im = {im = idle1, c = idle1c}
+        you.im = ilde1
       end
     elseif idley >= 17 and idley < 33 then
       idley = idley + 1
       if you.health<maxhealth/2 then
 
-        you.im = {im = idle4, c = idle4c}
+        you.im = idle4
       else
 
-        you.im = {im = idle2, c = idle2c}
+        you.im = idle2
       end
     elseif idley >=33 then
       idley = 0
@@ -1842,18 +1839,18 @@ death = function()
       idleme = idleme + 1
       if me.health<maxhealth/2 then
 
-        me.im = {im = idle3, c = idle3c}
+        me.im = idle3
       else
 
-        me.im = {im = idle1, c = idle1c}
+        me.im = idle1
       end
     elseif idleme >= 17 and idleme < 33 then
       idleme = idleme + 1
       if me.health<maxhealth/2 then
 
-        me.im = {im = idle4, c = idle4c}
+        me.im = idle4
       else
-        me.im = {im = idle2, c = idle2c}
+        me.im = idle2
       end
     elseif idleme >=33 then
       idleme = 0

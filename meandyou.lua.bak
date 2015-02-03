@@ -36,7 +36,7 @@ me.id = 1
 	me.g = true
 	me.slide = false
 	--the image
-	me.im = idle
+	me.im = idle1
 	me.x = 1000
 	me.xleft = me.x + 30
 	me.xanimate = me.x
@@ -172,8 +172,8 @@ function loadmeandyou2()
 backtowhite = false
 song1:rewind()
 
-me.im = idle
-you.im = idle
+me.im = idle1
+you.im = idle1
 
 me.yoffset = 0
 you.yoffset = 0
@@ -208,7 +208,7 @@ me.righty = true
 	me.g = true
 	me.slide = false
 	--the image
-	me.im = idle
+	me.im = idle1
 	me.x = 1000
 	me.xleft = me.x + 30
 	me.xanimate = me.x
@@ -340,14 +340,14 @@ me.righty = true
 	for i,v in ipairs(mymines) do table.remove(mymines,i) end
 	for i,v in ipairs(yourmines) do table.remove(yourmines,i) end
 
-if themap == "street" then 
+if themap.name == "street" then 
 	floor = 1900 - 3
 	me.x = 1000
 		you.x = 6000
 		floor = 1900 - 3
 		me.y = floor - 60
 		you.y = floor - 60
-elseif themap == "library" then 
+elseif themap.name == "library" then 
 	me.x = 700
 		you.x = 2000
 		me.y = 300
@@ -470,7 +470,7 @@ startsfade = false
 	me.g = true
 	me.slide = false
 	--the image
-	me.im = idle
+	me.im = idle1
 	me.x = 1000
 	me.xleft = me.x + 30
 	me.xanimate = me.x

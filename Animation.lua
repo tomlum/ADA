@@ -1,12 +1,4 @@
 
-idle1 = love.graphics.newImage("me/idle/idle1.png")
-idle1c = love.graphics.newImage("me/idle/idle1c.png")
-idle2 = love.graphics.newImage("me/idle/idle2.png")
-idle2c = love.graphics.newImage("me/idle/idle2c.png")
-idle3 = love.graphics.newImage("me/idle/idle3.png")
-idle3c = love.graphics.newImage("me/idle/idle3c.png")
-idle4 = love.graphics.newImage("me/idle/idle4.png")
-idle4c = love.graphics.newImage("me/idle/idle4c.png")
 walk1im = love.graphics.newImage("me/walk/walk51.png")
 walk2im = love.graphics.newImage("me/walk/walk52.png")
 walk3im = love.graphics.newImage("me/walk/walk53.png")
@@ -147,8 +139,10 @@ function drawmytrail(xx)
         me.x = 1000
         you.x = 1040
         floor = 896
-        me.y = floor - 60
-        you.y = floor - 60
+        me.im =idle1
+        you.im =idle1
+        me.y = floor - 100
+        you.y = floor - 100
 
 
 
@@ -254,6 +248,9 @@ function drawmytrail(xx)
 
 
   actionshotdur = 70
+
+me.im = idle1
+you.im = idle1
 
   function drawa(xx)
     drawmytrail(xx)
@@ -592,10 +589,10 @@ function drawmytrail(xx)
     for i = #papers, 1, -1 do
       local temp = papers[i]
       --if paper hits the ceiling
-      if platformcheck(temp.x,temp.y-temp.j-5,-temp.j) then
+      if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then
         temp.j = 0
       end
-      if platformcheck(temp.x,temp.y-5,temp.j) or temp.y > 100000 or temp.x < -10 or temp.x > 10000 then table.remove(papers,i) end
+      if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then table.remove(papers,i) end
 
     end
     for i,v in ipairs(papers)do
@@ -678,7 +675,7 @@ function drawglass()
 
   for i = #glasseses, 1, -1 do
     local temp = glasseses[i]
-    if platformcheck(temp.x,temp.y,temp.j) or temp.y > 100000 or temp.x < -10 or temp.x > 10000 then table.remove(glasseses,i) end
+    if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then table.remove(glasseses,i) end
 
   end
   for i,v in ipairs(glasseses)do
@@ -701,7 +698,7 @@ function drawdust()
 
   for i = #dust, 1, -1 do
     local temp = dust[i]
-    if platformcheck(temp.x,temp.y,temp.j) or temp.y > 100000 or temp.x < -10 or temp.x > 10000 then table.remove(dust,i) end
+    if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then table.remove(dust,i) end
 
   end
 
@@ -722,7 +719,7 @@ function drawrubble()
 
   for i = #rubble, 1, -1 do
     local temp = rubble[i]
-    if platformcheck(temp.x,temp.y,temp.j) or temp.y > 100000 or temp.x < -10 or temp.x > 10000 then table.remove(rubble,i) end
+    if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then table.remove(rubble,i) end
 
   end
 
@@ -1820,18 +1817,18 @@ death = function()
     if idley < 17 then 
       idley = idley + 1
       if you.health<maxhealth/2 then
-        you.im = {im = idle3, c = idle3c}
+        you.im = idle3
       else
-        you.im = {im = idle1, c = idle1c}
+        you.im = idle1
       end
     elseif idley >= 17 and idley < 33 then
       idley = idley + 1
       if you.health<maxhealth/2 then
 
-        you.im = {im = idle4, c = idle4c}
+        you.im = idle4
       else
 
-        you.im = {im = idle2, c = idle2c}
+        you.im = idle2
       end
     elseif idley >=33 then
       idley = 0
@@ -1842,18 +1839,18 @@ death = function()
       idleme = idleme + 1
       if me.health<maxhealth/2 then
 
-        me.im = {im = idle3, c = idle3c}
+        me.im = idle3
       else
 
-        me.im = {im = idle1, c = idle1c}
+        me.im = idle1
       end
     elseif idleme >= 17 and idleme < 33 then
       idleme = idleme + 1
       if me.health<maxhealth/2 then
 
-        me.im = {im = idle4, c = idle4c}
+        me.im = idle4
       else
-        me.im = {im = idle2, c = idle2c}
+        me.im = idle2
       end
     elseif idleme >=33 then
       idleme = 0
@@ -2089,7 +2086,7 @@ death = function()
 
     for i = #sparks, 1, -1 do
       local temp = sparks[i]
-      if platformcheck(temp.x,temp.y,temp.j) or temp.y > 100000 or temp.x < -10 or temp.x > 10000 then table.remove(dust,i) end
+      if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then table.remove(sparks,i) end
 
     end
 

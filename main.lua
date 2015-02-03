@@ -502,9 +502,9 @@ function love.update()
 
 
 
-        platformcheckx()
         movex(me,me)
         movex(you,you)
+        platformcheckx()
 
         walljump()
 
@@ -673,8 +673,8 @@ drawcity()
       end
       love.graphics.draw(enviro.paralax, -(enviro.dolly/2) -100, ((-floor-30)/4)/2 + screenheight - 655, 0, .5, .5)
       love.graphics.draw(enviro.floor, -enviro.dolly, (-floor-30)/2 + screenheight, 0, .5, .5)
-      me.im = idle
-      you.im = idle
+      me.im =idle1
+      you.im =idle1
 
     elseif MENU == "play"
 
@@ -834,6 +834,7 @@ drawcity()
         ..
         "       type: "..tostring(me.type),10,30)
       love.graphics.print("bleh"..tostring(you.extratimer).." "..tostring(you.falltimer).." "..tostring(you.ft), 10, 50)
+      love.graphics.print(tostring(me.gothroughplats).." slowdown "..tostring(me.slowdown).." slide "..tostring(me.slide), 10, 60)
     end
 
 

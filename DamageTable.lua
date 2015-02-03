@@ -161,7 +161,7 @@ minvfordust = 3
 --higher means more fric
 fricrate = .75
 
-initrunspeed = 12
+initrunspeed = 10
 runpace = 19
 
 --slowdown rate

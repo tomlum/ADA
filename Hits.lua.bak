@@ -11,8 +11,7 @@ end
 
 
 hitt = {}
-me.height = 50
-you.height = 50
+
 
 
 table.insert(hitt, 
@@ -22,7 +21,6 @@ table.insert(hitt,
     flinch = false, ft = 0, 
     block = 0, dodge = false, invince = false,
     width = 20, height = 50, g = true})
-
 table.insert(hitt, 
   {i = 2,
     x = 0, v = 0, 
@@ -171,7 +169,7 @@ function drawhexcheck(ex, why, w, h, v, j)
   love.graphics.setColor(0,255,0)
   love.graphics.line(t[oppn].x,t[oppn].y, t[adjn1].x,t[adjn1].y)
   love.graphics.line(t[oppn].x,t[oppn].y, t[adjn2].x,t[adjn2].y)
-
+  
   love.graphics.setColor(255,255,255)
 
 
@@ -192,7 +190,7 @@ function hboxcs(theid, P1, P2, P3, P4, special)
   hitt[1].flinchway = me.flinchway
   hitt[1].ft = me.ft
   hitt[1].health = me.health
-  hitt[1].invince = me.invince
+  hitt[1].invince = you.invince
   hitt[1].g = me.g
   hitt[2].x = you.x+5
   hitt[2].y = you.y+5
@@ -269,49 +267,10 @@ function hexplatcheck(y1, x1, x2, ex, why, w, h, v, j)
 
 end
 
-velforclimb = 20
-
-function climbplatcheck(ex, why, lr, h, v, j)
-  midv2 = {x = (ex)+15*lr, y=why-j, n = 2}
-  midv = {x = (ex)+15*lr, y=why+h-j, n = 2}
-
-
-  for j = #themap.plats, 1, -1 do 
-    plat = themap.plats[j]
-    local linep1 = {x = plat.x1, y = plat.y}
-    local linep2 = {x = plat.x2, y = plat.y}
-    if pint(linep1, linep2, midv, midv2) 
-    then return true
-    end
-  end
-  return false
-
-end
-
-function lineplatcheck(ex, why,v, j)
-  midv2 = {x = (ex)+v, y=why-j, n = 2}
-  midv = {x = ex, y=why, n = 2}
-
-  if why > 100000 or ex < -10 or ex > 10000  then
-    return false
-  end
-
-  for j = #themap.plats, 1, -1 do 
-    plat = themap.plats[j]
-    local linep1 = {x = plat.x1, y = plat.y}
-    local linep2 = {x = plat.x2, y = plat.y}
-    if pint(linep1, linep2, midv, midv2) 
-    then return true
-    end
-  end
-  return false
-
-end
-
 me.im = idle1
 you.im = idle2
 
-function hboxp()
+function hboxp(plat)
   hitt[1].x = me.x+hexbuffer
   hitt[1].y = me.y+hexbuffer
   hitt[1].j = me.j
@@ -320,9 +279,8 @@ function hboxp()
   hitt[1].flinchway = me.flinchway
   hitt[1].ft = me.ft
   hitt[1].health = me.health
-  hitt[1].invince = me.invince
+  hitt[1].invince = you.invince
   hitt[1].g = me.g
-  hitt[1].me = me
   hitt[2].x = you.x+hexbuffer
   hitt[2].y = you.y+hexbuffer
   hitt[2].j = you.j
@@ -333,68 +291,32 @@ function hboxp()
   hitt[2].health = you.health
   hitt[2].invince = you.invince
   hitt[2].g = you.g
-  hitt[2].me = you
 
 
   hitt[1].im = me.im
   hitt[2].im = you.im
 
-  hitt[1].landingcounter = me.landingcounter
-  hitt[1].landing = me.landing
-  hitt[1].slowdown = me.slowdown
-
-  hitt[2].landingcounter = you.landingcounter
-  hitt[2].landing = you.landing
-  hitt[2].slowdown = you.slowdown
-
-
-  hitt[1].gothroughplats = me.gothroughplats
-  hitt[2].gothroughplats = you.gothroughplats
-
-
 
   for i,p in ipairs(hitt) do
-    for j = #themap.plats, 1, -1 do 
-      plat = themap.plats[j]
-      xx = p
-      if (not p.gothroughplats or plat.floor~=null) and (
-        ((hexplatcheck(plat.y, plat.x1, plat.x2, p.x, p.y, p.width, p.height+hexbuffer, p.v, p.j) and p.j <= 0 
-            and p.y+p.j <= plat.y-(p.im.im:getHeight())-p.im.yoff+14))
-        or 
-        (p.y == plat.y-hexbuffer-p.height and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
-      then
-        if p.j ~= 0 then
-          if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
-            xx.landingcounter = landingwait
-            xx.landing = true 
-            xx.v = xx.v * landingfric
-          else
-            xx.landingcounter = shortlandwait
-            xx.landing = true 
-            xx.v = xx.v * landingfric
-          end
-          xx.me.land:play()
-          xx.slowdown = false
-        end
+    if 
+    ((hexplatcheck(plat.y, plat.x1, plat.x2, p.x, p.y, p.width, p.height, p.v, p.j) and p.j <= 0 
+    and p.y+p.j <= plat.y-(p.im.im:getHeight())-p.im.yoff+14))
+    
+    
 
-        p.y = plat.y-hexbuffer-p.height
-        p.g = true
-        p.j = 0
-        p.plat = cur;
-
-
-
-        break
-      else
-        p.g = false
-        p.plat = noplat
-      end
-
+    then
+         p.y = cur.y-(p.im.im:getHeight())-p.im.yoff+13
+         p.g = true
+         p.plat = cur;
+      goBreak = true
+    else goBreak = false
+      p.plat = noplat
+      p.g = false
     end
   end
 
-  me.x = hitt[1].x-hexbuffer
-  me.y = hitt[1].y-hexbuffer
+  me.x = hitt[1].x-5
+  me.y = hitt[1].y-5
   me.j = hitt[1].j
   me.v = hitt[1].v
   me.flinch = hitt[1].flinch
@@ -414,19 +336,8 @@ function hboxp()
   you.ft = hitt[2].ft
   you.health = hitt[2].health
   you.ft = hitt[2].ft
-  you.g = hitt[2].g
   you.plat = hitt[2].plat
-
-
-  me.landingcounter = hitt[1].landingcounter 
-  me.landing = hitt[1].landing 
-  me.slowdown = hitt[1].slowdown 
-
-  you.landingcounter = hitt[2].landingcounter 
-  you.landing = hitt[2].landing 
-  you.slowdown = hitt[2].slowdown 
-
-
+  return goBreak
 
 end
 
