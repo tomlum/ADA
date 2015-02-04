@@ -225,8 +225,9 @@ function hboxcs(theid, P1, P2, P3, P4, special)
     )
     then
       --flash = true
+      if not p.me.dodge then
       special(p)
-
+      end
     end
   end
 
@@ -357,7 +358,7 @@ function hboxp()
     for j = #themap.plats, 1, -1 do 
       plat = themap.plats[j]
       xx = p
-      if (not p.gothroughplats or plat.floor~=null) and (
+      if (not p.gothroughplats or (plat.floor~=nil)) and (
         ((hexplatcheck(plat.y, plat.x1, plat.x2, p.x, p.y, p.width, p.height+hexbuffer, p.v, p.j) and p.j <= 0 
             and p.y+p.j <= plat.y-(p.im.im:getHeight())-p.im.yoff+14))
         or 

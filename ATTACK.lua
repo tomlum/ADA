@@ -1,5 +1,4 @@
 
---if you.flinch and wall then bounce, switch the flinch direction
 --also if hit floor and greatenough time then falls down
 
 --charge blue isn't a big punch, but like a big sword slice where like, big slash
@@ -40,6 +39,7 @@ if xx.type == 3 and xx.cancombo then xx.uppercuthit = true end
     then
       xx.actionshot = true
       xx.cancombo = false
+      xx.uppercuttimer = 0
     end
     xx.uppercuttimer = xx.uppercuttimer-1
     xx.a1 = false

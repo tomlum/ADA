@@ -19,7 +19,7 @@ maps.fightclub = {name = "fightclub",
   plats = {},
   floor = 896
 }
-table.insert(maps.fightclub.plats, {y = 896, x1 = 0, x2 = 100000})
+table.insert(maps.fightclub.plats, {y = 896, x1 = 0, x2 = 100000, floor = true})
 table.insert(maps.fightclub.plats, {y = 465, x1 = 32, x2 = 236})
 table.insert(maps.fightclub.plats, {y = 541, x1 = 839, x2 = 1016})
 table.insert(maps.fightclub.plats, {y = 719, x1 = 655, x2 = 1560})
@@ -448,11 +448,11 @@ end
 --FRICTION FUNCTION TO SLOW DOWN
 you.fric = function (base) 
   if you.v > 1 +base
-  then you.v = you.v - fricrate
+  then you.v = you.v - fricrate*rampspeed
 
 
   elseif you.v < -1+base
-  then you.v = you.v + fricrate
+  then you.v = you.v + fricrate*rampspeed
   else 
     you.v = 0+base
   end
@@ -474,11 +474,11 @@ end
 
 me.fric = function (base) 
   if me.v > 1 +base
-  then me.v = me.v - fricrate
+  then me.v = me.v - fricrate*rampspeed
 
 
   elseif me.v < -1+base
-  then me.v = me.v + fricrate
+  then me.v = me.v + fricrate*rampspeed
   else 
     me.v = 0+base
   end
@@ -802,19 +802,19 @@ function movex(xx,z)
     if z.up and xx.j > 0 
     and xx.jmax > 0 
     and xx.firstjump
-    then xx.jmax = xx.jmax - .7
+    then xx.jmax = xx.jmax - .7*rampspeed
       --the end arc/fall of any jump or the mini jump
     else
       xx.firstjump = false
       if xx.jt > 0
-      then xx.jt = xx.jt -  1
+      then xx.jt = xx.jt -  1*rampspeed
       elseif xx.jt <= 0 and xx.j > - maxgravity
-      then xx.jt = xx.jt -  1
+      then xx.jt = xx.jt -  1*rampspeed
         if xx.j >= 0 then
-          xx.j = xx.j - risegrav
+          xx.j = xx.j - risegrav*rampspeed
         else
 
-          xx.j = xx.j - dropgrav
+          xx.j = xx.j - dropgrav*rampspeed
         end
         --elseif xx.jt <= 0 and xx.ht > 0
         --then xx.j = 0

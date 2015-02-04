@@ -9,7 +9,7 @@ at.g = {}
 at.g.p = {}
 at.g.p.dam = 4
 at.g.p.kb = 2
-at.g.p.ft = 5
+at.g.p.ft = 10
 at.g.p.max = 5
 
 
@@ -21,9 +21,18 @@ at.g.u.j = 26
 at.g.u.ft = 20
 
 
+at.g.k = {}
+at.g.k.dam = 10
+at.g.k.ft = 30
+
+
 me.ggpc = 0
 you.ggpc = 0
 
+--transform angle
+function tang(ang,xx)
+return (-xx.lr*90) + 90-(ang)*xx.lr
+end
 
 function gandg(xx)
 
@@ -57,31 +66,31 @@ function gandg(xx)
     if xx.type <= 1 then
       if xx.animcounter < 4 then
         xx.im = greena21
-        
-        
+
+
 
       elseif xx.animcounter < 30 then
         xx.im = greena22
         if xx.ggpc>=3 then
           table.insert(xx.trail, 
             {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0;})
-          
+
         end
-    
+
         if xx.animcounter == 4 then
-          table.insert(xx.bolts, {angle = 70*-xx.lr, speed = boltspeed*xx.lr, x = xx.mid+(30*xx.lr), y = xx.y+30, t = 0, stuck = false})
-          
-          
+          table.insert(xx.bolts, {angle = tang(32,xx), speed = boltspeed, x = xx.mid+(30*xx.lr), y = xx.y+30, t = 0, stuck = false})
+
+
           if xx.ggpc ==3 then
-          xx.v = xx.v + (xx.lr*17)
+            xx.v = xx.v + (xx.lr*17)
           elseif xx.ggpc==4 then
-          xx.lr=-xx.lr
-          xx.v = xx.v + (xx.lr*22)
+            xx.lr=-xx.lr
+            xx.v = xx.v + (xx.lr*22)
           elseif xx.ggpc==5 then
-          xx.lr=-xx.lr
-          xx.v = xx.v + (xx.lr*19)
+            xx.lr=-xx.lr
+            xx.v = xx.v + (xx.lr*19)
           end
-          
+
           xx.im = greena22s
           repplay(xx.greens)
 
@@ -91,22 +100,25 @@ function gandg(xx)
             {x=xx.mid, y = me.y+60},
             {x=xx.mid+xx.v+(xx.lr*88), y = xx.y+60},
             function(z)
-              
+
               makeslashsparks(xx.y+30,xx.v+xx.x+xx.lr*(15),-xx.lr*slashsparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
-              
+
               xx.cancombo = true
-              z.health = z.health - at.g.p.dam
               if xx.ggpc == at.g.p.max then
                 z.v = xx.lr*at.g.p.kb*3
               else
                 z.v = xx.lr*at.g.p.kb
               end
-              z.flinch = true
-              z.ft = at.g.p.ft
-              if #joysticks>=xx.id then
-                xx.joystick:setVibration(.7,1)
-              end
 
+              if not (z.block == -xx.lr) then
+                z.health = z.health - at.g.p.dam
+
+                z.flinch = true
+                z.ft = at.g.p.ft
+                if #joysticks>=xx.id then
+                  xx.joystick:setVibration(.7,1)
+                end
+              end
             end)
         end
 
@@ -157,10 +169,10 @@ function gandg(xx)
         xx.im = greena21
       elseif xx.animcounter < 14 then
         xx.im = greena1
-        
-          if xx.animcounter >=5 and xx.animcounter < 7 then 
-            xx.im = greena1s
-            end
+
+        if xx.animcounter >=5 and xx.animcounter < 7 then 
+          xx.im = greena1s
+        end
         if xx.animcounter == 5 then
           repplay(xx.greens)
           hboxcs(xx.id, 
@@ -228,7 +240,7 @@ function boltdraw(xx)
     local v = xx.bolts[i]
     love.graphics.draw(bolt, 
       v.x-(2.5*(math.cos(math.rad(v.angle)))),
-      v.y+(2.5*(math.sin(math.rad(v.angle)))), math.rad(v.angle))
+      v.y+(2.5*(math.sin(math.rad(v.angle)))), math.rad(180+v.angle))
   end
 end
 
@@ -237,6 +249,15 @@ function boltupdate(xx)
     local v = xx.bolts[i]
     v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))
     v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))
+    hboxcs(xx.id, {x=v.x, y=v.y}, 
+      {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y}, {x=v.x, y=v.y}, 
+      function(p)
+        p.v = p.v + (v.speed/6 * math.cos(math.rad(v.angle)))
+        p.j = p.j - (v.speed/6 * math.sin(math.rad(v.angle)))
+        p.flinch = true
+        p.ft = at.g.k.ft
+        end)
+    
   end
 end
 

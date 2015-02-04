@@ -69,6 +69,8 @@ paper4 = love.graphics.newImage("enviro/paper4.png")
 mytriangles = {}
 yourtriangles = {}
 
+
+
 traillength = 4
 
 me.trail={}
@@ -254,6 +256,7 @@ you.im = idle1
 
   function drawa(xx)
     drawmytrail(xx)
+    
     if xx.im.xoff == nil then xx.im.xoff = 0 end
     if xx.im.yoff == nil then xx.im.yoff = 0 end
     love.graphics.setColor(255, 255, 255, 255)
@@ -1861,7 +1864,7 @@ death = function()
 
 
     if you.running then 
-      you.walktimer = you.walktimer + 1
+      you.walktimer = you.walktimer + 1*rampspeed
 
       if you.walktimer >= runpace+2 then you.im = run4 
         you.walktimer = 0 
@@ -1879,19 +1882,19 @@ death = function()
 
       if you.walktimer < 7 then 
         you.im = walk1
-        you.walktimer = you.walktimer + 1
+        you.walktimer = you.walktimer + 1*rampspeed
       elseif you.walktimer >= 7 and you.walktimer < 14 then
         you.im = walk2
-        you.walktimer = you.walktimer + 1
+        you.walktimer = you.walktimer + 1*rampspeed
       elseif you.walktimer >= 14 and you.walktimer < 21 then
         you.im = walk3
-        you.walktimer = you.walktimer + 1
+        you.walktimer = you.walktimer + 1*rampspeed
       elseif you.walktimer >= 21 and you.walktimer < 28 then
         you.im = walk4
-        you.walktimer = you.walktimer + 1
+        you.walktimer = you.walktimer + 1*rampspeed
       elseif you.walktimer >= 28 and you.walktimer < 35 then
         you.im = walk5
-        you.walktimer = you.walktimer + 1
+        you.walktimer = you.walktimer + 1*rampspeed
       else
         you.walktimer = 0
       end
@@ -1901,7 +1904,7 @@ death = function()
 
 
     if me.running then 
-      me.walktimer = me.walktimer + 1
+      me.walktimer = me.walktimer + 1*rampspeed
 
       if me.walktimer >= runpace+2 then me.im = run4 
         me.walktimer = 0
@@ -1919,19 +1922,19 @@ death = function()
 
       if me.walktimer < 7 then 
         me.im = walk1
-        me.walktimer = me.walktimer + 1
+        me.walktimer = me.walktimer + 1*rampspeed
       elseif me.walktimer >= 7 and me.walktimer < 14 then
         me.im = walk2
-        me.walktimer = me.walktimer + 1
+        me.walktimer = me.walktimer + 1*rampspeed
       elseif me.walktimer >= 14 and me.walktimer < 21 then
         me.im = walk3
-        me.walktimer = me.walktimer + 1
+        me.walktimer = me.walktimer + 1*rampspeed
       elseif me.walktimer >= 21 and me.walktimer < 28 then
         me.im = walk4
-        me.walktimer = me.walktimer + 1
+        me.walktimer = me.walktimer + 1*rampspeed
       elseif me.walktimer >= 28 and me.walktimer < 35 then
         me.im = walk5
-        me.walktimer = me.walktimer + 1
+        me.walktimer = me.walktimer + 1*rampspeed
       else
         me.walktimer = 0
       end
@@ -1957,14 +1960,14 @@ death = function()
     if you.landingcounter <= 0	
     then you.landing = false
     else
-      you.landingcounter = you.landingcounter - 1
+      you.landingcounter = you.landingcounter - 1*rampspeed
     end
   end
   landmecheck = function ()
     if me.landingcounter <= 0	
     then me.landing = false
     else
-      me.landingcounter = me.landingcounter - 1
+      me.landingcounter = me.landingcounter - 1*rampspeed
     end
   end
   slidetimery = 0
@@ -1972,7 +1975,7 @@ death = function()
   slideycheck = function ()
     if slidetimery < 6
     then 
-      slidetimery = slidetimery + 1
+      slidetimery = slidetimery + 1*rampspeed
     elseif slidetimery >= 6
     then you.slide = false
 
@@ -1981,7 +1984,7 @@ death = function()
   slidemecheck = function ()
     if slidetimerme < 6
     then 
-      slidetimerme = slidetimerme + 1
+      slidetimerme = slidetimerme + 1*rampspeed
     elseif slidetimerme >= 6
     then me.slide = false
 

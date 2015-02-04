@@ -1,10 +1,10 @@
 --todo
-
+therampspeed = .1
 
 
 blashader = love.graphics.newShader( "outline.glsl" )
+--do special features to second pp, shake if on plat and near, send person through plat if not floor
 --make spikes not be on not ground
---can change lr during flinch
 --front paralax?
 --anytime glassbreak then slowmo
 --if combo swap, still does follow through of that color, easy fix
@@ -362,6 +362,13 @@ end
 function love.update()
   --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
 
+  speedramp = love.keyboard.isDown("x")
+  if speedramp then 
+    rampspeed = therampspeed
+    else
+    rampspeed = 1
+   end
+
   if not finishedLoading then
     loader.update()   end
 
@@ -516,10 +523,11 @@ function love.update()
         end
 
 
-        you.y = you.y - you.j*.9
-        me.y = me.y - me.j*.9
-        you.x = you.x + you.v
-        me.x = me.x + me.v
+
+        you.y = you.y - you.j*.9*rampspeed
+        me.y = me.y - me.j*.9*rampspeed
+        you.x = you.x + you.v*rampspeed
+        me.x = me.x + me.v*rampspeed
         you.next = you.feet - you.j*.9
         me.next = me.feet - me.j*.9
 
@@ -536,9 +544,9 @@ function love.update()
 
     end
 
-    cammovement()
+    --cammovement()
     --if here then slideycling to person
-    camerafol()
+    --camerafol()
 
     if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
       animate()
@@ -624,7 +632,9 @@ function love.update()
         thesong:stop()
         retryupdate()
       end
-
+cammovement()
+    --if here then no slow mo twitter
+    camerafol()
 
     end
 

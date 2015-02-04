@@ -90,7 +90,7 @@ function combomanage(xx)
   if xx.animcounter > 0 then
     xx.block = false
     xx.jstop = true
-    xx.animcounter = xx.animcounter + 1
+    xx.animcounter = xx.animcounter + 1*rampspeed
   elseif xx.animcounter == 0 then 
     xx.combo = 0
     xx.cancombo = false
@@ -265,16 +265,18 @@ function breadandbutter(xx)
             {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32},
             function(z)
               xx.cancombo = true
-              z.health = z.health - at.bb.p.dam
               if xx.bbpc == animcounter then
                 z.v = xx.lr*at.bb.p.kb*3
               else
                 z.v = xx.lr*at.bb.p.kb
               end
+              if not (z.block == -xx.lr) then
+              z.health = z.health - at.bb.p.dam
               z.flinch = true
               z.ft = at.bb.p.ft
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(.7,1)
+              end
               end
 
               makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
@@ -307,6 +309,7 @@ function breadandbutter(xx)
         xx.im = kick1
       elseif xx.animcounter < 18 then
         xx.im = kick2
+        if xx.animcounter == 12 then
         hboxcs(xx.id, 
           {x=me.mid, y = me.y+31},
           {x=me.mid+me.v+(me.lr*28), y = me.y+31},
@@ -315,15 +318,21 @@ function breadandbutter(xx)
           function(z)
             xx.cancombo = true
             z.health = z.health - at.bb.k.dam
-            z.v = xx.lr*at.bb.k.kb
             z.flinch = true
+            if not (z.block == -xx.lr) then
             z.ft = at.bb.k.ft
+            z.v = xx.lr*at.bb.k.kb
+              else
+            z.ft = at.bb.k.ft/2
+            z.v = xx.lr*at.bb.k.kb*2/3
+            end
             if #joysticks>=xx.id then
               xx.joystick:setVibration(1,1)
             end
             makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
 
-          end)
+        end)
+      end
       elseif xx.animcounter < 43 then
         xx.im = kick3
         if xx.animcounter >= 17 then 
