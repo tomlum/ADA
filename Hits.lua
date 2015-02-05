@@ -13,6 +13,8 @@ end
 hitt = {}
 me.height = 50
 you.height = 50
+me.width = 20
+you.width = 20
 
 
 table.insert(hitt, 
@@ -20,16 +22,14 @@ table.insert(hitt,
     x = 0, v = 0, 
     j = 0, y = 0, 
     flinch = false, ft = 0, 
-    block = 0, dodge = false, invince = false,
-    width = 20, height = 50, g = true})
+    block = 0, dodge = false, invince = false, g = true, lr = me.lr})
 
 table.insert(hitt, 
   {i = 2,
     x = 0, v = 0, 
     j = 0, y = 0, 
     flinch = false, ft = 0, 
-    block = 0, dodge = false, invince = false,
-    width = 20, height = 50, g = true})
+    block = 0, dodge = false, invince = false, g = true, lr = you.lr})
 
 
 
@@ -140,22 +140,31 @@ end
 
 function drawallhex()
   for i,v in ipairs(hitt) do
-    drawhexcheck(v.x, v.y, v.width, v.height, v.v, v.j)
+    --dodgeoffsetx
+    dsh = 0
+    dsw = 0
+    if v.im.dodgeh ~= nil then
+      dsh = 20
+      end
+    if v.im.dodgew ~= nil then
+      dsw = 100
+      end
+    drawhexcheck(v.me.mid+v.me.lr*(dsw/2), v.y+(dsh), v.width+dsw, v.height-dsh, v.v, v.j)
   end
 
   love.graphics.line(bx1,by1,bx2,by2)
 end
 function drawhexcheck(ex, why, w, h, v, j)
-  t = {["c"] = {x = ex+w/2, y = why+h/2},
-    [0] = {x = ex, y=why, n = 0},
-    [1] = {x = ex+w, y=why, n = 1},
-    [2] = {x = ex+w, y=why+h, n = 2},
-    [3] = {x = ex, y=why+h, n = 3}}
+  t = {["c"] = {x = ex, y = why+h/2},
+    [0] = {x = ex-w/2, y=why, n = 0},
+    [1] = {x = ex+w/2, y=why, n = 1},
+    [2] = {x = ex+w/2, y=why+h, n = 2},
+    [3] = {x = ex-w/2, y=why+h, n = 3}}
   d = {
-    [0] = {x = ex+v, y=why-j, n = 0},
-    [1] = {x = ex+w+v, y=why-j, n = 1},
-    [2] = {x = ex+w+v, y=why+h-j, n = 2},
-    [3] = {x = ex+v, y=why+h-j, n = 3}}
+    [0] = {x = ex+v-w/2, y=why-j, n = 0},
+    [1] = {x = ex+v+w/2, y=why-j, n = 1},
+    [2] = {x = ex+v+w/2, y=why+h-j, n = 2},
+    [3] = {x = ex+v-w/2, y=why+h-j, n = 3}}
 
 
   disn = hexdistan(hexdistan(d[0], d[1]), hexdistan(d[2], d[3])).n
@@ -194,6 +203,8 @@ function hboxcs(theid, P1, P2, P3, P4, special)
   hitt[1].health = me.health
   hitt[1].invince = me.invince
   hitt[1].g = me.g
+  hitt[1].width = me.width
+  hitt[1].height = me.height
   hitt[2].x = you.x+5
   hitt[2].y = you.y+5
   hitt[2].j = you.j
@@ -204,6 +215,8 @@ function hboxcs(theid, P1, P2, P3, P4, special)
   hitt[2].health = you.health
   hitt[2].invince = you.invince
   hitt[2].g = you.g
+  hitt[2].width = you.width
+  hitt[2].height = you.height
   if not me.block then
     hitt[1].block = 0
   else
@@ -216,6 +229,7 @@ function hboxcs(theid, P1, P2, P3, P4, special)
   end
 
   for i,p in ipairs(hitt) do
+    
     if theid ~= i and 
     (hexcheck(P1.x, P1.y, P2.x, P2.y, p.x, p.y, p.width, p.height, p.v, p.j) 
       or hexcheck(P2.x, P2.y, P3.x, P3.y, p.x, p.y, p.width, p.height, p.v, p.j)
@@ -225,7 +239,7 @@ function hboxcs(theid, P1, P2, P3, P4, special)
     )
     then
       --flash = true
-      if not p.me.dodge then
+      if not p.me.dodge and rampcanhit then
       special(p)
       end
     end
@@ -324,6 +338,8 @@ function hboxp()
   hitt[1].invince = me.invince
   hitt[1].g = me.g
   hitt[1].me = me
+  hitt[1].height = me.height
+  hitt[1].width = me.width
   hitt[2].x = you.x+hexbuffer
   hitt[2].y = you.y+hexbuffer
   hitt[2].j = you.j
@@ -335,6 +351,8 @@ function hboxp()
   hitt[2].invince = you.invince
   hitt[2].g = you.g
   hitt[2].me = you
+  hitt[2].height = you.height
+  hitt[2].width = you.width
 
 
   hitt[1].im = me.im

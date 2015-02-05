@@ -365,7 +365,16 @@ function love.update()
   speedramp = love.keyboard.isDown("x")
   if speedramp then 
     rampspeed = therampspeed
-    else
+    if ramptimer >= 1 then 
+      ramptimer = 0
+      rampcanhit = true
+    else 
+    ramptimer = ramptimer + therampspeed
+      rampcanhit = false
+    end
+  else
+    ramptimer = 0
+      rampcanhit = true
     rampspeed = 1
    end
 
@@ -585,13 +594,21 @@ function love.update()
 
 
     if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
-
+       
+       whoupdatesfirst = math.random()
+       if whoupdatesfirst>.5 then
       attackmanage(me)
-      attackmanage(you)
       spikeupdate(me)
-      spikeupdate(you)
       boltupdate(me) 
-      boltupdate(you)   
+      end
+      attackmanage(you)
+      spikeupdate(you)
+      boltupdate(you)  
+      if whoupdatesfirst<=.5 then
+      attackmanage(me)
+      spikeupdate(me)
+      boltupdate(me) 
+      end
 
       flinchingx(me,you)
       flinchingx(you,me)

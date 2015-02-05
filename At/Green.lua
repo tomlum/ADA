@@ -5,6 +5,9 @@ greena22s = {im=love.graphics.newImage("me/attack/greena22s.png"),c=love.graphic
 greena1s = {im=love.graphics.newImage("me/attack/greena1s.png"),c=love.graphics.newImage("me/attack/greena1c.png"), xoff = 20, yoff = 60}
 greena1 = {im=love.graphics.newImage("me/attack/greena1.png"),c=love.graphics.newImage("me/attack/greena1c.png"), xoff = 20, yoff = 60}
 
+greenk1 = {im=love.graphics.newImage("me/attack/greenk1.png"),c=love.graphics.newImage("me/attack/greenk1c.png"), xoff = 25}
+greenk2 = {im=love.graphics.newImage("me/attack/greenk2.png"),c=love.graphics.newImage("me/attack/greenk2c.png"), xoff = 25}
+
 at.g = {}
 at.g.p = {}
 at.g.p.dam = 4
