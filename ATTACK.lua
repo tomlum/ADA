@@ -55,8 +55,6 @@ me.currentanim = 0
 you.currentanim = 0
 
 function attackmanage(xx)
-
-
   nottoomanyuppercuts(xx)
 
   if xx.flinch then xx.animcounter = 0
@@ -74,7 +72,6 @@ function attackmanage(xx)
   elseif xx.currentanim == 2 then
     gandg(xx)
   end
-
 
 
 end
@@ -121,7 +118,7 @@ block = {im = blockim, c = blockc}
 
 dodgeback = {im = love.graphics.newImage("me/attack/dodgeback.png"), c=love.graphics.newImage("me/attack/dodgebackc.png")}
 dodgeback2 = {im = love.graphics.newImage("me/attack/dodgeback2.png"), c=love.graphics.newImage("me/attack/dodgeback2c.png")}
-dodge = {im=love.graphics.newImage("me/attack/dodge.png"), c=love.graphics.newImage("me/attack/dodgec.png"), dodgeh = 36, dodgew = 44}
+dodge = {im=love.graphics.newImage("me/attack/dodge.png"), c=love.graphics.newImage("me/attack/dodgec.png"), dodgeh = 32, dodgew = 10}
 dodge2 = {im=love.graphics.newImage("me/attack/dodge2.png"), c=love.graphics.newImage("me/attack/dodge2c.png"), xoff = 12}
 dodge21 = {im=love.graphics.newImage("me/attack/dodge21.png"), c=love.graphics.newImage("me/attack/dodge21c.png"), xoff = 12}
 
@@ -456,10 +453,10 @@ newforwarddodge = function(xx)
       xx.hittheground = false 
     end
 
-    if xx.ft < 0 then xx.ft = xx.ft + 1
-    elseif xx.ft ==0 then 
+    if xx.ft < 0 then xx.ft = xx.ft + 1*rampspeed
+    elseif xx.ft == 0 or (xx.ft < 0 and xx.ft + 1*rampspeed >=0) or (xx.ft > 0 and xx.ft - 1*rampspeed <=0) then 
       xx.flinch = false end
-      if xx.ft > 0 then xx.ft = xx.ft - 1
+      if xx.ft > 0 then xx.ft = xx.ft - 1*rampspeed
       end
       camshakeflinch()
 

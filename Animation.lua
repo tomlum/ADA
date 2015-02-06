@@ -684,9 +684,9 @@ function drawglass()
   for i,v in ipairs(glasseses)do
   if #glasseses > 500 then table.remove(glasseses,500) end
   if not me.actionshot and not you.actionshot and not pause then
-    v.y = v.y - v.j
-    v.x = v.x + v.v
-    v.j = v.j - .3
+    v.y = v.y - v.j*rampspeed
+    v.x = v.x + v.v*rampspeed
+    v.j = v.j - .3*rampspeed
     glassn = math.random(155,255)
     glassclarity = math.random(55,255)
   end
@@ -729,9 +729,9 @@ function drawrubble()
   for i,v in ipairs(rubble)do
   if table.getn(rubble) > 500 then table.remove(rubble,500) end
   if not me.actionshot and not you.actionshot and not pause then
-    v.y = v.y - v.j
-    v.x = v.x + v.v
-    v.j = v.j - .3
+    v.y = v.y - v.j*rampspeed
+    v.x = v.x + v.v*rampspeed
+    v.j = v.j - .3*rampspeed
     blackn = math.random(80,150)
   end
   love.graphics.setColor(blackn,blackn,blackn)
@@ -740,6 +740,7 @@ function drawrubble()
 end
 end
 function makerunrubble(why,ex,vee)
+  if rampcanhit then
   if vee > 0 then
     table.insert(rubble,{x = ex, y = why, v=vee + math.random(5), j = math.random(2,7)})
     table.insert(rubble,{x = ex, y = why, v=vee + math.random(5), j = math.random(2,7)})
@@ -754,17 +755,22 @@ function makerunrubble(why,ex,vee)
     table.insert(rubble,{x = ex, y = why, v=vee - math.random(5), j = math.random(2,7)})
     table.insert(rubble,{x = ex, y = why, v=vee - math.random(5), j = math.random(2,7)})
   end
+  end
 end
 function makeslidedust(why,ex,vee)
+  if rampcanhit then
   if vee > minvfordust and math.random() > .5 then
     table.insert(dust,{x = ex, y = why, v=vee/3 + math.random(3), j = math.random(0,vee/5)})
   elseif vee < -minvfordust and math.random() > .5 then
     table.insert(dust,{x = ex, y = why, v=vee/3 - math.random(3), j = math.random(0,-vee/5)})
   end
+  end
+  
 end
 
 
 function makerubble(ex,why,vee,jay)
+  
   if vee > 0 then
     table.insert(rubble,{x = ex, y = why, v=vee + math.random(5), j = jay+1*math.random(5)})
     table.insert(rubble,{x = ex, y = why+5, v=vee + math.random(5), j = jay+1*math.random(5)})
@@ -2095,12 +2101,12 @@ death = function()
 
     for i,v in ipairs(sparks)do
     if not me.actionshot and not you.actionshot and not pause then
-      v.y = v.y - v.j
-      v.x = v.x + v.v
-      v.j = v.j - .1
+      v.y = v.y - v.j*rampspeed
+      v.x = v.x + v.v*rampspeed
+      v.j = v.j - .1*rampspeed
     end
     love.graphics.setColor(v.r,v.g,v.b)
-    love.graphics.draw(enviro.spark,v.x,v.y-2,math.random(0,10),.3,.3)
+    love.graphics.draw(enviro.spark,v.x,v.y-2,math.random(0,10)*rampspeed,.3,.3)
     love.graphics.setColor(255,255,255)
 
   end

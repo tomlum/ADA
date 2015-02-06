@@ -447,12 +447,20 @@ end
 
 --FRICTION FUNCTION TO SLOW DOWN
 you.fric = function (base) 
-  if you.v > 1 +base
-  then you.v = you.v - fricrate*rampspeed
+  if you.v > base
+  then 
+    if you.v - fricrate < base then you.v = base
+    else
+      you.v = you.v - fricrate
+    end
 
 
-  elseif you.v < -1+base
-  then you.v = you.v + fricrate*rampspeed
+  elseif you.v < base
+  then 
+    if you.v + fricrate*rampspeed > base then you.v = base
+    else
+      you.v = you.v + fricrate
+    end
   else 
     you.v = 0+base
   end
@@ -473,12 +481,20 @@ end
 
 
 me.fric = function (base) 
-  if me.v > 1 +base
-  then me.v = me.v - fricrate*rampspeed
+  if me.v > base
+  then 
+     if me.v - fricrate < base then me.v = base
+    else
+      me.v = me.v - fricrate
+    end
 
 
-  elseif me.v < -1+base
-  then me.v = me.v + fricrate*rampspeed
+  elseif me.v < base
+  then 
+     if me.v + fricrate*rampspeed > base then me.v = base
+    else
+      me.v = me.v + fricrate
+    end
   else 
     me.v = 0+base
   end
@@ -695,7 +711,7 @@ you.gothroughplats = false
 function movex(xx,z)
   if z.down then 
     xx.gothroughplats = true
-    else
+  else
     xx.gothroughplats = false
   end
 

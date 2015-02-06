@@ -95,16 +95,17 @@ end
 
 
 function hexcheck(lx1, ly1, lx2, ly2, ex, why, w, h, v, j)
-  t = {["c"] = {x = ex+w/2, y = why+h/2},
-    [0] = {x = ex, y=why, n = 0},
-    [1] = {x = ex+w, y=why, n = 1},
-    [2] = {x = ex+w, y=why+h, n = 2},
-    [3] = {x = ex, y=why+h, n = 3}}
+   t = {["c"] = {x = ex, y = why+h/2},
+    [0] = {x = ex-w/2, y=why, n = 0},
+    [1] = {x = ex+w/2, y=why, n = 1},
+    [2] = {x = ex+w/2, y=why+h, n = 2},
+    [3] = {x = ex-w/2, y=why+h, n = 3}}
   d = {
-    [0] = {x = ex+v, y=why-j, n = 0},
-    [1] = {x = ex+w+v, y=why-j, n = 1},
-    [2] = {x = ex+w+v, y=why+h-j, n = 2},
-    [3] = {x = ex+v, y=why+h-j, n = 3}}
+    [0] = {x = ex+v-w/2, y=why-j, n = 0},
+    [1] = {x = ex+v+w/2, y=why-j, n = 1},
+    [2] = {x = ex+v+w/2, y=why+h-j, n = 2},
+    [3] = {x = ex+v-w/2, y=why+h-j, n = 3}}
+
   l = {[1] = {x = lx1, y = ly1},[2] = {x = lx2, y = ly2}}
 
 
@@ -144,10 +145,10 @@ function drawallhex()
     dsh = 0
     dsw = 0
     if v.im.dodgeh ~= nil then
-      dsh = 20
+      dsh = v.im.dodgeh
       end
     if v.im.dodgew ~= nil then
-      dsw = 100
+      dsw = v.im.dodgew
       end
     drawhexcheck(v.me.mid+v.me.lr*(dsw/2), v.y+(dsh), v.width+dsw, v.height-dsh, v.v, v.j)
   end
@@ -229,19 +230,24 @@ function hboxcs(theid, P1, P2, P3, P4, special)
   end
 
   for i,p in ipairs(hitt) do
-    
-    if theid ~= i and 
-    (hexcheck(P1.x, P1.y, P2.x, P2.y, p.x, p.y, p.width, p.height, p.v, p.j) 
-      or hexcheck(P2.x, P2.y, P3.x, P3.y, p.x, p.y, p.width, p.height, p.v, p.j)
-      or hexcheck(P3.x, P3.y, P4.x, P4.y, p.x, p.y, p.width, p.height, p.v, p.j)
-      or hexcheck(P4.x, P4.y, P1.x, P1.y, p.x, p.y, p.width, p.height, p.v, p.j)
+     dsh = 0
+    dsw = 0
+    if p.im.dodgeh ~= nil then
+      dsh = p.im.dodgeh
+      end
+    if p.im.dodgew ~= nil then
+      dsw = p.im.dodgew
+      end
+    if theid ~= i and
+    (hexcheck(P1.x, P1.y, P2.x, P2.y, p.me.mid+p.me.lr*(dsw/2), p.y+(dsh), p.width+dsw, p.height-dsh, p.v, p.j) 
+      or hexcheck(P2.x, P2.y, P3.x, P3.y, p.me.mid+p.me.lr*(dsw/2), p.y+(dsh), p.width+dsw, p.height-dsh, p.v, p.j)
+      or hexcheck(P3.x, P3.y, P4.x, P4.y, p.me.mid+p.me.lr*(dsw/2), p.y+(dsh), p.width+dsw, p.height-dsh, p.v, p.j)
+      or hexcheck(P4.x, P4.y, P1.x, P1.y, p.me.mid+p.me.lr*(dsw/2), p.y+(dsh), p.width+dsw, p.height-dsh, p.v, p.j)
       or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
     )
     then
       --flash = true
-      if not p.me.dodge and rampcanhit then
       special(p)
-      end
     end
   end
 

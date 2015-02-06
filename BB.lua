@@ -4,6 +4,11 @@
 --FLINCH IS RESPONSIBLE FOR LOWERING combo TO 0 and animcounter to 0
 --General combo funciton responsible for keeping track of combo and attacking, not individual functions
 
+me.numofas = 0
+you.numofas = 0
+
+
+
 at.bb = {}
 at.bb.p = {}
 at.bb.p.dam = 5
@@ -41,10 +46,10 @@ me.animcounter = 0
 you.animcounter = 0
 you.bbcounter = 0
 me.type = 1
-me.bbpc = 0
+me.repcounter = 0
 me.bbpready = false
 you.type = 1
-you.bbpc = 0
+you.repcounter = 0
 you.bbpready = false
 me.clicka = false
 you.clicka = false
@@ -90,11 +95,14 @@ function combomanage(xx)
   if xx.animcounter > 0 then
     xx.block = false
     xx.jstop = true
-    xx.animcounter = xx.animcounter + 1*rampspeed
+    if rampcanhit then
+    xx.animcounter = xx.animcounter+1
+    end
   elseif xx.animcounter == 0 then 
     xx.combo = 0
     xx.cancombo = false
     xx.type = 0
+    xx.repcounter = 0
   end
 
 
@@ -119,9 +127,9 @@ function combo(xx, func)
     if xx.a2 or xx.a3 then
       if func~= nil then func() end
       if xx.color.n==0 then
-        if xx.bbpc < bbnumpunch then
-          xx.bbpc = xx.bbpc+1
-          if xx.bbpc == 1 then xx.combo = xx.combo + 1 end
+        if xx.repcounter < bbnumpunch then
+          xx.repcounter = xx.repcounter+1
+          if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
           xx.animcounter = 1
           if math.abs(xx.type) < 2 and math.abs(xx.type) > 0 then
             xx.type = -xx.type
@@ -229,7 +237,7 @@ function breadandbutter(xx)
       xx.type = -xx.type
       xx.animcounter = 1
       xx.combo = xx.combo + 1
-      xx.bbpc = 1
+      xx.repcounter = 1
     elseif xx.a4 and not xx.holda then
       xx.type = 2
       xx.animcounter = 1
@@ -261,11 +269,11 @@ function breadandbutter(xx)
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y+24},
             {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26},
-            {x=xx.mid, y = me.y+30},
+            {x=xx.mid, y = xx.y+30},
             {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32},
             function(z)
               xx.cancombo = true
-              if xx.bbpc == animcounter then
+              if xx.repcounter == animcounter then
                 z.v = xx.lr*at.bb.p.kb*3
               else
                 z.v = xx.lr*at.bb.p.kb
@@ -299,7 +307,6 @@ function breadandbutter(xx)
 
       elseif xx.animcounter >= 37 then
         xx.animcounter = 0
-        xx.bbpc = 0
       end
 
 
@@ -340,7 +347,6 @@ function breadandbutter(xx)
         end
       elseif xx.animcounter >= 43 then
         xx.animcounter = 0
-        xx.bbpc = 0
       end
     elseif xx.type ==3 then
       if xx.animcounter < 9 then
@@ -370,7 +376,6 @@ function breadandbutter(xx)
         end
       elseif xx.animcounter >= 16 then
         xx.animcounter = 0
-        xx.bbpc = 0
       end
     end
   end

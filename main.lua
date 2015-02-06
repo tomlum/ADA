@@ -1,5 +1,9 @@
 --todo
 therampspeed = .1
+--placement of cam funcs causes weirdness for actionshot
+
+
+
 
 
 blashader = love.graphics.newShader( "outline.glsl" )
@@ -235,6 +239,8 @@ moop = 0
 function love.load()
 
 
+me.oldv = 0
+you.oldv = 0
 
   myShader = love.graphics.newShader[[
   vec4 effect(vec4 color, Image texture, vec2 vTexCoord, vec2 pixel_coords)
@@ -369,14 +375,14 @@ function love.update()
       ramptimer = 0
       rampcanhit = true
     else 
-    ramptimer = ramptimer + therampspeed
+      ramptimer = ramptimer + therampspeed
       rampcanhit = false
     end
   else
     ramptimer = 0
-      rampcanhit = true
+    rampcanhit = true
     rampspeed = 1
-   end
+  end
 
   if not finishedLoading then
     loader.update()   end
@@ -531,7 +537,9 @@ function love.update()
         elseif themap.name == "floors" then floorswallbreak() 
         end
 
-
+      
+          me.v = me.oldv + (me.v-me.oldv)*(rampspeed)
+          you.v = you.oldv + (you.v-you.oldv)*(rampspeed)
 
         you.y = you.y - you.j*.9*rampspeed
         me.y = me.y - me.j*.9*rampspeed
@@ -539,7 +547,9 @@ function love.update()
         me.x = me.x + me.v*rampspeed
         you.next = you.feet - you.j*.9
         me.next = me.feet - me.j*.9
-
+        
+        me.oldv = me.v
+        you.oldv = you.v
 
         if you.push > 0 then you.push = you.push - 1
         elseif you.push < 0 then you.push = you.push + 1
@@ -594,20 +604,20 @@ function love.update()
 
 
     if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
-       
-       whoupdatesfirst = math.random()
-       if whoupdatesfirst>.5 then
-      attackmanage(me)
-      spikeupdate(me)
-      boltupdate(me) 
+
+      whoupdatesfirst = math.random()
+      if whoupdatesfirst>.5 then
+        attackmanage(me)
+        spikeupdate(me)
+        boltupdate(me) 
       end
       attackmanage(you)
       spikeupdate(you)
       boltupdate(you)  
       if whoupdatesfirst<=.5 then
-      attackmanage(me)
-      spikeupdate(me)
-      boltupdate(me) 
+        attackmanage(me)
+        spikeupdate(me)
+        boltupdate(me) 
       end
 
       flinchingx(me,you)
@@ -645,13 +655,15 @@ function love.update()
 
 
 
-      if (themode == "classic" and (you.dead or me.dead))or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
+      if (themode == "classic" and (you.dead or me.dead)) or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
         thesong:stop()
         retryupdate()
       end
-cammovement()
-    --if here then no slow mo twitter
-    camerafol()
+      if not me.actionshot and not you.actionshot and not pause then
+        cammovement()
+        --if here then no slow mo twitter
+        camerafol()
+      end
 
     end
 
@@ -682,7 +694,7 @@ cammovement()
 
     if MENU == "title" or MENU == "prestage" or MENU == "stage" or MENU == "modes"
     then 
-drawcity()
+      drawcity()
 
 
 
@@ -859,8 +871,7 @@ drawcity()
         "       animcounter: "..tostring(me.animcounter)
         ..
         "       type: "..tostring(me.type),10,30)
-      love.graphics.print("bleh"..tostring(you.extratimer).." "..tostring(you.falltimer).." "..tostring(you.ft), 10, 50)
-      love.graphics.print(tostring(me.gothroughplats).." slowdown "..tostring(me.slowdown).." slide "..tostring(me.slide), 10, 60)
+      love.graphics.print("bleh"..tostring(rampcanhit), 10, 50)
     end
 
 
