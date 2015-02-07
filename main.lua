@@ -669,7 +669,6 @@ function love.update()
       holdmanage(you)
 
 
-
       if (themode == "classic" and (you.dead or me.dead)) or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
         thesong:stop()
         retryupdate()
@@ -884,7 +883,7 @@ function love.update()
         "       animcounter: "..tostring(me.animcounter)
         ..
         "       type: "..tostring(me.type),10,30)
-      love.graphics.print("bleh"..tostring(you.falltimer).." ft "..tostring(you.ft), 10, 50)
+      love.graphics.print("bleh "..tostring(2).." ft "..tostring(you.ft), 10, 50)
     end
 
 

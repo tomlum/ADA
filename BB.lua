@@ -195,7 +195,7 @@ function bump(xx)
       {x=xx.mid, y = xx.y+5},
       function(z)
         if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
-         z.me.push = xx.v
+         z.push = xx.v
         end
       end)
   end

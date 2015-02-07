@@ -250,14 +250,15 @@ function boltupdate(xx)
     hboxcs(xx.id, {x=v.x, y=v.y}, 
       {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y}, {x=v.x, y=v.y}, 
       function(p)
-        p.v = p.v + (v.speed/3 * math.cos(math.rad(v.angle)))
-        p.j = p.j - (v.speed/3 * math.sin(math.rad(v.angle)))
+        p.v = p.v + (v.speed/4 * math.cos(math.rad(v.angle)))
+        p.j = p.j - (v.speed/4 * math.sin(math.rad(v.angle)))
         p.flinch = true
         if (v.speed * math.cos(math.rad(v.angle))) > 0 then p.flinchway = -1 
         else
           p.flinchway = 1
         end
         p.ft = at.g.k.ft
+        makeslashsparks(v.y,v.x, (v.speed * math.cos(math.rad(v.angle)))/8,(v.speed * math.sin(math.rad(v.angle)))+5, xx.color.c.r,xx.color.c.g,xx.color.c.b)
         table.remove(xx.bolts, i)
       end)
 
