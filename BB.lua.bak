@@ -4,6 +4,11 @@
 --FLINCH IS RESPONSIBLE FOR LOWERING combo TO 0 and animcounter to 0
 --General combo funciton responsible for keeping track of combo and attacking, not individual functions
 
+me.repcounter = 0
+you.repcounter = 0
+
+
+
 at.bb = {}
 at.bb.p = {}
 at.bb.p.dam = 5
@@ -24,6 +29,7 @@ at.bb.u.j = 22
 at.bb.u.ft = 20
 
 sparkspeed = 3
+slashsparkspeed = 7
 
 maxcombo = 5
 me.maxcombo = maxcombo
@@ -40,10 +46,10 @@ me.animcounter = 0
 you.animcounter = 0
 you.bbcounter = 0
 me.type = 1
-me.bbpc = 0
+me.repcounter = 0
 me.bbpready = false
 you.type = 1
-you.bbpc = 0
+you.repcounter = 0
 you.bbpready = false
 me.clicka = false
 you.clicka = false
@@ -89,11 +95,14 @@ function combomanage(xx)
   if xx.animcounter > 0 then
     xx.block = false
     xx.jstop = true
-    xx.animcounter = xx.animcounter + 1
+    if rampcanhit then
+    xx.animcounter = xx.animcounter+1
+    end
   elseif xx.animcounter == 0 then 
     xx.combo = 0
     xx.cancombo = false
     xx.type = 0
+    xx.repcounter = 0
   end
 
 
@@ -106,55 +115,61 @@ end
 
 function combo(xx, func)
 
-  if func ~= nil then
-    func()
-  end
+  
 
   if xx.color.n ~= xx.cchangeto.n and xx.cancombo
   then
+    if func~= nil then func() end
     xx.actionshot = true
     xx.cancombo = false
   end
   if not xx.holda then
     if xx.a2 or xx.a3 then
+      if func~= nil then func() end
       if xx.color.n==0 then
-        if xx.bbpc < bbnumpunch then
-          xx.bbpc = xx.bbpc+1
-          if xx.bbpc == 1 then xx.combo = xx.combo + 1 end
+        if xx.repcounter < bbnumpunch then
+          xx.repcounter = xx.repcounter+1
+          if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
           xx.animcounter = 1
           if math.abs(xx.type) < 2 and math.abs(xx.type) > 0 then
             xx.type = -xx.type
           else xx.type = 1
           end
         end
-      elseif xx.color.n==1 and xx.ppnum < numofps then
+      elseif xx.color.n==1 and xx.ppnum < at.p.p.max then
         xx.type = 1
         xx.animcounter = 1
         xx.ppnum = xx.ppnum + 1
         if xx.ppnum == 1 then xx.combo = xx.combo + 1 end
-      elseif xx.color.n==2 and xx.ggpc < at.g.p.max then
+      elseif xx.color.n==2 and xx.repcounter < at.g.p.max then
         xx.type = 1
         xx.animcounter = 1
-        xx.ggpc = xx.ggpc + 1
-        if xx.ggpc == 1 then xx.combo = xx.combo + 1 end
+        xx.repcounter = xx.repcounter + 1
+        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
 
 
       end
 
-    elseif xx.a4 and xx.type ~= 2 then
+  elseif xx.a4 and xx.type ~= 2 then
+    if func~= nil then func() end
       if xx.color.n==0 then
         xx.combo = xx.combo + 1
         xx.animcounter = 1
         xx.type = 2
 
-      elseif xx.color.n==1 and xx.ppnum < numofps then
+      elseif xx.color.n==1 and xx.ppnum < at.bb.p.max then
         xx.type = 2
         xx.animcounter = 1
         xx.ppnum = xx.ppnum + 1
         xx.combo = xx.combo + 1
       end
     elseif xx.a1 then
+      if func~= nil then func() end
       if xx.color.n==0 then
+        xx.type = 3
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
+      elseif xx.color.n==2 then
         xx.type = 3
         xx.animcounter = 1
         xx.combo = xx.combo + 1
@@ -179,12 +194,12 @@ function bump(xx)
   if not xx.dodge then
     hboxcs(xx.id, 
       {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+55},
-      {x=xx.mid+((8 * (-xx.v/(math.abs(xx.v))))), y = xx.y+55},
+      {x=xx.mid, y = xx.y+55},
       {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+5},
-      {x=xx.mid+((8 * (-xx.v/(math.abs(xx.v))))), y = xx.y+5},
+      {x=xx.mid, y = xx.y+5},
       function(z)
-        if xx.v * (z.x - xx.x) > 0 then
-          z.x = z.x + (xx.v*2/3)
+        if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
+         z.me.push = xx.v
         end
       end)
   end
@@ -222,7 +237,7 @@ function breadandbutter(xx)
       xx.type = -xx.type
       xx.animcounter = 1
       xx.combo = xx.combo + 1
-      xx.bbpc = 1
+      xx.repcounter = 1
     elseif xx.a4 and not xx.holda then
       xx.type = 2
       xx.animcounter = 1
@@ -254,20 +269,22 @@ function breadandbutter(xx)
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y+24},
             {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26},
-            {x=xx.mid, y = me.y+30},
+            {x=xx.mid, y = xx.y+30},
             {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32},
             function(z)
               xx.cancombo = true
-              z.health = z.health - at.bb.p.dam
-              if xx.bbpc == animcounter then
+              if xx.repcounter == animcounter then
                 z.v = xx.lr*at.bb.p.kb*3
               else
                 z.v = xx.lr*at.bb.p.kb
               end
+              if not (z.block == -xx.lr) then
+              z.health = z.health - at.bb.p.dam
               z.flinch = true
               z.ft = at.bb.p.ft
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(.7,1)
+              end
               end
 
               makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
@@ -290,7 +307,6 @@ function breadandbutter(xx)
 
       elseif xx.animcounter >= 37 then
         xx.animcounter = 0
-        xx.bbpc = 0
       end
 
 
@@ -300,6 +316,7 @@ function breadandbutter(xx)
         xx.im = kick1
       elseif xx.animcounter < 18 then
         xx.im = kick2
+        if xx.animcounter == 12 then
         hboxcs(xx.id, 
           {x=me.mid, y = me.y+31},
           {x=me.mid+me.v+(me.lr*28), y = me.y+31},
@@ -308,15 +325,21 @@ function breadandbutter(xx)
           function(z)
             xx.cancombo = true
             z.health = z.health - at.bb.k.dam
-            z.v = xx.lr*at.bb.k.kb
             z.flinch = true
+            if not (z.block == -xx.lr) then
             z.ft = at.bb.k.ft
+            z.v = xx.lr*at.bb.k.kb
+              else
+            z.ft = at.bb.k.ft/2
+            z.v = xx.lr*at.bb.k.kb*2/3
+            end
             if #joysticks>=xx.id then
               xx.joystick:setVibration(1,1)
             end
             makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
 
-          end)
+        end)
+      end
       elseif xx.animcounter < 43 then
         xx.im = kick3
         if xx.animcounter >= 17 then 
@@ -324,7 +347,6 @@ function breadandbutter(xx)
         end
       elseif xx.animcounter >= 43 then
         xx.animcounter = 0
-        xx.bbpc = 0
       end
     elseif xx.type ==3 then
       if xx.animcounter < 9 then
@@ -342,7 +364,7 @@ function breadandbutter(xx)
             function(z)
               xx.cancombo = true
               z.health = z.health - at.bb.u.dam
-              z.v = at.bb.u.kb
+              z.v = at.bb.u.kb*xx.lr
               z.j = at.bb.u.j
               z.flinch = true
               z.ft = at.bb.u.ft
@@ -354,7 +376,6 @@ function breadandbutter(xx)
         end
       elseif xx.animcounter >= 16 then
         xx.animcounter = 0
-        xx.bbpc = 0
       end
     end
   end

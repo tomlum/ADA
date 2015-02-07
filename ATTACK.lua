@@ -60,9 +60,9 @@ function attackmanage(xx)
   if xx.flinch then xx.animcounter = 0
   end
   if xx.animcounter == 0 then
-    xx.ppnum = 0
+    xx.repcounter = 0
     xx.bbpc = 0
-    xx.ggpc = 0
+    xx.repcounter = 0
     xx.currentanim = xx.color.n
   end
   if xx.currentanim == 0 then
@@ -453,10 +453,11 @@ newforwarddodge = function(xx)
       xx.hittheground = false 
     end
 
-    if xx.ft < 0 then xx.ft = xx.ft + 1*rampspeed
-    elseif xx.ft == 0 or (xx.ft < 0 and xx.ft + 1*rampspeed >=0) or (xx.ft > 0 and xx.ft - 1*rampspeed <=0) then 
-      xx.flinch = false end
-      if xx.ft > 0 then xx.ft = xx.ft - 1*rampspeed
+    if xx.ft == 0 or (xx.ft < 0 and xx.ft + 1*rampspeed >=0) or (xx.ft > 0 and xx.ft - 1*rampspeed <=0) then 
+      xx.flinch = false 
+      xx.ft = 0
+    elseif xx.ft < 0 then xx.ft = xx.ft + 1*rampspeed
+    elseif xx.ft > 0 then xx.ft = xx.ft - 1*rampspeed
       end
       camshakeflinch()
 

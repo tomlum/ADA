@@ -3,6 +3,27 @@
 --DUDE, MAYBE MAKE ALL BLOCKS SHOULD BE INTEGERS
 --also remember that flinch dir depends on the object hitting dir not necessarily the lr of the other person
 
+
+
+--resting orbital decimal interval base
+function rodibv(val,i,base)
+  if val.v > base then 
+    if val.v - i < base then
+      val.v = base
+    else
+      val.v = val.v - i
+    end
+  elseif val.v < base then 
+    if val.v + i > base then
+      val.v = base
+    else
+      val.v = val.v + i
+    end
+  end
+end
+
+
+
 hexbuffer = 5
 
 function sideofline(cx1, cy1, cx2, cy2, x,y)
@@ -95,7 +116,7 @@ end
 
 
 function hexcheck(lx1, ly1, lx2, ly2, ex, why, w, h, v, j)
-   t = {["c"] = {x = ex, y = why+h/2},
+  t = {["c"] = {x = ex, y = why+h/2},
     [0] = {x = ex-w/2, y=why, n = 0},
     [1] = {x = ex+w/2, y=why, n = 1},
     [2] = {x = ex+w/2, y=why+h, n = 2},
@@ -146,10 +167,10 @@ function drawallhex()
     dsw = 0
     if v.im.dodgeh ~= nil then
       dsh = v.im.dodgeh
-      end
+    end
     if v.im.dodgew ~= nil then
       dsw = v.im.dodgew
-      end
+    end
     drawhexcheck(v.me.mid+v.me.lr*(dsw/2), v.y+(dsh), v.width+dsw, v.height-dsh, v.v, v.j)
   end
 
@@ -230,14 +251,14 @@ function hboxcs(theid, P1, P2, P3, P4, special)
   end
 
   for i,p in ipairs(hitt) do
-     dsh = 0
+    dsh = 0
     dsw = 0
     if p.im.dodgeh ~= nil then
       dsh = p.im.dodgeh
-      end
+    end
     if p.im.dodgew ~= nil then
       dsw = p.im.dodgew
-      end
+    end
     if theid ~= i and
     (hexcheck(P1.x, P1.y, P2.x, P2.y, p.me.mid+p.me.lr*(dsw/2), p.y+(dsh), p.width+dsw, p.height-dsh, p.v, p.j) 
       or hexcheck(P2.x, P2.y, P3.x, P3.y, p.me.mid+p.me.lr*(dsw/2), p.y+(dsh), p.width+dsw, p.height-dsh, p.v, p.j)
@@ -250,7 +271,7 @@ function hboxcs(theid, P1, P2, P3, P4, special)
       special(p)
     end
   end
-
+  me = hitt[1].me
   me.x = hitt[1].x-5
   me.y = hitt[1].y-5
   me.j = hitt[1].j
@@ -262,6 +283,7 @@ function hboxcs(theid, P1, P2, P3, P4, special)
   me.g = hitt[1].g
 
 
+  you = hitt[2].me
   you.x = hitt[2].x-5
   you.y = hitt[2].y-5
   you.j = hitt[2].j

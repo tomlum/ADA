@@ -10,16 +10,16 @@ ppunch2 = {im = ppunch2im, c = ppunch2c, xoff = 45}
 ppunch3 = {im = ppunch3im, c = ppunch3c, xoff = 45}
 stomp1 = {im=love.graphics.newImage("me/attack/stomp1.png"),c=love.graphics.newImage("me/attack/stomp1c.png")}
 stomp2 = {im=love.graphics.newImage("me/attack/stomp2.png"),c=love.graphics.newImage("me/attack/stomp2c.png")}
-spikesize = 20
+spikesize = 12
 function spikegrow(cur, n)
   local vv = cur.verts
   if n == 1 then
     vv[3] = vv[3]+(math.random(3, 9)+math.random()*(spikesize))*cur.lr
-    vv[4] = vv[4]-(math.random(10, 15)+math.random()*(spikesize))
+    vv[4] = vv[4]-(math.random(10, 20)+math.random()*(spikesize))
     vv[5] = vv[5]+(math.random(0)+math.random()*(spikesize))*cur.lr
   elseif n == 2 then
     vv[3] = vv[3]+(math.random(2, 5)+math.random()*(cur.t/5))*cur.lr
-    vv[4] = vv[4]-(math.random(10, 15)+math.random()*(cur.t/5))
+    vv[4] = vv[4]-(math.random(10, 20)+math.random()*(cur.t/5))
     vv[5] = vv[5]+(math.random(4, 10)+math.random()*(cur.t/5))*cur.lr
   end
 
@@ -33,12 +33,12 @@ me.spikechargetimer = 0
 spikecooldown = 15
 
 p4ft = 10
-p4dam = 6
 
 mespikeprime = false
 mespikeairprime = false
 me.ptopspeed = 0
 you.ptopspeed = 0
+
 
 spikespace = 10
 
@@ -47,7 +47,7 @@ function spikedraw(xx)
     love.graphics.setColor(thecolors[1].c.r,thecolors[1].c.g,thecolors[1].c.b)
     local cur = xx.spikes[i] 
     if cur.t >= -3 then
-      
+
 
       local vv = xx.spikes[i].verts 
 
@@ -84,7 +84,7 @@ function spikeupdate(xx)
       vv[5] = vv[5]-(6*cur.lr)
       love.graphics.polygon("fill", vv)
     elseif cur.t > 0 and cur.t<5  then
-            spikegrow(cur,1)
+      spikegrow(cur,1)
     elseif cur.t <=7 and cur.t >=5 then
       hboxcs(xx.id, 
         {x=vv[1], y = vv[2]},
@@ -92,14 +92,15 @@ function spikeupdate(xx)
         {x=vv[5], y = vv[6]},
         {x=vv[1], y = vv[2]},
         function(z)
-              xx.cancombo = true
+          xx.cancombo = true
+          xx.hitsomeonewithpurp = true
           z.x = z.x + 3*cur.lr
           z.v = z.v + math.abs((vv[3]-vv[1])/70)*cur.lr
           z.j = z.j + -(vv[4]-vv[2])/30
           z.y = z.y-30
           z.flinch = true
           z.ft = z.ft + p4ft
-          z.health = z.health - p4dam
+          z.health = z.health - at.p.k.dam
         end)
     elseif cur.t >=6 then
       hboxcs(0, 
@@ -119,11 +120,12 @@ function spikeupdate(xx)
         {x=vv[3], y = vv[4]},
         {x=vv[3], y = vv[4]},
         function(z)
+          xx.hitsomeonewithpurp = true
           z.v = -z.v + (cur.lr*2)
           z.j = z.j + 6
           z.flinch = true
           z.ft = z.ft + p4ft
-          z.health = z.health - p4dam/3
+          z.health = z.health - at.p.k.dam/3
         end)
     end
 
@@ -135,7 +137,7 @@ function spikeupdate(xx)
       end
     end
     if cur.t == 2 then 
-      makerubble(cur.verts[3], cur.verts[1], 3,3)
+      makerubble(cur.verts[3], cur.verts[2], 2*cur.lr,5)
     end
   end
 end
@@ -145,29 +147,39 @@ at.p = {}
 
 at.p.p = {}
 at.p.p.dam = 12
-at.p.p.ft = 10
+at.p.p.ft = 20
 at.p.p.kb = 2
+at.p.p.max = 3
 
 at.p.k = {}
 at.p.k.max = 6
 at.p.k.kb = 6
-at.p.p.ft = 10
+at.p.k.dam = 6
 
 
-ppft = 10
 me.ppnum = 0
 you.ppnum = 0
 
 me.numofspikes = 0
 you.numofspikes = 0
-at.p.k.max = 6
 
 pa2busytime = 28
 pa4busytime = 10
 
 
+me.hitsomeonewithpurp = false
+you.hitsomeonewithpurp = false 
+
+
 
 function pandp(xx)
+
+  if xx.hitsomeonewithpurp and xx.numofspikes>0 then 
+    combo(xx, function()
+    xx.numofspikes = 0
+        end)
+    xx.cancombo = true
+  end
 
 
   if xx.animcounter > 7 then
@@ -181,19 +193,19 @@ function pandp(xx)
   end
 
   if xx.animcounter == 0 then
-
+    xx.hitsomeonewithpurp = false
 
     if (xx.a2 or xx.a3) then
       xx.type = 1
       xx.animcounter = 1
       xx.ppnum = 1
       xx.ppnum = 1
-        xx.combo = xx.combo + 1
+      xx.combo = xx.combo + 1
     elseif xx.a4 then
       xx.type = 2
       xx.animcounter = 1
       xx.ppnum = 1
-        xx.combo = xx.combo + 1
+      xx.combo = xx.combo + 1
     end
 
 
@@ -218,7 +230,7 @@ function pandp(xx)
           {x=xx.mid, y = me.y+6},
           {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+49},
           function(z)
-              xx.cancombo = true
+            xx.cancombo = true
             z.health = z.health - at.p.p.dam
             z.v = xx.lr*at.p.p.kb
             z.flinch = true
@@ -310,12 +322,12 @@ function pandp(xx)
               t = 0, lr=1})
 
 
-         -- lverts2[1]= xx.mid+(xx.lr*25*(sn))
-         -- lverts2[2]= xx.feet
-         -- lverts2[3]= xx.mid+(xx.lr*25*(sn))
-         -- lverts2[4]= xx.feet
-         -- lverts2[5]= xx.mid+(xx.lr*25*(sn))
-         -- lverts2[6]= xx.feet
+          -- lverts2[1]= xx.mid+(xx.lr*25*(sn))
+          -- lverts2[2]= xx.feet
+          -- lverts2[3]= xx.mid+(xx.lr*25*(sn))
+          -- lverts2[4]= xx.feet
+          -- lverts2[5]= xx.mid+(xx.lr*25*(sn))
+          -- lverts2[6]= xx.feet
 
           --table.insert(xx.spikes, 
           --  {verts = lverts2,
@@ -330,14 +342,14 @@ function pandp(xx)
           lverts[6]= xx.feet
 
 
-        --  lverts2[1]= xx.mid+(xx.lr*25*(sn))
-        --  lverts2[2]= xx.feet
-        --  lverts2[3]= xx.mid+(xx.lr*25*(sn))
-        --  lverts2[4]= xx.feet
-        --  lverts2[5]= xx.mid+(xx.lr*25*(sn))
-        --  lverts2[6]= xx.feet
+          --  lverts2[1]= xx.mid+(xx.lr*25*(sn))
+          --  lverts2[2]= xx.feet
+          --  lverts2[3]= xx.mid+(xx.lr*25*(sn))
+          --  lverts2[4]= xx.feet
+          --  lverts2[5]= xx.mid+(xx.lr*25*(sn))
+          --  lverts2[6]= xx.feet
 
-         -- table.insert(xx.spikes, 
+          -- table.insert(xx.spikes, 
           --  {verts = lverts2,
           --    t = 0, lr=-1})
 
@@ -353,13 +365,7 @@ function pandp(xx)
 
       elseif xx.animcounter < 50 then
         xx.im = stomp2
-        if xx.animcounter >= 17 then 
-          combo(xx, function()
-              if (xx.a1 or xx.a2 or xx.a3) and xx.combo < xx.maxcombo-1 then
-                xx.numofspikes = 0
-              end
-            end)
-        end
+
         if xx.animcounter >= pa4busytime and xx.a4 and not xx.holda and xx.numofspikes< at.p.k.max then 
           xx.animcounter = 1
         end

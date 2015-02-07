@@ -19,7 +19,7 @@ maps.fightclub = {name = "fightclub",
   plats = {},
   floor = 896
 }
-table.insert(maps.fightclub.plats, {y = 896, x1 = 0, x2 = 100000})
+table.insert(maps.fightclub.plats, {y = 896, x1 = 0, x2 = 100000, floor = true})
 table.insert(maps.fightclub.plats, {y = 465, x1 = 32, x2 = 236})
 table.insert(maps.fightclub.plats, {y = 541, x1 = 839, x2 = 1016})
 table.insert(maps.fightclub.plats, {y = 719, x1 = 655, x2 = 1560})
@@ -30,365 +30,10 @@ table.insert(maps.fightclub.plats, {y = 719, x1 = 655, x2 = 1560})
 
 
 function platformcheckx()
-   
-     hboxp() 
-  
-end
 
-function platformcheck(x, y, j)
-
-  if themap.name == "fightclub" then 
-    if x >= 4485-4453 and x <= 4689-4453 and y <= 1064+400-821 and y - j >= 1064+400-821
-    then return true
-    elseif x >= 5292-4453 and x <= 5469-4453 and y <= 1140+400-821 and y - j >= 1140+400 -821
-    then return true
-    elseif x >= 5654-4453 and x <= 5831-4453 and y <= 1140+400-821 and y - j >= 1140+400-821
-    then return true
-    elseif x >= 5108-4453 and x <= 6013-4453 and y <= 1318+400-821 and y - j >= 1318+400-821
-    then return true
-    elseif y - j >= floor
-    then return true
-    else return false
-    end
-
-  elseif themap.name == "street" then
-
-    if x >= 1118 and x <= 1528 and y <= 979+400 and y - j >= 979+400
-    then
-      return true
-    elseif x >= 2245 and x <= 2750 and y <= 1227+400 and y - j >= 1227+400
-    then 
-      return true
-    elseif x >= 2879 and x <= 3143 and y <= 618+400 and y - j >= 618+400
-    then return true
-
-    elseif x >= 2749 and x <=2968 and y <= 1270+400 and y - j >= 1270+400
-    then return true
-    elseif x >= 3294 and x <= 3676 and y <= 618+400 and y - j >= 618+400
-    then return true
-    elseif x >= 3325 and x <= 3764 and y <= 1270+400 and y - j >= 1270+400
-    then return true
-    elseif x >= 4485 and x <= 4689 and y <= 1064+400 and y - j >= 1064+400
-    then return true
-    elseif x >= 5292 and x <= 5469 and y <= 1140+400 and y - j >= 1140+400 
-    then return true
-    elseif x >= 5654 and x <= 5831 and y <= 1140+400 and y - j >= 1140+400
-    then return true
-    elseif x >= 5108 and x <= 6013 and y <= 1318+400 and y - j >= 1318+400
-    then return true
-    elseif y - j >= floor
-    then return true
-    else return false
-    end
-
-  elseif themap.name == "library" then
-    if x >= 1535 and x < 3200 and y <= 871 and y - j >= 871 
-    then return true
-    elseif x >= 1616 and x < 3196 and y <= 1516 and y - j >= 1516 
-    then return true
-    elseif y - j >= floor and x < 1400
-    then return true
-    elseif y - j >= floor and x >= 1400
-    then return true
-    else return false
-    end
-
-  elseif themap.name == "floors" then
-    if x >= 418 and x <= 2140 then	
-
-
-      if x == -20000 then return 0
-      elseif x > 581 and x < 1039 and y <= 3004 and y - j >= 3004 then
-        return true
-      elseif y <= 5616 and y - j >= 5616 then 
-        return true
-      elseif y <= 5330 and y - j >= 5330 then 
-        return true
-      elseif y <= 5044 and y - j >= 5044 then 
-        return true
-      elseif y <= 4758 and y - j >= 4758 then 
-        return true
-      elseif y <= 4472 and y - j >= 4472 then 
-        return true
-      elseif y <= 4186 and y - j >= 4186 then 
-        return true
-      elseif y <= 3900 and y - j >= 3900 then 
-        return true
-      elseif y <= 3614 and y - j >= 3614 then 
-        return true
-      elseif y <= 3328 and y - j >= 3328 then 
-        return true
-      elseif y <= 2756 and y - j >= 2756 then 
-        return true
-      elseif y <= 2471 and y - j >= 2471 and x < 808 then 
-        return true
-      elseif y <= 2471 and y - j >= 2471 and x > 1755 and x < 2130 then 
-        return true
-      elseif y <= 2184 and y - j >= 2184 and x < 643 then 
-        return true
-      elseif y <= 2184 and y - j >= 2184 and x > 2076 and x < 2136 then 
-        return true
-      elseif y <= 1898 and y - j >= 1898 and x > 2071 then 
-        return true
-      elseif y <= 1898 and y - j >= 1898 and x < 636 then 
-        return true
-      elseif y <= 1612 and y - j >= 1612 and x > 2071 then 
-        return true
-      end
-    elseif y <= 2688 and y - j >= 2688 and x > 2154 and x < 2726 then 
-      return true
-    elseif y <= 5778 and y - j >= 5778 and x > 2142 and x < 2299 then 
-      return true
-    elseif x >= 3161 then
-      if x < - 200 then return 0
-      elseif y <= 5599 and y - j >= 5599 and x < 4901 then 
-        return true
-      elseif y <= 5300 and y - j >= 5300 and x < 4898 then 
-        return true
-      elseif y <= 5001 and y - j >= 5001 and x < 4895 then 
-        return true
-      elseif y <= 4702 and y - j >= 4702 and x < 4889 then 
-        return true
-      elseif y <= 4403 and y - j >= 4403 and x < 4906 then 
-        return true
-      elseif y <= 4104 and y - j >= 4104 and x < 4899 then 
-        return true
-      elseif y <= 3805 and y - j >= 3805 and x < 4784 then 
-        return true
-      elseif y <= 3506 and y - j >= 3506 and x < 4699  then 
-        return true
-      elseif y <= 3207 and y - j >= 3207 and (x <= 4168 or x >= 4405) and x < 4889 then 
-        return true
-      elseif y <= 2829 and y - j >= 2829 and (x <= 3847 or x >= 4335) and x < 4908 then 
-        return true
-      end
-
-    elseif y - j >= floor
-    then return true
-    else return false
-    end
-
-
-  end
+  hboxp() 
 
 end
-
-
-
-function platformy(x, y)
-  if themap.name == "fightclub" then 
-    if x >= 4485-4453 and x <= 4689-4453 and y <= 1064+400-821-178 and y >= 1064+400-821-30-178
-    then return 1064+400-821-178
-    elseif x >= 5292-4453 and x <= 5469-4453 and y <= 1140+400-821-178 and y >= 1140+400 -821-30-178
-    then return 1140+400-821-178
-    elseif x >= 5654-4453 and x <= 5831-4453 and y <= 1140+400-821-178 and y >= 1140+400-821-30-178
-    then return 1140+400-821-178
-    elseif x >= 5108-4453 and x <= 6013-4453 and y <= 1318+400-821-178 and y >= 1318+400-821-30-178
-    then return 1318+400-821-178
-    else return floor
-    end
-  elseif themap.name == "street" then
-
-    if x >= 1118 and x <= 1528 and y <= 979+400 and y >= 949+400
-    then
-      return 979+400
-    elseif x >= 2245 and x <= 2750 and y <= 1227+400 and y >= 1197+400
-    then 
-      return 1227+400
-    elseif x >= 2879 and x <= 3143 and y <= 618+400 and y >= 588+400
-    then return 618+400
-
-    elseif x >= 2749 and x <=2968 and y <= 1270+400 and y >= 1240+400
-    then return 1270+400
-    elseif x >= 3294 and x <= 3676 and y <= 618+400 and y >= 588+400
-    then return 618+400
-    elseif x >= 3325 and x <= 3764 and y <= 1270+400 and y >= 1240+400
-    then return 1270+400
-    elseif x >= 4485 and x <= 4689 and y <= 1064+400 and y >= 1034+400
-    then return 1064+400
-    elseif x >= 5292 and x <= 5469 and y <= 1140+400 and y >= 1110 +400
-    then return 1140+400
-    elseif x >= 5654 and x <= 5831 and y <= 1140 + 400 and y >= 1110 + 400
-    then return 1140+400
-    elseif x >= 5108 and x <= 6013 and y <= 1318+400 and y >= 1288+400
-    then return 1318+400
-
-    else return floor
-    end
-
-
-  elseif themap.name == "library" then
-
-
-
-    if x >= 1535 and x < 3200 and y <= 871 and y >= 841 
-    then return 871
-
-    elseif x >= 1905 and x < 2020 and y <= 1198 and y >= 1168 
-    then return 1198
-    elseif x >= 2271 and x < 2386 and y <= 1198 and y >= 1168  
-    then return 1198
-    elseif x >= 2637 and x < 2752 and y <= 1198 and y >= 1168 
-    then return 1198
-
-    elseif x >= 1893 and x < 2135 and y <= 1804 and y >= 1774 
-    then return 1804
-    elseif x >= 2321 and x < 2563 and y <= 1804 and y >= 1774 
-    then return 1804
-    elseif x >= 2749 and x < 2991 and y <= 1804 and y >= 1774 
-    then return 1804
-
-    elseif x >= 3003 and x < 3118 and y <= 1297 and y >= 1267 
-    then return 1297
-
-    elseif x >= 1616 and x < 3196 and y <= 1516 and y >= 1485 
-    then return 1516
-    elseif y >= floor - 20 and x < 1400
-    then return floor
-    elseif y >= floor - 20 - 63 and x >= 1400
-    then return floor - 63
-    else return floor
-    end
-
-  elseif themap.name == "floors" then
-
-    if x >= 418 and x <= 2140 then	
-
-
-      if x == -20000 then return 0
-      elseif x > 581 and x < 1039 and y <= 3004 and y >= 2974 then
-        return 3004
-      elseif y <= 5616 and y >= 5586 then 
-        return 5616
-      elseif y <= 5330 and y >= 5300 then 
-        return 5330
-      elseif y <= 5044 and y >= 5014 then 
-        return 5044
-      elseif y <= 4758 and y >= 4728 then 
-        return 4758
-      elseif y <= 4472 and y >= 4442 then 
-        return 4472
-      elseif y <= 4186 and y >= 4156 then 
-        return 4186
-      elseif y <= 3900 and y >= 3870 then 
-        return 3900
-      elseif y <= 3614 and y >= 3584 then 
-        return 3614
-      elseif y <= 3328 and y >= 3298 then 
-        return 3328
-      elseif y <= 2756 and y >= 2726 then 
-        return 2756
-      elseif y <= 2471 and y >= 2441 and x < 808 then 
-        return 2471
-      elseif y <= 2471 and y >= 2441 and x > 1755 and x < 2130 then 
-        return 2471
-      elseif y <= 2184 and y >= 2154 and x < 643 then 
-        return 2184
-      elseif y <= 2184 and y >= 2154 and x > 2076 and x < 2136 then 
-        return 2184
-      elseif y <= 1898 and y >= 1868 and x > 2071 then 
-        return 1898
-      elseif y <= 1898 and y >= 1868 and x < 636 then 
-        return 1898
-      elseif y <= 1612 and y >= 1582 and x > 2071 then 
-        return 1612
-
-
-      else return floor
-      end
-    elseif y <= 2688 and y >= 2658 and x > 2154 and x < 2726 then 
-      return 2688
-    elseif y <= 5778 and y >= 5748 and x > 2142 and x < 2299 then 
-      return 5778
-    elseif x >= 3161 then
-      if x < - 200 then return 0
-      elseif y <= 5599 and y >= 5569 and x < 4901 then 
-        return 5599
-      elseif y <= 5300 and y >= 5270 and x < 4898 then 
-        return 5300
-      elseif y <= 5001 and y >= 4971 and x < 4895 then 
-        return 5001
-      elseif y <= 4702 and y >= 4672 and x < 4889 then 
-        return 4702
-      elseif y <= 4403 and y >= 4373 and x < 4906 then 
-        return 4403
-      elseif y <= 4104 and y >= 4074 and x < 4899 then 
-        return 4104
-      elseif y <= 3805 and y >= 3775 and x < 4784 then 
-        return 3805
-      elseif y <= 3506 and y >= 3476 and x < 4699 then 
-        return 3506
-      elseif y <= 3207 and y >= 3176 and (x <= 4168 or x >= 4405) and x < 4889  then 
-        return 3207
-      elseif y <= 2829 and x <= 3847 and (x >= 4335 or y >= 2796) and x < 4908 then 
-        return 2829
-      else return floor
-      end
-
-    else
-      return floor
-    end
-
-
-  end
-
-
-
-end
-
-
-function platforming()
-
-  me.floor = floor
-  you.floor = floor
-
-  if themap.name == "library" then 
-
-    if you.mid >= 1400 then you.floor = 1900 - 65 end
-    if me.mid >= 1400 then me.floor = 1900 - 65 end
-
-    --slope attempt
-    -- if themap.name == "library" then 
-
-
-
-    -- if me.mid > 1207 and me.mid < 1407 then
-    -- 		me.floor = 1900-(((me.mid-1207)/200)*(63)) end
-    -- if you.mid > 1207 and you.mid < 1407 then
-    -- 		you.floor = 1900-(((you.mid-1207)/200)*(63)) end
-    -- 	if me.mid > 1207 and me.mid < 1407 then
-    -- 		me.floor = 1900-(((me.mid-1207)/200)*(63)) end
-    -- if you.mid > 1207 and you.mid < 1407 then
-    -- 		you.floor = 1900-(((you.mid-1207)/200)*(63)) end
-    -- if you.mid >= 1407 then you.floor = 1900 - 63 end
-    -- if me.mid >= 1407 then me.floor = 1900 - 63 end
-
-    -- end
-
-  end
-
-
-  you.tempfloor = platformy(you.mid, you.feet)
-  me.tempfloor = platformy(me.mid, me.feet)
-  if me.tempfloor < me.floor 
-  then me.onplat = true
-  else me.onplat = false
-    if me.feet + 10 < me.floor
-    then me.g = false
-    end
-  end
-  if you.tempfloor < you.floor 
-  then you.onplat = true
-  else you.onplat = false
-    if you.feet + 10 < you.floor
-    then you.g = false
-    end
-  end
-
-
-end
-
-
 function spikecheck(x, y)
 
   if themap.name == "fightclub" then 
@@ -802,12 +447,20 @@ end
 
 --FRICTION FUNCTION TO SLOW DOWN
 you.fric = function (base) 
-  if you.v > 1 +base
-  then you.v = you.v - fricrate
+  if you.v > base
+  then 
+    if you.v - fricrate < base then you.v = base
+    else
+      you.v = you.v - fricrate
+    end
 
 
-  elseif you.v < -1+base
-  then you.v = you.v + fricrate
+  elseif you.v < base
+  then 
+    if you.v + fricrate*rampspeed > base then you.v = base
+    else
+      you.v = you.v + fricrate
+    end
   else 
     you.v = 0+base
   end
@@ -827,27 +480,35 @@ you.fric = function (base)
 end
 
 
-me.fric = function (base) 
-  if me.v > 1 +base
-  then me.v = me.v - fricrate
+fric = function (xx, base) 
+  if xx.v > base
+  then 
+     if xx.v - fricrate < base then xx.v = base
+    else
+      xx.v = xx.v - fricrate
+    end
 
 
-  elseif me.v < -1+base
-  then me.v = me.v + fricrate
+  elseif xx.v < base
+  then 
+     if xx.v + fricrate > base then xx.v = base
+    else
+      xx.v = xx.v + fricrate
+    end
   else 
-    me.v = 0+base
+    xx.v = 0+base
   end
 
-  if not me.landing
+  if not xx.landing
   then
-    if me.v > 0+base and not me.dodge
+    if xx.v > 0+base and not xx.dodge 
+    then
+      xx.slide = true
+      xx.slidetimer = 0
+    elseif xx.v < 0+base and not xx.dodge 
     then
       me.slide = true
-      slidetimerme = 0
-    elseif me.v < 0+base and not me.dodge
-    then
-      me.slide = true
-      slidetimerme = 0
+      xx.slidetimer = 0
     end
   end
 end
@@ -1044,8 +705,15 @@ end
 me.oldg = true
 you.oldg = true
 
-function movex(xx,z)
+me.gothroughplats = false
+you.gothroughplats = false
 
+function movex(xx,z)
+  if z.down then 
+    xx.gothroughplats = true
+  else
+    xx.gothroughplats = false
+  end
 
   ------?????--------
   if xx.flinch then
@@ -1111,9 +779,9 @@ function movex(xx,z)
     then
       xx.landingcounter = xx.landingcounter - 1
     end
-    if z.blockb and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet+5) ~= platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-65) and platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-65) ~= xx.floor
+    if z.blockb and math.abs(z.j) + math.abs(z.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j)
     then 
-      if platformy(xx.mid+(xx.v/2)+(xx.lr*15),xx.feet-35) ~= platformy(xx.mid+(xx.v/2)+xx.lr*15,xx.feet+5) then
+      if climbplatcheck(xx.x, xx.y+xx.height/2, xx.lr, xx.height/2, xx.v, xx.j) then
         xx.ctim = 7
       else xx.ctim = 1
       end
@@ -1135,8 +803,6 @@ function movex(xx,z)
     then xx.v = xx.v +amovrate
       xx.slowdown = false
 
-    elseif z.down
-    then xx.tempfloor = xx.floor
     elseif xx.push > 0 then
       bloop = 2
       if xx.v > xx.push*1.5 then 
@@ -1149,40 +815,22 @@ function movex(xx,z)
     end
 
     --landing
-    if xx.g and not xx.oldg
-    then 
-      if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
-        xx.landingcounter = landingwait
-        xx.landing = true 
-        xx.v = xx.v * landingfric
-      else
-        xx.landingcounter = shortlandwait
-        xx.landing = true 
-        xx.v = xx.v * landingfric
-      end
-      xx.j = 0
-      xx.y = xx.tempfloor - 60
-      xx.g = true
-      land2:play()
-      xx.slowdown = false
-
-      --long jump
-    elseif z.up and xx.j > 0 
+    if z.up and xx.j > 0 
     and xx.jmax > 0 
     and xx.firstjump
-    then xx.jmax = xx.jmax - .7
+    then xx.jmax = xx.jmax - .7*rampspeed
       --the end arc/fall of any jump or the mini jump
     else
       xx.firstjump = false
       if xx.jt > 0
-      then xx.jt = xx.jt -  1
+      then xx.jt = xx.jt -  1*rampspeed
       elseif xx.jt <= 0 and xx.j > - maxgravity
-      then xx.jt = xx.jt -  1
+      then xx.jt = xx.jt -  1*rampspeed
         if xx.j >= 0 then
-          xx.j = xx.j - risegrav
+          xx.j = xx.j - risegrav*rampspeed
         else
 
-          xx.j = xx.j - dropgrav
+          xx.j = xx.j - dropgrav*rampspeed
         end
         --elseif xx.jt <= 0 and xx.ht > 0
         --then xx.j = 0

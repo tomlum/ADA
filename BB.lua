@@ -4,8 +4,8 @@
 --FLINCH IS RESPONSIBLE FOR LOWERING combo TO 0 and animcounter to 0
 --General combo funciton responsible for keeping track of combo and attacking, not individual functions
 
-me.numofas = 0
-you.numofas = 0
+me.repcounter = 0
+you.repcounter = 0
 
 
 
@@ -131,21 +131,17 @@ function combo(xx, func)
           xx.repcounter = xx.repcounter+1
           if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
           xx.animcounter = 1
-          if math.abs(xx.type) < 2 and math.abs(xx.type) > 0 then
-            xx.type = -xx.type
-          else xx.type = 1
-          end
         end
-      elseif xx.color.n==1 and xx.ppnum < at.p.p.max then
+      elseif xx.color.n==1 and xx.repcounter < at.p.p.max then
         xx.type = 1
         xx.animcounter = 1
-        xx.ppnum = xx.ppnum + 1
-        if xx.ppnum == 1 then xx.combo = xx.combo + 1 end
-      elseif xx.color.n==2 and xx.ggpc < at.g.p.max then
+        xx.repcounter = xx.repcounter + 1
+        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+      elseif xx.color.n==2 and xx.repcounter < at.g.p.max then
         xx.type = 1
         xx.animcounter = 1
-        xx.ggpc = xx.ggpc + 1
-        if xx.ggpc == 1 then xx.combo = xx.combo + 1 end
+        xx.repcounter = xx.repcounter + 1
+        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
 
 
       end
@@ -157,10 +153,10 @@ function combo(xx, func)
         xx.animcounter = 1
         xx.type = 2
 
-      elseif xx.color.n==1 and xx.ppnum < at.bb.p.max then
+      elseif xx.color.n==1 and xx.repcounter < at.bb.p.max then
         xx.type = 2
         xx.animcounter = 1
-        xx.ppnum = xx.ppnum + 1
+        xx.repcounter = xx.repcounter + 1
         xx.combo = xx.combo + 1
       end
     elseif xx.a1 then
@@ -194,12 +190,12 @@ function bump(xx)
   if not xx.dodge then
     hboxcs(xx.id, 
       {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+55},
-      {x=xx.mid+((8 * (-xx.v/(math.abs(xx.v))))), y = xx.y+55},
+      {x=xx.mid, y = xx.y+55},
       {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+5},
-      {x=xx.mid+((8 * (-xx.v/(math.abs(xx.v))))), y = xx.y+5},
+      {x=xx.mid, y = xx.y+5},
       function(z)
-        if xx.v * (z.x - xx.x) > 0 then
-          z.x = z.x + (xx.v*2/3)
+        if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
+         z.me.push = xx.v
         end
       end)
   end
@@ -231,10 +227,7 @@ function breadandbutter(xx)
   if xx.animcounter == 0 then
 
     if (xx.a2 or xx.a3) and xx.color.n == 0 and not xx.holda then
-      if xx.type >1 then 
         xx.type = 1
-      end
-      xx.type = -xx.type
       xx.animcounter = 1
       xx.combo = xx.combo + 1
       xx.repcounter = 1
@@ -250,16 +243,16 @@ function breadandbutter(xx)
 
   else
 
-    if xx.type <= 1 then
+    if xx.type == 1 then
       if xx.animcounter < 6 then
-        if xx.type> 0 then
+        if xx.repcounter%2==0 then
           xx.im = punch1
         else
           xx.im = punch4
         end
 
-      elseif xx.animcounter < 10 then
-        if xx.type>0 then
+      elseif xx.animcounter<=9 then
+        if xx.repcounter%2==0 then
           xx.im = punch2
         else
           xx.im = punch5
@@ -274,9 +267,9 @@ function breadandbutter(xx)
             function(z)
               xx.cancombo = true
               if xx.repcounter == animcounter then
-                z.v = xx.lr*at.bb.p.kb*3
+                z.v = xx.lr*at.bb.p.kb*3+xx.v
               else
-                z.v = xx.lr*at.bb.p.kb
+                z.v = xx.lr*at.bb.p.kb+xx.v
               end
               if not (z.block == -xx.lr) then
               z.health = z.health - at.bb.p.dam
@@ -294,7 +287,7 @@ function breadandbutter(xx)
         xx.v = xx.v + (xx.lr*3)
 
       elseif xx.animcounter < 37 then
-        if xx.type>0 then
+        if xx.repcounter%2==0  then
           xx.im = punch3
         else
           xx.im = punch6

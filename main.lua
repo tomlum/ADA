@@ -1,8 +1,11 @@
 --todo
 therampspeed = .1
 --placement of cam funcs causes weirdness for actionshot
+--cant move right while sliding left?  pretty easy to do with base/push
 
 
+--to be rampspeedified (or if not rampcanhitified)
+  --idle
 
 
 
@@ -550,22 +553,34 @@ function love.update()
         
         me.oldv = me.v
         you.oldv = you.v
+        
 
-        if you.push > 0 then you.push = you.push - 1
-        elseif you.push < 0 then you.push = you.push + 1
+        if you.push > 0 then
+          if you.push - 1 < 0 then you.push = 0
+            else you.push = you.push - 1
+          end
+        elseif you.push < 0 then
+          if you.push + 1 > 0 then you.push = 0
+            else you.push = you.push + 1
+          end
         end
 
-        if me.push > 0 then me.push = me.push - 1
-        elseif me.push < 0 then me.push = me.push + 1
+         if me.push > 0 then
+          if me.push - 1 < 0 then me.push = 0
+            else me.push = me.push - 1
+          end
+        elseif me.push < 0 then
+          if me.push + 1 > 0 then me.push = 0
+            else me.push = me.push + 1
+          end
         end
-
       end
 
     end
 
-    --cammovement()
+    cammovement()
     --if here then slideycling to person
-    --camerafol()
+    camerafol()
 
     if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
       animate()
@@ -659,11 +674,9 @@ function love.update()
         thesong:stop()
         retryupdate()
       end
-      if not me.actionshot and not you.actionshot and not pause then
         cammovement()
         --if here then no slow mo twitter
         camerafol()
-      end
 
     end
 
@@ -871,7 +884,7 @@ function love.update()
         "       animcounter: "..tostring(me.animcounter)
         ..
         "       type: "..tostring(me.type),10,30)
-      love.graphics.print("bleh"..tostring(rampcanhit), 10, 50)
+      love.graphics.print("bleh"..tostring(you.falltimer).." ft "..tostring(you.ft), 10, 50)
     end
 
 

@@ -5,15 +5,15 @@ greena22s = {im=love.graphics.newImage("me/attack/greena22s.png"),c=love.graphic
 greena1s = {im=love.graphics.newImage("me/attack/greena1s.png"),c=love.graphics.newImage("me/attack/greena1c.png"), xoff = 20, yoff = 60}
 greena1 = {im=love.graphics.newImage("me/attack/greena1.png"),c=love.graphics.newImage("me/attack/greena1c.png"), xoff = 20, yoff = 60}
 
-greenk1 = {im=love.graphics.newImage("me/attack/greenk1.png"),c=love.graphics.newImage("me/attack/greenk1c.png"), xoff = 25}
-greenk2 = {im=love.graphics.newImage("me/attack/greenk2.png"),c=love.graphics.newImage("me/attack/greenk2c.png"), xoff = 25}
+greenk1 = {im=love.graphics.newImage("me/attack/greenk1.png"),c=love.graphics.newImage("me/attack/greenk1c.png"), xoff = 40, yoff = 20}
+greenk2 = {im=love.graphics.newImage("me/attack/greenk2.png"),c=love.graphics.newImage("me/attack/greenk2c.png"), xoff = 30, yoff = 20}
 
 at.g = {}
 at.g.p = {}
 at.g.p.dam = 4
 at.g.p.kb = 2
 at.g.p.ft = 10
-at.g.p.max = 5
+at.g.p.max = 4
 
 
 
@@ -26,15 +26,16 @@ at.g.u.ft = 20
 
 at.g.k = {}
 at.g.k.dam = 10
+at.g.k.angle = 0
 at.g.k.ft = 30
 
 
-me.ggpc = 0
-you.ggpc = 0
+me.repcounter = 0
+you.repcounter = 0
 
 --transform angle
 function tang(ang,xx)
-return (-xx.lr*90) + 90-(ang)*xx.lr
+  return (-xx.lr*90) + 90-(ang)*xx.lr
 end
 
 function gandg(xx)
@@ -52,7 +53,7 @@ function gandg(xx)
     if (xx.a2 or xx.a3) and not xx.holda then
       xx.animcounter = 1
       xx.combo = xx.combo + 1
-      xx.ggpc = 1
+      xx.repcounter = 1
       xx.type = 1
     elseif xx.a4 and not xx.holda then
       xx.type = 2
@@ -74,24 +75,23 @@ function gandg(xx)
 
       elseif xx.animcounter < 30 then
         xx.im = greena22
-        if xx.ggpc>=3 then
+        if xx.repcounter>=1 then
           table.insert(xx.trail, 
             {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0;})
 
         end
 
         if xx.animcounter == 4 then
-          table.insert(xx.bolts, {angle = tang(32,xx), speed = boltspeed, x = xx.mid+(30*xx.lr), y = xx.y+30, t = 0, stuck = false})
 
 
-          if xx.ggpc ==3 then
+          if xx.repcounter ==1 then
             xx.v = xx.v + (xx.lr*17)
-          elseif xx.ggpc==4 then
+          elseif xx.repcounter==2 then
             xx.lr=-xx.lr
             xx.v = xx.v + (xx.lr*22)
-          elseif xx.ggpc==5 then
+          elseif xx.repcounter==3 then
             xx.lr=-xx.lr
-            xx.v = xx.v + (xx.lr*19)
+            xx.v = xx.v + (xx.lr*13)
           end
 
           xx.im = greena22s
@@ -107,7 +107,7 @@ function gandg(xx)
               makeslashsparks(xx.y+30,xx.v+xx.x+xx.lr*(15),-xx.lr*slashsparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
 
               xx.cancombo = true
-              if xx.ggpc == at.g.p.max then
+              if xx.repcounter == at.g.p.max then
                 z.v = xx.lr*at.g.p.kb*3
               else
                 z.v = xx.lr*at.g.p.kb
@@ -131,42 +131,37 @@ function gandg(xx)
 
       elseif xx.animcounter >= 30 then
         xx.animcounter = 0
-        xx.ggpc = 0
+        xx.repcounter = 0
       end
 
 
 
     elseif xx.type == 2 then
-      if xx.animcounter < 12 then
-        xx.im = kick1
-      elseif xx.animcounter < 18 then
-        xx.im = kick2
-        hboxcs(xx.id, 
-          {x=me.mid, y = me.y+31},
-          {x=me.mid+me.v-(me.lr*3), y = me.y-56},
-          {x=me.mid+(me.lr*51), y = me.y-32},
-          {x=me.mid+me.v+(me.lr*22), y = me.y+32},
-          function(z)
-            xx.cancombo = true
-            z.health = z.health - at.bb.k.dam
-            z.v = xx.lr*at.bb.k.kb
-            z.flinch = true
-            z.ft = at.bb.p.ft
-            if #joysticks>=xx.id then
-              xx.joystick:setVibration(1,1)
-            end
-            makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
+      if xx.animcounter < 10 then
+        xx.im = greenk1
+        xx.animcounter = 8
+        if xx.a1b then
+          at.g.k.angle = 90
+          xx.animcounter = 9
+        elseif xx.a2b or xx.a3b then
+          at.g.k.angle = 0
+          xx.animcounter = 9
+        end
+      elseif xx.animcounter < 50 then
+        xx.im = greenk2
 
-          end)
-      elseif xx.animcounter < 43 then
-        xx.im = kick3
-        if xx.animcounter >= 17 then 
+        if xx.animcounter == 10 then
+          if rampcanhit then
+          table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx), speed = boltspeed, x = xx.mid, y = xx.y+30, t = 0, stuck = false})
+          end
+        elseif xx.animcounter >= 12 then 
           combo(xx)
         end
-      elseif xx.animcounter >= 43 then
+      elseif xx.animcounter >= 50 then
         xx.animcounter = 0
-        xx.ggpc = 0
+        xx.repcounter = 0
       end
+
     elseif xx.type ==3 then
       if xx.animcounter < 5 then
         xx.im = greena21
@@ -199,7 +194,7 @@ function gandg(xx)
         end
       elseif xx.animcounter >= 14 then
         xx.animcounter = 0
-        xx.ggpc = 0
+        xx.repcounter = 0
       end
     end
   end
@@ -250,17 +245,22 @@ end
 function boltupdate(xx)
   for i = #xx.bolts, 1, -1 do
     local v = xx.bolts[i]
-    v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))
-    v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))
+    v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed
+    v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*rampspeed
     hboxcs(xx.id, {x=v.x, y=v.y}, 
       {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y}, {x=v.x, y=v.y}, 
       function(p)
-        p.v = p.v + (v.speed/6 * math.cos(math.rad(v.angle)))
-        p.j = p.j - (v.speed/6 * math.sin(math.rad(v.angle)))
+        p.v = p.v + (v.speed/3 * math.cos(math.rad(v.angle)))
+        p.j = p.j - (v.speed/3 * math.sin(math.rad(v.angle)))
         p.flinch = true
+        if (v.speed * math.cos(math.rad(v.angle))) > 0 then p.flinchway = -1 
+        else
+          p.flinchway = 1
+        end
         p.ft = at.g.k.ft
-        end)
-    
+        table.remove(xx.bolts, i)
+      end)
+
   end
 end
 

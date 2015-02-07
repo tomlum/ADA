@@ -157,8 +157,8 @@ at.p.k.kb = 6
 at.p.k.dam = 6
 
 
-me.ppnum = 0
-you.ppnum = 0
+me.repcounter = 0
+you.repcounter = 0
 
 me.numofspikes = 0
 you.numofspikes = 0
@@ -198,13 +198,13 @@ function pandp(xx)
     if (xx.a2 or xx.a3) then
       xx.type = 1
       xx.animcounter = 1
-      xx.ppnum = 1
-      xx.ppnum = 1
+      xx.repcounter = 1
+      xx.repcounter = 1
       xx.combo = xx.combo + 1
     elseif xx.a4 then
       xx.type = 2
       xx.animcounter = 1
-      xx.ppnum = 1
+      xx.repcounter = 1
       xx.combo = xx.combo + 1
     end
 
@@ -242,7 +242,7 @@ function pandp(xx)
 
           end)
 
-        if xx.ppnum == 1 then
+        if xx.repcounter == 1 then
           xx.v = xx.v + (xx.lr*5)
         end
 

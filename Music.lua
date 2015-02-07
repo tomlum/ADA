@@ -1,3 +1,13 @@
+--origsetPitch = setPitch
+--function Source:setPitch(pitch)
+--  self:origsetPitch(pitch * .1)
+--end
+
+--function Account:withdraw (v)
+--      self.balance = self.balance - v
+--    end
+
+
 song1 = love.audio.newSource("sounds/song1.mp3", "stream")
 song1:setVolume(.25)
 song1:setLooping(true)

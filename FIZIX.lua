@@ -446,69 +446,35 @@ walls = function ()
 end
 
 --FRICTION FUNCTION TO SLOW DOWN
-you.fric = function (base) 
-  if you.v > base
-  then 
-    if you.v - fricrate < base then you.v = base
-    else
-      you.v = you.v - fricrate
-    end
 
 
-  elseif you.v < base
-  then 
-    if you.v + fricrate*rampspeed > base then you.v = base
+fric = function (xx) 
+  
+  if xx.v > xx.push then 
+    if xx.v - fricrate < xx.push then
+      xx.v = xx.push
     else
-      you.v = you.v + fricrate
+      xx.v = xx.v - fricrate
     end
-  else 
-    you.v = 0+base
+  elseif xx.v < xx.push then 
+    if xx.v + fricrate > xx.push then
+      xx.v = xx.push
+    else
+      xx.v = xx.v + fricrate
+    end
   end
-
-  if not you.landing
+  
+  
+  if not xx.landing
   then
-    if you.v > 0+base and not you.dodge
+    if xx.v > 0+xx.push and not xx.dodge 
     then
-      you.slide = true
-      slidetimery = 0
-    elseif you.v < 0+base and not you.dodge
-    then
-      you.slide = true
-      slidetimery = 0
-    end
-  end
-end
-
-
-me.fric = function (base) 
-  if me.v > base
-  then 
-     if me.v - fricrate < base then me.v = base
-    else
-      me.v = me.v - fricrate
-    end
-
-
-  elseif me.v < base
-  then 
-     if me.v + fricrate*rampspeed > base then me.v = base
-    else
-      me.v = me.v + fricrate
-    end
-  else 
-    me.v = 0+base
-  end
-
-  if not me.landing
-  then
-    if me.v > 0+base and not me.dodge
+      xx.slide = true
+      xx.slidetimer = 0
+    elseif xx.v < 0+xx.push and not xx.dodge 
     then
       me.slide = true
-      slidetimerme = 0
-    elseif me.v < 0+base and not me.dodge
-    then
-      me.slide = true
-      slidetimerme = 0
+      xx.slidetimer = 0
     end
   end
 end
@@ -517,23 +483,23 @@ end
 
 
 
-function vroomright(xx, base)
-  if xx.v == 0+base and not xx.running
-  then xx.v = 1.5+base
-  elseif xx.v >0+base and xx.v < speedlimit -accel+base and not xx.running
+function vroomright(xx)
+  if xx.v == 0+xx.push and not xx.running
+  then xx.v = 1.5+xx.push
+  elseif xx.v >0+xx.push and xx.v < speedlimit -accel+xx.push and not xx.running
   then xx.v = xx.v + accel
-  elseif xx.v >0+base and xx.v >= speedlimit -accel+base  and not xx.running
-  then xx.v = speedlimit -accel+base
+  elseif xx.v >0+xx.push and xx.v >= speedlimit -accel+xx.push  and not xx.running
+  then xx.v = speedlimit -accel+xx.push
   end
 end 
 
-function vroomleft(xx, base)
-  if xx.v == 0+base and not xx.running
-  then xx.v = -1.5+base
-  elseif xx.v < 0+base and xx.v > -speedlimit + accel+base and not xx.running
+function vroomleft(xx)
+  if xx.v == 0+xx.push and not xx.running
+  then xx.v = -1.5+xx.push
+  elseif xx.v < 0+xx.push and xx.v > -speedlimit + accel+xx.push and not xx.running
   then xx.v = xx.v - accel
-  elseif xx.v < 0+base and xx.v <= -speedlimit + accel+base and not xx.running
-  then xx.v = -speedlimit + accel+base
+  elseif xx.v < 0+xx.push and xx.v <= -speedlimit + accel+xx.push and not xx.running
+  then xx.v = -speedlimit + accel+xx.push
   end
 end 
 
@@ -761,17 +727,17 @@ function movex(xx,z)
     elseif z.right and xx.v >= xx.push and xx.stop == false and not xx.flinch
     and not z.left
     then 
-      vroomright(xx, xx.push)
+      vroomright(xx)
     elseif z.left and xx.v <= xx.push and xx.stop == false and not xx.flinch
     and not z.right
     then 
-      vroomleft(xx, xx.push)
+      vroomleft(xx)
     elseif z.down and xx.onplat and not xx.busy and not xx.dodge
     and not z.a1 and not z.a2 and not z.a3 and not z.a4
     then
       xx.y = xx.y + 4
     else
-      xx.fric(xx.push)
+      fric(xx)
     end
   else
 

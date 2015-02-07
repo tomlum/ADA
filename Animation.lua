@@ -273,6 +273,7 @@ you.im = idle1
     if xx.actionshot then
 
       if xx.color.n == xx.cchangeto.n and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) then
+        xx.repcounter = 0
         xx.currentanim = xx.color.n
         combo(xx)
         xx.actionshot = false
@@ -1976,22 +1977,22 @@ death = function()
       me.landingcounter = me.landingcounter - 1*rampspeed
     end
   end
-  slidetimery = 0
-  slidetimerme = 0
+  you.slidetimer = 0
+  me.slidetimer = 0
   slideycheck = function ()
-    if slidetimery < 6
+    if you.slidetimer < 6
     then 
-      slidetimery = slidetimery + 1*rampspeed
-    elseif slidetimery >= 6
+      you.slidetimer = you.slidetimer + 1*rampspeed
+    elseif you.slidetimer >= 6
     then you.slide = false
 
     end
   end
   slidemecheck = function ()
-    if slidetimerme < 6
+    if me.slidetimer < 6
     then 
-      slidetimerme = slidetimerme + 1*rampspeed
-    elseif slidetimerme >= 6
+      me.slidetimer = me.slidetimer + 1*rampspeed
+    elseif me.slidetimer >= 6
     then me.slide = false
 
     end
