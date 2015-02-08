@@ -9,19 +9,20 @@
 
 
 --resting orbital decimal interval base
-function rodibv(val,i,base)
-  if val.v > base then 
-    if val.v - i < base then
-      val.v = base
+function rodib(val,i,base)
+  if val > base then 
+    if val - i < base then
+      return base
     else
-      val.v = val.v - i
+      return val - i
     end
-  elseif val.v < base then 
-    if val.v + i > base then
-      val.v = base
+  elseif val < base then 
+    if val + i > base then
+      return base
     else
-      val.v = val.v + i
+      return val + i
     end
+  else return base
   end
 end
 
@@ -43,7 +44,7 @@ function returntobase(val,i,base)
 end
 
 
-hexbuffer = 5
+hexbuffer = 10
 
 function sideofline(cx1, cy1, cx2, cy2, x,y)
   return ((cx2 - cx1)*(y - cy1) - (cy2 - cy1)*(x - cx1)) > 0;

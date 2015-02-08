@@ -32,7 +32,7 @@ me.uppercuthit = false
 you.uppercuthit = false
 function nottoomanyuppercuts(xx)
 
-if xx.type == 3 and xx.cancombo then xx.uppercuthit = true end
+  if xx.type == 3 and xx.cancombo then xx.uppercuthit = true end
 
   if xx.uppercuttimer > 0 then
     if xx.color.n ~= xx.cchangeto.n and xx.uppercuthit and xx.uppercuttimer > 30
@@ -458,127 +458,135 @@ newforwarddodge = function(xx)
       xx.ft = 0
     elseif xx.ft < 0 then xx.ft = xx.ft + 1*rampspeed
     elseif xx.ft > 0 then xx.ft = xx.ft - 1*rampspeed
+    end
+    camshakeflinch()
+
+
+
+    if xx.prevhealth > xx.health then 
+      xx.flinchway = yy.lr * xx.lr
+      if xx.flinch then 
+        if xx.g then xx.gflinchleft = xx.ft end
+        repplay(xx.flinch1)
+        repplay(xx.flinch2)
+      else 
+        repplay(xx.minch)
       end
-      camshakeflinch()
+    end
 
 
-
-      if xx.prevhealth > xx.health then 
-        xx.flinchway = yy.lr * xx.lr
-        if xx.flinch then 
-          if xx.g then xx.gflinchleft = xx.ft end
-          repplay(xx.flinch1)
-          repplay(xx.flinch2)
-        else 
-          repplay(xx.minch)
+    if xx.falltimer < 0 then
+      if xx.falltimer + 1*rampspeed > 0 then
+        xx.falltimer = 0
+      else
+        xx.falltimer = xx.falltimer + 1*rampspeed
+      end
+      xx.flinch = true
+      xx.stop = true
+      if xx.flinchway > 0 then 
+        xx.im = gettingup2
+      else
+        if xx.falltimer < -4 then 
+          xx.im = gettingup11
+        else xx.im = gettingup1
         end
       end
 
+    elseif not xx.falling and xx.flinch then 
+      if xx.flinchway < 0 then xx.im = flinch
+      else xx.im = flinchback
+      end
 
-      if xx.falltimer < 0 then
-        xx.falltimer = xx.falltimer + 1
-        xx.flinch = true
-        xx.stop = true
-        if xx.flinchway > 0 then 
-          xx.im = gettingup2
+    elseif xx.falling then
+
+      if xx.ft == 0 and xx.falltimer == 0 then
+        if xx.flinchway > 0 then
+          xx.im = fallforward
         else
-          if xx.falltimer < -4 then 
-            xx.im = gettingup11
-          else xx.im = gettingup1
+          xx.im = fallback
+        end
+        if xx.extratimer == 1 then
+          xx.falling = false
+          xx.extratimer = 0
+          xx.flinch = true
+          xx.stop = true
+          if xx.flinchway > 0 then 
+            xx.falltimer = -forgetuptime
+          elseif xx.j==0 then
+            xx.falltimer = -getuptime
+          end
+        elseif xx.extratimer == 0 and xx.j==0 and xx.v==0 then xx.extratimer = extrastayonthegroundtime
+        elseif xx.extratimer > 0 then
+
+          xx.flinch = true
+          xx.stop = true
+          if xx.extratimer - 1*rampspeed < 1 then
+            xx.extratimer = 1
+          else
+            xx.extratimer = xx.extratimer - 1*rampspeed
           end
         end
 
-      elseif not xx.falling and xx.flinch then 
-        if xx.flinchway < 0 then xx.im = flinch
-        else xx.im = flinchback
+      end
+
+      if xx.falltimer > 0 then xx.falltimer = xx.falltimer - 1*rampspeed
+      else 
+        xx.hittheground = true
+      end
+
+      if not xx.g then 
+
+        if xx.j < -jforfallbackbounce then xx.bouncej = xx.j
+        else xx.bouncej = 0 
         end
 
-      elseif xx.falling then
+        xx.falltimer = fallframes
+        if not xx.hittheground then
+          if xx.flinchway > 0 then xx.im = fallforward1
+          else xx.im = fallback1
+          end
+        else
+          if xx.flinchway > 0 then 
+            xx.im = fallforward1
+          else 
+            if xx.j >=0 then xx.im = fallbackbounce
+            else xx.im = fallbackbouncedown
+            end
+          end
+        end
 
-        if xx.ft == 0 and xx.falltimer == 0 then
-          if xx.flinchway > 0 then
-            xx.im = fallforward
+      else 
+
+
+        if xx.flinchway > 0 
+        --and not (xx.flinchway < 0 and xx.hittheground) 
+        then
+          if xx.falltimer > 0 then
+            xx.im = fallforward1
           else
+            xx.im = fallforward
+          end
+        else
+          if xx.falltimer > 0 and not xx.hittheground then
+            xx.im = fallback1
+          else
+            if xx.bouncej < 0 then
+              xx.j = -xx.bouncej*.2
+            end
             xx.im = fallback
           end
-          if xx.extratimer == 1 then
-            xx.falling = false
-            xx.extratimer = 0
-        xx.flinch = true
-        xx.stop = true
-            if xx.flinchway > 0 then 
-              xx.falltimer = -forgetuptime
-            elseif xx.j==0 then
-              xx.falltimer = -getuptime
-            end
-          elseif xx.extratimer == 0 and xx.j==0 and xx.v==0 then xx.extratimer = extrastayonthegroundtime
-        elseif xx.extratimer > 0 then
-          
-        xx.flinch = true
-        xx.stop = true
-            xx.extratimer = xx.extratimer - 1
-          end
-
         end
-
-        if xx.falltimer > 0 then xx.falltimer = xx.falltimer - 1
-        else 
-          xx.hittheground = true
-        end
-
-        if not xx.g then 
-
-          if xx.j < -jforfallbackbounce then xx.bouncej = xx.j
-          else xx.bouncej = 0 
-          end
-
-          xx.falltimer = fallframes
-          if not xx.hittheground then
-            if xx.flinchway > 0 then xx.im = fallforward1
-            else xx.im = fallback1
-            end
-          else
-            if xx.flinchway > 0 then 
-              xx.im = fallforward1
-            else 
-              if xx.j >=0 then xx.im = fallbackbounce
-              else xx.im = fallbackbouncedown
-              end
-            end
-          end
-
-        else 
-
-
-          if xx.flinchway > 0 
-          --and not (xx.flinchway < 0 and xx.hittheground) 
-          then
-            if xx.falltimer > 0 then
-              xx.im = fallforward1
-            else
-              xx.im = fallforward
-            end
-          else
-            if xx.falltimer > 0 and not xx.hittheground then
-              xx.im = fallback1
-            else
-              if xx.bouncej < 0 then
-                xx.j = -xx.bouncej*.2
-              end
-              xx.im = fallback
-            end
-          end
-        end
-
-
-
       end
 
 
-      xx.oldflinch = xx.flinch
-      xx.oldft = xx.ft
-      xx.oldg = xx.g
 
     end
+
+
+    xx.oldflinch = xx.flinch
+    xx.oldft = xx.ft
+    xx.oldg = xx.g
+
+  end
 
 

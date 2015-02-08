@@ -541,8 +541,8 @@ function love.update()
         end
 
       
-          me.v = me.oldv + (me.v-me.oldv)*(rampspeed)
-          you.v = you.oldv + (you.v-you.oldv)*(rampspeed)
+          --me.v = me.oldv + (me.v-me.oldv)*(rampspeed)
+          --you.v = you.oldv + (you.v-you.oldv)*(rampspeed)
 
         you.y = you.y - you.j*.9*rampspeed
         me.y = me.y - me.j*.9*rampspeed
@@ -554,26 +554,8 @@ function love.update()
         me.oldv = me.v
         you.oldv = you.v
         
-
-        if you.push > 0 then
-          if you.push - 1 < 0 then you.push = 0
-            else you.push = you.push - 1
-          end
-        elseif you.push < 0 then
-          if you.push + 1 > 0 then you.push = 0
-            else you.push = you.push + 1
-          end
-        end
-
-         if me.push > 0 then
-          if me.push - 1 < 0 then me.push = 0
-            else me.push = me.push - 1
-          end
-        elseif me.push < 0 then
-          if me.push + 1 > 0 then me.push = 0
-            else me.push = me.push + 1
-          end
-        end
+        you.push = rodib(you.push,1,0)
+        me.push = rodib(me.push,1,0)
       end
 
     end

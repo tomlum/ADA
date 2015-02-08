@@ -451,19 +451,7 @@ end
 
 fric = function (xx) 
   
-  if xx.v > xx.push then 
-    if xx.v - fricrate < xx.push then
-      xx.v = xx.push
-    else
-      xx.v = xx.v - fricrate
-    end
-  elseif xx.v < xx.push then 
-    if xx.v + fricrate > xx.push then
-      xx.v = xx.push
-    else
-      xx.v = xx.v + fricrate
-    end
-  end
+  xx.v = rodib(xx.v,fricrate*rampspeed,xx.push)
   
   
   if not xx.landing
