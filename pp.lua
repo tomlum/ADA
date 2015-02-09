@@ -25,6 +25,8 @@ function spikegrow(cur, n)
 
 end
 
+quakerange = 200
+
 spikes = {}
 you.spikes = {}
 me.spikes = {}
@@ -219,11 +221,12 @@ function pandp(xx)
 
         xx.im = ppunch2
         makerubble(xx.mid+xx.lr*20, xx.y+50,3*xx.lr,3)
-        repplay(xx.purpsound)
+        repplay(xx.purp2)
         if #joysticks>=xx.id then
           xx.joystick:setVibration(1,1)
         end
-        hall(xx.id, function(z) if z.plat.n == xx.plat.n then
+        hall(xx.id, function(z) if z.plat.n == xx.plat.n
+            and math.abs(z.x) - math.abs(xx.x) < quakerange then
               z.j = 20
               z.flinch = true
               z.ft = at.p.p.ft*2/3
@@ -238,7 +241,8 @@ function pandp(xx)
             z.health = z.health - at.p.p.dam
             z.v = xx.lr*at.p.p.kb
             z.flinch = true
-            z.ft = z.ft + at.p.p.ft
+            z.ft = z.ft + at.p.p.ft/3
+            z.j=0
             minzoom = defaultminzoom - .06
             maxzoom = defaultmaxzoom - .06
             

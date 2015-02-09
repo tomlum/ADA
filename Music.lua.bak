@@ -1,3 +1,14 @@
+--origsetPitch = setPitch
+--function Source:setPitch(pitch)
+--  self:origsetPitch(pitch * .1)
+--end
+
+--function Account:withdraw (v)
+--      self.balance = self.balance - v
+--    end
+
+
+
 song1 = love.audio.newSource("sounds/song1.mp3", "stream")
 song1:setVolume(.25)
 song1:setLooping(true)
@@ -35,12 +46,14 @@ me.greens:setPitch(1.2 + (math.random() * .3) )
 you.greens:setPitch(1.2 + (math.random() * .3) )
 you.purpsound:setPitch(.8 + (math.random() * .3) )
 me.purpsound:setPitch(.8 + (math.random() * .3) )
-gr1:setPitch(1.2 + (math.random() * .3) )
+you.purp2:setPitch(.8 + (math.random() * .3) )
+me.purp2:setPitch(.8 + (math.random() * .3) )
+me.green:setPitch(1.2 + (math.random() * .3) )
 gr2:setPitch(1.2 + (math.random() * .3) )
 gp1:setPitch(.3 + (math.random() * .3) )
 gp2:setPitch(.3 + (math.random() * .3) )
 me.land:setPitch(.8 + (math.random() * .3) )
-land2:setPitch(.8 + (math.random() * .3) )
+you.land:setPitch(.8 + (math.random() * .3) )
 me.flinch1:setPitch(.3 + (math.random() * .3) )
 you.flinch1:setPitch(.3 + (math.random() * .3) )
 me.flinch2:setPitch(.9 + (math.random() * .3) )
@@ -325,8 +338,8 @@ cg2:setVolume(SFXV-.67-adj)
 cg2:setPitch(1.3)
 
 
-gr1 = love.audio.newSource("sounds/green.mp3", "static")
-gr1:setVolume(SFXV-.8-adj)
+me.green = love.audio.newSource("sounds/green.mp3", "static")
+me.green:setVolume(SFXV-.8-adj)
 gr2 = love.audio.newSource("sounds/green.mp3", "static")
 gr2:setVolume(SFXV-.8-adj)
 
@@ -373,11 +386,17 @@ me.purpsound:setVolume(SFXV-.3-adj)
 you.purpsound = love.audio.newSource("sounds/Purple.wav", "static")
 you.purpsound:setVolume(SFXV-.3-adj)
 
+me.purp2 = love.audio.newSource("sounds/Purple3.wav", "static")
+me.purp2:setVolume(SFXV-.7-adj)
+
+you.purp2 = love.audio.newSource("sounds/Purple3.wav", "static")
+you.purp2:setVolume(SFXV-.7-adj)
+
 me.land = love.audio.newSource("sounds/land.wav", "static")
 me.land:setVolume(SFXV-.68-adj)
 
-land2 = love.audio.newSource("sounds/land.wav", "static")
-land2:setVolume(SFXV-.68-adj)
+you.land = love.audio.newSource("sounds/land.wav", "static")
+you.land:setVolume(SFXV-.68-adj)
 
 me.climbsound = love.audio.newSource("sounds/land.wav", "static")
 me.climbsound:setVolume(SFXV-.6-adj)

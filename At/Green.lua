@@ -151,8 +151,10 @@ function gandg(xx)
         xx.im = greenk2
 
         if xx.animcounter == 10 then
+          repplay(xx.greens)
           if rampcanhit then
-          table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx), speed = boltspeed, x = xx.mid, y = xx.y+30, t = 0, stuck = false})
+           
+          table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx), speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
           end
         elseif xx.animcounter >= 12 then 
           combo(xx)
@@ -245,19 +247,22 @@ end
 function boltupdate(xx)
   for i = #xx.bolts, 1, -1 do
     local v = xx.bolts[i]
+    if v.y <= themap.floor+10 then
     v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed
     v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*rampspeed
+    end
     hboxcs(xx.id, {x=v.x, y=v.y}, 
       {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y}, {x=v.x, y=v.y}, 
       function(p)
-        p.v = p.v + (v.speed/4 * math.cos(math.rad(v.angle)))
-        p.j = p.j - (v.speed/4 * math.sin(math.rad(v.angle)))
+        p.v = p.v + (v.speed/2 * math.cos(math.rad(v.angle)))
+        p.j = p.j - (v.speed/2 * math.sin(math.rad(v.angle)))
         p.flinch = true
         if (v.speed * math.cos(math.rad(v.angle))) > 0 then p.flinchway = -1 
         else
           p.flinchway = 1
         end
         p.ft = at.g.k.ft
+        repplay(xx.greenbreak)
         makeslashsparks(v.y,v.x, (v.speed * math.cos(math.rad(v.angle)))/8,(v.speed * math.sin(math.rad(v.angle)))+5, xx.color.c.r,xx.color.c.g,xx.color.c.b)
         table.remove(xx.bolts, i)
       end)

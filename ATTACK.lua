@@ -55,6 +55,7 @@ me.currentanim = 0
 you.currentanim = 0
 
 function attackmanage(xx)
+
   nottoomanyuppercuts(xx)
 
   if xx.flinch then xx.animcounter = 0
@@ -72,7 +73,9 @@ function attackmanage(xx)
   elseif xx.currentanim == 2 then
     gandg(xx)
   end
-
+  if(math.abs(xx.v) > math.abs(xx.oldv)) then
+    xx.v = xx.oldv + (xx.v-xx.oldv)*(rampspeed)
+  end
 
 end
 
@@ -249,7 +252,7 @@ newforwarddodge = function(xx)
     end
 
     if xx.dodgedelaycounter > 0 then 
-      xx.dodgedelaycounter = xx.dodgedelaycounter - 1
+      xx.dodgedelaycounter = xx.dodgedelaycounter - 1*rampspeed
       xx.stop = true
       xx.dodge = false
       xx.dodgetype = 0
@@ -257,7 +260,11 @@ newforwarddodge = function(xx)
 
 
     if xx.dodgecounter > 1 then 
-      xx.dodgecounter = xx.dodgecounter-1 
+      xx.dodgecounter = xx.dodgecounter-1*rampspeed
+      if xx.dodgecounter-1*rampspeed<1 then
+        xx.dodgecounter = 1
+      end
+      
     elseif xx.dodgecounter == 1 then
       xx.dodgecounter = 0
       if xx.dodgetype == 1 or xx.dodgetype == -1 then 
@@ -327,7 +334,11 @@ newforwarddodge = function(xx)
       repplay(xx.backdodge)
       xx.slidesound = false
 
-    end
+  end
+  
+  if(math.abs(xx.v) > math.abs(xx.oldv)) then
+    xx.v = xx.oldv + (xx.v-xx.oldv)*(rampspeed)
+  end
 
   end
 

@@ -540,8 +540,7 @@ function love.update()
         elseif themap.name == "floors" then floorswallbreak() 
         end
 
-      
-          --me.v = me.oldv + (me.v-me.oldv)*(rampspeed)
+        
           --you.v = you.oldv + (you.v-you.oldv)*(rampspeed)
 
         you.y = you.y - you.j*.9*rampspeed
@@ -865,7 +864,7 @@ function love.update()
         "       animcounter: "..tostring(me.animcounter)
         ..
         "       type: "..tostring(me.type),10,30)
-      love.graphics.print("bleh "..tostring(2).." ft "..tostring(you.ft), 10, 50)
+      love.graphics.print("bleh "..tostring(2).." me.run "..tostring(me.run), 10, 50)
     end
 
 
