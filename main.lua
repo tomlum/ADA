@@ -864,7 +864,7 @@ function love.update()
         "       animcounter: "..tostring(me.animcounter)
         ..
         "       type: "..tostring(me.type),10,30)
-      love.graphics.print("bleh "..tostring(2).." me.run "..tostring(me.run), 10, 50)
+      love.graphics.print("nospikes "..tostring(me.numofspikes).." hitsomeone "..tostring(me.hitsomeonewithpurp), 10, 50)
     end
 
 

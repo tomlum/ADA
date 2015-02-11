@@ -33,7 +33,6 @@ function ColorChange(xx)
   else xx.cchangeto = thecolors[0]
   end
 
-
 end
 
 
@@ -54,6 +53,9 @@ you.cct = 0
 
 
 function ColorChanging(xx)
+  if not xx.actionshot and xx.color.n~=-1 then 
+    xx.cantreturntothis = xx.color.n
+  end
   if xx.cchangeto.n > 0  then
     if xx.cct < colorchangetime and (xx.animcounter == 0 or xx.actionshot)  then
       xx.cct = xx.cct + 1
@@ -72,9 +74,9 @@ function ColorChanging(xx)
     xx.color = xx.cchangeto
     end
   elseif xx.cct <= 0  then
-    
     xx.color = thecolors[0]
-  else xx.color = thecolors[100]
+  else 
+    xx.color = thecolors[100]
     xx.color.c.r = thecolors[0].c.r-xx.ctri * xx.cct
     xx.color.c.g = thecolors[0].c.g-xx.ctgi * xx.cct
     xx.color.c.b = thecolors[0].c.b-xx.ctbi * xx.cct

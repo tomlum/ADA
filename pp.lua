@@ -149,7 +149,7 @@ at.p = {}
 
 at.p.p = {}
 at.p.p.dam = 12
-at.p.p.ft = 30
+at.p.p.ft = 20
 at.p.p.kb = 2
 at.p.p.max = 3
 
@@ -177,9 +177,7 @@ you.hitsomeonewithpurp = false
 function pandp(xx)
 
   if xx.hitsomeonewithpurp and xx.numofspikes>0 then 
-    combo(xx, function()
-    xx.numofspikes = 0
-        end)
+    combo(xx)
     xx.cancombo = true
   end
 

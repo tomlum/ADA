@@ -223,36 +223,28 @@ function jjstick(xx)
       or xx.jry/xx.jrx <= -1)
     and xx.jry < 0
     then
-      xx.a1 = true
+      xx.a1b = true
     end
 
     if xx.jry/xx.jrx >= -1
     and xx.jry/xx.jrx <= 1
     and xx.jrx < 0
     then
-      if xx.flip > 0 then
-        xx.a2 = true
-      elseif xx.flip < 0 then 
-        xx.a3 = true
-      end
+      xx.a2b = true
     end
 
     if xx.jry/xx.jrx >= -1
     and xx.jry/xx.jrx <= 1
     and xx.jrx > 0
     then
-      if xx.flip > 0 then
-        xx.a3 = true
-      elseif xx.flip < 0 then 
-        xx.a2 = true
-      end
+        xx.a3b = true
     end
 
     if (xx.jry/xx.jrx >= 1
       or xx.jry/xx.jrx <= -1)
     and xx.jry > 0
     then
-      xx.a4 = true
+      xx.a4b = true
     end
   end
 
@@ -333,7 +325,10 @@ function jjstick(xx)
 
   xx.leftdeadzone = math.abs(xx.jlx/math.cos(math.atan(-xx.jly/xx.jlx))) < .3
 
-
+xx.a1 = xx.a1b
+          xx.a2 = xx.a2b
+          xx.a3 = xx.a3b
+          xx.a4 = xx.a4b
 
   if not xx.leftdeadzone then
     xx.angle = math.atan(-xx.joystick:getGamepadAxis("lefty")/(math.abs(xx.joystick:getGamepadAxis("leftx"))))

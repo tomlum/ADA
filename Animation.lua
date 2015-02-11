@@ -81,7 +81,7 @@ function updatemytrail(xx)
     cur = xx.trail[i]
     
 
-  cur.t = cur.t + 1
+  cur.t = cur.t + 1*rampspeed
   
   if cur.t >= traillength then 
     table.remove(xx.trail, i)
@@ -100,7 +100,7 @@ function drawmytrail(xx)
     
     if cur.im.xoff == nil then cur.im.xoff = 0 end
     if cur.im.yoff == nil then cur.im.yoff = 0 end
-      love.graphics.setColor(cur.color.c.r,cur.color.c.g,cur.color.c.b,255*(traillength/cur.t))
+      love.graphics.setColor(cur.color.c.r,cur.color.c.g,cur.color.c.b,(255/traillength)*(traillength/cur.t))
     love.graphics.draw(cur.im.im, cur.xanimate-cur.im.xoff*cur.lr, cur.y-cur.im.yoff, 0, cur.lr, 1)
     love.graphics.setColor(255, 255, 255, 255)
 
@@ -257,6 +257,8 @@ you.im = idle1
   function drawa(xx)
     drawmytrail(xx)
     
+  drawcolorstuff(xx)
+    bolttraildraw(xx)
     if xx.im.xoff == nil then xx.im.xoff = 0 end
     if xx.im.yoff == nil then xx.im.yoff = 0 end
     love.graphics.setColor(255, 255, 255, 255)
@@ -271,13 +273,22 @@ you.im = idle1
 
   function actionshotstuff(xx)
     if xx.actionshot then
+      xx.numofspikes = 0
+      xx.uppercuthit = false
 
-      if xx.color.n == xx.cchangeto.n and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) then
+      if xx.color.n == xx.cchangeto.n and (xx.color.n~=xx.cantreturntothis) and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) then
+        if xx.color.n == 2 and xx.a4b then
+        xx.animcounter = 8
+        xx.type = 2
+        xx.im = greenk1
+      else
         xx.repcounter = 0
         xx.currentanim = xx.color.n
         combo(xx)
         xx.actionshot = false
         xx.actiontimer = 0
+        
+        end
       end
       minzoom = minzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
       maxzoom = maxzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)

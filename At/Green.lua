@@ -8,6 +8,10 @@ greena1 = {im=love.graphics.newImage("me/attack/greena1.png"),c=love.graphics.ne
 greenk1 = {im=love.graphics.newImage("me/attack/greenk1.png"),c=love.graphics.newImage("me/attack/greenk1c.png"), xoff = 40, yoff = 20}
 greenk2 = {im=love.graphics.newImage("me/attack/greenk2.png"),c=love.graphics.newImage("me/attack/greenk2c.png"), xoff = 30, yoff = 20}
 
+
+me.greenkhit = false
+you.greenkhit = false
+
 at.g = {}
 at.g.p = {}
 at.g.p.dam = 4
@@ -28,6 +32,10 @@ at.g.k = {}
 at.g.k.dam = 10
 at.g.k.angle = 0
 at.g.k.ft = 30
+
+greendissolvetime = 400
+me.greenhit = false
+you.greenhit = false
 
 
 me.repcounter = 0
@@ -73,7 +81,7 @@ function gandg(xx)
 
 
 
-      elseif xx.animcounter < 30 then
+      elseif xx.animcounter < 40 then
         xx.im = greena22
         if xx.repcounter>=1 then
           table.insert(xx.trail, 
@@ -87,10 +95,12 @@ function gandg(xx)
           if xx.repcounter ==1 then
             xx.v = xx.v + (xx.lr*17)
           elseif xx.repcounter==2 then
-            xx.lr=-xx.lr
+            if rampcanhit then
+            xx.lr=-xx.lr end
             xx.v = xx.v + (xx.lr*22)
           elseif xx.repcounter==3 then
-            xx.lr=-xx.lr
+            if rampcanhit then
+            xx.lr=-xx.lr end
             xx.v = xx.v + (xx.lr*13)
           end
 
@@ -129,7 +139,7 @@ function gandg(xx)
           combo(xx)
         end
 
-      elseif xx.animcounter >= 30 then
+      elseif xx.animcounter >= 40 then
         xx.animcounter = 0
         xx.repcounter = 0
       end
@@ -155,8 +165,10 @@ function gandg(xx)
           if rampcanhit then
            
           table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx), speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
+          xx.greenhit = false
           end
-        elseif xx.animcounter >= 12 then 
+        elseif xx.animcounter >= 12 and xx.greenhit then 
+          xx.cancombo = true
           combo(xx)
         end
       elseif xx.animcounter >= 50 then
@@ -244,14 +256,39 @@ function boltdraw(xx)
   end
 end
 
+me.bolttrail = {}
+you.bolttrail = {}
+bolttraillength = 3
+function bolttraildraw(xx)
+  for i = #xx.bolttrail, 1, -1 do
+    local v = xx.bolttrail[i]
+    
+    if v.t >= bolttraillength then table.remove(xx.bolttrail, i) else
+    v.t = v.t + 1*rampspeed
+    love.graphics.setColor(255,255,255,50)--love.graphics.setColor(255,255,255,(255/bolttraillength)*(bolttraillength/xx.bolttrail[i].t))
+    love.graphics.draw(bolt, 
+      v.x-(2.5*(math.cos(math.rad(v.angle)))),
+      v.y+(2.5*(math.sin(math.rad(v.angle)))), math.rad(180+v.angle))
+    end
+  end
+end
+
 function boltupdate(xx)
   for i = #xx.bolts, 1, -1 do
     local v = xx.bolts[i]
-    if v.y <= themap.floor+10 then
+      v.t = v.t + 1
+      
+      
+      if v.t >= greendissolvetime then
+        table.remove(xx.bolts, i)
+        end
+    if v.y <= themap.floor+10 or v.stuck then
+      table.insert(xx.bolttrail, {angle = v.angle, speed = v.speed, x = v.x, y = v.y, t = 0})
     v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed
     v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*rampspeed
+    else v.stuck = true
     end
-    hboxcs(xx.id, {x=v.x, y=v.y}, 
+    if not v.stuck then hboxcs(xx.id, {x=v.x, y=v.y}, 
       {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y}, {x=v.x, y=v.y}, 
       function(p)
         p.v = p.v + (v.speed/2 * math.cos(math.rad(v.angle)))
@@ -265,8 +302,9 @@ function boltupdate(xx)
         repplay(xx.greenbreak)
         makeslashsparks(v.y,v.x, (v.speed * math.cos(math.rad(v.angle)))/8,(v.speed * math.sin(math.rad(v.angle)))+5, xx.color.c.r,xx.color.c.g,xx.color.c.b)
         table.remove(xx.bolts, i)
+        xx.greenhit = true
       end)
-
+end
   end
 end
 

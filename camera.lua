@@ -572,15 +572,7 @@ function drawright()
     drawsparks()
     drawrubble()
   end
-  medrawmines()
-  drawcolorstuff(me)
-  drawtornado()
-  love.graphics.setColor(220,220,220)
-  youdrawmines()
 
-  love.graphics.setColor(155,155,155)
-  drawcolorstuff(you)
-  youdrawtornado()
   love.graphics.setColor(255, 255, 255, 255)
   if themap.name == "street" then
     drawstreetstuff()

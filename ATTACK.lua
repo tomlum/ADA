@@ -30,6 +30,9 @@ you.extratimer = 0
 extrastayonthegroundtime = 8
 me.uppercuthit = false
 you.uppercuthit = false
+me.cantreturntothis = 0
+you.cantreturntothis = 0
+
 function nottoomanyuppercuts(xx)
 
   if xx.type == 3 and xx.cancombo then xx.uppercuthit = true end
@@ -335,11 +338,11 @@ newforwarddodge = function(xx)
       xx.slidesound = false
 
   end
-  
+  if xx.dodgetype~=0 then
   if(math.abs(xx.v) > math.abs(xx.oldv)) then
     xx.v = xx.oldv + (xx.v-xx.oldv)*(rampspeed)
   end
-
+  end
   end
 
 

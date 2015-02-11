@@ -96,7 +96,7 @@ function combomanage(xx)
     xx.block = false
     xx.jstop = true
     if rampcanhit then
-    xx.animcounter = xx.animcounter+1
+      xx.animcounter = xx.animcounter+1
     end
   elseif xx.animcounter == 0 then 
     xx.combo = 0
@@ -115,7 +115,7 @@ end
 
 function combo(xx, func)
 
-  
+
 
   if xx.color.n ~= xx.cchangeto.n and xx.cancombo
   then
@@ -125,6 +125,7 @@ function combo(xx, func)
   end
   if not xx.holda then
     if xx.a2 or xx.a3 then
+      xx.numofspikes = 0
       if func~= nil then func() end
       if xx.color.n==0 then
         if xx.repcounter < bbnumpunch then
@@ -146,20 +147,26 @@ function combo(xx, func)
 
       end
 
-  elseif xx.a4 and xx.type ~= 2 then
-    if func~= nil then func() end
+    elseif xx.a4 then
+      if func~= nil then func() end
       if xx.color.n==0 then
         xx.combo = xx.combo + 1
         xx.animcounter = 1
         xx.type = 2
 
-      elseif xx.color.n==1 and xx.repcounter < at.bb.p.max then
+      elseif xx.color.n==1 then
         xx.type = 2
         xx.animcounter = 1
         xx.repcounter = xx.repcounter + 1
         xx.combo = xx.combo + 1
+      elseif xx.color.n==2 then
+        xx.type = 2
+      xx.animcounter = 1
+      xx.combo = xx.combo + 1
+      
       end
     elseif xx.a1 then
+      xx.numofspikes = 0
       if func~= nil then func() end
       if xx.color.n==0 then
         xx.type = 3
@@ -195,7 +202,7 @@ function bump(xx)
       {x=xx.mid, y = xx.y+5},
       function(z)
         if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
-         z.push = xx.v
+          z.push = xx.v
         end
       end)
   end
@@ -227,7 +234,7 @@ function breadandbutter(xx)
   if xx.animcounter == 0 then
 
     if (xx.a2 or xx.a3) and xx.color.n == 0 and not xx.holda then
-        xx.type = 1
+      xx.type = 1
       xx.animcounter = 1
       xx.combo = xx.combo + 1
       xx.repcounter = 1
@@ -272,12 +279,12 @@ function breadandbutter(xx)
                 z.v = xx.lr*at.bb.p.kb+xx.v
               end
               if not (z.block == -xx.lr) then
-              z.health = z.health - at.bb.p.dam
-              z.flinch = true
-              z.ft = at.bb.p.ft
-              if #joysticks>=xx.id then
-                xx.joystick:setVibration(.7,1)
-              end
+                z.health = z.health - at.bb.p.dam
+                z.flinch = true
+                z.ft = at.bb.p.ft
+                if #joysticks>=xx.id then
+                  xx.joystick:setVibration(.7,1)
+                end
               end
 
               makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
@@ -310,29 +317,29 @@ function breadandbutter(xx)
       elseif xx.animcounter < 18 then
         xx.im = kick2
         if xx.animcounter == 12 then
-        hboxcs(xx.id, 
-          {x=me.mid, y = me.y+31},
-          {x=me.mid+me.v+(me.lr*28), y = me.y+31},
-          {x=me.mid, y = me.y+37},
-          {x=me.mid+me.v+(me.lr*28), y = me.y+39},
-          function(z)
-            xx.cancombo = true
-            z.health = z.health - at.bb.k.dam
-            z.flinch = true
-            if not (z.block == -xx.lr) then
-            z.ft = at.bb.k.ft
-            z.v = xx.lr*at.bb.k.kb
+          hboxcs(xx.id, 
+            {x=me.mid, y = me.y+31},
+            {x=me.mid+me.v+(me.lr*28), y = me.y+31},
+            {x=me.mid, y = me.y+37},
+            {x=me.mid+me.v+(me.lr*28), y = me.y+39},
+            function(z)
+              xx.cancombo = true
+              z.health = z.health - at.bb.k.dam
+              z.flinch = true
+              if not (z.block == -xx.lr) then
+                z.ft = at.bb.k.ft
+                z.v = xx.lr*at.bb.k.kb
               else
-            z.ft = at.bb.k.ft/2
-            z.v = xx.lr*at.bb.k.kb*2/3
-            end
-            if #joysticks>=xx.id then
-              xx.joystick:setVibration(1,1)
-            end
-            makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
+                z.ft = at.bb.k.ft/2
+                z.v = xx.lr*at.bb.k.kb*2/3
+              end
+              if #joysticks>=xx.id then
+                xx.joystick:setVibration(1,1)
+              end
+              makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
 
-        end)
-      end
+            end)
+        end
       elseif xx.animcounter < 43 then
         xx.im = kick3
         if xx.animcounter >= 17 then 
