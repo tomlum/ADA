@@ -1,10 +1,17 @@
 --todo
+therampspeed = .1
+--placement of cam funcs causes weirdness for actionshot
+--cant move right while sliding left?  pretty easy to do with base/push
+
+
+--to be rampspeedified (or if not rampcanhitified)
+  --idle
 
 
 
 blashader = love.graphics.newShader( "outline.glsl" )
+--do special features to second pp, shake if on plat and near, send person through plat if not floor
 --make spikes not be on not ground
---can change lr during flinch
 --front paralax?
 --anytime glassbreak then slowmo
 --if combo swap, still does follow through of that color, easy fix
@@ -207,7 +214,6 @@ pausedonhit = false
 
 
 
-
 require "DamageTable"
 require "meandyou"
 require "colorcontrol"
@@ -236,6 +242,8 @@ moop = 0
 function love.load()
 
 
+me.oldv = 0
+you.oldv = 0
 
   myShader = love.graphics.newShader[[
   vec4 effect(vec4 color, Image texture, vec2 vTexCoord, vec2 pixel_coords)
@@ -362,6 +370,22 @@ end
 
 function love.update()
   --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
+
+  speedramp = love.keyboard.isDown("x")
+  if speedramp then 
+    rampspeed = therampspeed
+    if ramptimer >= 1 then 
+      ramptimer = 0
+      rampcanhit = true
+    else 
+      ramptimer = ramptimer + therampspeed
+      rampcanhit = false
+    end
+  else
+    ramptimer = 0
+    rampcanhit = true
+    rampspeed = 1
+  end
 
   if not finishedLoading then
     loader.update()   end
@@ -502,9 +526,9 @@ function love.update()
 
 
 
-        platformcheckx()
         movex(me,me)
         movex(you,you)
+        --used to be here platformcheckx()
 
         walljump()
 
@@ -516,23 +540,23 @@ function love.update()
         elseif themap.name == "floors" then floorswallbreak() 
         end
 
+        
+          --you.v = you.oldv + (you.v-you.oldv)*(rampspeed)
+        platformcheckx()
 
-        you.y = you.y - you.j*.9
-        me.y = me.y - me.j*.9
-        you.x = you.x + you.v
-        me.x = me.x + me.v
+        you.y = you.y - you.j*.9*rampspeed
+        me.y = me.y - me.j*.9*rampspeed
+        you.x = you.x + you.v*rampspeed
+        me.x = me.x + me.v*rampspeed
         you.next = you.feet - you.j*.9
         me.next = me.feet - me.j*.9
-
-
-        if you.push > 0 then you.push = you.push - 1
-        elseif you.push < 0 then you.push = you.push + 1
-        end
-
-        if me.push > 0 then me.push = me.push - 1
-        elseif me.push < 0 then me.push = me.push + 1
-        end
-
+        
+        
+        me.oldv = me.v
+        you.oldv = you.v
+        
+        you.push = rodib(you.push,1,0)
+        me.push = rodib(me.push,1,0)
       end
 
     end
@@ -560,7 +584,7 @@ function love.update()
 
       me.jstop = false
       you.jstop = false
-      melimitbreak= false
+      me.limitbreak= false
       youlimitbreak = false
 
 
@@ -579,12 +603,20 @@ function love.update()
 
     if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
 
-      attackmanage(me)
+      whoupdatesfirst = math.random()
+      if whoupdatesfirst>.5 then
+        attackmanage(me)
+        spikeupdate(me)
+        boltupdate(me) 
+      end
       attackmanage(you)
-      spikeupdate(me)
       spikeupdate(you)
-      boltupdate(me) 
-      boltupdate(you)   
+      boltupdate(you)  
+      if whoupdatesfirst<=.5 then
+        attackmanage(me)
+        spikeupdate(me)
+        boltupdate(me) 
+      end
 
       flinchingx(me,you)
       flinchingx(you,me)
@@ -600,7 +632,9 @@ function love.update()
         else bump(you)
         end
 
-      end
+    end
+    
+    
 
       newforwarddodge(me)
       newforwarddodge(you)
@@ -610,7 +644,7 @@ function love.update()
       climbs(you)
 
 
-      walls()
+      --walls()
 
       isanyonedead()
       death()
@@ -620,12 +654,13 @@ function love.update()
       holdmanage(you)
 
 
-
-      if (themode == "classic" and (you.dead or me.dead))or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
+      if (themode == "classic" and (you.dead or me.dead)) or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
         thesong:stop()
         retryupdate()
       end
-
+        cammovement()
+        --if here then no slow mo twitter
+        camerafol()
 
     end
 
@@ -656,7 +691,7 @@ function love.update()
 
     if MENU == "title" or MENU == "prestage" or MENU == "stage" or MENU == "modes"
     then 
-drawcity()
+      drawcity()
 
 
 
@@ -673,8 +708,8 @@ drawcity()
       end
       love.graphics.draw(enviro.paralax, -(enviro.dolly/2) -100, ((-floor-30)/4)/2 + screenheight - 655, 0, .5, .5)
       love.graphics.draw(enviro.floor, -enviro.dolly, (-floor-30)/2 + screenheight, 0, .5, .5)
-      me.im = idle1
-      you.im = idle1
+      me.im =idle1
+      you.im =idle1
 
     elseif MENU == "play"
 
@@ -833,7 +868,7 @@ drawcity()
         "       animcounter: "..tostring(me.animcounter)
         ..
         "       type: "..tostring(me.type),10,30)
-      love.graphics.print("bleh"..tostring(you.extratimer).." "..tostring(you.falltimer).." "..tostring(you.ft), 10, 50)
+      love.graphics.print("nospikes "..tostring(me.numofspikes).." hitsomeone "..tostring(me.hitsomeonewithpurp), 10, 50)
     end
 
 

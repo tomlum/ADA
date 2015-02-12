@@ -3,7 +3,48 @@
 --DUDE, MAYBE MAKE ALL BLOCKS SHOULD BE INTEGERS
 --also remember that flinch dir depends on the object hitting dir not necessarily the lr of the other person
 
-hexbuffer = 5
+
+
+
+
+
+--resting orbital decimal interval base
+function rodib(val,i,base)
+  if val > base then 
+    if val - i < base then
+      return base
+    else
+      return val - i
+    end
+  elseif val < base then 
+    if val + i > base then
+      return base
+    else
+      return val + i
+    end
+  else return base
+  end
+end
+
+
+function returntobase(val,i,base)
+  if val > base then 
+    if val - i < base then
+      val = base
+    else
+      val = val - i
+    end
+  elseif val < base then 
+    if val + i > base then
+      val = base
+    else
+      val = val + i
+    end
+  end
+end
+
+
+hexbuffer = 10
 
 function sideofline(cx1, cy1, cx2, cy2, x,y)
   return ((cx2 - cx1)*(y - cy1) - (cy2 - cy1)*(x - cx1)) > 0;
@@ -11,24 +52,16 @@ end
 
 
 hitt = {}
-
-
+me.height = 60
+you.height = 60
+me.width = 30
+you.width = 30
 
 table.insert(hitt, 
-  {i = 1,
-    x = 0, v = 0, 
-    j = 0, y = 0, 
-    flinch = false, ft = 0, 
-    block = 0, dodge = false, invince = false,
-    width = 20, height = 50, g = true})
-table.insert(hitt, 
-  {i = 2,
-    x = 0, v = 0, 
-    j = 0, y = 0, 
-    flinch = false, ft = 0, 
-    block = 0, dodge = false, invince = false,
-    width = 20, height = 50, g = true})
+  me)
 
+table.insert(hitt, 
+  you)
 
 
 --if worried about corner hitting do two points
@@ -91,18 +124,18 @@ end
 
 
 
-
 function hexcheck(lx1, ly1, lx2, ly2, ex, why, w, h, v, j)
-  t = {["c"] = {x = ex+w/2, y = why+h/2},
-    [0] = {x = ex, y=why, n = 0},
-    [1] = {x = ex+w, y=why, n = 1},
-    [2] = {x = ex+w, y=why+h, n = 2},
-    [3] = {x = ex, y=why+h, n = 3}}
+  t = {["c"] = {x = ex, y = why+h/2},
+    [0] = {x = ex-w/2, y=why, n = 0},
+    [1] = {x = ex+w/2, y=why, n = 1},
+    [2] = {x = ex+w/2, y=why+h, n = 2},
+    [3] = {x = ex-w/2, y=why+h, n = 3}}
   d = {
-    [0] = {x = ex+v, y=why-j, n = 0},
-    [1] = {x = ex+w+v, y=why-j, n = 1},
-    [2] = {x = ex+w+v, y=why+h-j, n = 2},
-    [3] = {x = ex+v, y=why+h-j, n = 3}}
+    [0] = {x = ex+v-w/2, y=why-j, n = 0},
+    [1] = {x = ex+v+w/2, y=why-j, n = 1},
+    [2] = {x = ex+v+w/2, y=why+h-j, n = 2},
+    [3] = {x = ex+v-w/2, y=why+h-j, n = 3}}
+
   l = {[1] = {x = lx1, y = ly1},[2] = {x = lx2, y = ly2}}
 
 
@@ -138,22 +171,31 @@ end
 
 function drawallhex()
   for i,v in ipairs(hitt) do
-    drawhexcheck(v.x, v.y, v.width, v.height, v.v, v.j)
+    --dodgeoffsetx
+    dsh = 0
+    dsw = 0
+    if v.im.dodgeh ~= nil then
+      dsh = v.im.dodgeh
+    end
+    if v.im.dodgew ~= nil then
+      dsw = v.im.dodgew
+    end
+     drawhexcheck(v.mid+v.lr*(dsw/2), v.y+(dsh)+hexbuffer/2, v.width+dsw-hexbuffer, v.height-dsh-hexbuffer, v.v, v.j)
   end
 
   love.graphics.line(bx1,by1,bx2,by2)
 end
 function drawhexcheck(ex, why, w, h, v, j)
-  t = {["c"] = {x = ex+w/2, y = why+h/2},
-    [0] = {x = ex, y=why, n = 0},
-    [1] = {x = ex+w, y=why, n = 1},
-    [2] = {x = ex+w, y=why+h, n = 2},
-    [3] = {x = ex, y=why+h, n = 3}}
+  t = {["c"] = {x = ex, y = why+h/2},
+    [0] = {x = ex-w/2, y=why, n = 0},
+    [1] = {x = ex+w/2, y=why, n = 1},
+    [2] = {x = ex+w/2, y=why+h, n = 2},
+    [3] = {x = ex-w/2, y=why+h, n = 3}}
   d = {
-    [0] = {x = ex+v, y=why-j, n = 0},
-    [1] = {x = ex+w+v, y=why-j, n = 1},
-    [2] = {x = ex+w+v, y=why+h-j, n = 2},
-    [3] = {x = ex+v, y=why+h-j, n = 3}}
+    [0] = {x = ex+v-w/2, y=why-j, n = 0},
+    [1] = {x = ex+v+w/2, y=why-j, n = 1},
+    [2] = {x = ex+v+w/2, y=why+h-j, n = 2},
+    [3] = {x = ex+v-w/2, y=why+h-j, n = 3}}
 
 
   disn = hexdistan(hexdistan(d[0], d[1]), hexdistan(d[2], d[3])).n
@@ -169,7 +211,7 @@ function drawhexcheck(ex, why, w, h, v, j)
   love.graphics.setColor(0,255,0)
   love.graphics.line(t[oppn].x,t[oppn].y, t[adjn1].x,t[adjn1].y)
   love.graphics.line(t[oppn].x,t[oppn].y, t[adjn2].x,t[adjn2].y)
-  
+
   love.graphics.setColor(255,255,255)
 
 
@@ -182,73 +224,31 @@ end
 
 
 function hboxcs(theid, P1, P2, P3, P4, special)
-  hitt[1].x = me.x+5
-  hitt[1].y = me.y+5
-  hitt[1].j = me.j
-  hitt[1].v = me.v
-  hitt[1].flinch = me.flinch
-  hitt[1].flinchway = me.flinchway
-  hitt[1].ft = me.ft
-  hitt[1].health = me.health
-  hitt[1].invince = you.invince
-  hitt[1].g = me.g
-  hitt[2].x = you.x+5
-  hitt[2].y = you.y+5
-  hitt[2].j = you.j
-  hitt[2].v = you.v
-  hitt[2].flinch = you.flinch
-  hitt[2].flinchway = you.flinchway
-  hitt[2].ft = you.ft
-  hitt[2].health = you.health
-  hitt[2].invince = you.invince
-  hitt[2].g = you.g
-  if not me.block then
-    hitt[1].block = 0
-  else
-    hitt[1].block = me.lr
-  end
-  if not you.block then
-    hitt[2].block = 0
-  else
-    hitt[2].block = you.lr
-  end
+ 
 
   for i,p in ipairs(hitt) do
-    if theid ~= i and 
-    (hexcheck(P1.x, P1.y, P2.x, P2.y, p.x, p.y, p.width, p.height, p.v, p.j) 
-      or hexcheck(P2.x, P2.y, P3.x, P3.y, p.x, p.y, p.width, p.height, p.v, p.j)
-      or hexcheck(P3.x, P3.y, P4.x, P4.y, p.x, p.y, p.width, p.height, p.v, p.j)
-      or hexcheck(P4.x, P4.y, P1.x, P1.y, p.x, p.y, p.width, p.height, p.v, p.j)
+    dsh = 0
+    dsw = 0
+    if p.im.dodgeh ~= nil then
+      dsh = p.im.dodgeh
+    end
+    if p.im.dodgew ~= nil then
+      dsw = p.im.dodgew
+    end
+   
+    if theid ~= i and
+    (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, p.height-dsh-hexbuffer/2, p.v, p.j) 
+      or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, p.height-dsh-hexbuffer/2, p.v, p.j)
+      or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, p.height-dsh-hexbuffer/2, p.v, p.j)
+      or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, p.height-dsh-hexbuffer/2, p.v, p.j)
       or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
     )
     then
       --flash = true
       special(p)
-
     end
   end
-
-  me.x = hitt[1].x-5
-  me.y = hitt[1].y-5
-  me.j = hitt[1].j
-  me.v = hitt[1].v
-  me.flinch = hitt[1].flinch
-  me.flinchway = hitt[1].flinchway
-  me.ft = hitt[1].ft
-  me.health = hitt[1].health
-  me.g = hitt[1].g
-
-
-  you.x = hitt[2].x-5
-  you.y = hitt[2].y-5
-  you.j = hitt[2].j
-  you.v = hitt[2].v
-  you.flinch = hitt[2].flinch
-  you.flinchway = hitt[2].flinchway
-  you.ft = hitt[2].ft
-  you.health = hitt[2].health
-  you.ft = hitt[2].ft
-
+  
 
 end
 
@@ -267,77 +267,142 @@ function hexplatcheck(y1, x1, x2, ex, why, w, h, v, j)
 
 end
 
+velforclimb = 20
+
+function climbplatcheck(ex, why, lr, h, v, j)
+  midv2 = {x = (ex)+15*lr, y=why-j, n = 2}
+  midv = {x = (ex)+15*lr, y=why+h-j, n = 2}
+
+
+  for j = #themap.plats, 1, -1 do 
+    plat = themap.plats[j]
+    local linep1 = {x = plat.x1, y = plat.y}
+    local linep2 = {x = plat.x2, y = plat.y}
+    if pint(linep1, linep2, midv, midv2) 
+    then return true
+    end
+  end
+  return false
+
+end
+
+function lineplatcheck(ex, why,v, j)
+  midv2 = {x = (ex)+v, y=why-j, n = 2}
+  midv = {x = ex, y=why, n = 2}
+
+  if why > 100000 or ex < -10 or ex > 10000  then
+    return false
+  end
+
+  for j = #themap.plats, 1, -1 do 
+    plat = themap.plats[j]
+    local linep1 = {x = plat.x1, y = plat.y}
+    local linep2 = {x = plat.x2, y = plat.y}
+    if pint(linep1, linep2, midv, midv2) 
+    then return true
+    end
+  end
+  return false
+
+end
+
 me.im = idle1
 you.im = idle2
 
-function hboxp(plat)
-  hitt[1].x = me.x+hexbuffer
-  hitt[1].y = me.y+hexbuffer
-  hitt[1].j = me.j
-  hitt[1].v = me.v
-  hitt[1].flinch = me.flinch
-  hitt[1].flinchway = me.flinchway
-  hitt[1].ft = me.ft
-  hitt[1].health = me.health
-  hitt[1].invince = you.invince
-  hitt[1].g = me.g
-  hitt[2].x = you.x+hexbuffer
-  hitt[2].y = you.y+hexbuffer
-  hitt[2].j = you.j
-  hitt[2].v = you.v
-  hitt[2].flinch = you.flinch
-  hitt[2].flinchway = you.flinchway
-  hitt[2].ft = you.ft
-  hitt[2].health = you.health
-  hitt[2].invince = you.invince
-  hitt[2].g = you.g
 
-
-  hitt[1].im = me.im
-  hitt[2].im = you.im
-
-
-  for i,p in ipairs(hitt) do
-    if 
-    ((hexplatcheck(plat.y, plat.x1, plat.x2, p.x, p.y, p.width, p.height, p.v, p.j) and p.j <= 0 
-    and p.y+p.j <= plat.y-(p.im.im:getHeight())-p.im.yoff+14))
+function hall(theid, func)
+    for i,p in ipairs(hitt) do
+      if theid ~= i then
+      func(p)
+    end
+    end
     
-    
-
-    then
-         p.y = cur.y-(p.im.im:getHeight())-p.im.yoff+13
-         p.g = true
-         p.plat = cur;
-      goBreak = true
-    else goBreak = false
-      p.plat = noplat
+  end
+function hboxwall()
+   for i,p in ipairs(hitt) do 
+     for j = #themap.walls, 1, -1 do 
+       wall = themap.walls[j]
+       if wall.y1 == -1 then
+         if p.x + p.v >= wall.x or p.x + p.v <= wall.x then
+           p.x = wall.x
+           if p.flinch and math.abs(p.v) > 10 then 
+      p.health = p.health - math.abs(p.v/2)
+      p.v = -p.v/3
+      p.j = math.abs(p.v)
+      makerubble(p.mid, p.y,p.v, p.j)
+      p.flinchway = -p.flinchway
+      repplay(wallhit2)
       p.g = false
+      p.y = p.y - 10
+    else
+      you.x = 40
+      you.v = 0
+    end
+         end
+       end
+     end
+     
+   end
+  
+ if you.flinch and math.abs(you.v) > 10 then 
+      you.health = you.health - math.abs(you.v/2)
+      you.v = -you.v/3
+      you.j = math.abs(you.v)
+      makerubble(you.mid, you.y,you.v, you.j)
+      you.flinchway = -you.flinchway
+      repplay(wallhit2)
+      you.g = false
+      you.y = you.y - 10
+    else
+      you.x = 40
+      you.v = 0
+    end
+end
+
+function hboxp()
+ 
+  for i,p in ipairs(hitt) do
+    for j = #themap.plats, 1, -1 do 
+      plat = themap.plats[j]
+      xx = p
+      if (not p.gothroughplats or (plat.floor~=nil)) and (
+        ((hexplatcheck(plat.y, plat.x1, plat.x2, p.x, p.y, p.width, p.height, p.v, p.j) and p.j <= 0 
+            and p.y+p.j <= plat.y-(p.im.im:getHeight())-p.im.yoff+14))
+        or 
+        (p.y == plat.y-p.height and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
+      then
+        if p.j ~= 0 then
+          if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
+            xx.landingcounter = landingwait
+            xx.landing = true 
+            xx.v = xx.v * landingfric
+          else
+            xx.landingcounter = shortlandwait
+            xx.landing = true 
+            xx.v = xx.v * landingfric
+          end
+          xx.land:play()
+          xx.slowdown = false
+        end
+
+        p.y = plat.y-p.height
+        p.g = true
+        p.j = 0
+        p.plat = plat;
+
+
+
+        break
+      else
+        p.g = false
+        p.plat = noplat
+      end
+
     end
   end
 
-  me.x = hitt[1].x-5
-  me.y = hitt[1].y-5
-  me.j = hitt[1].j
-  me.v = hitt[1].v
-  me.flinch = hitt[1].flinch
-  me.flinchway = hitt[1].flinchway
-  me.ft = hitt[1].ft
-  me.health = hitt[1].health
-  me.g = hitt[1].g
-  me.plat = hitt[1].plat
 
 
-  you.x = hitt[2].x-5
-  you.y = hitt[2].y-5
-  you.j = hitt[2].j
-  you.v = hitt[2].v
-  you.flinch = hitt[2].flinch
-  you.flinchway = hitt[2].flinchway
-  you.ft = hitt[2].ft
-  you.health = hitt[2].health
-  you.ft = hitt[2].ft
-  you.plat = hitt[2].plat
-  return goBreak
 
 end
 

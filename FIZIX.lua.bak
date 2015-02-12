@@ -13,16 +13,21 @@ you.jmax = jmax
 me.jmax = jmax
 
 maps = {}
-
-noplat = {}
+me.plat = noplat
+you.plat = noplat
+noplat = {n=0;}
 maps.fightclub = {name = "fightclub", 
-  plats = {},
+  plats = {}, walls = {},
   floor = 896
 }
-table.insert(maps.fightclub.plats, {y = 896, x1 = 0, x2 = 100000, floor = true})
-table.insert(maps.fightclub.plats, {y = 465, x1 = 32, x2 = 236})
-table.insert(maps.fightclub.plats, {y = 541, x1 = 839, x2 = 1016})
-table.insert(maps.fightclub.plats, {y = 719, x1 = 655, x2 = 1560})
+table.insert(maps.fightclub.plats, {n=1, y = 896, x1 = 0, x2 = 100000, floor = true})
+table.insert(maps.fightclub.plats, {n=2, y = 465, x1 = 32, x2 = 236})
+table.insert(maps.fightclub.plats, {n=3, y = 541, x1 = 839, x2 = 1016})
+table.insert(maps.fightclub.plats, {n=4, y = 719, x1 = 655, x2 = 1560})
+
+table.insert(maps.fightclub.walls, {n=1, y1 = -1, y2 = -1, x=0})
+
+--table.insert(maps.fightclub.walls, {n=2, y1 = -1, y2 = -1, x=3000})
 
 
 
@@ -32,336 +37,10 @@ table.insert(maps.fightclub.plats, {y = 719, x1 = 655, x2 = 1560})
 function platformcheckx()
 
   hboxp() 
+  
+  hboxwall()
 
 end
-function spikecheck(x, y)
-
-  if themap.name == "fightclub" then 
-    if x >= 4485-4453 and x <= 4689-4453 and y <= 1064+400-821-178 
-    then return 1064+400-821-178
-    elseif x >= 5292-4453 and x <= 5469-4453 and y <= 1140+400-821-178 
-    then return 1140+400-821-178
-    elseif x >= 5654-4453 and x <= 5831-4453 and y <= 1140+400-821-178 
-    then return 1140+400-821-178
-    elseif x >= 5108-4453 and x <= 6013-4453 and y <= 1318+400-821-178 
-    then return 1318+400-821-178
-    else return floor
-    end
-
-  elseif themap.name == "street" then
-
-    if x >= 2879 and x <= 3143 and y <= 618+400 
-    then return 618+400
-    elseif x >= 1118 and x <= 1528 and y <= 979+400 
-    then
-      return 979+400
-    elseif x >= 2245 and x <= 2750 and y <= 1227+400 
-    then return 1227+400
-
-
-
-
-    elseif x > 2750 and x <=2968 and y <= 1270 +400
-    then return 1270+400
-
-
-
-
-
-    elseif x >= 3294 and x <= 3676 and y <= 618 +400
-    then return 618+400
-    elseif x >= 3325 and x <= 3764 and y <= 1270 +400
-    then return 1270+400
-    elseif x >= 4485 and x <= 4689 and y <= 1064 +400
-    then return 1064+400
-    elseif x >= 5292 and x <= 5469 and y <= 1140 +400
-    then return 1140+400
-    elseif x >= 5654 and x <= 5831 and y <= 1140 +400
-    then return 1140+400
-    elseif x >= 5108 and x <= 6013 and y <= 1318 +400
-    then return 1318+400
-
-
-
-    else return floor
-    end
-
-  elseif themap.name == "library" then
-
-    if x >= 1535 and x < 3200 and y <= 871 
-    then return 871
-    elseif x >= 1616 and x < 3196 and y <= 1516
-    then return 1516
-    elseif y <= floor and x < 1400
-    then return floor
-    elseif y <= floor - 63 and x >= 1400
-    then return floor - 63
-    else return floor
-    end
-  elseif themap.name == "floors" then
-
-    if x >= 418 and x <= 2140 then	
-
-
-      if x == -20000 then return 0
-      elseif y <= 1612 then 
-        return 1612
-      elseif y <= 1898 and (x < 636 or x > 2071) then 
-        return 1898
-      elseif y <= 2184 and (x < 643 or x < 2136) then 
-        return 2184
-      elseif y <= 2471 and (x < 808 or (x > 1755 and x < 2130)) then 
-        return 2471
-      elseif y <= 2756 then 
-        return 2756
-      elseif x > 581 and x < 1039 and y <= 3004 then
-        return 3004
-      elseif y <= 3328 then 
-        return 3328
-      elseif y <= 3614 then 
-        return 3614
-      elseif y <= 3900 then 
-        return 3900
-      elseif y <= 4186 then 
-        return 4186
-      elseif y <= 4472 then 
-        return 4472
-      elseif y <= 4758 then 
-        return 4758
-      elseif y <= 5044 then 
-        return 5044
-      elseif y <= 5330 then 
-        return 5330
-      elseif y <= 5616 and y >= 5586 then 
-        return 5616
-      else return floor
-      end
-    elseif x >= 3161 then
-      if x < - 200 then return 0
-      elseif y <= 2829  and (x <= 3847 or x >= 4335) and x < 4908 then 
-        return 2829
-      elseif y <= 3207 and (x <= 4168 or x >= 4405) and x < 4889 then 
-        return 3207
-      elseif y <= 3506 and x < 4699 then 
-        return 3506
-      elseif y <= 3805 and x < 4784 then 
-        return 3805
-      elseif y <= 4104 and x < 4899 then 
-        return 4104
-      elseif y <= 4403 and x < 4906 then 
-        return 4403
-      elseif y <= 4702 and x < 4889 then 
-        return 4702
-      elseif y <= 5001 and x < 4895 then 
-        return 5001
-      elseif y <= 5300 and x < 4898 then 
-        return 5300
-      elseif y <= 5599 and x < 4901 then 
-        return 5599
-      else return floor
-      end
-
-    else
-      return floor
-    end
-
-
-
-
-
-
-
-  end
-end
-
-
-minecheck = function(x, y)
-
-  if themap.name == "fightclub" then 
-    if x >= 4485-4453 and x <= 4689-4453 and y <= 1064+400-821-178 
-    then return 1064+400-821-178
-    elseif x >= 5292-4453 and x <= 5469-4453 and y <= 1140+400-821-178 
-    then return 1140+400-821-178
-    elseif x >= 5654-4453 and x <= 5831-4453 and y <= 1140+400-821-178 
-    then return 1140+400-821-178
-    elseif x >= 5108-4453 and x <= 6013-4453 and y <= 1318+400-821-178 
-    then return 1318+400-821-178
-    else return floor
-    end
-
-  elseif themap.name == "street" then
-
-    if x >= 2879 and x <= 3143 and y <= 618+400 
-    then return 618+400
-    elseif x >= 1118 and x <= 1528 and y <= 979+400 
-    then
-      return 979+400
-    elseif x >= 2245 and x <= 2750 and y <= 1227+400 
-    then return 1227+400
-
-
-
-
-    elseif x > 2750 and x <=2968 and y <= 1270 +400
-    then return 1270+400
-
-
-
-
-
-    elseif x >= 3294 and x <= 3676 and y <= 618 +400
-    then return 618+400
-    elseif x >= 3325 and x <= 3764 and y <= 1270 +400
-    then return 1270+400
-    elseif x >= 4485 and x <= 4689 and y <= 1064 +400
-    then return 1064+400
-    elseif x >= 5292 and x <= 5469 and y <= 1140 +400
-    then return 1140+400
-    elseif x >= 5654 and x <= 5831 and y <= 1140 +400
-    then return 1140+400
-    elseif x >= 5108 and x <= 6013 and y <= 1318 +400
-    then return 1318+400
-
-
-
-    else return floor
-    end
-
-  elseif themap.name == "library" then
-
-    if x >= 1535 and x < 3200 and y <= 871 
-    then return 871
-
-
-    elseif x >= 1905 and x < 2020 and y <= 1198 
-    then return 1198
-    elseif x >= 2271 and x < 2386 and y <= 1198  
-    then return 1198
-    elseif x >= 2637 and x < 2752 and y <= 1198 
-    then return 1198
-    elseif x >= 3003 and x < 3118 and y <= 1297 
-    then return 1297
-
-
-    elseif x >= 1616 and x < 3196 and y <= 1516
-    then return 1516
-
-    elseif x >= 1893 and x < 2135 and y <= 1804 
-    then return 1804
-    elseif x >= 2321 and x < 2563 and y <= 1804 
-    then return 1804
-    elseif x >= 2749 and x < 2991 and y <= 1804 
-    then return 1804
-
-
-
-    elseif y <= floor and x < 1400
-    then return floor
-    elseif y <= floor - 63 and x >= 1400
-    then return floor - 63
-    else return floor
-    end
-
-  elseif themap.name == "floors" then 
-
-    if x >= 418 and x <= 2140 then	
-
-
-      if x == -20000 then return 0
-      elseif y <= 1612 then 
-        return 1612
-      elseif y <= 1898 and (x < 636 or x > 2071) then 
-        return 1898
-      elseif y <= 2184 and (x < 643 or x < 2136) then 
-        return 2184
-      elseif y <= 2471 and (x < 808 or (x > 1755 and x < 2130)) then 
-        return 2471
-      elseif y <= 2756 then 
-        return 2756
-      elseif x > 581 and x < 1039 and y <= 3004 then
-        return 3004
-      elseif y <= 3328 then 
-        return 3328
-      elseif y <= 3614 then 
-        return 3614
-      elseif y <= 3900 then 
-        return 3900
-      elseif y <= 4186 then 
-        return 4186
-      elseif y <= 4472 then 
-        return 4472
-      elseif y <= 4758 then 
-        return 4758
-      elseif y <= 5044 then 
-        return 5044
-      elseif y <= 5330 then 
-        return 5330
-      elseif y <= 5616 and y >= 5586 then 
-        return 5616
-      else return floor
-      end
-
-    elseif y <= 2688 and x > 2154 and x < 2726 then 
-      return 2688
-    elseif y <= 5778 and x > 2142 and x < 2299 then 
-      return 5778
-    elseif x >= 3161 then
-      if x < - 200 then return 0
-      elseif y <= 2829 and (x <= 3847 or x >= 4335) and x < 4908 then 
-        return 2829
-      elseif y <= 3207 and (x <= 4168 or x >= 4405) and x < 4889 then 
-        return 3207
-      elseif y <= 3506 and x < 4699 then 
-        return 3506
-      elseif y <= 3805 and x < 4784 then 
-        return 3805
-      elseif y <= 4104 and x < 4899 then 
-        return 4104
-      elseif y <= 4403 and x < 4906 then 
-        return 4403
-      elseif y <= 4702 and x < 4889 then 
-        return 4702
-      elseif y <= 5001 and x < 4895 then 
-        return 5001
-      elseif y <= 5300 and x < 4898 then 
-        return 5300
-      elseif y <= 5599 and x < 4901 then 
-        return 5599
-      else return floor
-      end
-
-    else
-      return floor
-    end
-
-
-
-
-
-  end
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 walls = function ()
 
@@ -384,7 +63,7 @@ walls = function ()
       you.j = math.abs(you.v)
       makerubble(you.mid, you.y,you.v, you.j)
       you.flinchway = -you.flinchway
-      repplay(wallhit2)
+      repplay(you.wallhit)
       you.g = false
       you.y = you.y - 10
     else
@@ -400,7 +79,7 @@ walls = function ()
       makerubble(you.mid, you.y,you.v, you.j)
       you.flinchway = -you.flinchway
 
-      repplay(wallhit2)
+      repplay(you.wallhit)
       you.g = false
       you.y = you.y - 10
     else
@@ -419,7 +98,7 @@ walls = function ()
 
       me.g = false
       me.y = me.y - 10
-      repplay(wallhit1)
+      repplay(me.wallhit)
     else
       me.x = 40
       me.v = 0
@@ -434,7 +113,7 @@ walls = function ()
       makerubble(me.mid, me.y,me.v, me.j)
       me.flinchway = -me.flinchway
 
-      repplay(wallhit1)
+      repplay(me.wallhit)
       me.g = false
       me.y = me.y - 10
     else
@@ -446,66 +125,20 @@ walls = function ()
 end
 
 --FRICTION FUNCTION TO SLOW DOWN
-you.fric = function (base) 
-  if you.v > base
-  then 
-    if you.v - fricrate < base then you.v = base
-    else
-      you.v = you.v - fricrate
-    end
 
 
-  elseif you.v < base
-  then 
-    if you.v + fricrate*rampspeed > base then you.v = base
-    else
-      you.v = you.v + fricrate
-    end
-  else 
-    you.v = 0+base
-  end
-
-  if not you.landing
-  then
-    if you.v > 0+base and not you.dodge
-    then
-      you.slide = true
-      slidetimery = 0
-    elseif you.v < 0+base and not you.dodge
-    then
-      you.slide = true
-      slidetimery = 0
-    end
-  end
-end
-
-
-fric = function (xx, base) 
-  if xx.v > base
-  then 
-     if xx.v - fricrate < base then xx.v = base
-    else
-      xx.v = xx.v - fricrate
-    end
-
-
-  elseif xx.v < base
-  then 
-     if xx.v + fricrate > base then xx.v = base
-    else
-      xx.v = xx.v + fricrate
-    end
-  else 
-    xx.v = 0+base
-  end
-
+fric = function (xx) 
+  
+  xx.v = rodib(xx.v,fricrate*rampspeed,xx.push)
+  
+  
   if not xx.landing
   then
-    if xx.v > 0+base and not xx.dodge 
+    if xx.v > 0+xx.push and not xx.dodge 
     then
       xx.slide = true
       xx.slidetimer = 0
-    elseif xx.v < 0+base and not xx.dodge 
+    elseif xx.v < 0+xx.push and not xx.dodge 
     then
       me.slide = true
       xx.slidetimer = 0
@@ -517,23 +150,23 @@ end
 
 
 
-function vroomright(xx, base)
-  if xx.v == 0+base and not xx.running
-  then xx.v = 1.5+base
-  elseif xx.v >0+base and xx.v < speedlimit -accel+base and not xx.running
+function vroomright(xx)
+  if xx.v == 0+xx.push and not xx.running
+  then xx.v = 1.5+xx.push
+  elseif xx.v >0+xx.push and xx.v < speedlimit -accel+xx.push and not xx.running
   then xx.v = xx.v + accel
-  elseif xx.v >0+base and xx.v >= speedlimit -accel+base  and not xx.running
-  then xx.v = speedlimit -accel+base
+  elseif xx.v >0+xx.push and xx.v >= speedlimit -accel+xx.push  and not xx.running
+  then xx.v = speedlimit -accel+xx.push
   end
 end 
 
-function vroomleft(xx, base)
-  if xx.v == 0+base and not xx.running
-  then xx.v = -1.5+base
-  elseif xx.v < 0+base and xx.v > -speedlimit + accel+base and not xx.running
+function vroomleft(xx)
+  if xx.v == 0+xx.push and not xx.running
+  then xx.v = -1.5+xx.push
+  elseif xx.v < 0+xx.push and xx.v > -speedlimit + accel+xx.push and not xx.running
   then xx.v = xx.v - accel
-  elseif xx.v < 0+base and xx.v <= -speedlimit + accel+base and not xx.running
-  then xx.v = -speedlimit + accel+base
+  elseif xx.v < 0+xx.push and xx.v <= -speedlimit + accel+xx.push and not xx.running
+  then xx.v = -speedlimit + accel+xx.push
   end
 end 
 
@@ -565,87 +198,44 @@ end
 
 function runrunrun()
 
-  if not me.g then me.running = false end
-  if not you.g then you.running = false end
+  if not xx.g then xx.running = false end
 
-  if me.running and math.abs(me.push) > 0 then me.j = 14 me.g = false
-    me.v = me.v + me.push*4 
+  if xx.running and math.abs(xx.push) > 0 then xx.j = 14 xx.g = false
+    xx.v = xx.v + xx.push*4 
   end
-  if you.running and math.abs(you.push) > 0 then  you.j = 14 you.g = false
-    you.v = you.v + you.push*4
-  end
-
-  if me.flinch or math.abs(me.v) <= speedminit then 
-    me.running = false
-  elseif me.running then 
-    me.a1 = false
-    me.a2 = false
-    me.a3 = false
-    me.a4 = false
+  if xx.flinch or math.abs(xx.v) <= speedminit then 
+    xx.running = false
+  elseif xx.running then 
+    xx.a1 = false
+    xx.a2 = false
+    xx.a3 = false
+    xx.a4 = false
 
 
   end
 
-  if me.run and me.running and (me.right or me.left) and me.run and not me.block and not anyofmycombos() and not anyofmyprimes() and not me.slide and not me.dodge then         
-    if me.right and me.v > 0 then
-      me.v = runspeed
-    elseif me.left and me.v < 0 then
-      me.v = -runspeed
+  if xx.run and xx.running and (xx.right or xx.left) and xx.run and not xx.block and not xx.slide and not xx.dodge then         
+    if xx.right and xx.v > 0 then
+      xx.v = runspeed
+    elseif xx.left and xx.v < 0 then
+      xx.v = -runspeed
     end
 
 
 
 
 
-  elseif math.abs(me.v) > speedminit-accel*2 and (me.left or me.right) and me.g and not c1accept() and me.run and not me.block and not anyofmycombos() and not anyofmyprimes() and not me.slide and not me.dodge then
-    me.a1 = false
-    me.a2 = false
-    me.a3 = false
-    me.a4 = false
-    me.running = true
+  elseif math.abs(xx.v) > speedminit-accel*2 and (xx.left or xx.right) and xx.g  and xx.run and not xx.block and not xx.slide and not xx.dodge then
+    xx.a1 = false
+    xx.a2 = false
+    xx.a3 = false
+    xx.a4 = false
+    xx.running = true
     melimitbreak = true
     if me.right and me.v > 0 then
       me.v = runspeed
     elseif me.left and me.v < 0 then
       me.v = -runspeed
-    end
-
-
-  end
-
-  if you.flinch or math.abs(you.v) <= speedlimit then 
-    you.running = false
-  elseif you.running then 
-    you.a1 = false
-    you.a2 = false
-    you.a3 = false
-    you.a4 = false
-
-
-  end
-
-  if you.run and you.running and (you.right or you.left) and you.run and not you.block and not anyofyourcombos() and not anyofyourprimes() and not you.slide and not you.dodge then         
-    if you.right and you.v > 0 then
-      you.v = runspeed
-    elseif you.left and you.v < 0 then
-      you.v = -runspeed
-    end
-
-
-
-
-
-  elseif math.abs(you.v) > speedlimit-accel*2 and (you.left or you.right) and you.g and not c1accept() and you.run and not you.block and not anyofyourcombos() and not anyofyourprimes() and not you.slide and not you.dodge then
-    you.a1 = false
-    you.a2 = false
-    you.a3 = false
-    you.a4 = false
-    you.running = true
-    youlimitbreak = true
-    if you.right and you.v > 0 then
-      you.v = runspeed
-    elseif you.left and you.v < 0 then
-      you.v = -runspeed
     end
 
 
@@ -761,17 +351,17 @@ function movex(xx,z)
     elseif z.right and xx.v >= xx.push and xx.stop == false and not xx.flinch
     and not z.left
     then 
-      vroomright(xx, xx.push)
+      vroomright(xx)
     elseif z.left and xx.v <= xx.push and xx.stop == false and not xx.flinch
     and not z.right
     then 
-      vroomleft(xx, xx.push)
+      vroomleft(xx)
     elseif z.down and xx.onplat and not xx.busy and not xx.dodge
     and not z.a1 and not z.a2 and not z.a3 and not z.a4
     then
       xx.y = xx.y + 4
     else
-      xx.fric(xx.push)
+      fric(xx)
     end
   else
 

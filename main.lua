@@ -528,7 +528,7 @@ function love.update()
 
         movex(me,me)
         movex(you,you)
-        platformcheckx()
+        --used to be here platformcheckx()
 
         walljump()
 
@@ -542,6 +542,7 @@ function love.update()
 
         
           --you.v = you.oldv + (you.v-you.oldv)*(rampspeed)
+        platformcheckx()
 
         you.y = you.y - you.j*.9*rampspeed
         me.y = me.y - me.j*.9*rampspeed
@@ -549,6 +550,7 @@ function love.update()
         me.x = me.x + me.v*rampspeed
         you.next = you.feet - you.j*.9
         me.next = me.feet - me.j*.9
+        
         
         me.oldv = me.v
         you.oldv = you.v
@@ -582,8 +584,8 @@ function love.update()
 
       me.jstop = false
       you.jstop = false
-      melimitbreak= false
-      youlimitbreak = false
+      me.limitbreak= false
+      you.limitbreak = false
 
 
 
@@ -630,7 +632,9 @@ function love.update()
         else bump(you)
         end
 
-      end
+    end
+    
+    
 
       newforwarddodge(me)
       newforwarddodge(you)
@@ -640,7 +644,6 @@ function love.update()
       climbs(you)
 
 
-      walls()
 
       isanyonedead()
       death()
