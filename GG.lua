@@ -109,9 +109,9 @@ function gandg(xx)
 
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y},
-            {x=xx.mid+xx.v+(xx.lr*88), y = xx.y},
+            {x=xx.mid+xx.v+(xx.lr*88), y = xx.y-xx.j},
             {x=xx.mid, y = me.y+60},
-            {x=xx.mid+xx.v+(xx.lr*88), y = xx.y+60},
+            {x=xx.mid+xx.v+(xx.lr*88), y = xx.y+60-xx.j},
             function(z)
 
               makeslashsparks(xx.y+30,xx.v+xx.x+xx.lr*(15),-xx.lr*slashsparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
@@ -188,10 +188,10 @@ function gandg(xx)
         if xx.animcounter == 5 then
           repplay(xx.greens)
           hboxcs(xx.id, 
-            {x=me.mid-(me.lr*-33), y = me.y+8},
-            {x=me.mid+me.v+(me.lr*3), y = me.y+8},
-            {x=me.mid, y = me.y+20},
-            {x=me.mid+me.v+(me.lr*17), y = me.y+8},
+            {x=xx.mid-(xx.lr*-33), y = xx.y+8},
+            {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-40-xx.j},
+            {x=xx.mid, y = xx.y+30},
+            {x=xx.mid+xx.v+(xx.lr*33), y = xx.y-40-xx.j},
 
             function(z)
               xx.cancombo = true

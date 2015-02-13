@@ -319,18 +319,85 @@ function hall(theid, func)
 
 end
 
-vforwallflinch = 10
+
+
+
+
+
+
 
 function hboxwall()
   for i,p in ipairs(hitt) do 
+
+
+
+    if p.flinch or p.a1 or p.a2 or p.a3 or p.a4 then p.wjt = 0 end
+
+    if p.wjt > 0 then 
+      p.wjt = p.wjt + 1*rampspeed
+      if p.wjt > 8 then 
+        p.wjt = 0
+        if p.v >= 0 then p.lr = 1
+        else p.lr = -1
+        end
+      elseif p.wjt > 7 then 
+        p.wjt = 0 
+        p.lr = p.walllr
+        if p.up then
+          p.jt = p.jt + walljumpjt2
+          p.j = walljumpvv2
+          p.v = walljumpv2 *-p.walllr
+        else
+          p.jt = p.jt + walljumpjt
+          p.j = walljumpvv
+          p.v = walljumpv *-p.walllr
+        end
+
+      else 
+        p.x = p.wallx
+        p.v = 0
+        p.j = 0
+        p.im = wallgrab
+        p.y = p.initwy
+        p.lr = p.walllr
+
+
+      end
+    end
+
+
+
     for j = #themap.walls, 1, -1 do 
       wall = themap.walls[j]
 
 
+      if
+      ((p.x+p.v*walljumprange < wall.x and p.x >= wall.x) or (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x)) and
+      ((p.v < 0 and p.right) or (p.v > 0 and p.left)) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch
+      then
+        if (p.x+p.v*walljumprange < wall.x and p.x >= wall.x) then
+          wallside = 1 
+        elseif (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x) then
+          wallside = -1 -p.width
+        end
+        
+        p.wjt = 1 
+        p.initwy = p.y - p.j
+        p.walllr = p.lr
+        p.wallx = wall.x+wallside
+        p.v = 0
+      elseif wall.y1==-1 and (p.x+p.v < wall.x and p.mid >= wall.x) or (p.x+p.width+p.v > wall.x and p.x+p.width <= wall.x) and p.wjt == 0 then
+        if (p.x+p.v < wall.x and p.x >= wall.x) then
+          wallside = 1 
+        else
+          wallside = -1 
+        end
 
 
-      if (p.x+p.v < wall.x and p.x >= wall.x)  then
+
+
         if p.flinch and math.abs(p.v) > vforwallflinch then 
+
           p.health = p.health - math.abs(p.v/3)
           p.v = -p.v/2
           if p.g then
@@ -345,30 +412,9 @@ function hboxwall()
           p.y = p.y - 10
 
         else
-          p.x = wall.x+1
+        
           p.v = 0
         end
-      elseif (p.x+p.v > wall.x and p.x <= wall.x) then
-
-        if p.flinch and math.abs(p.v) > vforwallflinch  then 
-          p.health = p.health - math.abs(p.v/3)
-          p.v = -p.v/2
-          if p.g then
-            p.j = math.abs(p.v)
-          else
-            p.j = p.j - math.abs(p.v/3)
-          end
-          makerubble(p.mid, p.y,p.v, p.j)
-          p.flinchway = -p.flinchway
-          repplay(p.wallhit)
-          p.g = false
-          p.y = p.y - 10
-
-        else
-          p.x = wall.x-1
-          p.v = 0
-        end
-
 
       end
     end
@@ -386,7 +432,9 @@ function hboxp()
     for j = #themap.plats, 1, -1 do 
       plat = themap.plats[j]
       xx = p
-
+      
+      
+        
 
       if p.im.yoff==nil then
         p.im.yoff = 0
@@ -399,11 +447,11 @@ function hboxp()
       then
         if p.j ~= 0 then
           if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
-            xx.landingcounter = landingwait
+            xx.landingcounter = xx.landingcounter + landingwait
             xx.landing = true 
             xx.v = xx.v * landingfric
           else
-            xx.landingcounter = shortlandwait
+            xx.landingcounter = xx.landingcounter + shortlandwait
             xx.landing = true 
             xx.v = xx.v * landingfric
           end

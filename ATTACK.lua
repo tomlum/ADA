@@ -37,6 +37,8 @@ function nottoomanyuppercuts(xx)
 
   if xx.type == 3 and xx.cancombo then xx.uppercuthit = true end
 
+  if not xx.g then xx.uppercuttimer = 0 end
+
   if xx.uppercuttimer > 0 then
     if xx.color.n ~= xx.cchangeto.n and xx.uppercuthit and xx.uppercuttimer > 30
     then
@@ -44,10 +46,12 @@ function nottoomanyuppercuts(xx)
       xx.cancombo = false
       xx.uppercuttimer = 0
     end
-    xx.uppercuttimer = xx.uppercuttimer-1
+    xx.uppercuttimer = xx.uppercuttimer-1*rampspeed
     xx.a1 = false
   else xx.uppercuthit = false
   end
+
+  
 
   if xx.type==3 then xx.uppercuttimer = uppercutpause end
 
@@ -56,13 +60,14 @@ end
 
 me.currentanim = 0
 you.currentanim = 0
-
+me.oldj = 0
+you.oldj = 0
 function attackmanage(xx)
 
   nottoomanyuppercuts(xx)
 
-  if xx.flinch then xx.animcounter = 0
-  end
+--  if xx.flinch then xx.animcounter = 0
+--  end
   if xx.animcounter == 0 then
     xx.repcounter = 0
     xx.bbpc = 0
@@ -79,6 +84,12 @@ function attackmanage(xx)
   if(math.abs(xx.v) > math.abs(xx.oldv)) then
     xx.v = xx.oldv + (xx.v-xx.oldv)*(rampspeed)
   end
+  
+--  if(math.abs(xx.j) > math.abs(xx.oldj)) then
+--    xx.j = xx.oldj + (xx.j-xx.oldj)*(rampspeed)
+--  end
+  
+  --xx.oldj = xx.j
 
 end
 
@@ -446,10 +457,17 @@ newforwarddodge = function(xx)
 
   getuptime = 8
   forgetuptime = 3
+  me.oldhealth = me.health
+  you.oldhealth = you.health
 
   jforfallbackbounce = 5
 
   function flinchingx(xx,yy)
+    if xx.health < xx.oldhealth then
+      local dif = xx.oldhealth - xx.health
+    makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,math.floor(dif*2/3))
+  end
+  xx.oldhealth = xx.health
 
     if xx.ft > fttofall then
       xx.falling = true

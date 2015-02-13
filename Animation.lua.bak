@@ -81,7 +81,7 @@ function updatemytrail(xx)
     cur = xx.trail[i]
     
 
-  cur.t = cur.t + 1
+  cur.t = cur.t + 1*rampspeed
   
   if cur.t >= traillength then 
     table.remove(xx.trail, i)
@@ -100,7 +100,7 @@ function drawmytrail(xx)
     
     if cur.im.xoff == nil then cur.im.xoff = 0 end
     if cur.im.yoff == nil then cur.im.yoff = 0 end
-      love.graphics.setColor(cur.color.c.r,cur.color.c.g,cur.color.c.b,255*(traillength/cur.t))
+      love.graphics.setColor(cur.color.c.r,cur.color.c.g,cur.color.c.b,(255/traillength)*(traillength/cur.t))
     love.graphics.draw(cur.im.im, cur.xanimate-cur.im.xoff*cur.lr, cur.y-cur.im.yoff, 0, cur.lr, 1)
     love.graphics.setColor(255, 255, 255, 255)
 
@@ -257,6 +257,8 @@ you.im = idle1
   function drawa(xx)
     drawmytrail(xx)
     
+  drawcolorstuff(xx)
+    bolttraildraw(xx)
     if xx.im.xoff == nil then xx.im.xoff = 0 end
     if xx.im.yoff == nil then xx.im.yoff = 0 end
     love.graphics.setColor(255, 255, 255, 255)
@@ -271,12 +273,22 @@ you.im = idle1
 
   function actionshotstuff(xx)
     if xx.actionshot then
+      xx.numofspikes = 0
+      xx.uppercuthit = false
 
-      if xx.color.n == xx.cchangeto.n and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) then
+      if xx.color.n == xx.cchangeto.n and (xx.color.n~=xx.cantreturntothis) and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) then
+        if xx.color.n == 2 and xx.a4b then
+        xx.animcounter = 8
+        xx.type = 2
+        xx.im = greenk1
+      else
+        xx.repcounter = 0
         xx.currentanim = xx.color.n
         combo(xx)
         xx.actionshot = false
         xx.actiontimer = 0
+        
+        end
       end
       minzoom = minzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
       maxzoom = maxzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
@@ -394,156 +406,21 @@ you.im = idle1
 
     end
   end
-  mwjt = 0
-  initwy = 0
-  ywjt = 0
-  yinitwy = 0
+  me.wjt = 0
+  me.initwy = 0
+  you.wjt = 0
+  you.initwy = 0
   --the x coord for either wall to walljump off of
   wallwalljump = 45
   --wallcheckhelper
-  function wch(x,v,wallx)
-    if (x < wallx and x+v > wallx - walljumpdis) or (x > wallx and x+v < wallx + walljumpdis) then
-      return true 
-    end
-  end
 
-  function wallcheck(ex,vee,why)
-    if themap.name == "library" then
-      if wch(ex, vee, 1610) and why > 893 and why < 1643 then 
-        return 1610
-      elseif wch(ex,vee,wallwalljump) 
-      then return wallwalljump
-      elseif wch(ex,vee,enviro.rightwall-40)  
-      then return enviro.rightwall-40
-      else return -1000
-      end
-    elseif themap.name == "street" then
-      if wch(ex,vee,wallwalljump) 
-      then return wallwalljump
-      elseif wch(ex,vee,enviro.rightwall-40)  
-      then return enviro.rightwall-40
-      else return -1000
-      end
-    elseif themap.name == "fightclub" then
-      if wch(ex,vee,wallwalljump) 
-      then return wallwalljump
-      elseif wch(ex,vee,enviro.rightwall)  
-      then return enviro.rightwall
-      else return -1000
-      end
-    elseif themap.name == "floors" then
-      if wch(ex,vee,wallwalljump) 
-      then return wallwalljump
-      elseif wch(ex, vee, 2139) and ((why > 2763 and why < 5778) or(why > 1613 and why < 2183))  then 
-        return 2139
-      elseif wch(ex, vee, 419) and why > 1898 then 
-        return 419
-      elseif wch(ex, vee, 3159) and why > 2829 then 
-        return 3159
-      elseif wch(ex,vee,enviro.rightwall-wallwalljump)  
-      then return enviro.rightwall-wallwalljump
-      else return -1000
-      end
-
-    end
-  end
   --when you do it from the right side it doesnt turn around, maybe check the lr
-  --CHANGE THIS SO THAT IT DOESNT DO DURING ANY ATTACKS
-  --CHANGE THIS SO THAT IT DOESNT DO DURING ANY ATTACKS
-  --CHANGE THIS SO THAT IT DOESNT DO DURING ANY ATTACKS
-  --CHANGE THIS SO THAT IT DOESNT DO DURING ANY ATTACKS
-  --CHANGE THIS SO THAT IT DOESNT DO DURING ANY ATTACKS
-  --CHANGE THIS SO THAT IT DOESNT DO DURING ANY ATTACKS
-  --CHANGE THIS SO THAT IT DOESNT DO DURING ANY ATTACKS
-  --CHANGE THIS SO THAT IT DOESNT DO DURING ANY ATTACKS
-  --CHANGE THIS SO THAT IT DOESNT DO DURING ANY ATTACKS
-  --CHANGE THIS SO THAT IT DOESNT DO DURING ANY ATTACKS
-  mwalllr = 0
-  mwallx = 0
-  ywalllr = 0
-  ywallx = 0
-  function walljump()
-    if me.flinch or me.a1 or me.a2 or me.a3 or me.a4 then mwjt = 0 end
-    if wallcheck(me.mid+15*me.lr,me.v,me.y+ 30-me.j) > -10 and ((me.left and me.v > minvforwalljump) or (me.right and me.v < -minvforwalljump)) and mwjt == 0 and not anyofmyprimes() and not anyofmycombos() and math.abs(me.j) > 0 and not me.flinch
-    then
-      mwjt = 1 
-      initwy = me.y - me.j
-      mwalllr = me.lr
-      mwallx = wallcheck(me.mid+15*me.lr,me.v,me.y+ 30-me.j) -15 - 15*me.lr - 29*me.lr
-    end
-    if mwjt > 0 then 
-      mwjt = mwjt + 1
-      if mwjt > 8 then 
-        mwjt = 0
-        if me.v >= 0 then me.lr = 1
-        else me.lr = -1
-        end
-      elseif mwjt > 7 then 
-        mwjt = 0 
-        me.lr = mwalllr
-        if me.up then
-          me.jt = me.jt + walljumpjt2
-          me.j = walljumpvv2
-          me.v = walljumpv2 *-mwalllr
-        else
-          me.jt = me.jt + walljumpjt
-          me.j = walljumpvv
-          me.v = walljumpv *-mwalllr
-        end
-
-      else 
-        me.x = mwallx
-        me.v = 0
-        me.j = 0
-        me.im = wallgrab
-        me.y = initwy
-        me.lr = mwalllr
-
-
-      end
-    end
-
-    if you.flinch or you.a1 or you.a2 or you.a3 or you.a4 then ywjt = 0 end
-    if wallcheck(you.mid+15*you.lr,you.v,you.y+ 30-you.j) > -10 and ((you.left and you.v > minvforwalljump) or (you.right and you.v < -minvforwalljump)) and ywjt == 0 and not anyofyourprimes() and not anyofyourcombos() and math.abs(you.j) > 0 and not you.flinch
-    then
-      ywjt = 1 
-      yinitwy = you.y - you.j
-      ywalllr = you.lr
-      ywallx = wallcheck(you.mid+15*you.lr,you.v,you.y+ 30-you.j) -15 - 15*you.lr - 29*you.lr
-    end
-    if ywjt > 0 then 
-      ywjt = ywjt + 1
-      if ywjt > 8 then 
-        ywjt = 0
-        if you.v >= 0 then you.lr = 1
-        else you.lr = -1
-        end
-      elseif ywjt > 7 then 
-        ywjt = 0 
-        you.lr = ywalllr
-        if you.up then
-          you.jt = you.jt + walljumpjt2
-          you.j = walljumpvv2
-          you.v = walljumpv2 *-ywalllr
-        else
-          you.jt = you.jt + walljumpjt
-          you.j = walljumpvv
-          you.v = walljumpv *-ywalllr
-        end
-      else 
-        you.x = ywallx
-        you.v = 0
-        you.j = 0
-        you.im = wallgrab
-        you.y = yinitwy
-        you.lr = ywalllr
-
-
-      end
-    end
-
-
-  end
+ 
+  me.walllr = 0
+  me.wallx = 0
+  you.walllr = 0
+  you.wallx = 0
+  
   function drawstreetprestuff()
     love.graphics.draw(enviro.light, 4448, 1525)
     lights()
@@ -707,13 +584,13 @@ function drawdust()
 
   for i,v in ipairs(dust)do
   if not me.actionshot and not you.actionshot and not pause then
-    v.y = v.y - v.j
-    v.x = v.x + v.v
-    v.j = v.j - .2
+    v.y = v.y - v.j*rampspeed
+    v.x = v.x + v.v*rampspeed
+    v.j = v.j - .5*rampspeed
     dustn = math.random(100,200)
   end
   love.graphics.setColor(dustn,dustn,dustn,150)
-  love.graphics.draw(enviro.rubble,v.x,v.y-2,70/(v.v+v.y),1,1)
+  love.graphics.draw(enviro.rubble,v.x,v.y-2,70/(v.v+v.y),1.5,1.5)
   love.graphics.setColor(255,255,255)
 
 end
@@ -741,19 +618,8 @@ end
 end
 function makerunrubble(why,ex,vee)
   if rampcanhit then
-  if vee > 0 then
-    table.insert(rubble,{x = ex, y = why, v=vee + math.random(5), j = math.random(2,7)})
-    table.insert(rubble,{x = ex, y = why, v=vee + math.random(5), j = math.random(2,7)})
-    table.insert(rubble,{x = ex, y = why, v=vee + math.random(5), j = math.random(2,7)})
-    table.insert(rubble,{x = ex, y = why, v=vee + math.random(5), j = math.random(2,7)})
-    table.insert(rubble,{x = ex, y = why, v=vee + math.random(5), j = math.random(2,7)})
-    table.insert(rubble,{x = ex, y = why, v=vee + math.random(5), j = math.random(2,7)})
-  else
-    table.insert(rubble,{x = ex, y = why, v=vee - math.random(5), j = math.random(2,7)})
-    table.insert(rubble,{x = ex, y = why, v=vee - math.random(5), j = math.random(2,7)})
-    table.insert(rubble,{x = ex, y = why, v=vee - math.random(5), j = math.random(2,7)})
-    table.insert(rubble,{x = ex, y = why, v=vee - math.random(5), j = math.random(2,7)})
-    table.insert(rubble,{x = ex, y = why, v=vee - math.random(5), j = math.random(2,7)})
+    for i = 10, 1, -1 do
+    table.insert(dust,{x = ex, y = why, v=math.random(vee/2, vee) + math.random()*lr, j = math.random(2,7)+math.random()})
   end
   end
 end
@@ -1874,14 +1740,14 @@ death = function()
 
       if you.walktimer >= runpace+2 then you.im = run4 
         you.walktimer = 0 
-        repplay(runsound2)
-        makerunrubble(you.y+50,you.mid,-you.v)
+        repplay(you.me.runsound)
+        makerunrubble(you.y+50,you.mid,-you.v,you.lr)
       elseif you.walktimer >= runpace+1 then you.im = run4 
-        makerunrubble(you.y+50,you.mid,-you.v)
+        makerunrubble(you.y+50,you.mid,-you.v,you.lr)
       elseif you.walktimer >= runpace/2 + 2 then you.im = run3 
       elseif you.walktimer >= runpace/2 then you.im = run2 
-        makerunrubble(you.y+50,you.mid,-you.v)
-        repplay(runsound2)
+        makerunrubble(you.y+50,you.mid,-you.v,you.lr)
+        repplay(you.me.runsound)
       elseif you.walktimer >= 0 then you.im = run1 
       end  
     else
@@ -1906,48 +1772,42 @@ death = function()
       end
     end
   end
-  walkme = function ()
+  walkxx = function (xx)
 
+        xx.walktimer = xx.walktimer + 1*rampspeed
 
-    if me.running then 
-      me.walktimer = me.walktimer + 1*rampspeed
+    if xx.running then 
 
-      if me.walktimer >= runpace+2 then me.im = run4 
-        me.walktimer = 0
-        repplay(runsound)
-        makerunrubble(me.y+50,me.mid,-me.v)
+      if xx.walktimer >= runpace+2 then xx.im = run4 
+        xx.walktimer = 0
+        repplay(me.runsound)
+        makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
       elseif me.walktimer >= runpace + 1 then me.im = run4 
-        makerunrubble(me.y+50,me.mid,-me.v)
-      elseif me.walktimer >= runpace/2 + 2 then me.im = run3 
-      elseif me.walktimer >= runpace/2 then me.im = run2 
-        makerunrubble(me.y+50,me.mid,-me.v)
-        repplay(runsound)
-      elseif me.walktimer >= 0 then me.im = run1 
+        makerunrubble(xx.y+50,me.mid,-xx.v,xx.lr)
+      elseif xx.walktimer >= runpace/2 + 2 then xx.im = run3 
+      elseif xx.walktimer >= runpace/2 then xx.im = run2 
+        makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
+        repplay(me.runsound)
+      elseif xx.walktimer >= 0 then xx.im = run1 
       end  
     else
-
-      if me.walktimer < 7 then 
-        me.im = walk1
-        me.walktimer = me.walktimer + 1*rampspeed
-      elseif me.walktimer >= 7 and me.walktimer < 14 then
-        me.im = walk2
-        me.walktimer = me.walktimer + 1*rampspeed
-      elseif me.walktimer >= 14 and me.walktimer < 21 then
-        me.im = walk3
-        me.walktimer = me.walktimer + 1*rampspeed
-      elseif me.walktimer >= 21 and me.walktimer < 28 then
-        me.im = walk4
-        me.walktimer = me.walktimer + 1*rampspeed
-      elseif me.walktimer >= 28 and me.walktimer < 35 then
-        me.im = walk5
-        me.walktimer = me.walktimer + 1*rampspeed
+      if xx.walktimer < 7 then 
+        xx.im = walk1
+      elseif xx.walktimer >= 7 and xx.walktimer < 14 then
+        xx.im = walk2
+      elseif xx.walktimer >= 14 and xx.walktimer < 21 then
+        xx.im = walk3
+      elseif xx.walktimer >= 21 and xx.walktimer < 28 then
+        xx.im = walk4
+      elseif me.walktimer >= 28 and xx.walktimer < 35 then
+        xx.im = walk5
       else
         me.walktimer = 0
       end
     end
   end
   jumpy = function ()
-    if ywjt == 0 then
+    if you.wjt == 0 then
       if you.j > 0 then 
         you.im = jumprise
       else you.im = jumpfalling
@@ -1955,7 +1815,7 @@ death = function()
     end
   end
   jumpme = function ()
-    if mwjt == 0 then
+    if me.wjt == 0 then
       if me.j > 0 then 
         me.im = jumprise
       else me.im = jumpfalling
@@ -1976,13 +1836,13 @@ death = function()
       me.landingcounter = me.landingcounter - 1*rampspeed
     end
   end
-  slidetimery = 0
+  you.slidetimer = 0
   me.slidetimer = 0
   slideycheck = function ()
-    if slidetimery < 6
+    if you.slidetimer < 6
     then 
-      slidetimery = slidetimery + 1*rampspeed
-    elseif slidetimery >= 6
+      you.slidetimer = you.slidetimer + 1*rampspeed
+    elseif you.slidetimer >= 6
     then you.slide = false
 
     end
@@ -2072,20 +1932,19 @@ death = function()
 
 
   function makeslashsparks(why,ex,vee, jay, arr,gee,bee)
-    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee, j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
+    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
 
 
   end

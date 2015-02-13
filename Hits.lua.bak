@@ -180,7 +180,7 @@ function drawallhex()
     if v.im.dodgew ~= nil then
       dsw = v.im.dodgew
     end
-     drawhexcheck(v.mid+v.lr*(dsw/2), v.y+(dsh)+hexbuffer/2, v.width+dsw-hexbuffer, v.height-dsh-hexbuffer, v.v, v.j)
+    drawhexcheck(v.mid+v.lr*(dsw/2), v.y+(dsh)+hexbuffer/2, v.width+dsw-hexbuffer, v.height-dsh-hexbuffer, v.v, v.j)
   end
 
   love.graphics.line(bx1,by1,bx2,by2)
@@ -224,7 +224,7 @@ end
 
 
 function hboxcs(theid, P1, P2, P3, P4, special)
- 
+
 
   for i,p in ipairs(hitt) do
     dsh = 0
@@ -235,7 +235,7 @@ function hboxcs(theid, P1, P2, P3, P4, special)
     if p.im.dodgew ~= nil then
       dsw = p.im.dodgew
     end
-   
+
     if theid ~= i and
     (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, p.height-dsh-hexbuffer/2, p.v, p.j) 
       or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, p.height-dsh-hexbuffer/2, p.v, p.j)
@@ -248,7 +248,7 @@ function hboxcs(theid, P1, P2, P3, P4, special)
       special(p)
     end
   end
-  
+
 
 end
 
@@ -311,60 +311,128 @@ you.im = idle2
 
 
 function hall(theid, func)
-    for i,p in ipairs(hitt) do
-      if theid ~= i then
+  for i,p in ipairs(hitt) do
+    if theid ~= i then
       func(p)
     end
-    end
-    
   end
+
+end
+
+vforwallflinch = 10
+
 function hboxwall()
-   for i,p in ipairs(hitt) do 
-     for j = #themap.walls, 1, -1 do 
-       wall = themap.walls[j]
-       if wall.y1 == -1 then
-         if p.x + p.v >= wall.x or p.x + p.v <= wall.x then
-           p.x = wall.x
-           if p.flinch and math.abs(p.v) > 10 then 
-      p.health = p.health - math.abs(p.v/2)
-      p.v = -p.v/3
-      p.j = math.abs(p.v)
-      makerubble(p.mid, p.y,p.v, p.j)
-      p.flinchway = -p.flinchway
-      repplay(wallhit2)
-      p.g = false
-      p.y = p.y - 10
-    else
-      you.x = 40
-      you.v = 0
+  for i,p in ipairs(hitt) do 
+    if p.flinch or p.a1 or p.a2 or p.a3 or p.a4 then p.wjt = 0 end
+    for j = #themap.walls, 1, -1 do 
+      wall = themap.walls[j]
+      
+
+if (p.x+p.v < wall.x and p.x >= wall.x and p.left) or (p.x+p.v < wall.x and p.x >= wall.x and p.right) and me.wjt == 0 math.abs(p.j) > 0 and not p.flinch
+    then
+      p.wjt = 1 
+      p.initwy = p.y - p.j
+      me.walllr = me.lr
+      mwallx = wall.x
     end
-         end
-       end
-     end
-     
-   end
-  
- if you.flinch and math.abs(you.v) > 10 then 
-      you.health = you.health - math.abs(you.v/2)
-      you.v = -you.v/3
-      you.j = math.abs(you.v)
-      makerubble(you.mid, you.y,you.v, you.j)
-      you.flinchway = -you.flinchway
-      repplay(wallhit2)
-      you.g = false
-      you.y = you.y - 10
-    else
-      you.x = 40
-      you.v = 0
+    if me.wjt > 0 then 
+      me.wjt = me.wjt + 1
+      if me.wjt > 8 then 
+        me.wjt = 0
+        if me.v >= 0 then me.lr = 1
+        else me.lr = -1
+        end
+      elseif me.wjt > 7 then 
+        me.wjt = 0 
+        p.lr = p.walllr
+        if p.up then
+          p.jt = p.jt + walljumpjt2
+          p.j = walljumpvv2
+          p.v = walljumpv2 *-p.walllr
+        else
+          p.jt = p.jt + walljumpjt
+          p.j = walljumpvv
+          p.v = walljumpv *-p.walllr
+        end
+
+      else 
+        p.x = mwallx
+        p.v = 0
+        p.j = 0
+        p.im = wallgrab
+        p.y = me.initwy
+        p.lr = me.walllr
+
+
+      end
     end
+
+
+
+      if (p.x+p.v < wall.x and p.x >= wall.x)  then
+        if p.flinch and math.abs(p.v) > vforwallflinch then 
+          
+          
+          p.health = p.health - math.abs(p.v/3)
+          p.v = -p.v/2
+          if p.g then
+            p.j = math.abs(p.v)
+          else
+            p.j = p.j - math.abs(p.v/3)
+          end
+          makerubble(p.mid, p.y,p.v, p.j)
+          p.flinchway = -p.flinchway
+          repplay(p.wallhit)
+          p.g = false
+          p.y = p.y - 10
+
+        else
+          p.x = wall.x+1
+          p.v = 0
+        end
+      elseif (p.x+p.v > wall.x and p.x <= wall.x) then
+
+        if p.flinch and math.abs(p.v) > vforwallflinch  then 
+          p.health = p.health - math.abs(p.v/3)
+          p.v = -p.v/2
+          if p.g then
+            p.j = math.abs(p.v)
+          else
+            p.j = p.j - math.abs(p.v/3)
+          end
+          makerubble(p.mid, p.y,p.v, p.j)
+          p.flinchway = -p.flinchway
+          repplay(p.wallhit)
+          p.g = false
+          p.y = p.y - 10
+
+        else
+          p.x = wall.x-1
+          p.v = 0
+        end
+
+
+      end
+    end
+
+
+  end
+
+  xx.oldx = xx.x
+
 end
 
 function hboxp()
- 
+
   for i,p in ipairs(hitt) do
     for j = #themap.plats, 1, -1 do 
       plat = themap.plats[j]
       xx = p
+
+
+      if p.im.yoff==nil then
+        p.im.yoff = 0
+      end
       if (not p.gothroughplats or (plat.floor~=nil)) and (
         ((hexplatcheck(plat.y, plat.x1, plat.x2, p.x, p.y, p.width, p.height, p.v, p.j) and p.j <= 0 
             and p.y+p.j <= plat.y-(p.im.im:getHeight())-p.im.yoff+14))

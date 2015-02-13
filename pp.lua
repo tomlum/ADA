@@ -96,13 +96,14 @@ function spikeupdate(xx)
         function(z)
           xx.cancombo = true
           xx.hitsomeonewithpurp = true
-          z.x = z.x + 3*cur.lr
+          
           z.v = z.v + math.abs((vv[3]-vv[1])/70)*cur.lr
           z.j = z.j + -(vv[4]-vv[2])/30
           z.y = z.y-30
           z.flinch = true
           z.ft = z.ft + p4ft
           z.health = z.health - at.p.k.dam
+          
         end)
     elseif cur.t >=6 then
       hboxcs(0, 
@@ -124,10 +125,11 @@ function spikeupdate(xx)
         function(z)
           xx.hitsomeonewithpurp = true
           z.v = -z.v + (cur.lr*2)
-          z.j = z.j + 6
+          z.j = z.j + 10
           z.flinch = true
           z.ft = z.ft + p4ft
           z.health = z.health - at.p.k.dam/3
+          
         end)
     end
 
@@ -156,7 +158,7 @@ at.p.p.max = 3
 at.p.k = {}
 at.p.k.max = 6
 at.p.k.kb = 6
-at.p.k.dam = 6
+at.p.k.dam = 3
 
 
 me.repcounter = 0
@@ -244,8 +246,6 @@ function pandp(xx)
             minzoom = defaultminzoom - .06
             maxzoom = defaultmaxzoom - .06
             
-
-            makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
 
           end)
 

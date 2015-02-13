@@ -85,10 +85,10 @@ function combomanage(xx)
   end
 
 
-  if xx.anibusy --or not xx.readya
-  then
-    cancelas(xx)
-  end
+  --  if xx.anibusy --or not xx.readya
+  --  then
+  --    cancelas(xx)
+  --  end
 
   xx.anibusy = false
 
@@ -149,7 +149,7 @@ function combo(xx, func)
 
     elseif xx.a4 then
       if func~= nil then func() end
-      if xx.color.n==0 then
+      if xx.color.n==0 and xx.type~=2 then
         xx.combo = xx.combo + 1
         xx.animcounter = 1
         xx.type = 2
@@ -161,9 +161,9 @@ function combo(xx, func)
         xx.combo = xx.combo + 1
       elseif xx.color.n==2 then
         xx.type = 2
-      xx.animcounter = 1
-      xx.combo = xx.combo + 1
-      
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
+
       end
     elseif xx.a1 then
       xx.numofspikes = 0
@@ -218,35 +218,59 @@ kick1 = {im = love.graphics.newImage("me/attack/kick1.png"), c = love.graphics.n
 kick2 = {im = love.graphics.newImage("me/attack/kick2.png"), c = love.graphics.newImage("me/attack/kick2c.png"), xoff = 15, yoff = 10}
 kick3 = {im = love.graphics.newImage("me/attack/kick3.png"), c = love.graphics.newImage("me/attack/kick3c.png"), xoff = 15, yoff = 10}
 uppercut = {im=love.graphics.newImage("me/attack/uppercut.png"),c=love.graphics.newImage("me/attack/uppercutc.png"), xoff = 15}
+jumpuppercut = {im=love.graphics.newImage("me/attack/jumpuppercut.png"),c=love.graphics.newImage("me/attack/jumpuppercutc.png")}
+dropkick1 = {im=love.graphics.newImage("me/attack/dropkick1.png"),c=love.graphics.newImage("me/attack/dropkick1c.png"), xoff = 5}
+dropkick2 = {im=love.graphics.newImage("me/attack/dropkick2.png"),c=love.graphics.newImage("me/attack/dropkick2c.png"), xoff = 8}
+divekick = {im=love.graphics.newImage("me/attack/divekick.png"),c=love.graphics.newImage("me/attack/divekickc.png"), xoff = 5}
 
-
+landingpenaltyforb5 = 40
 
 function breadandbutter(xx)
 
 
-  if xx.animcounter > 7 then
+  if xx.animcounter > 0 then
     xx.stop = true
   end
   if xx.animcounter < 17 and xx.animcounter > 0  then
     xx.anibusy = true
   end
 
+  if xx.type < 4 and xx.j~=0 then xx.animcounter = 0
+  elseif xx.type >= 4 and xx.g then xx.animcounter = 0
+  end
+
   if xx.animcounter == 0 then
 
-    if (xx.a2 or xx.a3) and xx.color.n == 0 and not xx.holda then
-      xx.type = 1
-      xx.animcounter = 1
-      xx.combo = xx.combo + 1
-      xx.repcounter = 1
-    elseif xx.a4 and not xx.holda then
-      xx.type = 2
-      xx.animcounter = 1
-      xx.combo = xx.combo + 1
-    elseif xx.a1 and not xx.holda then
-      xx.type = 3
-      xx.animcounter = 1
-      xx.combo = xx.combo + 1
+    if xx.g then 
+      if (xx.a2 or xx.a3) and xx.color.n == 0 and not xx.holda then
+        xx.type = 1
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
+        xx.repcounter = 1
+      elseif xx.a4 and not xx.holda then
+        xx.type = 2
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
+      elseif xx.a1 and not xx.holda then
+        xx.type = 3
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
+      end
+    else
+      if (xx.a2 or xx.a3) and not xx.holda then
+        xx.type = 4
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
+      elseif xx.a4 and not xx.holda then
+        xx.type = 5
+        xx.animcounter = 1
+        elseif xx.a1 and not xx.holda then
+        xx.type = 6
+        xx.animcounter = 1
+      end
+
     end
+
 
   else
 
@@ -268,9 +292,9 @@ function breadandbutter(xx)
         if xx.animcounter == 6 then
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y+24},
-            {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26},
+            {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
             {x=xx.mid, y = xx.y+30},
-            {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32},
+            {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32-xx.j},
             function(z)
               xx.cancombo = true
               if xx.repcounter == animcounter then
@@ -286,8 +310,6 @@ function breadandbutter(xx)
                   xx.joystick:setVibration(.7,1)
                 end
               end
-
-              makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
 
             end)
         end
@@ -318,10 +340,10 @@ function breadandbutter(xx)
         xx.im = kick2
         if xx.animcounter == 12 then
           hboxcs(xx.id, 
-            {x=me.mid, y = me.y+31},
-            {x=me.mid+me.v+(me.lr*28), y = me.y+31},
-            {x=me.mid, y = me.y+37},
-            {x=me.mid+me.v+(me.lr*28), y = me.y+39},
+            {x=xx.mid, y = xx.y+31},
+            {x=xx.mid+xx.v+(xx.lr*28), y = xx.y+31-xx.j},
+            {x=xx.mid, y = xx.y+37},
+            {x=xx.mid+me.v+(xx.lr*28), y = xx.y+39-xx.j},
             function(z)
               xx.cancombo = true
               z.health = z.health - at.bb.k.dam
@@ -336,7 +358,6 @@ function breadandbutter(xx)
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(1,1)
               end
-              makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
 
             end)
         end
@@ -351,15 +372,14 @@ function breadandbutter(xx)
     elseif xx.type ==3 then
       if xx.animcounter < 9 then
         xx.im = punch6
-        xx.xoffset = 15
       elseif xx.animcounter < 16 then
         xx.im = uppercut
         if xx.animcounter == 9 then
           hboxcs(xx.id, 
-            {x=me.mid, y = me.y+30},
-            {x=me.mid+me.v+(me.lr*11), y = me.y+8},
-            {x=me.mid, y = me.y+20},
-            {x=me.mid+me.v+(me.lr*17), y = me.y+8},
+            {x=xx.mid, y = xx.y+30},
+            {x=xx.mid+xx.v+(xx.lr*11), y = xx.y+8-xx.j},
+            {x=xx.mid, y = xx.y+20},
+            {x=xx.mid+xx.v+(xx.lr*17), y = xx.y+8-xx.j},
 
             function(z)
               xx.cancombo = true
@@ -371,12 +391,125 @@ function breadandbutter(xx)
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(1,1)
               end
-              makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
             end)
         end
       elseif xx.animcounter >= 16 then
         xx.animcounter = 0
       end
+
+    elseif xx.type == 4 then
+      if xx.animcounter < 4 then
+        xx.im = dropkick1
+
+      elseif xx.animcounter<=20 then
+        xx.im = dropkick2
+        hboxcs(xx.id, 
+          {x=xx.mid, y = xx.y+18},
+          {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+18-xx.j},
+          {x=xx.mid, y = xx.y+26},
+          {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+26-xx.j},
+          function(z)
+            xx.cancombo = true
+            if xx.repcounter == animcounter then
+              z.v = xx.lr*at.bb.p.kb*3+xx.v
+            else
+              z.v = xx.lr*at.bb.p.kb+xx.v
+            end
+            if not (z.block == -xx.lr) then
+              if xx.animcounter == 4 then
+                z.health = z.health - at.bb.p.dam
+              else
+                z.health = z.health - at.bb.p.dam/2
+              end
+              z.flinch = true
+              z.ft = at.bb.p.ft
+              if #joysticks>=xx.id then
+                xx.joystick:setVibration(.7,1)
+              end
+            end
+
+          end)
+
+      elseif xx.animcounter < 25 then
+        xx.im=dropkick1
+      elseif xx.animcounter < 40 then
+
+      elseif xx.animcounter >= 40 then
+        xx.animcounter = 0
+      end
+
+
+    elseif xx.type == 5 then
+      if xx.animcounter < 8 then
+        xx.im=dropkick1
+
+      elseif xx.animcounter<=25 then
+        xx.im = divekick
+        if xx.animcounter == 10 then
+          xx.j = xx.j - 10
+          xx.landingcounter = landingpenaltyforb5
+        end
+        hboxcs(xx.id, 
+          {x=xx.mid+8, y = xx.y+40},
+          {x=xx.mid+xx.v+(xx.lr*14), y = xx.y+64-xx.j},
+          {x=xx.mid, y = xx.y+40},
+          {x=xx.mid+xx.v+(xx.lr*6), y = xx.y+64-xx.j},
+          function(z)
+            xx.cancombo = true
+            if xx.repcounter == animcounter then
+              z.v = xx.lr*at.bb.p.kb*3+xx.v
+            else
+              z.v = xx.lr*at.bb.p.kb+xx.v
+            end
+            if not (z.block == -xx.lr) then
+              if xx.animcounter == 5 then
+                z.health = z.health - at.bb.p.dam
+              else
+                z.health = z.health - at.bb.p.dam/2
+              end
+              z.flinch = true
+              z.ft = at.bb.p.ft
+              if #joysticks>=xx.id then
+                xx.joystick:setVibration(.7,1)
+              end
+            end
+
+          end)
+
+
+      elseif xx.animcounter <= 40 then
+
+      elseif xx.animcounter >= 40 then
+        xx.animcounter = 0
+      end
+
+    elseif xx.type ==6 then
+      if xx.animcounter < 5 then
+      elseif xx.animcounter < 16 then
+        xx.im = jumpuppercut
+        if xx.animcounter == 6 then
+          hboxcs(xx.id, 
+            {x=xx.mid, y = xx.y+30},
+            {x=xx.mid+xx.v+(xx.lr*11), y = xx.y+8-xx.j},
+            {x=xx.mid, y = xx.y+20},
+            {x=xx.mid+xx.v+(xx.lr*17), y = xx.y+8-xx.j},
+
+            function(z)
+              xx.cancombo = true
+              z.health = z.health - at.bb.u.dam
+              z.v = at.bb.u.kb*xx.lr
+              z.j = at.bb.u.j*2/3
+              z.flinch = true
+              z.ft = at.bb.u.ft
+              if #joysticks>=xx.id then
+                xx.joystick:setVibration(1,1)
+              end
+            end)
+        end
+      elseif xx.animcounter >= 16 then
+        xx.animcounter = 0
+      end
+
     end
   end
 end

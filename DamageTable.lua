@@ -1,4 +1,10 @@
 
+
+vforwallflinch = 10
+
+walljumprange = 3.5
+
+
 initjumpj = 12+2+1
 --
 initjmax = 17+2
@@ -165,7 +171,7 @@ initrunspeed = 10
 runpace = 19
 
 --slowdown rate
-adecrate = .5
+adecrate = .2
 --move rate
 amovrate = .7
 maxairmove = speedminit*.6
