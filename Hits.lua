@@ -427,7 +427,6 @@ function hboxwall()
 end
 
 function hboxp()
-
   for i,p in ipairs(hitt) do
     for j = #themap.plats, 1, -1 do 
       plat = themap.plats[j]
@@ -441,10 +440,11 @@ function hboxp()
       end
       if (not p.gothroughplats or (plat.floor~=nil)) and (
         ((hexplatcheck(plat.y, plat.x1, plat.x2, p.x, p.y, p.width, p.height, p.v, p.j) and p.j <= 0 
-            and p.y+p.j <= plat.y-(p.im.im:getHeight())-p.im.yoff+14))
+            and p.y+p.j-p.im.yoff <= plat.y-(p.height)-p.im.yoff))
         or 
         (p.y == plat.y-p.height and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
       then
+        
         if p.j ~= 0 then
           if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
             xx.landingcounter = xx.landingcounter + landingwait

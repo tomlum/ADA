@@ -235,9 +235,6 @@ function breadandbutter(xx)
     xx.anibusy = true
   end
 
-  if xx.type < 4 and xx.j~=0 then xx.animcounter = 0
-  elseif xx.type >= 4 and xx.g then xx.animcounter = 0
-  end
 
   if xx.animcounter == 0 then
 

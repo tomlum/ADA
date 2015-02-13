@@ -648,6 +648,7 @@ function love.update()
       holdmanage(me)
       holdmanage(you)
 
+       
 
       if (themode == "classic" and (you.dead or me.dead)) or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
         thesong:stop()
@@ -863,7 +864,7 @@ function love.update()
         "       animcounter: "..tostring(me.animcounter)
         ..
         "       type: "..tostring(me.type),10,30)
-      love.graphics.print("nospikes "..tostring(me.numofspikes).." hitsomeone "..tostring(me.landingcounter), 10, 50)
+      love.graphics.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
     end
 
 

@@ -62,7 +62,13 @@ me.currentanim = 0
 you.currentanim = 0
 me.oldj = 0
 you.oldj = 0
+
 function attackmanage(xx)
+
+  if xx.type < 4 and xx.j~=0 then xx.animcounter = 0
+  elseif xx.type >= 4 and xx.g then xx.animcounter = 0
+  end
+
 
   nottoomanyuppercuts(xx)
 
@@ -85,6 +91,7 @@ function attackmanage(xx)
     xx.v = xx.oldv + (xx.v-xx.oldv)*(rampspeed)
   end
   
+ 
 --  if(math.abs(xx.j) > math.abs(xx.oldj)) then
 --    xx.j = xx.oldj + (xx.j-xx.oldj)*(rampspeed)
 --  end
@@ -464,6 +471,7 @@ newforwarddodge = function(xx)
 
   function flinchingx(xx,yy)
     if xx.health < xx.oldhealth then
+    xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(rampspeed)
       local dif = xx.oldhealth - xx.health
     makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,math.floor(dif*2/3))
   end
