@@ -63,6 +63,9 @@ you.currentanim = 0
 me.oldj = 0
 you.oldj = 0
 
+me.oldft = 0
+you.oldft = 0
+
 function attackmanage(xx)
 
   if xx.type < 4 and xx.j~=0 then xx.animcounter = 0
@@ -90,6 +93,7 @@ function attackmanage(xx)
   if(math.abs(xx.v) > math.abs(xx.oldv)) then
     xx.v = xx.oldv + (xx.v-xx.oldv)*(rampspeed)
   end
+  xx.oldft = xx.ft
 
 
   --  if(math.abs(xx.j) > math.abs(xx.oldj)) then
@@ -264,12 +268,13 @@ newforwarddodge = function(xx)
     end
 
 
-    if xx.flinch 
+    if xx.flinch or xx.falling
     then xx.dodgecounter = 0
       xx.dodge = false
       xx.dodgetype = 0
       xx.pause = false
       xx.dodgedelaycounter = 0
+      xx.stop = true
     end
 
     if xx.dodgedelaycounter > 0 then 

@@ -245,9 +245,9 @@ function pandp(xx)
         if xx.animcounter <  at.p.p2.t then
           xx.im = ppunch3
           
-        elseif xx.animcounter <  at.p.p2.t+4 then
+        elseif xx.animcounter <  at.p.p2.t+2 then
           xx.im = pp1back
-          if xx.animcounter == at.p.p2.t then
+          if xx.animcounter >=at.p.p2.t and xx.animcounter < at.p.p2.t+1 then
           hboxcs(xx.id, 
               {x=xx.mid, y = xx.y+6},
               {x=xx.mid+xx.v+(xx.lr*46), y = xx.y+35},
@@ -256,7 +256,7 @@ function pandp(xx)
               function(z)
                 xx.cancombo = true
                 z.health = z.health - at.p.p2.dam
-                z.v = xx.lr*at.p.p2.kb
+                z.v = z.v + xx.lr*at.p.p2.kb
                 z.flinch = true
                 z.ft = z.ft + at.p.p2.ft
                 z.j=at.p.p2.kj
@@ -264,9 +264,9 @@ function pandp(xx)
                 maxzoom = defaultmaxzoom - .07
 
 
-            end)
-          end
-        elseif xx.animcounter < at.p.p2.t+6 then
+          end)
+        end
+        elseif xx.animcounter < at.p.p2.t+4 then
           xx.im = pp1back2
           hboxcs(xx.id, 
               {x=xx.mid+(xx.lr * -17), y = xx.y-31},
@@ -276,7 +276,7 @@ function pandp(xx)
               function(z)
                 xx.cancombo = true
                 z.health = z.health - at.p.p2.dam
-                z.v = -xx.lr*at.p.p2.kb/3
+                z.v = z.v -xx.lr*at.p.p2.kb/3
                 z.flinch = true
                 z.ft = z.ft + at.p.p2.ft
                 z.j=at.p.p2.kj*1.5
@@ -286,11 +286,11 @@ function pandp(xx)
 
             end)
         elseif xx.animcounter < at.p.p2.t+39 then
-          if xx.animcounter == at.p.p2.t+6 then 
+          if xx.animcounter == at.p.p2.t+5 then 
             repplay(xx.purp2)
           end
           xx.im = pp1back4
-          if xx.animcounter <= at.p.p2.t+7 then 
+          if xx.animcounter <= at.p.p2.t+5 then 
             hboxcs(xx.id, 
               {x=xx.mid, y = xx.y+22},
               {x=xx.mid+xx.v+(xx.lr*-55), y = xx.y+66},
@@ -299,7 +299,7 @@ function pandp(xx)
               function(z)
                 xx.cancombo = true
                 z.health = z.health - at.p.p2.dam
-                z.v = -xx.lr*at.p.p2.kb
+                z.v = z.v-xx.lr*at.p.p2.kb
                 z.flinch = true
                 z.ft = z.ft + at.p.p2.ft
                 minzoom = defaultminzoom - .07
@@ -331,7 +331,7 @@ function pandp(xx)
               and math.abs(z.x) - math.abs(xx.x) < quakerange then
                 z.j = 10
                 z.flinch = true
-                z.ft = at.p.p.ft*2/3
+                z.ft = z.ft+at.p.p.ft*2/3
               end end)
             hboxcs(xx.id, 
               {x=xx.mid, y = xx.y+35},

@@ -151,7 +151,7 @@ function gandg(xx)
                     z.health = z.health - at.g.p.dam
 
                     z.flinch = true
-                    z.ft = at.g.p.ft
+                    z.ft = z.ft+at.g.p.ft
                     if #joysticks>=xx.id then
                       xx.joystick:setVibration(.7,1)
                     end
@@ -223,7 +223,7 @@ function gandg(xx)
                   z.v = at.g.u.kb*xx.lr
                   z.j = at.g.u.j
                   z.flinch = true
-                  z.ft = at.g.u.ft
+                  z.ft = z.ft+at.g.u.ft
                   if #joysticks>=xx.id then
                     xx.joystick:setVibration(1,1)
                   end
@@ -271,7 +271,7 @@ function gandg(xx)
                     z.health = z.health - at.g.p.dam
 
                     z.flinch = true
-                    z.ft = at.g.p.ft
+                    z.ft = z.ft+at.g.p.ft
                     if #joysticks>=xx.id then
                       xx.joystick:setVibration(.7,1)
                     end
@@ -306,7 +306,7 @@ function gandg(xx)
                   z.v = at.g.u.kb*xx.lr
                   z.j = at.g.u.j
                   z.flinch = true
-                  z.ft = at.g.u.ft
+                  z.ft = z.ft+at.g.u.ft
                   if #joysticks>=xx.id then
                     xx.joystick:setVibration(1,1)
                   end

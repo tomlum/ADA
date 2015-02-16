@@ -1671,7 +1671,7 @@ death = function()
     you.xleft = you.x + 30
     you.mid = you.x + 15
 
-    if not xx.slowdown and not xx.slide and not xx.stop and not xx.pause
+    if not xx.slowdown and not xx.slide and not xx.stop and not xx.pause and not xx.flinch
     and (xx.dodgetype~=2 and xx.dodgetype >-1)
     then
       if xx.right then xx.lr = 1

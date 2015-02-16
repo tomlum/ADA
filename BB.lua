@@ -308,7 +308,7 @@ function breadandbutter(xx)
               if not (z.block == -xx.lr) then
                 z.health = z.health - at.bb.p.dam
                 z.flinch = true
-                z.ft = at.bb.p.ft
+                z.ft = z.ft+at.bb.p.ft
                 if #joysticks>=xx.id then
                   xx.joystick:setVibration(.7,1)
                 end
@@ -352,10 +352,10 @@ function breadandbutter(xx)
               z.health = z.health - at.bb.k.dam
               z.flinch = true
               if not (z.block == -xx.lr) then
-                z.ft = at.bb.k.ft
+                z.ft = z.ft+at.bb.k.ft
                 z.v = xx.lr*at.bb.k.kb
               else
-                z.ft = at.bb.k.ft/2
+                z.ft = z.ft+at.bb.k.ft/2
                 z.v = xx.lr*at.bb.k.kb*2/3
               end
               if #joysticks>=xx.id then
@@ -390,7 +390,7 @@ function breadandbutter(xx)
               z.v = at.bb.u.kb*xx.lr
               z.j = at.bb.u.j
               z.flinch = true
-              z.ft = at.bb.u.ft
+              z.ft = z.ft+at.bb.u.ft
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(1,1)
               end
@@ -425,7 +425,7 @@ function breadandbutter(xx)
                 z.health = z.health - at.bb.p.dam/2
               end
               z.flinch = true
-              z.ft = at.bb.p.ft
+              z.ft = z.ft+at.bb.p.ft
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(.7,1)
               end
@@ -467,7 +467,7 @@ function breadandbutter(xx)
                 z.health = z.health - at.bb.p.dam/2
               end
               z.flinch = true
-              z.ft = at.bb.p.ft
+              z.ft = z.ft+at.bb.p.ft
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(.7,1)
               end
@@ -499,7 +499,7 @@ function breadandbutter(xx)
               z.v = at.bb.u.kb*xx.lr
               z.j = at.bb.u.j*2/3
               z.flinch = true
-              z.ft = at.bb.u.ft
+              z.ft = z.ft+at.bb.u.ft
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(1,1)
               end

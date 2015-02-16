@@ -634,7 +634,12 @@ function love.update()
         if math.random()>.5
         then bump(me)
         else bump(you)
-        end
+      end
+      
+      
+  if(math.abs(you.ft) > math.abs(you.oldft)) then
+    you.ft = you.oldft + (you.ft-you.oldft)*(rampspeed)
+  end
 
     end
     
