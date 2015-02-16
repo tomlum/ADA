@@ -1864,7 +1864,7 @@ walkxx = function (xx)
   sparks = {}
 
   function makesparks(ex,why,vee, jay, arr,gee,bee)
-    if rampcanhit then
+   
       for i = 10, 1, -1 do
     table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay),r=arr,g=gee,b=bee, rot = math.random(0,360)})
     table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay),r=arr,g=gee,b=bee, rot = math.random(0,360)})
@@ -1872,19 +1872,16 @@ walkxx = function (xx)
     table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee, rot = math.random(0,360)})
 
 end
-end
 
 end
 
  function makensparks(ex,why,vee, jay, arr,gee,bee, n)
-    if rampcanhit then
       for i = n, 1, -1 do
-    table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay),r=arr,g=gee,b=bee, rot = math.random(0,360)})
-    table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay),r=arr,g=gee,b=bee, rot = math.random(0,360)})
-    table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0),r=arr,g=gee,b=bee, rot = math.random(0,360)})
-    table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee, rot = math.random(0,360)})
+    table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee, rot = math.random(0,360)})
+    table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee, rot = math.random(0,360)})
+    table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0)+math.random(),r=arr,g=gee,b=bee, rot = math.random(0,360)})
+    table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2)+math.random(),r=arr,g=gee,b=bee, rot = math.random(0,360)})
 
-end
 end
 
 

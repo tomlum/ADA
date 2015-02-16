@@ -37,7 +37,7 @@ at.g.u.ft = 20
 
 
 at.g.au = {}
-at.g.au.mj = 0--20
+at.g.au.mj = 15
 
 at.g.k = {}
 at.g.k.dam = 10
@@ -212,7 +212,7 @@ function gandg(xx)
             if xx.animcounter == 5 then
               repplay(xx.greens)
               hboxcs(xx.id, 
-                {x=xx.mid-(xx.lr*-33), y = xx.y+8},
+                {x=xx.mid+(xx.lr*-33), y = xx.y+8},
                 {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-40-xx.j},
                 {x=xx.mid, y = xx.y+30},
                 {x=xx.mid+xx.v+(xx.lr*33), y = xx.y-40-xx.j},
@@ -240,9 +240,10 @@ function gandg(xx)
 
           elseif xx.animcounter < 30 then
             xx.im = agreena22
-            table.insert(xx.trail, 
-              {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0;})
-
+            if rampcanhit then
+              table.insert(xx.trail, 
+                {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0;})
+            end
 
             if xx.animcounter == 3 then
               xx.v = xx.v+10*xx.lr
@@ -281,8 +282,8 @@ function gandg(xx)
           elseif xx.animcounter >= 40 then
             xx.animcounter = 0
           end
-          
-          elseif xx.type ==6 then
+
+        elseif xx.type ==6 then
           if xx.animcounter < 3 then
           elseif xx.animcounter < 40 then
             xx.im = agreena1

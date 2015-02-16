@@ -1,5 +1,13 @@
 --todo
-therampspeed = .1
+therampspeed = .2
+drawboxes = true
+
+--if you use one color too long you start to turn that color and have permanent those effects?  or you burn out?s
+--or you take up to double damage? become fragile, but stronger?
+
+--if landing lower the frnum of frames on the pre fall back
+--fix zoomout relative to distance slight jump
+
 --placement of cam funcs causes weirdness for actionshot
 --cant move right while sliding left?  pretty easy to do with base/push
 putmehere = 975
@@ -865,6 +873,7 @@ function love.update()
         ..
         "       type: "..tostring(me.type),10,30)
       love.graphics.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
+      love.graphics.print("falling "..tostring(you.falling).."|| ft "..tostring(you.ft).."|| flinchway "..tostring(you.flinchway), 10, 70)
     end
 
 

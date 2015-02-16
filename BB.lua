@@ -1,8 +1,12 @@
+
+
 --maybe if... dying then color fades in color?  Or becomes darker!!!
 --trails or something, sparks
 --WHILE COMBO, ANIMCOUNTER NEVER GOES BELOW 1 (USUALLY RESETS TO 1)
 --FLINCH IS RESPONSIBLE FOR LOWERING combo TO 0 and animcounter to 0
 --General combo funciton responsible for keeping track of combo and attacking, not individual functions
+
+
 
 me.repcounter = 0
 you.repcounter = 0
@@ -128,6 +132,7 @@ function combo(xx, func)
       xx.numofspikes = 0
       if func~= nil then func() end
       if xx.color.n==0 then
+        xx.type = 1
         if xx.repcounter < bbnumpunch then
           xx.repcounter = xx.repcounter+1
           if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
@@ -293,6 +298,7 @@ function breadandbutter(xx)
             {x=xx.mid, y = xx.y+30},
             {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32-xx.j},
             function(z)
+              
               xx.cancombo = true
               if xx.repcounter == animcounter then
                 z.v = xx.lr*at.bb.p.kb*3+xx.v
@@ -407,8 +413,8 @@ function breadandbutter(xx)
           {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+26-xx.j},
           function(z)
             xx.cancombo = true
-            if xx.repcounter == animcounter then
-              z.v = xx.lr*at.bb.p.kb*3+xx.v
+            if xx.animcounter == 4 then
+              z.v = xx.lr*at.bb.p.kb*2+xx.v
             else
               z.v = xx.lr*at.bb.p.kb+xx.v
             end
@@ -453,11 +459,7 @@ function breadandbutter(xx)
           {x=xx.mid+xx.v+(xx.lr*6), y = xx.y+64-xx.j},
           function(z)
             xx.cancombo = true
-            if xx.repcounter == animcounter then
-              z.v = xx.lr*at.bb.p.kb*3+xx.v
-            else
-              z.v = xx.lr*at.bb.p.kb+xx.v
-            end
+              z.v = xx.lr*at.bb.p.kb*2+xx.v
             if not (z.block == -xx.lr) then
               if xx.animcounter == 5 then
                 z.health = z.health - at.bb.p.dam

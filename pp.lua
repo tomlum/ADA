@@ -10,17 +10,33 @@ ppunch2 = {im = ppunch2im, c = ppunch2c, xoff = 45}
 ppunch3 = {im = ppunch3im, c = ppunch3c, xoff = 45}
 stomp1 = {im=love.graphics.newImage("me/attack/stomp1.png"),c=love.graphics.newImage("me/attack/stomp1c.png")}
 stomp2 = {im=love.graphics.newImage("me/attack/stomp2.png"),c=love.graphics.newImage("me/attack/stomp2c.png")}
+
+pp1back = {im=love.graphics.newImage("me/attack/pp1back.png"),c=love.graphics.newImage("me/attack/pp1backc.png"), xoff = 45, yoff = 20}
+pp1back2 = {im=love.graphics.newImage("me/attack/pp1back2.png"),c=love.graphics.newImage("me/attack/pp1back2c.png"), xoff = 45, yoff = 40}
+pp1back3 = {im=love.graphics.newImage("me/attack/pp1back3.png"),c=love.graphics.newImage("me/attack/pp1back3c.png"), xoff = 45, yoff = 10}
+pp1back4 = {im=love.graphics.newImage("me/attack/pp1back4.png"),c=love.graphics.newImage("me/attack/pp1back3c.png"), xoff = 45, yoff = 10}
+
+
 spikesize = 12
-function spikegrow(cur, n)
+function spikegrow(cur, n, xx)
   local vv = cur.verts
   if n == 1 then
     vv[3] = vv[3]+(math.random(3, 9)+math.random()*(spikesize))*cur.lr
     vv[4] = vv[4]-(math.random(10, 20)+math.random()*(spikesize))
-    vv[5] = vv[5]+(math.random(0)+math.random()*(spikesize))*cur.lr
+    local growmount = vv[5]+(math.random()*(spikesize))*cur.lr
+    
+    if growmount > themap.plats[xx.plat.n].x1 and 
+           growmount < themap.plats[xx.plat.n].x2 then
+    vv[5] = growmount
+    end
   elseif n == 2 then
     vv[3] = vv[3]+(math.random(2, 5)+math.random()*(cur.t/5))*cur.lr
     vv[4] = vv[4]-(math.random(10, 20)+math.random()*(cur.t/5))
-    vv[5] = vv[5]+(math.random(4, 10)+math.random()*(cur.t/5))*cur.lr
+    local growmount = vv[5]+(math.random(4, 10)+math.random()*(cur.t/5))*cur.lr
+    if growmount > themap.plats[xx.plat.n].x1 and 
+           growmount < themap.plats[xx.plat.n].x2 then
+    vv[5] = growmount
+    end
   end
 
 end
@@ -64,7 +80,8 @@ function spikedraw(xx)
       love.graphics.polygon("fill", xx.spikes[i].verts)
       love.graphics.setColor(89,0,104)
       love.graphics.polygon("fill", vvv)
-      love.graphics.setColor(2,2,2)
+      franratio = 1.5
+      love.graphics.setColor(thecolors[1].c.r/franratio,thecolors[1].c.g/franratio,thecolors[1].c.b/franratio)
       love.graphics.polygon("line", xx.spikes[i].verts)
 
     elseif cur.t<-3 then 
@@ -86,7 +103,7 @@ function spikeupdate(xx)
       vv[5] = vv[5]-(6*cur.lr)
       love.graphics.polygon("fill", vv)
     elseif cur.t > 0 and cur.t<5  then
-      spikegrow(cur,1)
+      spikegrow(cur,1, xx)
     elseif cur.t <=7 and cur.t >=5 then
       hboxcs(xx.id, 
         {x=vv[1], y = vv[2]},
@@ -96,14 +113,14 @@ function spikeupdate(xx)
         function(z)
           xx.cancombo = true
           xx.hitsomeonewithpurp = true
-          
+
           z.v = z.v + math.abs((vv[3]-vv[1])/70)*cur.lr
           z.j = z.j + -(vv[4]-vv[2])/30
           z.y = z.y-30
           z.flinch = true
           z.ft = z.ft + p4ft
           z.health = z.health - at.p.k.dam
-          
+
         end)
     elseif cur.t >=6 then
       hboxcs(0, 
@@ -129,7 +146,7 @@ function spikeupdate(xx)
           z.flinch = true
           z.ft = z.ft + p4ft
           z.health = z.health - at.p.k.dam/3
-          
+
         end)
     end
 
@@ -151,9 +168,18 @@ at.p = {}
 
 at.p.p = {}
 at.p.p.dam = 12
-at.p.p.ft = 20
+at.p.p.ft = 25
 at.p.p.kb = 2
-at.p.p.max = 3
+at.p.p.max = 4
+
+
+at.p.p2 = {}
+at.p.p2.dam = 12
+at.p.p2.ft = 65
+at.p.p2.kb = 15
+at.p.p2.kj = 15 
+at.p.p2.t = 10
+
 
 at.p.k = {}
 at.p.k.max = 6
@@ -167,7 +193,7 @@ you.repcounter = 0
 me.numofspikes = 0
 you.numofspikes = 0
 
-pa2busytime = 28
+pa2busytime = 30
 pa4busytime = 10
 
 
@@ -214,177 +240,223 @@ function pandp(xx)
   else
 
     if xx.type == 1 then
-      if xx.animcounter < 15 then
-        xx.im = ppunch1
 
-      elseif xx.animcounter < 16 then
-
-        xx.im = ppunch2
-        makerubble(xx.mid+xx.lr*20, xx.y+50,3*xx.lr,3)
-        repplay(xx.purp2)
-        if #joysticks>=xx.id then
-          xx.joystick:setVibration(1,1)
-        end
-        hall(xx.id, function(z) if z.plat.n == xx.plat.n
-            and math.abs(z.x) - math.abs(xx.x) < quakerange then
-              z.j = 20
-              z.flinch = true
-              z.ft = at.p.p.ft*2/3
-             end end)
-        hboxcs(xx.id, 
-          {x=xx.mid, y = xx.y+35},
-          {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+26},
-          {x=xx.mid, y = me.y+6},
-          {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+49},
-          function(z)
-            xx.cancombo = true
-            z.health = z.health - at.p.p.dam
-            z.v = xx.lr*at.p.p.kb
-            z.flinch = true
-            z.ft = z.ft + at.p.p.ft/3
-            z.j=0
-            minzoom = defaultminzoom - .06
-            maxzoom = defaultmaxzoom - .06
-            
-
-          end)
-
-        if xx.repcounter == 1 then
-          xx.v = xx.v + (xx.lr*5)
-        end
-
-      elseif xx.animcounter < 55 then
-        xx.im = ppunch3
-        if xx.animcounter >= pa2busytime then 
-          combo(xx)
-        end
-
-      elseif xx.animcounter >= 55 then
-        xx.animcounter = 0
-      end
-
-    elseif xx.type == 2 then
-      if xx.animcounter < 8 then
-        xx.im = stomp1
-
-      elseif xx.animcounter == 8 then
-        xx.im = stomp2
-        xx.numofspikes = xx.numofspikes+1
-        local lverts = {}
-        local lverts2 = {}
-        local sn = xx.numofspikes
-        if (xx.numofspikes <= 2 and xx.lr > 0) then
-          lverts[1]= xx.mid+(xx.lr*25*(sn-1))
-          lverts[2]= xx.feet
-          lverts[3]= xx.mid+(xx.lr*25*(sn-1))
-          lverts[4]= xx.feet
-          lverts[5]= xx.mid+(xx.lr*25*(sn-1))
-          lverts[6]= xx.feet
-
-          lverts2[1]= xx.mid+(xx.lr*25*(sn))
-          lverts2[2]= xx.feet
-          lverts2[3]= xx.mid+(xx.lr*25*(sn))
-          lverts2[4]= xx.feet
-          lverts2[5]= xx.mid+(xx.lr*25*(sn))
-          lverts2[6]= xx.feet
-
-          table.insert(xx.spikes, 
-            {verts = lverts,
-              t = 0, lr=1})
-          table.insert(xx.spikes, 
-            {verts = lverts2,
-              t = 0, lr=1})
-        elseif (xx.numofspikes <= 2 and xx.lr < 0) then
-          lverts[1]= xx.mid+(xx.lr*70*(sn-1))
-          lverts[2]= xx.feet
-          lverts[3]= xx.mid+(xx.lr*70*(sn-1))
-          lverts[4]= xx.feet
-          lverts[5]= xx.mid+(xx.lr*70*(sn-1))
-          lverts[6]= xx.feet
-
-          lverts2[1]= xx.mid+(xx.lr*30*(sn))
-          lverts2[2]= xx.feet
-          lverts2[3]= xx.mid+(xx.lr*30*(sn))
-          lverts2[4]= xx.feet
-          lverts2[5]= xx.mid+(xx.lr*30*(sn))
-          lverts2[6]= xx.feet
-
-          table.insert(xx.spikes, 
-            {verts = lverts2,
-              t = 0, lr=-1})
-
-          table.insert(xx.spikes,
-            {verts = lverts,
-              t = 0, lr=-1})
-
-        elseif math.random()>0 then
-          lverts[1]= xx.mid+(xx.lr*40*(sn-1))
-          lverts[2]= xx.feet
-          lverts[3]= xx.mid+(xx.lr*40*(sn-1))
-          lverts[4]= xx.feet
-          lverts[5]= xx.mid+(xx.lr*40*(sn-1))
-          lverts[6]= xx.feet
-          table.insert(xx.spikes, 
-            {verts = lverts,
-              t = 0, lr=1})
+      if xx.repcounter > 3 then
+        if xx.animcounter <  at.p.p2.t then
+          xx.im = ppunch3
+          
+        elseif xx.animcounter <  at.p.p2.t+4 then
+          xx.im = pp1back
+          if xx.animcounter == at.p.p2.t then
+          hboxcs(xx.id, 
+              {x=xx.mid, y = xx.y+6},
+              {x=xx.mid+xx.v+(xx.lr*46), y = xx.y+35},
+              {x=xx.mid, y = me.y+30},
+              {x=xx.mid+xx.v+(xx.lr*60), y = xx.y+40},
+              function(z)
+                xx.cancombo = true
+                z.health = z.health - at.p.p2.dam
+                z.v = xx.lr*at.p.p2.kb
+                z.flinch = true
+                z.ft = z.ft + at.p.p2.ft
+                z.j=at.p.p2.kj
+                minzoom = defaultminzoom - .07
+                maxzoom = defaultmaxzoom - .07
 
 
-          -- lverts2[1]= xx.mid+(xx.lr*25*(sn))
-          -- lverts2[2]= xx.feet
-          -- lverts2[3]= xx.mid+(xx.lr*25*(sn))
-          -- lverts2[4]= xx.feet
-          -- lverts2[5]= xx.mid+(xx.lr*25*(sn))
-          -- lverts2[6]= xx.feet
+            end)
+          end
+        elseif xx.animcounter < at.p.p2.t+6 then
+          xx.im = pp1back2
+          hboxcs(xx.id, 
+              {x=xx.mid+(xx.lr * -17), y = xx.y-31},
+              {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38},
+              {x=xx.mid+(xx.lr*-31), y = me.y+13},
+              {x=xx.mid+xx.v+(xx.lr*50), y = xx.y+28},
+              function(z)
+                xx.cancombo = true
+                z.health = z.health - at.p.p2.dam
+                z.v = -xx.lr*at.p.p2.kb/3
+                z.flinch = true
+                z.ft = z.ft + at.p.p2.ft
+                z.j=at.p.p2.kj*1.5
+                minzoom = defaultminzoom - .07
+                maxzoom = defaultmaxzoom - .07
 
-          --table.insert(xx.spikes, 
-          --  {verts = lverts2,
-          --    t = 0, lr=1})
 
+            end)
+        elseif xx.animcounter < at.p.p2.t+39 then
+          if xx.animcounter == at.p.p2.t+6 then 
+            repplay(xx.purp2)
+          end
+          xx.im = pp1back4
+          if xx.animcounter <= at.p.p2.t+7 then 
+            hboxcs(xx.id, 
+              {x=xx.mid, y = xx.y+22},
+              {x=xx.mid+xx.v+(xx.lr*-55), y = xx.y+66},
+              {x=xx.mid+(xx.lr*-12), y = me.y+37},
+              {x=xx.mid+xx.v+(xx.lr*-44), y = xx.y+65},
+              function(z)
+                xx.cancombo = true
+                z.health = z.health - at.p.p2.dam
+                z.v = -xx.lr*at.p.p2.kb
+                z.flinch = true
+                z.ft = z.ft + at.p.p2.ft
+                minzoom = defaultminzoom - .07
+                maxzoom = defaultmaxzoom - .07
+
+
+            end)
+            xx.im = pp1back3
+          end
+          
         else
-          lverts[1]= xx.mid+(xx.lr*40*(sn-1))
-          lverts[2]= xx.feet
-          lverts[3]= xx.mid+(xx.lr*40*(sn-1))
-          lverts[4]= xx.feet
-          lverts[5]= xx.mid+(xx.lr*40*(sn-1))
-          lverts[6]= xx.feet
-
-
-          --  lverts2[1]= xx.mid+(xx.lr*25*(sn))
-          --  lverts2[2]= xx.feet
-          --  lverts2[3]= xx.mid+(xx.lr*25*(sn))
-          --  lverts2[4]= xx.feet
-          --  lverts2[5]= xx.mid+(xx.lr*25*(sn))
-          --  lverts2[6]= xx.feet
-
-          -- table.insert(xx.spikes, 
-          --  {verts = lverts2,
-          --    t = 0, lr=-1})
-
-          table.insert(xx.spikes,
-            {verts = lverts,
-              t = 0, lr=-1})
+          xx.animcounter = 0
         end
-        repplay(xx.purpsound)
-        if #joysticks>=xx.id then
-          xx.joystick:setVibration(1,1)
+      else
+
+
+        if xx.animcounter < 20 then
+          xx.im = ppunch1
+
+        elseif xx.animcounter < 21 then
+
+          xx.im = ppunch2
+          makerubble(xx.mid+xx.lr*20, xx.y+50,3*xx.lr,3)
+          repplay(xx.purp2)
+          if #joysticks>=xx.id then
+            xx.joystick:setVibration(1,1)
+          end
+          hall(xx.id, function(z) if z.plat.n == xx.plat.n
+              and math.abs(z.x) - math.abs(xx.x) < quakerange then
+                z.j = 10
+                z.flinch = true
+                z.ft = at.p.p.ft*2/3
+              end end)
+            hboxcs(xx.id, 
+              {x=xx.mid, y = xx.y+35},
+              {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+26},
+              {x=xx.mid, y = me.y+6},
+              {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+49},
+              function(z)
+                xx.cancombo = true
+                z.health = z.health - at.p.p.dam
+                z.v = xx.lr*at.p.p.kb
+                z.flinch = true
+                z.ft = z.ft + at.p.p.ft/3
+                z.j=0
+                minzoom = defaultminzoom - .06
+                maxzoom = defaultmaxzoom - .06
+
+
+              end)
+
+            if xx.repcounter == 1 then
+              xx.v = xx.v + (xx.lr*5)
+            end
+
+          elseif xx.animcounter < 55 then
+            xx.im = ppunch3
+            if xx.animcounter >= pa2busytime then 
+              combo(xx)
+            end
+
+          elseif xx.animcounter >= 55 then
+            xx.animcounter = 0
+          end
+        end
+      elseif xx.type == 2 then
+        if xx.animcounter < 8 then
+          xx.im = stomp1
+
+        elseif xx.animcounter == 8 then
+          xx.im = stomp2
+          xx.numofspikes = xx.numofspikes+1
+          local lverts = {}
+          local lverts2 = {}
+          local sn = xx.numofspikes
+          if (xx.numofspikes <= 2 ) then
+            lverts[1]= xx.mid+(xx.lr*25*(sn-1))
+            lverts[2]= xx.feet
+            lverts[3]= xx.mid+(xx.lr*25*(sn-1))
+            lverts[4]= xx.feet
+            lverts[5]= xx.mid+(xx.lr*25*(sn-1))
+            lverts[6]= xx.feet
+
+            lverts2[1]= xx.mid+(xx.lr*25*(sn))
+            lverts2[2]= xx.feet
+            lverts2[3]= xx.mid+(xx.lr*25*(sn))
+            lverts2[4]= xx.feet
+            lverts2[5]= xx.mid+(xx.lr*25*(sn))
+            lverts2[6]= xx.feet
+            
+            if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
+            lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
+            table.insert(xx.spikes, 
+              {verts = lverts,
+                t = 0, lr=xx.lr})
+            table.insert(xx.spikes, 
+              {verts = lverts2,
+                t = 0, lr=xx.lr})
+            
+          repplay(xx.purpsound)
+            end
+        
+          else
+            lverts[1]= xx.mid+(xx.lr*40*(sn-1))
+            lverts[2]= xx.feet
+            lverts[3]= xx.mid+(xx.lr*40*(sn-1))
+            lverts[4]= xx.feet
+            lverts[5]= xx.mid+(xx.lr*40*(sn-1))
+            lverts[6]= xx.feet
+
+
+            --  lverts2[1]= xx.mid+(xx.lr*25*(sn))
+            --  lverts2[2]= xx.feet
+            --  lverts2[3]= xx.mid+(xx.lr*25*(sn))
+            --  lverts2[4]= xx.feet
+            --  lverts2[5]= xx.mid+(xx.lr*25*(sn))
+            --  lverts2[6]= xx.feet
+
+            -- table.insert(xx.spikes, 
+            --  {verts = lverts2,
+            --    t = 0, lr=-1})
+             
+            if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
+            lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
+              
+          repplay(xx.purpsound)
+            if math.random() > .5 then
+            table.insert(xx.spikes,
+              {verts = lverts,
+                t = 0, lr=-1})
+            else
+            table.insert(xx.spikes,
+              {verts = lverts,
+                t = 0, lr=1})
+            end
+            end
+          end
+          if #joysticks>=xx.id then
+            xx.joystick:setVibration(1,1)
+          end
+
+
+        elseif xx.animcounter < 50 then
+          xx.im = stomp2
+
+          if xx.animcounter >= pa4busytime and xx.a4 and not xx.holda and xx.numofspikes< at.p.k.max then 
+            xx.animcounter = 1
+          end
+        elseif xx.animcounter < 72 then
+          xx.im = stomp2
+          xx.numofspikes = 0
+        elseif xx.animcounter >= 72 then
+          xx.im = stomp2
+          xx.animcounter = 0
         end
 
-
-      elseif xx.animcounter < 50 then
-        xx.im = stomp2
-
-        if xx.animcounter >= pa4busytime and xx.a4 and not xx.holda and xx.numofspikes< at.p.k.max then 
-          xx.animcounter = 1
-        end
-      elseif xx.animcounter < 72 then
-        xx.im = stomp2
-        xx.numofspikes = 0
-      elseif xx.animcounter >= 72 then
-        xx.im = stomp2
-        xx.animcounter = 0
       end
-
     end
   end
-end
 

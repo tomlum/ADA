@@ -51,7 +51,7 @@ function nottoomanyuppercuts(xx)
   else xx.uppercuthit = false
   end
 
-  
+
 
   if xx.type==3 then xx.uppercuttimer = uppercutpause end
 
@@ -72,8 +72,8 @@ function attackmanage(xx)
 
   nottoomanyuppercuts(xx)
 
---  if xx.flinch then xx.animcounter = 0
---  end
+  --  if xx.flinch then xx.animcounter = 0
+  --  end
   if xx.animcounter == 0 then
     xx.repcounter = 0
     xx.bbpc = 0
@@ -90,12 +90,12 @@ function attackmanage(xx)
   if(math.abs(xx.v) > math.abs(xx.oldv)) then
     xx.v = xx.oldv + (xx.v-xx.oldv)*(rampspeed)
   end
-  
- 
---  if(math.abs(xx.j) > math.abs(xx.oldj)) then
---    xx.j = xx.oldj + (xx.j-xx.oldj)*(rampspeed)
---  end
-  
+
+
+  --  if(math.abs(xx.j) > math.abs(xx.oldj)) then
+  --    xx.j = xx.oldj + (xx.j-xx.oldj)*(rampspeed)
+  --  end
+
   --xx.oldj = xx.j
 
 end
@@ -285,7 +285,7 @@ newforwarddodge = function(xx)
       if xx.dodgecounter-1*rampspeed<1 then
         xx.dodgecounter = 1
       end
-      
+
     elseif xx.dodgecounter == 1 then
       xx.dodgecounter = 0
       if xx.dodgetype == 1 or xx.dodgetype == -1 then 
@@ -355,12 +355,12 @@ newforwarddodge = function(xx)
       repplay(xx.backdodge)
       xx.slidesound = false
 
-  end
-  if xx.dodgetype~=0 then
-  if(math.abs(xx.v) > math.abs(xx.oldv)) then
-    xx.v = xx.oldv + (xx.v-xx.oldv)*(rampspeed)
-  end
-  end
+    end
+    if xx.dodgetype~=0 then
+      if(math.abs(xx.v) > math.abs(xx.oldv)) then
+        xx.v = xx.oldv + (xx.v-xx.oldv)*(rampspeed)
+      end
+    end
   end
 
 
@@ -455,7 +455,7 @@ newforwarddodge = function(xx)
   you.falling = false
 
   fttofall = 25
-  fallframes = 8
+  fallframes = 4
   me.oldflinch = false
   you.oldflinch = false
   me.bouncej = 0
@@ -471,11 +471,11 @@ newforwarddodge = function(xx)
 
   function flinchingx(xx,yy)
     if xx.health < xx.oldhealth then
-    xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(rampspeed)
+      xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(rampspeed)
       local dif = xx.oldhealth - xx.health
-    makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,math.floor(dif*2/3))
-  end
-  xx.oldhealth = xx.health
+      makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,math.floor(dif/rampspeed * 2/3))
+    end
+    xx.oldhealth = xx.health
 
     if xx.ft > fttofall then
       xx.falling = true
@@ -504,7 +504,19 @@ newforwarddodge = function(xx)
 
 
     if xx.prevhealth > xx.health then 
-      xx.flinchway = yy.lr * xx.lr
+      if xx.v/(math.abs(xx.v)) < 0 then
+        if xx.lr > 0 then
+          xx.flinchway = -1
+        else
+          xx.flinchway = 11
+          end
+      else
+        if xx.lr > 0 then
+          xx.flinchway = 11
+        else
+          xx.flinchway = -1
+          end
+      end
       if xx.flinch then 
         if xx.g then xx.gflinchleft = xx.ft end
         repplay(xx.flinch1)
@@ -538,6 +550,7 @@ newforwarddodge = function(xx)
       end
 
     elseif xx.falling then
+
 
       if xx.ft == 0 and xx.falltimer == 0 then
         if xx.flinchway > 0 then

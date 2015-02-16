@@ -170,21 +170,24 @@ end
 
 
 function drawallhex()
-  for i,v in ipairs(hitt) do
-    --dodgeoffsetx
-    dsh = 0
-    dsw = 0
-    if v.im.dodgeh ~= nil then
-      dsh = v.im.dodgeh
+  if drawboxes then
+    for i,v in ipairs(hitt) do
+      --dodgeoffsetx
+      dsh = 0
+      dsw = 0
+      if v.im.dodgeh ~= nil then
+        dsh = v.im.dodgeh
+      end
+      if v.im.dodgew ~= nil then
+        dsw = v.im.dodgew
+      end
+      drawhexcheck(v.mid+v.lr*(dsw/2), v.y+(dsh)+hexbuffer/2, v.width+dsw-hexbuffer, v.height-dsh-hexbuffer, v.v, v.j)
     end
-    if v.im.dodgew ~= nil then
-      dsw = v.im.dodgew
-    end
-    drawhexcheck(v.mid+v.lr*(dsw/2), v.y+(dsh)+hexbuffer/2, v.width+dsw-hexbuffer, v.height-dsh-hexbuffer, v.v, v.j)
-  end
 
-  love.graphics.line(bx1,by1,bx2,by2)
+    love.graphics.line(bx1,by1,bx2,by2)
+  end
 end
+
 function drawhexcheck(ex, why, w, h, v, j)
   t = {["c"] = {x = ex, y = why+h/2},
     [0] = {x = ex-w/2, y=why, n = 0},
@@ -215,9 +218,8 @@ function drawhexcheck(ex, why, w, h, v, j)
   love.graphics.setColor(255,255,255)
 
 
-
-
 end
+
 
 
 
@@ -278,7 +280,7 @@ function climbplatcheck(ex, why, lr, h, v, j)
     plat = themap.plats[j]
     local linep1 = {x = plat.x1, y = plat.y}
     local linep2 = {x = plat.x2, y = plat.y}
-    if pint(linep1, linep2, midv, midv2) 
+    if (plat.floor==nil) and pint(linep1, linep2, midv, midv2) 
     then return true
     end
   end
@@ -380,7 +382,7 @@ function hboxwall()
         elseif (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x) then
           wallside = -1 -p.width
         end
-        
+
         p.wjt = 1 
         p.initwy = p.y - p.j
         p.walllr = p.lr
@@ -406,13 +408,12 @@ function hboxwall()
             p.j = p.j - math.abs(p.v/3)
           end
           makerubble(p.mid, p.y,p.v, p.j)
-          p.flinchway = -p.flinchway
           repplay(p.wallhit)
           p.g = false
           p.y = p.y - 10
 
         else
-        
+
           p.v = 0
         end
 
@@ -431,9 +432,9 @@ function hboxp()
     for j = #themap.plats, 1, -1 do 
       plat = themap.plats[j]
       xx = p
-      
-      
-        
+
+
+
 
       if p.im.yoff==nil then
         p.im.yoff = 0
@@ -444,7 +445,7 @@ function hboxp()
         or 
         (p.y == plat.y-p.height and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
       then
-        
+
         if p.j ~= 0 then
           if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
             xx.landingcounter = xx.landingcounter + landingwait
