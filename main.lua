@@ -621,7 +621,7 @@ function love.update()
         spikeupdate(me)
         boltupdate(me) 
       end
-
+      
       flinchingx(me,you)
       flinchingx(you,me)
 
@@ -670,6 +670,7 @@ function love.update()
         cammovement()
         --if here then no slow mo twitter
         camerafol()
+          camshakeflinch()
 
     end
 
@@ -690,6 +691,7 @@ function love.update()
   end
 
   function love.draw()
+      
 
     --love.graphics.setShader(myShader)
 

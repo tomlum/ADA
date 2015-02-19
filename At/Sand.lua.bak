@@ -1,26 +1,4 @@
 
-sready = love.graphics.newImage("me/attack/s.png")
-sflap = love.graphics.newImage("me/attack/sflap.png")
-jsready = love.graphics.newImage("me/attack/js.png")
-jsflap = love.graphics.newImage("me/attack/jsflap.png")
-sbackflap = love.graphics.newImage("me/attack/sbackflap.png")
-bigflap = love.graphics.newImage("me/attack/bigflap.png")
-bigwings = love.graphics.newImage("me/attack/bigwings.png")
-tor = love.graphics.newImage("me/attack/tor.png")
-bsend = love.graphics.newImage("me/attack/bsend.png")
-bsstart = love.graphics.newImage("me/attack/bsstart.png")
-sandbolt = love.graphics.newImage("me/attack/sandbolt.png")
-sandboltready = love.graphics.newImage("me/attack/sandboltready.png")
-
-purpwings = love.graphics.newImage("me/attack/purpwings.png")
-wingswing1 = love.graphics.newImage("me/attack/wingswing1.png")
-wingswing2 = love.graphics.newImage("me/attack/wingswing2.png")
-wingswing3 = love.graphics.newImage("me/attack/wingswing3.png")
-upflap = love.graphics.newImage("me/attack/upflap.png")
-
-syready = love.graphics.newImage("me/attack/syready.png")
-jsyready = love.graphics.newImage("me/attack/jsyready.png")
-
 sandchargetime = 90
 tornadowidth = 20
 
@@ -368,7 +346,7 @@ elseif mpshhold > 0 then
 	me.xoffset = 166
 
 	if mpshhold == 40 then
-		shakeme = true
+		me.shake = true
 	repplay(pwss)
 	if you.mid * me.lr < me.mid * me.lr and you.mid * me.lr > (me.mid) * me.lr - 110
 		and you.y < me.feet and you.feet > me.y then 
@@ -742,7 +720,7 @@ elseif youbsct and not x then
 	youbslevel = you.y
 
 	you.im = bsend
-	if (you.g and not controller2.up) or controller2.right or controller2.left then
+	if (you.g and not you.up) or you.right or you.left then
     ybsxend = you.mid
 	ybssx = you.mid
   ybslr = you.lr
@@ -751,7 +729,7 @@ elseif youbsct and not x then
 	youbsct = false
 	you.v = 100 *you.lr
   youbsind = 1
-	elseif controller2.up or (you.j >= 0 and not controller2.down) then
+	elseif you.up or (you.j >= 0 and not you.down) then
 	repplay(flapblues2)
 	youbshold = -45
 	you.g = false
@@ -769,7 +747,7 @@ elseif youbsct and not x then
 			me.ft = bsft
 			end
 		end
-	elseif (not you.g and controller2.down) or you.j < 0 then
+	elseif (not you.g and you.down) or you.j < 0 then
 	repplay(flapblues2)
 	youbshold = -45
 	you.g = false

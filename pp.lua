@@ -11,6 +11,10 @@ ppunch3 = {im = ppunch3im, c = ppunch3c, xoff = 45}
 stomp1 = {im=love.graphics.newImage("me/attack/stomp1.png"),c=love.graphics.newImage("me/attack/stomp1c.png")}
 stomp2 = {im=love.graphics.newImage("me/attack/stomp2.png"),c=love.graphics.newImage("me/attack/stomp2c.png")}
 
+pa11 = {im=love.graphics.newImage("me/attack/pa11.png"),c=love.graphics.newImage("me/attack/pa11c.png"), xoff = 15, yoff = 30}
+pa12 = {im=love.graphics.newImage("me/attack/pa12.png"),c=love.graphics.newImage("me/attack/pa12c.png"), xoff = 15}
+pa13 = {im=love.graphics.newImage("me/attack/pa13.png"),c=love.graphics.newImage("me/attack/pa13c.png"), xoff = 15}
+
 pp1back = {im=love.graphics.newImage("me/attack/pp1back.png"),c=love.graphics.newImage("me/attack/pp1backc.png"), xoff = 45, yoff = 20}
 pp1back2 = {im=love.graphics.newImage("me/attack/pp1back2.png"),c=love.graphics.newImage("me/attack/pp1back2c.png"), xoff = 45, yoff = 40}
 pp1back3 = {im=love.graphics.newImage("me/attack/pp1back3.png"),c=love.graphics.newImage("me/attack/pp1back3c.png"), xoff = 45, yoff = 10}
@@ -158,7 +162,7 @@ function spikeupdate(xx)
       end
     end
     if cur.t == 2 then 
-      makerubble(cur.verts[3], cur.verts[2], 2*cur.lr,5)
+      makenrubble(cur.verts[3], cur.verts[2], 2*cur.lr,5,7)
     end
   end
 end
@@ -179,6 +183,13 @@ at.p.p2.ft = 65
 at.p.p2.kb = 15
 at.p.p2.kj = 15 
 at.p.p2.t = 10
+
+
+at.p.u = {}
+at.p.u.dam = 3
+at.p.u.ft = 30
+at.p.u.kb = 0
+at.p.u.kj = 24
 
 
 at.p.k = {}
@@ -231,6 +242,11 @@ function pandp(xx)
       xx.combo = xx.combo + 1
     elseif xx.a4 then
       xx.type = 2
+      xx.animcounter = 1
+      xx.repcounter = 1
+      xx.combo = xx.combo + 1
+    elseif xx.a1 then
+      xx.type = 3
       xx.animcounter = 1
       xx.repcounter = 1
       xx.combo = xx.combo + 1
@@ -322,17 +338,18 @@ function pandp(xx)
         elseif xx.animcounter < 21 then
 
           xx.im = ppunch2
-          makerubble(xx.mid+xx.lr*20, xx.y+50,3*xx.lr,3)
+          makenrubble(xx.mid+xx.lr*20, xx.y+50,3*xx.lr,3,10)
           repplay(xx.purp2)
           if #joysticks>=xx.id then
             xx.joystick:setVibration(1,1)
           end
-          hall(xx.id, function(z) if z.plat.n == xx.plat.n
+            hall(xx.id, function(z) if z.plat.n == xx.plat.n
               and math.abs(z.x) - math.abs(xx.x) < quakerange then
                 z.j = 10
                 z.flinch = true
                 z.ft = z.ft+at.p.p.ft*2/3
               end end)
+        
             hboxcs(xx.id, 
               {x=xx.mid, y = xx.y+35},
               {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+26},
@@ -455,6 +472,37 @@ function pandp(xx)
           xx.im = stomp2
           xx.animcounter = 0
         end
+
+      elseif xx.type ==3 then
+      if xx.animcounter < 20 then
+        xx.im = pa11
+        
+      elseif xx.animcounter < 21 then
+        xx.im = pa12
+      elseif xx.animcounter < 40 then
+        xx.im = pa13
+        if xx.animcounter == 21 then
+          
+      makenrubble(xx.mid, xx.feet-5, 5,4,7)
+      makenrubble(xx.mid, xx.feet-5, -5,4,7)
+      
+          repplay(xx.purpsound)
+          repplay(xx.purp2)
+      me.shake = true 
+              hall(xx.id, function(z) if z.plat.n == xx.plat.n then
+                z.j = at.p.u.kj
+              xx.cancombo = true
+                z.flinch = true
+                z.ft = z.ft+at.p.u.ft
+                z.health = z.health - at.p.u.dam
+              end end)
+          
+        elseif xx.animcounter > 23 then
+          combo(xx)
+        end
+      else 
+        xx.animcounter = 0
+      end
 
       end
     end

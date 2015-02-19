@@ -105,8 +105,8 @@ function attackmanage(xx)
 end
 
 
-shakeme = false
-shakeyou = false
+me.shake = false
+you.shake = false
 
 me.nododge = false
 you.nododge = false
@@ -164,13 +164,13 @@ function camshakeflinch()
   mhdif = me.prevhealth-me.health
 
   if not (me.actionshot or you.actionshot) and not noshake then
-    if ((you.prevhealth > you.health or shakeyou) and you.x >= me.x)  or shakeboth then 
+    if ((you.shake) and you.x >= me.x)  or shakeboth then 
       camera2.x = camera2.x + math.ceil(math.random()) * (shakedis + yhdif/2)
       camera2.y = camera2.y + math.ceil(math.random()) * (shakedis + yhdif/2)
       if #joysticks>1 then
         you.joystick:setVibration(1,1)
       end
-    elseif ((you.prevhealth > you.health  or shakeyou) and you.x < me.x) then 
+    elseif ((you.shake) and you.x < me.x) then 
       camera.x = camera.x + math.ceil(math.random()) * (shakedis + yhdif/2)
       camera.y = camera.y + math.ceil(math.random()) * (shakedis + yhdif/2)
       if #joysticks>1 then
@@ -178,13 +178,13 @@ function camshakeflinch()
       end
     end
 
-    if ((me.prevhealth > me.health  or shakeme) and me.x < you.x) or shakeboth then 
+    if ((me.shake) and me.x < you.x) or shakeboth then 
       camera.x = camera.x + math.ceil(math.random()) * (shakedis + mhdif/2)
       camera.y = camera.y + math.ceil(math.random()) * (shakedis + mhdif/2)
       if #joysticks>0 then
         me.joystick:setVibration(1,1)
       end
-    elseif ((me.prevhealth > me.health  or shakeme) and me.x >= me.x) then 
+    elseif ((me.shake) and me.x >= me.x) then 
       camera2.x = camera2.x + math.ceil(math.random()) * (shakedis + mhdif/2)
       camera2.y = camera2.y + math.ceil(math.random()) * (shakedis + mhdif/2)
       if #joysticks>0 then
@@ -195,8 +195,9 @@ function camshakeflinch()
     end
   end
 
-  shakeme = false
-  shakeyou = false
+  me.shake = false
+  you.shake = false
+  shakeboth = false
 
 end
 
@@ -504,7 +505,7 @@ newforwarddodge = function(xx)
     elseif xx.ft < 0 then xx.ft = xx.ft + 1*rampspeed
     elseif xx.ft > 0 then xx.ft = xx.ft - 1*rampspeed
     end
-    camshakeflinch()
+    --camshakeflinch()
 
 
 

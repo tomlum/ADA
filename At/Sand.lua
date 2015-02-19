@@ -254,7 +254,7 @@ elseif ypshhold > 0 then
 	you.xoffset = 166
 
 	if ypshhold == 40 then
-		shakeyou = true
+		you.shake = true
 		repplay(pwss2)
 	if me.mid * you.lr < you.mid * you.lr and me.mid * you.lr > (you.mid) * you.lr - 110
 		and me.y < you.feet and me.feet > you.y then 
@@ -346,7 +346,7 @@ elseif mpshhold > 0 then
 	me.xoffset = 166
 
 	if mpshhold == 40 then
-		shakeme = true
+		me.shake = true
 	repplay(pwss)
 	if you.mid * me.lr < me.mid * me.lr and you.mid * me.lr > (me.mid) * me.lr - 110
 		and you.y < me.feet and you.feet > me.y then 

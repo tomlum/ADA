@@ -177,6 +177,10 @@ function combo(xx, func)
         xx.type = 3
         xx.animcounter = 1
         xx.combo = xx.combo + 1
+      elseif xx.color.n==1 then
+        xx.type = 3
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
       elseif xx.color.n==2 then
         xx.type = 3
         xx.animcounter = 1
@@ -300,11 +304,7 @@ function breadandbutter(xx)
             function(z)
               
               xx.cancombo = true
-              if xx.repcounter == animcounter then
-                z.v = xx.lr*at.bb.p.kb*3+xx.v
-              else
-                z.v = xx.lr*at.bb.p.kb+xx.v
-              end
+                z.v = z.v/3+xx.lr*at.bb.p.kb+xx.v
               if not (z.block == -xx.lr) then
                 z.health = z.health - at.bb.p.dam
                 z.flinch = true
@@ -353,10 +353,10 @@ function breadandbutter(xx)
               z.flinch = true
               if not (z.block == -xx.lr) then
                 z.ft = z.ft+at.bb.k.ft
-                z.v = xx.lr*at.bb.k.kb
+                z.v = z.v/3+ xx.lr*at.bb.k.kb
               else
                 z.ft = z.ft+at.bb.k.ft/2
-                z.v = xx.lr*at.bb.k.kb*2/3
+                z.v = z.v/3+ xx.lr*at.bb.k.kb*2/3
               end
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(1,1)
@@ -387,8 +387,8 @@ function breadandbutter(xx)
             function(z)
               xx.cancombo = true
               z.health = z.health - at.bb.u.dam
-              z.v = at.bb.u.kb*xx.lr
-              z.j = at.bb.u.j
+              z.v = z.v/3+at.bb.u.kb*xx.lr
+              z.j = z.j/3+at.bb.u.j
               z.flinch = true
               z.ft = z.ft+at.bb.u.ft
               if #joysticks>=xx.id then
@@ -406,6 +406,7 @@ function breadandbutter(xx)
 
       elseif xx.animcounter<=20 then
         xx.im = dropkick2
+        if xx.animcounter <10 then
         hboxcs(xx.id, 
           {x=xx.mid, y = xx.y+18},
           {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+18-xx.j},
@@ -414,9 +415,9 @@ function breadandbutter(xx)
           function(z)
             xx.cancombo = true
             if xx.animcounter == 4 then
-              z.v = xx.lr*at.bb.p.kb*2+xx.v
+              z.v = z.v/3+xx.lr*at.bb.p.kb*2.5+xx.v
             else
-              z.v = xx.lr*at.bb.p.kb+xx.v
+              z.v = z.v/3+xx.lr*at.bb.p.kb+xx.v
             end
             if not (z.block == -xx.lr) then
               if xx.animcounter == 4 then
@@ -425,13 +426,14 @@ function breadandbutter(xx)
                 z.health = z.health - at.bb.p.dam/2
               end
               z.flinch = true
-              z.ft = z.ft+at.bb.p.ft
+              z.ft = z.ft+at.bb.p.ft/4
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(.7,1)
               end
             end
 
-          end)
+        end)
+      end
 
       elseif xx.animcounter < 25 then
         xx.im=dropkick1
@@ -459,7 +461,11 @@ function breadandbutter(xx)
           {x=xx.mid+xx.v+(xx.lr*6), y = xx.y+64-xx.j},
           function(z)
             xx.cancombo = true
-              z.v = xx.lr*at.bb.p.kb*2+xx.v
+            if z.g then
+              z.v = z.v/3+xx.lr*at.bb.p.kb*2+xx.v
+            else
+              z.v = z.v/3+xx.lr*at.bb.p.kb+xx.v
+              end
             if not (z.block == -xx.lr) then
               if xx.animcounter == 5 then
                 z.health = z.health - at.bb.p.dam
@@ -496,8 +502,8 @@ function breadandbutter(xx)
             function(z)
               xx.cancombo = true
               z.health = z.health - at.bb.u.dam
-              z.v = at.bb.u.kb*xx.lr
-              z.j = at.bb.u.j*2/3
+              z.v = z.v/3+at.bb.u.kb*xx.lr
+              z.j = z.j/3 + at.bb.u.j*2/3
               z.flinch = true
               z.ft = z.ft+at.bb.u.ft
               if #joysticks>=xx.id then
