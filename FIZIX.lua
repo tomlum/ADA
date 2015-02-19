@@ -45,10 +45,26 @@ end
 --FRICTION FUNCTION TO SLOW DOWN
 
 
+function transferofenergy(xx)
+  if xx.g and xx.j<0 then 
+    if xx.v > 0 then
+      xx.v = xx.v - xx.j/2 
+    elseif xx.v < 0 then
+      xx.v = xx.v + xx.j/2 
+    else 
+      if math.random() > .5 then
+      xx.v = xx.v + xx.j/3 
+      else
+      xx.v = xx.v - xx.j/3 
+        end
+      end
+    end
+  
+end
+
 fric = function (xx) 
 
   xx.v = rodib(xx.v,fricrate*rampspeed,xx.push)
-
 
   if not xx.landing
   then
@@ -216,18 +232,22 @@ you.oldg = true
 me.gothroughplats = false
 you.gothroughplats = false
 
-function movex(xx,z)
+function movex(xx)
   
+transferofenergy(xx)
+  z = xx
   if xx.landingcounter > landingwait then
         xx.stop=true
         xx.holda = true
       end
   
-  if z.down then 
+  if z.down  then 
     xx.gothroughplats = true
   else
     xx.gothroughplats = false
   end
+  
+  xx.forcethroughplats = false
 
   ------?????--------
   if xx.flinch then
@@ -254,7 +274,7 @@ function movex(xx,z)
   xx.feet = xx.y + 60
   if xx.g 
   then 
-    if xx.j < 0 then xx.j = 0
+    if xx.j < 0 then xx.j = 0 
     end
     if z.up and not xx.flinch and not xx.block and not xx.jstop and not xx.busy
     and not z.a1 and not z.a2 and not z.a3 and not xx.bur and not xxpurp

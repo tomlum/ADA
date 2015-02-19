@@ -25,6 +25,12 @@ at.bb.k.dam = 10
 at.bb.k.kb = 22
 at.bb.k.ft = 30
 
+at.bb.ak = {}
+at.bb.ak.dam = 5
+at.bb.ak.kb = 4
+at.bb.ak.ft = 8
+at.bb.ak.kj = -5
+
 
 at.bb.u = {}
 at.bb.u.dam = 7
@@ -461,19 +467,16 @@ function breadandbutter(xx)
           {x=xx.mid+xx.v+(xx.lr*6), y = xx.y+64-xx.j},
           function(z)
             xx.cancombo = true
-            if z.g then
-              z.v = z.v/3+xx.lr*at.bb.p.kb*2+xx.v
-            else
-              z.v = z.v/3+xx.lr*at.bb.p.kb+xx.v
-              end
+              z.v = z.v+xx.lr*at.bb.ak.kb+xx.v/2
             if not (z.block == -xx.lr) then
               if xx.animcounter == 5 then
-                z.health = z.health - at.bb.p.dam
+                z.health = z.health - at.bb.ak.dam
               else
-                z.health = z.health - at.bb.p.dam/2
+                z.health = z.health - at.bb.ak.dam/2
               end
               z.flinch = true
-              z.ft = z.ft+at.bb.p.ft
+              z.ft = z.ft+at.bb.ak.ft
+              z.j = xx.j + at.bb.ak.kj
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(.7,1)
               end

@@ -532,8 +532,8 @@ function love.update()
 
 
 
-        movex(me,me)
-        movex(you,you)
+        movex(me)
+        movex(you)
         --used to be here platformcheckx()
 
 

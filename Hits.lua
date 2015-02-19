@@ -407,7 +407,7 @@ function hboxwall()
           else
             p.j = p.j - math.abs(p.v/3)
           end
-          makerubble(p.mid, p.y,p.v, p.j)
+          makenrubble("vert", p.mid, p.feet,p.v, p.j/2,20)
           repplay(p.wallhit)
           p.g = false
           p.y = p.y - 10
