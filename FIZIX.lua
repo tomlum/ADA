@@ -25,8 +25,8 @@ table.insert(maps.fightclub.plats, {n=2, y = 465, x1 = 32, x2 = 236})
 table.insert(maps.fightclub.plats, {n=3, y = 541, x1 = 839, x2 = 1016})
 table.insert(maps.fightclub.plats, {n=4, y = 719, x1 = 655, x2 = 1560})
 
-table.insert(maps.fightclub.walls, {n=1, y1 = -1, x=0})
-table.insert(maps.fightclub.walls, {n=2, y1 = -1, x=2000})
+table.insert(maps.fightclub.walls, {n=1, y1 = -1, x=0, barrier = true})
+table.insert(maps.fightclub.walls, {n=2, y1 = -1, x=2000, barrier = true})
 
 
 
@@ -87,20 +87,20 @@ end
 function vroomright(xx)
   if xx.v == 0+xx.push and not xx.running
   then xx.v = 1.5+xx.push
-  elseif xx.v >0+xx.push and xx.v < speedlimit -accel+xx.push and not xx.running
-  then xx.v = xx.v + accel
-  elseif xx.v >0+xx.push and xx.v >= speedlimit -accel+xx.push  and not xx.running
-  then xx.v = speedlimit -accel+xx.push
+  elseif xx.v >0+xx.push and xx.v < (speedlimit -accel+xx.push)*xx.color.s.speed and not xx.running
+  then xx.v = xx.v + (accel+xx.push)*xx.color.s.speed
+  elseif xx.v >0+xx.push and xx.v >= (speedlimit -accel+xx.push)*xx.color.s.speed  and not xx.running
+  then xx.v = (speedlimit -accel+xx.push)*xx.color.s.speed
   end
 end 
 
 function vroomleft(xx)
   if xx.v == 0+xx.push and not xx.running
   then xx.v = -1.5+xx.push
-  elseif xx.v < 0+xx.push and xx.v > -speedlimit + accel+xx.push and not xx.running
-  then xx.v = xx.v - accel
-  elseif xx.v < 0+xx.push and xx.v <= -speedlimit + accel+xx.push and not xx.running
-  then xx.v = -speedlimit + accel+xx.push
+  elseif xx.v < 0+xx.push and xx.v > (-speedlimit + accel+xx.push)*xx.color.s.speed and not xx.running
+  then xx.v = xx.v - (accel+xx.push)*xx.color.s.speed
+  elseif xx.v < 0+xx.push and xx.v <= (-speedlimit + accel+xx.push)*xx.color.s.speed and not xx.running
+  then xx.v = (-speedlimit + accel+xx.push)*xx.color.s.speed
   end
 end 
 
@@ -286,17 +286,17 @@ transferofenergy(xx)
       else
         xx.jt = jt
         xx.jmax = jmax
-        xx.j = jumpj
+        xx.j = jumpj*xx.color.s.jump
       end
       xx.ht = 7
       xx.firstjump = true
       xx.g = false
       repplay(xx.jumpd)
-    elseif z.right and xx.v >= xx.push and xx.stop == false and not xx.flinch
+    elseif z.right and xx.v >= xx.push and xx.stop == false and not xx.flinch and xx.landingcounter < 6
     and not z.left
     then 
       vroomright(xx)
-    elseif z.left and xx.v <= xx.push and xx.stop == false and not xx.flinch
+    elseif z.left and xx.v <= xx.push and xx.stop == false and not xx.flinch and xx.landingcounter < 6
     and not z.right
     then 
       vroomleft(xx)

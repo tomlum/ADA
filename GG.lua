@@ -1,5 +1,6 @@
 --AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH
 
+amountstuckinwall = 40
 
 greena21 = {im=love.graphics.newImage("me/attack/greena21.png"),c=love.graphics.newImage("me/attack/greena21c.png"), xoff = 10}
 greena22 = {im=love.graphics.newImage("me/attack/greena22.png"),c=love.graphics.newImage("me/attack/greena22c.png"), xoff = 20}
@@ -14,7 +15,10 @@ agreena1 = {im=love.graphics.newImage("me/attack/agreena1.png"),c=love.graphics.
 agreena1s = {im=love.graphics.newImage("me/attack/agreena1s.png"),c=love.graphics.newImage("me/attack/agreena1c.png"), xoff = 20, yoff = 60}
 
 greenk1 = {im=love.graphics.newImage("me/attack/greenk1.png"),c=love.graphics.newImage("me/attack/greenk1c.png"), xoff = 40, yoff = 20}
-greenk2 = {im=love.graphics.newImage("me/attack/greenk2.png"),c=love.graphics.newImage("me/attack/greenk2c.png"), xoff = 30, yoff = 20}
+greenk2 = {im=love.graphics.newImage("me/attack/greenk2.png"),c=love.graphics.newImage("me/attack/greenk2c.png"), xoff = 10, yoff = 20}
+
+agk1 = {im=love.graphics.newImage("me/attack/agk1.png"),c=love.graphics.newImage("me/attack/agk1c.png"), xoff = 40, yoff =10}
+agk2 = {im=love.graphics.newImage("me/attack/agk2.png"),c=love.graphics.newImage("me/attack/agk2c.png"), xoff = 10, yoff =10}
 
 
 me.greenkhit = false
@@ -94,6 +98,10 @@ function gandg(xx)
       elseif xx.a1 and not xx.holda then
         xx.animcounter = 1
         xx.type = 6
+      elseif xx.a4 and not xx.holda then
+        xx.type = 2
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
 
       end
     end
@@ -114,7 +122,6 @@ function gandg(xx)
         end
 
         if xx.animcounter == 4 then
-
 
           if xx.repcounter ==1 then
             xx.v = xx.v + (xx.lr*17)
@@ -172,7 +179,11 @@ function gandg(xx)
 
         elseif xx.type == 2 then
           if xx.animcounter < 10 then
-            xx.im = greenk1
+            if xx.g then
+              xx.im = greenk1
+            else
+              xx.im = agk1
+            end
             xx.animcounter = 8
             if xx.a1b then
               at.g.k.angle = 90
@@ -182,10 +193,19 @@ function gandg(xx)
               xx.animcounter = 9
             end
           elseif xx.animcounter < 50 then
-            xx.im = greenk2
+            if xx.g then
+              xx.im = greenk2
+            else
+              xx.im = agk2
+            end
 
             if xx.animcounter == 10 then
               repplay(xx.greens)
+              if not xx.g then
+                xx.v = xx.v-(boltspeed/3 * math.cos(math.rad(at.g.k.angle)))
+                xx.j = xx.j-(boltspeed/3 * math.sin(math.rad(at.g.k.angle)))
+
+              end
               if rampcanhit then
 
                 table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx), speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
@@ -392,97 +412,108 @@ function gandg(xx)
         if v.t >= greendissolvetime then
           table.remove(xx.bolts, i)
         end
-        if v.y <= themap.floor+10 or v.stuck then
-          table.insert(xx.bolttrail, {angle = v.angle, speed = v.speed, x = v.x, y = v.y, t = 0})
-          v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed
-          v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*rampspeed
-        else v.stuck = true
-        end
-        if not v.stuck then hboxcs(xx.id, {x=v.x, y=v.y}, 
-            {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y}, {x=v.x, y=v.y}, 
-            function(p)
-              p.v = p.v + (v.speed/2 * math.cos(math.rad(v.angle)))
-              p.j = p.j - (v.speed/2 * math.sin(math.rad(v.angle)))
-              p.flinch = true
-              if (v.speed * math.cos(math.rad(v.angle))) > 0 then p.flinchway = -1 
-              else
-                p.flinchway = 1
-              end
-              p.ft = at.g.k.ft
-              repplay(xx.greenbreak)
-              makeslashsparks(v.y,v.x, (v.speed * math.cos(math.rad(v.angle)))/8,(v.speed * math.sin(math.rad(v.angle)))+5, xx.color.c.r,xx.color.c.g,xx.color.c.b)
-              table.remove(xx.bolts, i)
-              xx.greenhit = true
-            end)
-        end
-      end
-    end
 
-    function xpint(a,A,b,B)
-
-      s1 = (a.y-A.y)/(a.x-A.x)
-      s2 = (b.y-B.y)/(b.x-B.x)
-
-      if A.x == a.x then
-        if (b.x < a.x and B.x > a.x) or
-        (B.x < a.x and b.x > a.x) then return true
-        else return false 
+        for j,k in ipairs(themap.walls) do 
+          if k.barrier then
+            if (v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed > k.x+amountstuckinwall) 
+            or 
+            (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed < k.x-amountstuckinwall) then
+              v.stuck = true
+            end
+          end
         end
-      elseif B.x == b.x then
-        if (a.x < b.x and A.x > b.x) or
-        (A.x < b.x and a.x > b.x) then return true
-        else return false 
+
+          if v.y <= themap.floor+10 and not v.stuck then
+            table.insert(xx.bolttrail, {angle = v.angle, speed = v.speed, x = v.x, y = v.y, t = 0})
+            v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed
+            v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*rampspeed
+          else v.stuck = true
+          end
+          if not v.stuck then hboxcs(xx.id, {x=v.x, y=v.y}, 
+              {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y}, {x=v.x, y=v.y}, 
+              function(p)
+                p.v = p.v + (v.speed/2 * math.cos(math.rad(v.angle)))
+                p.j = p.j - (v.speed/2 * math.sin(math.rad(v.angle)))
+                p.flinch = true
+                if (v.speed * math.cos(math.rad(v.angle))) > 0 then p.flinchway = -1 
+                else
+                  p.flinchway = 1
+                end
+                p.ft = at.g.k.ft
+                repplay(xx.greenbreak)
+                makeslashsparks(v.y,v.x, (v.speed * math.cos(math.rad(v.angle)))/8,(v.speed * math.sin(math.rad(v.angle)))+5, xx.color.c.r,xx.color.c.g,xx.color.c.b)
+                table.remove(xx.bolts, i)
+                xx.greenhit = true
+              end)
+          end
         end
       end
 
-      if math.abs(s1 - s2) < .01 then return false
-      end
+      function xpint(a,A,b,B)
 
-      thepy = ((-s1*s2*a.x)-(s1*s2*b.x)+(s1*b.y)-(s2*a.y))/(s1 - s2)
-      thepx = ((thepy-a.y)/s1) + a.x 
+        s1 = (a.y-A.y)/(a.x-A.x)
+        s2 = (b.y-B.y)/(b.x-B.x)
 
-      if thepx < math.max(math.max(a.x, A.x), math.max(b.x, B.x))
-      and thepx > math.min(math.min(a.x, A.x), math.min(b.x, B.x))
-      and thepy < math.max(math.max(a.y, A.y), math.max(b.y, B.y))
-      and thepy > math.min(math.min(a.y, A.y), math.min(b.y, B.y))
-      then return true
-      else return false
-      end
-    end
+        if A.x == a.x then
+          if (b.x < a.x and B.x > a.x) or
+          (B.x < a.x and b.x > a.x) then return true
+          else return false 
+          end
+        elseif B.x == b.x then
+          if (a.x < b.x and A.x > b.x) or
+          (A.x < b.x and a.x > b.x) then return true
+          else return false 
+          end
+        end
 
+        if math.abs(s1 - s2) < .01 then return false
+        end
 
+        thepy = ((-s1*s2*a.x)-(s1*s2*b.x)+(s1*b.y)-(s2*a.y))/(s1 - s2)
+        thepx = ((thepy-a.y)/s1) + a.x 
 
-
-
-
-    function findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, seg1, seg2)
-      local a1,b1,a2,b2 = l1p2y-l1p1y, l1p1x-l1p2x, l2p2y-l2p1y, l2p1x-l2p2x
-      local c1,c2 = a1*l1p1x+b1*l1p1y, a2*l2p1x+b2*l2p1y
-      local det,x,y = a1*b2 - a2*b1
-      if det==0 then return false end
-      x,y = (b2*c1-b1*c2)/det, (a1*c2-a2*c1)/det
-      if seg1 or seg2 then
-        local min,max = math.min, math.max
-        if seg1 and not (min(l1p1x,l1p2x) <= x and x <= max(l1p1x,l1p2x) and min(l1p1y,l1p2y) <= y and y <= max(l1p1y,l1p2y)) or
-        seg2 and not (min(l2p1x,l2p2x) <= x and x <= max(l2p1x,l2p2x) and min(l2p1y,l2p2y) <= y and y <= max(l2p1y,l2p2y)) then
-          return false
+        if thepx < math.max(math.max(a.x, A.x), math.max(b.x, B.x))
+        and thepx > math.min(math.min(a.x, A.x), math.min(b.x, B.x))
+        and thepy < math.max(math.max(a.y, A.y), math.max(b.y, B.y))
+        and thepy > math.min(math.min(a.y, A.y), math.min(b.y, B.y))
+        then return true
+        else return false
         end
       end
-      return true
-    end
 
-    function findxIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y)
 
-      if findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, true, true) or findIntersect(l1p2x,l1p2y,l1p1x,l1p1y,l2p1x,l2p1y, l2p2x,l2p2y, true, true) then
+
+
+
+
+      function findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, seg1, seg2)
+        local a1,b1,a2,b2 = l1p2y-l1p1y, l1p1x-l1p2x, l2p2y-l2p1y, l2p1x-l2p2x
+        local c1,c2 = a1*l1p1x+b1*l1p1y, a2*l2p1x+b2*l2p1y
+        local det,x,y = a1*b2 - a2*b1
+        if det==0 then return false end
+        x,y = (b2*c1-b1*c2)/det, (a1*c2-a2*c1)/det
+        if seg1 or seg2 then
+          local min,max = math.min, math.max
+          if seg1 and not (min(l1p1x,l1p2x) <= x and x <= max(l1p1x,l1p2x) and min(l1p1y,l1p2y) <= y and y <= max(l1p1y,l1p2y)) or
+          seg2 and not (min(l2p1x,l2p2x) <= x and x <= max(l2p1x,l2p2x) and min(l2p1y,l2p2y) <= y and y <= max(l2p1y,l2p2y)) then
+            return false
+          end
+        end
         return true
-      else return false
       end
 
-    end
+      function findxIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y)
 
-    function pint(p11,p12,p21,p22)
-      return findIntersect(p11.x+.2,p11.y+.2,p12.x,p12.y,p21.x+.2,p21.y+.2,p22.x,p22.y,true,true)
-    end
+        if findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, true, true) or findIntersect(l1p2x,l1p2y,l1p1x,l1p1y,l2p1x,l2p1y, l2p2x,l2p2y, true, true) then
+          return true
+        else return false
+        end
+
+      end
+
+      function pint(p11,p12,p21,p22)
+        return findIntersect(p11.x+.2,p11.y+.2,p12.x,p12.y,p21.x+.2,p21.y+.2,p22.x,p22.y,true,true)
+      end
 
 
 

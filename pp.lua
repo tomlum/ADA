@@ -19,6 +19,10 @@ apa21 = {im=love.graphics.newImage("me/attack/apa21.png"),c=love.graphics.newIma
 apa22 = {im=love.graphics.newImage("me/attack/apa22.png"),c=love.graphics.newImage("me/attack/apa22c.png"), xoff = 15}
 apa23 = {im=love.graphics.newImage("me/attack/apa23.png"),c=love.graphics.newImage("me/attack/apa23c.png"), xoff = 45}
 
+apa11 = {im=love.graphics.newImage("me/attack/apa11.png"),c=love.graphics.newImage("me/attack/apa11c.png"), xoff = 45}
+apa12 = {im=love.graphics.newImage("me/attack/apa12.png"),c=love.graphics.newImage("me/attack/apa12c.png"), xoff = 45, yoff = 40}
+apa13 = {im=love.graphics.newImage("me/attack/apa13.png"),c=love.graphics.newImage("me/attack/apa13c.png"), xoff = 45, yoff = 20}
+
 pp1back = {im=love.graphics.newImage("me/attack/pp1back.png"),c=love.graphics.newImage("me/attack/pp1backc.png"), xoff = 45, yoff = 20}
 pp1back2 = {im=love.graphics.newImage("me/attack/pp1back2.png"),c=love.graphics.newImage("me/attack/pp1back2c.png"), xoff = 45, yoff = 40}
 pp1back3 = {im=love.graphics.newImage("me/attack/pp1back3.png"),c=love.graphics.newImage("me/attack/pp1back3c.png"), xoff = 45, yoff = 10}
@@ -183,6 +187,11 @@ at.p.p.max = 4
 at.p.ap = {}
 at.p.ap.kj = -15
 
+at.p.au = {}
+at.p.au.dam = 12
+at.p.au.ft = 25
+at.p.au.kb = 10
+at.p.au.kj = 15
 
 at.p.p2 = {}
 at.p.p2.dam = 12
@@ -264,8 +273,9 @@ function pandp(xx)
       if (xx.a2 or xx.a3) then
         xx.type = 4
         xx.animcounter = 1
-        xx.combo = xx.combo + 1
-
+      elseif xx.a1 then
+        xx.type = 6
+        xx.animcounter = 1
       end
     end
 
@@ -289,10 +299,10 @@ function pandp(xx)
               function(z)
                 xx.cancombo = true
                 z.health = z.health - at.p.p2.dam
-                z.v = z.v + xx.lr*at.p.p2.kb
+                z.v = z.v + xx.lr*at.p.p2.kb + xx.v
                 z.flinch = true
                 z.ft = z.ft + at.p.p2.ft
-                z.j=at.p.p2.kj
+                z.j=at.p.p2.kj + xx.j
                 minzoom = defaultminzoom - .07
                 maxzoom = defaultmaxzoom - .07
 
@@ -309,10 +319,10 @@ function pandp(xx)
             function(z)
               xx.cancombo = true
               z.health = z.health - at.p.p2.dam
-              z.v = z.v -xx.lr*at.p.p2.kb/3
+              z.v = z.v -xx.lr*at.p.p2.kb/3 + xx.v
               z.flinch = true
               z.ft = z.ft + at.p.p2.ft
-              z.j=at.p.p2.kj*1.5
+              z.j=at.p.p2.kj*1.5 + xx.j
               minzoom = defaultminzoom - .07
               maxzoom = defaultmaxzoom - .07
 
@@ -332,7 +342,7 @@ function pandp(xx)
               function(z)
                 xx.cancombo = true
                 z.health = z.health - at.p.p2.dam
-                z.v = z.v-xx.lr*at.p.p2.kb
+                z.v = z.v-xx.lr*at.p.p2.kb + xx.v
                 z.flinch = true
                 z.ft = z.ft + at.p.p2.ft
                 minzoom = defaultminzoom - .07
@@ -375,7 +385,7 @@ function pandp(xx)
               function(z)
                 xx.cancombo = true
                 z.health = z.health - at.p.p.dam
-                z.v = xx.lr*at.p.p.kb
+                z.v = xx.lr*at.p.p.kb + xx.v
                 z.flinch = true
                 z.ft = z.ft + at.p.p.ft/3
                 z.j=0
@@ -402,11 +412,12 @@ function pandp(xx)
 
 
 
-      elseif xx.type == 2 then
-        if xx.animcounter < 8 then
+    elseif xx.type == 2 then
+        
+        if xx.animcounter < 20 then
           xx.im = stomp1
 
-        elseif xx.animcounter == 8 then
+        elseif xx.animcounter == 20 then
           xx.im = stomp2
           xx.numofspikes = xx.numofspikes+1
           local lverts = {}
@@ -479,16 +490,17 @@ function pandp(xx)
           end
 
 
-        elseif xx.animcounter < 50 then
+        elseif xx.animcounter < 60 then
           xx.im = stomp2
 
-          if xx.animcounter >= pa4busytime and xx.a4 and not xx.holda and xx.numofspikes< at.p.k.max then 
-            xx.animcounter = 1
+          if  xx.a4 and not xx.holda and xx.numofspikes< at.p.k.max then 
+            xx.animcounter = 17
           end
-        elseif xx.animcounter < 72 then
+        elseif xx.animcounter < 70 then
           xx.im = stomp2
           xx.numofspikes = 0
-        elseif xx.animcounter >= 72 then
+
+        else
           xx.im = stomp2
           xx.animcounter = 0
         end
@@ -510,7 +522,7 @@ function pandp(xx)
             repplay(xx.purp2)
             me.shake = true 
             hall(xx.id, function(z) if z.plat.n == xx.plat.n then
-                  z.j = at.p.u.kj
+                  z.j = at.p.u.kj 
                   xx.cancombo = true
                   z.flinch = true
                   z.ft = z.ft+at.p.u.ft
@@ -552,6 +564,37 @@ function pandp(xx)
                   maxzoom = defaultmaxzoom - .06
                 end)
             end
+          end
+          elseif xx.type ==6 then
+          if xx.animcounter < 15 then
+            xx.im = apa11
+          elseif xx.animcounter < 17 then
+            xx.im = apa12
+             if xx.animcounter == 15 then
+                 xx.j = xx.j + at.p.au.kj 
+                 xx.v = xx.v - at.p.au.kb 
+              hboxcs(xx.id, 
+            {x=xx.mid+(xx.lr * -17), y = xx.y-31},
+            {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38},
+            {x=xx.mid+(xx.lr*-31), y = me.y+13},
+            {x=xx.mid+xx.v+(xx.lr*50), y = xx.y+28},
+          
+            function(z)
+              xx.cancombo = true
+              z.health = z.health - at.p.au.dam
+              z.v = z.v -xx.lr*at.p.au.kb/3 + xx.v
+              z.flinch = true
+              z.ft = z.ft + at.p.au.ft
+              z.j=at.p.au.kj + xx.j
+              minzoom = defaultminzoom - .07
+              maxzoom = defaultmaxzoom - .07
+
+
+            end)
+            end
+          elseif xx.animcounter < 50 then
+            xx.im = apa13
+           
           end
         end
       end

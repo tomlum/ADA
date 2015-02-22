@@ -1,6 +1,7 @@
 --todo
-therampspeed = .2
+therampspeed = .3
 drawboxes = true
+
 
 --if you use one color too long you start to turn that color and have permanent those effects?  or you burn out?s
 --or you take up to double damage? become fragile, but stronger?
@@ -690,7 +691,13 @@ function love.update()
 
   end
 
+
+
+
+
+
   function love.draw()
+    
       
 
     --love.graphics.setShader(myShader)
@@ -882,6 +889,8 @@ function love.update()
       love.graphics.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
       love.graphics.print("falling "..tostring(you.falling).."|| ft "..tostring(you.ft).."|| flinchway "..tostring(you.flinchway), 10, 70)
     end
+    love.graphics.print("falling "..tostring(me.numofspikes), 10, 90)
+    
 
 
     flash = false
@@ -892,5 +901,6 @@ function love.update()
       love.graphics.print("yeah",100,10,100)
     end
     ]]--
+    
 
   end

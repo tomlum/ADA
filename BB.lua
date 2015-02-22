@@ -30,6 +30,7 @@ at.bb.ak.dam = 5
 at.bb.ak.kb = 4
 at.bb.ak.ft = 8
 at.bb.ak.kj = -5
+at.bb.ak.penalty = 26
 
 
 at.bb.u = {}
@@ -160,14 +161,14 @@ function combo(xx, func)
 
     elseif xx.a4 then
       if func~= nil then func() end
-      if xx.color.n==0 and xx.type~=2 then
+      if xx.color.n==0  then
         xx.combo = xx.combo + 1
         xx.animcounter = 1
         xx.type = 2
 
-      elseif xx.color.n==1 then
+      elseif xx.color.n==1 and not xx.hitsomeonewithpurp then
         xx.type = 2
-        xx.animcounter = 1
+        xx.animcounter = 17
         xx.repcounter = xx.repcounter + 1
         xx.combo = xx.combo + 1
       elseif xx.color.n==2 then
@@ -238,7 +239,7 @@ dropkick1 = {im=love.graphics.newImage("me/attack/dropkick1.png"),c=love.graphic
 dropkick2 = {im=love.graphics.newImage("me/attack/dropkick2.png"),c=love.graphics.newImage("me/attack/dropkick2c.png"), xoff = 8}
 divekick = {im=love.graphics.newImage("me/attack/divekick.png"),c=love.graphics.newImage("me/attack/divekickc.png"), xoff = 5}
 
-landingpenaltyforb5 = 40
+
 
 function breadandbutter(xx)
 
@@ -272,7 +273,6 @@ function breadandbutter(xx)
       if (xx.a2 or xx.a3) and not xx.holda then
         xx.type = 4
         xx.animcounter = 1
-        xx.combo = xx.combo + 1
       elseif xx.a4 and not xx.holda then
         xx.type = 5
         xx.animcounter = 1
@@ -458,7 +458,7 @@ function breadandbutter(xx)
         xx.im = divekick
         if xx.animcounter == 10 then
           xx.j = xx.j - 10
-          xx.landingcounter = landingpenaltyforb5
+          xx.landingcounter = at.bb.ak.penalty
         end
         hboxcs(xx.id, 
           {x=xx.mid+8, y = xx.y+40},
@@ -506,7 +506,7 @@ function breadandbutter(xx)
               xx.cancombo = true
               z.health = z.health - at.bb.u.dam
               z.v = z.v/3+at.bb.u.kb*xx.lr
-              z.j = z.j/3 + at.bb.u.j*2/3
+              z.j = z.j/3 + at.bb.u.j*2/3 + xx.j
               z.flinch = true
               z.ft = z.ft+at.bb.u.ft
               if #joysticks>=xx.id then

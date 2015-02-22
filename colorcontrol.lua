@@ -7,10 +7,14 @@ colorfadetime = 10
 colorvib = .1
 
 thecolors = {}
-thecolors[0] = {n=0,c={r = 255, g = 255, b = 255}}
-thecolors[1] = {n=1,c={r = 87, g = 0, b = 158}}
-thecolors[2] = {n=2,c={r = 40, g = 255, b = 0}}
-thecolors[100] = {n=-1,c={r = 0, g = 0, b = 0}}
+thecolors[0] = {n=0,c={r = 255, g = 255, b = 255},
+  s = {def=1, speed = 1, jump = 1}}
+thecolors[1] = {n=1,c={r = 87, g = 0, b = 158},
+  s = {def=1.2, speed = .8, jump = .5}}
+thecolors[2] = {n=2,c={r = 40, g = 255, b = 0},
+  s = {def=.7, speed = 1.3, jump = 1.2}}
+thecolors[100] = {n=-1,c={r = 0, g = 0, b = 0},
+  s = {def=.7, speed = 1, jump = 1}}
 
 
 me.color = thecolors[0]
