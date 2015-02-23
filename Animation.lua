@@ -281,8 +281,9 @@ function actionshotstuff(xx)
   if xx.actionshot then
     xx.numofspikes = 0
     xx.uppercuthit = false
+    xx.hitsomeonewithpurp = false
 
-    if xx.color.n == xx.cchangeto.n and (xx.color.n~=xx.cantreturntothis) and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) then
+    if xx.color.n == xx.cchangeto.n and (xx.color.n~=xx.cantreturntothis) and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) and xx.combo<xx.maxcombo then
       if xx.color.n == 2 and xx.a4b then
         xx.animcounter = 8
         xx.type = 2

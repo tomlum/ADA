@@ -248,7 +248,6 @@ function pandp(xx)
   end
 
   if xx.animcounter == 0 then
-    xx.hitsomeonewithpurp = false
     if xx.g then
 
       if (xx.a2 or xx.a3) then
@@ -358,7 +357,6 @@ function pandp(xx)
         end
       else
 
-
         if xx.animcounter < 20 then
           xx.im = ppunch1
 
@@ -410,10 +408,8 @@ function pandp(xx)
           end
         end
 
+      elseif xx.type == 2 then
 
-
-    elseif xx.type == 2 then
-        
         if xx.animcounter < 20 then
           xx.im = stomp1
 
@@ -558,45 +554,45 @@ function pandp(xx)
                   z.ft = z.ft + at.p.p.ft
                   z.j = z.j + xx.j + at.p.ap.kj
                   if z.plat.floor == nil then
-                  z.g = false
+                    z.g = false
                   end
                   minzoom = defaultminzoom - .06
                   maxzoom = defaultmaxzoom - .06
                 end)
             end
           end
-          elseif xx.type ==6 then
+        elseif xx.type ==6 then
           if xx.animcounter < 15 then
             xx.im = apa11
           elseif xx.animcounter < 17 then
             xx.im = apa12
-             if xx.animcounter == 15 then
-                 xx.j = xx.j + at.p.au.kj 
-                 xx.v = xx.v - at.p.au.kb 
+            if xx.animcounter == 15 then
+              xx.j = xx.j + at.p.au.kj 
+              xx.v = xx.v - at.p.au.kb 
               hboxcs(xx.id, 
-            {x=xx.mid+(xx.lr * -17), y = xx.y-31},
-            {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38},
-            {x=xx.mid+(xx.lr*-31), y = me.y+13},
-            {x=xx.mid+xx.v+(xx.lr*50), y = xx.y+28},
-          
-            function(z)
-              xx.cancombo = true
-              z.health = z.health - at.p.au.dam
-              z.v = z.v -xx.lr*at.p.au.kb/3 + xx.v
-              z.flinch = true
-              z.ft = z.ft + at.p.au.ft
-              z.j=at.p.au.kj + xx.j
-              minzoom = defaultminzoom - .07
-              maxzoom = defaultmaxzoom - .07
+                {x=xx.mid+(xx.lr * -17), y = xx.y-31},
+                {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38},
+                {x=xx.mid+(xx.lr*-31), y = me.y+13},
+                {x=xx.mid+xx.v+(xx.lr*50), y = xx.y+28},
+
+                function(z)
+                  xx.cancombo = true
+                  z.health = z.health - at.p.au.dam
+                  z.v = z.v -xx.lr*at.p.au.kb/3 + xx.v
+                  z.flinch = true
+                  z.ft = z.ft + at.p.au.ft
+                  z.j=at.p.au.kj + xx.j
+                  minzoom = defaultminzoom - .07
+                  maxzoom = defaultmaxzoom - .07
 
 
-            end)
+                end)
             end
           elseif xx.animcounter < 50 then
             xx.im = apa13
-           
+
           end
         end
       end
-    end
 
+    end

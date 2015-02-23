@@ -889,7 +889,7 @@ function love.update()
       love.graphics.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
       love.graphics.print("falling "..tostring(you.falling).."|| ft "..tostring(you.ft).."|| flinchway "..tostring(you.flinchway), 10, 70)
     end
-    love.graphics.print("falling "..tostring(me.numofspikes), 10, 90)
+    love.graphics.print("falling "..tostring(me.hitsomeonewithpurp), 10, 90)
     
 
 

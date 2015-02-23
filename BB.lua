@@ -110,6 +110,7 @@ function combomanage(xx)
       xx.animcounter = xx.animcounter+1
     end
   elseif xx.animcounter == 0 then 
+    xx.hitsomeonewithpurp = false
     xx.combo = 0
     xx.cancombo = false
     xx.type = 0
@@ -118,92 +119,7 @@ function combomanage(xx)
 
 
 
-  if xx.combo > xx.maxcombo then
-    cancelas(xx)
-  end
-
 end
-
-function combo(xx, func)
-
-
-
-  if xx.color.n ~= xx.cchangeto.n and xx.cancombo
-  then
-    if func~= nil then func() end
-    xx.actionshot = true
-    xx.cancombo = false
-  end
-  if not xx.holda then
-    if xx.a2 or xx.a3 then
-      xx.numofspikes = 0
-      if func~= nil then func() end
-      if xx.color.n==0 then
-        xx.type = 1
-        if xx.repcounter < bbnumpunch then
-          xx.repcounter = xx.repcounter+1
-          if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
-          xx.animcounter = 1
-        end
-      elseif xx.color.n==1 and xx.repcounter < at.p.p.max then
-        xx.type = 1
-        xx.animcounter = 1
-        xx.repcounter = xx.repcounter + 1
-        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
-      elseif xx.color.n==2 and xx.repcounter < at.g.p.max then
-        xx.type = 1
-        xx.animcounter = 1
-        xx.repcounter = xx.repcounter + 1
-        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
-
-
-      end
-
-    elseif xx.a4 then
-      if func~= nil then func() end
-      if xx.color.n==0  then
-        xx.combo = xx.combo + 1
-        xx.animcounter = 1
-        xx.type = 2
-
-      elseif xx.color.n==1 and not xx.hitsomeonewithpurp then
-        xx.type = 2
-        xx.animcounter = 17
-        xx.repcounter = xx.repcounter + 1
-        xx.combo = xx.combo + 1
-      elseif xx.color.n==2 then
-        xx.type = 2
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-
-      end
-    elseif xx.a1 then
-      xx.numofspikes = 0
-      if func~= nil then func() end
-      if xx.color.n==0 then
-        xx.type = 3
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-      elseif xx.color.n==1 then
-        xx.type = 3
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-      elseif xx.color.n==2 then
-        xx.type = 3
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-      end
-
-
-
-
-    end
-  end
-end
-
-
-
-
 function cancelas(xx) 
   xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false
 end
