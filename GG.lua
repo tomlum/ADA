@@ -185,12 +185,17 @@ function gandg(xx)
               xx.im = agk1
             end
             xx.animcounter = 8
+            if not xx.holda then
             if xx.a1b then
               at.g.k.angle = 90
               xx.animcounter = 9
             elseif xx.a2b or xx.a3b then
               at.g.k.angle = 0
               xx.animcounter = 9
+            elseif xx.a4b then
+              at.g.k.angle = -90
+              xx.animcounter = 9
+            end
             end
           elseif xx.animcounter < 50 then
             if xx.g then
@@ -202,7 +207,7 @@ function gandg(xx)
             if xx.animcounter == 10 then
               repplay(xx.greens)
               if not xx.g then
-                xx.v = xx.v-(boltspeed/3 * math.cos(math.rad(at.g.k.angle)))
+                xx.v = xx.v-(boltspeed/3 * math.cos(math.rad(at.g.k.angle)))*xx.lr
                 xx.j = xx.j-(boltspeed/3 * math.sin(math.rad(at.g.k.angle)))
 
               end

@@ -46,7 +46,14 @@ function combo(xx, func)
     xx.cancombo = false
   end
   if not xx.holda and xx.currentanim == xx.color.n and xx.combo<xx.maxcombo then
-    if xx.a2 or xx.a3 then
+
+    if xx.im==greenk1 then
+      xx.type = 2
+      xx.animcounter = 1
+      xx.combo = xx.combo + 1
+
+
+    elseif xx.a2 or xx.a3 then
       xx.numofspikes = 0
       if func~= nil then func() end
       if xx.color.n==0 then
@@ -601,13 +608,13 @@ newforwarddodge = function(xx)
           xx.flinchway = -1
         else
           xx.flinchway = 11
-          end
+        end
       else
         if xx.lr > 0 then
           xx.flinchway = 11
         else
           xx.flinchway = -1
-          end
+        end
       end
       if xx.flinch then 
         if xx.g then xx.gflinchleft = xx.ft end
