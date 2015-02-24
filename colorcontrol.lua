@@ -8,13 +8,13 @@ colorvib = .1
 
 thecolors = {}
 thecolors[0] = {n=0,c={r = 255, g = 255, b = 255},
-  s = {def=1, speed = 1, jump = 1}}
+  s = {def=1, speed = 1, jump = 1, weight = 1}}
 thecolors[1] = {n=1,c={r = 87, g = 0, b = 158},
-  s = {def=1.2, speed = .8, jump = .5}}
+  s = {def=1.2, speed = .8, jump = .7, weight = 1.3}}
 thecolors[2] = {n=2,c={r = 40, g = 255, b = 0},
-  s = {def=.7, speed = 1.3, jump = 1.2}}
+  s = {def=.7, speed = 1.3, jump = 1.2, weight = 1}}
 thecolors[100] = {n=-1,c={r = 0, g = 0, b = 0},
-  s = {def=.7, speed = 1, jump = 1}}
+  s = {def=.7, speed = 1, jump = 1, weight = 1}}
 
 
 me.color = thecolors[0]
@@ -76,8 +76,10 @@ function ColorChanging(xx)
   if xx.cct == colorchangetime then 
     if xx.color.n == -1 then
     xx.color = xx.cchangeto
+    xx.runpace = defrunpace / xx.color.s.speed
     end
   elseif xx.cct <= 0  then
+    xx.runpace = defrunpace
     xx.color = thecolors[0]
   else 
     xx.color = thecolors[100]

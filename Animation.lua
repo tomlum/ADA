@@ -1692,14 +1692,14 @@ death = function()
 
     if xx.running then 
 
-      if xx.walktimer >= runpace+2 then xx.im = run4 
+      if xx.walktimer >= xx.runpace+2 then xx.im = run4 
         xx.walktimer = 0
         repplay(xx.runsound)
         makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
-      elseif xx.walktimer >= runpace + 1 then xx.im = run4 
+      elseif xx.walktimer >= xx.runpace + 1 then xx.im = run4 
         makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
-      elseif xx.walktimer >= runpace/2 + 2 then xx.im = run3 
-      elseif xx.walktimer >= runpace/2 then xx.im = run2 
+      elseif xx.walktimer >= xx.runpace/2 + 2 then xx.im = run3 
+      elseif xx.walktimer >= xx.runpace/2 then xx.im = run2 
         makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
         repplay(xx.runsound)
       elseif xx.walktimer >= 0 then xx.im = run1 

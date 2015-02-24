@@ -147,7 +147,7 @@ maxgravity = 27
 speedlimit = 13
 
 runspeed = 22
-xx.runpace = 23
+runpace = 23
 
 
 --slowdown rate
@@ -168,7 +168,7 @@ minvfordust = 3
 fricrate = .75
 
 initrunspeed = 10
-defrunpace = 19
+runpace = 19
 
 --slowdown rate
 adecrate = .2

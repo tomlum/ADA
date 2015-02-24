@@ -46,7 +46,9 @@ morph5 = love.graphics.newImage("me/attack/morph5.png")
 morph6 = love.graphics.newImage("me/attack/morph6.png")
 morph7 = love.graphics.newImage("me/attack/morph7.png")
 triangle = love.graphics.newImage("enviro/triangle.png")
-wallgrab = love.graphics.newImage("me/attack/wallgrab.png")
+wallgrab = {im = love.graphics.newImage("me/attack/wallgrab.png"),
+  c = love.graphics.newImage("me/attack/wallgrabc.png")
+}
 partition = love.graphics.newImage("enviro/partition2.png")
 partition:setFilter("nearest")
 
@@ -77,207 +79,212 @@ me.trail={}
 you.trail={}
 
 function updatemytrail(xx)
-   for i = #xx.trail, 1, -1 do
+  for i = #xx.trail, 1, -1 do
     cur = xx.trail[i]
-    
 
-  cur.t = cur.t + 1*rampspeed
-  
-  if cur.t >= traillength then 
-    table.remove(xx.trail, i)
+
+    cur.t = cur.t + 1*rampspeed
+
+    if cur.t >= traillength then 
+      table.remove(xx.trail, i)
+    end
+
   end
-  
-  end
-  
+
 end
 
 function drawmytrail(xx)
-  
-  
+
+
   for i = #xx.trail, 1, -1 do
     cur = xx.trail[i]
-    
-    
+
+
     if cur.im.xoff == nil then cur.im.xoff = 0 end
     if cur.im.yoff == nil then cur.im.yoff = 0 end
-      love.graphics.setColor(cur.color.c.r,cur.color.c.g,cur.color.c.b,(255/traillength)*(traillength/cur.t))
+    love.graphics.setColor(cur.color.c.r,cur.color.c.g,cur.color.c.b,(255/traillength)*(traillength/cur.t))
     love.graphics.draw(cur.im.im, cur.xanimate-cur.im.xoff*cur.lr, cur.y-cur.im.yoff, 0, cur.lr, 1)
     love.graphics.setColor(255, 255, 255, 255)
 
   end
 
 
-  end
+end
 
-  me.j = 0
+me.j = 0
 
-  whatlevel = function()
+whatlevel = function()
 
-    if placespeople then
-      placespeople = false
-      finishedloading = false
+  if placespeople then
+    placespeople = false
+    finishedloading = false
 
-      if themode == "roulette" then 
-        you.lives = 5
-        me.lives = 5
-        maxhealth = 70
-      elseif themode == "classic" then 
-        maxhealth = 380
-      end
-      me.health = maxhealth
-      you.health = maxhealth
+    if themode == "roulette" then 
+      you.lives = 5
+      me.lives = 5
+      maxhealth = 70
+    elseif themode == "classic" then 
+      maxhealth = 380
+    end
+    me.health = maxhealth
+    you.health = maxhealth
 
-      if themap.name == "fightclub" then
+    if themap.name == "fightclub" then
 
-        loader.start(function()
-            finishedLoading = true
-          end)
+      loader.start(function()
+          finishedLoading = true
+        end)
 
-        enviro.rightwall = 2000
+      enviro.rightwall = 2000
 
-        loader.newImage(enviro,'floor', "enviro/fightclub.png")
-        loader.newImage(enviro,"paralax","enviro/READY.png")
-        loader.newImage(enviro,"sky","enviro/ready.png")
-        me.x = 1000
-        you.x = 1040
-        floor = 896
-        me.im =idle1
-        you.im =idle1
-        me.y = floor - 100
-        you.y = floor - 100
+      loader.newImage(enviro,'floor', "enviro/fightclub.png")
+      loader.newImage(enviro,"paralax","enviro/READY.png")
+      loader.newImage(enviro,"sky","enviro/ready.png")
+      me.x = putmehere
+      you.x = putyouhere
+      floor = 896
+      me.im =idle1
+      you.im =idle1
+      me.y = floor - 100
+      you.y = floor - 100
 
 
 
-      elseif themap.name == "street" then
-        loader.newImage(enviro,'floor', "enviro/astreet.png")
-        loader.start(function()
-            finishedLoading = true
-          end)
-        loader.newImage(enviro,"paralax","enviro/paralax.png")
-        loader.newImage(enviro,"sky","enviro/sky.png")
-        loader.newImage(enviro,'lightson',"enviro/lightson.png")
-        loader.newImage(enviro,'lightsoff', "enviro/lightsoff.png")
-        loader.newImage(enviro,'floor', "enviro/astreet.png")
-        loader.newImage(enviro,'partitionwall',"enviro/partition2.png")
-        loader.newImage(enviro,'rafters',"enviro/rafters.png")
-        loader.newImage(enviro,'buildingwall',"enviro/buildingwall.png")
+    elseif themap.name == "street" then
+      loader.newImage(enviro,'floor', "enviro/astreet.png")
+      loader.start(function()
+          finishedLoading = true
+        end)
+      loader.newImage(enviro,"paralax","enviro/paralax.png")
+      loader.newImage(enviro,"sky","enviro/sky.png")
+      loader.newImage(enviro,'lightson',"enviro/lightson.png")
+      loader.newImage(enviro,'lightsoff', "enviro/lightsoff.png")
+      loader.newImage(enviro,'floor', "enviro/astreet.png")
+      loader.newImage(enviro,'partitionwall',"enviro/partition2.png")
+      loader.newImage(enviro,'rafters',"enviro/rafters.png")
+      loader.newImage(enviro,'buildingwall',"enviro/buildingwall.png")
 
-        -- 	enviro.sky = love.graphics.newImage("enviro/sky.png")
-        -- lightson = love.graphics.newImage("enviro/lightson.png")
-        -- lightsoff = love.graphics.newImage("enviro/lightsoff.png")
-        -- 	enviro.floor = love.graphics.newImage("enviro/astreet.png")
-        -- 	enviro.paralax = love.graphics.newImage("enviro/paralax.png")
-        -- 	enviro.partitionwall = love.graphics.newImage("enviro/partition2.png")
-        -- enviro.rafters = love.graphics.newImage("enviro/rafters.png")
-        -- enviro.buildingwall = love.graphics.newImage("enviro/buildingwall.png")
-        lighttimer = 0
-        me.x = 1000
-        you.x = 6000
-        floor = 1900 - 3
-        me.y = floor - 60
-        you.y = floor - 60
-        enviro.rightwall = 6600-20
-        enviro.ds = 5
-        thesong = song1
-      end
-      -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
-      -- enviro.sky = love.graphics.newImage("enviro/librarysky.png")
-      -- enviro.librarylpartition = love.graphics.newImage("enviro/librarylpartition.png")
-      -- enviro.libraryrpartition = love.graphics.newImage("enviro/libraryrpartition.png")
-      -- enviro.plibrary = love.graphics.newImage("enviro/libraryplayer.png")
-      -- enviro.thelibraryveneer = love.graphics.newImage("enviro/libraryveneer.png")
-      -- enviro.paralax2 = love.graphics.newImage("enviro/libraryparalax2.png")
-      -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
-      -- enviro.floor = love.graphics.newImage("enviro/library2.png")
+      -- 	enviro.sky = love.graphics.newImage("enviro/sky.png")
+      -- lightson = love.graphics.newImage("enviro/lightson.png")
+      -- lightsoff = love.graphics.newImage("enviro/lightsoff.png")
+      -- 	enviro.floor = love.graphics.newImage("enviro/astreet.png")
+      -- 	enviro.paralax = love.graphics.newImage("enviro/paralax.png")
+      -- 	enviro.partitionwall = love.graphics.newImage("enviro/partition2.png")
+      -- enviro.rafters = love.graphics.newImage("enviro/rafters.png")
+      -- enviro.buildingwall = love.graphics.newImage("enviro/buildingwall.png")
+      lighttimer = 0
+      me.x = 1000
+      you.x = 6000
+      floor = 1900 - 3
+      me.y = floor - 60
+      you.y = floor - 60
+      enviro.rightwall = 6600-20
+      enviro.ds = 5
+      thesong = song1
+    end
+    -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
+    -- enviro.sky = love.graphics.newImage("enviro/librarysky.png")
+    -- enviro.librarylpartition = love.graphics.newImage("enviro/librarylpartition.png")
+    -- enviro.libraryrpartition = love.graphics.newImage("enviro/libraryrpartition.png")
+    -- enviro.plibrary = love.graphics.newImage("enviro/libraryplayer.png")
+    -- enviro.thelibraryveneer = love.graphics.newImage("enviro/libraryveneer.png")
+    -- enviro.paralax2 = love.graphics.newImage("enviro/libraryparalax2.png")
+    -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
+    -- enviro.floor = love.graphics.newImage("enviro/library2.png")
 
-      if themap.name == "library" then
-        loader.start(function()
-            finishedLoading = true
-          end)
-        loader.newImage(enviro,'paralax',"enviro/libraryparalax.png")
-        loader.newImage(enviro,'paralax2', "enviro/libraryparalax2.png")
-        loader.newImage(enviro,'floor', "enviro/library2.png")
-        loader.newImage(enviro,'sky',"enviro/librarysky.png")
-        loader.newImage(enviro,'librarylpartition', "enviro/librarylpartition.png")
-        loader.newImage(enviro,'libraryrpartition', "enviro/libraryrpartition.png")
-        loader.newImage(enviro,'plibrary', "enviro/libraryplayer.png")
-        loader.newImage(enviro, 'thelibraryveneer',"enviro/libraryveneer.png")
+    if themap.name == "library" then
+      loader.start(function()
+          finishedLoading = true
+        end)
+      loader.newImage(enviro,'paralax',"enviro/libraryparalax.png")
+      loader.newImage(enviro,'paralax2', "enviro/libraryparalax2.png")
+      loader.newImage(enviro,'floor', "enviro/library2.png")
+      loader.newImage(enviro,'sky',"enviro/librarysky.png")
+      loader.newImage(enviro,'librarylpartition', "enviro/librarylpartition.png")
+      loader.newImage(enviro,'libraryrpartition', "enviro/libraryrpartition.png")
+      loader.newImage(enviro,'plibrary', "enviro/libraryplayer.png")
+      loader.newImage(enviro, 'thelibraryveneer',"enviro/libraryveneer.png")
 
-        me.x = 700
-        you.x = 2000
-        floor = 1900 - 2
-        me.y = 300
-        you.y = 300
-        enviro.rightwall = 3700 
-        enviro.ds = 2
+      me.x = 700
+      you.x = 2000
+      floor = 1900 - 2
+      me.y = 300
+      you.y = 300
+      enviro.rightwall = 3700 
+      enviro.ds = 2
 
-        thesong = song2
-
-      end
-
-      if themap.name == "floors" then
-        loader.start(function()
-            finishedLoading = true
-          end)
-        loader.newImage(enviro,'paralax',"enviro/floorsparalax.png")
-        loader.newImage(enviro,'floor', "enviro/floors.png")
-        loader.newImage(enviro,'sky',"enviro/floorssky.png")
-        loader.newImage(enviro,'pfloors', "enviro/floorsplayer.png")
-        loader.newImage(enviro, 'floorsveneer2',"enviro/floorsveneer2.png")
-        loader.newImage(enviro, 'floorsveneer1',"enviro/floorsveneer1.png")
-        me.x = 500
-        you.x = 3000
-        floor = 5898
-        me.y = 300
-        you.y = 300
-        enviro.rightwall = 5000
-        enviro.ds = 5
-        thesong = song2
-
-      end
+      thesong = song2
 
     end
+
+    if themap.name == "floors" then
+      loader.start(function()
+          finishedLoading = true
+        end)
+      loader.newImage(enviro,'paralax',"enviro/floorsparalax.png")
+      loader.newImage(enviro,'floor', "enviro/floors.png")
+      loader.newImage(enviro,'sky',"enviro/floorssky.png")
+      loader.newImage(enviro,'pfloors', "enviro/floorsplayer.png")
+      loader.newImage(enviro, 'floorsveneer2',"enviro/floorsveneer2.png")
+      loader.newImage(enviro, 'floorsveneer1',"enviro/floorsveneer1.png")
+      me.x = 500
+      you.x = 3000
+      floor = 5898
+      me.y = 300
+      you.y = 300
+      enviro.rightwall = 5000
+      enviro.ds = 5
+      thesong = song2
+
+    end
+
   end
-  ma1fade= 100
-  ma2fade= 100
-  ma3fade= 100
-  ma4fade= 100
-  ya1fade= 100
-  ya2fade= 100
-  ya3fade= 100
-  ya4fade= 100
-  basefade = 80
+end
+ma1fade= 100
+ma2fade= 100
+ma3fade= 100
+ma4fade= 100
+ya1fade= 100
+ya2fade= 100
+ya3fade= 100
+ya4fade= 100
+basefade = 80
 
 
-  actionshotdur = 70
+actionshotdur = 70
 
 me.im = idle1
 you.im = idle1
 
-  function drawa(xx)
-    drawmytrail(xx)
-    
+function drawa(xx)
+  drawmytrail(xx)
+
   drawcolorstuff(xx)
-    bolttraildraw(xx)
-    if xx.im.xoff == nil then xx.im.xoff = 0 end
-    if xx.im.yoff == nil then xx.im.yoff = 0 end
-    love.graphics.setColor(255, 255, 255, 255)
-    love.graphics.draw(xx.im.im, xx.xanimate-xx.im.xoff*xx.lr, xx.y-xx.im.yoff, 0, xx.lr, 1)
-    if xx.im.c ~= nil then 
-      love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-      love.graphics.draw(xx.im.c, xx.xanimate-xx.im.xoff*xx.lr, xx.y-xx.im.yoff, 0, xx.lr, 1)
-    end
-    love.graphics.setColor(255, 255, 255, 255)
+  bolttraildraw(xx)
+  if xx.im.xoff == nil then xx.im.xoff = 0 end
+  if xx.im.yoff == nil then xx.im.yoff = 0 end
+  if xx.id == 2 then
+  love.graphics.setColor(180, 180, 180)
+    else
+  love.graphics.setColor(255, 255, 255, 255)
   end
+  love.graphics.draw(xx.im.im, xx.xanimate-xx.im.xoff*xx.lr, xx.y-xx.im.yoff, 0, xx.lr, 1)
+  if xx.im.c ~= nil then 
+    love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+    love.graphics.draw(xx.im.c, xx.xanimate-xx.im.xoff*xx.lr, xx.y-xx.im.yoff, 0, xx.lr, 1)
+  end
+  love.graphics.setColor(255, 255, 255, 255)
+end
 
 
-  function actionshotstuff(xx)
-    if xx.actionshot then
-      xx.numofspikes = 0
-      xx.uppercuthit = false
+function actionshotstuff(xx)
+  if xx.actionshot then
+    xx.numofspikes = 0
+    xx.uppercuthit = false
+    xx.hitsomeonewithpurp = false
 
-      if xx.color.n == xx.cchangeto.n and (xx.color.n~=xx.cantreturntothis) and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) then
-        if xx.color.n == 2 and xx.a4b then
+    if xx.color.n == xx.cchangeto.n and (xx.color.n~=xx.cantreturntothis) and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) and xx.combo<xx.maxcombo then
+      if xx.color.n == 2 and xx.a4b then
         xx.animcounter = 8
         xx.type = 2
         xx.im = greenk1
@@ -287,227 +294,217 @@ you.im = idle1
         combo(xx)
         xx.actionshot = false
         xx.actiontimer = 0
-        
-        end
+
       end
-      minzoom = minzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
-      maxzoom = maxzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
     end
-
-    ColorChange(xx)
-    ColorChanging(xx)
-
-    if xx.actiontimer == 1 
-    then xx.actionshot = false 
-      xx.actiontimer = 0
-      if not musicmute then
-        thesong:setPitch(1)
-      end
-
-      if not pause then
-        --deathsound:play()
-        collides:play()
-        --bcs:play()
-
-
-
-
-      end
-
-    elseif xx.actionshot == true and xx.actiontimer == 0 
-    then xx.actiontimer = actionshotdur
-    elseif xx.actiontimer > 0 
-    then xx.actiontimer = xx.actiontimer - 1
-      if not musicmute then
-        thesong:setPitch(xx.actiontimer/actionshotdur)
-      end
-    else xx.actiontimer = 0
-    end
-
+    minzoom = minzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
+    maxzoom = maxzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
   end
 
+  ColorChange(xx)
+  ColorChanging(xx)
+
+  if xx.actiontimer == 1 
+  then xx.actionshot = false 
+    xx.actiontimer = 0
+    if not musicmute then
+      thesong:setPitch(1)
+    end
+
+    if not pause then
+      --deathsound:play()
+      collides:play()
+      --bcs:play()
 
 
 
-  function settriangles()
-    mytriangles = {}
-    yourtriangles = {}
-    while table.getn(mytriangles) < 18
+
+    end
+
+  elseif xx.actionshot == true and xx.actiontimer == 0 
+  then xx.actiontimer = actionshotdur
+  elseif xx.actiontimer > 0 
+  then xx.actiontimer = xx.actiontimer - 1
+    if not musicmute then
+      thesong:setPitch(xx.actiontimer/actionshotdur)
+    end
+  else xx.actiontimer = 0
+  end
+
+end
+
+
+
+
+function settriangles()
+  mytriangles = {}
+  yourtriangles = {}
+  while table.getn(mytriangles) < 18
+  do 
+    table.insert(mytriangles, {(math.ceil(math.random(0,12))), (math.ceil(math.random(0,10))), (math.ceil(math.random(0,7)))})
+    table.insert(yourtriangles, {(math.ceil(math.random(0,12))), (math.ceil(math.random(0,10))), (math.ceil(math.random(0,7)))})
+  end
+end
+function drawtriangles()
+  for i,v in ipairs(mytriangles) do
+    for p,q in ipairs(mytriangles[i])
     do 
-      table.insert(mytriangles, {(math.ceil(math.random(0,12))), (math.ceil(math.random(0,10))), (math.ceil(math.random(0,7)))})
-      table.insert(yourtriangles, {(math.ceil(math.random(0,12))), (math.ceil(math.random(0,10))), (math.ceil(math.random(0,7)))})
-    end
-  end
-  function drawtriangles()
-    for i,v in ipairs(mytriangles) do
-      for p,q in ipairs(mytriangles[i])
-      do 
-        if p == 1 then love.graphics.setColor(a21r, a21g, a21b)
-        elseif p == 2 then love.graphics.setColor(a31r, a31g, a31b)
-        elseif p == 3 then love.graphics.setColor(a41r, a41g, a41b)
-        end
-        if q == 1 then
-          love.graphics.draw(triangle, ((520 + (p * 50)-ln)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,0, screenwidth/1440, screenheight/900)
-        elseif q == 2 then 
+      if p == 1 then love.graphics.setColor(a21r, a21g, a21b)
+      elseif p == 2 then love.graphics.setColor(a31r, a31g, a31b)
+      elseif p == 3 then love.graphics.setColor(a41r, a41g, a41b)
+      end
+      if q == 1 then
+        love.graphics.draw(triangle, ((520 + (p * 50)-ln)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,0, screenwidth/1440, screenheight/900)
+      elseif q == 2 then 
 
-          love.graphics.draw(triangle, ((570 + (p * 50)-ln)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,1.57079633, screenwidth/1440, screenheight/900)
-        elseif q == 3 then 
+        love.graphics.draw(triangle, ((570 + (p * 50)-ln)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,1.57079633, screenwidth/1440, screenheight/900)
+      elseif q == 3 then 
 
-          love.graphics.draw(triangle, ((570 + (p * 50)-ln)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*2, screenwidth/1440, screenheight/900)
-        elseif q == 4 then 
+        love.graphics.draw(triangle, ((570 + (p * 50)-ln)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*2, screenwidth/1440, screenheight/900)
+      elseif q == 4 then 
 
-          love.graphics.draw(triangle, ((520 + (p * 50)-ln)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*3, screenwidth/1440, screenheight/900)
-        end
+        love.graphics.draw(triangle, ((520 + (p * 50)-ln)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*3, screenwidth/1440, screenheight/900)
       end
     end
-    for i,v in ipairs(yourtriangles) do
-      for p,q in ipairs(yourtriangles[i])
-      do 
-        if p == 1 then love.graphics.setColor(a22r, a22g, a22b)
-        elseif p == 2 then love.graphics.setColor(a32r, a32g, a32b)
-        elseif p == 3 then love.graphics.setColor(a42r, a42g, a42b)
-        end
-        if q == 1 then
-          love.graphics.draw(triangle, ((1440 - 520 - 50 - (p * 50)+rn)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,0, screenwidth/1440, screenheight/900)
-        elseif q == 2 then 
+  end
+  for i,v in ipairs(yourtriangles) do
+    for p,q in ipairs(yourtriangles[i])
+    do 
+      if p == 1 then love.graphics.setColor(a22r, a22g, a22b)
+      elseif p == 2 then love.graphics.setColor(a32r, a32g, a32b)
+      elseif p == 3 then love.graphics.setColor(a42r, a42g, a42b)
+      end
+      if q == 1 then
+        love.graphics.draw(triangle, ((1440 - 520 - 50 - (p * 50)+rn)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,0, screenwidth/1440, screenheight/900)
+      elseif q == 2 then 
 
-          love.graphics.draw(triangle, ((1440 - 470 - 50 - (p * 50)+rn)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,1.57079633, screenwidth/1440, screenheight/900)
-        elseif q == 3 then 
+        love.graphics.draw(triangle, ((1440 - 470 - 50 - (p * 50)+rn)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,1.57079633, screenwidth/1440, screenheight/900)
+      elseif q == 3 then 
 
-          love.graphics.draw(triangle, ((1440 - 470 - 50 - (p * 50)+rn)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*2, screenwidth/1440, screenheight/900)
-        elseif q == 4 then 
+        love.graphics.draw(triangle, ((1440 - 470 - 50 - (p * 50)+rn)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*2, screenwidth/1440, screenheight/900)
+      elseif q == 4 then 
 
-          love.graphics.draw(triangle, ((1440 - 520 - 50 - (p * 50)+rn)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*3, screenwidth/1440, screenheight/900)
-        end
+        love.graphics.draw(triangle, ((1440 - 520 - 50 - (p * 50)+rn)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*3, screenwidth/1440, screenheight/900)
       end
     end
-    love.graphics.setColor(255,255,255)
   end
+  love.graphics.setColor(255,255,255)
+end
 
-  lights = function ()
-    if lighttimer >= 70
-    then
-      lighttimer = - math.random(100,300)
-    elseif lighttimer >= 50
-    then enviro.light = enviro.lightsoff
-      lighttimer = lighttimer + 1
-    elseif lighttimer >= 36 
-    then enviro.light = enviro.lightson
-      lighttimer = lighttimer + 1
-    elseif lighttimer >= 31 
-    then enviro.light = enviro.lightsoff
-      lighttimer = lighttimer + 1
-    else enviro.light = enviro.lightson
-      lighttimer = lighttimer + 1
+lights = function ()
+  if lighttimer >= 70
+  then
+    lighttimer = - math.random(100,300)
+  elseif lighttimer >= 50
+  then enviro.light = enviro.lightsoff
+    lighttimer = lighttimer + 1
+  elseif lighttimer >= 36 
+  then enviro.light = enviro.lightson
+    lighttimer = lighttimer + 1
+  elseif lighttimer >= 31 
+  then enviro.light = enviro.lightsoff
+    lighttimer = lighttimer + 1
+  else enviro.light = enviro.lightson
+    lighttimer = lighttimer + 1
 
 
 
 
 
+  end
+end
+me.wjt = 0
+me.initwy = 0
+you.wjt = 0
+you.initwy = 0
+--the x coord for either wall to walljump off of
+wallwalljump = 45
+--wallcheckhelper
+
+--when you do it from the right side it doesnt turn around, maybe check the lr
+
+me.walllr = 0
+me.wallx = 0
+you.walllr = 0
+you.wallx = 0
+
+function drawstreetprestuff()
+  love.graphics.draw(enviro.light, 4448, 1525)
+  lights()
+
+end
+drawstreetstuff = function()
+  love.graphics.draw(enviro.floorfloor, 0, floor-1, 0, 1, 20)
+  drawrubble()
+  love.graphics.draw(enviro.rafters,5608-502, 1536)
+  love.graphics.draw(enviro.buildingwall,-1500, 0)
+  love.graphics.draw(enviro.partitionwall,7027-510, 0)
+
+end
+drawlibrarystuff = function()
+  drawrubble()
+  love.graphics.draw(enviro.plibrary,0,0)
+  love.graphics.draw(enviro.librarylpartition,-1630, -61)
+  love.graphics.draw(enviro.libraryrpartition,enviro.rightwall-200, -61)
+  libraryveneer()
+end
+
+drawfloorsstuff = function()
+  drawrubble()
+  drawglass()
+  drawpapers()
+  love.graphics.draw(enviro.pfloors,0,0)
+  love.graphics.draw(partition,-1800+270, 1,0, 10,3.11)
+  love.graphics.draw(partition,enviro.rightwall-270, 1,0, 10,3.11)
+  floorsveneer()
+end
+
+enviro.rubble = love.graphics.newImage("enviro/rubble.png")
+enviro.glass = love.graphics.newImage("enviro/glass.png")
+enviro.spark = love.graphics.newImage("enviro/spark.png")
+rubble = {}
+glasseses = {}
+dust = {}
+papers = {}
+dustn = 0
+blackn = 0
+glassn = 0
+glassclarity = 255
+elar = frana
+function drawpapers()
+
+  for i = #papers, 1, -1 do
+    local temp = papers[i]
+    --if paper hits the ceiling
+    if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then
+      temp.j = 0
     end
-  end
-  me.wjt = 0
-  me.initwy = 0
-  you.wjt = 0
-  you.initwy = 0
-  --the x coord for either wall to walljump off of
-  wallwalljump = 45
-  --wallcheckhelper
-
-  --when you do it from the right side it doesnt turn around, maybe check the lr
- 
-  me.walllr = 0
-  me.wallx = 0
-  you.walllr = 0
-  you.wallx = 0
-  
-  function drawstreetprestuff()
-    love.graphics.draw(enviro.light, 4448, 1525)
-    lights()
+    if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then table.remove(papers,i) end
 
   end
-  drawstreetstuff = function()
-    love.graphics.draw(enviro.floorfloor, 0, floor-1, 0, 1, 20)
-    drawrubble()
-    love.graphics.draw(enviro.rafters,5608-502, 1536)
-    love.graphics.draw(enviro.buildingwall,-1500, 0)
-    love.graphics.draw(enviro.partitionwall,7027-510, 0)
-
-  end
-  drawlibrarystuff = function()
-    drawrubble()
-    love.graphics.draw(enviro.plibrary,0,0)
-    love.graphics.draw(enviro.librarylpartition,-1630, -61)
-    love.graphics.draw(enviro.libraryrpartition,enviro.rightwall-200, -61)
-    libraryveneer()
-  end
-
-  drawfloorsstuff = function()
-    drawrubble()
-    drawglass()
-    drawpapers()
-    love.graphics.draw(enviro.pfloors,0,0)
-    love.graphics.draw(partition,-1800+270, 1,0, 10,3.11)
-    love.graphics.draw(partition,enviro.rightwall-270, 1,0, 10,3.11)
-    floorsveneer()
-  end
-
-  enviro.rubble = love.graphics.newImage("enviro/rubble.png")
-  enviro.glass = love.graphics.newImage("enviro/glass.png")
-  enviro.spark = love.graphics.newImage("enviro/spark.png")
-  rubble = {}
-  glasseses = {}
-  dust = {}
-  papers = {}
-  dustn = 0
-  blackn = 0
-  glassn = 0
-  glassclarity = 255
-  elar = frana
-  function drawpapers()
-
-    for i = #papers, 1, -1 do
-      local temp = papers[i]
-      --if paper hits the ceiling
-      if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then
-        temp.j = 0
-      end
-      if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then table.remove(papers,i) end
-
+  for i,v in ipairs(papers)do
+  if not me.actionshot and not you.actionshot and not pause then
+    v.y = v.y - v.j
+    v.x = v.x + v.v
+    if v.v > 1 then v.v = v.v - .2
+    elseif v.v < -1 then v.v = v.v + .2
     end
-    for i,v in ipairs(papers)do
-    if not me.actionshot and not you.actionshot and not pause then
-      v.y = v.y - v.j
-      v.x = v.x + v.v
-      if v.v > 1 then v.v = v.v - .2
-      elseif v.v < -1 then v.v = v.v + .2
-      end
-      if v.j > -1 then v.j = v.j - .1
-      end
+    if v.j > -1 then v.j = v.j - .1
+    end
 
-      if math.abs(me.mid-v.x) < 25 and math.abs(me.y+27 - v.y) < 50 and me.v+me.j > 7
-      then v.v = v.v + me.v*.025
-        v.j = v.j + me.j*.01 + .1
-      end
-      if math.abs(you.mid-v.x) < 25 and math.abs(you.y+27 - v.y) < 50 and you.v+you.j > 7
-      then v.v = v.v + you.v*.025
-        v.j = v.j + you.j*.01 + .1
-      end
+    if math.abs(me.mid-v.x) < 25 and math.abs(me.y+27 - v.y) < 50 and me.v+me.j > 7
+    then v.v = v.v + me.v*.025
+      v.j = v.j + me.j*.01 + .1
+    end
+    if math.abs(you.mid-v.x) < 25 and math.abs(you.y+27 - v.y) < 50 and you.v+you.j > 7
+    then v.v = v.v + you.v*.025
+      v.j = v.j + you.j*.01 + .1
+    end
 
-      for p,q in ipairs(me.tornado)  do
-        if math.abs(q.x-v.x) < 25 and math.abs(q.y - v.y) < 50 
-        then 
-          if v.x < me.thecenter then
-            v.v = math.random(-1,10)
-          else
-            v.v = math.random(-10,1)
-          end
-          v.j = math.random(5,10)
-        end
-      end
-      for p,q in ipairs(you.tornado) do
-        if math.abs(q.x-v.x) < 25 and math.abs(q.y - v.y) < 50 
-        then if v.x < you.thecenter then
+    for p,q in ipairs(me.tornado)  do
+      if math.abs(q.x-v.x) < 25 and math.abs(q.y - v.y) < 50 
+      then 
+        if v.x < me.thecenter then
           v.v = math.random(-1,10)
         else
           v.v = math.random(-10,1)
@@ -515,21 +512,31 @@ you.im = idle1
         v.j = math.random(5,10)
       end
     end
-    if v.n < papertime then
-      v.n = v.n + 1
-    else v.n = 0
-      v.lr = -v.lr
+    for p,q in ipairs(you.tornado) do
+      if math.abs(q.x-v.x) < 25 and math.abs(q.y - v.y) < 50 
+      then if v.x < you.thecenter then
+        v.v = math.random(-1,10)
+      else
+        v.v = math.random(-10,1)
+      end
+      v.j = math.random(5,10)
     end
   end
-
-
-  if v.n < 10 then love.graphics.draw(paper1,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-  elseif v.n < 20 then love.graphics.draw(paper2,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-  elseif v.n < 30 then love.graphics.draw(paper3,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-  elseif v.n < papertime -20 then love.graphics.draw(paper4,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-  elseif v.n < papertime -10 then love.graphics.draw(paper3,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-  elseif v.n < papertime then love.graphics.draw(paper2,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+  if v.n < papertime then
+    v.n = v.n + 1
+  else v.n = 0
+    v.lr = -v.lr
   end
+end
+
+
+if v.n < 10 then love.graphics.draw(paper1,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+elseif v.n < 20 then love.graphics.draw(paper2,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+elseif v.n < 30 then love.graphics.draw(paper3,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+elseif v.n < papertime -20 then love.graphics.draw(paper4,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+elseif v.n < papertime -10 then love.graphics.draw(paper3,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+elseif v.n < papertime then love.graphics.draw(paper2,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+end
 
 end
 end
@@ -608,7 +615,7 @@ function drawrubble()
   if not me.actionshot and not you.actionshot and not pause then
     v.y = v.y - v.j*rampspeed
     v.x = v.x + v.v*rampspeed
-    v.j = v.j - .3*rampspeed
+    v.j = v.j - .2*rampspeed
     blackn = math.random(80,150)
   end
   love.graphics.setColor(blackn,blackn,blackn)
@@ -616,96 +623,44 @@ function drawrubble()
   love.graphics.setColor(255,255,255)
 end
 end
-function makerunrubble(why,ex,vee)
+function makerunrubble(why,ex,vee, lr)
   if rampcanhit then
     for i = 10, 1, -1 do
-    table.insert(dust,{x = ex, y = why, v=math.random(vee/2, vee) + math.random()*lr, j = math.random(2,7)+math.random()})
-  end
+      table.insert(dust,{x = ex, y = why, v=math.random(vee/2, vee) + math.random()*lr, j = math.random(1,5)+math.random()})
+    end
   end
 end
 function makeslidedust(why,ex,vee)
   if rampcanhit then
-  if vee > minvfordust and math.random() > .5 then
-    table.insert(dust,{x = ex, y = why, v=vee/3 + math.random(3), j = math.random(0,vee/5)})
-  elseif vee < -minvfordust and math.random() > .5 then
-    table.insert(dust,{x = ex, y = why, v=vee/3 - math.random(3), j = math.random(0,-vee/5)})
+    if vee > minvfordust and math.random() > .5 then
+      table.insert(dust,{x = ex, y = why, v=vee/3 + math.random(3), j = math.random(0,vee/5)})
+    elseif vee < -minvfordust and math.random() > .5 then
+      table.insert(dust,{x = ex, y = why, v=vee/3 - math.random(3), j = math.random(0,-vee/5)})
+    end
   end
-  end
-  
+
 end
 
+function makenrubble(ty, ex,why,vee,jay, n)
 
-function makerubble(ex,why,vee,jay)
-  
-  if vee > 0 then
-    table.insert(rubble,{x = ex, y = why, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+5, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+4, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+6, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+8, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+10, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+15, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+14, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+16, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+18, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+50, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+55, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+54, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+56, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+58, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+30, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+35, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+34, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+36, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+38, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+40, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+45, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+44, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+46, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+48, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+50, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+55, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+54, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+56, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+58, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+60, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+62, v=vee + math.random(5), j = jay-1*math.random(5)})
-  else
-    table.insert(rubble,{x = ex, y = why, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+5, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+4, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+6, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+8, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+10, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+15, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+14, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+16, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+18, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+50, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+55, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+54, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+56, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+58, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+30, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+35, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+34, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+36, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+38, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+40, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+45, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+44, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+46, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+48, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+50, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+55, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+54, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+56, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+58, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+60, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(rubble,{x = ex, y = why+62, v=vee - math.random(5), j = jay-1*math.random(5)})
+  if ty == "vert" then 
+    for i = n, 1, -1 do
+      if vee > 0 then
+        table.insert(rubble,{x = ex, y = why-i*2, v=math.random(0, vee) + math.random(), j = jay+1*math.random(5)+math.random()})
+      else
+        table.insert(rubble,{x = ex, y = why-i*2, v=math.random(0, vee) - math.random(), j = jay+1*math.random(5)+math.random()})
+      end
+    end
+  elseif ty == "horiz" then
+
+  for i = n, 1, -1 do
+    if vee > 0 then
+      table.insert(rubble,{x = ex, y = why, v=math.random(0, vee) + math.random(), j = jay+1*math.random(5)+math.random()})
+    else
+      table.insert(rubble,{x = ex, y = why, v=math.random(0, vee) - math.random(), j = jay+1*math.random(5)+math.random()})
+    end
   end
-
-
+end
 end
 function makeglass (ex,why,vee,jay)
   if vee > 0 then
@@ -1669,7 +1624,7 @@ death = function()
     you.xleft = you.x + 30
     you.mid = you.x + 15
 
-    if not xx.slowdown and not xx.slide and not xx.stop and not xx.pause
+    if not xx.slowdown and not xx.slide and not xx.stop and not xx.pause and not xx.flinch
     and (xx.dodgetype~=2 and xx.dodgetype >-1)
     then
       if xx.right then xx.lr = 1
@@ -1731,63 +1686,22 @@ death = function()
       idleme = 0
     end
   end
-
-  walky = function ()
-
-
-    if you.running then 
-      you.walktimer = you.walktimer + 1*rampspeed
-
-      if you.walktimer >= runpace+2 then you.im = run4 
-        you.walktimer = 0 
-        repplay(you.me.runsound)
-        makerunrubble(you.y+50,you.mid,-you.v,you.lr)
-      elseif you.walktimer >= runpace+1 then you.im = run4 
-        makerunrubble(you.y+50,you.mid,-you.v,you.lr)
-      elseif you.walktimer >= runpace/2 + 2 then you.im = run3 
-      elseif you.walktimer >= runpace/2 then you.im = run2 
-        makerunrubble(you.y+50,you.mid,-you.v,you.lr)
-        repplay(you.me.runsound)
-      elseif you.walktimer >= 0 then you.im = run1 
-      end  
-    else
-
-      if you.walktimer < 7 then 
-        you.im = walk1
-        you.walktimer = you.walktimer + 1*rampspeed
-      elseif you.walktimer >= 7 and you.walktimer < 14 then
-        you.im = walk2
-        you.walktimer = you.walktimer + 1*rampspeed
-      elseif you.walktimer >= 14 and you.walktimer < 21 then
-        you.im = walk3
-        you.walktimer = you.walktimer + 1*rampspeed
-      elseif you.walktimer >= 21 and you.walktimer < 28 then
-        you.im = walk4
-        you.walktimer = you.walktimer + 1*rampspeed
-      elseif you.walktimer >= 28 and you.walktimer < 35 then
-        you.im = walk5
-        you.walktimer = you.walktimer + 1*rampspeed
-      else
-        you.walktimer = 0
-      end
-    end
-  end
   walkxx = function (xx)
 
-        xx.walktimer = xx.walktimer + 1*rampspeed
+    xx.walktimer = xx.walktimer + 1*rampspeed
 
     if xx.running then 
 
       if xx.walktimer >= runpace+2 then xx.im = run4 
         xx.walktimer = 0
-        repplay(me.runsound)
+        repplay(xx.runsound)
         makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
-      elseif me.walktimer >= runpace + 1 then me.im = run4 
-        makerunrubble(xx.y+50,me.mid,-xx.v,xx.lr)
+      elseif xx.walktimer >= runpace + 1 then xx.im = run4 
+        makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
       elseif xx.walktimer >= runpace/2 + 2 then xx.im = run3 
       elseif xx.walktimer >= runpace/2 then xx.im = run2 
         makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
-        repplay(me.runsound)
+        repplay(xx.runsound)
       elseif xx.walktimer >= 0 then xx.im = run1 
       end  
     else
@@ -1799,10 +1713,10 @@ death = function()
         xx.im = walk3
       elseif xx.walktimer >= 21 and xx.walktimer < 28 then
         xx.im = walk4
-      elseif me.walktimer >= 28 and xx.walktimer < 35 then
+      elseif xx.walktimer >= 28 and xx.walktimer < 35 then
         xx.im = walk5
       else
-        me.walktimer = 0
+        xx.walktimer = 0
       end
     end
   end
@@ -1874,7 +1788,7 @@ death = function()
     then
       jumpy()
     else
-      walky()
+      walkxx(you)
     end
 
 
@@ -1893,7 +1807,7 @@ death = function()
     then
       jumpme()
     else
-      walkme()
+      walkxx(me)
     end
 
   end
@@ -1902,51 +1816,37 @@ death = function()
 
   sparks = {}
 
-  function makesparks(why,ex,vee, jay, arr,gee,bee)
-    table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee})
+  function makesparks(ex,why,vee, jay, arr,gee,bee)
 
-    table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay,0),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee})
+    for i = 10, 1, -1 do
+      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay),r=arr,g=gee,b=bee, rot = math.random(0,360)})
+      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay),r=arr,g=gee,b=bee, rot = math.random(0,360)})
+      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0),r=arr,g=gee,b=bee, rot = math.random(0,360)})
+      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee, rot = math.random(0,360)})
 
-    table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee})
+    end
 
-    table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay,0),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee})
+  end
 
-    table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee})
+  function makensparks(ex,why,vee, jay, arr,gee,bee, n)
+    for i = n, 1, -1 do
+      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee, rot = math.random(0,360)})
+      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee, rot = math.random(0,360)})
+      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0)+math.random(),r=arr,g=gee,b=bee, rot = math.random(0,360)})
+      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2)+math.random(),r=arr,g=gee,b=bee, rot = math.random(0,360)})
 
-    table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay,0),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee})
+    end
 
 
   end
 
 
   function makeslashsparks(why,ex,vee, jay, arr,gee,bee)
-    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-    table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee})
-
-
+    if rampcanhit then
+      for i = 10, 1, -1 do
+        table.insert(sparks,{x = ex, y = why, v=vee+math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee,rot=math.random(0,360)})
+      end
+    end
   end
 
 
@@ -1963,9 +1863,10 @@ death = function()
       v.y = v.y - v.j*rampspeed
       v.x = v.x + v.v*rampspeed
       v.j = v.j - .1*rampspeed
+      v.rot = v.rot + math.random() * rampspeed 
     end
-    love.graphics.setColor(v.r,v.g,v.b)
-    love.graphics.draw(enviro.spark,v.x,v.y-2,math.random(0,10)*rampspeed,.3,.3)
+    love.graphics.setColor(v.r,v.g,v.b,math.random(150,255))
+    love.graphics.draw(enviro.spark,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)
     love.graphics.setColor(255,255,255)
 
   end

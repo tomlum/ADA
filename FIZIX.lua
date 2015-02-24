@@ -118,6 +118,9 @@ you.ctim = 0
 me.running = false
 you.running = false
 
+me.runpace = defrunpace
+you.runpace = defrunpace
+
 --if me.running then jump height is half
 
 function fallthroughglassfloor()
@@ -150,16 +153,16 @@ function runrunrun()
 
     if xx.run and xx.running and (xx.right or xx.left) and xx.run and not xx.block and not xx.slide and not xx.dodge then         
       if xx.right and xx.v > 0 then
-        xx.v = runspeed
+        xx.v = xx.color.s.speed*runspeed
       elseif xx.left and xx.v < 0 then
-        xx.v = -runspeed
+        xx.v = -xx.color.s.speed*runspeed
       end
 
 
 
 
 
-    elseif math.abs(xx.v) > speedminit-accel*2 and (xx.left or xx.right) and xx.g  and xx.run and not xx.block and not xx.slide and not xx.dodge then
+    elseif math.abs(xx.v) > xx.color.s.speed*speedminit-accel*2 and (xx.left or xx.right) and xx.g  and xx.run and not xx.block and not xx.slide and not xx.dodge then
       xx.a1 = false
       xx.a2 = false
       xx.a3 = false
@@ -359,13 +362,13 @@ transferofenergy(xx)
       xx.firstjump = false
       if xx.jt > 0
       then xx.jt = xx.jt -  1*rampspeed
-      elseif xx.jt <= 0 and xx.j > - maxgravity
+      elseif xx.jt <= 0 and xx.j > - maxgravity*xx.color.s.weight
       then xx.jt = xx.jt -  1*rampspeed
         if xx.j >= 0 then
-          xx.j = xx.j - risegrav*rampspeed
+          xx.j = xx.j - risegrav*rampspeed*xx.color.s.weight
         else
 
-          xx.j = xx.j - dropgrav*rampspeed
+          xx.j = xx.j - dropgrav*rampspeed*xx.color.s.weight
         end
         --elseif xx.jt <= 0 and xx.ht > 0
         --then xx.j = 0
