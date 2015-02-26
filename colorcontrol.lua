@@ -30,9 +30,9 @@ you.cchangeto = {n = 0, {r = 255, g = 255, b = 255}}
 
 function ColorChange(xx)
 
-  if xx.rightb then 
+  if xx.rightbump then 
     xx.cchangeto = xx.rightc
-  elseif xx.leftb then
+  elseif xx.leftbump then
     xx.cchangeto = xx.leftc 
   else xx.cchangeto = thecolors[0]
   end

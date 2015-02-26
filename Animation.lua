@@ -259,8 +259,6 @@ you.im = idle1
 function drawa(xx)
   drawmytrail(xx)
 
-  drawcolorstuff(xx)
-  bolttraildraw(xx)
   if xx.im.xoff == nil then xx.im.xoff = 0 end
   if xx.im.yoff == nil then xx.im.yoff = 0 end
   if xx.id == 2 then
@@ -274,6 +272,8 @@ function drawa(xx)
     love.graphics.draw(xx.im.c, xx.xanimate-xx.im.xoff*xx.lr, xx.y-xx.im.yoff, 0, xx.lr, 1)
   end
   love.graphics.setColor(255, 255, 255, 255)
+  drawcolorstuff(xx)
+  bolttraildraw(xx)
 end
 
 
@@ -1690,7 +1690,7 @@ death = function()
 
     xx.walktimer = xx.walktimer + 1*rampspeed
 
-    if xx.running then 
+    if xx.running and not xx.dodge then 
 
       if xx.walktimer >= xx.runpace+2 then xx.im = run4 
         xx.walktimer = 0

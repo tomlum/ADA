@@ -34,7 +34,6 @@ me.cantreturntothis = 0
 you.cantreturntothis = 0
 
 
-
 function combo(xx, func)
 
 
@@ -160,8 +159,14 @@ you.oldft = 0
 
 function attackmanage(xx)
 
-  if xx.type < 4 and not xx.g and (xx.type~=2 and xx.color.n~=2) then xx.animcounter = 0
-  elseif xx.type >= 4 and xx.g then xx.animcounter = 0
+  if xx.type < 4 and not xx.g and (xx.type~=2 and xx.color.n~=2) then 
+    xx.animcounter = 0
+  elseif xx.type >= 4 and xx.g then 
+    xx.animcounter = 0
+    if xx.type == 5 and xx.color.n == 1 then
+      xx.purpgroundtimer = -at.p.ak.time
+
+    end
   end
 
   if xx.landing then xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false end
@@ -183,10 +188,7 @@ function attackmanage(xx)
   elseif xx.currentanim == 2 then
     gandg(xx)
   end
-  if(math.abs(xx.v) > math.abs(xx.oldv)) then
-    xx.v = xx.oldv + (xx.v-xx.oldv)*(rampspeed)
-  end
-  xx.oldft = xx.ft
+
 
 
   --  if(math.abs(xx.j) > math.abs(xx.oldj)) then
@@ -195,6 +197,15 @@ function attackmanage(xx)
 
   --xx.oldj = xx.j
 
+end
+function postattackmanage(xx)
+  if(math.abs(xx.v) > math.abs(xx.oldv)) then
+    xx.v = xx.oldv + ((xx.v-xx.oldv)/xx.color.s.weight)*(rampspeed)
+  end
+  if(math.abs(xx.ft) > math.abs(xx.oldft)) then
+    xx.ft = xx.oldft + (xx.ft-xx.oldft)*(rampspeed)
+  end
+  xx.oldft = xx.ft
 end
 
 
@@ -328,7 +339,7 @@ you.dodgedelaycounter = 0
 you.dodgecounter = 0
 me.dodgedelaycounter = 0
 me.dodgecounter = 0
-backdodgetime = 15
+backdodgetime = 20
 dodgetime = 23
 backdodgetime = 15
 turnaroundtime = 20
@@ -369,6 +380,8 @@ newforwarddodge = function(xx)
       xx.pause = false
       xx.dodgedelaycounter = 0
       xx.stop = true
+      xx.purpgroundtimer = 0
+      xx.landingcounter = 0
     end
 
     if xx.dodgedelaycounter > 0 then 
@@ -436,11 +449,11 @@ newforwarddodge = function(xx)
         xx.im = dodge21
       end
     elseif xx.dodgetype == 0 and xx.dodgerefreshtimer == 0 then
-      if((xx.lr > 0 and xx.right) or (xx.lr < 0 and xx.left)) and xx.block then
+      if xx.g and ((xx.lr > 0 and xx.rightb and xx.down) or (xx.lr < 0 and xx.leftb and xx.down))  then
         xx.dodgetype = 1
         xx.dodgecounter = dodgetime
         xx.currentdodgev = xx.v
-      elseif((xx.lr < 0 and xx.right) or (xx.lr > 0 and xx.left)) and xx.block and not xx.running  then
+      elseif xx.g and ((xx.lr < 0 and xx.rightb and xx.down) or (xx.lr > 0 and xx.leftb and xx.down))  and not xx.running  then
         xx.dodgetype = -1
         xx.dodgecounter = backdodgetime
       end

@@ -15,8 +15,9 @@ dropgrav = .4
 
 jforlanding = 20
 landingfric = .3
-landingwait = 10
-shortlandwait = 7
+landingwait = 13
+shortlandwait = 10
+frameswhilelandcantmove = 8
 
 maxgravity = 28
 speedminit = 7
@@ -70,10 +71,10 @@ windft = 4
 sminedam = 12
 gsft = 10
 
-hopj = 22
-hopj2 = 20
-hopv2 = speedlimit + 2
-climbj = 6
+hopj = 15
+hopj2 = 10
+hopv2 = speedlimit -5
+climbj = 9
 
 purplefuse = -70
 

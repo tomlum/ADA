@@ -48,14 +48,14 @@ end
 function transferofenergy(xx)
   if xx.g and xx.j<0 then 
     if xx.v > 0 then
-      xx.v = xx.v - xx.j/2 
+      xx.v = xx.v - xx.j/10 
     elseif xx.v < 0 then
-      xx.v = xx.v + xx.j/2 
+      xx.v = xx.v + xx.j/10 
     else 
       if math.random() > .5 then
-      xx.v = xx.v + xx.j/3 
+      xx.v = xx.v + xx.j/20 
       else
-      xx.v = xx.v - xx.j/3 
+      xx.v = xx.v - xx.j/20
         end
       end
     end
@@ -199,7 +199,7 @@ climbs = function(xx)
         xx.g = false
         xx.j = hopj
         repplay(xx.jumpd) 
-      elseif me.left then 
+      elseif xx.left then 
         xx.g = false
         xx.j = hopj2
         xx.v = -hopv2
@@ -244,7 +244,7 @@ transferofenergy(xx)
         xx.holda = true
       end
   
-  if z.down  then 
+  if (xx.g and xx.doubledown) or (not xx.g and xx.down) then 
     xx.gothroughplats = true
   else
     xx.gothroughplats = false
@@ -295,18 +295,15 @@ transferofenergy(xx)
       xx.firstjump = true
       xx.g = false
       repplay(xx.jumpd)
-    elseif z.right and xx.v >= xx.push and xx.stop == false and not xx.flinch and xx.landingcounter < 6
+    elseif z.right and xx.v >= xx.push and xx.stop == false and not xx.flinch and xx.landingcounter < frameswhilelandcantmove
     and not z.left
     then 
       vroomright(xx)
-    elseif z.left and xx.v <= xx.push and xx.stop == false and not xx.flinch and xx.landingcounter < 6
+    elseif z.left and xx.v <= xx.push and xx.stop == false and not xx.flinch and xx.landingcounter < frameswhilelandcantmove
     and not z.right
     then 
       vroomleft(xx)
-    elseif z.down and xx.onplat and not xx.busy and not xx.dodge
-    and not z.a1 and not z.a2 and not z.a3 and not z.a4
-    then
-      xx.y = xx.y + 4
+   
     else
       fric(xx)
     end
@@ -317,7 +314,7 @@ transferofenergy(xx)
       xx.landingcounter = xx.landingcounter - 1*rampspeed
     else xx.landingcounter = 0
     end
-    if z.blockb and math.abs(z.j) + math.abs(z.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j) and xx.j > 0
+    if z.blockb and (not xx.holda and xx.a1b) and math.abs(z.j) + math.abs(z.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j) and xx.j > 0
     then 
       if climbplatcheck(xx.x, xx.y+xx.height/2, xx.lr, xx.height/2, xx.v, xx.j) then
         xx.ctim = 7

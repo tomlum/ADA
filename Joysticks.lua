@@ -5,6 +5,54 @@
 --341a000000000000005f7000000000000
 
 
+
+doubletime = 14
+me.doubledown = false
+me.dubtimer = 0
+you.doubledown = false
+you.dubtimer = 0
+function doubledown(xx)
+
+  xx.dubtimer = rodib(xx.dubtimer,1,0)
+  
+  if not xx.down and xx.doubledown then
+    xx.dubtimer = 0
+    xx.doubledown = false
+  elseif xx.down and xx.dubtimer > 0 then
+    xx.doubledown = true
+    xx.dubtimer = 10
+  elseif not xx.down and xx.dubtimer < 0 then
+    xx.dubtimer = -xx.dubtimer
+  elseif xx.down and xx.dubtimer <= 0 then
+    xx.dubtimer = -doubletime
+  end
+
+end
+
+
+
+--things that you need regardless of the input type
+function controlsstuff(xx)
+  doubledown(xx)
+  
+  xx.a1 = xx.a1b
+          xx.a2 = xx.a2b
+          xx.a3 = xx.a3b
+          xx.a4 = xx.a4b
+          xx.block = xx.blockb
+          xx.right = xx.rightb
+          xx.left = xx.leftb
+          if xx.down then xx.right = false xx.left = false end
+  
+    if xx.blockb then 
+      xx.a1 = false
+      xx.a2 = false
+      xx.a3 = false
+      xx.a4 = false
+    end
+
+end
+
 function keyboardcontrols()
 
 
@@ -14,22 +62,24 @@ function keyboardcontrols()
 
           me.up = false
           me.down = false
-          me.left = false
-          me.right = false
-          me.a1 = false
-          me.a2 = false
-          me.a3 = false
+          me.leftbump = false
+          me.rightbump = false
+          me.a1b = false
+          me.a2b = false
+          me.a3b = false
+          me.a4b = false
           me.block = false
 
 
 
           you.up = false
           you.down = false
-          you.left = false
-          you.right = false
-          you.a1 = false
-          you.a2 = false
-          you.a3 = false
+          you.leftbump = false
+          you.rightbump = false
+          you.a1b = false
+          you.a2b = false
+          you.a3b = false
+          you.a4b = false
           you.block = false
 
         else
@@ -37,23 +87,23 @@ function keyboardcontrols()
           me.start = love.keyboard.isDown("q")
           me.up = love.keyboard.isDown("w")
           me.down = love.keyboard.isDown("s")
-          me.left = love.keyboard.isDown("a")
-          me.right = love.keyboard.isDown("d")
+          me.leftb = love.keyboard.isDown("a")
+          me.rightb = love.keyboard.isDown("d")
           me.a1b = love.keyboard.isDown("t")
           me.a2b = love.keyboard.isDown("f")
           me.a3b = love.keyboard.isDown("h")
           me.a4b = love.keyboard.isDown("g")
           me.blockb = love.keyboard.isDown("e")
           me.run = love.keyboard.isDown("r")
-          me.rightb = love.keyboard.isDown("2")
-          me.leftb = love.keyboard.isDown("1")
+          me.rightbump = love.keyboard.isDown("2")
+          me.leftbump = love.keyboard.isDown("1")
 
 
 
           you.up = love.keyboard.isDown("i")
           you.down = love.keyboard.isDown("k")
-          you.left = love.keyboard.isDown("j")
-          you.right = love.keyboard.isDown("l")
+          you.leftb = love.keyboard.isDown("j")
+          you.rightb = love.keyboard.isDown("l")
           you.a1b = love.keyboard.isDown("up")
           you.a4b = love.keyboard.isDown("down")
           you.a2b = love.keyboard.isDown("left")
@@ -61,17 +111,10 @@ function keyboardcontrols()
           you.blockb = love.keyboard.isDown("o")
           you.start = love.keyboard.isDown("u")
           you.run = love.keyboard.isDown("p")
-          you.rightb = love.keyboard.isDown("0")
-          you.leftb = love.keyboard.isDown("9")
+          you.rightbump = love.keyboard.isDown("0")
+          you.leftbump = love.keyboard.isDown("9")
 
-          you.a1 = you.a1b
-          you.a2 = you.a2b
-          you.a3 = you.a3b
-          you.a4 = you.a4b
-          me.a1 = me.a1b
-          me.a2 = me.a2b
-          me.a3 = me.a3b
-          me.a4 = me.a4b
+     
 
         end
 
@@ -317,25 +360,21 @@ function jjstick(xx)
 
 
 
-    xx.rightb = xx.joystick:getGamepadAxis("triggerright") > .5
-    xx.leftb = xx.joystick:getGamepadAxis("triggerleft") > .5
+    xx.rightbump = xx.joystick:getGamepadAxis("triggerright") > .5
+    xx.leftbump = xx.joystick:getGamepadAxis("triggerleft") > .5
 
   xx.jly = xx.joystick:getGamepadAxis("lefty")
   xx.jlx = xx.joystick:getGamepadAxis("leftx")
 
   xx.leftdeadzone = math.abs(xx.jlx/math.cos(math.atan(-xx.jly/xx.jlx))) < .3
 
-xx.a1 = xx.a1b
-          xx.a2 = xx.a2b
-          xx.a3 = xx.a3b
-          xx.a4 = xx.a4b
+
 
   if not xx.leftdeadzone then
     xx.angle = math.atan(-xx.joystick:getGamepadAxis("lefty")/(math.abs(xx.joystick:getGamepadAxis("leftx"))))
   else xx.angle = 0
   end
 
-  xx.gv = boltspeed*math.cos(xx.angle)
 
 
 

@@ -5,6 +5,86 @@
 --341a000000000000005f7000000000000
 
 
+function keyboardcontrols()
+
+
+
+
+        if me.health<0 or you.health<0 then
+
+          me.up = false
+          me.down = false
+          me.leftb = false
+          me.rightbump = false
+          me.a1b = false
+          me.a2b = false
+          me.a3b = false
+          me.a4b = false
+          me.block = false
+
+
+
+          you.up = false
+          you.down = false
+          you.leftb = false
+          you.rightbump = false
+          you.a1b = false
+          you.a2b = false
+          you.a3b = false
+          you.a4b = false
+          you.block = false
+
+        else
+
+          me.start = love.keyboard.isDown("q")
+          me.up = love.keyboard.isDown("w")
+          me.down = love.keyboard.isDown("s")
+          me.left = love.keyboard.isDown("a")
+          me.right = love.keyboard.isDown("d")
+          me.a1b = love.keyboard.isDown("t")
+          me.a2b = love.keyboard.isDown("f")
+          me.a3b = love.keyboard.isDown("h")
+          me.a4b = love.keyboard.isDown("g")
+          me.blockb = love.keyboard.isDown("e")
+          me.run = love.keyboard.isDown("r")
+          me.rightbump = love.keyboard.isDown("2")
+          me.leftb = love.keyboard.isDown("1")
+
+
+
+          you.up = love.keyboard.isDown("i")
+          you.down = love.keyboard.isDown("k")
+          you.left = love.keyboard.isDown("j")
+          you.right = love.keyboard.isDown("l")
+          you.a1b = love.keyboard.isDown("up")
+          you.a4b = love.keyboard.isDown("down")
+          you.a2b = love.keyboard.isDown("left")
+          you.a3b = love.keyboard.isDown("right")
+          you.blockb = love.keyboard.isDown("o")
+          you.start = love.keyboard.isDown("u")
+          you.run = love.keyboard.isDown("p")
+          you.rightbump = love.keyboard.isDown("0")
+          you.leftb = love.keyboard.isDown("9")
+
+          you.a1 = you.a1b
+          you.a2 = you.a2b
+          you.a3 = you.a3b
+          you.a4 = you.a4b
+          you.block = you.blockb
+          me.a1 = me.a1b
+          me.a2 = me.a2b
+          me.a3 = me.a3b
+          me.a4 = me.a4b
+          me.block = me.blockb
+          
+          if me.down then me.right = false me.left = false end
+          if you.down then you.right = false you.left = false end
+
+        end
+
+end
+
+
 
 me.leftdeadzone = false
 you.leftdeadzone = false
@@ -13,7 +93,7 @@ love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "start", "bu
 love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "leftx", "axis", 1)
 love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "lefty", "axis", 2)
 love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "rightx", "axis", 6)
-love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "you.righty", "axis", 3)
+love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "righty", "axis", 3)
 love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "leftstick", "button", 5)
 love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "rightstick", "button", 6)
 
@@ -137,7 +217,7 @@ function jjstick(xx)
   xx.gupv = 0
   xx.gv = boltspeed
 
-  xx.jry = xx.joystick:getGamepadAxis("you.righty")
+  xx.jry = xx.joystick:getGamepadAxis("righty")
   xx.jrx = xx.joystick:getGamepadAxis("rightx")
 
 
@@ -150,36 +230,28 @@ function jjstick(xx)
       or xx.jry/xx.jrx <= -1)
     and xx.jry < 0
     then
-      xx.a1 = true
+      xx.a1b = true
     end
 
     if xx.jry/xx.jrx >= -1
     and xx.jry/xx.jrx <= 1
     and xx.jrx < 0
     then
-      if xx.flip > 0 then
-        xx.a2 = true
-      elseif xx.flip < 0 then 
-        xx.a3 = true
-      end
+      xx.a2b = true
     end
 
     if xx.jry/xx.jrx >= -1
     and xx.jry/xx.jrx <= 1
     and xx.jrx > 0
     then
-      if xx.flip > 0 then
-        xx.a3 = true
-      elseif xx.flip < 0 then 
-        xx.a2 = true
-      end
+        xx.a3b = true
     end
 
     if (xx.jry/xx.jrx >= 1
       or xx.jry/xx.jrx <= -1)
     and xx.jry > 0
     then
-      xx.a4 = true
+      xx.a4b = true
     end
   end
 
@@ -246,13 +318,13 @@ function jjstick(xx)
   end
 
   -- if 
-  --      xx.joystick:getGamepadAxis("you.righty") > .4 then
+  --      xx.joystick:getGamepadAxis("righty") > .4 then
   --     xx.block = true
   -- end 
 
 
 
-    xx.rightb = xx.joystick:getGamepadAxis("triggerright") > .5
+    xx.rightbump = xx.joystick:getGamepadAxis("triggerright") > .5
     xx.leftb = xx.joystick:getGamepadAxis("triggerleft") > .5
 
   xx.jly = xx.joystick:getGamepadAxis("lefty")
@@ -260,7 +332,12 @@ function jjstick(xx)
 
   xx.leftdeadzone = math.abs(xx.jlx/math.cos(math.atan(-xx.jly/xx.jlx))) < .3
 
-
+xx.a1 = xx.a1b
+          xx.a2 = xx.a2b
+          xx.a3 = xx.a3b
+          xx.a4 = xx.a4b
+          xx.block = xx.blockb
+          if xx.down then xx.right = false xx.left = false end
 
   if not xx.leftdeadzone then
     xx.angle = math.atan(-xx.joystick:getGamepadAxis("lefty")/(math.abs(xx.joystick:getGamepadAxis("leftx"))))

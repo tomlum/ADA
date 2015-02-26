@@ -33,6 +33,98 @@ you.uppercuthit = false
 me.cantreturntothis = 0
 you.cantreturntothis = 0
 
+
+
+function combo(xx, func)
+
+
+
+  if xx.color.n ~= xx.cchangeto.n and xx.cancombo
+  then
+    if func~= nil then func() end
+    xx.actionshot = true
+    xx.cancombo = false
+  end
+  if not xx.holda and xx.currentanim == xx.color.n and xx.combo<xx.maxcombo then
+
+    if xx.im==greenk1 then
+      xx.type = 2
+      xx.animcounter = 1
+      xx.combo = xx.combo + 1
+
+
+    elseif xx.a2 or xx.a3 then
+      xx.numofspikes = 0
+      if func~= nil then func() end
+      if xx.color.n==0 then
+        xx.type = 1
+        if xx.repcounter < bbnumpunch then
+          xx.repcounter = xx.repcounter+1
+          if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+          xx.animcounter = 1
+        end
+      elseif xx.color.n==1 and xx.repcounter < at.p.p.max then
+        xx.type = 1
+        xx.animcounter = 1
+        xx.repcounter = xx.repcounter + 1
+        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+      elseif xx.color.n==2 and xx.repcounter < at.g.p.max then
+        xx.type = 1
+        xx.animcounter = 1
+        xx.repcounter = xx.repcounter + 1
+        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+
+
+      end
+
+    elseif xx.a4 then
+      if func~= nil then func() end
+      if xx.color.n==0  then
+        xx.combo = xx.combo + 1
+        xx.animcounter = 1
+        xx.type = 2
+
+      elseif xx.color.n==1 and not xx.hitsomeonewithpurp then
+        xx.type = 2
+        xx.animcounter = 17
+        xx.repcounter = xx.repcounter + 1
+        xx.combo = xx.combo + 1
+      elseif xx.color.n==2 then
+        xx.type = 2
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
+
+      end
+    elseif xx.a1 then
+      xx.numofspikes = 0
+      if func~= nil then func() end
+      if xx.color.n==0 then
+        xx.type = 3
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
+      elseif xx.color.n==1 then
+        xx.type = 3
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
+      elseif xx.color.n==2 then
+        xx.type = 3
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
+      end
+
+
+
+
+    end
+  end
+end
+
+
+
+
+
+
+
 function nottoomanyuppercuts(xx)
 
   if xx.type == 3 and xx.cancombo then xx.uppercuthit = true end
@@ -68,10 +160,17 @@ you.oldft = 0
 
 function attackmanage(xx)
 
-  if xx.type < 4 and xx.j~=0 then xx.animcounter = 0
-  elseif xx.type >= 4 and xx.g then xx.animcounter = 0
+  if xx.type < 4 and not xx.g and (xx.type~=2 and xx.color.n~=2) then 
+    xx.animcounter = 0
+  elseif xx.type >= 4 and xx.g then 
+    xx.animcounter = 0
+    if xx.type == 5 and xx.color.n == 1 then
+      xx.purpgroundtimer = -at.p.ak.time
+      
+    end
   end
 
+  if xx.landing then xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false end
 
   nottoomanyuppercuts(xx)
 
@@ -90,10 +189,7 @@ function attackmanage(xx)
   elseif xx.currentanim == 2 then
     gandg(xx)
   end
-  if(math.abs(xx.v) > math.abs(xx.oldv)) then
-    xx.v = xx.oldv + (xx.v-xx.oldv)*(rampspeed)
-  end
-  xx.oldft = xx.ft
+
 
 
   --  if(math.abs(xx.j) > math.abs(xx.oldj)) then
@@ -103,10 +199,19 @@ function attackmanage(xx)
   --xx.oldj = xx.j
 
 end
+function postattackmanage(xx)
+  if(math.abs(xx.v) > math.abs(xx.oldv)) then
+    xx.v = xx.oldv + ((xx.v-xx.oldv)/xx.color.s.weight)*(rampspeed)
+  end
+  if(math.abs(xx.ft) > math.abs(xx.oldft)) then
+    xx.ft = xx.oldft + (xx.ft-xx.oldft)*(rampspeed)
+  end
+  xx.oldft = xx.ft
+end
 
 
 me.shake = false
-shakeyou = false
+you.shake = false
 
 me.nododge = false
 you.nododge = false
@@ -164,13 +269,13 @@ function camshakeflinch()
   mhdif = me.prevhealth-me.health
 
   if not (me.actionshot or you.actionshot) and not noshake then
-    if ((you.prevhealth > you.health or shakeyou) and you.x >= me.x)  or shakeboth then 
+    if ((you.shake) and you.x >= me.x)  or shakeboth then 
       camera2.x = camera2.x + math.ceil(math.random()) * (shakedis + yhdif/2)
       camera2.y = camera2.y + math.ceil(math.random()) * (shakedis + yhdif/2)
       if #joysticks>1 then
         you.joystick:setVibration(1,1)
       end
-    elseif ((you.prevhealth > you.health  or shakeyou) and you.x < me.x) then 
+    elseif ((you.shake) and you.x < me.x) then 
       camera.x = camera.x + math.ceil(math.random()) * (shakedis + yhdif/2)
       camera.y = camera.y + math.ceil(math.random()) * (shakedis + yhdif/2)
       if #joysticks>1 then
@@ -178,13 +283,13 @@ function camshakeflinch()
       end
     end
 
-    if ((me.prevhealth > me.health  or me.shake) and me.x < you.x) or shakeboth then 
+    if ((me.shake) and me.x < you.x) or shakeboth then 
       camera.x = camera.x + math.ceil(math.random()) * (shakedis + mhdif/2)
       camera.y = camera.y + math.ceil(math.random()) * (shakedis + mhdif/2)
       if #joysticks>0 then
         me.joystick:setVibration(1,1)
       end
-    elseif ((me.prevhealth > me.health  or me.shake) and me.x >= me.x) then 
+    elseif ((me.shake) and me.x >= me.x) then 
       camera2.x = camera2.x + math.ceil(math.random()) * (shakedis + mhdif/2)
       camera2.y = camera2.y + math.ceil(math.random()) * (shakedis + mhdif/2)
       if #joysticks>0 then
@@ -196,7 +301,7 @@ function camshakeflinch()
   end
 
   me.shake = false
-  shakeyou = false
+  you.shake = false
   shakeboth = false
 
 end
@@ -276,6 +381,8 @@ newforwarddodge = function(xx)
       xx.pause = false
       xx.dodgedelaycounter = 0
       xx.stop = true
+      xx.purpgroundtimer = 0
+      xx.landingcounter = 0
     end
 
     if xx.dodgedelaycounter > 0 then 
@@ -343,11 +450,11 @@ newforwarddodge = function(xx)
         xx.im = dodge21
       end
     elseif xx.dodgetype == 0 and xx.dodgerefreshtimer == 0 then
-      if((xx.lr > 0 and xx.right) or (xx.lr < 0 and xx.left)) and xx.block then
+      if((xx.lr > 0 and xx.rightbump and xx.down) or (xx.lr < 0 and xx.leftb and xx.down))  then
         xx.dodgetype = 1
         xx.dodgecounter = dodgetime
         xx.currentdodgev = xx.v
-      elseif((xx.lr < 0 and xx.right) or (xx.lr > 0 and xx.left)) and xx.block and not xx.running  then
+      elseif((xx.lr < 0 and xx.rightbump and xx.down) or (xx.lr > 0 and xx.leftb and xx.down))  and not xx.running  then
         xx.dodgetype = -1
         xx.dodgecounter = backdodgetime
       end
@@ -477,7 +584,7 @@ newforwarddodge = function(xx)
 
   function flinchingx(xx,yy)
     if xx.health < xx.oldhealth then
-      xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(rampspeed)
+      xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(rampspeed)/xx.color.s.def
       local dif = xx.oldhealth - xx.health
       makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,math.floor(dif/rampspeed * 2/3))
     end
@@ -515,13 +622,13 @@ newforwarddodge = function(xx)
           xx.flinchway = -1
         else
           xx.flinchway = 11
-          end
+        end
       else
         if xx.lr > 0 then
           xx.flinchway = 11
         else
           xx.flinchway = -1
-          end
+        end
       end
       if xx.flinch then 
         if xx.g then xx.gflinchleft = xx.ft end

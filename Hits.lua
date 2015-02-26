@@ -3,6 +3,8 @@
 --DUDE, MAYBE MAKE ALL BLOCKS SHOULD BE INTEGERS
 --also remember that flinch dir depends on the object hitting dir not necessarily the lr of the other person
 
+--for dis from height to feet in fall anim
+offsetforplat = 4
 
 
 
@@ -440,7 +442,7 @@ function hboxp()
         p.im.yoff = 0
       end
       if (not p.gothroughplats or (plat.floor~=nil)) and (
-        ((hexplatcheck(plat.y, plat.x1, plat.x2, p.x, p.y, p.width, p.height, p.v, p.j) and p.j <= 0 
+        ((hexplatcheck(plat.y, plat.x1, plat.x2, p.x, p.y+offsetforplat, p.width, p.height, p.v, p.j) and p.j <= 0 
             and p.y+p.j-p.im.yoff <= plat.y-(p.height)-p.im.yoff))
         or 
         (p.y == plat.y-p.height and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))

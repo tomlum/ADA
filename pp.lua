@@ -27,7 +27,8 @@ pp1back = {im=love.graphics.newImage("me/attack/pp1back.png"),c=love.graphics.ne
 pp1back2 = {im=love.graphics.newImage("me/attack/pp1back2.png"),c=love.graphics.newImage("me/attack/pp1back2c.png"), xoff = 45, yoff = 40}
 pp1back3 = {im=love.graphics.newImage("me/attack/pp1back3.png"),c=love.graphics.newImage("me/attack/pp1back3c.png"), xoff = 45, yoff = 10}
 pp1back4 = {im=love.graphics.newImage("me/attack/pp1back4.png"),c=love.graphics.newImage("me/attack/pp1back3c.png"), xoff = 45, yoff = 10}
-
+apk1 = {im=love.graphics.newImage("me/attack/apk1.png"),c=love.graphics.newImage("me/attack/apk1c.png"), xoff = 15, yoff = 10}
+apk2 = {im=love.graphics.newImage("me/attack/apk2.png"),c=love.graphics.newImage("me/attack/apk2c.png"), xoff = 15, yoff = 30}
 
 spikesize = 12
 function spikegrow(cur, n, xx)
@@ -105,6 +106,49 @@ end
 
 
 function spikeupdate(xx)
+  
+   if xx.purpgroundtimer < 0 and xx.purpgroundtimer+1*rampspeed >= 0 then
+    xx.purpgroundtimer = 0
+      xx.numofspikes = 2*at.p.ak.n
+    for sn = 0, at.p.ak.n do
+        local lverts = {}
+        lverts[1]= xx.mid+(xx.lr*20*(sn))
+        lverts[2]= xx.feet
+        lverts[3]= xx.mid+(xx.lr*20*(sn-1))
+        lverts[4]= xx.feet
+        lverts[5]= xx.mid+(xx.lr*20*(sn-1))
+        lverts[6]= xx.feet
+        
+        local lverts2 = {}
+        lverts2[1]= xx.mid+(-xx.lr*20*(sn))
+        lverts2[2]= xx.feet
+        lverts2[3]= xx.mid+(-xx.lr*20*(sn))
+        lverts2[4]= xx.feet
+        lverts2[5]= xx.mid+(-xx.lr*20*(sn))
+        lverts2[6]= xx.feet
+         if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
+            lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
+        table.insert(xx.spikes,
+          {verts = lverts,
+            t = 0, lr=-xx.lr}) 
+        end
+         if lverts2[1] > themap.plats[xx.plat.n].x1+spikesize and 
+            lverts2[1] < themap.plats[xx.plat.n].x2-spikesize then
+        table.insert(xx.spikes,
+          {verts = lverts2,
+            t = 0, lr=xx.lr})
+        end
+
+
+    end
+  elseif xx.purpgroundtimer < 0 then
+    xx.purpgroundtimer = xx.purpgroundtimer + 1*rampspeed
+  elseif xx.landingcounter >= at.p.ak.exposedtime and xx.landingcounter-1 < at.p.ak.exposedtime then
+    xx.numofspikes = 0
+    
+  end
+
+  
   for i = #xx.spikes, 1, -1 do
     local cur = xx.spikes[i] 
     local vv = cur.verts
@@ -213,6 +257,14 @@ at.p.k.max = 6
 at.p.k.kb = 6
 at.p.k.dam = 3
 
+at.p.ak = {}
+at.p.ak.penalty = 50
+at.p.ak.n = 4
+at.p.ak.time = 30
+ at.p.ak.exposedtime = 37
+
+
+
 
 me.repcounter = 0
 you.repcounter = 0
@@ -227,7 +279,8 @@ pa4busytime = 10
 me.hitsomeonewithpurp = false
 you.hitsomeonewithpurp = false 
 
-
+me.purpgroundtimer = 0
+you.purpgroundtimer = 0
 
 function pandp(xx)
 
@@ -235,7 +288,8 @@ function pandp(xx)
     combo(xx)
     xx.cancombo = true
   end
-
+  
+ 
 
   if xx.animcounter > 7 then
     xx.stop = true
@@ -271,6 +325,9 @@ function pandp(xx)
     else
       if (xx.a2 or xx.a3) then
         xx.type = 4
+        xx.animcounter = 1
+      elseif xx.a4 then
+        xx.type = 5
         xx.animcounter = 1
       elseif xx.a1 then
         xx.type = 6
@@ -439,11 +496,13 @@ function pandp(xx)
               table.insert(xx.spikes, 
                 {verts = lverts,
                   t = 0, lr=xx.lr})
+              repplay(xx.purpsound)
+              end
+             if lverts2[1] > themap.plats[xx.plat.n].x1+spikesize and 
+            lverts2[1] < themap.plats[xx.plat.n].x2-spikesize then
               table.insert(xx.spikes, 
                 {verts = lverts2,
                   t = 0, lr=xx.lr})
-
-              repplay(xx.purpsound)
             end
 
           else
@@ -561,6 +620,26 @@ function pandp(xx)
                 end)
             end
           end
+
+
+        elseif xx.type == 5 then
+          if xx.animcounter < 3 then
+            xx.animcounter = 1
+            xx.im=apk1
+            xx.j = xx.j - 2
+            xx.landingcounter = at.p.ak.penalty + at.p.ak.time
+             
+
+
+
+          elseif xx.animcounter <= 40 then
+            xx.im=apk2
+
+
+          elseif xx.animcounter >= 40 then
+            xx.animcounter = 0
+          end
+
         elseif xx.type ==6 then
           if xx.animcounter < 15 then
             xx.im = apa11

@@ -14,7 +14,7 @@ drawboxes = true
 putmehere = 975
 putyouhere = 1025
 --to be rampspeedified (or if not rampcanhitified)
-  --idle
+--idle
 
 
 
@@ -249,8 +249,8 @@ moop = 0
 function love.load()
 
 
-me.oldv = 0
-you.oldv = 0
+  me.oldv = 0
+  you.oldv = 0
 
   myShader = love.graphics.newShader[[
   vec4 effect(vec4 color, Image texture, vec2 vTexCoord, vec2 pixel_coords)
@@ -470,6 +470,11 @@ function love.update()
       jjstick(me,joystick)
       jjstick(you,you.joystick)
     end
+      
+    controlsstuff(me)
+    controlsstuff(you)
+
+   
 
     if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause
     then
@@ -545,8 +550,8 @@ function love.update()
         elseif themap.name == "floors" then floorswallbreak() 
         end
 
-        
-          --you.v = you.oldv + (you.v-you.oldv)*(rampspeed)
+
+        --you.v = you.oldv + (you.v-you.oldv)*(rampspeed)
         platformcheckx()
 
         you.y = you.y - you.j*.9*rampspeed
@@ -555,11 +560,11 @@ function love.update()
         me.x = me.x + me.v*rampspeed
         you.next = you.feet - you.j*.9
         me.next = me.feet - me.j*.9
-        
-        
+
+
         me.oldv = me.v
         you.oldv = you.v
-        
+
         you.push = rodib(you.push,1,0)
         me.push = rodib(me.push,1,0)
       end
@@ -622,7 +627,9 @@ function love.update()
         spikeupdate(me)
         boltupdate(me) 
       end
-      
+
+      postattackmanage(me)
+      postattackmanage(you)
       flinchingx(me,you)
       flinchingx(you,me)
 
@@ -635,16 +642,16 @@ function love.update()
         if math.random()>.5
         then bump(me)
         else bump(you)
-      end
-      
-      
-  if(math.abs(you.ft) > math.abs(you.oldft)) then
-    you.ft = you.oldft + (you.ft-you.oldft)*(rampspeed)
-  end
+        end
 
-    end
-    
-    
+
+        if(math.abs(you.ft) > math.abs(you.oldft)) then
+          you.ft = you.oldft + (you.ft-you.oldft)*(rampspeed)
+        end
+
+      end
+
+
 
       newforwarddodge(me)
       newforwarddodge(you)
@@ -662,16 +669,16 @@ function love.update()
       holdmanage(me)
       holdmanage(you)
 
-       
+
 
       if (themode == "classic" and (you.dead or me.dead)) or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
         thesong:stop()
         retryupdate()
       end
-        cammovement()
-        --if here then no slow mo twitter
-        camerafol()
-          camshakeflinch()
+      cammovement()
+      --if here then no slow mo twitter
+      camerafol()
+      camshakeflinch()
 
     end
 
@@ -697,8 +704,8 @@ function love.update()
 
 
   function love.draw()
-    
-      
+
+
 
     --love.graphics.setShader(myShader)
 
@@ -889,8 +896,8 @@ function love.update()
       love.graphics.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
       love.graphics.print("falling "..tostring(you.falling).."|| ft "..tostring(you.ft).."|| flinchway "..tostring(you.flinchway), 10, 70)
     end
-    love.graphics.print("falling "..tostring(me.hitsomeonewithpurp), 10, 90)
-    
+    love.graphics.print("falling "..tostring(me.doubledown)..tostring(me.dubtimer), 10, 90)
+
 
 
     flash = false
@@ -901,6 +908,6 @@ function love.update()
       love.graphics.print("yeah",100,10,100)
     end
     ]]--
-    
+
 
   end

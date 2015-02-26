@@ -20,6 +20,12 @@ at.bb.p.kb = 7
 at.bb.p.ft = 15
 at.bb.p.max = 15
 
+
+at.bb.ap = {}
+at.bb.ap.kb = 6
+at.bb.ap.ft = 10
+at.bb.ap.dam = 6
+
 at.bb.k = {}
 at.bb.k.dam = 10
 at.bb.k.kb = 22
@@ -337,18 +343,18 @@ function breadandbutter(xx)
           function(z)
             xx.cancombo = true
             if xx.animcounter == 4 then
-              z.v = z.v/3+xx.lr*at.bb.p.kb*2.5+xx.v
+              z.v = z.v/3+xx.lr*at.bb.ap.kb+xx.v
             else
-              z.v = z.v/3+xx.lr*at.bb.p.kb+xx.v
+              z.v = z.v/3+xx.lr*at.bb.ap.kb/2+xx.v
             end
             if not (z.block == -xx.lr) then
               if xx.animcounter == 4 then
-                z.health = z.health - at.bb.p.dam
+                z.health = z.health - at.bb.ap.dam
               else
-                z.health = z.health - at.bb.p.dam/2
+                z.health = z.health - at.bb.ap.dam/2
               end
               z.flinch = true
-              z.ft = z.ft+at.bb.p.ft/4
+              z.ft = z.ft+at.bb.ap.ft/4
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(.7,1)
               end
@@ -373,7 +379,7 @@ function breadandbutter(xx)
       elseif xx.animcounter<=25 then
         xx.im = divekick
         if xx.animcounter == 10 then
-          xx.j = xx.j - 10
+          xx.j = xx.j - 7
           xx.landingcounter = at.bb.ak.penalty
         end
         hboxcs(xx.id, 
