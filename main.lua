@@ -1,7 +1,12 @@
 --todo
-therampspeed = .3
-drawboxes = true
+therampspeed = .1
+drawboxes = false
+fightclub = true
+fullscreen = false
+mute = false
 
+
+--PARALX ZOOMS OUT SLIGHTLY DIFFERENTLY TO CAMERA ZOOM
 
 --if you use one color too long you start to turn that color and have permanent those effects?  or you burn out?s
 --or you take up to double damage? become fragile, but stronger?
@@ -163,19 +168,19 @@ love.graphics.setDefaultFilter("linear","nearest",1)
 --purple climbs up rafters
 --Charge attack if it's a charge then me.charge and also you have to flip the stick in the opposite direction for it to work!
 
-flipfollow = false
-flash = false
 
 math.randomseed(os.clock())
---success = love.window.setMode(1280, 800, {resizable=true, fullscreen = true, vsync=true})
-success = love.window.setMode(600, 600, {resizable=true, fullscreen = false, vsync=true})
+if fullscreen then 
+  love.window.setMode(1280, 800, {resizable=true, fullscreen = true, vsync=true})
+else
+  love.window.setMode(1280/2, 800/2, {resizable=true, fullscreen = false, vsync=true})
+end
 
 
-fightclub = true
+
 debug = false
 
 musicmute = true
-mute = true
 
 justone = false
 --colorcontrol, go, size,menu
@@ -252,14 +257,13 @@ function love.load()
   me.oldv = 0
   you.oldv = 0
 
-  myShader = love.graphics.newShader[[
+  Germanunkol = love.graphics.newShader [[
+
   vec4 effect(vec4 color, Image texture, vec2 vTexCoord, vec2 pixel_coords)
   {
     vec4 sum = vec4(0.0);
     number blurSize = 0.005;
-    //number d = distance(vTexCoord, mousePos/screenSize);
-    //number blurSize = clamp(1/d/screenSize.x, 0, 1.0);
-    // blur in y (vertical)
+
     // take nine samples, with the distance blurSize between them
     sum += texture2D(texture, vec2(vTexCoord.x - 4.0*blurSize, vTexCoord.y)) * 0.05;
     sum += texture2D(texture, vec2(vTexCoord.x - 3.0*blurSize, vTexCoord.y)) * 0.09;
@@ -271,6 +275,27 @@ function love.load()
     sum += texture2D(texture, vec2(vTexCoord.x + 3.0*blurSize, vTexCoord.y)) * 0.09;
     sum += texture2D(texture, vec2(vTexCoord.x + 4.0*blurSize, vTexCoord.y)) * 0.05;
 
+
+    return sum;
+  }
+  ]]
+  blur2 = love.graphics.newShader [[
+
+  vec4 effect(vec4 color, Image texture, vec2 vTexCoord, vec2 pixel_coords)
+  {
+    vec4 sum = vec4(0.0);
+    number blurSize = 0.005;
+
+    // take nine samples, with the distance blurSize between them
+    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y - 4.0*blurSize)) * 0.05;
+    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y - 3.0*blurSize)) * 0.09;
+    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y - 2.0*blurSize)) * 0.12;
+    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y- blurSize)) * 0.15;
+    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y)) * 0.16;
+    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y + blurSize)) * 0.15;
+    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y + 2.0*blurSize)) * 0.12;
+    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y + 3.0*blurSize)) * 0.09;
+    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y + 4.0*blurSize)) * 0.05;
 
     return sum;
   }
@@ -353,8 +378,8 @@ function love.load()
   you.actiontimer = 0
 
   if fightclub then 
-    MENU = "play"
-    themap = maps.fightclub
+    menu = "play"
+    themap = themaps[100]
     placespeople = true
     mute = true
     while(not finishedLoading) do
@@ -402,29 +427,6 @@ function love.update()
 
 
 
-    if MENU == "play" then 
-      spines={}
-
-      you.start = love.keyboard.isDown("u")
-      if #joysticks > 0 then
-        me.start = me.joystick:isGamepadDown("start")
-        if #joysticks > 1 then
-          you.start = you.joystick:isGamepadDown("start") 
-        end
-      end 
-
-      if r2unpause and (me.start or you.start) and pause 
-      then pause = false
-        r2unpause = false
-        thesong:resume()
-      elseif (me.start or you.start) and r2unpause then 
-        pause = true
-        r2unpause = false
-        thesong:pause()
-      elseif not (me.start or you.start) then r2unpause = true 
-      end
-    end
-
 
 
 
@@ -470,70 +472,33 @@ function love.update()
       jjstick(me,joystick)
       jjstick(you,you.joystick)
     end
-      
+
     controlsstuff(me)
     controlsstuff(you)
 
-   
 
-    if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause
-    then
+    if menu == "preplay" or menu == "play" then 
+      menu = "play"
 
-      if me.dodge or me.block
-      then me.a1, me.a2, me.a3, me.a4, me.up = false,false,false,false,false
-      end
+      if slowt == SlowRate and not pause and not me.actionshot 
+      then
 
-      if you.dodge or you.block
-      then you.a1, you.a2, you.a3, you.a4, you.up = false,false,false,false,false
-      end
+        if me.dodge or me.block
+        then me.a1, me.a2, me.a3, me.a4, me.up = false,false,false,false,false
+        end
 
-
-      runrunrun()
-
-      clicks()
-
-
-
-
-      if MENU == "title" then
-        openingsong:play()
-
-        openingsong:setPitch(sfade/255)
-
-
-
-        if c1accept() or c2accept() then
-          MENU = "modes"
-          modesound:play()
-
-
+        if you.dodge or you.block
+        then you.a1, you.a2, you.a3, you.a4, you.up = false,false,false,false,false
         end
 
 
-      elseif MENU == "modes"
-      then 
-        modesstuff()
 
-      elseif MENU == "prestage" or MENU == "stage" then
-        stagestuff()
-
-
-      elseif MENU == "prechoose" or MENU == "choose" or MENU == "postchoose" then
-        if MENU == "prechoose" then MENU = "choose"
-
-        end
-
-        choosestuff()
+        clicks()
 
 
 
 
-      elseif MENU == "prepan" or MENU == "pan" then 
-        panstuff()
 
-
-      elseif MENU == "preplay" or MENU == "play" then 
-        MENU = "play"
 
 
 
@@ -551,7 +516,6 @@ function love.update()
         end
 
 
-        --you.v = you.oldv + (you.v-you.oldv)*(rampspeed)
         platformcheckx()
 
         you.y = you.y - you.j*.9*rampspeed
@@ -567,9 +531,8 @@ function love.update()
 
         you.push = rodib(you.push,1,0)
         me.push = rodib(me.push,1,0)
-      end
 
-    end
+      end
 
     cammovement()
     --if here then slideycling to person
@@ -605,6 +568,7 @@ function love.update()
 
       updatemytrail(me)
       updatemytrail(you)
+
 
     end
     actionshotstuff(me)
@@ -670,17 +634,21 @@ function love.update()
       holdmanage(you)
 
 
-
+      --[[
       if (themode == "classic" and (you.dead or me.dead)) or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
         thesong:stop()
         retryupdate()
       end
+      ]]--
       cammovement()
       --if here then no slow mo twitter
       camerafol()
       camshakeflinch()
 
     end
+
+
+
 
     --down here to allow facemovement even during me.actionshot
 
@@ -694,9 +662,11 @@ function love.update()
     if you.im == slowdown then 
       you.xoffset = 10
     end
+      end
 
 
   end
+
 
 
 
@@ -712,31 +682,11 @@ function love.update()
     me.xoffset = me.xoffset * me.lr
     you.xoffset = you.xoffset * you.lr
 
+    if menu ~= "play" then
+      drawmenus()
 
 
-    if MENU == "title" or MENU == "prestage" or MENU == "stage" or MENU == "modes"
-    then 
-      drawcity()
-
-
-
-    elseif MENU == "choose" or MENU == "postchoose" then
-      drawchoosestuff()
-
-
-
-    elseif MENU == "pan" or MENU == "preplay" then 
-      love.graphics.setColor(math.abs(streetfade),math.abs(streetfade),math.abs(streetfade,255))
-      love.graphics.draw(enviro.sky, 0, 0, 0, 500, screenheight/1500)
-      if themap.name == "library" then 
-        love.graphics.draw(enviro.paralax2, enviro.dolly/3 -100,((-floor-100)/2)/1.5 + screenheight-400, 0, .25, .25)
-      end
-      love.graphics.draw(enviro.paralax, -(enviro.dolly/2) -100, ((-floor-30)/4)/2 + screenheight - 655, 0, .5, .5)
-      love.graphics.draw(enviro.floor, -enviro.dolly, (-floor-30)/2 + screenheight, 0, .5, .5)
-      me.im =idle1
-      you.im =idle1
-
-    elseif MENU == "play"
+    elseif menu == "play"
 
     then
 
@@ -804,8 +754,6 @@ function love.update()
 
       else
 
-        love.graphics.setColor(255,255,255)
-        love.graphics.draw(enviro.gray, 0, 0, 10, 10)
         love.graphics.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, screenwidth/1440,1)
         love.graphics.setColor(155, 155, 155, 255)
         love.graphics.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, -screenwidth/1440, 1)
@@ -896,11 +844,9 @@ function love.update()
       love.graphics.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
       love.graphics.print("falling "..tostring(you.falling).."|| ft "..tostring(you.ft).."|| flinchway "..tostring(you.flinchway), 10, 70)
     end
-    love.graphics.print("falling "..tostring(me.doubledown)..tostring(me.dubtimer), 10, 90)
 
 
 
-    flash = false
     --love.graphics.setShader()
     --[[
     boop = joystick:isVibrationSupported()
@@ -908,6 +854,11 @@ function love.update()
       love.graphics.print("yeah",100,10,100)
     end
     ]]--
-
+    love.graphics.setColor(255,255,255)
+    love.graphics.print("themenu "..tostring(menu), 10, 90)
+    love.graphics.print("oldmenu "..tostring(oldmenu), 10, 110)
+    love.graphics.print("fadein "..tostring(fadein), 10, 130)
+    love.graphics.print("allfade "..tostring(allfade), 10, 150)
+    love.graphics.print("themode "..tostring(themode), 10, 180)
 
   end

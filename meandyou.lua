@@ -1,4 +1,4 @@
-MENU = "title"
+
 themap = "none"
 placespeople = true
 
@@ -27,7 +27,7 @@ lcx = -screenwidth
 rcx = screenwidth*1.5
 lset = false
 rset = false
-MENU = "stage"
+menu = "stage"
 sfade = 15
 startsfade = false
 juststartedpost = true
@@ -637,7 +637,6 @@ you.xoffset = 0
 	enviro.retry = love.graphics.newImage("enviro/retry.png")
 	enviro.retry:setFilter("nearest")
 
-	faceselector = love.graphics.newImage("enviro/faceselector.png")
 	ready = love.graphics.newImage("enviro/READY.png")
 	ready:setFilter("nearest")
 
@@ -685,15 +684,6 @@ if not fightclub then
 	enviro.i = love.graphics.newImage("enviro/i.png")
 	enviro.x = love.graphics.newImage("enviro/x.png")
 
-  
-	enviro.rselecter = love.graphics.newImage("enviro/rselect.png")
-
-	enviro.lselect = love.graphics.newImage("enviro/select.png")
-	enviro.lselect:setFilter("nearest")
-	enviro.rselect = love.graphics.newImage("enviro/selectr.png")
-	enviro.rselect:setFilter("nearest")
-	enviro.selector = love.graphics.newImage("enviro/selector.png")
-	enviro.selector:setFilter("nearest")
   slantbar = love.graphics.newImage("enviro/slantbar.png")
 	enviro.ptile = love.graphics.newImage("enviro/rp.png")
 	enviro.ptile:setFilter("nearest")
@@ -766,5 +756,4 @@ if not fightclub then
 	enviro.beige:setFilter("nearest")
 	enviro.light = love.graphics.newImage("enviro/lightson.png")
 	enviro.healthbar = love.graphics.newImage("enviro/healthbar.png")
-	enviro.gray = love.graphics.newImage("enviro/gray.png")
 	enviro.floorfloor = love.graphics.newImage("enviro/floor.png")

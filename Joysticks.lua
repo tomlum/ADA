@@ -13,7 +13,7 @@ you.doubledown = false
 you.dubtimer = 0
 function doubledown(xx)
 
-  xx.dubtimer = rodib(xx.dubtimer,1,0)
+  xx.dubtimer = rodib(xx.dubtimer,1*rampspeed,0)
   
   if not xx.down and xx.doubledown then
     xx.dubtimer = 0
@@ -177,14 +177,14 @@ end
 
 function clicks()
 
-  if MENU == "choose" and (me.block or you.block) then
+  if menu == "choose" and (me.block or you.block) then
     backtimer = backtimer + 1
     if backtimer > 50 then backtostage() 
     end
   else backtimer = 0
   end
 
-  if MENU ~= "play" then
+  if menu ~= "play" then
 
 
 

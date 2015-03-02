@@ -57,7 +57,7 @@ function combo(xx, func)
       if func~= nil then func() end
       if xx.color.n==0 then
         xx.type = 1
-        if xx.repcounter < bbnumpunch then
+        if xx.repcounter < at.bb.p.max then
           xx.repcounter = xx.repcounter+1
           if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
           xx.animcounter = 1
@@ -227,15 +227,14 @@ climb2 = {im=love.graphics.newImage("me/attack/climb2.png"),c=love.graphics.newI
 climb3 = {im=love.graphics.newImage("me/attack/climb3.png"),c=love.graphics.newImage("me/attack/climb3c.png")}
 
 
-hookhead = love.graphics.newImage("me/attack/hookhead.png")
 flinchim = love.graphics.newImage("me/attack/flinch.png")
 flinchc = love.graphics.newImage("me/attack/flinchc.png")
 flinch = {im = flinchim, c = flinchc}
 
 
-fallback = {im=love.graphics.newImage("me/attack/fallback.png"),c=love.graphics.newImage("me/attack/fallbackc.png"),xoff = 12}
-fallbackbounce = {im=love.graphics.newImage("me/attack/fallbackbounce.png"),c=love.graphics.newImage("me/attack/fallbackbouncec.png"),xoff = 12}
-fallbackbouncedown = {im=love.graphics.newImage("me/attack/fallbackbouncedown.png"),c=love.graphics.newImage("me/attack/fallbackbouncedownc.png"),xoff = 12}
+fallback = {im=love.graphics.newImage("me/attack/fallback.png"),c=love.graphics.newImage("me/attack/fallbackc.png"),xoff = 12, dodgeh = 32, dodgew = 26}
+fallbackbounce = {im=love.graphics.newImage("me/attack/fallbackbounce.png"),c=love.graphics.newImage("me/attack/fallbackbouncec.png"),xoff = 12, dodgeh = 32, dodgew = 26}
+fallbackbouncedown = {im=love.graphics.newImage("me/attack/fallbackbouncedown.png"),c=love.graphics.newImage("me/attack/fallbackbouncedownc.png"),xoff = 12, dodgeh = 32, dodgew = 26}
 fallforward = {im=love.graphics.newImage("me/attack/fallforward.png"),c=love.graphics.newImage("me/attack/fallforwardc.png")}
 fallback1 = {im=love.graphics.newImage("me/attack/fallback1.png"),c=love.graphics.newImage("me/attack/fallback1c.png")}
 fallforward1 = {im=love.graphics.newImage("me/attack/fallforward1.png"),c=love.graphics.newImage("me/attack/fallforward1c.png")}

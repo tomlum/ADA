@@ -1,11 +1,22 @@
 --todo
 therampspeed = .1
+drawboxes = false
+fightclub = false
+fullscreen = false
+mute = false
+
+--if you use one color too long you start to turn that color and have permanent those effects?  or you burn out?s
+--or you take up to double damage? become fragile, but stronger?
+
+--if landing lower the frnum of frames on the pre fall back
+--fix zoomout relative to distance slight jump
+
 --placement of cam funcs causes weirdness for actionshot
 --cant move right while sliding left?  pretty easy to do with base/push
-
-
+putmehere = 975
+putyouhere = 1025
 --to be rampspeedified (or if not rampcanhitified)
-  --idle
+--idle
 
 
 
@@ -154,19 +165,19 @@ love.graphics.setDefaultFilter("linear","nearest",1)
 --purple climbs up rafters
 --Charge attack if it's a charge then me.charge and also you have to flip the stick in the opposite direction for it to work!
 
-flipfollow = false
-flash = false
 
 math.randomseed(os.clock())
---success = love.window.setMode(1280, 800, {resizable=true, fullscreen = true, vsync=true})
-success = love.window.setMode(600, 600, {resizable=true, fullscreen = false, vsync=true})
+if fullscreen then 
+love.window.setMode(1280, 800, {resizable=true, fullscreen = true, vsync=true})
+else
+love.window.setMode(1280/2, 800/2, {resizable=true, fullscreen = false, vsync=true})
+end
 
 
-fightclub = true
+
 debug = false
 
 musicmute = true
-mute = true
 
 justone = false
 --colorcontrol, go, size,menu
@@ -224,14 +235,13 @@ require "FIZIX"
 require "Animation"
 require "Joysticks"
 require "ATTACK"
-require "At/Green"
-require "At/Yellow"
-require "At/Sand"
+require "GG"
 require "BB"
 require "pp"
 loader = require "love-loader"
 require "menustuff"
 
+initmenu("title")
 
 moop = 0
 
@@ -242,8 +252,8 @@ moop = 0
 function love.load()
 
 
-me.oldv = 0
-you.oldv = 0
+  me.oldv = 0
+  you.oldv = 0
 
   myShader = love.graphics.newShader[[
   vec4 effect(vec4 color, Image texture, vec2 vTexCoord, vec2 pixel_coords)
@@ -394,28 +404,24 @@ function love.update()
     whatlevel()
 
 
+    if MENU ~= "play" then
 
-    if MENU == "play" then 
-      spines={}
+      keyboardcontrols()
 
-      you.start = love.keyboard.isDown("u")
+
+
       if #joysticks > 0 then
-        me.start = me.joystick:isGamepadDown("start")
-        if #joysticks > 1 then
-          you.start = you.joystick:isGamepadDown("start") 
-        end
-      end 
-
-      if r2unpause and (me.start or you.start) and pause 
-      then pause = false
-        r2unpause = false
-        thesong:resume()
-      elseif (me.start or you.start) and r2unpause then 
-        pause = true
-        r2unpause = false
-        thesong:pause()
-      elseif not (me.start or you.start) then r2unpause = true 
+        jjstick(me,joystick)
+      elseif #joysticks > 1 then
+        jjstick(me,joystick)
+        jjstick(you,you.joystick)
       end
+
+      controlsstuff(me)
+      controlsstuff(you)
+
+
+
     end
 
 
@@ -464,6 +470,11 @@ function love.update()
       jjstick(you,you.joystick)
     end
 
+    controlsstuff(me)
+    controlsstuff(you)
+
+
+
     if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause
     then
 
@@ -476,61 +487,22 @@ function love.update()
       end
 
 
-      runrunrun()
 
       clicks()
 
 
 
 
-      if MENU == "title" then
-        openingsong:play()
-
-        openingsong:setPitch(sfade/255)
 
 
-
-        if c1accept() or c2accept() then
-          MENU = "modes"
-          modesound:play()
-
-
-        end
-
-
-      elseif MENU == "modes"
-      then 
-        modesstuff()
-
-      elseif MENU == "prestage" or MENU == "stage" then
-        stagestuff()
-
-
-      elseif MENU == "prechoose" or MENU == "choose" or MENU == "postchoose" then
-        if MENU == "prechoose" then MENU = "choose"
-
-        end
-
-        choosestuff()
-
-
-
-
-      elseif MENU == "prepan" or MENU == "pan" then 
-        panstuff()
-
-
-      elseif MENU == "preplay" or MENU == "play" then 
+      if MENU == "preplay" or MENU == "play" then 
         MENU = "play"
 
 
 
-
-        movex(me,me)
-        movex(you,you)
+        movex(me)
+        movex(you)
         --used to be here platformcheckx()
-
-        walljump()
 
 
         fallthroughglassfloor()
@@ -540,8 +512,8 @@ function love.update()
         elseif themap.name == "floors" then floorswallbreak() 
         end
 
-        
-          --you.v = you.oldv + (you.v-you.oldv)*(rampspeed)
+
+        --you.v = you.oldv + (you.v-you.oldv)*(rampspeed)
         platformcheckx()
 
         you.y = you.y - you.j*.9*rampspeed
@@ -550,117 +522,127 @@ function love.update()
         me.x = me.x + me.v*rampspeed
         you.next = you.feet - you.j*.9
         me.next = me.feet - me.j*.9
-        
-        
+
+
         me.oldv = me.v
         you.oldv = you.v
-        
+
         you.push = rodib(you.push,1,0)
         me.push = rodib(me.push,1,0)
-      end
 
-    end
+        cammovement()
+        --if here then slideycling to person
+        camerafol()
 
-    cammovement()
-    --if here then slideycling to person
-    camerafol()
-
-    if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
-      animate()
+        if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
+          animate()
 
 
 
-      orientlr(me)
-      orientlr(you)
+          orientlr(me)
+          orientlr(you)
 
-      you.feet = you.y + 60
-      me.feet = me.y + 60
-      --if here then non slideycling to person
-      --camerafol()
+          you.feet = you.y + 60
+          me.feet = me.y + 60
+          --if here then non slideycling to person
+          --camerafol()
 
 
 
-      blocknbusy()
+          blocknbusy()
 
-      me.jstop = false
-      you.jstop = false
-      me.limitbreak= false
-      youlimitbreak = false
+          me.jstop = false
+          you.jstop = false
+          me.limitbreak= false
+          you.limitbreak = false
 
 
 
 
-      combomanage(me)
-      combomanage(you)
+          combomanage(me)
+          combomanage(you)
 
-      updatemytrail(me)
-      updatemytrail(you)
+          updatemytrail(me)
+          updatemytrail(you)
 
-    end
-    actionshotstuff(me)
-    actionshotstuff(you)
+        end
+        actionshotstuff(me)
+        actionshotstuff(you)
 
 
-    if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
+        if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
 
-      whoupdatesfirst = math.random()
-      if whoupdatesfirst>.5 then
-        attackmanage(me)
-        spikeupdate(me)
-        boltupdate(me) 
-      end
-      attackmanage(you)
-      spikeupdate(you)
-      boltupdate(you)  
-      if whoupdatesfirst<=.5 then
-        attackmanage(me)
-        spikeupdate(me)
-        boltupdate(me) 
-      end
+          whoupdatesfirst = math.random()
+          if whoupdatesfirst>.5 then
+            attackmanage(me)
+            spikeupdate(me)
+            boltupdate(me) 
+          end
+          attackmanage(you)
+          spikeupdate(you)
+          boltupdate(you)  
+          if whoupdatesfirst<=.5 then
+            attackmanage(me)
+            spikeupdate(me)
+            boltupdate(me) 
+          end
 
-      flinchingx(me,you)
-      flinchingx(you,me)
+          postattackmanage(me)
+          postattackmanage(you)
+          flinchingx(me,you)
+          flinchingx(you,me)
 
-      if math.abs(me.v) > math.abs(you.v) then
-        bump(me)
-      elseif math.abs(me.v) < math.abs(you.v) then
+          if math.abs(me.v) > math.abs(you.v) then
+            bump(me)
+          elseif math.abs(me.v) < math.abs(you.v) then
 
-        bump(you)
-      else
-        if math.random()>.5
-        then bump(me)
-        else bump(you)
+            bump(you)
+          else
+            if math.random()>.5
+            then bump(me)
+            else bump(you)
+            end
+
+
+            if(math.abs(you.ft) > math.abs(you.oldft)) then
+              you.ft = you.oldft + (you.ft-you.oldft)*(rampspeed)
+            end
+
+          end
+
+
+
+          newforwarddodge(me)
+          newforwarddodge(you)
+
+
+          climbs(me)
+          climbs(you)
+
+
+
+          isanyonedead()
+          death()
+
+          miscsounds()
+          holdmanage(me)
+          holdmanage(you)
+
+
+          --[[
+          if (themode == "classic" and (you.dead or me.dead)) or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
+            thesong:stop()
+            retryupdate()
+          end
+          ]]--
+          cammovement()
+          --if here then no slow mo twitter
+          camerafol()
+          camshakeflinch()
+
         end
 
-    end
-    
-    
-
-      newforwarddodge(me)
-      newforwarddodge(you)
-
-
-      climbs(me)
-      climbs(you)
-
-
-      --walls()
-
-      isanyonedead()
-      death()
-
-      miscsounds()
-      holdmanage(me)
-      holdmanage(you)
-
-
-      if (themode == "classic" and (you.dead or me.dead)) or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
-        thesong:stop()
-        retryupdate()
       end
-        cammovement()
-        --if here then no slow mo twitter
-        camerafol()
 
     end
 
@@ -680,38 +662,25 @@ function love.update()
 
   end
 
+
+
+
+
+
   function love.draw()
+
+
 
     --love.graphics.setShader(myShader)
 
     me.xoffset = me.xoffset * me.lr
     you.xoffset = you.xoffset * you.lr
 
+if MENU == "title" then
+  drawmenus()
 
 
-    if MENU == "title" or MENU == "prestage" or MENU == "stage" or MENU == "modes"
-    then 
-      drawcity()
-
-
-
-    elseif MENU == "choose" or MENU == "postchoose" then
-      drawchoosestuff()
-
-
-
-    elseif MENU == "pan" or MENU == "preplay" then 
-      love.graphics.setColor(math.abs(streetfade),math.abs(streetfade),math.abs(streetfade,255))
-      love.graphics.draw(enviro.sky, 0, 0, 0, 500, screenheight/1500)
-      if themap.name == "library" then 
-        love.graphics.draw(enviro.paralax2, enviro.dolly/3 -100,((-floor-100)/2)/1.5 + screenheight-400, 0, .25, .25)
-      end
-      love.graphics.draw(enviro.paralax, -(enviro.dolly/2) -100, ((-floor-30)/4)/2 + screenheight - 655, 0, .5, .5)
-      love.graphics.draw(enviro.floor, -enviro.dolly, (-floor-30)/2 + screenheight, 0, .5, .5)
-      me.im =idle1
-      you.im =idle1
-
-    elseif MENU == "play"
+elseif MENU == "play"
 
     then
 
@@ -868,11 +837,13 @@ function love.update()
         "       animcounter: "..tostring(me.animcounter)
         ..
         "       type: "..tostring(me.type),10,30)
-      love.graphics.print("nospikes "..tostring(me.numofspikes).." hitsomeone "..tostring(me.hitsomeonewithpurp), 10, 50)
+      love.graphics.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
+      love.graphics.print("falling "..tostring(you.falling).."|| ft "..tostring(you.ft).."|| flinchway "..tostring(you.flinchway), 10, 70)
     end
+    love.graphics.print("themenu "..tostring(MENU), 10, 90)
 
 
-    flash = false
+
     --love.graphics.setShader()
     --[[
     boop = joystick:isVibrationSupported()
@@ -880,5 +851,6 @@ function love.update()
       love.graphics.print("yeah",100,10,100)
     end
     ]]--
+
 
   end

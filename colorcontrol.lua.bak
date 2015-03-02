@@ -32,7 +32,7 @@ function ColorChange(xx)
 
   if xx.rightbump then 
     xx.cchangeto = xx.rightc
-  elseif xx.leftb then
+  elseif xx.leftbump then
     xx.cchangeto = xx.leftc 
   else xx.cchangeto = thecolors[0]
   end

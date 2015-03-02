@@ -12,21 +12,45 @@ me.tempfloor = floor
 you.jmax = jmax
 me.jmax = jmax
 
-maps = {}
+themaps = {}
 me.plat = noplat
 you.plat = noplat
 noplat = {n=0;}
-maps.fightclub = {name = "fightclub", 
+
+themaps[1]= {name = "STREET", 
+  plats = {}, walls = {},
+  floor = 896,
+  lightx = 707+2.5,
+  lighty = 142+2.5,
+  lightcolor = {r = 40, g = 255, b = 0}
+}
+themaps[2]= {name = "LIBRARY", 
+  plats = {}, walls = {},
+  floor = 896,
+  lightx = 293.5,
+  lighty = 229.5,
+  lightcolor = {r = 87, g = 0, b = 158}
+}
+
+themaps[3]= {name = "FLOORS", 
+  plats = {}, walls = {},
+  floor = 896,
+  lightx = 442+2.5,
+  lighty = 311+2.5,
+  lightcolor = {r = 255, g = 99, b = 0}
+}
+
+themaps[100]= {name = "fightclub", 
   plats = {}, walls = {},
   floor = 896
 }
-table.insert(maps.fightclub.plats, {n=1, y = 896, x1 = 0, x2 = 100000, floor = true})
-table.insert(maps.fightclub.plats, {n=2, y = 465, x1 = 32, x2 = 236})
-table.insert(maps.fightclub.plats, {n=3, y = 541, x1 = 839, x2 = 1016})
-table.insert(maps.fightclub.plats, {n=4, y = 719, x1 = 655, x2 = 1560})
+table.insert(themaps[100].plats, {n=1, y = 896, x1 = 0, x2 = 100000, floor = true})
+table.insert(themaps[100].plats, {n=2, y = 465, x1 = 32, x2 = 236})
+table.insert(themaps[100].plats, {n=3, y = 541, x1 = 839, x2 = 1016})
+table.insert(themaps[100].plats, {n=4, y = 719, x1 = 655, x2 = 1560})
 
-table.insert(maps.fightclub.walls, {n=1, y1 = -1, x=0, barrier = true})
-table.insert(maps.fightclub.walls, {n=2, y1 = -1, x=2000, barrier = true})
+table.insert(themaps[100].walls, {n=1, y1 = -1, x=0, barrier = true})
+table.insert(themaps[100].walls, {n=2, y1 = -1, x=2000, barrier = true})
 
 
 
@@ -133,8 +157,7 @@ function fallthroughglassfloor()
 end
 
 
-function runrunrun()
-  for i,xx in ipairs(hitt) do 
+function runrunrun(xx)
     if not xx.g then xx.running = false end
 
     if xx.running and math.abs(xx.push) > 0 then xx.j = 14 xx.g = false
@@ -177,7 +200,6 @@ function runrunrun()
 
 
     end
-  end
 
 
 
@@ -236,7 +258,7 @@ me.gothroughplats = false
 you.gothroughplats = false
 
 function movex(xx)
-  
+   runrunrun(xx)
 transferofenergy(xx)
   z = xx
   if xx.landingcounter > landingwait then
@@ -289,7 +311,13 @@ transferofenergy(xx)
       else
         xx.jt = jt
         xx.jmax = jmax
+        if xx.dubtimer > 0 then
+          xx.j = jumpj*superjumpratio
+        else
+          
         xx.j = jumpj*xx.color.s.jump
+        end
+        
       end
       xx.ht = 7
       xx.firstjump = true

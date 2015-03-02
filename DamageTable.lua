@@ -1,4 +1,4 @@
-
+waveframerate = 8 --(2 is fast, higher is lower)
 
 vforwallflinch = 10
 
@@ -6,6 +6,7 @@ walljumprange = 3.5
 
 
 initjumpj = 12+2+1
+superjumpratio = 1.4
 --
 initjmax = 17+2
 --basically min j

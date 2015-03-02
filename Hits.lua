@@ -4,10 +4,13 @@
 --also remember that flinch dir depends on the object hitting dir not necessarily the lr of the other person
 
 --for dis from height to feet in fall anim
-offsetforplat = 4
+offsetforplat = 0
 
 
-
+function shakez(z)
+  minzoom = defaultminzoom - z
+  maxzoom = defaultmaxzoom - z
+end
 
 
 --resting orbital decimal interval base

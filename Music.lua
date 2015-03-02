@@ -22,7 +22,11 @@ selecsong:setVolume(.1)
 selecsong:setLooping(true)
 
 openingsong = love.audio.newSource("sounds/title.mp3", "stream")
+if not mute then
 openingsong:setVolume(.6)
+else
+openingsong:setVolume(0)
+end
 openingsong:setLooping(true)
 
 

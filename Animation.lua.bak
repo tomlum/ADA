@@ -259,8 +259,6 @@ you.im = idle1
 function drawa(xx)
   drawmytrail(xx)
 
-  drawcolorstuff(xx)
-  bolttraildraw(xx)
   if xx.im.xoff == nil then xx.im.xoff = 0 end
   if xx.im.yoff == nil then xx.im.yoff = 0 end
   if xx.id == 2 then
@@ -274,6 +272,8 @@ function drawa(xx)
     love.graphics.draw(xx.im.c, xx.xanimate-xx.im.xoff*xx.lr, xx.y-xx.im.yoff, 0, xx.lr, 1)
   end
   love.graphics.setColor(255, 255, 255, 255)
+  drawcolorstuff(xx)
+  bolttraildraw(xx)
 end
 
 
@@ -1437,7 +1437,7 @@ drawwaves = function()
 
   for i,v in ipairs(waves) do
     v.x = (screenwidth/24) * v.n
-    if oddeven%8 == 1 then
+    if oddeven%waveframerate == 1 then
       if v.n >= 1 then v.v = waves[i+1].v
         v.y = v.y - v.v
       else 
@@ -1690,16 +1690,16 @@ death = function()
 
     xx.walktimer = xx.walktimer + 1*rampspeed
 
-    if xx.running then 
+    if xx.running and not xx.dodge then 
 
-      if xx.walktimer >= runpace+2 then xx.im = run4 
+      if xx.walktimer >= xx.runpace+2 then xx.im = run4 
         xx.walktimer = 0
         repplay(xx.runsound)
         makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
-      elseif xx.walktimer >= runpace + 1 then xx.im = run4 
+      elseif xx.walktimer >= xx.runpace + 1 then xx.im = run4 
         makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
-      elseif xx.walktimer >= runpace/2 + 2 then xx.im = run3 
-      elseif xx.walktimer >= runpace/2 then xx.im = run2 
+      elseif xx.walktimer >= xx.runpace/2 + 2 then xx.im = run3 
+      elseif xx.walktimer >= xx.runpace/2 then xx.im = run2 
         makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
         repplay(xx.runsound)
       elseif xx.walktimer >= 0 then xx.im = run1 

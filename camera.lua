@@ -15,7 +15,7 @@ maxzdis = 4500
 cscale = .7
 
 growrate = .02
-shrinkrate = .02
+shrinkrate = .01
 
 function drawcolorstuff(xx)
   spikedraw(xx)
@@ -491,6 +491,7 @@ function drawleft()
     love.graphics.draw(enviro.paralax2, camera.x/1.5 + (screenwidth/4)/1.5 - 400,camera.y/1.2 + enviro.screenheight / 1.2 - 12 - paralaxoffset-940)
   end
   love.graphics.draw(enviro.paralax, camera.x / 2 + ((screenwidth/4)/2*cscale) - 200, (camera.y/2) + (enviro.screenheight/2*cscale) - 12 - paralaxoffset - 800)
+  
   love.graphics.draw(enviro.floor, 0, 0)
   if themap.name == "street" then
     drawstreetprestuff()
@@ -578,4 +579,5 @@ function drawright()
 
   end
   if fightclub then drawallhex()end
+
 end

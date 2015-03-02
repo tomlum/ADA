@@ -18,18 +18,21 @@ at.bb.p = {}
 at.bb.p.dam = 5
 at.bb.p.kb = 7
 at.bb.p.ft = 15
-at.bb.p.max = 15
+at.bb.p.max = 3
+at.bb.p.z = .05
 
 
 at.bb.ap = {}
 at.bb.ap.kb = 6
 at.bb.ap.ft = 10
 at.bb.ap.dam = 6
+at.bb.ap.z = .05
 
 at.bb.k = {}
 at.bb.k.dam = 10
 at.bb.k.kb = 22
 at.bb.k.ft = 30
+at.bb.k.z = .07
 
 at.bb.ak = {}
 at.bb.ak.dam = 5
@@ -37,6 +40,7 @@ at.bb.ak.kb = 4
 at.bb.ak.ft = 8
 at.bb.ak.kj = -5
 at.bb.ak.penalty = 26
+at.bb.ak.z = .05
 
 
 at.bb.u = {}
@@ -44,6 +48,7 @@ at.bb.u.dam = 7
 at.bb.u.kb = 2
 at.bb.u.j = 22
 at.bb.u.ft = 20
+at.bb.u.z = .05
 
 sparkspeed = 3
 slashsparkspeed = 7
@@ -241,6 +246,7 @@ function breadandbutter(xx)
                   xx.joystick:setVibration(.7,1)
                 end
               end
+              shakez(at.bb.p.z)
 
             end)
         end
@@ -289,6 +295,7 @@ function breadandbutter(xx)
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(1,1)
               end
+              shakez(at.bb.k.z)
 
             end)
         end
@@ -322,6 +329,7 @@ function breadandbutter(xx)
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(1,1)
               end
+              shakez(at.bb.u.z)
             end)
         end
       elseif xx.animcounter >= 16 then
@@ -358,6 +366,7 @@ function breadandbutter(xx)
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(.7,1)
               end
+              shakez(at.bb.ap.z)
             end
 
         end)
@@ -402,6 +411,7 @@ function breadandbutter(xx)
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(.7,1)
               end
+              shakez(at.bb.ak.z)
             end
 
           end)
@@ -434,6 +444,7 @@ function breadandbutter(xx)
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(1,1)
               end
+              shakez(at.bb.u.z)
             end)
         end
       elseif xx.animcounter >= 16 then

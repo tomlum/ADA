@@ -280,7 +280,7 @@ end
 
 
 
-      if lset and rset and MENU == "choose" then 
+      if lset and rset and menu == "choose" then 
 
         selecsong:play()
         if collide then
@@ -293,7 +293,7 @@ end
           collide = false
         end
 
-        if mereadytoplay and youreadytoplay and ((me.start and mns) or (you.start and yns)) then MENU = "postchoose"
+        if mereadytoplay and youreadytoplay and ((me.start and mns) or (you.start and yns)) then menu = "postchoose"
           selecsong:stop()
           readysound:play()
         end
@@ -1230,7 +1230,7 @@ end
 
 
 
-                                                                              if MENU == "play"
+                                                                              if menu == "play"
                                                                               then
 
 

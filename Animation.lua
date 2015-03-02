@@ -256,6 +256,8 @@ actionshotdur = 70
 me.im = idle1
 you.im = idle1
 
+
+
 function drawa(xx)
   drawmytrail(xx)
 
@@ -265,8 +267,13 @@ function drawa(xx)
   love.graphics.setColor(180, 180, 180)
     else
   love.graphics.setColor(255, 255, 255, 255)
-  end
-  love.graphics.draw(xx.im.im, xx.xanimate-xx.im.xoff*xx.lr, xx.y-xx.im.yoff, 0, xx.lr, 1)
+end
+local xim = xx.im.im
+local xxx = xx.xanimate-xx.im.xoff*xx.lr
+local xxy = xx.y-xx.im.yoff
+local xlr = xx.lr
+love.graphics.draw(xim,xxx, xxy, 0, xlr, 1) 
+  
   if xx.im.c ~= nil then 
     love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
     love.graphics.draw(xx.im.c, xx.xanimate-xx.im.xoff*xx.lr, xx.y-xx.im.yoff, 0, xx.lr, 1)
@@ -1176,11 +1183,11 @@ retryupdate = function()
 
   if waitforitplay > 0 then waitforitplay = waitforitplay - 1
   elseif fadeupretry == 2 and waitforitplay == 0 then
-    MENU = "prepan"
+    menu = "prepan"
     loadmeandyou2()
     fadeupretry = 0
   elseif fadeupretry == 3 and waitforitplay == 0 then
-    MENU = "prechoose"
+    menu = "prechoose"
     loadmeandyou()
     fadeupretry = 0
   elseif playfadeout >= 250 and fadeupretry == 2 or fadeupretry == 3  then
@@ -1253,7 +1260,7 @@ first = true
 spineymove = 0
 seperatespines = false
 drawspine = function()
-  if table.getn(spines) < 1 and MENU ~= "postpostchoose"
+  if table.getn(spines) < 1 and menu ~= "postpostchoose"
   then
     spinen = 11
     sosfirst = true
@@ -1437,7 +1444,7 @@ drawwaves = function()
 
   for i,v in ipairs(waves) do
     v.x = (screenwidth/24) * v.n
-    if oddeven%8 == 1 then
+    if oddeven%waveframerate == 1 then
       if v.n >= 1 then v.v = waves[i+1].v
         v.y = v.y - v.v
       else 
@@ -1445,7 +1452,7 @@ drawwaves = function()
         v.y = v.y - v.v
       end
     end
-    love.graphics.draw(enviro.wave, v.x, v.y+(screenheight*.7), 0, screenwidth/1440, screenheight/700)
+    love.graphics.draw(enviro.wave, v.x, v.y+(screenheight*.7)-stagey*(screenheight/350), 0, screenwidth/1440, screenheight/700)
 
   end
 end
