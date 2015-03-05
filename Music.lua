@@ -31,14 +31,18 @@ openingsong:setLooping(true)
 
 
 SFXV = 1
-
+volume = 0
 
 function repplay(x)
+  local aud = love.audio.getVolume(x)
+  
+    x:setVolume(aud*volume)
 	if x:isStopped() then
 			x:play()
 		else x:rewind()
 			x:play()
 		end
+    
 
 end
 
@@ -131,9 +135,23 @@ tornadosound1:setVolume(SFXV - .7)
 tornadosound2 = love.audio.newSource("sounds/tornado.wav", "stream")
 tornadosound2:setVolume(SFXV - .7)
 
-
-collides = love.audio.newSource("sounds/collide.wav", "stream")
-collides:setVolume(SFXV - .82)
+collides = {}
+collides[1] = love.audio.newSource("sounds/collide.wav", "stream")
+collides[1]:setVolume(SFXV - .82)
+collides[2] = love.audio.newSource("sounds/collide.wav", "stream")
+collides[2]:setVolume(SFXV - .82)
+collides[3] = love.audio.newSource("sounds/collide.wav", "stream")
+collides[3]:setVolume(SFXV - .82)
+collides[4] = love.audio.newSource("sounds/collide.wav", "stream")
+collides[4]:setVolume(SFXV - .82)
+collides[5] = love.audio.newSource("sounds/collide.wav", "stream")
+collides[5]:setVolume(SFXV - .82)
+collides[6] = love.audio.newSource("sounds/collide.wav", "stream")
+collides[6]:setVolume(SFXV - .82)
+collides[7] = love.audio.newSource("sounds/collide.wav", "stream")
+collides[7]:setVolume(SFXV - .82)
+collides[8] = love.audio.newSource("sounds/collide.wav", "stream")
+collides[8]:setVolume(SFXV - .82)
 
 
 adj = .14

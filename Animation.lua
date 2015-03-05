@@ -273,6 +273,7 @@ local xxx = xx.xanimate-xx.im.xoff*xx.lr
 local xxy = xx.y-xx.im.yoff
 local xlr = xx.lr
 love.graphics.draw(xim,xxx, xxy, 0, xlr, 1) 
+
   
   if xx.im.c ~= nil then 
     love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)

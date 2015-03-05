@@ -28,8 +28,17 @@ function doubledown(xx)
   end
 
 end
+function downs() 
+  if 
+((me.down and not me.dirholda) or (you.down and not you.dirholda)) then return true else return false
+end
+end
 
-
+function ups() 
+  if 
+((me.up and not me.dirholda) or (you.up and not you.dirholda)) then return true else return false
+end
+end
 
 --things that you need regardless of the input type
 function controlsstuff(xx)
@@ -162,18 +171,28 @@ clickclick = false
 
 
 function c1accept()    
-  if (me.a1 or me.a2 or me.a3 or me.a4 or me.block or me.start) then
+  if (me.a1 or me.a2 or me.a3 or me.a4 or me.start) then
     return true
   else return false
   end
 end    
 
 function c2accept()    
-  if (you.a1 or you.a2 or you.a3 or you.a4 or you.block or you.start) then
+  if (you.a1 or you.a2 or you.a3 or you.a4 or you.start) then
     return true
   else return false
   end
 end    
+
+
+function cancels()
+  if
+  (me.block and not me.dirholda) or (you.block and not you.dirholda) then return true
+  else
+    return false
+  end
+end
+
 
 function clicks()
 

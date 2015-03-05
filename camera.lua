@@ -1,3 +1,6 @@
+--have paralx tied to cscale so it zooms at a different rate
+--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate
+
 --IF Y DIF GREAT THEN GROW THE LINE MORE have an 'or' clause
 --HAVE IT SPLIT VERT ALSO? if horiz is same but different vert?
 
@@ -490,7 +493,9 @@ function drawleft()
   if themap.name == "library" then 
     love.graphics.draw(enviro.paralax2, camera.x/1.5 + (screenwidth/4)/1.5 - 400,camera.y/1.2 + enviro.screenheight / 1.2 - 12 - paralaxoffset-940)
   end
+  blurdraw(blursize, function()
   love.graphics.draw(enviro.paralax, camera.x / 2 + ((screenwidth/4)/2*cscale) - 200, (camera.y/2) + (enviro.screenheight/2*cscale) - 12 - paralaxoffset - 800)
+  end)
   
   love.graphics.draw(enviro.floor, 0, 0)
   if themap.name == "street" then
@@ -543,8 +548,10 @@ function drawright()
   if themap.name == "library" then 
     love.graphics.draw(enviro.paralax2, camera2.x/1.5 + (screenwidth/4)/1.5 - 400,camera2.y/1.2 + enviro.screenheight / 1.2 - 12 - paralaxoffset-940)
   end
-
+blurdraw(blursize, function()
   love.graphics.draw(enviro.paralax, camera2.x / 2 + ((screenwidth/4)/2*cscale) - 200, camera2.y / 2 + (enviro.screenheight/2*cscale) - 12 - paralaxoffset - 800)
+  
+  end)
   love.graphics.draw(enviro.floor,0, 0)
   if themap.name == "street" then
     drawstreetprestuff()

@@ -1,10 +1,12 @@
 --todo
 therampspeed = .1
 drawboxes = false
-fightclub = true
+fightclub = false
 fullscreen = false
-mute = false
+readout = true
+mute = true
 
+--airgrab
 
 --PARALX ZOOMS OUT SLIGHTLY DIFFERENTLY TO CAMERA ZOOM
 
@@ -228,6 +230,8 @@ pausedonhit = false
 
 
 
+require "blur"
+require "menustuff"
 require "DamageTable"
 require "meandyou"
 require "colorcontrol"
@@ -242,7 +246,6 @@ require "GG"
 require "BB"
 require "pp"
 loader = require "love-loader"
-require "menustuff"
 
 
 moop = 0
@@ -256,50 +259,6 @@ function love.load()
 
   me.oldv = 0
   you.oldv = 0
-
-  Germanunkol = love.graphics.newShader [[
-
-  vec4 effect(vec4 color, Image texture, vec2 vTexCoord, vec2 pixel_coords)
-  {
-    vec4 sum = vec4(0.0);
-    number blurSize = 0.005;
-
-    // take nine samples, with the distance blurSize between them
-    sum += texture2D(texture, vec2(vTexCoord.x - 4.0*blurSize, vTexCoord.y)) * 0.05;
-    sum += texture2D(texture, vec2(vTexCoord.x - 3.0*blurSize, vTexCoord.y)) * 0.09;
-    sum += texture2D(texture, vec2(vTexCoord.x - 2.0*blurSize, vTexCoord.y)) * 0.12;
-    sum += texture2D(texture, vec2(vTexCoord.x - blurSize, vTexCoord.y)) * 0.15;
-    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y)) * 0.16;
-    sum += texture2D(texture, vec2(vTexCoord.x + blurSize, vTexCoord.y)) * 0.15;
-    sum += texture2D(texture, vec2(vTexCoord.x + 2.0*blurSize, vTexCoord.y)) * 0.12;
-    sum += texture2D(texture, vec2(vTexCoord.x + 3.0*blurSize, vTexCoord.y)) * 0.09;
-    sum += texture2D(texture, vec2(vTexCoord.x + 4.0*blurSize, vTexCoord.y)) * 0.05;
-
-
-    return sum;
-  }
-  ]]
-  blur2 = love.graphics.newShader [[
-
-  vec4 effect(vec4 color, Image texture, vec2 vTexCoord, vec2 pixel_coords)
-  {
-    vec4 sum = vec4(0.0);
-    number blurSize = 0.005;
-
-    // take nine samples, with the distance blurSize between them
-    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y - 4.0*blurSize)) * 0.05;
-    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y - 3.0*blurSize)) * 0.09;
-    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y - 2.0*blurSize)) * 0.12;
-    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y- blurSize)) * 0.15;
-    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y)) * 0.16;
-    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y + blurSize)) * 0.15;
-    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y + 2.0*blurSize)) * 0.12;
-    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y + 3.0*blurSize)) * 0.09;
-    sum += texture2D(texture, vec2(vTexCoord.x, vTexCoord.y + 4.0*blurSize)) * 0.05;
-
-    return sum;
-  }
-  ]]
   if debug then 
     require("mobdebug").start() 
   end
@@ -534,135 +493,135 @@ function love.update()
 
       end
 
-    cammovement()
-    --if here then slideycling to person
-    camerafol()
+      cammovement()
+      --if here then slideycling to person
+      camerafol()
 
-    if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
-      animate()
-
-
-
-      orientlr(me)
-      orientlr(you)
-
-      you.feet = you.y + 60
-      me.feet = me.y + 60
-      --if here then non slideycling to person
-      --camerafol()
+      if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
+        animate()
 
 
 
-      blocknbusy()
+        orientlr(me)
+        orientlr(you)
 
-      me.jstop = false
-      you.jstop = false
-      me.limitbreak= false
-      you.limitbreak = false
-
-
-
-
-      combomanage(me)
-      combomanage(you)
-
-      updatemytrail(me)
-      updatemytrail(you)
+        you.feet = you.y + 60
+        me.feet = me.y + 60
+        --if here then non slideycling to person
+        --camerafol()
 
 
-    end
-    actionshotstuff(me)
-    actionshotstuff(you)
+
+        blocknbusy()
+
+        me.jstop = false
+        you.jstop = false
+        me.limitbreak= false
+        you.limitbreak = false
 
 
-    if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
 
-      whoupdatesfirst = math.random()
-      if whoupdatesfirst>.5 then
-        attackmanage(me)
-        spikeupdate(me)
-        boltupdate(me) 
+
+        combomanage(me)
+        combomanage(you)
+
+        updatemytrail(me)
+        updatemytrail(you)
+
+
       end
-      attackmanage(you)
-      spikeupdate(you)
-      boltupdate(you)  
-      if whoupdatesfirst<=.5 then
-        attackmanage(me)
-        spikeupdate(me)
-        boltupdate(me) 
-      end
+      actionshotstuff(me)
+      actionshotstuff(you)
 
-      postattackmanage(me)
-      postattackmanage(you)
-      flinchingx(me,you)
-      flinchingx(you,me)
 
-      if math.abs(me.v) > math.abs(you.v) then
-        bump(me)
-      elseif math.abs(me.v) < math.abs(you.v) then
+      if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
 
-        bump(you)
-      else
-        if math.random()>.5
-        then bump(me)
-        else bump(you)
+        whoupdatesfirst = math.random()
+        if whoupdatesfirst>.5 then
+          attackmanage(me)
+          spikeupdate(me)
+          boltupdate(me) 
+        end
+        attackmanage(you)
+        spikeupdate(you)
+        boltupdate(you)  
+        if whoupdatesfirst<=.5 then
+          attackmanage(me)
+          spikeupdate(me)
+          boltupdate(me) 
+        end
+
+        postattackmanage(me)
+        postattackmanage(you)
+        flinchingx(me,you)
+        flinchingx(you,me)
+
+        if math.abs(me.v) > math.abs(you.v) then
+          bump(me)
+        elseif math.abs(me.v) < math.abs(you.v) then
+
+          bump(you)
+        else
+          if math.random()>.5
+          then bump(me)
+          else bump(you)
+          end
+
+
+          if(math.abs(you.ft) > math.abs(you.oldft)) then
+            you.ft = you.oldft + (you.ft-you.oldft)*(rampspeed)
+          end
+
         end
 
 
-        if(math.abs(you.ft) > math.abs(you.oldft)) then
-          you.ft = you.oldft + (you.ft-you.oldft)*(rampspeed)
-        end
 
-      end
+        newforwarddodge(me)
+        newforwarddodge(you)
 
 
-
-      newforwarddodge(me)
-      newforwarddodge(you)
-
-
-      climbs(me)
-      climbs(you)
+        climbs(me)
+        climbs(you)
 
 
 
-      isanyonedead()
-      death()
+        isanyonedead()
+        death()
 
-      miscsounds()
+        miscsounds()
       holdmanage(me)
       holdmanage(you)
 
 
-      --[[
-      if (themode == "classic" and (you.dead or me.dead)) or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
-        thesong:stop()
-        retryupdate()
+        --[[
+        if (themode == "classic" and (you.dead or me.dead)) or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
+          thesong:stop()
+          retryupdate()
+        end
+        ]]--
+        cammovement()
+        --if here then no slow mo twitter
+        camerafol()
+        camshakeflinch()
+
       end
-      ]]--
-      cammovement()
-      --if here then no slow mo twitter
-      camerafol()
-      camshakeflinch()
-
-    end
 
 
 
 
-    --down here to allow facemovement even during me.actionshot
+      --down here to allow facemovement even during me.actionshot
 
 
 
 
-    if me.im == slowdown then
-      me.xoffset = 10
-    end
-
-    if you.im == slowdown then 
-      you.xoffset = 10
-    end
+      if me.im == slowdown then
+        me.xoffset = 10
       end
+
+      if you.im == slowdown then 
+        you.xoffset = 10
+      end
+    end
 
 
   end
@@ -855,10 +814,15 @@ function love.update()
     end
     ]]--
     love.graphics.setColor(255,255,255)
+    if readout then
     love.graphics.print("themenu "..tostring(menu), 10, 90)
     love.graphics.print("oldmenu "..tostring(oldmenu), 10, 110)
     love.graphics.print("fadein "..tostring(fadein), 10, 130)
     love.graphics.print("allfade "..tostring(allfade), 10, 150)
-    love.graphics.print("themode "..tostring(themode), 10, 180)
+    love.graphics.print("#tiles "..tostring(#tiles), 10, 180)
+    love.graphics.print("me.selectedcolor "..tostring(me.selectedcolor), 10, 230)
+    end
+    if love.keyboard.isDown("4") then blursize = blursize + 1
+    elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
 
   end

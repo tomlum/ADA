@@ -10,9 +10,19 @@ thecolors = {}
 thecolors[0] = {n=0,c={r = 255, g = 255, b = 255},
   s = {def=1, speed = 1, jump = 1, weight = 1}}
 thecolors[1] = {n=1,c={r = 87, g = 0, b = 158},
-  s = {def=1.2, speed = .8, jump = .7, weight = 1.3}}
+  s = {def=1.2, speed = .8, jump = .7, weight = 1.3}, tile = ptile}
 thecolors[2] = {n=2,c={r = 40, g = 255, b = 0},
-  s = {def=.7, speed = 1.3, jump = 1.2, weight = 1}}
+  s = {def=.7, speed = 1.3, jump = 1.2, weight = 1}, tile = gtile}
+thecolors[3] = {tile = tile,c={r = 255, g = 255, b = 255}}
+thecolors[4] = {tile = tile,c={r = 255, g = 255, b = 255}}
+thecolors[5] = {tile = tile,c={r = 255, g = 255, b = 255}}
+thecolors[6] = {tile = tile,c={r = 255, g = 255, b = 255}}
+thecolors[7] = {tile = tile,c={r = 255, g = 255, b = 255}}
+thecolors[8] = {tile = tile,c={r = 255, g = 255, b = 255}}
+thecolors[9] = {tile = tile,c={r = 255, g = 255, b = 255}}
+thecolors[10] = {tile = tile,c={r = 255, g = 255, b = 255}}
+thecolors[11] = {tile = tile,c={r = 255, g = 255, b = 255}}
+--transition color, weaker
 thecolors[100] = {n=-1,c={r = 0, g = 0, b = 0},
   s = {def=.7, speed = 1, jump = 1, weight = 1}}
 
