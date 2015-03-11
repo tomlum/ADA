@@ -168,6 +168,11 @@ function attackmanage(xx)
 
     end
   end
+     
+    if xx.type == 7 and xx.color.n == 0 and xx.animcounter > 2 and xx.g then
+      xx.animcounter = 0
+      
+      end
 
   if xx.landing then xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false end
 

@@ -479,8 +479,12 @@ function hboxp()
           xx.land:play()
           xx.slowdown = false
         end
-
+        
+        if extrah > 0 then
         p.y = plat.y-p.height
+      else
+        p.y = plat.y-p.height
+        end
         p.g = true
         p.j = 0
         p.plat = plat;

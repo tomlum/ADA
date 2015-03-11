@@ -164,9 +164,9 @@ dropkick1 = {im=love.graphics.newImage("me/attack/dropkick1.png"),c=love.graphic
 dropkick2 = {im=love.graphics.newImage("me/attack/dropkick2.png"),c=love.graphics.newImage("me/attack/dropkick2c.png"), xoff = 8,yoff = 10, dodgeh = -10 }
 divekick = {im=love.graphics.newImage("me/attack/divekick.png"),c=love.graphics.newImage("me/attack/divekickc.png"), xoff = 5,yoff = 10, dodgeh = -10 }
 
-brun1 = {im=love.graphics.newImage("me/attack/brun1.png"),c=love.graphics.newImage("me/attack/brun1c.png"), xoff = 16,yoff = 14,exheight=-10}
-brun2 = {im=love.graphics.newImage("me/attack/brun2.png"),c=love.graphics.newImage("me/attack/brun2c.png"), xoff = 16,yoff = 14,exheight=-10}
-brun3 = {im=love.graphics.newImage("me/attack/brun3.png"),c=love.graphics.newImage("me/attack/brun3c.png"), xoff = 16,yoff = 14,exheight=-10}
+brun1 = {im=love.graphics.newImage("me/attack/brun1.png"),c=love.graphics.newImage("me/attack/brun1c.png"), xoff = 16,yoff = 14,exheight=-6}
+brun2 = {im=love.graphics.newImage("me/attack/brun2.png"),c=love.graphics.newImage("me/attack/brun2c.png"), xoff = 16,yoff = 14,exheight=-6}
+brun3 = {im=love.graphics.newImage("me/attack/brun3.png"),c=love.graphics.newImage("me/attack/brun3c.png"), xoff = 16,yoff = 14,exheight=-6}
 
 
 
@@ -471,11 +471,7 @@ function breadandbutter(xx)
         xx.animcounter = 0
       end
       
-      
-    if xx.animcounter > 2 and xx.g then
-      xx.animcounter = 0
-      
-      end
+   
       
     end
   end

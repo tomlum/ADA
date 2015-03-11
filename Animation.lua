@@ -57,7 +57,7 @@ jumprisec = love.graphics.newImage("me/jump/jumprisec.png")
 jumprise = {im = jumpriseim, c = jumprisec}
 jumpfallingim = love.graphics.newImage("me/jump/jumpfalling.png")
 jumpfallingc = love.graphics.newImage("me/jump/jumpfallingc.png")
-jumpfalling = {im = jumpfallingim, c = jumpfallingc, exheight = 10}
+jumpfalling = {im = jumpfallingim, c = jumpfallingc, exheight = 5}
 landingim = love.graphics.newImage("me/jump/landing.png")
 landingc = love.graphics.newImage("me/jump/landingc.png")
 landing = {im = landingim, c = landingc}
