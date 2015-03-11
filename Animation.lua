@@ -57,7 +57,7 @@ jumprisec = love.graphics.newImage("me/jump/jumprisec.png")
 jumprise = {im = jumpriseim, c = jumprisec}
 jumpfallingim = love.graphics.newImage("me/jump/jumpfalling.png")
 jumpfallingc = love.graphics.newImage("me/jump/jumpfallingc.png")
-jumpfalling = {im = jumpfallingim, c = jumpfallingc}
+jumpfalling = {im = jumpfallingim, c = jumpfallingc, exheight = 10}
 landingim = love.graphics.newImage("me/jump/landing.png")
 landingc = love.graphics.newImage("me/jump/landingc.png")
 landing = {im = landingim, c = landingc}
@@ -256,7 +256,9 @@ actionshotdur = 70
 me.im = idle1
 you.im = idle1
 
-
+function p2shade()
+  love.graphics.setColor(180, 180, 180)
+  end
 
 function drawa(xx)
   drawmytrail(xx)
@@ -264,7 +266,7 @@ function drawa(xx)
   if xx.im.xoff == nil then xx.im.xoff = 0 end
   if xx.im.yoff == nil then xx.im.yoff = 0 end
   if xx.id == 2 then
-  love.graphics.setColor(180, 180, 180)
+  p2shade()
     else
   love.graphics.setColor(255, 255, 255, 255)
 end

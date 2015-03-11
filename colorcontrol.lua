@@ -8,23 +8,23 @@ colorvib = .1
 
 thecolors = {}
 thecolors[0] = {n=0,c={r = 255, g = 255, b = 255},
-  s = {def=1, speed = 1, jump = 1, weight = 1}}
+  s = {def=1, speed = 1, jump = 1, weight = 1}, logo=questionlogo}
 thecolors[1] = {n=1,c={r = 87, g = 0, b = 158},
-  s = {def=1.2, speed = .8, jump = .7, weight = 1.3}, tile = ptile}
+  s = {def=1.2, speed = .8, jump = .7, weight = 1.3}, tile = ptile, logo=plogo, sound = colorgsound}
 thecolors[2] = {n=2,c={r = 40, g = 255, b = 0},
-  s = {def=.7, speed = 1.3, jump = 1.2, weight = 1}, tile = gtile}
-thecolors[3] = {tile = tile,c={r = 255, g = 255, b = 255}}
-thecolors[4] = {tile = tile,c={r = 255, g = 255, b = 255}}
-thecolors[5] = {tile = tile,c={r = 255, g = 255, b = 255}}
-thecolors[6] = {tile = tile,c={r = 255, g = 255, b = 255}}
-thecolors[7] = {tile = tile,c={r = 255, g = 255, b = 255}}
-thecolors[8] = {tile = tile,c={r = 255, g = 255, b = 255}}
-thecolors[9] = {tile = tile,c={r = 255, g = 255, b = 255}}
-thecolors[10] = {tile = tile,c={r = 255, g = 255, b = 255}}
-thecolors[11] = {tile = tile,c={r = 255, g = 255, b = 255}}
+  s = {def=.7, speed = 1.3, jump = 1.2, weight = 1}, tile = gtile, logo=glogo, sound = colorgsound}
+thecolors[3] = {tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
+thecolors[4] = {tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
+thecolors[5] = {tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
+thecolors[6] = {tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
+thecolors[7] = {tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
+thecolors[8] = {tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
+thecolors[9] = {tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
+thecolors[10] = {tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
+thecolors[11] = {tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 --transition color, weaker
 thecolors[100] = {n=-1,c={r = 0, g = 0, b = 0},
-  s = {def=.7, speed = 1, jump = 1, weight = 1}}
+  s = {def=.7, speed = 1, jump = 1, weight = 1}, logo=questionlogo}
 
 
 me.color = thecolors[0]
@@ -73,6 +73,9 @@ function ColorChanging(xx)
   if xx.cchangeto.n > 0  then
     if xx.cct < colorchangetime and (xx.animcounter == 0 or xx.actionshot)  then
       xx.cct = xx.cct + 1
+      xx.cchangeto.sound:setPitch((xx.cct+1)/colorchangetime)
+      xx.cchangeto.sound:setVolume(((xx.cct+1)/(colorchangetime+100)))
+      repplay(xx.cchangeto.sound)
     end
       xx.ctri = (thecolors[0].c.r-xx.cchangeto.c.r)/colorchangetime
       xx.ctgi = (thecolors[0].c.g-xx.cchangeto.c.g)/colorchangetime
@@ -86,7 +89,7 @@ function ColorChanging(xx)
   if xx.cct == colorchangetime then 
     if xx.color.n == -1 then
     xx.color = xx.cchangeto
-    xx.runpace = defrunpace / xx.color.s.speed
+    xx.runpace = defrunpace /  (xx.color.s.speed*3/4)
     end
   elseif xx.cct <= 0  then
     xx.runpace = defrunpace

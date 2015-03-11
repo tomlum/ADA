@@ -17,7 +17,7 @@ agreena1s = {im=love.graphics.newImage("me/attack/agreena1s.png"),c=love.graphic
 greenk1 = {im=love.graphics.newImage("me/attack/greenk1.png"),c=love.graphics.newImage("me/attack/greenk1c.png"), xoff = 40, yoff = 20}
 greenk2 = {im=love.graphics.newImage("me/attack/greenk2.png"),c=love.graphics.newImage("me/attack/greenk2c.png"), xoff = 10, yoff = 20}
 
-agk1 = {im=love.graphics.newImage("me/attack/agk1.png"),c=love.graphics.newImage("me/attack/agk1c.png"), xoff = 40, yoff =10}
+agk1 = {im=love.graphics.newImage("me/attack/agk1.png"),c=love.graphics.newImage("me/attack/agk1c.png"), xoff = 40, yoff =12}
 agk2 = {im=love.graphics.newImage("me/attack/agk2.png"),c=love.graphics.newImage("me/attack/agk2c.png"), xoff = 10, yoff =10}
 
 

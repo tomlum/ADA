@@ -180,13 +180,18 @@ function drawallhex()
       --dodgeoffsetx
       dsh = 0
       dsw = 0
+      extrah = 0
       if v.im.dodgeh ~= nil then
         dsh = v.im.dodgeh
       end
       if v.im.dodgew ~= nil then
         dsw = v.im.dodgew
       end
-      drawhexcheck(v.mid+v.lr*(dsw/2), v.y+(dsh)+hexbuffer/2, v.width+dsw-hexbuffer, v.height-dsh-hexbuffer, v.v, v.j)
+      
+      if v.im.exheight ~= nil then
+        extrah = -v.im.exheight
+      end
+      drawhexcheck(v.mid+v.lr*(dsw/2), v.y+(dsh)+hexbuffer/2, v.width+dsw-hexbuffer, v.height-dsh-hexbuffer-extrah, v.v, v.j)
     end
 
     love.graphics.line(bx1,by1,bx2,by2)
@@ -236,18 +241,22 @@ function hboxcs(theid, P1, P2, P3, P4, special)
   for i,p in ipairs(hitt) do
     dsh = 0
     dsw = 0
+    extrah = 0
     if p.im.dodgeh ~= nil then
       dsh = p.im.dodgeh
     end
     if p.im.dodgew ~= nil then
       dsw = p.im.dodgew
     end
+    if p.im.exheight ~= nil then
+        extrah = -p.im.exheight
+      end
 
     if theid ~= i and
-    (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, p.height-dsh-hexbuffer/2, p.v, p.j) 
-      or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, p.height-dsh-hexbuffer/2, p.v, p.j)
-      or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, p.height-dsh-hexbuffer/2, p.v, p.j)
-      or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, p.height-dsh-hexbuffer/2, p.v, p.j)
+    (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j) 
+      or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
+      or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
+      or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
       or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
     )
     then
@@ -263,6 +272,8 @@ end
 
 
 function hexplatcheck(y1, x1, x2, ex, why, w, h, v, j)
+  
+    
   midv2 = {x = (ex+w/2)+v, y=why+h-j, n = 2}
   midv = {x = ex+w/2, y=why+h, n = 2}
   local linep1 = {x = x1, y = y1}
@@ -437,7 +448,11 @@ function hboxp()
     for j = #themap.plats, 1, -1 do 
       plat = themap.plats[j]
       xx = p
-
+      
+      extrah = 0
+    if p.im.exheight ~= nil then
+        extrah = -p.im.exheight
+      end
 
 
 
@@ -445,10 +460,10 @@ function hboxp()
         p.im.yoff = 0
       end
       if (not p.gothroughplats or (plat.floor~=nil)) and (
-        ((hexplatcheck(plat.y, plat.x1, plat.x2, p.x, p.y+offsetforplat, p.width, p.height, p.v, p.j) and p.j <= 0 
-            and p.y+p.j-p.im.yoff <= plat.y-(p.height)-p.im.yoff))
+        ((hexplatcheck(plat.y, plat.x1, plat.x2, p.x, p.y+offsetforplat, p.width, p.height-extrah, p.v, p.j) and p.j <= 0 
+            and p.y+p.j-p.im.yoff <= plat.y-(p.height-extrah)-p.im.yoff))
         or 
-        (p.y == plat.y-p.height and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
+        (p.y == plat.y-p.height-extrah and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
       then
 
         if p.j ~= 0 then

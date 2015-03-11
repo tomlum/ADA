@@ -50,6 +50,9 @@ at.bb.u.j = 22
 at.bb.u.ft = 20
 at.bb.u.z = .05
 
+at.bb.run = {}
+at.bb.run.j = 6
+
 sparkspeed = 3
 slashsparkspeed = 7
 
@@ -90,9 +93,9 @@ function holdmanage(xx)
       xx.holda = true
     end
   else xx.holda = false
-end
+  end
 
-if (xx.up or xx.down or xx.left or xx.right or xx.block) then
+  if (xx.up or xx.down or xx.left or xx.right or xx.block) then
     if not xx.dirholda then
       xx.dirholda = true
     end
@@ -145,21 +148,6 @@ function cancelas(xx)
   xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false
 end
 
---bounce method, if hit squares and not dodge then yeah
-function bump(xx)
-  if not xx.dodge then
-    hboxcs(xx.id, 
-      {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+55},
-      {x=xx.mid, y = xx.y+55},
-      {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+5},
-      {x=xx.mid, y = xx.y+5},
-      function(z)
-        if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
-          z.push = xx.v
-        end
-      end)
-  end
-end
 
 punch1 = {im=love.graphics.newImage("me/attack/punch1.png"),c=love.graphics.newImage("me/attack/punch1c.png"),xoff = 15}
 punch2 = {im=love.graphics.newImage("me/attack/punch2.png"),c=love.graphics.newImage("me/attack/punch2c.png"),xoff = 15}
@@ -172,9 +160,13 @@ kick2 = {im = love.graphics.newImage("me/attack/kick2.png"), c = love.graphics.n
 kick3 = {im = love.graphics.newImage("me/attack/kick3.png"), c = love.graphics.newImage("me/attack/kick3c.png"), xoff = 15, yoff = 10}
 uppercut = {im=love.graphics.newImage("me/attack/uppercut.png"),c=love.graphics.newImage("me/attack/uppercutc.png"), xoff = 15}
 jumpuppercut = {im=love.graphics.newImage("me/attack/jumpuppercut.png"),c=love.graphics.newImage("me/attack/jumpuppercutc.png")}
-dropkick1 = {im=love.graphics.newImage("me/attack/dropkick1.png"),c=love.graphics.newImage("me/attack/dropkick1c.png"), xoff = 5}
-dropkick2 = {im=love.graphics.newImage("me/attack/dropkick2.png"),c=love.graphics.newImage("me/attack/dropkick2c.png"), xoff = 8}
-divekick = {im=love.graphics.newImage("me/attack/divekick.png"),c=love.graphics.newImage("me/attack/divekickc.png"), xoff = 5}
+dropkick1 = {im=love.graphics.newImage("me/attack/dropkick1.png"),c=love.graphics.newImage("me/attack/dropkick1c.png"), xoff = 5,yoff = 10, dodgeh = -10}
+dropkick2 = {im=love.graphics.newImage("me/attack/dropkick2.png"),c=love.graphics.newImage("me/attack/dropkick2c.png"), xoff = 8,yoff = 10, dodgeh = -10 }
+divekick = {im=love.graphics.newImage("me/attack/divekick.png"),c=love.graphics.newImage("me/attack/divekickc.png"), xoff = 5,yoff = 10, dodgeh = -10 }
+
+brun1 = {im=love.graphics.newImage("me/attack/brun1.png"),c=love.graphics.newImage("me/attack/brun1c.png"), xoff = 16,yoff = 14,exheight=-10}
+brun2 = {im=love.graphics.newImage("me/attack/brun2.png"),c=love.graphics.newImage("me/attack/brun2c.png"), xoff = 16,yoff = 14,exheight=-10}
+brun3 = {im=love.graphics.newImage("me/attack/brun3.png"),c=love.graphics.newImage("me/attack/brun3c.png"), xoff = 16,yoff = 14,exheight=-10}
 
 
 
@@ -192,7 +184,11 @@ function breadandbutter(xx)
   if xx.animcounter == 0 then
 
     if xx.g then 
-      if (xx.a2 or xx.a3) and xx.color.n == 0 and not xx.holda then
+      if xx.running and (xx.a2b or xx.a3b) then
+        xx.type = 7
+        xx.animcounter = 1
+        eh = true
+      elseif (xx.a2 or xx.a3) and xx.color.n == 0 and not xx.holda then
         xx.type = 1
         xx.animcounter = 1
         xx.combo = xx.combo + 1
@@ -213,7 +209,7 @@ function breadandbutter(xx)
       elseif xx.a4 and not xx.holda then
         xx.type = 5
         xx.animcounter = 1
-        elseif xx.a1 and not xx.holda then
+      elseif xx.a1 and not xx.holda then
         xx.type = 6
         xx.animcounter = 1
       end
@@ -245,9 +241,9 @@ function breadandbutter(xx)
             {x=xx.mid, y = xx.y+30},
             {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32-xx.j},
             function(z)
-              
+
               xx.cancombo = true
-                z.v = z.v/3+xx.lr*at.bb.p.kb+xx.v
+              z.v = z.v/3+xx.lr*at.bb.p.kb+xx.v
               if not (z.block == -xx.lr) then
                 z.health = z.health - at.bb.p.dam
                 z.flinch = true
@@ -353,34 +349,34 @@ function breadandbutter(xx)
       elseif xx.animcounter<=20 then
         xx.im = dropkick2
         if xx.animcounter <10 then
-        hboxcs(xx.id, 
-          {x=xx.mid, y = xx.y+18},
-          {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+18-xx.j},
-          {x=xx.mid, y = xx.y+26},
-          {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+26-xx.j},
-          function(z)
-            xx.cancombo = true
-            if xx.animcounter == 4 then
-              z.v = z.v/3+xx.lr*at.bb.ap.kb+xx.v
-            else
-              z.v = z.v/3+xx.lr*at.bb.ap.kb/2+xx.v
-            end
-            if not (z.block == -xx.lr) then
+          hboxcs(xx.id, 
+            {x=xx.mid, y = xx.y+18},
+            {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+18-xx.j},
+            {x=xx.mid, y = xx.y+26},
+            {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+26-xx.j},
+            function(z)
+              xx.cancombo = true
               if xx.animcounter == 4 then
-                z.health = z.health - at.bb.ap.dam
+                z.v = z.v/3+xx.lr*at.bb.ap.kb+xx.v
               else
-                z.health = z.health - at.bb.ap.dam/2
+                z.v = z.v/3+xx.lr*at.bb.ap.kb/2+xx.v
               end
-              z.flinch = true
-              z.ft = z.ft+at.bb.ap.ft/4
-              if #joysticks>=xx.id then
-                xx.joystick:setVibration(.7,1)
+              if not (z.block == -xx.lr) then
+                if xx.animcounter == 4 then
+                  z.health = z.health - at.bb.ap.dam
+                else
+                  z.health = z.health - at.bb.ap.dam/2
+                end
+                z.flinch = true
+                z.ft = z.ft+at.bb.ap.ft/4
+                if #joysticks>=xx.id then
+                  xx.joystick:setVibration(.7,1)
+                end
+                shakez(at.bb.ap.z)
               end
-              shakez(at.bb.ap.z)
-            end
 
-        end)
-      end
+            end)
+        end
 
       elseif xx.animcounter < 25 then
         xx.im=dropkick1
@@ -408,7 +404,7 @@ function breadandbutter(xx)
           {x=xx.mid+xx.v+(xx.lr*6), y = xx.y+64-xx.j},
           function(z)
             xx.cancombo = true
-              z.v = z.v+xx.lr*at.bb.ak.kb+xx.v/2
+            z.v = z.v+xx.lr*at.bb.ak.kb+xx.v/2
             if not (z.block == -xx.lr) then
               if xx.animcounter == 5 then
                 z.health = z.health - at.bb.ak.dam
@@ -461,6 +457,26 @@ function breadandbutter(xx)
         xx.animcounter = 0
       end
 
+  elseif xx.type == 7 then
+      if xx.animcounter == 2 then
+        xx.j = at.bb.run.j
+        xx.im = brun1
+      elseif xx.animcounter < 7 then
+        xx.im = brun1
+      elseif xx.animcounter < 9 then
+        xx.im = brun2
+      elseif xx.animcounter < 30 then
+        xx.im = brun3
+      else
+        xx.animcounter = 0
+      end
+      
+      
+    if xx.animcounter > 2 and xx.g then
+      xx.animcounter = 0
+      
+      end
+      
     end
   end
 end

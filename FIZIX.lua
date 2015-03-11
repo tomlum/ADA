@@ -4,6 +4,8 @@
 --wind ability allows you to move more freely in the air, allows you to drop faster and change direction
 
 
+awaypenalty = .7
+
 floor = 1900 - 2
 you.tempfloor = floor
 me.tempfloor = floor
@@ -66,6 +68,25 @@ function platformcheckx()
 end
 
 
+
+
+--bounce method, if hit squares and not dodge then yeah
+function bump(xx)
+  if not xx.dodge then
+    hboxcs(xx.id, 
+      {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+55},
+      {x=xx.mid, y = xx.y+55},
+      {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+5},
+      {x=xx.mid, y = xx.y+5},
+      function(z)
+        if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
+          z.push = xx.v
+        end
+      end)
+  end
+end
+
+
 --FRICTION FUNCTION TO SLOW DOWN
 
 
@@ -111,20 +132,20 @@ end
 function vroomright(xx)
   if xx.v == 0+xx.push and not xx.running
   then xx.v = 1.5+xx.push
-  elseif xx.v >0+xx.push and xx.v < (speedlimit -accel+xx.push)*xx.color.s.speed and not xx.running
-  then xx.v = xx.v + (accel+xx.push)*xx.color.s.speed
-  elseif xx.v >0+xx.push and xx.v >= (speedlimit -accel+xx.push)*xx.color.s.speed  and not xx.running
-  then xx.v = (speedlimit -accel+xx.push)*xx.color.s.speed
+  elseif xx.v >0+xx.push and xx.v < (speedlimit -accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash and not xx.running
+  then xx.v = xx.v + (accel+xx.push)*xx.color.s.speed*xx.speedpenalty
+  elseif xx.v >0+xx.push and xx.v >= (speedlimit -accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash  and not xx.running
+  then xx.v = (speedlimit -accel+xx.push)*xx.color.s.speed*xx.speedpenalty
   end
 end 
 
 function vroomleft(xx)
   if xx.v == 0+xx.push and not xx.running
   then xx.v = -1.5+xx.push
-  elseif xx.v < 0+xx.push and xx.v > (-speedlimit + accel+xx.push)*xx.color.s.speed and not xx.running
-  then xx.v = xx.v - (accel+xx.push)*xx.color.s.speed
-  elseif xx.v < 0+xx.push and xx.v <= (-speedlimit + accel+xx.push)*xx.color.s.speed and not xx.running
-  then xx.v = (-speedlimit + accel+xx.push)*xx.color.s.speed
+  elseif xx.v < 0+xx.push and xx.v > (-speedlimit + accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash and not xx.running
+  then xx.v = xx.v - (accel+xx.push)*xx.color.s.speed*xx.speedpenalty
+  elseif xx.v < 0+xx.push and xx.v <= (-speedlimit + accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash and not xx.running
+  then xx.v = (-speedlimit + accel+xx.push)*xx.color.s.speed*xx.speedpenalty
   end
 end 
 
@@ -176,16 +197,16 @@ function runrunrun(xx)
 
     if xx.run and xx.running and (xx.right or xx.left) and xx.run and not xx.block and not xx.slide and not xx.dodge then         
       if xx.right and xx.v > 0 then
-        xx.v = xx.color.s.speed*runspeed
+        xx.v = xx.color.s.speed*runspeed*xx.speedpenalty
       elseif xx.left and xx.v < 0 then
-        xx.v = -xx.color.s.speed*runspeed
+        xx.v = -xx.color.s.speed*runspeed*xx.speedpenalty
       end
 
 
 
 
 
-    elseif math.abs(xx.v) > xx.color.s.speed*speedminit-accel*2 and (xx.left or xx.right) and xx.g  and xx.run and not xx.block and not xx.slide and not xx.dodge then
+    elseif math.abs(xx.v) > xx.color.s.speed*xx.speedpenalty*speedminit-accel*2 and (xx.left or xx.right) and xx.g  and xx.run and not xx.block and not xx.slide and not xx.dodge then
       xx.a1 = false
       xx.a2 = false
       xx.a3 = false
@@ -256,8 +277,20 @@ you.oldg = true
 
 me.gothroughplats = false
 you.gothroughplats = false
+me.speedpenalty = 1
+you.speedpenalty = 1
+ 
+function speedpenaltycalc(xx,yy)
+   if
+   (xx.v * (xx.x - yy.x)/(math.abs(xx.x - yy.x))) > 0
+  then xx.speedpenalty = .7
+  else
+    xx.speedpenalty = 1
+    end
+end
 
-function movex(xx)
+function movex(xx,yy)
+speedpenaltycalc(xx,yy)
    runrunrun(xx)
 transferofenergy(xx)
   z = xx

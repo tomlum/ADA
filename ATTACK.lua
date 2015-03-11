@@ -161,7 +161,7 @@ function attackmanage(xx)
 
   if xx.type < 4 and not xx.g and (xx.type~=2 and xx.color.n~=2) then 
     xx.animcounter = 0
-  elseif xx.type >= 4 and xx.g then 
+  elseif xx.type >= 4 and xx.type < 7 and xx.g then 
     xx.animcounter = 0
     if xx.type == 5 and xx.color.n == 1 then
       xx.purpgroundtimer = -at.p.ak.time

@@ -1,11 +1,11 @@
 --todo
 therampspeed = .1
-drawboxes = false
-fightclub = false
+drawboxes = true
+fightclub = true
 fullscreen = false
 readout = true
-mute = true
-
+mute = false
+eh = false
 --airgrab
 
 --PARALX ZOOMS OUT SLIGHTLY DIFFERENTLY TO CAMERA ZOOM
@@ -234,9 +234,9 @@ require "blur"
 require "menustuff"
 require "DamageTable"
 require "meandyou"
+require "Music"
 require "colorcontrol"
 require "camera"
-require "Music"
 require "Hits"
 require "FIZIX"
 require "Animation"
@@ -340,7 +340,6 @@ function love.load()
     menu = "play"
     themap = themaps[100]
     placespeople = true
-    mute = true
     while(not finishedLoading) do
       whatlevel()
       loader.update() 
@@ -462,8 +461,8 @@ function love.update()
 
 
 
-        movex(me)
-        movex(you)
+        movex(me,you)
+        movex(you,me)
         --used to be here platformcheckx()
 
 
@@ -819,8 +818,9 @@ function love.update()
     love.graphics.print("oldmenu "..tostring(oldmenu), 10, 110)
     love.graphics.print("fadein "..tostring(fadein), 10, 130)
     love.graphics.print("allfade "..tostring(allfade), 10, 150)
-    love.graphics.print("#tiles "..tostring(#tiles), 10, 180)
+    love.graphics.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
     love.graphics.print("me.selectedcolor "..tostring(me.selectedcolor), 10, 230)
+    love.graphics.print("eh "..tostring(eh), 10, 280)
     end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end

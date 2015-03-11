@@ -20,8 +20,13 @@ landingwait = 13
 shortlandwait = 10
 frameswhilelandcantmove = 8
 
+
+--set to 0 for whiplash like turning
+whiplash = 1 
+
 maxgravity = 28
-speedminit = 7
+defspeedminit = 7
+speedminit = defspeedminit
 speedlimit = speedminit
 accel = .5
 minmaxdif = 4

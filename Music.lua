@@ -31,17 +31,15 @@ openingsong:setLooping(true)
 
 
 SFXV = 1
-volume = 0
 
 function repplay(x)
-  local aud = love.audio.getVolume(x)
-  
-    x:setVolume(aud*volume)
+ if not mute then
 	if x:isStopped() then
 			x:play()
 		else x:rewind()
 			x:play()
 		end
+    end
     
 
 end
@@ -154,6 +152,13 @@ collides[8] = love.audio.newSource("sounds/collide.wav", "stream")
 collides[8]:setVolume(SFXV - .82)
 
 
+colorgsound = love.audio.newSource("sounds/gsound.mp3", "stream")
+colorgsound:setVolume(1)
+colorgsound:setPitch(1)
+you.colorgsound = love.audio.newSource("sounds/gsound.mp3", "stream")
+you.colorgsound:setVolume(1)
+you.colorgsound:setPitch(1)
+
 adj = .14
 
 
@@ -245,13 +250,13 @@ startb2 = love.audio.newSource("sounds/startb.wav", "stream")
 startb2:setVolume(SFXV - .93)
 startb2:setPitch(.8)
 
-selected = love.audio.newSource("sounds/selected.wav", "stream")
-selected:setVolume(SFXV - .85)
-selected:setPitch(1)
+me.selected = love.audio.newSource("sounds/selected.wav", "stream")
+me.selected:setVolume(SFXV - .85)
+me.selected:setPitch(1)
 
-selected2 = love.audio.newSource("sounds/selected.wav", "stream")
-selected2:setVolume(SFXV - .85)
-selected2:setPitch(1.1)
+you.selected = love.audio.newSource("sounds/selected.wav", "stream")
+you.selected:setVolume(SFXV - .85)
+you.selected:setPitch(1.1)
 
 mov = love.audio.newSource("sounds/moving.wav", "stream")
 mov:setVolume(SFXV - .7)

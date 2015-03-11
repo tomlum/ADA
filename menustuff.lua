@@ -1,4 +1,4 @@
-menu = "color"
+menu = "title"
 oldmenu = "begin"
 menuspeed = 10
 modes = love.graphics.newImage("enviro/mode.png")
@@ -9,11 +9,14 @@ map = love.graphics.newImage("enviro/map.png")
 ptile = love.graphics.newImage("enviro/ptile.png")
 gtile = love.graphics.newImage("enviro/gtile.png")
 tile = love.graphics.newImage("enviro/tile.png")
+plogo = love.graphics.newImage("enviro/plogo.png")
+glogo = love.graphics.newImage("enviro/glogo.png")
+questionlogo = love.graphics.newImage("enviro/questionmark.png")
 
 musfadein = 0
 musfade = 0
-tilezoom = .1
-colorfromwallspace = 60
+tilezoom = .05
+colorfromwallspace = 100
 
 
 tilespacing = 0
@@ -78,12 +81,15 @@ function initmenu()
     wobv = 1
     wobj = 1
   elseif menu == "map" and oldmenu ~= "map" then
-    allfade = 0
+    allfade = 1
     fadein = 1
+    faderate = 8
   elseif menu == "color" and oldmenu ~= "color" then
-    
-me.selectedcolor = 0
-you.selectedcolor = 0
+    me.drawontop = function() end
+    you.drawontop = function() end
+
+    me.selectedcolor = 0
+    you.selectedcolor = 0
     for i,v in ipairs(tiles) do
       if v.ud == "top" then
         v.y = -450-(#tiles/2-v.column)*100
@@ -93,7 +99,7 @@ you.selectedcolor = 0
         j=11
       end
     end
-    
+
     for i,v in ipairs(tiles2) do
       if v.ud == "top" then
         v.y = -450-(#tiles2/2-v.column)*100
@@ -103,7 +109,7 @@ you.selectedcolor = 0
         j=11
       end
     end
-    
+
     allfade = 255
     fadein = 0
   end
@@ -240,17 +246,25 @@ function drawmenus()
     love.graphics.draw(wiper,wipex,0,0, screenwidth/1440, screenheight/900)
 
   elseif menu == "map" or menu == "precolor" then
-
+    
 
     if cancels() then menu = "modes" end
 
-    if downs() and mapnum < 3 then mapnum = mapnum + 1 mov:play()
-    elseif ups() and mapnum > 1 then mapnum = mapnum - 1 mov:play()	
-    end
-
+    if downs() and mapnum < 3 then mapnum = mapnum + 1 repplay(mov)
+    elseif ups() and mapnum > 1 then mapnum = mapnum - 1 repplay(mov)
+  end
+  
+    
     if c1accept() or c2accept() then
-      menu = "color"
+      fadein = -1
       repplay(modesound)
+    end
+    
+    if fadein < 0 then
+    thesong:setPitch(allfade/255)
+    end
+    if allfade - faderate <= 0 then
+      menu = "color"
     end
 
     love.graphics.setColor(allfade,allfade,allfade,255)
@@ -266,19 +280,39 @@ function drawmenus()
 
   elseif menu == "color" or menu == "prepan" then
 
-if cancels() then menu = "map" end
-if me.right and not me.dirholda then me.selectedcolor = (me.selectedcolor + 1)%(#tiles)
-elseif me.left and not me.dirholda then me.selectedcolor = (me.selectedcolor - 1)%(#tiles)
-elseif me.down and not me.dirholda then me.selectedcolor = (me.selectedcolor + #tiles/2)%(#tiles)
-elseif me.up and not me.dirholda then me.selectedcolor = (me.selectedcolor - #tiles/2)%(#tiles)
-end
+    if cancels() then menu = "map" end
+    if me.right and not me.dirholda then me.selectedcolor = (me.selectedcolor + 1)%(#tiles)
+    elseif me.left and not me.dirholda then me.selectedcolor = (me.selectedcolor - 1)%(#tiles)
+    elseif me.down and not me.dirholda then me.selectedcolor = (me.selectedcolor + #tiles/2)%(#tiles)
+    elseif me.up and not me.dirholda then me.selectedcolor = (me.selectedcolor - #tiles/2)%(#tiles)
+    end
 
-if you.right and not you.dirholda then you.selectedcolor = (you.selectedcolor - 1)%(#tiles2)
-elseif you.left and not you.dirholda then you.selectedcolor = (you.selectedcolor + 1)%(#tiles2)
-elseif you.down and not you.dirholda then you.selectedcolor = (you.selectedcolor + #tiles2/2)%(#tiles2)
-elseif you.up and not you.dirholda then you.selectedcolor = (you.selectedcolor - #tiles2/2)%(#tiles2)
-  end
+    if you.right and not you.dirholda then you.selectedcolor = (you.selectedcolor - 1)%(#tiles2)
+    elseif you.left and not you.dirholda then you.selectedcolor = (you.selectedcolor + 1)%(#tiles2)
+    elseif you.down and not you.dirholda then you.selectedcolor = (you.selectedcolor + #tiles2/2)%(#tiles2)
+    elseif you.up and not you.dirholda then you.selectedcolor = (you.selectedcolor - #tiles2/2)%(#tiles2)
+    end
 
+    tileset = true
+    for i,v in ipairs(tiles) do
+      if v.j ~= 0 then
+        tileset = false
+      end
+    end
+
+
+    if tileset then love.graphics.sdraw(thecolors[me.selectedcolor+1].logo,420,0) 
+    end
+
+    if tileset then 
+      p2shade()
+      if you.selectedcolor+1>2 then
+
+        love.graphics.sdraw(thecolors[you.selectedcolor+1].logo,1440-420-300,0,0,1,1) 
+      else
+        love.graphics.sdraw(thecolors[you.selectedcolor+1].logo,1440-420,0,0,-1,1) 
+      end
+    end
 
 
     love.graphics.setColor(allfade,allfade,allfade,255)
@@ -310,24 +344,24 @@ elseif you.up and not you.dirholda then you.selectedcolor = (you.selectedcolor -
 
       end
       v.y = v.y - v.j
-      if i == me.selectedcolor+1 then
-      function me.drawontop() love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b) 
-        love.graphics.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-450*(tilezoom), 0, v.lr*(1+tilezoom), (1+tilezoom))
+      if i == me.selectedcolor+1 and tileset then
+        function me.drawontop() love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b) 
+          love.graphics.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-450*(tilezoom), 0, v.lr*(1+tilezoom), (1+tilezoom))
         end
-        else
-      love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
+      else
+        love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
         love.graphics.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)), v.y, 0, v.lr, 1)
       end
 
 
 
 
-  end
-      me.drawontop()
-  
-  
-  
-  for i,v in ipairs(tiles2) do
+    end
+    me.drawontop()
+
+
+
+    for i,v in ipairs(tiles2) do
       if v.ud == "top" then
         if v.y - v.j > 25 then 
           if v.j < -10 then
@@ -342,9 +376,9 @@ elseif you.up and not you.dirholda then you.selectedcolor = (you.selectedcolor -
 
       else
         if v.y - v.j <450-25 then 
-          
-      collides[i]:setVolume(SFXV - .82-(.1/(math.abs(v.j))))
-      repplay(collides[i])
+
+          collides[i]:setVolume(SFXV - .82-(.1/(math.abs(v.j))))
+          repplay(collides[i])
           if v.j > 10 then
             v.j = -v.j/3
 
@@ -358,26 +392,38 @@ elseif you.up and not you.dirholda then you.selectedcolor = (you.selectedcolor -
 
       end
       v.y = v.y - v.j
-      
-       if i == you.selectedcolor+1 then
-      function you.drawontop() 
-      love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-        love.graphics.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-(450*(tilezoom)), 0, -v.lr*(1+tilezoom), (1+tilezoom))
-      end
+
+      if i == you.selectedcolor+1 and tileset then
+        function you.drawontop() 
+          love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
+          love.graphics.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-(450*(tilezoom)), 0, -v.lr*(1+tilezoom), (1+tilezoom))
+        end
       else
-      love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
+        love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
         love.graphics.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)), v.y, 0, -v.lr, 1)
-end
+      end
 
 
 
+    end
+    you.drawontop()
+
+    if me.rightbump then 
+    me.rightc = thecolors[me.selectedcolor+1]
+    repplay(me.selected)
+    elseif me.leftbump then 
+    me.leftc = thecolors[me.selectedcolor+1]
+    repplay(me.selected)
   end
-  you.drawontop()
   
   
-
-
-    love.graphics.setColor(allfade,allfade,allfade,255)
+    if you.rightbump then 
+    you.rightc = thecolors[you.selectedcolor+1]
+    repplay(you.selected)
+    elseif you.leftbump then 
+    you.leftc = thecolors[you.selectedcolor+1]
+    repplay(you.selected)
+    end
 
   end
   holdmanage(me)
@@ -570,12 +616,12 @@ function drawcity()
           msy = msy + (screenheight * .15)
           mr2c = false
           meseleccurrent = meseleccurrent + 1
-          mov:play()
+          repplay(mov)
         elseif me.up and mr2c and msy > (screenheight * .14)  then 
           msy = msy - (screenheight * .15)
           meseleccurrent = meseleccurrent - 1
           mr2c = false
-          mov:play()
+          repplay(mov)
         elseif not me.down and not me.up then mr2c = true
         end
       end
@@ -639,12 +685,12 @@ function drawcity()
           ysy = ysy + (screenheight * .15)
           yr2c = false
           youseleccurrent = youseleccurrent+1
-          mov2:play()
+          repplay(mov2)
         elseif you.up and yr2c and ysy > (screenheight * .14) then 
           ysy = ysy - (screenheight * .15)
           yr2c = false
           youseleccurrent = youseleccurrent - 1
-          mov2:play()
+          repplay(mov2)
         elseif not you.down and not you.up then yr2c = true
         end
       end
