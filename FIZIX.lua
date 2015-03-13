@@ -73,7 +73,7 @@ end
 --bounce method, if hit squares and not dodge then yeah
 function bump(xx)
   if not xx.dodge then
-    hboxcs(xx.id, 
+    hboxcss(xx.id, 
       {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+55},
       {x=xx.mid, y = xx.y+55},
       {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+5},
@@ -411,7 +411,7 @@ transferofenergy(xx)
     end
 
     --landing
-    if z.up and xx.j > 0 
+    if z.up and xx.j > 0 and z.type ==0
     and xx.jmax > 0 
     and xx.firstjump
     then xx.jmax = xx.jmax - .7*rampspeed

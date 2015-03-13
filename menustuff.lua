@@ -1,5 +1,9 @@
-menu = "title"
+menu = "color"
 oldmenu = "begin"
+notilebouncing = true
+--menu that fades into another???
+
+
 menuspeed = 10
 modes = love.graphics.newImage("enviro/mode.png")
 backstreet = love.graphics.newImage("enviro/backstreet.png")
@@ -12,6 +16,8 @@ tile = love.graphics.newImage("enviro/tile.png")
 plogo = love.graphics.newImage("enviro/plogo.png")
 glogo = love.graphics.newImage("enviro/glogo.png")
 questionlogo = love.graphics.newImage("enviro/questionmark.png")
+shoulder = love.graphics.newImage("enviro/shoulder.png")
+ready = love.graphics.newImage("enviro/ready.png")
 
 musfadein = 0
 musfade = 0
@@ -51,10 +57,6 @@ function love.graphics.sdraw(im, x, y, rot, sx, sy)
 end
 
 
-
-local shine = require 'shine'
-blur = shine.gaussianblur()
-
 love.graphics.setNewFont(20)
 
 mapnum = 1
@@ -87,26 +89,40 @@ function initmenu()
   elseif menu == "color" and oldmenu ~= "color" then
     me.drawontop = function() end
     you.drawontop = function() end
+    spines = {}
+    allready = false
+    tilefadein = 1
+    tilefade = 0
+    tilefadehold = 0
+    me.readytoplay = false
+    you.readytoplay = false
+    tileset = false
+
+
+    me.rightc = thecolors[0]
+    you.rightc = thecolors[0]
+    me.leftc = thecolors[0]
+    you.leftc = thecolors[0]
 
     me.selectedcolor = 0
     you.selectedcolor = 0
     for i,v in ipairs(tiles) do
       if v.ud == "top" then
         v.y = -450-(#tiles/2-v.column)*100
-        j=-11
+        v.j=-11
       else 
         v.y = 900+(#tiles/2-v.column)*100
-        j=11
+        v.j=11
       end
     end
 
     for i,v in ipairs(tiles2) do
       if v.ud == "top" then
         v.y = -450-(#tiles2/2-v.column)*100
-        j=-11
+        v.j=-11
       else 
         v.y = 900+(#tiles2/2-v.column)*100
-        j=11
+        v.j=11
       end
     end
 
@@ -246,22 +262,24 @@ function drawmenus()
     love.graphics.draw(wiper,wipex,0,0, screenwidth/1440, screenheight/900)
 
   elseif menu == "map" or menu == "precolor" then
-    
+
 
     if cancels() then menu = "modes" end
 
     if downs() and mapnum < 3 then mapnum = mapnum + 1 repplay(mov)
     elseif ups() and mapnum > 1 then mapnum = mapnum - 1 repplay(mov)
-  end
-  
-    
+    end
+
+
     if c1accept() or c2accept() then
       fadein = -1
       repplay(modesound)
     end
-    
+
     if fadein < 0 then
-    thesong:setPitch(allfade/255)
+      if thesong~= nil then
+        thesong:setPitch(allfade/255)
+      end
     end
     if allfade - faderate <= 0 then
       menu = "color"
@@ -280,18 +298,7 @@ function drawmenus()
 
   elseif menu == "color" or menu == "prepan" then
 
-    if cancels() then menu = "map" end
-    if me.right and not me.dirholda then me.selectedcolor = (me.selectedcolor + 1)%(#tiles)
-    elseif me.left and not me.dirholda then me.selectedcolor = (me.selectedcolor - 1)%(#tiles)
-    elseif me.down and not me.dirholda then me.selectedcolor = (me.selectedcolor + #tiles/2)%(#tiles)
-    elseif me.up and not me.dirholda then me.selectedcolor = (me.selectedcolor - #tiles/2)%(#tiles)
-    end
 
-    if you.right and not you.dirholda then you.selectedcolor = (you.selectedcolor - 1)%(#tiles2)
-    elseif you.left and not you.dirholda then you.selectedcolor = (you.selectedcolor + 1)%(#tiles2)
-    elseif you.down and not you.dirholda then you.selectedcolor = (you.selectedcolor + #tiles2/2)%(#tiles2)
-    elseif you.up and not you.dirholda then you.selectedcolor = (you.selectedcolor - #tiles2/2)%(#tiles2)
-    end
 
     tileset = true
     for i,v in ipairs(tiles) do
@@ -301,13 +308,63 @@ function drawmenus()
     end
 
 
+    if tileset then
+      tilefade = tilefadef(tilefadein,tilefade,5)
+      tilefadein = tilefadeinf(tilefadein,tilefade,5)
+
+
+      if me.leftc.n == 0 then 
+        love.graphics.setColor((tilefade),(tilefade),(tilefade))
+      else
+        love.graphics.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
+      end
+      love.graphics.sdraw(shoulder, colorfromwallspace-80,0)
+
+
+
+      if me.rightc.n == 0 then 
+        love.graphics.setColor((tilefade),(tilefade),(tilefade))
+      else
+        love.graphics.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
+      end
+      love.graphics.sdraw(shoulder, 720-colorfromwallspace-140,0,0,-1,1)
+
+
+      if you.leftc.n == 0 then 
+        love.graphics.setColor((tilefade),(tilefade),(tilefade))
+      else
+        love.graphics.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
+      end
+      love.graphics.sdraw(shoulder, 720 +colorfromwallspace+140,0)
+
+
+
+      if you.rightc.n == 0 then 
+        love.graphics.setColor((tilefade),(tilefade),(tilefade))
+      else
+        love.graphics.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
+      end
+      love.graphics.sdraw(shoulder, 1440-colorfromwallspace+80,0,0,-1,1)
+
+
+
+
+    end
+
+    if tileset or allready then
+      love.graphics.setColor(255,255,255)
+      drawspine()
+
+    end
+
+    love.graphics.setColor(255,255,255)
+
     if tileset then love.graphics.sdraw(thecolors[me.selectedcolor+1].logo,420,0) 
     end
 
     if tileset then 
       p2shade()
       if you.selectedcolor+1>2 then
-
         love.graphics.sdraw(thecolors[you.selectedcolor+1].logo,1440-420-300,0,0,1,1) 
       else
         love.graphics.sdraw(thecolors[you.selectedcolor+1].logo,1440-420,0,0,-1,1) 
@@ -315,13 +372,13 @@ function drawmenus()
     end
 
 
+
     love.graphics.setColor(allfade,allfade,allfade,255)
     for i,v in ipairs(tiles) do
       if v.ud == "top" then
         if v.y - v.j > 25 then 
-          if v.j < -10 then
+          if v.j < -10 and not notilebouncing then
             v.j = -v.j/3
-
           else v.y = 25 v.j = 0
           end
         end
@@ -331,7 +388,7 @@ function drawmenus()
 
       else
         if v.y - v.j <450-25 then 
-          if v.j > 10 then
+          if v.j > 10 and not notilebouncing then
             v.j = -v.j/3
 
           else v.y = 450-25 v.j = 0
@@ -344,10 +401,24 @@ function drawmenus()
 
       end
       v.y = v.y - v.j
+
+
+
       if i == me.selectedcolor+1 and tileset then
-        function me.drawontop() love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b) 
-          love.graphics.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-450*(tilezoom), 0, v.lr*(1+tilezoom), (1+tilezoom))
+
+        if not me.readytoplay then
+
+          function me.drawontop() love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b) 
+            love.graphics.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-450*(tilezoom), 0, v.lr*(1+tilezoom), (1+tilezoom))
+          end
+
+        else
+          function me.drawontop() 
+            love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
+            love.graphics.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)), v.y, 0, v.lr, 1)
+          end
         end
+
       else
         love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
         love.graphics.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)), v.y, 0, v.lr, 1)
@@ -360,11 +431,10 @@ function drawmenus()
     me.drawontop()
 
 
-
     for i,v in ipairs(tiles2) do
       if v.ud == "top" then
         if v.y - v.j > 25 then 
-          if v.j < -10 then
+          if v.j < -10 and not notilebouncing then
             v.j = -v.j/3
 
           else v.y = 25 v.j = 0
@@ -377,9 +447,9 @@ function drawmenus()
       else
         if v.y - v.j <450-25 then 
 
-          collides[i]:setVolume(SFXV - .82-(.1/(math.abs(v.j))))
-          repplay(collides[i])
-          if v.j > 10 then
+          collidesar[i]:setVolume(SFXV - .82-(.1/(math.abs(v.j))))
+          repplay(collidesar[i])
+          if v.j > 10 and not notilebouncing then
             v.j = -v.j/3
 
           else v.y = 450-25 v.j = 0
@@ -393,10 +463,20 @@ function drawmenus()
       end
       v.y = v.y - v.j
 
-      if i == you.selectedcolor+1 and tileset then
-        function you.drawontop() 
-          love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-          love.graphics.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-(450*(tilezoom)), 0, -v.lr*(1+tilezoom), (1+tilezoom))
+      if i == you.selectedcolor+1 and tileset  then
+
+
+
+        if not you.readytoplay then
+          function you.drawontop() 
+            love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
+            love.graphics.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-(450*(tilezoom)), 0, -v.lr*(1+tilezoom), (1+tilezoom))
+          end
+        else
+          function you.drawontop() 
+            love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
+            love.graphics.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)), v.y, 0, -v.lr, 1)
+          end
         end
       else
         love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
@@ -409,21 +489,64 @@ function drawmenus()
     you.drawontop()
 
     if me.rightbump then 
-    me.rightc = thecolors[me.selectedcolor+1]
-    repplay(me.selected)
+      me.rightc = thecolors[me.selectedcolor+1]
+      repplay(me.selected)
     elseif me.leftbump then 
-    me.leftc = thecolors[me.selectedcolor+1]
-    repplay(me.selected)
-  end
-  
-  
-    if you.rightbump then 
-    you.rightc = thecolors[you.selectedcolor+1]
-    repplay(you.selected)
-    elseif you.leftbump then 
-    you.leftc = thecolors[you.selectedcolor+1]
-    repplay(you.selected)
+      me.leftc = thecolors[me.selectedcolor+1]
+      repplay(me.selected)
     end
+
+
+    if you.rightbump then 
+      you.rightc = thecolors[you.selectedcolor+1]
+      repplay(you.selected)
+    elseif you.leftbump then 
+      you.leftc = thecolors[you.selectedcolor+1]
+      repplay(you.selected)
+    end
+
+    if me.block and not me.holda and not me.readytoplay then 
+      menu = "map"
+      tileset = false
+    end
+    if you.block and not you.holda and not you.readytoplay then 
+      menu = "map" 
+      tileset = false
+    end
+
+    if me.start then me.readytoplay = true end
+    if me.block then me.readytoplay = false end
+    if you.start then you.readytoplay = true end
+    if you.block then you.readytoplay = false end
+
+
+
+    love.graphics.setColor(255, 255, 255)
+    if me.readytoplay then
+      love.graphics.sdraw(ready, 100, 70,0,5,5)
+    else
+      if me.right and not me.dirholda then me.selectedcolor = (me.selectedcolor + 1)%(#tiles)
+      elseif me.left and not me.dirholda then me.selectedcolor = (me.selectedcolor - 1)%(#tiles)
+      elseif me.down and not me.dirholda then me.selectedcolor = (me.selectedcolor + #tiles/2)%(#tiles)
+      elseif me.up and not me.dirholda then me.selectedcolor = (me.selectedcolor - #tiles/2)%(#tiles)
+      end
+
+
+    end
+
+    if you.readytoplay then
+      love.graphics.sdraw(ready, 1440-100-(64*5), 70,0,5,5)
+
+    else
+      if you.right and not you.dirholda then you.selectedcolor = (you.selectedcolor - 1)%(#tiles2)
+      elseif you.left and not you.dirholda then you.selectedcolor = (you.selectedcolor + 1)%(#tiles2)
+      elseif you.down and not you.dirholda then you.selectedcolor = (you.selectedcolor + #tiles2/2)%(#tiles2)
+      elseif you.up and not you.dirholda then you.selectedcolor = (you.selectedcolor - #tiles2/2)%(#tiles2)
+      end
+
+    end
+
+
 
   end
   holdmanage(me)
@@ -549,326 +672,3 @@ function drawcity()
 
   end
 
-
-
-  function drawchoosestuff()
-    love.graphics.setColor(255,255,255,255)
-    love.graphics.draw(enviro.lselect, ((lcx - ln)/1440)*screenwidth, 0, 0, screenwidth/1440, screenheight/900)	
-    love.graphics.draw(enviro.rselect, ((720-lcx + rn)/1440)*screenwidth, 0, 0, screenwidth/1440, screenheight/900)
-    love.graphics.setColor(255,255,255,255)
-
-    if lset then 
-
-
-
-      if mbb<=0 then 
-        love.graphics.setColor(br,bg,bb,255)
-      else love.graphics.setColor(255,255,255,255)
-      end
-      love.graphics.draw(enviro.btile, ((tileoffset-ln+mbindent)/1440)*screenwidth, ((tileyoffset+74)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-
-
-
-      if mgg<=0 then 
-        love.graphics.setColor(gr,gg,gb,255)
-      else love.graphics.setColor(255,255,255,255)
-      end
-      love.graphics.draw(enviro.gtile, ((tileoffset-ln-9+mgindent)/1440)*screenwidth, ((tileyoffset+138)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-
-
-
-      if mpp<=0 then 
-        love.graphics.setColor(pr,pg,pb,255)
-      else love.graphics.setColor(255,255,255,255)
-      end
-      love.graphics.draw(enviro.ptile, ((tileoffset-ln-18+mpindent)/1440)*screenwidth, ((tileyoffset+202)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-
-      if myy<=0 then 
-        love.graphics.setColor(yer,yeg,yeb,255)
-      else love.graphics.setColor(255,255,255,255)
-      end
-      love.graphics.draw(enviro.ytile, ((tileoffset-ln-27+myindent)/1440)*screenwidth, ((tileyoffset+266)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-
-
-
-      if mss<=0 then 
-        love.graphics.setColor(sr,sg,sb,255)
-      else love.graphics.setColor(255,255,255,255)
-      end
-      love.graphics.draw(enviro.stile, ((tileoffset-ln-36+msindent)/1440)*screenwidth, ((tileyoffset+330)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-
-
-      love.graphics.setColor(255,255,255,255)
-      if mechoosecolor then
-
-        mbindent, mgindent, mpindent, myindent, msindent = 0,0,0,0,0
-
-        if meseleccurrent == 0 then mbindent = 20
-        elseif meseleccurrent == 1 then mgindent = 20
-        elseif meseleccurrent == 2 then mpindent = 20
-        elseif meseleccurrent == 3 then myindent = 20
-        elseif meseleccurrent == 4 then msindent = 20
-        end
-
-
-        --love.graphics.draw(enviro.rselecter, ((tileoffset-ln-115-(meseleccurrent*9))/1440)*screenwidth, ((tileyoffset+10 + 64*(meseleccurrent+1))/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-        if me.down and mr2c and msy < (screenheight * .46) then 
-          msy = msy + (screenheight * .15)
-          mr2c = false
-          meseleccurrent = meseleccurrent + 1
-          repplay(mov)
-        elseif me.up and mr2c and msy > (screenheight * .14)  then 
-          msy = msy - (screenheight * .15)
-          meseleccurrent = meseleccurrent - 1
-          mr2c = false
-          repplay(mov)
-        elseif not me.down and not me.up then mr2c = true
-        end
-      end
-
-
-
-
-    end
-
-    if rset then 
-
-
-      if ybb<=0 then 
-        love.graphics.setColor(br,bg,bb,255)
-      else love.graphics.setColor(255,255,255,255)
-      end
-      love.graphics.draw(enviro.btile, ((1440-tileoffset+rn-ybindent)/1440)*screenwidth, ((tileyoffset+74)/900)*screenheight, 0, -screenwidth/1440, screenheight/900)
-
-
-      if ygg<=0 then 
-        love.graphics.setColor(gr,gg,gb,255)
-      else love.graphics.setColor(255,255,255,255)
-      end
-      love.graphics.draw(enviro.gtile, ((1440-tileoffset+rn+9-ygindent)/1440)*screenwidth, ((tileyoffset+138)/900)*screenheight, 0, -screenwidth/1440, screenheight/900)
-
-
-      if ypp<=0 then 
-        love.graphics.setColor(pr,pg,pb,255)
-      else love.graphics.setColor(255,255,255,255)
-      end
-      love.graphics.draw(enviro.ptile, ((1440-tileoffset+rn+18-ypindent)/1440)*screenwidth, ((tileyoffset+202)/900)*screenheight, 0, -screenwidth/1440, screenheight/900)
-
-      if yyy<=0 then 
-        love.graphics.setColor(yer,yeg,yeb,255)
-      else love.graphics.setColor(255,255,255,255)
-      end
-      love.graphics.draw(enviro.ytile, ((1440-tileoffset+rn+27-yyindent)/1440)*screenwidth, ((tileyoffset+266)/900)*screenheight, 0, -screenwidth/1440, screenheight/900)
-
-
-
-      if yss<=0 then 
-        love.graphics.setColor(sr,sg,sb,255)
-      else love.graphics.setColor(255,255,255,255)
-      end
-      love.graphics.draw(enviro.stile, ((1440-tileoffset+rn+36-ysindent)/1440)*screenwidth, ((tileyoffset+330)/900)*screenheight, 0, -screenwidth/1440, screenheight/900)
-
-
-
-      if youchoosecolor then
-
-        ybindent, ygindent, ypindent, yyindent, ysindent = 0,0,0,0,0
-
-        if youseleccurrent == 0 then ybindent = 20
-        elseif youseleccurrent == 1 then ygindent = 20
-        elseif youseleccurrent == 2 then ypindent = 20
-        elseif youseleccurrent == 3 then yyindent = 20
-        elseif youseleccurrent == 4 then ysindent = 20
-        end
-
-        if you.down and yr2c and ysy < (screenheight * .46) then 
-          ysy = ysy + (screenheight * .15)
-          yr2c = false
-          youseleccurrent = youseleccurrent+1
-          repplay(mov2)
-        elseif you.up and yr2c and ysy > (screenheight * .14) then 
-          ysy = ysy - (screenheight * .15)
-          yr2c = false
-          youseleccurrent = youseleccurrent - 1
-          repplay(mov2)
-        elseif not you.down and not you.up then yr2c = true
-        end
-      end
-
-
-
-
-
-    end
-
-    if r1 + g1 + b1 == 765 then a11flick = icflicker
-    else a11flick = 255 end
-    if a21g + a21r + a21b == 765 then a21flick = icflicker
-    else a21flick = 255 end
-    if a31g + a31r + a31b == 765 then a31flick = icflicker
-    else a31flick = 255 end
-    if a41g + a41r + a41b == 765 then a41flick = icflicker
-    else a41flick = 255 end
-
-    if r2 + g2 + b2 == 765 then a12flick = icflicker
-    else a12flick = 255 end
-    if a22g + a22r + a22b == 765 then a22flick = icflicker
-    else a22flick = 255 end
-    if a32g + a32r + a32b == 765 then a32flick = icflicker
-    else a32flick = 255 end
-    if a42g + a42r + a42b == 765 then a42flick = icflicker
-    else a42flick = 255 end
-
-
-
-    if rset and lset then
-
-
-      love.graphics.setColor(r1,g1,b1,a11flick)
-      love.graphics.draw(enviro.a1, ((252+33-ln)/1440)*screenwidth, ((65)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.draw(enviro.horiz, ((392+33-ln)/1440)*screenwidth, ((141)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.setColor(255,255,255,255)
-
-      love.graphics.setColor(a21r,a21g,a21b,a21flick)
-      love.graphics.draw(enviro.a2, ((232+33-ln)/1440)*screenwidth, ((85)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.draw(enviro.vert, ((388+33-ln)/1440)*screenwidth, ((145)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.setColor(255,255,255,255)
-
-      love.graphics.setColor(a31r,a31g,a31b,a31flick)
-      love.graphics.draw(enviro.a3, ((336+33-ln)/1440)*screenwidth, ((85)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.draw(enviro.vert, ((401+33-ln)/1440)*screenwidth, ((145)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.setColor(255,255,255,255)
-
-      love.graphics.setColor(a41r,a41g,a41b,a41flick)
-      love.graphics.draw(enviro.a4, ((252+33-ln)/1440)*screenwidth, ((170)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.draw(enviro.horiz, ((392+33-ln)/1440)*screenwidth, ((154)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.setColor(255,255,255,255)
-
-
-      love.graphics.setColor(r2,g2,b2,a12flick)
-      love.graphics.draw(enviro.a1, ((252 + 720+rn)/1440)*screenwidth, (65/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.draw(enviro.horiz, ((392 + 720+rn)/1440)*screenwidth, (141/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.setColor(255,255,255,255)
-
-
-      love.graphics.setColor(a22r,a22g,a22b,a22flick)
-      love.graphics.draw(enviro.a2, ((232 + 720+rn)/1440)*screenwidth, (85/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.draw(enviro.vert, ((388 + 720+rn)/1440)*screenwidth, (145/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.setColor(255,255,255,255)
-
-
-      love.graphics.setColor(a32r,a32g,a32b,a32flick)
-      love.graphics.draw(enviro.a3, ((336 + 720+rn)/1440)*screenwidth, (85/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.draw(enviro.vert, ((401 + 720+rn)/1440)*screenwidth, (145/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.setColor(255,255,255,255)
-
-      love.graphics.setColor(a42r,a42g,a42b,a42flick)
-      love.graphics.draw(enviro.a4, ((252 + 720+rn)/1440)*screenwidth, (170/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.draw(enviro.horiz, ((392 + 720+rn)/1440)*screenwidth, (154/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.setColor(255,255,255,255)
-
-
-      love.graphics.draw(mecurrentframe, ((232-7-ln)/1440)*screenwidth, ((262-6)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      love.graphics.setColor(155, 155, 155, 255)
-      love.graphics.draw(youcurrentframe, ((488 + 720 +7+rn)/1440)*screenwidth, ((262-6)/900)*screenheight, 0, -screenwidth/1440, screenheight/900)
-      love.graphics.setColor(a31r,a31g,a31b,255)
-      if mecurrentframe == enviro.pframe then 
-        love.graphics.draw(me.face, ((240-7 + 45-ln)/1440)*screenwidth, ((262-6+127)/900)*screenheight,0, screenwidth/1080, screenheight/675)
-      elseif mecurrentframe == enviro.bframe then 
-        love.graphics.draw(me.face, ((232-7 + 47-ln)/1440)*screenwidth, ((262-6+128)/900)*screenheight,0, screenwidth/1080, screenheight/675)
-      elseif mecurrentframe == enviro.sframe then 
-        love.graphics.draw(me.face, ((234-7 + 47-ln)/1440)*screenwidth, ((262-6+130)/900)*screenheight,0, screenwidth/1080, screenheight/675)
-
-      else
-        love.graphics.draw(me.face, ((234-7 + 47-ln)/1440)*screenwidth, ((262-6+127)/900)*screenheight,0, screenwidth/1080, screenheight/675)
-      end
-
-      love.graphics.setColor(a22r,a22g,a22b,255)
-      if youcurrentframe == enviro.pframe then
-        love.graphics.draw(you.face, ((1440-240-45-13.5+7+rn)/1440)*screenwidth, ((262-6+127)/900)*screenheight,0, screenwidth/1080, screenheight/675)
-      elseif youcurrentframe == enviro.bframe then
-        love.graphics.draw(you.face, ((1440-232-47-13.5+7+rn)/1440)*screenwidth, ((262-6+128)/900)*screenheight,0, screenwidth/1080, screenheight/675)
-      elseif youcurrentframe == enviro.sframe then
-        love.graphics.draw(you.face, ((1440-234-47-13.5+7+rn)/1440)*screenwidth, ((262-6+130)/900)*screenheight,0, screenwidth/1080, screenheight/675)
-      else
-        love.graphics.draw(you.face, ((1440-234-47-13.5+7+rn)/1440)*screenwidth, ((262-6+127)/900)*screenheight,0, screenwidth/1080, screenheight/675)
-      end
-      --why is this here? love.graphics.draw(face1, ((232+720)/1440)*screenwidth, (600/900)*screenheight, 0, screenwidth, screenheight)
-
-      wa = 36 + 18
-
-
-
-      if youchooseface then
-
-        --- -10
-
-        love.graphics.draw(slantbar, screenwidth, 0, 0 ,-screenwidth/1440, screenheight/900) 
-        love.graphics.setColor(yf1r, yf1g, yf1b, 255)
-        love.graphics.draw(face1, ((1440 - 40-70)/1440)*screenwidth, ((tileyoffset+138)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-        love.graphics.setColor(yf2r, yf2g, yf2b, 255)
-        love.graphics.draw(face2, ((1440 - 40-70 - 8)/1440)*screenwidth, ((tileyoffset+138 + 56)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-        love.graphics.setColor(yf3r, yf3g, yf3b, 255)
-        love.graphics.draw(face3, ((1440 - 40-70 - 16)/1440)*screenwidth, ((tileyoffset+138 + 56*2)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-        love.graphics.setColor(yf4r, yf4g, yf4b, 255)
-        love.graphics.draw(face4, ((1440 - 40-70 - 8*3)/1440)*screenwidth, ((tileyoffset+138 + 56*3)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-        love.graphics.setColor(yf5r, yf5g, yf5b, 255)
-        love.graphics.draw(face5, ((1440 - 40-70 - 8*4)/1440)*screenwidth, ((tileyoffset+138 + 56*4)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-        love.graphics.setColor(yf6r, yf6g, yf6b, 255)
-        love.graphics.draw(face6, ((1440 - 40-70 - 8*5)/1440)*screenwidth, ((tileyoffset+138 + 56*5)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-
-
-
-        love.graphics.setColor(a22r, a22g, a22b, 255)
-        love.graphics.draw(faceselector, ((1440 - 40 - 70 - 2 + 82 - (8 * youfaceselector))/1440)*screenwidth, ((tileyoffset+138 - 10 + 56*youfaceselector)/900)*screenheight, 0, -screenwidth/1440, screenheight/900)
-
-      end
-      if mechooseface then
-
-        love.graphics.draw(slantbar, 0, 0, 0 ,screenwidth/1440, screenheight/900) 
-
-
-        love.graphics.setColor(mf1r, mf1g, mf1b, 255)
-        love.graphics.draw(face1, ((70)/1440)*screenwidth, ((tileyoffset+138)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-        love.graphics.setColor(mf2r, mf2g, mf2b, 255)
-        love.graphics.draw(face2, ((70 + 8)/1440)*screenwidth, ((tileyoffset+138 + 56)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-        love.graphics.setColor(mf3r, mf3g, mf3b, 255)
-        love.graphics.draw(face3, ((70 + 16)/1440)*screenwidth, ((tileyoffset+138 + 56*2)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-        love.graphics.setColor(mf4r, mf4g, mf4b, 255)
-        love.graphics.draw(face4, ((70 + 8*3)/1440)*screenwidth, ((tileyoffset+138 + 56*3)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-        love.graphics.setColor(mf5r, mf5g, mf5b, 255)
-        love.graphics.draw(face5, ((70 + 8*4)/1440)*screenwidth, ((tileyoffset+138 + 56*4)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-        love.graphics.setColor(mf6r, mf6g, mf6b, 255)
-        love.graphics.draw(face6, ((70 + 8*5)/1440)*screenwidth, ((tileyoffset+138 + 56*5)/900)*screenheight, 0, 4*screenwidth/1440, 4*screenheight/900)
-
-        love.graphics.setColor(a31r, a31g, a31b, 255)
-        love.graphics.draw(faceselector, ((30 + (8 * mefaceselector))/1440)*screenwidth, ((tileyoffset+138 - 10 + 56*mefaceselector)/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      end
-
-
-
-      --22
-      if youreadytoplay then
-        love.graphics.setColor(255, 255, 255, 255)
-        love.graphics.draw(ready, ((267 + 720 +rn)/1440)*screenwidth, (107/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      end
-
-      if mereadytoplay then
-        love.graphics.setColor(255, 255, 255, 255)
-        love.graphics.draw(ready, ((300-ln)/1440)*screenwidth, (107/900)*screenheight, 0, screenwidth/1440, screenheight/900)
-      end
-
-
-
-
-
-
-
-      drawspine()
-
-      --drawtriangles()
-
-    end
-
-
-  end

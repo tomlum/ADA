@@ -19,6 +19,10 @@
 -- function updateobjects()
 -- objects[1]
 -- end
+
+simpledodge = true
+
+
 uppercutpause = 40
 me.uppercuttimer = 0
 you.uppercuttimer = 0
@@ -168,11 +172,11 @@ function attackmanage(xx)
 
     end
   end
-     
-    if xx.type == 7 and xx.color.n == 0 and xx.animcounter > 2 and xx.g then
-      xx.animcounter = 0
-      
-      end
+
+  if xx.type == 7 and xx.color.n == 0 and xx.animcounter > 2 and xx.g then
+    xx.animcounter = 0
+
+  end
 
   if xx.landing then xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false end
 
@@ -352,6 +356,8 @@ dodgedelay = 20
 dodgespeed = speedlimit*1.25
 backdodgespeed = speedlimit*1
 
+me.qualifyfordodge = false
+you.qualifyfordodge = false
 
 
 you.dodgeanimatetimer = 0
@@ -453,11 +459,11 @@ newforwarddodge = function(xx)
         xx.im = dodge21
       end
     elseif xx.dodgetype == 0 and xx.dodgerefreshtimer == 0 then
-      if xx.g and ((xx.lr > 0 and xx.rightb and xx.down) or (xx.lr < 0 and xx.leftb and xx.down))  then
+      if xx.g and ((xx.lr > 0 and xx.rightb and xx.qualifyfordodge) or (xx.lr < 0 and xx.leftb and xx.qualifyfordodge))  then
         xx.dodgetype = 1
         xx.dodgecounter = dodgetime
         xx.currentdodgev = xx.v
-      elseif xx.g and ((xx.lr < 0 and xx.rightb and xx.down) or (xx.lr > 0 and xx.leftb and xx.down))  and not xx.running  then
+      elseif xx.g and ((xx.lr < 0 and xx.rightb and xx.qualifyfordodge) or (xx.lr > 0 and xx.leftb and xx.qualifyfordodge))  and not xx.running  then
         xx.dodgetype = -1
         xx.dodgecounter = backdodgetime
       end
@@ -477,6 +483,11 @@ newforwarddodge = function(xx)
         xx.v = xx.oldv + (xx.v-xx.oldv)*(rampspeed)
       end
     end
+    if not simpledodge then
+      xx.qualifyfordodge = xx.down and not (xx.rightb or xx.leftb)
+    else
+      xx.qualifyfordodge = xx.down
+    end
   end
 
 
@@ -491,45 +502,37 @@ newforwarddodge = function(xx)
 
 
 
+  me.letgoofblock = false
+  you.letgoofblock = false
+  function blocknbusy(xx)
 
-  function blocknbusy()
+    if not xx.blockb then xx.letgoofblock = false 
+    end
+
+    if not xx.block and xx.blockb then
+      xx.letgoofblock = true
+    end
+
+    if xx.blockb and xx.dodgedelaycounter == 0 and not xx.a1 and not xx.a2 and not xx.a3 and xx.g and not xx.dodge and not xx.landing and not xx.letgoofblock
+    then xx.im = block
+      xx.block = true
+      xx.stop = true
+
+      if not xx.oldblock then repplay(xx.blocksound) end
 
 
-    if me.blockb and me.dodgedelaycounter == 0 and not me.a1 and not me.a2 and not me.a3 and me.g and not me.dodge and not me.landing
-    then me.im = block
-      me.block = true
-      me.stop = true
-      if not me.oldblock then repplay(me.blocksound) end
-
-
-    else me.block = false 
-      me.stop = false
+  else 
+    xx.block = false 
+      xx.stop = false
     end
 
 
-    if you.blockb and you.dodgedelaycounter == 0 and not you.a1 and not you.a2 and not you.a3 and you.g and not you.dodge and not you.landing 
-    then you.im = block
-      you.block = true
-      you.stop = true
-      if not you.oldblock then repplay(you.blocksound) end
-
-
-    else you.block = false
-      you.stop = false
+    if xx.landing or xx.flinch 
+    then xx.busy = true
+    else xx.busy = false
     end
 
-    if me.landing or me.flinch 
-    then me.busy = true
-    else me.busy = false
-    end
-
-    if you.landing or you.flinch 
-    then you.busy = true
-    else you.busy = false
-    end
-
-    me.oldblock = me.block
-    you.oldblock = you.block
+    xx.oldblock = xx.block
 
 
   end

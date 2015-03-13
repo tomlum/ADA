@@ -1343,11 +1343,11 @@ drawspine = function()
       else
         if math.abs(v.v) >= (15.6*screenwidth)/1440 and math.abs(v.v) <= (16.5*screenwidth)/1440 then 
           if v.v > 0 then 
-            if v.spinecolor < 3 then v.spinecolor = v.spinecolor + 1
+            if v.spinecolor < 2 then v.spinecolor = v.spinecolor + 1
             else v.spinecolor = 0
             end
           else
-            if v.spinecolor2 < 3 then v.spinecolor2 = v.spinecolor2 + 1
+            if v.spinecolor2 < 2 then v.spinecolor2 = v.spinecolor2 + 1
             else v.spinecolor2 = 0
             end
           end
@@ -1360,44 +1360,30 @@ drawspine = function()
     if v.n > 0 then
       if v.v >= 0 then
         if v.spinecolor == 0 then 
-          love.graphics.setColor(a32r,a32g,a32b)
+          love.graphics.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
         elseif v.spinecolor == 1 then 
-          love.graphics.setColor(a42r,a42g,a42b)
-        elseif v.spinecolor == 2 then 
-          love.graphics.setColor(a22r,a22g,a22b)
-        elseif v.spinecolor == 3 then 
-          love.graphics.setColor(r2,g2,b2)
+          love.graphics.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
         end
         love.graphics.draw(enviro.spine, v.x, ((v.n * 40)/900)*screenheight-(50*screenheight/1000)+spineymove, 0, screenwidth/1440, screenheight/1100)
+        
         if v.spinecolor2 == 0 then 
-          love.graphics.setColor(a31r,a31g,a31b)
+          love.graphics.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
         elseif v.spinecolor2 == 1 then 
-          love.graphics.setColor(a41r,a41g,a41b)
-        elseif v.spinecolor2 == 2 then 
-          love.graphics.setColor(a21r,a21g,a21b)
-        elseif v.spinecolor2 == 3 then 
-          love.graphics.setColor(r1,g1,b1)
+          love.graphics.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
         end
         love.graphics.draw(enviro.spine, screenwidth - v.x, ((v.n * 40)/900)*screenheight-(50*screenheight/1000)+spineymove, 0, -screenwidth/1440, screenheight/1100)
       else
         if v.spinecolor2 == 0 then 
-          love.graphics.setColor(a31r,a31g,a31b)
+          love.graphics.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
         elseif v.spinecolor2 == 1 then 
-          love.graphics.setColor(a41r,a41g,a41b)
-        elseif v.spinecolor2 == 2 then 
-          love.graphics.setColor(a21r,a21g,a21b)
-        elseif v.spinecolor2 == 3 then 
-          love.graphics.setColor(r1,g1,b1)
+          love.graphics.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
         end
         love.graphics.draw(enviro.spine, screenwidth - v.x, ((v.n * 40)/900)*screenheight-(50*screenheight/1000)+spineymove, 0, -screenwidth/1440, screenheight/1100)
+         
         if v.spinecolor == 0 then 
-          love.graphics.setColor(a32r,a32g,a32b)
+          love.graphics.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
         elseif v.spinecolor == 1 then 
-          love.graphics.setColor(a42r,a42g,a42b)
-        elseif v.spinecolor == 2 then 
-          love.graphics.setColor(a22r,a22g,a22b)
-        elseif v.spinecolor == 3 then 
-          love.graphics.setColor(r2,g2,b2)
+          love.graphics.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
         end
         love.graphics.draw(enviro.spine, v.x, ((v.n * 40)/900)*screenheight-(50*screenheight/1000)+spineymove, 0, screenwidth/1440, screenheight/1100)
       end
@@ -1436,7 +1422,11 @@ table.insert(waves, {x=0, y=0, n=0, v=0})
 oddeven = 0
 
 drawwaves = function()
+  if oddeven >=100 then
+    oddeven = 1
+    else
   oddeven = oddeven + 1
+  end
 
   if oscillator >= 4 then oup = false
   elseif oscillator <= -4                                                                                                                then oup = true

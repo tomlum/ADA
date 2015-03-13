@@ -315,15 +315,15 @@ function jjstick(xx)
 
 
   if xx.joystick:isGamepadDown("dpleft") then
-    xx.left = true
+    xx.leftb = true
   elseif xx.joystick:isGamepadDown("dpright") then
-    xx.right = true
+    xx.rightb = true
   end
 
   if xx.joystick:isGamepadDown("dpup") then
-    xx.up = true
+    xx.upb = true
   elseif xx.joystick:isGamepadDown("dpdown") then
-    xx.down = true
+    xx.downb = true
   end
 
   if xx.joystick:isGamepadDown("a") then
@@ -345,10 +345,10 @@ function jjstick(xx)
 
 
   if xx.joystick:getGamepadAxis("leftx") < -.4 then
-    xx.left = true
+    xx.leftb = true
   elseif 
-  xx.joystick:getGamepadAxis("leftx") > .4 then
-    xx.right = true
+  xx.joystick:getGamepadAxis("leftx")  > .4 then
+    xx.rightb = true
   end 
 
   if xx.run then
@@ -359,7 +359,8 @@ function jjstick(xx)
     elseif xx.joystick:getGamepadAxis("lefty") < - 2 then
       xx.up = true
     end 
-
+  
+  
 
   else
 
@@ -371,6 +372,8 @@ function jjstick(xx)
     end 
 
   end
+
+   
 
   -- if 
   --      xx.joystick:getGamepadAxis("righty") > .4 then

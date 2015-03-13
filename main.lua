@@ -1,10 +1,15 @@
 --todo
+--if not in the air then some kind of unblocking animation
+
+--SHAEZ TIED TO RUMBLE?!?!?!?
+
+
 therampspeed = .1
 drawboxes = true
-fightclub = true
+fightclub = false
 fullscreen = false
 readout = true
-mute = false
+mute = true
 eh = false
 --airgrab
 
@@ -425,9 +430,9 @@ function love.update()
 
 
     if #joysticks > 0 then
-      jjstick(me,joystick)
+      jjstick(me,me.joystick)
     elseif #joysticks > 1 then
-      jjstick(me,joystick)
+      jjstick(me,me.joystick)
       jjstick(you,you.joystick)
     end
 
@@ -450,8 +455,6 @@ function love.update()
         end
 
 
-
-        clicks()
 
 
 
@@ -511,7 +514,8 @@ function love.update()
 
 
 
-        blocknbusy()
+        blocknbusy(me)
+        blocknbusy(you)
 
         me.jstop = false
         you.jstop = false
@@ -819,8 +823,8 @@ function love.update()
     love.graphics.print("fadein "..tostring(fadein), 10, 130)
     love.graphics.print("allfade "..tostring(allfade), 10, 150)
     love.graphics.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
-    love.graphics.print("me.selectedcolor "..tostring(me.selectedcolor), 10, 230)
-    love.graphics.print("eh "..tostring(eh), 10, 280)
+    love.graphics.print("tileset "..tostring(tileset), 10, 230)
+    love.graphics.setColor(255,0,0)
     end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end

@@ -4,7 +4,9 @@
 --also remember that flinch dir depends on the object hitting dir not necessarily the lr of the other person
 
 --for dis from height to feet in fall anim
-offsetforplat = 0
+
+  me.oldpy = me.y
+  you.oldpy = you.y
 
 
 function shakez(z)
@@ -232,10 +234,8 @@ end
 
 
 
-
-
-
-function hboxcs(theid, P1, P2, P3, P4, special)
+--for non lethal things
+function hboxcss(theid, P1, P2, P3, P4, special)
 
 
   for i,p in ipairs(hitt) do
@@ -271,11 +271,60 @@ end
 
 
 
+function hboxcs(theid, P1, P2, P3, P4, special)
+
+
+  for i,p in ipairs(hitt) do
+    dsh = 0
+    dsw = 0
+    extrah = 0
+    if p.im.dodgeh ~= nil then
+      dsh = p.im.dodgeh
+    end
+    if p.im.dodgew ~= nil then
+      dsw = p.im.dodgew
+    end
+    if p.im.exheight ~= nil then
+        extrah = -p.im.exheight
+      end
+
+    if theid ~= i and
+    (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j) 
+      or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
+      or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
+      or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
+      or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
+    )
+    then
+      --flash = true
+      special(p)
+      if p.block then p.letgoofblock = true end
+    end
+  end
+
+
+end
+
+
+function hexplatcheck2(y1, x1, x2, ex, why, w, why2, v)
+  
+    
+  midv2 = {x = (ex+w/2)+v, y=why2}
+  midv = {x = ex+w/2, y=why}
+  local linep1 = {x = x1, y = y1}
+  local linep2 = {x = x2, y = y1}
+  if pint(linep1, linep2, midv, midv2) 
+  then return true
+  else return false
+  end
+
+end
+
 function hexplatcheck(y1, x1, x2, ex, why, w, h, v, j)
   
     
-  midv2 = {x = (ex+w/2)+v, y=why+h-j, n = 2}
-  midv = {x = ex+w/2, y=why+h, n = 2}
+  midv2 = {x = (ex+w/2)+v, y=why+h-j}
+  midv = {x = ex+w/2, y=why+h}
   local linep1 = {x = x1, y = y1}
   local linep2 = {x = x2, y = y1}
   if pint(linep1, linep2, midv, midv2) 
@@ -288,8 +337,8 @@ end
 velforclimb = 20
 
 function climbplatcheck(ex, why, lr, h, v, j)
-  midv2 = {x = (ex)+15*lr, y=why-j, n = 2}
-  midv = {x = (ex)+15*lr, y=why+h-j, n = 2}
+  midv2 = {x = (ex)+15*lr, y=why-j}
+  midv = {x = (ex)+15*lr, y=why+h-j}
 
 
   for j = #themap.plats, 1, -1 do 
@@ -450,8 +499,12 @@ function hboxp()
       xx = p
       
       extrah = 0
+      dodgeh = 0
     if p.im.exheight ~= nil then
         extrah = -p.im.exheight
+      end
+      if p.im.dodgeh ~= nil then
+        dodgeh= p.im.dodgeh
       end
 
 
@@ -460,8 +513,7 @@ function hboxp()
         p.im.yoff = 0
       end
       if (not p.gothroughplats or (plat.floor~=nil)) and (
-        ((hexplatcheck(plat.y, plat.x1, plat.x2, p.x, p.y+offsetforplat, p.width, p.height-extrah, p.v, p.j) and p.j <= 0 
-            and p.y+p.j-p.im.yoff <= plat.y-(p.height-extrah)-p.im.yoff))
+        (hexplatcheck2(plat.y, plat.x1, plat.x2, p.x, p.oldpy, p.width, p.y+p.height-extrah-p.j, p.v) and p.j <= 0)
         or 
         (p.y == plat.y-p.height-extrah and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
       then
@@ -480,11 +532,8 @@ function hboxp()
           xx.slowdown = false
         end
         
-        if extrah > 0 then
         p.y = plat.y-p.height
-      else
-        p.y = plat.y-p.height
-        end
+        
         p.g = true
         p.j = 0
         p.plat = plat;
@@ -497,7 +546,12 @@ function hboxp()
         p.plat = noplat
       end
 
-    end
+end
+if p.im.exheight ~= nil then
+  p.oldpy = p.y+p.height-p.im.exheight
+      else
+  p.oldpy = p.y+p.height
+  end
   end
 
 
