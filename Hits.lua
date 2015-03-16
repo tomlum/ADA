@@ -9,6 +9,20 @@
   you.oldpy = you.y
 
 
+function lof(x,y)
+  if x < y then return x
+  else return y
+    end
+  
+end
+
+function hof(x,y)
+  if x > y then return x
+  else return y
+    end
+  
+  end
+
 function shakez(z)
   minzoom = defaultminzoom - z
   maxzoom = defaultmaxzoom - z
@@ -488,7 +502,6 @@ function hboxwall()
 
   end
 
-  xx.oldx = xx.x
 
 end
 

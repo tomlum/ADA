@@ -30,14 +30,14 @@ slideim = love.graphics.newImage("me/walk/slide.png")
 slidec = love.graphics.newImage("me/walk/slidec.png")
 slide = {im = slideim, c = slidec}
 
-fade1 = love.graphics.newImage("me/attack/fade1.png")
-fade2 = love.graphics.newImage("me/attack/fade2.png")
-fade3 = love.graphics.newImage("me/attack/fade3.png")
-fade4 = love.graphics.newImage("me/attack/fade4.png")
-fade5 = love.graphics.newImage("me/attack/fade5.png")
-fade6 = love.graphics.newImage("me/attack/fade6.png")
-fade7 = love.graphics.newImage("me/attack/fade7.png")
-fade8 = love.graphics.newImage("me/attack/fade8.png")
+fade1 = {im = love.graphics.newImage("me/attack/fade1.png")}
+fade2 = {im = love.graphics.newImage("me/attack/fade2.png")}
+fade3 = {im = love.graphics.newImage("me/attack/fade3.png")}
+fade4 = {im = love.graphics.newImage("me/attack/fade4.png")}
+fade5 = {im = love.graphics.newImage("me/attack/fade5.png")}
+fade6 = {im = love.graphics.newImage("me/attack/fade6.png")}
+fade7 = {im = love.graphics.newImage("me/attack/fade7.png")}
+fade8 = {im = love.graphics.newImage("me/attack/fade8.png")}
 morph1 = love.graphics.newImage("me/attack/morph1.png")
 morph2 = love.graphics.newImage("me/attack/morph2.png")
 morph3 = love.graphics.newImage("me/attack/morph3.png")
@@ -78,6 +78,53 @@ traillength = 4
 me.trail={}
 you.trail={}
 
+
+function initpos()
+  
+  me.y = 0
+  you.y = 0
+  if themap.name == "fightclub" then
+
+      me.x = putmehere
+      you.x = putyouhere
+      me.im =idle1
+      you.im =idle1
+      me.y = themaps[100].floor - 500
+      you.y = themaps[100].floor - 500
+
+
+
+    elseif themap.name == "street" then
+      me.y = themaps[1].floor - 200
+      you.y = themaps[1].floor - 200
+      me.x = 1000
+      you.x = 1020
+
+    elseif themap.name == "library" then
+      
+      me.x = 700
+      you.x = 2000
+      me.y = 300
+      you.y = 300
+
+
+    elseif themap.name == "floors" then
+      me.x = 500
+      you.x = 3000
+      me.y = 300
+      you.y = 300
+
+    end
+  
+  
+  
+  
+  end
+
+
+
+
+
 function updatemytrail(xx)
   for i = #xx.trail, 1, -1 do
     cur = xx.trail[i]
@@ -117,13 +164,35 @@ whatlevel = function()
 
   if placespeople then
     placespeople = false
+    
+you.initwy = 0
+me.initwy = 0
     finishedloading = false
+    playfade = 0
+    me.deathclock = 0
+    you.deathclock = 0
+    me.animcounter = 0
+    you.animcounter = 0
+    me.v = 0
+    you.v = 0
+    me.push = 0
+    you.push = 0
+    me.lr = 1
+    you.lr = -1
+    me.j = 0
+    you.j = 0
+    me.flinch = false
+    you.flinch = false
+    me.ft = 0
+    you.ft = 0
+    minzoom = defaultminzoom
+    maxzoom = defaultmaxzoom
 
-    if themode == "roulette" then 
+    if themode == "spectrum" then 
       you.lives = 5
       me.lives = 5
       maxhealth = 70
-    elseif themode == "classic" then 
+    elseif themode == "duel" then 
       maxhealth = 380
     end
     me.health = maxhealth
@@ -132,28 +201,30 @@ whatlevel = function()
     if themap.name == "fightclub" then
 
       loader.start(function()
-          finishedLoading = true
+          finishedloading = true
         end)
 
       enviro.rightwall = 2000
 
-      loader.newImage(enviro,'floor', "enviro/fightclub.png")
+      loader.newImage(enviro,'stage', "enviro/fightclub.png")
       loader.newImage(enviro,"paralax","enviro/READY.png")
       loader.newImage(enviro,"sky","enviro/ready.png")
       me.x = putmehere
       you.x = putyouhere
-      floor = 896
       me.im =idle1
       you.im =idle1
-      me.y = floor - 100
-      you.y = floor - 100
+      me.y = themaps[100].floor - 500
+      you.y = themaps[100].floor - 500
+      floor = themaps[100].floor
 
 
 
     elseif themap.name == "street" then
-      loader.newImage(enviro,'floor', "enviro/astreet.png")
+      me.y = themaps[1].floor - 200
+      you.y = themaps[1].floor - 200
+      loader.newImage(enviro,'stage', "enviro/astreet.png")
       loader.start(function()
-          finishedLoading = true
+          finishedloading = true
         end)
       loader.newImage(enviro,"paralax","enviro/paralax.png")
       loader.newImage(enviro,"sky","enviro/sky.png")
@@ -167,21 +238,18 @@ whatlevel = function()
       -- 	enviro.sky = love.graphics.newImage("enviro/sky.png")
       -- lightson = love.graphics.newImage("enviro/lightson.png")
       -- lightsoff = love.graphics.newImage("enviro/lightsoff.png")
-      -- 	enviro.floor = love.graphics.newImage("enviro/astreet.png")
+      -- 	enviro.stage = love.graphics.newImage("enviro/astreet.png")
       -- 	enviro.paralax = love.graphics.newImage("enviro/paralax.png")
       -- 	enviro.partitionwall = love.graphics.newImage("enviro/partition2.png")
       -- enviro.rafters = love.graphics.newImage("enviro/rafters.png")
       -- enviro.buildingwall = love.graphics.newImage("enviro/buildingwall.png")
       lighttimer = 0
       me.x = 1000
-      you.x = 6000
-      floor = 1900 - 3
-      me.y = floor - 60
-      you.y = floor - 60
+      you.x = 1020
       enviro.rightwall = 6600-20
       enviro.ds = 5
       thesong = song1
-    end
+    
     -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
     -- enviro.sky = love.graphics.newImage("enviro/librarysky.png")
     -- enviro.librarylpartition = love.graphics.newImage("enviro/librarylpartition.png")
@@ -190,15 +258,15 @@ whatlevel = function()
     -- enviro.thelibraryveneer = love.graphics.newImage("enviro/libraryveneer.png")
     -- enviro.paralax2 = love.graphics.newImage("enviro/libraryparalax2.png")
     -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
-    -- enviro.floor = love.graphics.newImage("enviro/library2.png")
+    -- enviro.stage = love.graphics.newImage("enviro/library2.png")
 
-    if themap.name == "library" then
+    elseif themap.name == "library" then
       loader.start(function()
-          finishedLoading = true
+          finishedloading = true
         end)
       loader.newImage(enviro,'paralax',"enviro/libraryparalax.png")
       loader.newImage(enviro,'paralax2', "enviro/libraryparalax2.png")
-      loader.newImage(enviro,'floor', "enviro/library2.png")
+      loader.newImage(enviro,'stage', "enviro/library2.png")
       loader.newImage(enviro,'sky',"enviro/librarysky.png")
       loader.newImage(enviro,'librarylpartition', "enviro/librarylpartition.png")
       loader.newImage(enviro,'libraryrpartition', "enviro/libraryrpartition.png")
@@ -207,7 +275,6 @@ whatlevel = function()
 
       me.x = 700
       you.x = 2000
-      floor = 1900 - 2
       me.y = 300
       you.y = 300
       enviro.rightwall = 3700 
@@ -215,21 +282,18 @@ whatlevel = function()
 
       thesong = song2
 
-    end
-
-    if themap.name == "floors" then
+    elseif themap.name == "floors" then
       loader.start(function()
-          finishedLoading = true
+          finishedloading = true
         end)
       loader.newImage(enviro,'paralax',"enviro/floorsparalax.png")
-      loader.newImage(enviro,'floor', "enviro/floors.png")
+      loader.newImage(enviro,'stage', "enviro/floors.png")
       loader.newImage(enviro,'sky',"enviro/floorssky.png")
       loader.newImage(enviro,'pfloors', "enviro/floorsplayer.png")
       loader.newImage(enviro, 'floorsveneer2',"enviro/floorsveneer2.png")
       loader.newImage(enviro, 'floorsveneer1',"enviro/floorsveneer1.png")
       me.x = 500
       you.x = 3000
-      floor = 5898
       me.y = 300
       you.y = 300
       enviro.rightwall = 5000
@@ -238,7 +302,9 @@ whatlevel = function()
 
     end
 
-  end
+end
+    me.oldpy = me.y
+    you.oldpy = you.y
 end
 ma1fade= 100
 ma2fade= 100
@@ -256,9 +322,13 @@ actionshotdur = 70
 me.im = idle1
 you.im = idle1
 
+function p2shadefade(fade)
+  love.graphics.setColor(180, 180, 180,fade)
+end
+
 function p2shade()
   love.graphics.setColor(180, 180, 180)
-  end
+end
 
 function drawa(xx)
   drawmytrail(xx)
@@ -266,18 +336,22 @@ function drawa(xx)
   if xx.im.xoff == nil then xx.im.xoff = 0 end
   if xx.im.yoff == nil then xx.im.yoff = 0 end
   if xx.id == 2 then
-  p2shade()
-    else
-  love.graphics.setColor(255, 255, 255, 255)
-end
-local xim = xx.im.im
-local xxx = xx.xanimate-xx.im.xoff*xx.lr
-local xxy = xx.y-xx.im.yoff
-local xlr = xx.lr
-love.graphics.draw(xim,xxx, xxy, 0, xlr, 1) 
+    p2shade()
+  else
+    love.graphics.setColor(255, 255, 255, 255)
+  end
+  local xim = xx.im.im
+  local xxx = xx.xanimate-xx.im.xoff*xx.lr
+  local xxy = xx.y-xx.im.yoff
+  local xlr = xx.lr
+  if mode == "retry" and fadein < 0 then
+    love.graphics.setColor(255,255,255,allfade)
+    p2shadefade(allfade)
+  end
+  love.graphics.draw(xim,xxx, xxy, 0, xlr, 1) 
 
-  
-  if xx.im.c ~= nil then 
+
+  if xx.im.c ~= nil and mode~="retry" then 
     love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
     love.graphics.draw(xx.im.c, xx.xanimate-xx.im.xoff*xx.lr, xx.y-xx.im.yoff, 0, xx.lr, 1)
   end
@@ -289,6 +363,7 @@ end
 
 function actionshotstuff(xx)
   if xx.actionshot then
+    musfadein = -10
     xx.numofspikes = 0
     xx.uppercuthit = false
     xx.hitsomeonewithpurp = false
@@ -303,12 +378,15 @@ function actionshotstuff(xx)
         xx.currentanim = xx.color.n
         combo(xx)
         xx.actionshot = false
+        
+    musfadein = 10
         xx.actiontimer = 0
 
       end
     end
     minzoom = minzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
     maxzoom = maxzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
+  
   end
 
   ColorChange(xx)
@@ -316,10 +394,9 @@ function actionshotstuff(xx)
 
   if xx.actiontimer == 1 
   then xx.actionshot = false 
+    
+    musfadein = 10
     xx.actiontimer = 0
-    if not musicmute then
-      thesong:setPitch(1)
-    end
 
     if not pause then
       --deathsound:play()
@@ -444,11 +521,11 @@ function drawstreetprestuff()
 
 end
 drawstreetstuff = function()
-  love.graphics.draw(enviro.floorfloor, 0, floor-1, 0, 1, 20)
+  love.graphics.draw(enviro.stagefloor, 0, floor-1, 0, 1, 20)
   drawrubble()
   love.graphics.draw(enviro.rafters,5608-502, 1536)
-  love.graphics.draw(enviro.buildingwall,-1500, 0)
-  love.graphics.draw(enviro.partitionwall,7027-510, 0)
+  love.graphics.draw(enviro.buildingwall,-1542, 0)
+  love.graphics.draw(enviro.partitionwall,themaps[1].rightwall-20, 0)
 
 end
 drawlibrarystuff = function()
@@ -663,14 +740,14 @@ function makenrubble(ty, ex,why,vee,jay, n)
     end
   elseif ty == "horiz" then
 
-  for i = n, 1, -1 do
-    if vee > 0 then
-      table.insert(rubble,{x = ex, y = why, v=math.random(0, vee) + math.random(), j = jay+1*math.random(5)+math.random()})
-    else
-      table.insert(rubble,{x = ex, y = why, v=math.random(0, vee) - math.random(), j = jay+1*math.random(5)+math.random()})
+    for i = n, 1, -1 do
+      if vee > 0 then
+        table.insert(rubble,{x = ex, y = why, v=math.random(0, vee) + math.random(), j = jay+1*math.random(5)+math.random()})
+      else
+        table.insert(rubble,{x = ex, y = why, v=math.random(0, vee) - math.random(), j = jay+1*math.random(5)+math.random()})
+      end
     end
   end
-end
 end
 function makeglass (ex,why,vee,jay)
   if vee > 0 then
@@ -884,10 +961,10 @@ function floorsveneer()
     elseif lvfade2 < 255 then lvfade2 = lvfade2 + 5
     end
     love.graphics.setColor(255,255,255,lvfade)
-    love.graphics.draw(enviro.floorsveneer1, 416, 1898)
+    love.graphics.draw(enviro.stagesveneer1, 416, 1898)
     love.graphics.setColor(255,255,255)
     love.graphics.setColor(255,255,255,lvfade2)
-    love.graphics.draw(enviro.floorsveneer2, 3157, 2829)
+    love.graphics.draw(enviro.stagesveneer2, 3157, 2829)
     love.graphics.setColor(255,255,255)
   end
 end
@@ -1170,66 +1247,6 @@ function aboutso(x,y)
   else return false
   end
 end
-retryupdate = function()
-
-  me.a1 = love.keyboard.isDown("f")
-  me.a2 = love.keyboard.isDown("t")
-  me.a3 = love.keyboard.isDown("h")
-  me.block = love.keyboard.isDown("e")
-
-  you.a1 = love.keyboard.isDown("left")
-  you.a2 = love.keyboard.isDown("up")
-  you.a3 = love.keyboard.isDown("right")
-  you.block = love.keyboard.isDown("o")
-  jjstick(me,joystick)
-  jjstick(you,you.joystick)
-
-  if waitforitplay > 0 then waitforitplay = waitforitplay - 1
-  elseif fadeupretry == 2 and waitforitplay == 0 then
-    menu = "prepan"
-    loadmeandyou2()
-    fadeupretry = 0
-  elseif fadeupretry == 3 and waitforitplay == 0 then
-    menu = "prechoose"
-    loadmeandyou()
-    fadeupretry = 0
-  elseif playfadeout >= 250 and fadeupretry == 2 or fadeupretry == 3  then
-    waitforitplay = 120
-    retryfade = 0
-    playfadeout = 255
-  elseif fadeupretry == 2 then retryfade = retryfade - 5
-    playfadeout = playfadeout + 5
-  elseif fadeupretry == 3 then retryfade = retryfade - 5
-    playfadeout = playfadeout + 5
-  elseif (me.block or you.block) and retryfade >= 250
-  then fadeupretry = 2
-  elseif (me.a1 or you.a1 or me.a2 or you.a2 or me.a3 or you.a3) and retryfade >= 250
-  then fadeupretry = 3
-  elseif fadeupretry == 1 and retryfade <255 then 
-    retryfade = retryfade + 1
-  elseif me.im == fade8 or you.im == fade8 then
-    fadeupretry = 1
-  end
-
-  me.up = false
-  me.down = false
-  me.left = false
-  me.right = false
-  me.a1 = false
-  me.a2 = false
-  me.a3 = false
-  me.block = false
-
-  you.up = false
-  you.down = false
-  you.left = false
-  you.right = false
-  you.a1 = false
-  you.a2 = false
-  you.a3 = false
-  you.block = false
-
-end
 
 retry = function()
 
@@ -1238,15 +1255,13 @@ retry = function()
     love.graphics.draw(enviro.retry, 0, 0, 0, screenwidth/1440, screenheight/900)
     love.graphics.setColor(255, 255, 255, 255)
   elseif you.dead then 
-    love.graphics.setColor(a31r,a31g,a31b, retryfade)
-    love.graphics.draw(enviro.v, 0, 0, 0, screenwidth/1440, screenheight/900)
-    love.graphics.setColor(a31r,a31g,a31b, retryfade)
+    love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b, retryfade)
+    --love.graphics.draw(enviro.v, 0, 0, 0, screenwidth/1440, screenheight/900)
     love.graphics.draw(enviro.retry, 0, 0, 0, screenwidth/1440, screenheight/900)
     love.graphics.setColor(255, 255, 255, 255)
   elseif me.dead then
-    love.graphics.setColor(a22r,a22g,a22b, retryfade)
+    love.graphics.setColor(you.color.c.r,you.color.c.g,you.color.c.b, retryfade)
     love.graphics.draw(enviro.v, screenwidth, 0, 0, -screenwidth/1440, screenheight/900)
-    love.graphics.setColor(a22r,a22g,a22b, retryfade)
     love.graphics.draw(enviro.retry, 0, 0, 0, screenwidth/1440, screenheight/900)
     love.graphics.setColor(255, 255, 255, 255)
   end
@@ -1259,14 +1274,14 @@ oscillator = 0
 oup=true
 soscillator = 0
 soup=true
-first = true
 spineymove = 0
-seperatespines = false
+separatespines = false
 drawspine = function()
-  if table.getn(spines) < 1 and menu ~= "postpostchoose"
+  if table.getn(spines) < 1 and menu == "color"
   then
     spinen = 11
     sosfirst = true
+    soup=true
     spinestartx = 680
     spineymove = 0
     table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=26, v=0, spinecolor = 0, spinecolor2 = 0})
@@ -1301,10 +1316,8 @@ drawspine = function()
 
 
   end
-  if finishedLoading then seperateSpines = true
-  end
 
-  if seperateSpines then 
+  if separatespines then 
     if soscillator < -8 then soscillator = soscillator - 2
     elseif soscillator > 8 then  soscillator = soscillator + 2
     end
@@ -1365,7 +1378,7 @@ drawspine = function()
           love.graphics.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
         end
         love.graphics.draw(enviro.spine, v.x, ((v.n * 40)/900)*screenheight-(50*screenheight/1000)+spineymove, 0, screenwidth/1440, screenheight/1100)
-        
+
         if v.spinecolor2 == 0 then 
           love.graphics.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
         elseif v.spinecolor2 == 1 then 
@@ -1379,7 +1392,7 @@ drawspine = function()
           love.graphics.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
         end
         love.graphics.draw(enviro.spine, screenwidth - v.x, ((v.n * 40)/900)*screenheight-(50*screenheight/1000)+spineymove, 0, -screenwidth/1440, screenheight/1100)
-         
+
         if v.spinecolor == 0 then 
           love.graphics.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
         elseif v.spinecolor == 1 then 
@@ -1424,8 +1437,8 @@ oddeven = 0
 drawwaves = function()
   if oddeven >=100 then
     oddeven = 1
-    else
-  oddeven = oddeven + 1
+  else
+    oddeven = oddeven + 1
   end
 
   if oscillator >= 4 then oup = false
@@ -1462,19 +1475,19 @@ function go()
   end
 end
 
-medeathclock = 0
-youdeathclock = 0
+me.deathclock = 0
+you.deathclock = 0
 function drawroulettenumbers()
   numshake = math.random(-5,5)
   if themode == "roulette" then
-    if youdeathclock < 5 and youdeathclock > 0 then
+    if you.deathclock < 5 and you.deathclock > 0 then
       love.graphics.draw(enviro.x,0,0,0,screenwidth/1440,screenheight/900)
       if you.lives == 4 then love.graphics.draw(enviro.iv,screenwidth - (530/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
       elseif you.lives == 3 then love.graphics.draw(enviro.iii,screenwidth - (530/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
       elseif you.lives == 2 then love.graphics.draw(enviro.ii,screenwidth - (530/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
       elseif you.lives == 1 then love.graphics.draw(enviro.i,screenwidth - (530/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
       end
-    elseif medeathclock < 5 and medeathclock > 0 then
+    elseif me.deathclock < 5 and me.deathclock > 0 then
       love.graphics.draw(enviro.x,0,0,0,screenwidth/1440,screenheight/900)
       if me.lives == 4 then love.graphics.draw(enviro.iv,(30/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
       elseif me.lives == 3 then love.graphics.draw(enviro.iii,(30/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
@@ -1485,52 +1498,47 @@ function drawroulettenumbers()
   end
 end
 
-death = function()
-  if themode == "classic" or (themode == "roulette" and (me.lives == 0 or you.lives == 0)) then
-    if you.health<0 then 
-      you.dead = true
-      r2, g2, b2 = 0,0,0
-      youdeathclock = youdeathclock + 1
-      if youdeathclock > 104+ 30 then you.im = invis
-      elseif youdeathclock > 101+ 30 then you.im = fade8 
-      elseif youdeathclock > 98+ 30 then you.im = fade7
-      elseif youdeathclock > 95+ 30 then you.im = fade6
-      elseif youdeathclock > 92+ 30 then you.im = fade5
-      elseif youdeathclock > 89+ 30 then you.im = fade4
-      elseif youdeathclock > 86+ 30 then you.im = fade3
-      elseif youdeathclock > 83+ 30 then you.im = fade2
-      elseif youdeathclock > 80+ 30 then you.im = fade1
+death = function(xx, yy)
+  if themode == "duel" or (themode == "spectrum" and (me.lives == 0 or you.lives == 0)) then
+    if xx.health<0 then 
+      xx.dead = true
+      if xx.deathclock < 143 then
+        if xx.deathclock == 142 then
+
+          beginretry = true
+        end
+        xx.deathclock = xx.deathclock + 1
+
+      end
+      if xx.deathclock == 1 then 
+        deathsound:play()
+        deathsound2:play() 
+      end
+      if xx.deathclock > 104+ 30 then xx.im = invis
+      elseif xx.deathclock > 101+ 30 then xx.im = fade8 
+      elseif xx.deathclock > 98+ 30 then xx.im = fade7
+      elseif xx.deathclock > 95+ 30 then xx.im = fade6
+      elseif xx.deathclock > 92+ 30 then xx.im = fade5
+      elseif xx.deathclock > 89+ 30 then xx.im = fade4
+      elseif xx.deathclock > 86+ 30 then xx.im = fade3
+      elseif xx.deathclock > 83+ 30 then xx.im = fade2
+      elseif xx.deathclock > 80+ 30 then xx.im = fade1
       end
     end
-    if me.health<0 then 
-      me.dead = true
-      r1, g1, b1 = 0,0,0
-      medeathclock = medeathclock + 1
-      if medeathclock > 104+ 30 then me.im = invis
-      elseif medeathclock > 101+ 30 then me.im = fade8 
-      elseif medeathclock > 98+ 30 then me.im = fade7
-      elseif medeathclock > 95+ 30 then me.im = fade6
-      elseif medeathclock > 92+ 30 then me.im = fade5
-      elseif medeathclock > 89+ 30 then me.im = fade4
-      elseif medeathclock > 86+ 30 then me.im = fade3
-      elseif medeathclock > 83+ 30 then me.im = fade2
-      elseif medeathclock > 80 + 30 then me.im = fade1
-      end
 
-    end
 
-  elseif themode == "roulette" then
-    if you.health<0 then 
-      if not you.dead then you.lives = you.lives - 1
+  elseif themode == "spectrum" then
+    if xx.health<0 then 
+      if not xx.dead then xx.lives = xx.lives - 1
         deathsound2:play() end
-        you.dead = true
-        youdeathclock = youdeathclock + 1
-        if youdeathclock > 104- 30 then 
-          you.dead = false
-          youdeathclock = 0
-          you.health = maxhealth
-          you.v = 0
-          you.j = 0
+        xx.dead = true
+        xx.deathclock = xx.deathclock + 1
+        if xx.deathclock > 104- 30 then 
+          xx.dead = false
+          xx.deathclock = 0
+          xx.health = maxhealth
+          xx.v = 0
+          xx.j = 0
           myroulettespin()
           yourroulettespin()
           if themap.name == "street" then 
@@ -1543,69 +1551,26 @@ death = function()
             end
           end
 
-        elseif youdeathclock > 101- 30 then you.im = fade8 
-          me.im = morph7
-        elseif youdeathclock > 98- 30 then you.im = fade7
-          me.im = morph7
-        elseif youdeathclock > 95- 30 then you.im = fade6
-          me.im = morph6
-        elseif youdeathclock > 92- 30 then you.im = fade5
-          me.im = morph5
-        elseif youdeathclock > 89- 30 then you.im = fade4
-          me.im = morph4
-        elseif youdeathclock > 86- 30 then you.im = fade3
-          me.im = morph3
-        elseif youdeathclock > 83- 30 then you.im = fade2
-          me.im = morph2
-        elseif youdeathclock > 80- 30 then you.im = fade1
-          me.im = morph1
+        elseif xx.deathclock > 101- 30 then xx.im = fade8 
+          yy.im = morph7
+        elseif xx.deathclock > 98- 30 then xx.im = fade7
+          yy.im = morph7
+        elseif xx.deathclock > 95- 30 then xx.im = fade6
+          yy.im = morph6
+        elseif xx.deathclock > 92- 30 then xx.im = fade5
+          yy.im = morph5
+        elseif xx.deathclock > 89- 30 then xx.im = fade4
+          yy.im = morph4
+        elseif xx.deathclock > 86- 30 then xx.im = fade3
+          yy.im = morph3
+        elseif xx.deathclock > 83- 30 then xx.im = fade2
+          yy.im = morph2
+        elseif xx.deathclock > 80- 30 then xx.im = fade1
+          yy.im = morph1
         end
       end
-      if me.health<0 then 
-        if not me.dead then me.lives = me.lives - 1 
-          deathsound2:play()
-        end
-        me.dead = true
-        medeathclock = medeathclock + 1
 
-        if medeathclock > 104- 20 then 
-          me.dead = false
-          medeathclock = 0
-          me.health = maxhealth
-          me.v = 0
-          me.j = 0
-          myroulettespin()
-          yourroulettespin()
-          if themap.name == "street" then 
-            if me.x > 3500 then me.x = 600 me.y = 600
-            else me.x = 6000 me.y = 1000
-            end
-          elseif themap.name == "library" then 
-            if me.x > 1000 then me.x = 700 me.y = 600
-            else me.x = 2000 me.y = 600
-            end
-          end
-
-        elseif medeathclock > 101- 30 then me.im = fade8 
-          you.im = morph7
-        elseif medeathclock > 98- 30 then me.im = fade7
-          you.im = morph7
-        elseif medeathclock > 95- 30 then me.im = fade6
-          you.im = morph6
-        elseif medeathclock > 92- 30 then me.im = fade5
-          you.im = morph5
-        elseif medeathclock > 89- 30 then me.im = fade4
-          you.im = morph4
-        elseif medeathclock > 86- 30 then me.im = fade3
-          you.im = morph3
-        elseif medeathclock > 83- 30 then me.im = fade2
-          you.im = morph2
-        elseif medeathclock > 80- 30 then me.im = fade1
-          you.im = morph1
-        end
-      end
     end
-
   end
 
   --function that adjusts the x for flipping left and right

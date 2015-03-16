@@ -66,33 +66,6 @@ function keyboardcontrols()
 
 
 
-
-        if me.health<0 or you.health<0 then
-
-          me.up = false
-          me.down = false
-          me.leftbump = false
-          me.rightbump = false
-          me.a1b = false
-          me.a2b = false
-          me.a3b = false
-          me.a4b = false
-          me.block = false
-
-
-
-          you.up = false
-          you.down = false
-          you.leftbump = false
-          you.rightbump = false
-          you.a1b = false
-          you.a2b = false
-          you.a3b = false
-          you.a4b = false
-          you.block = false
-
-        else
-
           me.start = love.keyboard.isDown("q")
           me.up = love.keyboard.isDown("w")
           me.down = love.keyboard.isDown("s")
@@ -124,8 +97,6 @@ function keyboardcontrols()
           you.leftbump = love.keyboard.isDown("9")
 
      
-
-        end
 
 end
 

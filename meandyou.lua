@@ -1,6 +1,4 @@
 
-themap = "none"
-placespeople = true
 
 
 idle1im = love.graphics.newImage("me/idle/idle1.png")
@@ -17,22 +15,6 @@ idle3 = {im = idle3im, c = idle3c}
 idle4 = {im = idle4im, c = idle4c}
 
 at = {}
-
-
-backtostage = function()
-collide = true
-ln = 1
-rn = 1
-lcx = -screenwidth 
-rcx = screenwidth*1.5
-lset = false
-rset = false
-menu = "stage"
-sfade = 15
-startsfade = false
-juststartedpost = true
-end
-
 
 
 
@@ -199,8 +181,8 @@ you.yoffset = 0
 	youchoosecolor = false
 
 
-	youdeathclock = 0
-	medeathclock = 0
+	you.deathclock = 0
+	me.deathclock = 0
 
 you.lefty = true
 me.righty = true
@@ -357,8 +339,6 @@ if themap.name == "street" then
 	me.x = 1000
 		you.x = 6000
 		floor = 1900 - 3
-		me.y = floor - 60
-		you.y = floor - 60
 elseif themap.name == "library" then 
 	me.x = 700
 		you.x = 2000
@@ -398,8 +378,8 @@ me.yoffset = 0
 you.yoffset = 0
 
 
-	youdeathclock = 0
-	medeathclock = 0
+	you.deathclock = 0
+	me.deathclock = 0
 
 	you.lefty = true
 me.righty = true
@@ -659,22 +639,8 @@ if not fightclub then
 
 	playfadeout = 0
 
-	enviro.bwstage1 = love.graphics.newImage("enviro/bwministreet.png")
-	enviro.bwstage2 = love.graphics.newImage("enviro/bwminilibrary.png")
-	enviro.stage1 = love.graphics.newImage("enviro/ministreet2.png")
-	enviro.stage2 = love.graphics.newImage("enviro/minilibrary2.png")
-	enviro.bwstage3 = love.graphics.newImage("enviro/bwminifloors.png")
-	enviro.stage3 = love.graphics.newImage("enviro/minifloors.png")
-	
 
-	enviro.a4 = love.graphics.newImage("enviro/a4.png")
-	enviro.a3 = love.graphics.newImage("enviro/a3.png")
-	enviro.a2 = love.graphics.newImage("enviro/a2.png")
-	enviro.a1 = love.graphics.newImage("enviro/a1.png")
-	enviro.ma4 = love.graphics.newImage("enviro/ma4.png")
-	enviro.ma3 = love.graphics.newImage("enviro/ma3.png")
-	enviro.ma2 = love.graphics.newImage("enviro/ma2.png")
-	enviro.ma1 = love.graphics.newImage("enviro/ma1.png")
+	
 	enviro.vert = love.graphics.newImage("enviro/vert.png")
 	enviro.horiz = love.graphics.newImage("enviro/horiz.png")
 
@@ -685,44 +651,13 @@ if not fightclub then
 	enviro.x = love.graphics.newImage("enviro/x.png")
 
   slantbar = love.graphics.newImage("enviro/slantbar.png")
-	enviro.ptile = love.graphics.newImage("enviro/rp.png")
-	enviro.ptile:setFilter("nearest")
-	enviro.btile = love.graphics.newImage("enviro/rb.png")
-	enviro.btile:setFilter("nearest")
-	enviro.stile = love.graphics.newImage("enviro/rs.png")
-	enviro.stile:setFilter("nearest")
-	enviro.gtile = love.graphics.newImage("enviro/rg.png")
-	enviro.gtile:setFilter("nearest")
-	enviro.ytile = love.graphics.newImage("enviro/ry.png")
-	enviro.ytile:setFilter("nearest")
 
-	enviro.sptile = love.graphics.newImage("enviro/sptile.png")
-	enviro.sptile:setFilter("nearest")
-	enviro.sbtile = love.graphics.newImage("enviro/sbtile.png")
-	enviro.sbtile:setFilter("nearest")
-	enviro.sstile = love.graphics.newImage("enviro/sstile.png")
-	enviro.sstile:setFilter("nearest")
-	enviro.sgtile = love.graphics.newImage("enviro/sgtile.png")
-	enviro.sgtile:setFilter("nearest")
-	enviro.sytile = love.graphics.newImage("enviro/sytile.png")
-	enviro.sytile:setFilter("nearest")
 
-	enviro.pframe = love.graphics.newImage("enviro/pframe.png")
-	enviro.pframe:setFilter("nearest")
-	enviro.bframe = love.graphics.newImage("enviro/bframe.png")
-	enviro.bframe:setFilter("nearest")
-	enviro.gframe = love.graphics.newImage("enviro/gframe.png")
-	enviro.gframe:setFilter("nearest")
-	enviro.yframe = love.graphics.newImage("enviro/yframe.png")
-	enviro.yframe:setFilter("nearest")
-	enviro.sframe = love.graphics.newImage("enviro/sframe.png")
-	enviro.sframe:setFilter("nearest")
+
 	enviro.spine = love.graphics.newImage("enviro/spine.png")
 	enviro.spine:setFilter("nearest")
 
 
-	mode1 = love.graphics.newImage("enviro/mode1.png")
-	mode2 = love.graphics.newImage("enviro/mode2.png")
 	
 	enviro.v1 = love.graphics.newImage("enviro/v1.png")
 	enviro.v1 = love.graphics.newImage("enviro/v1.png")
@@ -742,10 +677,9 @@ if not fightclub then
 	enviro.ada:setFilter("nearest")
 	enviro.go = love.graphics.newImage("enviro/go.png")
 	enviro.go:setFilter("nearest")
-	enviro.white = love.graphics.newImage("enviro/white.png")
 	enviro.screenheight = screenheight - barheight
-	--enviro.floor = love.graphics.newImage("enviro/astreet.png")
-	-- enviro.floor = love.graphics.newImage("enviro/library2.png")
+	--enviro.stage = love.graphics.newImage("enviro/astreet.png")
+	-- enviro.stage = love.graphics.newImage("enviro/library2.png")
 	--enviro.paralax = love.graphics.newImage("enviro/paralax.png")
 	-- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
 	enviro.leftwall = 0
@@ -756,4 +690,4 @@ if not fightclub then
 	enviro.beige:setFilter("nearest")
 	enviro.light = love.graphics.newImage("enviro/lightson.png")
 	enviro.healthbar = love.graphics.newImage("enviro/healthbar.png")
-	enviro.floorfloor = love.graphics.newImage("enviro/floor.png")
+	enviro.stagefloor = love.graphics.newImage("enviro/floor.png")

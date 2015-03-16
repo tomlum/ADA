@@ -2,8 +2,45 @@ menu = "color"
 oldmenu = "begin"
 notilebouncing = true
 --menu that fades into another???
+noplat = {n=0;}
+
+themaps = {}
+themaps[1]= {name = "street", 
+  plats = {}, walls = {},
+  floor = 1896,
+  lightx = 707+2.5,
+  lighty = 142+2.5,
+  lightcolor = {r = 40, g = 255, b = 0},
+  rightwall = 7000
+}
+themaps[2]= {name = "library", 
+  plats = {}, walls = {},
+  floor = 896,
+  lightx = 293.5,
+  lighty = 229.5,
+  lightcolor = {r = 87, g = 0, b = 158},
+  rightwall = 4000
+}
+
+themaps[3]= {name = "floors", 
+  plats = {}, walls = {},
+  floor = 896,
+  lightx = 442+2.5,
+  lighty = 311+2.5,
+  lightcolor = {r = 255, g = 99, b = 0},
+  rightwall = 5000
+}
+
+themaps[100]= {name = "fightclub", 
+  plats = {}, walls = {},
+  floor = 896
+}
 
 
+themap = themaps[1]
+
+
+letterboxheight = 80
 menuspeed = 10
 modes = love.graphics.newImage("enviro/mode.png")
 backstreet = love.graphics.newImage("enviro/backstreet.png")
@@ -56,47 +93,57 @@ function love.graphics.sdraw(im, x, y, rot, sx, sy)
   end
 end
 
+function love.graphics.srectangle(mode, x, y, width, height) 
+  love.graphics.rectangle(mode, x*screenwidth/1440, y*screenheight/900, width*screenwidth/1440, height*screenheight/900) 
+end
+
 
 love.graphics.setNewFont(20)
 
 mapnum = 1
 
 lightsize = 7
-maxwob = 5
+maxwob = 10
 function initmenu()
   if menu == "title" and oldmenu ~= "title" then
-    faderate = 2.5
-    musfadein = 1
+    musfadein = 3
     musfade = 0
     allfade = 0
-    fadein = 1
+    fadein = 3
     thesong = openingsong
     thesong:rewind()
     repplay(thesong)
     stagey = 0
   elseif menu == "modes" and oldmenu ~= "modes" then
-    faderate = 8
     allfade = 0
-    fadein = 1
-    wipex = -screenwidth*2
-    wipespeed = 10
+    fadein = 8
+    wipex = -screenwidth*6
+    wipefraction = 5
     wobv = 1
     wobj = 1
   elseif menu == "map" and oldmenu ~= "map" then
     allfade = 1
-    fadein = 1
-    faderate = 8
+    fadein = 9
   elseif menu == "color" and oldmenu ~= "color" then
+    soscillator = 0
+    finishedloading = false
+    if themode == nil or themode == "none" then themode = "duel" end
     me.drawontop = function() end
     you.drawontop = function() end
     spines = {}
+
     allready = false
     tilefadein = 1
     tilefade = 0
     tilefadehold = 0
+    musfade = 255
+    musfadein = 0
     me.readytoplay = false
     you.readytoplay = false
     tileset = false
+    separatespines = false
+    tilesep = 0
+    thesong = colortheme
 
 
     me.rightc = thecolors[0]
@@ -128,6 +175,31 @@ function initmenu()
 
     allfade = 255
     fadein = 0
+
+elseif menu == "pan" and oldmenu ~= "pan" then
+  thesong:play()
+    spines = {}
+    fadein = 0
+    musfadein = 0
+    musfade = 255
+    allfade = 255
+    dollyx = 0
+    dollyv = 7
+    streetfadehold = 1
+    streetfadestart = false
+
+  elseif menu == "retry" and oldmenu ~= "retry" then
+    fadein = 0
+    allfade = 0
+    musfade = 0
+    beginretry = false
+    nextstop = "?"
+    if thesong ~= nil then
+      thesong:stop()
+    end
+    streetfadehold = 1
+    streetfadestart = false
+
   end
   oldmenu = menu
 end
@@ -151,38 +223,44 @@ function drawmenus()
   woby = woby - wobj/2
 
   if fadein > 0 then 
-    allfade = allfade + faderate
-    if allfade + 2 >= 255 then
+    allfade = allfade + fadein
+    if allfade + fadein >= 255 then
       fadein = 0
       allfade = 255
     end
   elseif fadein < 0 then
-    allfade = allfade - faderate
-    if allfade -2 <= 0 then
+    allfade = allfade + fadein
+    if allfade +fadein <= 0 then
       fadein = 0
       allfade = 0
     end
   end
 
   if musfadein > 0 then 
-    musfade = musfade + 2
-    if musfade + 2 >= 255 then
+    musfade = musfade + musfadein
+    if musfade + musfadein >= 255 then
       musfadein = 0
       musfade = 255
     end
   elseif musfadein < 0 then
-    musfade = musfade - 2
-    if musfade -2 <= 0 then
+    musfade = musfade + musfadein
+    if musfade +musfadein <= 0 then
       musfadein = 0
       musfade = 0
     end
   end
+
   if thesong~= nil then
-    thesong:setPitch(musfade/255)
+    if musfade == 0 then
+      thesong:pause()
+    else
+      thesong:play()
+      thesong:setPitch(musfade/255)
+    end
   end
 
   if menu == "title" or menu == "premode" then
-    if c1accept() or c2accept() then
+    if (c1accept() or c2accept()) and menu=="title" then
       menu = "premode" 
       repplay(wavesound)
     end
@@ -208,7 +286,7 @@ function drawmenus()
     love.graphics.setColor(255,255,255,allfade)
     love.graphics.draw(enviro.ada, 0, 0, 0,screenwidth/1440,screenheight/900)
     love.graphics.setColor(0,0,0)
-    love.graphics.rectangle("fill", 0, screenheight-stagey*(screenheight/250), screenwidth, screenheight)
+    love.graphics.srectangle("fill", 0, 900-stagey*4, 1440, 900)
 
 
   elseif menu == "modes" or menu == "premap" then
@@ -225,7 +303,7 @@ function drawmenus()
 
     if menu == "premap" then
       if wipex < 0 then
-        wipex = wipex + screenwidth/wipespeed
+        wipex = wipex + screenwidth/wipefraction
       else 
         menu = "map"
       end
@@ -238,7 +316,7 @@ function drawmenus()
       end
     end
 
-    if c1accept() or c2accept() then
+    if (c1accept() and not me.holda) or (not you.holda and c2accept()) and menu == "modes" then
       menu = "premap"
       repplay(modesound)
     end
@@ -254,12 +332,12 @@ function drawmenus()
       selectory = 411
       themode = "spectrum"
     end
-    love.graphics.setColor(allfade/1.5,allfade/1.5,allfade/1.5,255)
-    blur(function() love.graphics.draw(backstreet,wobx-maxwob*2,woby-maxwob*2,0, screenwidth/1440, screenheight/900) end)
+    love.graphics.setColor(allfade,allfade,allfade,255)
+    blurdraw(2,function() love.graphics.sdraw(backstreet,wobx-maxwob*2,woby-maxwob*2) end)
     love.graphics.setColor(allfade/2,allfade/2,allfade/1,255)
-    love.graphics.draw(modes,0,0,0, screenwidth/1440, screenheight/900)
-    love.graphics.draw(modeselector, selectorx*(screenwidth/1440), selectory*(screenheight/900), 0,screenwidth/1440,screenheight/900)
-    love.graphics.draw(wiper,wipex,0,0, screenwidth/1440, screenheight/900)
+    love.graphics.sdraw(modes,0,0)
+    love.graphics.sdraw(modeselector, selectorx, selectory)
+    love.graphics.sdraw(wiper,wipex,0)
 
   elseif menu == "map" or menu == "precolor" then
 
@@ -270,20 +348,18 @@ function drawmenus()
     elseif ups() and mapnum > 1 then mapnum = mapnum - 1 repplay(mov)
     end
 
+    themap = themaps[mapnum]
 
-    if c1accept() or c2accept() then
-      fadein = -1
+    if (c1accept() and not me.holda) or (not you.holda and c2accept())and menu == "map" then
+      fadein = -5
       repplay(modesound)
+      musfadein = -5
     end
 
-    if fadein < 0 then
-      if thesong~= nil then
-        thesong:setPitch(allfade/255)
-      end
-    end
-    if allfade - faderate <= 0 then
+    if allfade - fadein <= 0 then
       menu = "color"
     end
+
 
     love.graphics.setColor(allfade,allfade,allfade,255)
     love.graphics.draw(map,0,0, 0, screenwidth/1440, screenheight/900)
@@ -291,7 +367,7 @@ function drawmenus()
     love.graphics.circle("fill",(themaps[mapnum].lightx)*(screenwidth/1440),(themaps[mapnum].lighty)*(screenheight/900),lightsize*(screenwidth/1440))
     local wordspacing = 20
     for i = 0, screenheight/wordspacing do
-      love.graphics.print(themaps[mapnum].name, 1000*(screenwidth/1440), i*wordspacing)
+      love.graphics.print(string.upper(themaps[mapnum].name), 1000*(screenwidth/1440), i*wordspacing)
     end
 
 
@@ -318,7 +394,7 @@ function drawmenus()
       else
         love.graphics.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
       end
-      love.graphics.sdraw(shoulder, colorfromwallspace-80,0)
+      love.graphics.sdraw(shoulder, colorfromwallspace-80,tilesep)
 
 
 
@@ -327,7 +403,7 @@ function drawmenus()
       else
         love.graphics.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
       end
-      love.graphics.sdraw(shoulder, 720-colorfromwallspace-140,0,0,-1,1)
+      love.graphics.sdraw(shoulder, 720-colorfromwallspace-140,-tilesep,0,-1,1)
 
 
       if you.leftc.n == 0 then 
@@ -335,7 +411,7 @@ function drawmenus()
       else
         love.graphics.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
       end
-      love.graphics.sdraw(shoulder, 720 +colorfromwallspace+140,0)
+      love.graphics.sdraw(shoulder, 720 +colorfromwallspace+140,-tilesep)
 
 
 
@@ -344,7 +420,7 @@ function drawmenus()
       else
         love.graphics.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
       end
-      love.graphics.sdraw(shoulder, 1440-colorfromwallspace+80,0,0,-1,1)
+      love.graphics.sdraw(shoulder, 1440-colorfromwallspace+80,tilesep,0,-1,1)
 
 
 
@@ -359,15 +435,15 @@ function drawmenus()
 
     love.graphics.setColor(255,255,255)
 
-    if tileset then love.graphics.sdraw(thecolors[me.selectedcolor+1].logo,420,0) 
+    if tileset then love.graphics.sdraw(thecolors[me.selectedcolor+1].logo,420+tilesep,-tilesep) 
     end
 
     if tileset then 
       p2shade()
       if you.selectedcolor+1>2 then
-        love.graphics.sdraw(thecolors[you.selectedcolor+1].logo,1440-420-300,0,0,1,1) 
+        love.graphics.sdraw(thecolors[you.selectedcolor+1].logo,1440-420-300-tilesep,-tilesep,0,1,1) 
       else
-        love.graphics.sdraw(thecolors[you.selectedcolor+1].logo,1440-420,0,0,-1,1) 
+        love.graphics.sdraw(thecolors[you.selectedcolor+1].logo,1440-420-tilesep,-tilesep,0,-1,1) 
       end
     end
 
@@ -415,16 +491,14 @@ function drawmenus()
         else
           function me.drawontop() 
             love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-            love.graphics.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)), v.y, 0, v.lr, 1)
+            love.graphics.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))-tilesep/i, v.y, 0, v.lr, 1)
           end
         end
 
       else
         love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-        love.graphics.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)), v.y, 0, v.lr, 1)
+        love.graphics.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))-tilesep/i, v.y, 0, v.lr, 1)
       end
-
-
 
 
     end
@@ -475,12 +549,12 @@ function drawmenus()
         else
           function you.drawontop() 
             love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-            love.graphics.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)), v.y, 0, -v.lr, 1)
+            love.graphics.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))+tilesep/i, v.y, 0, -v.lr, 1)
           end
         end
       else
         love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-        love.graphics.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)), v.y, 0, -v.lr, 1)
+        love.graphics.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))+tilesep/i, v.y, 0, -v.lr, 1)
       end
 
 
@@ -488,19 +562,19 @@ function drawmenus()
     end
     you.drawontop()
 
-    if me.rightbump then 
+    if me.rightbump and not me.holda then 
       me.rightc = thecolors[me.selectedcolor+1]
       repplay(me.selected)
-    elseif me.leftbump then 
+    elseif me.leftbump and not me.holda then 
       me.leftc = thecolors[me.selectedcolor+1]
       repplay(me.selected)
     end
 
 
-    if you.rightbump then 
+    if you.rightbump and not you.holda then 
       you.rightc = thecolors[you.selectedcolor+1]
       repplay(you.selected)
-    elseif you.leftbump then 
+    elseif you.leftbump and not you.holda then 
       you.leftc = thecolors[you.selectedcolor+1]
       repplay(you.selected)
     end
@@ -514,16 +588,16 @@ function drawmenus()
       tileset = false
     end
 
-    if me.start then me.readytoplay = true end
-    if me.block then me.readytoplay = false end
-    if you.start then you.readytoplay = true end
-    if you.block then you.readytoplay = false end
+    if me.start and not me.readytoplay then me.readytoplay = true repplay(me.selected) end
+    if me.block and not you.readytoplay then me.readytoplay = false end
+    if you.start and not you.readytoplay then you.readytoplay = true repplay(you.selected)  end
+    if you.block and not me.readytoplay then you.readytoplay = false end
 
 
 
     love.graphics.setColor(255, 255, 255)
     if me.readytoplay then
-      love.graphics.sdraw(ready, 100, 70,0,5,5)
+      love.graphics.sdraw(ready, 100, 70+tilesep,0,5,5)
     else
       if me.right and not me.dirholda then me.selectedcolor = (me.selectedcolor + 1)%(#tiles)
       elseif me.left and not me.dirholda then me.selectedcolor = (me.selectedcolor - 1)%(#tiles)
@@ -535,7 +609,7 @@ function drawmenus()
     end
 
     if you.readytoplay then
-      love.graphics.sdraw(ready, 1440-100-(64*5), 70,0,5,5)
+      love.graphics.sdraw(ready, 1440-100-(64*5), 70+tilesep,0,5,5)
 
     else
       if you.right and not you.dirholda then you.selectedcolor = (you.selectedcolor - 1)%(#tiles2)
@@ -546,12 +620,163 @@ function drawmenus()
 
     end
 
+    if you.readytoplay and me.readytoplay then
+      if tilesep == 0 then
+        tilesep = 1
+        placespeople = true
+        thesong:stop()
+        repplay(readysound)
+        musfade = 0
+        musfadein = 0
+      elseif tilesep < 4000 then
+        tilesep = tilesep +  tilesep*.09
+      end
+      if finishedloading then
+        separatespines = true
+      end
+    end
+    if 
+    math.abs(soscillator)>400 then 
+      menu = "pan"
+    end
+
+
+
+  elseif menu == "pan" then
+
+    if dollyx == 0 then
+      if not mute then
+        thesong:rewind()
+        repplay(thesong)
+      end
+    elseif streetfadehold <= 0 then 
+      menu = "play"
+      gotimer = 0
+    elseif streetfadestart then streetfadehold = streetfadehold - 1
+    elseif dollyx + screenwidth > themap.rightwall-1440*1.5
+    or c1accept() or c2accept()
+    then 
+      fadein = -5
+    end
+
+    if allfade == 0 and not streetfadestart then
+      streetfadestart = true
+      streetfadehold = math.random(50,100)
+      dollyx = 0
+
+    end
+
+    love.graphics.setColor(allfade,allfade,allfade)
+    
+  love.graphics.sdraw(enviro.paralax, -dollyx/2,  -enviro.paralax:getHeight()+900-letterboxheight-30)
+    love.graphics.sdraw(enviro.stage, -dollyx, -themap.floor+900 -letterboxheight-30)
+    love.graphics.setColor(0,0,0)
+    love.graphics.srectangle("fill", 0, 0, 1440, hof(letterboxheight, 450-3^(dollyx/50)))
+
+    love.graphics.srectangle("fill", 0, 900, 1440, -hof(letterboxheight, 450-3^(dollyx/50)))
+    dollyx = dollyx + dollyv
+
+
+  elseif menu == "retry" then
+
+    if allfade +fadein*2<= 0 and nextstop ~= "?" then
+      allfade = 0
+      menu = nextstop
+      if menu == "pan" then
+        placespeople = true
+      end
+    end
+
+    love.graphics.setColor(225,225,225)
+
+    if fadein < 0 then
+      love.graphics.setColor(allfade,allfade,allfade)
+    else
+      love.graphics.setColor(255,255,255)
+    end
+    love.graphics.srectangle("fill", 0, 0, 1440, 900)
+
+
+
+
+    love.graphics.setScissor(0, 0, screenwidth/2, enviro.screenheight)
+    camera:set()
+    drawa(me)
+
+    love.graphics.setColor(255,255,255)
+
+    drawa(you)
+
+
+    love.graphics.setColor(255,255,255)
+
+    camera:unset()
+    love.graphics.setScissor()
+
+
+
+    love.graphics.setScissor(screenwidth/2, 0, screenwidth/2, enviro.screenheight)
+    camera2:set()
+
+    drawa(me)
+
+    drawa(you)
+
+    camera2:unset()
+    love.graphics.setScissor()
+
+    death(me, you)
+    death(you, me)
+    retry()
+
+    love.graphics.setColor(0,0,0,allfade)
+    love.graphics.sdraw(enviro.retry, 0, 0)
+
+    if beginretry then
+      fadein = 5
+      if (me.blockb and not me.holda) or (not you.holda and you.blockb) then 
+        nextstop = "pan" 
+        fadein = -4 
+        beginretry = false
+      end
+      if (c1accept() and not me.holda) or (not you.holda and c2accept()) then
+        nextstop = "map"
+        fadein = -4
+        beginretry = false
+      end
+
+    end
+
 
 
   end
   holdmanage(me)
   holdmanage(you)
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -606,8 +831,8 @@ function choosestuff()
   if rn > 1000020 and ln > 1000020 and math.abs(soscillator)>400 
   then menu = "prepan"
     yoffset = 0
-    finishedLoading = false
-    seperateSpines = false
+    finishedloading = false
+    separatespines = false
   end
 
 end
@@ -628,12 +853,7 @@ function panstuff()
   elseif streetfade <= 0 then streetfadehold = streetfadehold - 1
   elseif streetfadestart then streetfade = streetfade - 5
   elseif enviro.dolly + screenwidth > enviro.rightwall/2
-  or me.a1
-  or me.a2
-  or me.a3
-  or you.a1
-  or you.a2
-  or you.a3 
+  or c1accept() or c2accept()
   then 
     streetfadestart = true	
   end

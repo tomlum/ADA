@@ -40,8 +40,6 @@ you.cantreturntothis = 0
 
 function combo(xx, func)
 
-
-
   if xx.color.n ~= xx.cchangeto.n and xx.cancombo
   then
     if func~= nil then func() end
@@ -169,13 +167,11 @@ function attackmanage(xx)
     xx.animcounter = 0
     if xx.type == 5 and xx.color.n == 1 then
       xx.purpgroundtimer = -at.p.ak.time
-
     end
   end
 
   if xx.type == 7 and xx.color.n == 0 and xx.animcounter > 2 and xx.g then
     xx.animcounter = 0
-
   end
 
   if xx.landing then xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false end
@@ -226,8 +222,8 @@ you.nododge = false
 
 
 
-dying = love.graphics.newImage("me/attack/dying.png")
-airdying = love.graphics.newImage("me/attack/airdying.png")
+dying ={im = love.graphics.newImage("me/attack/dying.png")}
+airdying = {im = love.graphics.newImage("me/attack/airdying.png")}
 
 bolt = love.graphics.newImage("me/attack/bolt.png")
 

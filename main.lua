@@ -1,15 +1,15 @@
 --todo
 --if not in the air then some kind of unblocking animation
-
+--apple w is window close
 --SHAEZ TIED TO RUMBLE?!?!?!?
 
 
 therampspeed = .1
 drawboxes = true
-fightclub = false
+fightclub = true
 fullscreen = false
 readout = true
-mute = true
+mute = false
 eh = false
 --airgrab
 
@@ -134,7 +134,7 @@ love.graphics.setDefaultFilter("linear","nearest",1)
 --im for running through wall/ glass ( or maybe only wall)
 --dodge then hold run and move right, it goes weird
 --make flinch sound more solid
---why is there that one stray color in the spine when they seperate??
+--why is there that one stray color in the spine when they separate??
 --also have a special case fo rwall jumping off edge barriers? or...
 --standardize the barriers
 --grapple function? it's click in on right stick and move in a direction
@@ -267,7 +267,7 @@ function love.load()
   if debug then 
     require("mobdebug").start() 
   end
-  finishedLoading = false
+  finishedloading = false
 
   stagey = 0
   stagenum = 0
@@ -342,10 +342,11 @@ function love.load()
   you.actiontimer = 0
 
   if fightclub then 
+    themode = "duel"
     menu = "play"
     themap = themaps[100]
     placespeople = true
-    while(not finishedLoading) do
+    while(not finishedloading) do
       whatlevel()
       loader.update() 
     end
@@ -382,7 +383,7 @@ function love.update()
     rampspeed = 1
   end
 
-  if not finishedLoading then
+  if not finishedloading then
     loader.update()   end
 
 
@@ -442,6 +443,29 @@ function love.update()
 
     if menu == "preplay" or menu == "play" then 
       menu = "play"
+      
+      if musfadein > 0 then 
+    musfade = musfade + musfadein
+    if musfade + musfadein >= 255 then
+      musfadein = 0
+      musfade = 255
+    end
+  elseif musfadein < 0 then
+    musfade = musfade + musfadein
+    if musfade +musfadein <= 0 then
+      musfadein = 0
+      musfade = 0
+    end
+  end
+
+  if thesong~= nil then
+    if musfade == 0 then
+      thesong:pause()
+    else
+      thesong:play()
+      thesong:setPitch(musfade/255)
+    end
+  end
 
       if slowt == SlowRate and not pause and not me.actionshot 
       then
@@ -561,13 +585,17 @@ function love.update()
 
         if math.abs(me.v) > math.abs(you.v) then
           bump(me)
+          bump(you)
         elseif math.abs(me.v) < math.abs(you.v) then
 
           bump(you)
+          bump(me)
         else
           if math.random()>.5
           then bump(me)
+            bump(you)
           else bump(you)
+            bump(me)
           end
 
 
@@ -589,19 +617,13 @@ function love.update()
 
 
         isanyonedead()
-        death()
 
         miscsounds()
       holdmanage(me)
       holdmanage(you)
 
 
-        --[[
-        if (themode == "classic" and (you.dead or me.dead)) or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0))then
-          thesong:stop()
-          retryupdate()
-        end
-        ]]--
+        
         cammovement()
         --if here then no slow mo twitter
         camerafol()
@@ -654,64 +676,8 @@ function love.update()
 
 
 
-      if (themode == "classic" and (you.health < 0 or me.health < 0)) or (themode == "roulette" and (you.lives <= 0 or me.lives <= 0)) then 
-        if not backtowhite then
-          deathsound:play()
-          deathsound2:play()
-        end
-
-
-        if backtowhite then 
-          love.graphics.setColor(225,225,225)
-        end
-
-        love.graphics.setColor(255-playfadeout,255-playfadeout,255-playfadeout)
-        love.graphics.draw(enviro.white, 0, 0, 0, screenwidth, screenheight)
-        love.graphics.setColor(0, 0, 0, 255)
-        backtowhite = true
-
-
-
-
-        love.graphics.setScissor(0, 0, screenwidth/2, enviro.screenheight)
-        camera:set()
-        love.graphics.setColor(a31r,a31g,a31b,255-playfadeout)
-        love.graphics.draw(me.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
-
-        love.graphics.setColor(255,255,255)
-
-        love.graphics.setColor(a22r,a22g,a22b,255-playfadeout)
-        love.graphics.draw(you.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
-
-        love.graphics.setColor(255,255,255)
-
-        camera:unset()
-        love.graphics.setScissor()
-
-
-
-        love.graphics.setScissor(screenwidth/2, 0, screenwidth/2, enviro.screenheight)
-        camera2:set()
-
-        love.graphics.setColor(a31r,a31g,a31b,255-playfadeout)
-        love.graphics.draw(me.im, me.xanimate-me.xoffset, me.y-me.yoffset, 0, me.lr, 1)
-
-        love.graphics.setColor(255,255,255)
-
-        love.graphics.setColor(a22r,a22g,a22b,255-playfadeout)
-        love.graphics.draw(you.im, you.xanimate-you.xoffset, you.y-you.yoffset, 0, you.lr, 1)
-
-        love.graphics.setColor(255,255,255)
-
-        camera2:unset()
-        love.graphics.setScissor()
-
-        retry()
-
-
-
-
-
+      if (themode == "duel" and (you.health < 0 or me.health < 0)) or (themode == "spectrum" and (you.lives <= 0 or me.lives <= 0)) then 
+          menu = "retry"
 
 
       else
@@ -723,7 +689,7 @@ function love.update()
 
         love.graphics.setScissor(0, 0, screenwidth/2, enviro.screenheight)
         camera:set()
-        drawleft()
+        drawx(camera)
         camera:unset()
         love.graphics.setScissor()
 
@@ -731,7 +697,7 @@ function love.update()
         love.graphics.setScissor(screenwidth/2, 0, screenwidth/2, enviro.screenheight)
         camera2:set()
 
-        drawright()
+        drawx(camera2)
 
         camera2:unset()
         love.graphics.setScissor()
@@ -741,25 +707,25 @@ function love.update()
 
             love.graphics.setScissor(screenwidth/2, topy,twidth, enviro.screenheight/2)
             camera:set()
-            drawleft()
+            drawx(camera)
             camera:unset()
             love.graphics.setScissor()
 
             love.graphics.setScissor(screenwidth/2-twidth+1, bottomy,twidth, enviro.screenheight/2)
             camera2:set()
-            drawright()
+            drawx(camera2)
             camera2:unset()
             love.graphics.setScissor()
           elseif me.x >= you.x then
             love.graphics.setScissor(screenwidth/2-twidth+1, topy,twidth, enviro.screenheight/2)
             camera2:set()
-            drawright()
+            drawx(camera2)
             camera2:unset()
             love.graphics.setScissor()
 
             love.graphics.setScissor(screenwidth/2, bottomy,twidth, enviro.screenheight/2)
             camera:set()
-            drawleft()
+            drawx(camera)
             camera:unset()
             love.graphics.setScissor()
           end
@@ -818,6 +784,7 @@ function love.update()
     ]]--
     love.graphics.setColor(255,255,255)
     if readout then
+    love.graphics.setColor(255,10,0)
     love.graphics.print("themenu "..tostring(menu), 10, 90)
     love.graphics.print("oldmenu "..tostring(oldmenu), 10, 110)
     love.graphics.print("fadein "..tostring(fadein), 10, 130)
@@ -825,6 +792,12 @@ function love.update()
     love.graphics.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
     love.graphics.print("tileset "..tostring(tileset), 10, 230)
     love.graphics.setColor(255,0,0)
+    love.graphics.print("me.currentanim "..tostring(me.currentanim), 10, 260)
+    love.graphics.print("themode "..tostring(themode), 10, 280)
+    love.graphics.print("finishedloading "..tostring(finishedloading), 10, 320)
+    love.graphics.print("separatespines "..tostring(separatespines), 10, 350)
+    love.graphics.print("me.y "..tostring(me.y), 10, 370)
+    love.graphics.print("themap.name "..tostring(themap.name), 10, 390)
     end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end

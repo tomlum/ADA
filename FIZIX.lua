@@ -14,43 +14,23 @@ me.tempfloor = floor
 you.jmax = jmax
 me.jmax = jmax
 
-themaps = {}
 me.plat = noplat
 you.plat = noplat
-noplat = {n=0;}
 
-themaps[1]= {name = "STREET", 
-  plats = {}, walls = {},
-  floor = 896,
-  lightx = 707+2.5,
-  lighty = 142+2.5,
-  lightcolor = {r = 40, g = 255, b = 0}
-}
-themaps[2]= {name = "LIBRARY", 
-  plats = {}, walls = {},
-  floor = 896,
-  lightx = 293.5,
-  lighty = 229.5,
-  lightcolor = {r = 87, g = 0, b = 158}
-}
 
-themaps[3]= {name = "FLOORS", 
-  plats = {}, walls = {},
-  floor = 896,
-  lightx = 442+2.5,
-  lighty = 311+2.5,
-  lightcolor = {r = 255, g = 99, b = 0}
-}
+table.insert(themaps[1].plats, {n=1, y = themaps[1].floor, x1 = 0, x2 = 100000, floor = true})
+table.insert(themaps[1].plats, {n=2, y = 1379, x1 = 1120, x2 = 1529})
+table.insert(themaps[1].plats, {n=2, y = 1379, x1 = 1120, x2 = 1529})
+table.insert(themaps[1].plats, {n=2, y = 1627, x1 = 2245, x2 = 2751})
+table.insert(themaps[1].plats, {n=2, x1 = 2751, x2 = 2971, y = 1670})
+table.insert(themaps[1].walls, {n=1, y1 = -1, x=0, barrier = true})
+table.insert(themaps[1].walls, {n=2, y1 = -1, x=themaps[1].rightwall, barrier = true})
 
-themaps[100]= {name = "fightclub", 
-  plats = {}, walls = {},
-  floor = 896
-}
+
 table.insert(themaps[100].plats, {n=1, y = 896, x1 = 0, x2 = 100000, floor = true})
 table.insert(themaps[100].plats, {n=2, y = 465, x1 = 32, x2 = 236})
 table.insert(themaps[100].plats, {n=3, y = 541, x1 = 839, x2 = 1016})
 table.insert(themaps[100].plats, {n=4, y = 719, x1 = 655, x2 = 1560})
-
 table.insert(themaps[100].walls, {n=1, y1 = -1, x=0, barrier = true})
 table.insert(themaps[100].walls, {n=2, y1 = -1, x=2000, barrier = true})
 
@@ -80,10 +60,49 @@ function bump(xx)
       {x=xx.mid, y = xx.y+5},
       function(z)
         if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
+          if z.flinch then
           z.push = xx.v
+            else
+          z.push = xx.v*2/3
+          end
         end
       end)
   end
+end
+
+function doublebump()
+  me.newpush = 0
+  you.newpush = 0
+  xx = me
+  if not xx.dodge then
+    hboxcss(xx.id, 
+      {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+55},
+      {x=xx.mid, y = xx.y+55},
+      {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+5},
+      {x=xx.mid, y = xx.y+5},
+      function(z)
+        if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
+          z.push = xx.v/2
+        end
+      end)
+  end
+  
+  xx = you
+  if not xx.dodge then
+    hboxcss(xx.id, 
+      {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+55},
+      {x=xx.mid, y = xx.y+55},
+      {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+5},
+      {x=xx.mid, y = xx.y+5},
+      function(z)
+        if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
+          z.push = xx.v/2
+        end
+      end)
+  end
+  
+  me.v = me.v + me.newpush
+  you.v = you.v + you.newpush
 end
 
 
@@ -181,8 +200,9 @@ end
 function runrunrun(xx)
     if not xx.g then xx.running = false end
 
-    if xx.running and math.abs(xx.push) > 0 then xx.j = 14 xx.g = false
-      xx.v = xx.v + xx.push*4 
+    if xx.running and math.abs(xx.push) > 0 then 
+      --xx.j = 14 xx.g = false
+      xx.v = xx.v + xx.push
     end
     if xx.flinch or math.abs(xx.v) <= speedminit then 
       xx.running = false

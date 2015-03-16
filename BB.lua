@@ -88,14 +88,14 @@ bbnumpunch = 3
 me.dirholda = false
 you.dirholda = false
 function holdmanage(xx)
-  if (xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.block) then
+  if (xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.block) or (menu ~= "play" and (xx.rightbump or xx.leftbump)) then
     if not xx.holda then
       xx.holda = true
     end
   else xx.holda = false
   end
 
-  if (xx.up or xx.down or xx.left or xx.right or xx.block) then
+  if (xx.up or xx.down or xx.left or xx.right) then
     if not xx.dirholda then
       xx.dirholda = true
     end

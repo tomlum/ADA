@@ -7,7 +7,9 @@
 --      self.balance = self.balance - v
 --    end
 
-
+colortheme = love.audio.newSource("sounds/colortheme.mp3", "stream")
+colortheme:setVolume(.25)
+colortheme:setLooping(true)
 
 song1 = love.audio.newSource("sounds/song1.mp3", "stream")
 song1:setVolume(.25)
@@ -156,11 +158,8 @@ collidesar[8]:setVolume(SFXV - .82)
 
 
 colorgsound = love.audio.newSource("sounds/gsound.mp3", "stream")
-colorgsound:setVolume(1)
+colorgsound:setVolume(0)
 colorgsound:setPitch(1)
-you.colorgsound = love.audio.newSource("sounds/gsound.mp3", "stream")
-you.colorgsound:setVolume(1)
-you.colorgsound:setPitch(1)
 
 adj = .14
 
