@@ -454,7 +454,7 @@ function hboxwall()
 
       if
       ((p.x+p.v*walljumprange < wall.x and p.x >= wall.x) or (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x)) and
-      ((p.v < 0 and p.right) or (p.v > 0 and p.left)) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch
+      ((p.v < 0 and p.right) or (p.v > 0 and p.left)) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch and not p.busy and p.animcounter == 0
       then
         if (p.x+p.v*walljumprange < wall.x and p.x >= wall.x) then
           wallside = 1 
