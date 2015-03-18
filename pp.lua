@@ -255,6 +255,7 @@ at.p.u.ft = 30
 at.p.u.kb = 0
 at.p.u.kj = 24
 at.p.u.z = .07
+at.p.u.r = .5
 
 at.p.k = {}
 at.p.k.max = 6
@@ -583,6 +584,7 @@ function pandp(xx)
             repplay(xx.purpsound)
             repplay(xx.purp2)
             me.shake = true 
+                  rumbleme(me, at.p.u.r)
             hall(xx.id, function(z) if z.plat.n == xx.plat.n then
                   z.j = at.p.u.kj 
                   xx.cancombo = true

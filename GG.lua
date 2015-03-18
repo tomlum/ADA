@@ -2,6 +2,8 @@
 
 amountstuckinwall = 40
 
+throw = {im=love.graphics.newImage("me/attack/throw.png"),c=love.graphics.newImage("me/attack/throwc.png"), xoff = 9, yoff = 10}
+
 greena21 = {im=love.graphics.newImage("me/attack/greena21.png"),c=love.graphics.newImage("me/attack/greena21c.png"), xoff = 10}
 greena22 = {im=love.graphics.newImage("me/attack/greena22.png"),c=love.graphics.newImage("me/attack/greena22c.png"), xoff = 20}
 greena22s = {im=love.graphics.newImage("me/attack/greena22s.png"),c=love.graphics.newImage("me/attack/greena22c.png"), xoff = 20}
@@ -160,9 +162,6 @@ function gandg(xx)
 
                   z.flinch = true
                   z.ft = z.ft+at.g.p.ft
-                  if #joysticks>=xx.id then
-                    xx.joystick:setVibration(.7,1)
-                  end
                 end
               end)
           end
@@ -250,9 +249,6 @@ function gandg(xx)
                 z.j = at.g.u.j
                 z.flinch = true
                 z.ft = z.ft+at.g.u.ft
-                if #joysticks>=xx.id then
-                  xx.joystick:setVibration(1,1)
-                end
                 makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
               end)
           end
@@ -298,9 +294,6 @@ function gandg(xx)
 
                   z.flinch = true
                   z.ft = z.ft+at.g.p.ft
-                  if #joysticks>=xx.id then
-                    xx.joystick:setVibration(.7,1)
-                  end
                 end
               end)
           end
@@ -333,9 +326,6 @@ function gandg(xx)
                 z.j = at.g.u.j
                 z.flinch = true
                 z.ft = z.ft+at.g.u.ft
-                if #joysticks>=xx.id then
-                  xx.joystick:setVibration(1,1)
-                end
                 makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
               end)
           end

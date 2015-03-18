@@ -20,6 +20,80 @@
 -- objects[1]
 -- end
 
+throwft = 40
+throwz = .07
+
+me.grabtimer = 0
+you.grabtimer = 0
+me.grabbingx = nil
+you.grabbingx = nil
+function grab(xx)
+
+
+  if xx.type == 8 and xx.animcounter > 0 then 
+    xx.busy = true 
+    xx.stop = true
+  end
+  
+  if xx.blockb and (xx.a2b or xx.a3b) and xx.animcounter == 0 then
+    xx.animcounter = 1
+    xx.type = 8
+  elseif xx.animcounter > 0 and xx.type == 8 then
+
+
+    if xx.animcounter < 4 then
+      xx.im = punch1
+    elseif xx.animcounter < 7 then
+      xx.im = punch2
+      if xx.animcounter == 4 then
+      hboxcs(xx.id, 
+        {x=xx.mid, y = xx.y+24},
+        {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
+        {x=xx.mid, y = xx.y+30},
+        {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32-xx.j},
+        function(z)
+          xx.animcounter = 100
+          xx.grabbingx = z
+          z.y = xx.y
+          z.j = xx.j
+          z.v = xx.v
+
+      end)
+    end
+    elseif xx.animcounter < 20 then 
+      xx.im = punch3
+    elseif xx.animcounter < 100 then
+      xx.animcounter = 0
+    elseif xx.animcounter < 130 then
+      xx.im = punch2
+      xx.grabbingx.ft = 10
+      if not xx.holda and (xx.a1 or xx.a2 or xx.a3 or xx.a4) then 
+        xx.grabbingx.j =  -xx.jry*20
+        xx.grabbingx.v =  xx.jrx*20
+        xx.animcounter = 300
+        shakez(throwz)
+        xx.grabbingx.ft = throwft
+        if xx.jrx > 0 then
+          xx.grabbingx.flinchway = -1
+        else xx.grabbingx.flinchway = 1
+          end
+        end
+    elseif xx.animcounter <260 then
+      xx.animcounter = 0
+      xx.v = -xx.lr*5
+      xx.grabbingx.ft = 0
+    elseif xx.animcounter < 310 then
+    xx.im = throw
+    elseif xx.animcounter < 400 then
+      xx.animcounter = 0
+    end
+
+end
+end
+
+
+
+
 simpledodge = true
 
 
@@ -173,6 +247,8 @@ function attackmanage(xx)
   if xx.type == 7 and xx.color.n == 0 and xx.animcounter > 2 and xx.g then
     xx.animcounter = 0
   end
+  
+  grab(xx)
 
   if xx.landing then xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false end
 
@@ -208,6 +284,7 @@ function postattackmanage(xx)
     xx.v = xx.oldv + ((xx.v-xx.oldv)/xx.color.s.weight)*(rampspeed)
   end
   if(math.abs(xx.ft) > math.abs(xx.oldft)) then
+    rumbleme(xx,(math.log(xx.ft-xx.oldft)+.5)/5)
     xx.ft = xx.oldft + (xx.ft-xx.oldft)*(rampspeed)
   end
   xx.oldft = xx.ft
@@ -373,7 +450,7 @@ newforwarddodge = function(xx)
 
 
   if not xx.dodge then xx.dodgelr = xx.lr
-    xx.slidesound = true end
+    xx.makeslidesound = true end
 
     if xx.dodgerefreshtimer > 0 then xx.dodgerefreshtimer = xx.dodgerefreshtimer - 1
     end
@@ -451,7 +528,7 @@ newforwarddodge = function(xx)
         xx.v = xx.currentdodgev/3-(dodgespeed*xx.lr)
         xx.dodgetype = 2
         xx.dodgecounter = turnaroundtime
-        xx.slidesound = true
+        xx.makeslidesound = true
         xx.im = dodge21
       end
     elseif xx.dodgetype == 0 and xx.dodgerefreshtimer == 0 then
@@ -466,12 +543,12 @@ newforwarddodge = function(xx)
     end
 
 
-    if xx.dodgetype >= 1 and xx.slidesound then 
+    if xx.dodgetype >= 1 and xx.makeslidesound then 
       repplay(xx.slidedodge)
-      xx.slidesound = false
-    elseif xx.dodgetype <= -1 and xx.slidesound then
+      xx.makeslidesound = false
+    elseif xx.dodgetype <= -1 and xx.makeslidesound then
       repplay(xx.backdodge)
-      xx.slidesound = false
+      xx.makeslidesound = false
 
     end
     if xx.dodgetype~=0 then
@@ -517,8 +594,8 @@ newforwarddodge = function(xx)
       if not xx.oldblock then repplay(xx.blocksound) end
 
 
-  else 
-    xx.block = false 
+    else 
+      xx.block = false 
       xx.stop = false
     end
 
@@ -584,7 +661,12 @@ newforwarddodge = function(xx)
 
   jforfallbackbounce = 5
 
+
   function flinchingx(xx,yy)
+    
+    
+    if xx.ft > 0 then xx.flinch = true end
+    
     if xx.health < xx.oldhealth then
       xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(rampspeed)/xx.color.s.def
       local dif = xx.oldhealth - xx.health

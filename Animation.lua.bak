@@ -78,6 +78,53 @@ traillength = 4
 me.trail={}
 you.trail={}
 
+
+function initpos()
+  
+  me.y = 0
+  you.y = 0
+  if themap.name == "fightclub" then
+
+      me.x = putmehere
+      you.x = putyouhere
+      me.im =idle1
+      you.im =idle1
+      me.y = themaps[100].floor - 500
+      you.y = themaps[100].floor - 500
+
+
+
+    elseif themap.name == "street" then
+      me.y = themaps[1].floor - 200
+      you.y = themaps[1].floor - 200
+      me.x = 1000
+      you.x = 1020
+
+    elseif themap.name == "library" then
+      
+      me.x = 700
+      you.x = 2000
+      me.y = 300
+      you.y = 300
+
+
+    elseif themap.name == "floors" then
+      me.x = 500
+      you.x = 3000
+      me.y = 300
+      you.y = 300
+
+    end
+  
+  
+  
+  
+  end
+
+
+
+
+
 function updatemytrail(xx)
   for i = #xx.trail, 1, -1 do
     cur = xx.trail[i]
@@ -117,6 +164,9 @@ whatlevel = function()
 
   if placespeople then
     placespeople = false
+    
+you.initwy = 0
+me.initwy = 0
     finishedloading = false
     playfade = 0
     me.deathclock = 0
@@ -129,6 +179,14 @@ whatlevel = function()
     you.push = 0
     me.lr = 1
     you.lr = -1
+    me.j = 0
+    you.j = 0
+    me.flinch = false
+    you.flinch = false
+    me.ft = 0
+    you.ft = 0
+    minzoom = defaultminzoom
+    maxzoom = defaultmaxzoom
 
     if themode == "spectrum" then 
       you.lives = 5
@@ -143,7 +201,7 @@ whatlevel = function()
     if themap.name == "fightclub" then
 
       loader.start(function()
-          finishedLoading = true
+          finishedloading = true
         end)
 
       enviro.rightwall = 2000
@@ -153,11 +211,11 @@ whatlevel = function()
       loader.newImage(enviro,"sky","enviro/ready.png")
       me.x = putmehere
       you.x = putyouhere
-      floor = 896
       me.im =idle1
       you.im =idle1
-      me.y = floor - 500
-      you.y = floor - 500
+      me.y = themaps[100].floor - 500
+      you.y = themaps[100].floor - 500
+      floor = themaps[100].floor
 
 
 
@@ -166,7 +224,7 @@ whatlevel = function()
       you.y = themaps[1].floor - 200
       loader.newImage(enviro,'stage', "enviro/astreet.png")
       loader.start(function()
-          finishedLoading = true
+          finishedloading = true
         end)
       loader.newImage(enviro,"paralax","enviro/paralax.png")
       loader.newImage(enviro,"sky","enviro/sky.png")
@@ -188,11 +246,10 @@ whatlevel = function()
       lighttimer = 0
       me.x = 1000
       you.x = 1020
-      floor = 1900 - 3
       enviro.rightwall = 6600-20
       enviro.ds = 5
       thesong = song1
-    end
+    
     -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
     -- enviro.sky = love.graphics.newImage("enviro/librarysky.png")
     -- enviro.librarylpartition = love.graphics.newImage("enviro/librarylpartition.png")
@@ -203,9 +260,9 @@ whatlevel = function()
     -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
     -- enviro.stage = love.graphics.newImage("enviro/library2.png")
 
-    if themap.name == "library" then
+    elseif themap.name == "library" then
       loader.start(function()
-          finishedLoading = true
+          finishedloading = true
         end)
       loader.newImage(enviro,'paralax',"enviro/libraryparalax.png")
       loader.newImage(enviro,'paralax2', "enviro/libraryparalax2.png")
@@ -218,7 +275,6 @@ whatlevel = function()
 
       me.x = 700
       you.x = 2000
-      floor = 1900 - 2
       me.y = 300
       you.y = 300
       enviro.rightwall = 3700 
@@ -226,11 +282,9 @@ whatlevel = function()
 
       thesong = song2
 
-    end
-
-    if themap.name == "floors" then
+    elseif themap.name == "floors" then
       loader.start(function()
-          finishedLoading = true
+          finishedloading = true
         end)
       loader.newImage(enviro,'paralax',"enviro/floorsparalax.png")
       loader.newImage(enviro,'stage', "enviro/floors.png")
@@ -240,7 +294,6 @@ whatlevel = function()
       loader.newImage(enviro, 'floorsveneer1',"enviro/floorsveneer1.png")
       me.x = 500
       you.x = 3000
-      floor = 5898
       me.y = 300
       you.y = 300
       enviro.rightwall = 5000
@@ -249,7 +302,9 @@ whatlevel = function()
 
     end
 
-  end
+end
+    me.oldpy = me.y
+    you.oldpy = you.y
 end
 ma1fade= 100
 ma2fade= 100
@@ -292,7 +347,7 @@ function drawa(xx)
   if mode == "retry" and fadein < 0 then
     love.graphics.setColor(255,255,255,allfade)
     p2shadefade(allfade)
-    end
+  end
   love.graphics.draw(xim,xxx, xxy, 0, xlr, 1) 
 
 
@@ -308,6 +363,7 @@ end
 
 function actionshotstuff(xx)
   if xx.actionshot then
+    musfadein = -10
     xx.numofspikes = 0
     xx.uppercuthit = false
     xx.hitsomeonewithpurp = false
@@ -322,12 +378,15 @@ function actionshotstuff(xx)
         xx.currentanim = xx.color.n
         combo(xx)
         xx.actionshot = false
+        
+    musfadein = 10
         xx.actiontimer = 0
 
       end
     end
     minzoom = minzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
     maxzoom = maxzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
+  
   end
 
   ColorChange(xx)
@@ -335,10 +394,9 @@ function actionshotstuff(xx)
 
   if xx.actiontimer == 1 
   then xx.actionshot = false 
+    
+    musfadein = 10
     xx.actiontimer = 0
-    if not musicmute then
-      thesong:setPitch(1)
-    end
 
     if not pause then
       --deathsound:play()
@@ -1216,14 +1274,14 @@ oscillator = 0
 oup=true
 soscillator = 0
 soup=true
-first = true
 spineymove = 0
 separatespines = false
 drawspine = function()
-  if table.getn(spines) < 1 and menu ~= "postpostchoose"
+  if table.getn(spines) < 1 and menu == "color"
   then
     spinen = 11
     sosfirst = true
+    soup=true
     spinestartx = 680
     spineymove = 0
     table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=26, v=0, spinecolor = 0, spinecolor2 = 0})
@@ -1446,11 +1504,11 @@ death = function(xx, yy)
       xx.dead = true
       if xx.deathclock < 143 then
         if xx.deathclock == 142 then
-          
-        beginretry = true
+
+          beginretry = true
         end
         xx.deathclock = xx.deathclock + 1
-        
+
       end
       if xx.deathclock == 1 then 
         deathsound:play()
@@ -1469,51 +1527,51 @@ death = function(xx, yy)
     end
 
 
-elseif themode == "spectrum" then
-  if xx.health<0 then 
-    if not xx.dead then xx.lives = xx.lives - 1
-      deathsound2:play() end
-      xx.dead = true
-      xx.deathclock = xx.deathclock + 1
-      if xx.deathclock > 104- 30 then 
-        xx.dead = false
-        xx.deathclock = 0
-        xx.health = maxhealth
-        xx.v = 0
-        xx.j = 0
-        myroulettespin()
-        yourroulettespin()
-        if themap.name == "street" then 
-          if me.x > 3500 then you.x = 600 you.y = 600
-          else you.x = 6000 you.y = 1000
+  elseif themode == "spectrum" then
+    if xx.health<0 then 
+      if not xx.dead then xx.lives = xx.lives - 1
+        deathsound2:play() end
+        xx.dead = true
+        xx.deathclock = xx.deathclock + 1
+        if xx.deathclock > 104- 30 then 
+          xx.dead = false
+          xx.deathclock = 0
+          xx.health = maxhealth
+          xx.v = 0
+          xx.j = 0
+          myroulettespin()
+          yourroulettespin()
+          if themap.name == "street" then 
+            if me.x > 3500 then you.x = 600 you.y = 600
+            else you.x = 6000 you.y = 1000
+            end
+          elseif themap.name == "library" then 
+            if me.x > 1000 then you.x = 700 you.y = 600
+            else you.x = 2000 you.y = 600
+            end
           end
-        elseif themap.name == "library" then 
-          if me.x > 1000 then you.x = 700 you.y = 600
-          else you.x = 2000 you.y = 600
-          end
+
+        elseif xx.deathclock > 101- 30 then xx.im = fade8 
+          yy.im = morph7
+        elseif xx.deathclock > 98- 30 then xx.im = fade7
+          yy.im = morph7
+        elseif xx.deathclock > 95- 30 then xx.im = fade6
+          yy.im = morph6
+        elseif xx.deathclock > 92- 30 then xx.im = fade5
+          yy.im = morph5
+        elseif xx.deathclock > 89- 30 then xx.im = fade4
+          yy.im = morph4
+        elseif xx.deathclock > 86- 30 then xx.im = fade3
+          yy.im = morph3
+        elseif xx.deathclock > 83- 30 then xx.im = fade2
+          yy.im = morph2
+        elseif xx.deathclock > 80- 30 then xx.im = fade1
+          yy.im = morph1
         end
-
-      elseif xx.deathclock > 101- 30 then xx.im = fade8 
-        yy.im = morph7
-      elseif xx.deathclock > 98- 30 then xx.im = fade7
-        yy.im = morph7
-      elseif xx.deathclock > 95- 30 then xx.im = fade6
-        yy.im = morph6
-      elseif xx.deathclock > 92- 30 then xx.im = fade5
-        yy.im = morph5
-      elseif xx.deathclock > 89- 30 then xx.im = fade4
-        yy.im = morph4
-      elseif xx.deathclock > 86- 30 then xx.im = fade3
-        yy.im = morph3
-      elseif xx.deathclock > 83- 30 then xx.im = fade2
-        yy.im = morph2
-      elseif xx.deathclock > 80- 30 then xx.im = fade1
-        yy.im = morph1
       end
-    end
 
-end
-end
+    end
+  end
 
   --function that adjusts the x for flipping left and right
 

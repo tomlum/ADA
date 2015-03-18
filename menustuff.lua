@@ -667,7 +667,7 @@ function drawmenus()
     end
 
     love.graphics.setColor(allfade,allfade,allfade)
-    
+    love.graphics.sdraw(enviro.sky, 0, 0, 0, 10, 1)
   love.graphics.sdraw(enviro.paralax, -dollyx/2,  -enviro.paralax:getHeight()+900-letterboxheight-30)
     love.graphics.sdraw(enviro.stage, -dollyx, -themap.floor+900 -letterboxheight-30)
     love.graphics.setColor(0,0,0)

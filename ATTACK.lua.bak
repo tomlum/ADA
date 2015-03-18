@@ -19,6 +19,84 @@
 -- function updateobjects()
 -- objects[1]
 -- end
+
+throwft = 40
+throwz = .07
+
+me.grabtimer = 0
+you.grabtimer = 0
+me.grabbingx = nil
+you.grabbingx = nil
+function grab(xx)
+
+
+  if xx.type == 8 and xx.animcounter > 0 then 
+    xx.busy = true 
+    xx.stop = true
+  end
+  
+  if xx.blockb and (xx.a2b or xx.a3b) and xx.animcounter == 0 then
+    xx.animcounter = 1
+    xx.type = 8
+  elseif xx.animcounter > 0 and xx.type == 8 then
+
+
+    if xx.animcounter < 4 then
+      xx.im = punch1
+    elseif xx.animcounter < 7 then
+      xx.im = punch2
+      if xx.animcounter == 4 then
+      hboxcs(xx.id, 
+        {x=xx.mid, y = xx.y+24},
+        {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
+        {x=xx.mid, y = xx.y+30},
+        {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32-xx.j},
+        function(z)
+          xx.animcounter = 100
+          xx.grabbingx = z
+          z.y = xx.y
+          z.j = xx.j
+          z.v = xx.v
+
+      end)
+    end
+    elseif xx.animcounter < 20 then 
+      xx.im = punch3
+    elseif xx.animcounter < 100 then
+      xx.animcounter = 0
+    elseif xx.animcounter < 130 then
+      xx.im = punch2
+      xx.grabbingx.ft = 10
+      if not xx.holda and (xx.a1 or xx.a2 or xx.a3 or xx.a4) then 
+        xx.grabbingx.j =  -xx.jry*20
+        xx.grabbingx.v =  xx.jrx*20
+        xx.animcounter = 300
+        shakez(throwz)
+        xx.grabbingx.ft = throwft
+        if xx.jrx > 0 then
+          xx.grabbingx.flinchway = -1
+        else xx.grabbingx.flinchway = 1
+          end
+        end
+    elseif xx.animcounter <260 then
+      xx.animcounter = 0
+      xx.v = -xx.lr*5
+      xx.grabbingx.ft = 0
+    elseif xx.animcounter < 310 then
+    xx.im = throw
+    elseif xx.animcounter < 400 then
+      xx.animcounter = 0
+    end
+
+end
+end
+
+
+
+
+simpledodge = true
+
+
 uppercutpause = 40
 me.uppercuttimer = 0
 you.uppercuttimer = 0
@@ -34,10 +112,7 @@ me.cantreturntothis = 0
 you.cantreturntothis = 0
 
 
-
 function combo(xx, func)
-
-
 
   if xx.color.n ~= xx.cchangeto.n and xx.cancombo
   then
@@ -58,7 +133,7 @@ function combo(xx, func)
       if func~= nil then func() end
       if xx.color.n==0 then
         xx.type = 1
-        if xx.repcounter < bbnumpunch then
+        if xx.repcounter < at.bb.p.max then
           xx.repcounter = xx.repcounter+1
           if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
           xx.animcounter = 1
@@ -162,13 +237,18 @@ function attackmanage(xx)
 
   if xx.type < 4 and not xx.g and (xx.type~=2 and xx.color.n~=2) then 
     xx.animcounter = 0
-  elseif xx.type >= 4 and xx.g then 
+  elseif xx.type >= 4 and xx.type < 7 and xx.g then 
     xx.animcounter = 0
     if xx.type == 5 and xx.color.n == 1 then
       xx.purpgroundtimer = -at.p.ak.time
-      
     end
   end
+
+  if xx.type == 7 and xx.color.n == 0 and xx.animcounter > 2 and xx.g then
+    xx.animcounter = 0
+  end
+  
+  grab(xx)
 
   if xx.landing then xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false end
 
@@ -204,6 +284,7 @@ function postattackmanage(xx)
     xx.v = xx.oldv + ((xx.v-xx.oldv)/xx.color.s.weight)*(rampspeed)
   end
   if(math.abs(xx.ft) > math.abs(xx.oldft)) then
+    rumbleme(xx,(math.log(xx.ft-xx.oldft)+.5)/5)
     xx.ft = xx.oldft + (xx.ft-xx.oldft)*(rampspeed)
   end
   xx.oldft = xx.ft
@@ -218,8 +299,8 @@ you.nododge = false
 
 
 
-dying = love.graphics.newImage("me/attack/dying.png")
-airdying = love.graphics.newImage("me/attack/airdying.png")
+dying ={im = love.graphics.newImage("me/attack/dying.png")}
+airdying = {im = love.graphics.newImage("me/attack/airdying.png")}
 
 bolt = love.graphics.newImage("me/attack/bolt.png")
 
@@ -228,15 +309,14 @@ climb2 = {im=love.graphics.newImage("me/attack/climb2.png"),c=love.graphics.newI
 climb3 = {im=love.graphics.newImage("me/attack/climb3.png"),c=love.graphics.newImage("me/attack/climb3c.png")}
 
 
-hookhead = love.graphics.newImage("me/attack/hookhead.png")
 flinchim = love.graphics.newImage("me/attack/flinch.png")
 flinchc = love.graphics.newImage("me/attack/flinchc.png")
 flinch = {im = flinchim, c = flinchc}
 
 
-fallback = {im=love.graphics.newImage("me/attack/fallback.png"),c=love.graphics.newImage("me/attack/fallbackc.png"),xoff = 12}
-fallbackbounce = {im=love.graphics.newImage("me/attack/fallbackbounce.png"),c=love.graphics.newImage("me/attack/fallbackbouncec.png"),xoff = 12}
-fallbackbouncedown = {im=love.graphics.newImage("me/attack/fallbackbouncedown.png"),c=love.graphics.newImage("me/attack/fallbackbouncedownc.png"),xoff = 12}
+fallback = {im=love.graphics.newImage("me/attack/fallback.png"),c=love.graphics.newImage("me/attack/fallbackc.png"),xoff = 12, dodgeh = 32, dodgew = 26}
+fallbackbounce = {im=love.graphics.newImage("me/attack/fallbackbounce.png"),c=love.graphics.newImage("me/attack/fallbackbouncec.png"),xoff = 12, dodgeh = 32, dodgew = 26}
+fallbackbouncedown = {im=love.graphics.newImage("me/attack/fallbackbouncedown.png"),c=love.graphics.newImage("me/attack/fallbackbouncedownc.png"),xoff = 12, dodgeh = 32, dodgew = 26}
 fallforward = {im=love.graphics.newImage("me/attack/fallforward.png"),c=love.graphics.newImage("me/attack/fallforwardc.png")}
 fallback1 = {im=love.graphics.newImage("me/attack/fallback1.png"),c=love.graphics.newImage("me/attack/fallback1c.png")}
 fallforward1 = {im=love.graphics.newImage("me/attack/fallforward1.png"),c=love.graphics.newImage("me/attack/fallforward1c.png")}
@@ -340,7 +420,7 @@ you.dodgedelaycounter = 0
 you.dodgecounter = 0
 me.dodgedelaycounter = 0
 me.dodgecounter = 0
-backdodgetime = 15
+backdodgetime = 20
 dodgetime = 23
 backdodgetime = 15
 turnaroundtime = 20
@@ -349,6 +429,8 @@ dodgedelay = 20
 dodgespeed = speedlimit*1.25
 backdodgespeed = speedlimit*1
 
+me.qualifyfordodge = false
+you.qualifyfordodge = false
 
 
 you.dodgeanimatetimer = 0
@@ -450,11 +532,11 @@ newforwarddodge = function(xx)
         xx.im = dodge21
       end
     elseif xx.dodgetype == 0 and xx.dodgerefreshtimer == 0 then
-      if((xx.lr > 0 and xx.rightbump and xx.down) or (xx.lr < 0 and xx.leftb and xx.down))  then
+      if xx.g and ((xx.lr > 0 and xx.rightb and xx.qualifyfordodge) or (xx.lr < 0 and xx.leftb and xx.qualifyfordodge))  then
         xx.dodgetype = 1
         xx.dodgecounter = dodgetime
         xx.currentdodgev = xx.v
-      elseif((xx.lr < 0 and xx.rightbump and xx.down) or (xx.lr > 0 and xx.leftb and xx.down))  and not xx.running  then
+      elseif xx.g and ((xx.lr < 0 and xx.rightb and xx.qualifyfordodge) or (xx.lr > 0 and xx.leftb and xx.qualifyfordodge))  and not xx.running  then
         xx.dodgetype = -1
         xx.dodgecounter = backdodgetime
       end
@@ -474,6 +556,11 @@ newforwarddodge = function(xx)
         xx.v = xx.oldv + (xx.v-xx.oldv)*(rampspeed)
       end
     end
+    if not simpledodge then
+      xx.qualifyfordodge = xx.down and not (xx.rightb or xx.leftb)
+    else
+      xx.qualifyfordodge = xx.down
+    end
   end
 
 
@@ -488,45 +575,37 @@ newforwarddodge = function(xx)
 
 
 
+  me.letgoofblock = false
+  you.letgoofblock = false
+  function blocknbusy(xx)
 
-  function blocknbusy()
+    if not xx.blockb then xx.letgoofblock = false 
+    end
+
+    if not xx.block and xx.blockb then
+      xx.letgoofblock = true
+    end
+
+    if xx.blockb and xx.dodgedelaycounter == 0 and not xx.a1 and not xx.a2 and not xx.a3 and xx.g and not xx.dodge and not xx.landing and not xx.letgoofblock
+    then xx.im = block
+      xx.block = true
+      xx.stop = true
+
+      if not xx.oldblock then repplay(xx.blocksound) end
 
 
-    if me.blockb and me.dodgedelaycounter == 0 and not me.a1 and not me.a2 and not me.a3 and me.g and not me.dodge and not me.landing
-    then me.im = block
-      me.block = true
-      me.stop = true
-      if not me.oldblock then repplay(me.blocksound) end
-
-
-    else me.block = false 
-      me.stop = false
+    else 
+      xx.block = false 
+      xx.stop = false
     end
 
 
-    if you.blockb and you.dodgedelaycounter == 0 and not you.a1 and not you.a2 and not you.a3 and you.g and not you.dodge and not you.landing 
-    then you.im = block
-      you.block = true
-      you.stop = true
-      if not you.oldblock then repplay(you.blocksound) end
-
-
-    else you.block = false
-      you.stop = false
+    if xx.landing or xx.flinch 
+    then xx.busy = true
+    else xx.busy = false
     end
 
-    if me.landing or me.flinch 
-    then me.busy = true
-    else me.busy = false
-    end
-
-    if you.landing or you.flinch 
-    then you.busy = true
-    else you.busy = false
-    end
-
-    me.oldblock = me.block
-    you.oldblock = you.block
+    xx.oldblock = xx.block
 
 
   end
@@ -582,7 +661,12 @@ newforwarddodge = function(xx)
 
   jforfallbackbounce = 5
 
+
   function flinchingx(xx,yy)
+    
+    
+    if xx.ft > 0 then xx.flinch = true end
+    
     if xx.health < xx.oldhealth then
       xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(rampspeed)/xx.color.s.def
       local dif = xx.oldhealth - xx.health

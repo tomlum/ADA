@@ -137,9 +137,7 @@ function ColorChanging(xx)
     xx.color.c.g = thecolors[0].c.g-xx.ctgi * xx.cct
     xx.color.c.b = thecolors[0].c.b-xx.ctbi * xx.cct
   end
-  if xx.id <= #joysticks then 
-    xx.joystick:setVibration(0,(xx.cct/colorchangetime)*colorvib)
-  end
+  
 end
 
 

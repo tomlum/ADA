@@ -18,19 +18,36 @@ at.bb.p = {}
 at.bb.p.dam = 5
 at.bb.p.kb = 7
 at.bb.p.ft = 15
-at.bb.p.max = 15
+at.bb.p.max = 3
+at.bb.p.z = .05
+
+at.bb.rp = {}
+at.bb.rp.dam = 5
+at.bb.rp.kb = 10
+at.bb.rp.ft = 30
+at.bb.rp.z = .05
+
+
+
+at.bb.ap = {}
+at.bb.ap.kb = 6
+at.bb.ap.ft = 10
+at.bb.ap.dam = 6
+at.bb.ap.z = .05
 
 at.bb.k = {}
 at.bb.k.dam = 10
 at.bb.k.kb = 22
 at.bb.k.ft = 30
+at.bb.k.z = .07
 
 at.bb.ak = {}
 at.bb.ak.dam = 5
 at.bb.ak.kb = 4
 at.bb.ak.ft = 8
 at.bb.ak.kj = -5
-landingpenaltyforb5 = 40
+at.bb.ak.penalty = 26
+at.bb.ak.z = .05
 
 
 at.bb.u = {}
@@ -38,6 +55,10 @@ at.bb.u.dam = 7
 at.bb.u.kb = 2
 at.bb.u.j = 22
 at.bb.u.ft = 20
+at.bb.u.z = .05
+
+at.bb.run = {}
+at.bb.run.j = 6
 
 sparkspeed = 3
 slashsparkspeed = 7
@@ -71,13 +92,23 @@ you.holda = false
 
 bbnumpunch = 3
 
+me.dirholda = false
+you.dirholda = false
 function holdmanage(xx)
-  if (xx.a1b or xx.a2b or xx.a3b or xx.a4b) then
+  if (xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.block) or (menu ~= "play" and (xx.rightbump or xx.leftbump)) then
     if not xx.holda then
       xx.holda = true
     end
   else xx.holda = false
   end
+
+  if (xx.up or xx.down or xx.left or xx.right) then
+    if not xx.dirholda then
+      xx.dirholda = true
+    end
+  else xx.dirholda = false
+  end
+
 end
 
 
@@ -110,6 +141,7 @@ function combomanage(xx)
       xx.animcounter = xx.animcounter+1
     end
   elseif xx.animcounter == 0 then 
+    xx.hitsomeonewithpurp = false
     xx.combo = 0
     xx.cancombo = false
     xx.type = 0
@@ -118,111 +150,11 @@ function combomanage(xx)
 
 
 
-  if xx.combo > xx.maxcombo then
-    cancelas(xx)
-  end
-
 end
-
-function combo(xx, func)
-
-
-
-  if xx.color.n ~= xx.cchangeto.n and xx.cancombo
-  then
-    if func~= nil then func() end
-    xx.actionshot = true
-    xx.cancombo = false
-  end
-  if not xx.holda then
-    if xx.a2 or xx.a3 then
-      xx.numofspikes = 0
-      if func~= nil then func() end
-      if xx.color.n==0 then
-        xx.type = 1
-        if xx.repcounter < bbnumpunch then
-          xx.repcounter = xx.repcounter+1
-          if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
-          xx.animcounter = 1
-        end
-      elseif xx.color.n==1 and xx.repcounter < at.p.p.max then
-        xx.type = 1
-        xx.animcounter = 1
-        xx.repcounter = xx.repcounter + 1
-        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
-      elseif xx.color.n==2 and xx.repcounter < at.g.p.max then
-        xx.type = 1
-        xx.animcounter = 1
-        xx.repcounter = xx.repcounter + 1
-        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
-
-
-      end
-
-    elseif xx.a4 then
-      if func~= nil then func() end
-      if xx.color.n==0 and xx.type~=2 then
-        xx.combo = xx.combo + 1
-        xx.animcounter = 1
-        xx.type = 2
-
-      elseif xx.color.n==1 and not xx.hitsomeonewithpurp then
-        xx.type = 2
-        xx.animcounter = 17
-        xx.repcounter = xx.repcounter + 1
-        xx.combo = xx.combo + 1
-      elseif xx.color.n==2 then
-        xx.type = 2
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-
-      end
-    elseif xx.a1 then
-      xx.numofspikes = 0
-      if func~= nil then func() end
-      if xx.color.n==0 then
-        xx.type = 3
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-      elseif xx.color.n==1 then
-        xx.type = 3
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-      elseif xx.color.n==2 then
-        xx.type = 3
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-      end
-
-
-
-
-    end
-  end
-end
-
-
-
-
 function cancelas(xx) 
   xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false
 end
 
---bounce method, if hit squares and not dodge then yeah
-function bump(xx)
-  if not xx.dodge then
-    hboxcs(xx.id, 
-      {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+55},
-      {x=xx.mid, y = xx.y+55},
-      {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+5},
-      {x=xx.mid, y = xx.y+5},
-      function(z)
-        if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
-          z.push = xx.v
-        end
-      end)
-  end
-end
 
 punch1 = {im=love.graphics.newImage("me/attack/punch1.png"),c=love.graphics.newImage("me/attack/punch1c.png"),xoff = 15}
 punch2 = {im=love.graphics.newImage("me/attack/punch2.png"),c=love.graphics.newImage("me/attack/punch2c.png"),xoff = 15}
@@ -235,9 +167,13 @@ kick2 = {im = love.graphics.newImage("me/attack/kick2.png"), c = love.graphics.n
 kick3 = {im = love.graphics.newImage("me/attack/kick3.png"), c = love.graphics.newImage("me/attack/kick3c.png"), xoff = 15, yoff = 10}
 uppercut = {im=love.graphics.newImage("me/attack/uppercut.png"),c=love.graphics.newImage("me/attack/uppercutc.png"), xoff = 15}
 jumpuppercut = {im=love.graphics.newImage("me/attack/jumpuppercut.png"),c=love.graphics.newImage("me/attack/jumpuppercutc.png")}
-dropkick1 = {im=love.graphics.newImage("me/attack/dropkick1.png"),c=love.graphics.newImage("me/attack/dropkick1c.png"), xoff = 5}
-dropkick2 = {im=love.graphics.newImage("me/attack/dropkick2.png"),c=love.graphics.newImage("me/attack/dropkick2c.png"), xoff = 8}
-divekick = {im=love.graphics.newImage("me/attack/divekick.png"),c=love.graphics.newImage("me/attack/divekickc.png"), xoff = 5}
+dropkick1 = {im=love.graphics.newImage("me/attack/dropkick1.png"),c=love.graphics.newImage("me/attack/dropkick1c.png"), xoff = 5,yoff = -7}
+dropkick2 = {im=love.graphics.newImage("me/attack/dropkick2.png"),c=love.graphics.newImage("me/attack/dropkick2c.png"), xoff = 8,yoff = -7,exheight=-15}
+divekick = {im=love.graphics.newImage("me/attack/divekick.png"),c=love.graphics.newImage("me/attack/divekickc.png"), xoff = 5,yoff = -7,exheight=15}
+
+brun1 = {im=love.graphics.newImage("me/attack/brun1.png"),c=love.graphics.newImage("me/attack/brun1c.png"), xoff = 16,yoff = 15,exheight=-6}
+brun2 = {im=love.graphics.newImage("me/attack/brun2.png"),c=love.graphics.newImage("me/attack/brun2c.png"), xoff = 16,yoff = 15,exheight=-6}
+brun3 = {im=love.graphics.newImage("me/attack/brun3.png"),c=love.graphics.newImage("me/attack/brun3c.png"), xoff = 16,yoff = 15,exheight=-6}
 
 
 
@@ -255,7 +191,11 @@ function breadandbutter(xx)
   if xx.animcounter == 0 then
 
     if xx.g then 
-      if (xx.a2 or xx.a3) and xx.color.n == 0 and not xx.holda then
+      if xx.running and (xx.a2b or xx.a3b) then
+        xx.type = 7
+        xx.animcounter = 1
+        eh = true
+      elseif (xx.a2 or xx.a3) and xx.color.n == 0 and not xx.holda then
         xx.type = 1
         xx.animcounter = 1
         xx.combo = xx.combo + 1
@@ -276,7 +216,7 @@ function breadandbutter(xx)
       elseif xx.a4 and not xx.holda then
         xx.type = 5
         xx.animcounter = 1
-        elseif xx.a1 and not xx.holda then
+      elseif xx.a1 and not xx.holda then
         xx.type = 6
         xx.animcounter = 1
       end
@@ -308,10 +248,10 @@ function breadandbutter(xx)
             {x=xx.mid, y = xx.y+30},
             {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32-xx.j},
             function(z)
-              
+
               xx.cancombo = true
-                z.v = z.v/3+xx.lr*at.bb.p.kb+xx.v
-              if not (z.block == -xx.lr) then
+              z.v = z.v/3+xx.lr*at.bb.p.kb+xx.v
+              if not (z.block and z.lr == -xx.lr) then
                 z.health = z.health - at.bb.p.dam
                 z.flinch = true
                 z.ft = z.ft+at.bb.p.ft
@@ -319,6 +259,7 @@ function breadandbutter(xx)
                   xx.joystick:setVibration(.7,1)
                 end
               end
+              shakez(at.bb.p.z)
 
             end)
         end
@@ -357,7 +298,7 @@ function breadandbutter(xx)
               xx.cancombo = true
               z.health = z.health - at.bb.k.dam
               z.flinch = true
-              if not (z.block == -xx.lr) then
+              if not (z.block and z.lr == -xx.lr) then
                 z.ft = z.ft+at.bb.k.ft
                 z.v = z.v/3+ xx.lr*at.bb.k.kb
               else
@@ -367,6 +308,7 @@ function breadandbutter(xx)
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(1,1)
               end
+              shakez(at.bb.k.z)
 
             end)
         end
@@ -400,6 +342,7 @@ function breadandbutter(xx)
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(1,1)
               end
+              shakez(at.bb.u.z)
             end)
         end
       elseif xx.animcounter >= 16 then
@@ -413,33 +356,34 @@ function breadandbutter(xx)
       elseif xx.animcounter<=20 then
         xx.im = dropkick2
         if xx.animcounter <10 then
-        hboxcs(xx.id, 
-          {x=xx.mid, y = xx.y+18},
-          {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+18-xx.j},
-          {x=xx.mid, y = xx.y+26},
-          {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+26-xx.j},
-          function(z)
-            xx.cancombo = true
-            if xx.animcounter == 4 then
-              z.v = z.v/3+xx.lr*at.bb.p.kb*2.5+xx.v
-            else
-              z.v = z.v/3+xx.lr*at.bb.p.kb+xx.v
-            end
-            if not (z.block == -xx.lr) then
+          hboxcs(xx.id, 
+            {x=xx.mid, y = xx.y+18},
+            {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+18-xx.j},
+            {x=xx.mid, y = xx.y+26},
+            {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+26-xx.j},
+            function(z)
+              xx.cancombo = true
               if xx.animcounter == 4 then
-                z.health = z.health - at.bb.p.dam
+                z.v = z.v/3+xx.lr*at.bb.ap.kb+xx.v
               else
-                z.health = z.health - at.bb.p.dam/2
+                z.v = z.v/3+xx.lr*at.bb.ap.kb/2+xx.v
               end
-              z.flinch = true
-              z.ft = z.ft+at.bb.p.ft/4
-              if #joysticks>=xx.id then
-                xx.joystick:setVibration(.7,1)
+              if not (z.block and z.lr == -xx.lr) then
+                if xx.animcounter == 4 then
+                  z.health = z.health - at.bb.ap.dam
+                else
+                  z.health = z.health - at.bb.ap.dam/2
+                end
+                z.flinch = true
+                z.ft = z.ft+at.bb.ap.ft/4
+                if #joysticks>=xx.id then
+                  xx.joystick:setVibration(.7,1)
+                end
+                shakez(at.bb.ap.z)
               end
-            end
 
-        end)
-      end
+            end)
+        end
 
       elseif xx.animcounter < 25 then
         xx.im=dropkick1
@@ -457,8 +401,8 @@ function breadandbutter(xx)
       elseif xx.animcounter<=25 then
         xx.im = divekick
         if xx.animcounter == 10 then
-          xx.j = xx.j - 10
-          xx.landingcounter = landingpenaltyforb5
+          xx.j = xx.j - 7
+          xx.landingcounter = at.bb.ak.penalty
         end
         hboxcs(xx.id, 
           {x=xx.mid+8, y = xx.y+40},
@@ -467,8 +411,8 @@ function breadandbutter(xx)
           {x=xx.mid+xx.v+(xx.lr*6), y = xx.y+64-xx.j},
           function(z)
             xx.cancombo = true
-              z.v = z.v+xx.lr*at.bb.ak.kb+xx.v/2
-            if not (z.block == -xx.lr) then
+            z.v = z.v+xx.lr*at.bb.ak.kb+xx.v/2
+            if not (z.block and z.lr == -xx.lr)then
               if xx.animcounter == 5 then
                 z.health = z.health - at.bb.ak.dam
               else
@@ -480,6 +424,7 @@ function breadandbutter(xx)
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(.7,1)
               end
+              shakez(at.bb.ak.z)
             end
 
           end)
@@ -512,12 +457,50 @@ function breadandbutter(xx)
               if #joysticks>=xx.id then
                 xx.joystick:setVibration(1,1)
               end
+              shakez(at.bb.u.z)
             end)
         end
       elseif xx.animcounter >= 16 then
         xx.animcounter = 0
       end
 
+  elseif xx.type == 7 then
+      if xx.animcounter == 2 then
+        xx.j = at.bb.run.j
+        xx.im = brun1
+      elseif xx.animcounter < 7 then
+        xx.im = brun1
+      elseif xx.animcounter < 9 then
+        if xx.animcounter == 7 then
+           hboxcs(xx.id, 
+            {x=xx.mid, y = xx.y+19},
+            {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+23-xx.j},
+            {x=xx.mid, y = xx.y+26},
+            {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+29-xx.j},
+            function(z)
+              z.v = z.v/3+xx.lr*at.bb.rp.kb+xx.v
+              if not (z.block and z.lr == -xx.lr) then
+                z.health = z.health - at.bb.rp.dam
+                z.flinch = true
+                z.ft = z.ft+at.bb.rp.ft
+                if #joysticks>=xx.id then
+                  xx.joystick:setVibration(.7,1)
+                end
+              end
+              shakez(at.bb.rp.z)
+
+            end)
+          
+          end
+        xx.im = brun2
+      elseif xx.animcounter < 30 then
+        xx.im = brun3
+      else
+        xx.animcounter = 0
+      end
+      
+   
+      
     end
   end
 end

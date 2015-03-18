@@ -235,6 +235,7 @@ pausedonhit = false
 
 
 
+require "TESound"
 require "blur"
 require "menustuff"
 require "DamageTable"
@@ -649,6 +650,7 @@ function love.update()
     end
 
 
+  TEsound.cleanup()
   end
 
 
@@ -793,13 +795,16 @@ function love.update()
     love.graphics.print("tileset "..tostring(tileset), 10, 230)
     love.graphics.setColor(255,0,0)
     love.graphics.print("me.currentanim "..tostring(me.currentanim), 10, 260)
-    love.graphics.print("themode "..tostring(themode), 10, 280)
-    love.graphics.print("finishedloading "..tostring(finishedloading), 10, 320)
-    love.graphics.print("separatespines "..tostring(separatespines), 10, 350)
-    love.graphics.print("me.y "..tostring(me.y), 10, 370)
-    love.graphics.print("themap.name "..tostring(themap.name), 10, 390)
+    love.graphics.print("me.lrum "..tostring(me.lrum), 10, 290)
     end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
 
+  
+   if #joysticks > 0 then
+    rumblemodule(me)
+  end
+  if #joysticks > 1 then
+    rumblemodule(you)
+  end
   end

@@ -57,7 +57,7 @@ jumprisec = love.graphics.newImage("me/jump/jumprisec.png")
 jumprise = {im = jumpriseim, c = jumprisec}
 jumpfallingim = love.graphics.newImage("me/jump/jumpfalling.png")
 jumpfallingc = love.graphics.newImage("me/jump/jumpfallingc.png")
-jumpfalling = {im = jumpfallingim, c = jumpfallingc, exheight = 5}
+jumpfalling = {im = jumpfallingim, c = jumpfallingc, extrah = 5}
 landingim = love.graphics.newImage("me/jump/landing.png")
 landingc = love.graphics.newImage("me/jump/landingc.png")
 landing = {im = landingim, c = landingc}
@@ -77,52 +77,6 @@ traillength = 4
 
 me.trail={}
 you.trail={}
-
-
-function initpos()
-  
-  me.y = 0
-  you.y = 0
-  if themap.name == "fightclub" then
-
-      me.x = putmehere
-      you.x = putyouhere
-      me.im =idle1
-      you.im =idle1
-      me.y = themaps[100].floor - 500
-      you.y = themaps[100].floor - 500
-
-
-
-    elseif themap.name == "street" then
-      me.y = themaps[1].floor - 200
-      you.y = themaps[1].floor - 200
-      me.x = 1000
-      you.x = 1020
-
-    elseif themap.name == "library" then
-      
-      me.x = 700
-      you.x = 2000
-      me.y = 300
-      you.y = 300
-
-
-    elseif themap.name == "floors" then
-      me.x = 500
-      you.x = 3000
-      me.y = 300
-      you.y = 300
-
-    end
-  
-  
-  
-  
-  end
-
-
-
 
 
 function updatemytrail(xx)
@@ -187,6 +141,7 @@ me.initwy = 0
     you.ft = 0
     minzoom = defaultminzoom
     maxzoom = defaultmaxzoom
+    
 
     if themode == "spectrum" then 
       you.lives = 5
@@ -213,8 +168,8 @@ me.initwy = 0
       you.x = putyouhere
       me.im =idle1
       you.im =idle1
-      me.y = themaps[100].floor - 500
-      you.y = themaps[100].floor - 500
+      me.y = themaps[100].floor - 60
+      you.y = themaps[100].floor - 60
       floor = themaps[100].floor
 
 
@@ -300,11 +255,12 @@ me.initwy = 0
       enviro.ds = 5
       thesong = song2
 
-    end
-
-end
+  end
+  
     me.oldpy = me.y
     you.oldpy = you.y
+
+end
 end
 ma1fade= 100
 ma2fade= 100

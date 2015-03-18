@@ -33,15 +33,18 @@ openingsong:setLooping(true)
 
 
 SFXV = 1
+--TEsound.volume("all",.1)
 
 function repplay(x)
  if not mute then
 	if x:isStopped() then
-			x:play()
+   
+			TEsound.play(x)
 		else x:rewind()
-			x:play()
+			TEsound.play(x)
 		end
-    end
+  end
+  
     
 
 end
@@ -76,8 +79,8 @@ you.bpsound:setPitch(.8 + (math.random() * .3) )
 me.bpsound:setPitch(.8 + (math.random() * .3) )
 me.cp:setPitch(.8 + (math.random() * .3) )
 you.cp:setPitch(.8 + (math.random() * .3) )
-slidesound:setPitch(.8 + (math.random() * .3) )
-slidesound2:setPitch(.8 + (math.random() * .3) )
+me.slidesound:setPitch(.8 + (math.random() * .3) )
+you.slidesound:setPitch(.8 + (math.random() * .3) )
 me.runsound:setPitch(1.3 + (math.random() * .3) )
 you.runsound:setPitch(1.3 + (math.random() * .3) )
 me.jumpd:setPitch(1.65 + (math.random() * .3) )
@@ -111,13 +114,13 @@ you.blocksound:setVolume(.1)
 miscsounds = function()
 
 if me.im == slide and msready and not me.dodge then
-			slidesound:play()
+			repplay(me.slidesound)
 			msready = false
 elseif me.im ~= slide then msready = true
 end
 
 if you.im == slide and not you.dodge and ysready then
-			slidesound2:play()
+			repplay(you.slidesound)
 			ysready = false
 elseif you.im ~= slide then ysready = true
 end
@@ -267,10 +270,10 @@ mov2:setVolume(SFXV - .7)
 mov2:setPitch(1.2)
 
 
-slidesound = love.audio.newSource("sounds/slide.wav", "static")
-slidesound:setVolume(SFXV-.82)
-slidesound2 = love.audio.newSource("sounds/slide.wav", "static")
-slidesound2:setVolume(SFXV-.82)
+me.slidesound = love.audio.newSource("sounds/slide.wav", "static")
+me.slidesound:setVolume(SFXV-.82)
+you.slidesound = love.audio.newSource("sounds/slide.wav", "static")
+you.slidesound:setVolume(SFXV-.82)
 
 me.runsound = love.audio.newSource("sounds/run.wav", "static")
 me.runsound:setVolume(SFXV-.8)

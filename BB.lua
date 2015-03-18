@@ -21,6 +21,13 @@ at.bb.p.ft = 15
 at.bb.p.max = 3
 at.bb.p.z = .05
 
+at.bb.rp = {}
+at.bb.rp.dam = 5
+at.bb.rp.kb = 10
+at.bb.rp.ft = 30
+at.bb.rp.z = .05
+
+
 
 at.bb.ap = {}
 at.bb.ap.kb = 6
@@ -76,77 +83,6 @@ me.bbpready = false
 you.type = 1
 you.repcounter = 0
 you.bbpready = false
-me.clicka = false
-you.clicka = false
-me.holda = false
-you.holda = false
-
-
-
-bbnumpunch = 3
-
-me.dirholda = false
-you.dirholda = false
-function holdmanage(xx)
-  if (xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.block) or (menu ~= "play" and (xx.rightbump or xx.leftbump)) then
-    if not xx.holda then
-      xx.holda = true
-    end
-  else xx.holda = false
-  end
-
-  if (xx.up or xx.down or xx.left or xx.right) then
-    if not xx.dirholda then
-      xx.dirholda = true
-    end
-  else xx.dirholda = false
-  end
-
-end
-
-
-function combomanage(xx)
-
-  if (xx.a1 or xx.a2 or xx.a3 or xx.a4) then
-    if not xx.clicka then
-      xx.clicka = true
-      xx.readya = true
-    else 
-      xx.readya = false
-    end
-  else
-    xx.clicka = false
-    xx.readya = false
-  end
-
-
-  --  if xx.anibusy --or not xx.readya
-  --  then
-  --    cancelas(xx)
-  --  end
-
-  xx.anibusy = false
-
-  if xx.animcounter > 0 then
-    xx.block = false
-    xx.jstop = true
-    if rampcanhit then
-      xx.animcounter = xx.animcounter+1
-    end
-  elseif xx.animcounter == 0 then 
-    xx.hitsomeonewithpurp = false
-    xx.combo = 0
-    xx.cancombo = false
-    xx.type = 0
-    xx.repcounter = 0
-  end
-
-
-
-end
-function cancelas(xx) 
-  xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false
-end
 
 
 punch1 = {im=love.graphics.newImage("me/attack/punch1.png"),c=love.graphics.newImage("me/attack/punch1c.png"),xoff = 15}
@@ -161,12 +97,12 @@ kick3 = {im = love.graphics.newImage("me/attack/kick3.png"), c = love.graphics.n
 uppercut = {im=love.graphics.newImage("me/attack/uppercut.png"),c=love.graphics.newImage("me/attack/uppercutc.png"), xoff = 15}
 jumpuppercut = {im=love.graphics.newImage("me/attack/jumpuppercut.png"),c=love.graphics.newImage("me/attack/jumpuppercutc.png")}
 dropkick1 = {im=love.graphics.newImage("me/attack/dropkick1.png"),c=love.graphics.newImage("me/attack/dropkick1c.png"), xoff = 5,yoff = -7}
-dropkick2 = {im=love.graphics.newImage("me/attack/dropkick2.png"),c=love.graphics.newImage("me/attack/dropkick2c.png"), xoff = 8,yoff = -7,exheight=-15}
-divekick = {im=love.graphics.newImage("me/attack/divekick.png"),c=love.graphics.newImage("me/attack/divekickc.png"), xoff = 5,yoff = -7,exheight=15}
+dropkick2 = {im=love.graphics.newImage("me/attack/dropkick2.png"),c=love.graphics.newImage("me/attack/dropkick2c.png"), xoff = 8,yoff = -7,extrah=-15}
+divekick = {im=love.graphics.newImage("me/attack/divekick.png"),c=love.graphics.newImage("me/attack/divekickc.png"), xoff = 5,yoff = -7,extrah=15}
 
-brun1 = {im=love.graphics.newImage("me/attack/brun1.png"),c=love.graphics.newImage("me/attack/brun1c.png"), xoff = 16,yoff = 14,exheight=-6}
-brun2 = {im=love.graphics.newImage("me/attack/brun2.png"),c=love.graphics.newImage("me/attack/brun2c.png"), xoff = 16,yoff = 14,exheight=-6}
-brun3 = {im=love.graphics.newImage("me/attack/brun3.png"),c=love.graphics.newImage("me/attack/brun3c.png"), xoff = 16,yoff = 14,exheight=-6}
+brun1 = {im=love.graphics.newImage("me/attack/brun1.png"),c=love.graphics.newImage("me/attack/brun1c.png"), xoff = 16,yoff = 15,extrah=-6}
+brun2 = {im=love.graphics.newImage("me/attack/brun2.png"),c=love.graphics.newImage("me/attack/brun2c.png"), xoff = 16,yoff = 15,extrah=-6}
+brun3 = {im=love.graphics.newImage("me/attack/brun3.png"),c=love.graphics.newImage("me/attack/brun3c.png"), xoff = 16,yoff = 15,extrah=-6}
 
 
 
@@ -248,9 +184,6 @@ function breadandbutter(xx)
                 z.health = z.health - at.bb.p.dam
                 z.flinch = true
                 z.ft = z.ft+at.bb.p.ft
-                if #joysticks>=xx.id then
-                  xx.joystick:setVibration(.7,1)
-                end
               end
               shakez(at.bb.p.z)
 
@@ -298,9 +231,6 @@ function breadandbutter(xx)
                 z.ft = z.ft+at.bb.k.ft/2
                 z.v = z.v/3+ xx.lr*at.bb.k.kb*2/3
               end
-              if #joysticks>=xx.id then
-                xx.joystick:setVibration(1,1)
-              end
               shakez(at.bb.k.z)
 
             end)
@@ -332,9 +262,6 @@ function breadandbutter(xx)
               z.j = z.j/3+at.bb.u.j
               z.flinch = true
               z.ft = z.ft+at.bb.u.ft
-              if #joysticks>=xx.id then
-                xx.joystick:setVibration(1,1)
-              end
               shakez(at.bb.u.z)
             end)
         end
@@ -369,9 +296,6 @@ function breadandbutter(xx)
                 end
                 z.flinch = true
                 z.ft = z.ft+at.bb.ap.ft/4
-                if #joysticks>=xx.id then
-                  xx.joystick:setVibration(.7,1)
-                end
                 shakez(at.bb.ap.z)
               end
 
@@ -414,9 +338,6 @@ function breadandbutter(xx)
               z.flinch = true
               z.ft = z.ft+at.bb.ak.ft
               z.j = xx.j + at.bb.ak.kj
-              if #joysticks>=xx.id then
-                xx.joystick:setVibration(.7,1)
-              end
               shakez(at.bb.ak.z)
             end
 
@@ -447,9 +368,6 @@ function breadandbutter(xx)
               z.j = z.j/3 + at.bb.u.j*2/3 + xx.j
               z.flinch = true
               z.ft = z.ft+at.bb.u.ft
-              if #joysticks>=xx.id then
-                xx.joystick:setVibration(1,1)
-              end
               shakez(at.bb.u.z)
             end)
         end
@@ -464,6 +382,24 @@ function breadandbutter(xx)
       elseif xx.animcounter < 7 then
         xx.im = brun1
       elseif xx.animcounter < 9 then
+        if xx.animcounter == 7 then
+           hboxcs(xx.id, 
+            {x=xx.mid, y = xx.y+19},
+            {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+23-xx.j},
+            {x=xx.mid, y = xx.y+26},
+            {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+29-xx.j},
+            function(z)
+              z.v = z.v/3+xx.lr*at.bb.rp.kb+xx.v
+              if not (z.block and z.lr == -xx.lr) then
+                z.health = z.health - at.bb.rp.dam
+                z.flinch = true
+                z.ft = z.ft+at.bb.rp.ft
+              end
+              shakez(at.bb.rp.z)
+
+            end)
+          
+          end
         xx.im = brun2
       elseif xx.animcounter < 30 then
         xx.im = brun3

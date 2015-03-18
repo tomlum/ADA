@@ -1,7 +1,5 @@
 --STEPPING UP ANIMATION IF CLIMBING, SO THAT YOU CAN GET UP EVEN IF JUST AT FEET NARROWLY MISS IT
 
---setvibration is in attack, currently commented out
-
 --341a000000000000005f7000000000000
 
 
@@ -11,6 +9,115 @@ me.doubledown = false
 me.dubtimer = 0
 you.doubledown = false
 you.dubtimer = 0
+
+me.rumbleint = 0
+you.rumbleint = 0
+me.lrum = 0
+me.rrum = 0
+you.lrum = 0
+you.rrum = 0
+
+function rumbleme(xx,i)
+  if i > xx.rumbleint then
+  xx.rumbleint = i
+else
+  xx.rumbleint = xx.rumbleint + i/2
+  end
+end
+
+function rumblemodule(xx)
+  base = (xx.cct/colorchangetime)*colorvib
+  if xx.rumbleint >= 1 then
+    xx.lrum = 1
+    xx.rrum = lof(1, xx.rumbleint - 1)
+  else
+    xx.lrum = xx.rumbleint 
+    xx.rrum = 0
+  end
+  
+  xx.joystick:setVibration(xx.lrum,xx.rrum)
+  xx.rumbleint = hof(base,xx.rumbleint-.05)
+  
+  
+end
+
+
+
+
+me.clicka = false
+you.clicka = false
+me.holda = false
+you.holda = false
+
+
+
+
+me.dirholda = false
+you.dirholda = false
+function holdmanage(xx)
+  if (xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.block) or (menu ~= "play" and (xx.rightbump or xx.leftbump)) then
+    if not xx.holda then
+      xx.holda = true
+    end
+  else xx.holda = false
+  end
+
+  if (xx.up or xx.down or xx.left or xx.right) then
+    if not xx.dirholda then
+      xx.dirholda = true
+    end
+  else xx.dirholda = false
+  end
+
+end
+
+
+function combomanage(xx)
+
+  if (xx.a1 or xx.a2 or xx.a3 or xx.a4) then
+    if not xx.clicka then
+      xx.clicka = true
+      xx.readya = true
+    else 
+      xx.readya = false
+    end
+  else
+    xx.clicka = false
+    xx.readya = false
+  end
+
+
+  --  if xx.anibusy --or not xx.readya
+  --  then
+  --    cancelas(xx)
+  --  end
+
+  xx.anibusy = false
+
+  if xx.animcounter > 0 then
+    xx.block = false
+    xx.jstop = true
+    if rampcanhit then
+      xx.animcounter = xx.animcounter+1
+    end
+  elseif xx.animcounter == 0 then 
+    xx.hitsomeonewithpurp = false
+    xx.combo = 0
+    xx.cancombo = false
+    xx.type = 0
+    xx.repcounter = 0
+  end
+
+
+
+end
+function cancelas(xx) 
+  xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false
+end
+
+
+
+
 function doubledown(xx)
 
   xx.dubtimer = rodib(xx.dubtimer,1*rampspeed,0)
@@ -239,6 +346,7 @@ function jjstick(xx)
   xx.a1 = false
   xx.a2 = false
   xx.a3 = false
+  
 
   xx.gupv = 0
   xx.gv = boltspeed
@@ -302,12 +410,12 @@ function jjstick(xx)
   end
 
 
-  if xx.joystick:isGamepadDown("rightshoulder") and xx.joystick:isGamepadDown("leftshoulder") then
-    xx.block = true
-  end 
-
   if xx.joystick:isGamepadDown("leftstick") then
     xx.run = true
+  end 
+  
+  if xx.joystick:isGamepadDown("rightstick") then
+    xx.blockb = true
   end 
   if xx.joystick:isGamepadDown("start") then
     xx.start = true

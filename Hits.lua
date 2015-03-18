@@ -24,6 +24,7 @@ function hof(x,y)
   end
 
 function shakez(z)
+  rumbleme(me,z*10)
   minzoom = defaultminzoom - z
   maxzoom = defaultmaxzoom - z
 end
@@ -204,8 +205,8 @@ function drawallhex()
         dsw = v.im.dodgew
       end
       
-      if v.im.exheight ~= nil then
-        extrah = -v.im.exheight
+      if v.im.extrah ~= nil then
+        extrah = -v.im.extrah
       end
       drawhexcheck(v.mid+v.lr*(dsw/2), v.y+(dsh)+hexbuffer/2, v.width+dsw-hexbuffer, v.height-dsh-hexbuffer-extrah, v.v, v.j)
     end
@@ -262,8 +263,8 @@ function hboxcss(theid, P1, P2, P3, P4, special)
     if p.im.dodgew ~= nil then
       dsw = p.im.dodgew
     end
-    if p.im.exheight ~= nil then
-        extrah = -p.im.exheight
+    if p.im.extrah ~= nil then
+        extrah = -p.im.extrah
       end
 
     if theid ~= i and
@@ -298,8 +299,8 @@ function hboxcs(theid, P1, P2, P3, P4, special)
     if p.im.dodgew ~= nil then
       dsw = p.im.dodgew
     end
-    if p.im.exheight ~= nil then
-        extrah = -p.im.exheight
+    if p.im.extrah ~= nil then
+        extrah = -p.im.extrah
       end
 
     if theid ~= i and
@@ -513,8 +514,8 @@ function hboxp()
       
       extrah = 0
       dodgeh = 0
-    if p.im.exheight ~= nil then
-        extrah = -p.im.exheight
+    if p.im.extrah ~= nil then
+        extrah = -p.im.extrah
       end
       if p.im.dodgeh ~= nil then
         dodgeh= p.im.dodgeh
@@ -541,7 +542,7 @@ function hboxp()
             xx.landing = true 
             xx.v = xx.v * landingfric
           end
-          xx.land:play()
+          repplay(xx.land)
           xx.slowdown = false
         end
         
@@ -560,8 +561,8 @@ function hboxp()
       end
 
 end
-if p.im.exheight ~= nil then
-  p.oldpy = p.y+p.height-p.im.exheight
+if p.im.extrah ~= nil then
+  p.oldpy = p.y+p.height-p.im.extrah
       else
   p.oldpy = p.y+p.height
   end
