@@ -3,7 +3,6 @@
 --apple w is window close
 --SHAEZ TIED TO RUMBLE?!?!?!?
 
-
 therampspeed = .1
 drawboxes = true
 fightclub = true
@@ -11,6 +10,8 @@ fullscreen = false
 readout = true
 mute = false
 eh = false
+volume=.5
+love.audio.setVolume(volume)
 --airgrab
 
 --PARALX ZOOMS OUT SLIGHTLY DIFFERENTLY TO CAMERA ZOOM
@@ -235,7 +236,6 @@ pausedonhit = false
 
 
 
-require "TESound"
 require "blur"
 require "menustuff"
 require "DamageTable"
@@ -650,7 +650,6 @@ function love.update()
     end
 
 
-  TEsound.cleanup()
   end
 
 

@@ -148,6 +148,10 @@ end
 end
 
 --things that you need regardless of the input type
+
+--abletochangecolor
+me.atcc = true
+you.atcc = true
 function controlsstuff(xx)
   doubledown(xx)
   
@@ -159,7 +163,18 @@ function controlsstuff(xx)
           xx.right = xx.rightb
           xx.left = xx.leftb
           if xx.down then xx.right = false xx.left = false end
-  
+  if (xx.cct > 0 and not (xx.rightbumpb or xx.leftbumpb)) or (xx.rightbumpb and xx.leftbumpb) then
+    xx.atcc = false
+  elseif xx.cct <=0 then
+    xx.atcc = true
+  end
+  if xx.atcc then
+    xx.rightbump = xx.rightbumpb
+    xx.leftbump = xx.leftbumpb
+  else
+    xx.rightbump = false
+    xx.leftbump = false
+  end
     if xx.blockb then 
       xx.a1 = false
       xx.a2 = false
@@ -184,8 +199,8 @@ function keyboardcontrols()
           me.a4b = love.keyboard.isDown("g")
           me.blockb = love.keyboard.isDown("e")
           me.run = love.keyboard.isDown("r")
-          me.rightbump = love.keyboard.isDown("2")
-          me.leftbump = love.keyboard.isDown("1")
+          me.rightbumpb = love.keyboard.isDown("2")
+          me.leftbumpb = love.keyboard.isDown("1")
 
 
 
@@ -200,8 +215,8 @@ function keyboardcontrols()
           you.blockb = love.keyboard.isDown("o")
           you.start = love.keyboard.isDown("u")
           you.run = love.keyboard.isDown("p")
-          you.rightbump = love.keyboard.isDown("0")
-          you.leftbump = love.keyboard.isDown("9")
+          you.rightbumpb = love.keyboard.isDown("0")
+          you.leftbumpb = love.keyboard.isDown("9")
 
      
 
@@ -461,8 +476,8 @@ function jjstick(xx)
 
 
 
-    xx.rightbump = xx.joystick:getGamepadAxis("triggerright") > .5
-    xx.leftbump = xx.joystick:getGamepadAxis("triggerleft") > .5
+    xx.rightbumpb = xx.joystick:getGamepadAxis("triggerright") > .5
+    xx.leftbumpb = xx.joystick:getGamepadAxis("triggerleft") > .5
 
   xx.jly = xx.joystick:getGamepadAxis("lefty")
   xx.jlx = xx.joystick:getGamepadAxis("leftx")

@@ -480,6 +480,8 @@ function pandp(xx)
 
         elseif xx.animcounter == 20 then
           xx.im = stomp2
+          
+        rumbleme(xx, 1.2)
           xx.numofspikes = xx.numofspikes+1
           local lverts = {}
           local lverts2 = {}

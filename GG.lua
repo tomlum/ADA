@@ -2,7 +2,6 @@
 
 amountstuckinwall = 40
 
-throw = {im=love.graphics.newImage("me/attack/throw.png"),c=love.graphics.newImage("me/attack/throwc.png"), xoff = 9, yoff = 10}
 
 greena21 = {im=love.graphics.newImage("me/attack/greena21.png"),c=love.graphics.newImage("me/attack/greena21c.png"), xoff = 10}
 greena22 = {im=love.graphics.newImage("me/attack/greena22.png"),c=love.graphics.newImage("me/attack/greena22c.png"), xoff = 20}
@@ -82,14 +81,17 @@ function gandg(xx)
         xx.combo = xx.combo + 1
         xx.repcounter = 1
         xx.type = 1
+        rumbleme(xx, 1)
       elseif xx.a4 and not xx.holda then
         xx.type = 2
         xx.animcounter = 1
         xx.combo = xx.combo + 1
+        rumbleme(xx, .7)
       elseif xx.a1 and not xx.holda then
         xx.type = 3
         xx.animcounter = 1
         xx.combo = xx.combo + 1
+        rumbleme(xx, 1)
       end
 
     else
@@ -112,6 +114,7 @@ function gandg(xx)
     if xx.type == 1 then
       if xx.animcounter < 4 then
         xx.im = greena21
+        
 
 
 
@@ -140,6 +143,8 @@ function gandg(xx)
 
             xx.im = greena22s
             repplay(xx.greens)
+            
+        rumbleme(xx, 1)
 
             hboxcs(xx.id, 
               {x=xx.mid, y = xx.y},
@@ -179,6 +184,7 @@ function gandg(xx)
 
       elseif xx.type == 2 then
         if xx.animcounter < 10 then
+          
           if xx.g then
             xx.im = greenk1
           else
@@ -212,6 +218,8 @@ function gandg(xx)
 
             end
             if rampcanhit then
+              
+        rumbleme(xx, .7)
 
               table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx), speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
               xx.greenhit = false
@@ -228,6 +236,9 @@ function gandg(xx)
       elseif xx.type ==3 then
         if xx.animcounter < 5 then
           xx.im = greena21
+          if xx.animcounter == 1 then
+        rumbleme(xx, 1)
+        end
         elseif xx.animcounter < 14 then
           xx.im = greena1
 

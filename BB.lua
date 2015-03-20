@@ -105,6 +105,11 @@ brun2 = {im=love.graphics.newImage("me/attack/brun2.png"),c=love.graphics.newIma
 brun3 = {im=love.graphics.newImage("me/attack/brun3.png"),c=love.graphics.newImage("me/attack/brun3c.png"), xoff = 16,yoff = 15,extrah=-6}
 
 
+airgrab1 = {im=love.graphics.newImage("me/attack/airgrab1.png"),c=love.graphics.newImage("me/attack/airgrab1c.png"),xoff=15}
+airgrab2 = {im=love.graphics.newImage("me/attack/airgrab2.png"),c=love.graphics.newImage("me/attack/airgrab2c.png"),xoff=15}
+airgrab3 = {im=love.graphics.newImage("me/attack/airgrab3.png"),c=love.graphics.newImage("me/attack/airgrab3c.png"),xoff=15}
+
+
 
 function breadandbutter(xx)
 

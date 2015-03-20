@@ -20,8 +20,12 @@
 -- objects[1]
 -- end
 
+
+throw = {im=love.graphics.newImage("me/attack/throw.png"),c=love.graphics.newImage("me/attack/throwc.png"), xoff = 9, yoff = 10}
+airthrow = {im=love.graphics.newImage("me/attack/airthrow.png"),c=love.graphics.newImage("me/attack/airthrowc.png"), xoff = 10, yoff = 10}
+
 throwft = 40
-throwz = .07
+throwz = .3
 
 me.grabtimer = 0
 you.grabtimer = 0
@@ -42,9 +46,17 @@ function grab(xx)
 
 
     if xx.animcounter < 4 then
+    if xx.g then 
       xx.im = punch1
+    else
+      xx.im = airgrab1
+      end
     elseif xx.animcounter < 7 then
+    if xx.g then 
       xx.im = punch2
+    else
+      xx.im = airgrab2
+      end
       if xx.animcounter == 4 then
       hboxcs(xx.id, 
         {x=xx.mid, y = xx.y+24},
@@ -60,22 +72,37 @@ function grab(xx)
 
       end)
     end
-    elseif xx.animcounter < 20 then 
+  elseif xx.animcounter < 20 then 
+    if xx.g then 
       xx.im = punch3
+    else
+      xx.im = airgrab3
+      end
     elseif xx.animcounter < 100 then
       xx.animcounter = 0
     elseif xx.animcounter < 130 then
+    if xx.g then 
       xx.im = punch2
+    else
+      xx.im = airgrab2
+      end
       xx.grabbingx.ft = 10
       if not xx.holda and (xx.a1 or xx.a2 or xx.a3 or xx.a4) then 
         xx.grabbingx.j =  -xx.jry*20
         xx.grabbingx.v =  xx.jrx*20
+        if not xx.g then
+          xx.v = -xx.grabbingx.v*.8
+          xx.j = -xx.grabbingx.j*.8
+        end
         xx.animcounter = 300
         shakez(throwz)
         xx.grabbingx.ft = throwft
+        
         if xx.jrx > 0 then
           xx.grabbingx.flinchway = -1
+          xx.lr = 1
         else xx.grabbingx.flinchway = 1
+          xx.lr = -1
           end
         end
     elseif xx.animcounter <260 then
@@ -83,7 +110,11 @@ function grab(xx)
       xx.v = -xx.lr*5
       xx.grabbingx.ft = 0
     elseif xx.animcounter < 310 then
-    xx.im = throw
+     if xx.g then
+     xx.im = throw
+    else
+      xx.im = airthrow
+      end
     elseif xx.animcounter < 400 then
       xx.animcounter = 0
     end

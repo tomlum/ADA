@@ -35,13 +35,20 @@ openingsong:setLooping(true)
 SFXV = 1
 --TEsound.volume("all",.1)
 
+ss = {}
+
 function repplay(x)
  if not mute then
+  --[[ local name = toString(2)
+   if ss.name ~= nil then 
+   else
+     ss.name = true
+     end
+     ]]--
 	if x:isStopped() then
-   
-			TEsound.play(x)
+			x:play()
 		else x:rewind()
-			TEsound.play(x)
+			x:play()
 		end
   end
   
@@ -161,8 +168,9 @@ collidesar[8]:setVolume(SFXV - .82)
 
 
 colorgsound = love.audio.newSource("sounds/gsound.mp3", "stream")
-colorgsound:setVolume(0)
-colorgsound:setPitch(1)
+
+colorpsound = love.audio.newSource("sounds/psound.mp3", "stream")
+
 
 adj = .14
 

@@ -10,7 +10,7 @@ thecolors = {}
 thecolors[0] = {n=0,c={r = 255, g = 255, b = 255},
   s = {def=1, speed = 1, jump = 1, weight = 1}, logo=questionlogo}
 thecolors[1] = {n=1,c={r = 87, g = 0, b = 158},
-  s = {def=1.2, speed = .8, jump = .7, weight = 1.3}, tile = ptile, logo=plogo, sound = colorgsound}
+  s = {def=1.2, speed = .8, jump = .7, weight = 1.3}, tile = ptile, logo=plogo, sound = colorpsound}
 thecolors[2] = {n=2,c={r = 40, g = 255, b = 0},
   s = {def=.7, speed = 1.3, jump = 1.2, weight = 1}, tile = gtile, logo=glogo, sound = colorgsound}
 thecolors[3] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
@@ -25,6 +25,7 @@ thecolors[11] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlo
 --transition color, weaker
 thecolors[100] = {n=-1,c={r = 0, g = 0, b = 0},
   s = {def=.7, speed = 1, jump = 1, weight = 1}, logo=questionlogo}
+
 
 
 me.color = thecolors[0]
@@ -108,11 +109,22 @@ function ColorChanging(xx)
     xx.cantreturntothis = xx.color.n
   end
   if xx.cchangeto.n > 0  then
+    if xx.oldcctn ~= xx.cchangeto.n and xx.oldcctn ~= 0 then
+      xx.atcc = false
+    end
     if xx.cct < colorchangetime and (xx.animcounter == 0 or xx.actionshot)  then
+      if xx.cct > 0 then
+      xx.colorsound:setPitch((xx.cct+1)/colorchangetime)
+      xx.colorsound:setVolume(((xx.cct+1)/(colorchangetime+300)))
+    else
+      xx.colorsound = xx.cchangeto.sound:clone()
+      xx.colorsound:setPitch(.01)
+      xx.colorsound:setVolume(.01)
+      end
       xx.cct = xx.cct + 1
-      xx.cchangeto.sound:setPitch((xx.cct+1)/colorchangetime)
-      --xx.cchangeto.sound:setVolume(((xx.cct+1)/(colorchangetime+100)))
-      repplay(xx.cchangeto.sound)
+      if xx.cct%1 == 0 then
+      repplay(xx.colorsound)
+      end
     end
     xx.ctri = (thecolors[0].c.r-xx.cchangeto.c.r)/colorchangetime
     xx.ctgi = (thecolors[0].c.g-xx.cchangeto.c.g)/colorchangetime
@@ -121,6 +133,10 @@ function ColorChanging(xx)
 
   elseif xx.cct > 0 then
     xx.cct = xx.cct - 3
+    if xx.cct > 0 then
+      xx.colorsound:setPitch((xx.cct+1)/colorchangetime)
+      xx.colorsound:setVolume(((xx.cct+1)/(colorchangetime+300)))
+      end
   end
 
   if xx.cct == colorchangetime then 
@@ -129,6 +145,7 @@ function ColorChanging(xx)
       xx.runpace = defrunpace /  (xx.color.s.speed*3/4)
     end
   elseif xx.cct <= 0  then
+    xx.cct = 0
     xx.runpace = defrunpace
     xx.color = thecolors[0]
   else 
@@ -137,6 +154,8 @@ function ColorChanging(xx)
     xx.color.c.g = thecolors[0].c.g-xx.ctgi * xx.cct
     xx.color.c.b = thecolors[0].c.b-xx.ctbi * xx.cct
   end
+  
+  xx.oldcctn = xx.cchangeto.n
   
 end
 
