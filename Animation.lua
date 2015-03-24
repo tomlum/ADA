@@ -1235,50 +1235,23 @@ retry = function()
 end
 
 
-
 oscillator = 0
 oup=true
-soscillator = 0
+soscillator = 15
 soup=true
-spineymove = 0
+spinespacing = 10
+spineymove = -40-spinespacing
 separatespines = false
 drawspine = function()
   if table.getn(spines) < 1 and menu == "color"
   then
-    spinen = 11
-    sosfirst = true
     soup=true
-    spinestartx = 680
-    spineymove = 0
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=26, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=25, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=24, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=23, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=22, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=21, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=20, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=19, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=18, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=17, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=16, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=15, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=14, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=13, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=12, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=11, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=10, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=9, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=8, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=7, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=6, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=5, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=4, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=3, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=2, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=1, v=0, spinecolor = 0, spinecolor2 = 0})
-    table.insert(spines, {x=(spinestartx/1440)*screenwidth, y=0, n=0, v=0, spinecolor = 0, spinecolor2 = 0})
-
-
+    spinestartx = 615
+    for i=1, 24 do
+    table.insert(spines, {x=spinestartx, y=0, n=24-i, v=0, spinecolor = 0, spinecolor2 = 0})
+      
+      
+    end
 
 
   end
@@ -1290,12 +1263,9 @@ drawspine = function()
   end
 
   oddeven = oddeven + 1
-  spinecolor = 0
 
-  if soscillator == 0 and soup then spinen = 11
-  elseif soscillator == 1.5*spinen then soup = false
-  elseif sosfirst and soscillator == spinen then soup = false
-  elseif soscillator == -1.5*spinen then soup = true sosfirst = false
+  if soscillator == 15 then soup = false
+  elseif soscillator == -15 then soup = true 
   end
   --this works
   -- if soscillator == 0 and soup then n = 10
@@ -1307,66 +1277,60 @@ drawspine = function()
   else soscillator = soscillator - .5
   end
   for i,v in ipairs(spines) do
-
     if oddeven%4 == 1 then
       if v.n >= 1 then 
         v.v = spines[i+1].v
         v.x = v.x + v.v 
-        if math.abs(v.v) >= (15.6*screenwidth)/1440 and math.abs(v.v) <= (16.5*screenwidth)/1440  then 
-          if v.v > 0 then 
+        if v.v == 14.5 then 
             v.spinecolor = spines[i+1].spinecolor
-          else
+          elseif v.v == -14.5 then 
             v.spinecolor2 = spines[i+1].spinecolor2
-          end
         end
       else
-        if math.abs(v.v) >= (15.6*screenwidth)/1440 and math.abs(v.v) <= (16.5*screenwidth)/1440 then 
-          if v.v > 0 then 
-            if v.spinecolor < 2 then v.spinecolor = v.spinecolor + 1
-            else v.spinecolor = 0
+        if v.v == 14.5 then 
+            if v.spinecolor2 == 0 then v.spinecolor2 = 1
+          else v.spinecolor2 = 0
             end
-          else
-            if v.spinecolor2 < 2 then v.spinecolor2 = v.spinecolor2 + 1
-            else v.spinecolor2 = 0
+        elseif v.v == -14.5 then 
+            if v.spinecolor == 0 then v.spinecolor = 1
+          else v.spinecolor = 0
             end
           end
-        end
-        v.v = soscillator*screenwidth/1440 
+        
+        v.v = soscillator
         v.x = v.x + v.v
       end
     end
 
-    if v.n > 0 then
       if v.v >= 0 then
         if v.spinecolor == 0 then 
           love.graphics.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
         elseif v.spinecolor == 1 then 
           love.graphics.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
         end
-        love.graphics.draw(enviro.spine, v.x, ((v.n * 40)/900)*screenheight-(50*screenheight/1000)+spineymove, 0, screenwidth/1440, screenheight/1100)
+        love.graphics.sdraw(enviro.spine, v.x, (v.n * (40+spinespacing))+spineymove)
 
         if v.spinecolor2 == 0 then 
           love.graphics.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
         elseif v.spinecolor2 == 1 then 
           love.graphics.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
         end
-        love.graphics.draw(enviro.spine, screenwidth - v.x, ((v.n * 40)/900)*screenheight-(50*screenheight/1000)+spineymove, 0, -screenwidth/1440, screenheight/1100)
+        love.graphics.sdraw(enviro.spine, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
       else
         if v.spinecolor2 == 0 then 
           love.graphics.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
         elseif v.spinecolor2 == 1 then 
           love.graphics.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
         end
-        love.graphics.draw(enviro.spine, screenwidth - v.x, ((v.n * 40)/900)*screenheight-(50*screenheight/1000)+spineymove, 0, -screenwidth/1440, screenheight/1100)
+        love.graphics.sdraw(enviro.spine, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
 
         if v.spinecolor == 0 then 
           love.graphics.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
         elseif v.spinecolor == 1 then 
           love.graphics.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
         end
-        love.graphics.draw(enviro.spine, v.x, ((v.n * 40)/900)*screenheight-(50*screenheight/1000)+spineymove, 0, screenwidth/1440, screenheight/1100)
+        love.graphics.sdraw(enviro.spine, v.x, (v.n * (40+spinespacing))+spineymove)
       end
-    end
   end
 
 end
@@ -1574,7 +1538,7 @@ death = function(xx, yy)
   end
 
 
-  idleanimatex = function ()
+  idleanimatex = function(xx)
     if xx.idletimer < 17 then 
       xx.idletimer = xx.idletimer + 1*rampspeed
       if xx.health<maxhealth/2 then

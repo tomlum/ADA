@@ -5,7 +5,7 @@
 
 therampspeed = .1
 drawboxes = true
-fightclub = true
+fightclub = false
 fullscreen = false
 readout = true
 mute = false
@@ -13,7 +13,7 @@ eh = false
 volume=0
 love.audio.setVolume(volume)
 --airgrab
-
+test123 = false
 --PARALX ZOOMS OUT SLIGHTLY DIFFERENTLY TO CAMERA ZOOM
 
 --if you use one color too long you start to turn that color and have permanent those effects?  or you burn out?s
@@ -795,7 +795,13 @@ function love.update()
     love.graphics.print("tileset "..tostring(tileset), 10, 230)
     love.graphics.setColor(255,0,0)
     love.graphics.print("mme.oldcolorn"..tostring(me.oldcolorn), 10, 260)
-    love.graphics.print("mme.color.n"..tostring(me.color.n), 10, 280)
+    if spines[1]~= nil then
+    love.graphics.print("mspines[1].spinecolor"..tostring(spines[24].spinecolor), 10, 280)
+    love.graphics.print("mspines[1].spinecolor2"..tostring(spines[24].spinecolor2), 10, 310)
+    love.graphics.print("mspines[1].spines[1].v"..tostring(spines[24].v), 10, 330)
+    end
+    love.graphics.print("mspines[1].spines[1me.rightc.c.n"..tostring(me.rightc.n), 10, 350)
+    love.graphics.print("mspines[1].spines[1me.leftc.c.n"..tostring(me.leftc.n), 10, 370)
     end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end

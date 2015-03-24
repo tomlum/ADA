@@ -282,7 +282,7 @@ end
 
 function cancels()
   if
-  (me.block and not me.dirholda) or (you.block and not you.dirholda) then return true
+  (me.block and not me.holda) or (you.block and not you.holda) then return true
   else
     return false
   end

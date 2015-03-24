@@ -208,7 +208,7 @@ function combo(xx, func)
         xx.combo = xx.combo + 1
       elseif xx.color.n==3 then
         xx.type = 2
-        xx.animcounter = 5
+        xx.animcounter = 7
         xx.combo = xx.combo + 1
 
       end
