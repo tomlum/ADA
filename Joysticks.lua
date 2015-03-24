@@ -1,3 +1,5 @@
+--Can configure aiming the green thing, hit directly up, left, right, down
+
 --STEPPING UP ANIMATION IF CLIMBING, SO THAT YOU CAN GET UP EVEN IF JUST AT FEET NARROWLY MISS IT
 
 --341a000000000000005f7000000000000

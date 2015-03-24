@@ -202,7 +202,6 @@ function breadandbutter(xx)
         else
           xx.im = punch6
         end
-        xx.xoffset = 15
 
         if xx.animcounter >= 17 then 
           combo(xx)
@@ -223,8 +222,8 @@ function breadandbutter(xx)
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y+31},
             {x=xx.mid+xx.v+(xx.lr*28), y = xx.y+31-xx.j},
-            {x=xx.mid, y = xx.y+37},
             {x=xx.mid+me.v+(xx.lr*28), y = xx.y+39-xx.j},
+            {x=xx.mid, y = xx.y+37},
             function(z)
               xx.cancombo = true
               z.health = z.health - at.bb.k.dam
@@ -257,8 +256,8 @@ function breadandbutter(xx)
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y+30},
             {x=xx.mid+xx.v+(xx.lr*11), y = xx.y+8-xx.j},
-            {x=xx.mid, y = xx.y+20},
             {x=xx.mid+xx.v+(xx.lr*17), y = xx.y+8-xx.j},
+            {x=xx.mid, y = xx.y+20},
 
             function(z)
               xx.cancombo = true
@@ -284,8 +283,8 @@ function breadandbutter(xx)
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y+18},
             {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+18-xx.j},
-            {x=xx.mid, y = xx.y+26},
             {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+26-xx.j},
+            {x=xx.mid, y = xx.y+26},
             function(z)
               xx.cancombo = true
               if xx.animcounter == 4 then
@@ -329,8 +328,8 @@ function breadandbutter(xx)
         hboxcs(xx.id, 
           {x=xx.mid+8, y = xx.y+40},
           {x=xx.mid+xx.v+(xx.lr*14), y = xx.y+64-xx.j},
-          {x=xx.mid, y = xx.y+40},
           {x=xx.mid+xx.v+(xx.lr*6), y = xx.y+64-xx.j},
+          {x=xx.mid, y = xx.y+40},
           function(z)
             xx.cancombo = true
             z.v = z.v+xx.lr*at.bb.ak.kb+xx.v/2
@@ -363,8 +362,8 @@ function breadandbutter(xx)
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y+30},
             {x=xx.mid+xx.v+(xx.lr*11), y = xx.y+8-xx.j},
-            {x=xx.mid, y = xx.y+20},
             {x=xx.mid+xx.v+(xx.lr*17), y = xx.y+8-xx.j},
+            {x=xx.mid, y = xx.y+20},
 
             function(z)
               xx.cancombo = true
@@ -391,8 +390,8 @@ function breadandbutter(xx)
            hboxcs(xx.id, 
             {x=xx.mid, y = xx.y+19},
             {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+23-xx.j},
-            {x=xx.mid, y = xx.y+26},
             {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+29-xx.j},
+            {x=xx.mid, y = xx.y+26},
             function(z)
               z.v = z.v/3+xx.lr*at.bb.rp.kb+xx.v
               if not (z.block and z.lr == -xx.lr) then

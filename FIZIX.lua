@@ -447,9 +447,9 @@ transferofenergy(xx)
       then xx.jt = xx.jt -  1*rampspeed
       elseif xx.jt <= 0 and xx.j > - maxgravity*xx.color.s.weight
       then xx.jt = xx.jt -  1*rampspeed
-        if xx.j >= 0 then
+        if xx.j >= 0 and not xx.float then
           xx.j = xx.j - risegrav*rampspeed*xx.color.s.weight
-        else
+        elseif not xx.float then
 
           xx.j = xx.j - dropgrav*rampspeed*xx.color.s.weight
         end
@@ -463,6 +463,7 @@ transferofenergy(xx)
 
     end
   end
+  xx.float = false
 end
 
 

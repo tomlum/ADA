@@ -388,6 +388,27 @@ function lineplatcheck(ex, why,v, j)
 
 end
 
+
+function retlineplatcheck(ex, why,v, j)
+  midv2 = {x = (ex)+v, y=why-j, n = 2}
+  midv = {x = ex, y=why, n = 2}
+
+  if why > 100000 or ex < -10 or ex > 10000  then
+    return false
+  end
+
+  for j = #themap.plats, 1, -1 do 
+    plat = themap.plats[j]
+    local linep1 = {x = plat.x1, y = plat.y}
+    local linep2 = {x = plat.x2, y = plat.y}
+    if pint(linep1, linep2, midv, midv2) 
+    then return plat
+    end
+  end
+  return nil
+
+end
+
 me.im = idle1
 you.im = idle2
 

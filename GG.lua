@@ -63,6 +63,14 @@ function tang(ang,xx)
 end
 
 function gandg(xx)
+  
+   if #joysticks>=xx.id then
+     xx.gangle = math.deg(math.atan(-xx.jry/math.abs(xx.jrx)))
+    if xx.gangle > 75 then xx.gangle = 90 
+    elseif xx.gangle < 15 and xx.gangle < -15 then
+      gangle = 0
+     end
+     end
 
 
   if xx.animcounter > 7 then
@@ -81,17 +89,17 @@ function gandg(xx)
         xx.combo = xx.combo + 1
         xx.repcounter = 1
         xx.type = 1
-        rumbleme(xx, 1)
+        rumbleme(xx, .01)
       elseif xx.a4 and not xx.holda then
         xx.type = 2
         xx.animcounter = 1
         xx.combo = xx.combo + 1
-        rumbleme(xx, .7)
+        rumbleme(xx, .01)
       elseif xx.a1 and not xx.holda then
         xx.type = 3
         xx.animcounter = 1
         xx.combo = xx.combo + 1
-        rumbleme(xx, 1)
+        rumbleme(xx, .01)
       end
 
     else
@@ -149,8 +157,8 @@ function gandg(xx)
             hboxcs(xx.id, 
               {x=xx.mid, y = xx.y},
               {x=xx.mid+xx.v+(xx.lr*88), y = xx.y-xx.j},
-              {x=xx.mid, y = me.y+60},
               {x=xx.mid+xx.v+(xx.lr*88), y = xx.y+60-xx.j},
+              {x=xx.mid, y = me.y+60},
               function(z)
 
                 makeslashsparks(xx.y+30,xx.v+xx.x+xx.lr*(15),-xx.lr*slashsparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
@@ -192,7 +200,11 @@ function gandg(xx)
           end
           xx.animcounter = 8
           if not xx.holda then
-            if xx.a1b then
+            if (xx.a1b or xx.a2b or xx.a3b or xx.a4b)and #joysticks>=xx.id then
+              at.g.k.angle = xx.gangle
+              xx.animcounter = 9
+              
+            elseif xx.a1b then
               at.g.k.angle = 90
               xx.animcounter = 9
             elseif xx.a2b or xx.a3b then
@@ -250,8 +262,8 @@ function gandg(xx)
             hboxcs(xx.id, 
               {x=xx.mid+(xx.lr*-33), y = xx.y+8},
               {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-40-xx.j},
-              {x=xx.mid, y = xx.y+30},
               {x=xx.mid+xx.v+(xx.lr*33), y = xx.y-40-xx.j},
+              {x=xx.mid, y = xx.y+30},
 
               function(z)
                 xx.cancombo = true
@@ -287,8 +299,8 @@ function gandg(xx)
             hboxcs(xx.id, 
               {x=xx.mid, y = xx.y},
               {x=xx.mid+xx.v+(xx.lr*88), y = xx.y-xx.j},
-              {x=xx.mid, y = me.y+60},
               {x=xx.mid+xx.v+(xx.lr*88), y = xx.y+60-xx.j},
+              {x=xx.mid, y = me.y+60},
               function(z)
 
                 makeslashsparks(xx.y+30,xx.v+xx.x+xx.lr*(15),-xx.lr*slashsparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
@@ -327,8 +339,8 @@ function gandg(xx)
             hboxcs(xx.id, 
               {x=xx.mid-(xx.lr*-33), y = xx.y+8},
               {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-40-xx.j},
-              {x=xx.mid, y = xx.y+30},
               {x=xx.mid+xx.v+(xx.lr*33), y = xx.y-40-xx.j},
+              {x=xx.mid, y = xx.y+30},
 
               function(z)
                 xx.cancombo = true
@@ -418,8 +430,22 @@ function gandg(xx)
 
       if v.t >= greendissolvetime then
         table.remove(xx.bolts, i)
+      end--[[
+      local xnex =  v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed
+      local ynex = v.y+(v.speed * math.sin(math.rad(v.angle)))*rampspeed
+  for i = #you.spikes, 1, -1 do 
+    local spike1 = you.spikes[i-1] 
+      if pint({x = spike1[1], y = spike1[2]}, {x = spike1[3], y = spike1[4]}, {x = v.x, y = v.y}, {x = xnex, y = ynex}) or
+      pint({x = spike1[3], y = spike1[4]}, {x = spike1[5], y = spike1[6]}, {x = v.x, y = v.y}, {x = xnex, y = ynex}) or
+      pint({x = spike1[5], y = spike1[6]}, {x = spike1[1], y = spike1[2]}, {x = v.x, y = v.y}, {x = xnex, y = ynex})
+      
+      then
+        makeslashsparks(v.y,v.x, (v.speed * math.cos(math.rad(v.angle)))/8,(v.speed * math.sin(math.rad(v.angle)))+5, xx.color.c.r,xx.color.c.g,xx.color.c.b)
+            table.remove(xx.bolts, i)
+        end
+      
       end
-
+]]--
       for j,k in ipairs(themap.walls) do 
         if k.barrier then
           if (v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed > k.x+amountstuckinwall) 
@@ -429,6 +455,8 @@ function gandg(xx)
           end
         end
       end
+      
+      
 
       if v.y <= themap.floor+10 and not v.stuck then
         table.insert(xx.bolttrail, {angle = v.angle, speed = v.speed, x = v.x, y = v.y, t = 0})

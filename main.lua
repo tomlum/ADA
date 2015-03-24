@@ -10,7 +10,7 @@ fullscreen = false
 readout = true
 mute = false
 eh = false
-volume=.5
+volume=0
 love.audio.setVolume(volume)
 --airgrab
 
@@ -251,6 +251,7 @@ require "ATTACK"
 require "GG"
 require "BB"
 require "pp"
+require "OO"
 loader = require "love-loader"
 
 
@@ -793,8 +794,8 @@ function love.update()
     love.graphics.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
     love.graphics.print("tileset "..tostring(tileset), 10, 230)
     love.graphics.setColor(255,0,0)
-    love.graphics.print("me.currentanim "..tostring(me.currentanim), 10, 260)
-    love.graphics.print("me.lrum "..tostring(me.lrum), 10, 290)
+    love.graphics.print("mme.oldcolorn"..tostring(me.oldcolorn), 10, 260)
+    love.graphics.print("mme.color.n"..tostring(me.color.n), 10, 280)
     end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end

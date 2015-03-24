@@ -650,12 +650,7 @@ function drawdust()
 
 end
 end
-rubbletimer = 0
 function drawrubble()
-  if rubbletimer > 100 then rubbletimer = 0
-    else
-  rubbletimer = rubbletimer + 1*rampspeed
-  end
 
   for i = #rubble, 1, -1 do
     local temp = rubble[i]
@@ -672,7 +667,7 @@ function drawrubble()
     blackn = math.random(80,150)
   end
   love.graphics.setColor(blackn,blackn,blackn)
-  love.graphics.draw(enviro.rubble,v.x-2*math.cos(rubbletimer/10),v.y-2*math.sin(rubbletimer/10),rubbletimer/10+v.rot,2.2,2.2)
+  love.graphics.draw(enviro.rubble,v.x,v.y,70/(v.v+v.y),2.2,2.2)
   love.graphics.setColor(255,255,255)
 end
 end
@@ -699,9 +694,9 @@ function makenrubble(ty, ex,why,vee,jay, n)
   if ty == "vert" then 
     for i = n, 1, -1 do
       if vee > 0 then
-        table.insert(rubble,{x = ex, y = why-i*2, v=math.random(0, vee) + math.random(), j = jay+1*math.random(5)+math.random(), rot = math.random() + math.random(1,5)})
+        table.insert(rubble,{x = ex, y = why-i*2, v=math.random(0, vee) + math.random(), j = jay+1*math.random(5)+math.random()})
       else
-        table.insert(rubble,{x = ex, y = why-i*2, v=math.random(0, vee) - math.random(), j = jay+1*math.random(5)+math.random(), rot = math.random() + math.random(1,5)})
+        table.insert(rubble,{x = ex, y = why-i*2, v=math.random(0, vee) - math.random(), j = jay+1*math.random(5)+math.random()})
       end
     end
   elseif ty == "horiz" then
@@ -1542,7 +1537,7 @@ death = function(xx, yy)
   --function that adjusts the x for flipping left and right
 
   you.idletimer = 0
-  me.idletimer = 0
+  idleme = 0
   ay = 0
   me.walktimer = 0
   you.walktimer = 0
@@ -1575,28 +1570,48 @@ death = function(xx, yy)
 
 
   idleanimatex = function ()
-    if xx.idletimer < 17 then 
-      xx.idletimer = xx.idletimer + 1*rampspeed
-      if xx.health<maxhealth/2 then
-        xx.im = idle3
+    if you.idletimer < 17 then 
+      you.idletimer = you.idletimer + 1
+      if you.health<maxhealth/2 then
+        you.im = idle3
       else
-        xx.im = idle1
+        you.im = idle1
       end
-    elseif xx.idletimer >= 17 and xx.idletimer < 33 then
-      xx.idletimer = xx.idletimer + 1
-      if xx.health<maxhealth/2 then
+    elseif you.idletimer >= 17 and you.idletimer < 33 then
+      you.idletimer = you.idletimer + 1
+      if you.health<maxhealth/2 then
 
-        xx.im = idle4
+        you.im = idle4
       else
 
-        xx.im = idle2
+        you.im = idle2
       end
-    elseif xx.idletimer >=33 then
-      xx.idletimer = 0
+    elseif you.idletimer >=33 then
+      you.idletimer = 0
     end
   end
-  
-  
+  idleanimateme = function ()
+    if idleme < 17 then 
+      idleme = idleme + 1
+      if me.health<maxhealth/2 then
+
+        me.im = idle3
+      else
+
+        me.im = idle1
+      end
+    elseif idleme >= 17 and idleme < 33 then
+      idleme = idleme + 1
+      if me.health<maxhealth/2 then
+
+        me.im = idle4
+      else
+        me.im = idle2
+      end
+    elseif idleme >=33 then
+      idleme = 0
+    end
+  end
   walkxx = function (xx)
 
     xx.walktimer = xx.walktimer + 1*rampspeed
@@ -1693,7 +1708,7 @@ death = function(xx, yy)
     elseif you.landing
     then you.im = landing
     elseif you.g and aboutso(you.v, you.push) and not you.slide 
-    then idleanimatex(you)
+    then idleanimatey()
       you.walktimer = 0
     elseif not you.g
     then
@@ -1712,7 +1727,7 @@ death = function(xx, yy)
     elseif me.landing
     then me.im = landing
     elseif me.g and aboutso(me.v, me.push) and not me.slide 
-    then idleanimatex(me)
+    then idleanimateme()
       me.walktimer = 0
     elseif not me.g
     then

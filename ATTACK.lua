@@ -25,7 +25,7 @@ throw = {im=love.graphics.newImage("me/attack/throw.png"),c=love.graphics.newIma
 airthrow = {im=love.graphics.newImage("me/attack/airthrow.png"),c=love.graphics.newImage("me/attack/airthrowc.png"), xoff = 10, yoff = 10}
 
 throwft = 40
-throwz = .3
+throwz = .1
 
 me.grabtimer = 0
 you.grabtimer = 0
@@ -88,7 +88,7 @@ function grab(xx)
       end
       xx.grabbingx.ft = 10
       if not xx.holda and (xx.a1 or xx.a2 or xx.a3 or xx.a4) then 
-        xx.grabbingx.j =  -xx.jry*20
+        xx.grabbingx.j =  -xx.jry*30
         xx.grabbingx.v =  xx.jrx*20
         if not xx.g then
           xx.v = -xx.grabbingx.v*.8
@@ -144,6 +144,7 @@ you.cantreturntothis = 0
 
 
 function combo(xx, func)
+  
 
   if xx.color.n ~= xx.cchangeto.n and xx.cancombo
   then
@@ -153,6 +154,7 @@ function combo(xx, func)
   end
   if not xx.holda and xx.currentanim == xx.color.n and xx.combo<xx.maxcombo then
 
+  if xx.g then 
     if xx.im==greenk1 then
       xx.type = 2
       xx.animcounter = 1
@@ -179,11 +181,16 @@ function combo(xx, func)
         xx.animcounter = 1
         xx.repcounter = xx.repcounter + 1
         if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+      elseif xx.color.n==3 and xx.repcounter < at.o.p.max then
+        xx.type = 1
+        xx.animcounter = 1
+        xx.repcounter = xx.repcounter + 1
+        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
 
 
       end
 
-    elseif xx.a4 then
+    elseif xx.a4 and (xx.oldtype ~= 2 or xx.actionshot) then
       if func~= nil then func() end
       if xx.color.n==0  then
         xx.combo = xx.combo + 1
@@ -198,6 +205,10 @@ function combo(xx, func)
       elseif xx.color.n==2 then
         xx.type = 2
         xx.animcounter = 1
+        xx.combo = xx.combo + 1
+      elseif xx.color.n==3 then
+        xx.type = 2
+        xx.animcounter = 5
         xx.combo = xx.combo + 1
 
       end
@@ -221,7 +232,24 @@ function combo(xx, func)
 
 
 
+end
+else
+    if xx.a4 then
+      if xx.color.n==3 and xx.repcounter < at.o.ak.max then
+        xx.animcounter = 1
+        xx.type = 5
+        xx.combo = xx.combo + 1
+        xx.repcounter = xx.repcounter + 1
+        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+        xx.j = 2
+        
+      end
+      
+      
     end
+
+
+  end
   end
 end
 
@@ -265,8 +293,10 @@ me.oldft = 0
 you.oldft = 0
 
 function attackmanage(xx)
+  
+  
 
-  if xx.type < 4 and not xx.g and (xx.type~=2 and xx.color.n~=2) then 
+  if xx.type < 4 and not xx.g and ((xx.type~=2 and xx.color.n~=2) or (xx.type~=2 and xx.color.n~=3)) then 
     xx.animcounter = 0
   elseif xx.type >= 4 and xx.type < 7 and xx.g then 
     xx.animcounter = 0
@@ -299,6 +329,8 @@ function attackmanage(xx)
     pandp(xx)
   elseif xx.currentanim == 2 then
     gandg(xx)
+  elseif xx.currentanim == 3 then
+    orangeyouglad(xx)
   end
 
 
@@ -308,6 +340,7 @@ function attackmanage(xx)
   --  end
 
   --xx.oldj = xx.j
+  
 
 end
 function postattackmanage(xx)
@@ -316,7 +349,7 @@ function postattackmanage(xx)
   end
   if(math.abs(xx.ft) > math.abs(xx.oldft)) then
     rumbleme(xx,(math.log(xx.ft-xx.oldft)+.5)/5)
-    xx.ft = xx.oldft + (xx.ft-xx.oldft)*(rampspeed)
+    xx.ft = xx.oldft + (xx.ft-xx.oldft)*(rampspeed)*xx.color.s.brittle
   end
   xx.oldft = xx.ft
 end

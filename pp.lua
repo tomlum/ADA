@@ -355,8 +355,8 @@ function pandp(xx)
             hboxcs(xx.id, 
               {x=xx.mid, y = xx.y+6},
               {x=xx.mid+xx.v+(xx.lr*46), y = xx.y+35},
-              {x=xx.mid, y = me.y+30},
               {x=xx.mid+xx.v+(xx.lr*60), y = xx.y+40},
+              {x=xx.mid, y = me.y+30},
               function(z)
                 xx.cancombo = true
                 z.health = z.health - at.p.p2.dam
@@ -374,8 +374,8 @@ function pandp(xx)
           hboxcs(xx.id, 
             {x=xx.mid+(xx.lr * -17), y = xx.y-31},
             {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38},
-            {x=xx.mid+(xx.lr*-31), y = me.y+13},
             {x=xx.mid+xx.v+(xx.lr*50), y = xx.y+28},
+            {x=xx.mid+(xx.lr*-31), y = me.y+13},
             function(z)
               xx.cancombo = true
               z.health = z.health - at.p.p2.dam
@@ -403,8 +403,8 @@ function pandp(xx)
             hboxcs(xx.id, 
               {x=xx.mid, y = xx.y+22},
               {x=xx.mid+xx.v+(xx.lr*-55), y = xx.y+66},
-              {x=xx.mid+(xx.lr*-12), y = me.y+37},
               {x=xx.mid+xx.v+(xx.lr*-44), y = xx.y+65},
+              {x=xx.mid+(xx.lr*-12), y = me.y+37},
               function(z)
                 xx.cancombo = true
                 z.health = z.health - at.p.p2.dam
@@ -444,8 +444,8 @@ function pandp(xx)
             hboxcs(xx.id, 
               {x=xx.mid, y = xx.y+35},
               {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+26},
-              {x=xx.mid, y = me.y+6},
               {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+49},
+              {x=xx.mid, y = me.y+6},
               function(z)
                 xx.cancombo = true
                 z.health = z.health - at.p.p.dam
@@ -613,9 +613,9 @@ function pandp(xx)
             if xx.animcounter == 17 then
               hboxcs(xx.id, 
                 {x=xx.mid, y = xx.y+15},
-                {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+29},
+                {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+29-xx.j},
+                {x=xx.mid+xx.v+(xx.lr*18), y = xx.y+57-xx.j},
                 {x=xx.mid-5*xx.lr, y = me.y+70},
-                {x=xx.mid+xx.v+(xx.lr*18), y = xx.y+57},
                 function(z)
                   xx.cancombo = true
                   z.health = z.health - at.p.p.dam
@@ -660,9 +660,9 @@ function pandp(xx)
               xx.v = xx.v - at.p.au.kb 
               hboxcs(xx.id, 
                 {x=xx.mid+(xx.lr * -17), y = xx.y-31},
-                {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38},
+                {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38-xx.j},
+                {x=xx.mid+xx.v+(xx.lr*50), y = xx.y+28-xx.j},
                 {x=xx.mid+(xx.lr*-31), y = me.y+13},
-                {x=xx.mid+xx.v+(xx.lr*50), y = xx.y+28},
 
                 function(z)
                   xx.cancombo = true

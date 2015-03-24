@@ -385,6 +385,9 @@ cg2 = love.audio.newSource("sounds/cg.wav", "static")
 cg2:setVolume(SFXV-.67-adj)
 cg2:setPitch(1.3)
 
+whiff = love.audio.newSource("sounds/green.mp3", "static")
+whiff:setVolume(SFXV-.9-adj)
+
 
 me.green = love.audio.newSource("sounds/green.mp3", "static")
 me.green:setVolume(SFXV-.8-adj)

@@ -8,12 +8,13 @@ colorvib = .1
 
 thecolors = {}
 thecolors[0] = {n=0,c={r = 255, g = 255, b = 255},
-  s = {def=1, speed = 1, jump = 1, weight = 1}, logo=questionlogo}
+  s = {def=1, speed = 1, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
 thecolors[1] = {n=1,c={r = 87, g = 0, b = 158},
-  s = {def=1.2, speed = .8, jump = .7, weight = 1.3}, tile = ptile, logo=plogo, sound = colorpsound}
+  s = {def=1.2, speed = .8, jump = .7, weight = 1.3, brittle = 1}, tile = ptile, logo=plogo, sound = colorpsound}
 thecolors[2] = {n=2,c={r = 40, g = 255, b = 0},
-  s = {def=.7, speed = 1.3, jump = 1.2, weight = 1}, tile = gtile, logo=glogo, sound = colorgsound}
-thecolors[3] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
+  s = {def=.7, speed = 1.3, jump = 1.2, weight = 1, brittle = 1}, tile = gtile, logo=glogo, sound = colorgsound}
+thecolors[3] = {n=3, tile = tile,c={r = 255, g = 99, b = 0}, logo=questionlogo, sound = colorgsound,
+  s = {def=1, speed = 1, jump = 1.5, weight = .8, brittle = 1.5}}
 thecolors[4] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 thecolors[5] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 thecolors[6] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
@@ -24,7 +25,7 @@ thecolors[10] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlo
 thecolors[11] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 --transition color, weaker
 thecolors[100] = {n=-1,c={r = 0, g = 0, b = 0},
-  s = {def=.7, speed = 1, jump = 1, weight = 1}, logo=questionlogo}
+  s = {def=.7, speed = 1, jump = 1, weight = 1, brittle = 1.1}, logo=questionlogo}
 
 
 
@@ -61,7 +62,7 @@ function tilefadeinf(inf, f, rate)
 end
 
 if fightclub then
-  me.rightc = thecolors[1]
+  me.rightc = thecolors[3]
   you.rightc = thecolors[1]
   me.leftc = thecolors[2]
   you.leftc = thecolors[2]
@@ -83,6 +84,12 @@ function ColorChange(xx)
   elseif xx.leftbump then
     xx.cchangeto = xx.leftc 
   else xx.cchangeto = thecolors[0]
+  end
+
+
+  if xx.animcounter > 1 then
+    xx.oldtype = xx.type
+    xx.oldcolorn = xx.color.n
   end
 
 end
