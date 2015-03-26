@@ -12,9 +12,9 @@ thecolors[0] = {n=0,c={r = 255, g = 255, b = 255},
 thecolors[1] = {n=1,c={r = 87, g = 0, b = 158},
   s = {def=1.2, speed = .8, jump = .7, weight = 1.3, brittle = 1}, tile = ptile, logo=plogo, sound = colorpsound}
 thecolors[2] = {n=2,c={r = 40, g = 255, b = 0},
-  s = {def=.7, speed = 1.3, jump = 1.2, weight = 1, brittle = 1}, tile = gtile, logo=glogo, sound = colorgsound}
+  s = {def=.7, speed = 1.3, jump = 1.1, weight = 1, brittle = 1}, tile = gtile, logo=glogo, sound = colorgsound}
 thecolors[3] = {n=3, tile = tile,c={r = 255, g = 99, b = 0}, logo=questionlogo, sound = colorgsound,
-  s = {def=1, speed = 1, jump = 1.5, weight = .8, brittle = 1.5}}
+  s = {def=1, speed = 1, jump = 1.1, weight = .8, brittle = 1.5}}
 thecolors[4] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 thecolors[5] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 thecolors[6] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}

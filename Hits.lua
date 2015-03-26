@@ -5,23 +5,63 @@
 
 --for dis from height to feet in fall anim
 
-  me.oldpy = me.y
-  you.oldpy = you.y
+me.oldpy = me.y
+you.oldpy = you.y
+me.wallrubbletimer = 0
+you.wallrubbletimer = 0
 
 
 function lof(x,y)
   if x < y then return x
   else return y
-    end
-  
+  end
+
 end
+
+function mlof(x)
+  local lof = x[1]
+  for i = 2, #x do
+    if lof > x[i] then lof = x[i]
+
+    end
+  end
+  return lof
+
+end
+
+function mlofgz(x)
+  local lof = 10000000
+  for i = 1, #x do
+
+    if x[i]>0 and lof > x[i] then lof = x[i]
+
+    end
+  end
+  if lof == 10000000 then
+    return 0 else
+    return lof
+  end
+
+end
+
+function mhof(x)
+  local hof = x[1]
+  for i = 2, #x do
+    if hof < x[i] then hof = x[i]
+
+    end
+  end
+  return hof
+
+end
+
 
 function hof(x,y)
   if x > y then return x
   else return y
-    end
-  
   end
+
+end
 
 function shakez(z)
   rumbleme(me,z*10)
@@ -144,6 +184,39 @@ end
 
 
 
+function rethexcheck(lx1, ly1, lx2, ly2, ex, why, w, h, v, j)
+  t = {["c"] = {x = ex, y = why+h/2.5},
+    [0] = {x = ex-w/2, y=why, n = 0},
+    [1] = {x = ex+w/2, y=why, n = 1},
+    [2] = {x = ex+w/2, y=why+h, n = 2},
+    [3] = {x = ex-w/2, y=why+h, n = 3}}
+  d = {
+    [0] = {x = ex+v-w/2, y=why-j, n = 0},
+    [1] = {x = ex+v+w/2, y=why-j, n = 1},
+    [2] = {x = ex+v+w/2, y=why+h-j, n = 2},
+    [3] = {x = ex+v-w/2, y=why+h-j, n = 3}}
+
+
+  disn = hexdistan(hexdistan(d[0], d[1]), hexdistan(d[2], d[3])).n
+  adjn1 = (disn+1)%4
+  adjn2 = (disn-1)%4
+  oppn = (disn-2)%4
+  local linep1 = {x = lx1, y = ly1}
+  local linep2 = {x = lx2, y = ly2}
+
+
+  retp1 = retpint({x=lx1,y=ly1}, {x=lx2,y=ly2}, d[disn], d[adjn1]) 
+  retp2 = retpint({x=lx1,y=ly1}, {x=lx2,y=ly2}, d[disn], d[adjn2]) 
+  retp3 = retpint({x=lx1,y=ly1}, {x=lx2,y=ly2}, t[adjn1], d[adjn1]) 
+  retp4 = retpint({x=lx1,y=ly1}, {x=lx2,y=ly2}, t[adjn2], d[adjn2]) 
+  retp5 = retpint({x=lx1,y=ly1}, {x=lx2,y=ly2}, t[oppn], t[adjn1]) 
+  retp6 = retpint({x=lx1,y=ly1}, {x=lx2,y=ly2}, t[oppn], t[adjn2])
+  local yhof = mhof({retp1[2], retp2[2], retp3[2], retp4[2], retp5[2], retp6[2]})
+  local ylof = mlofgz({retp1[2], retp2[2], retp3[2], retp4[2], retp5[2], retp6[2]})
+  return {yhof, ylof}
+
+
+end
 
 
 function hexcheck(lx1, ly1, lx2, ly2, ex, why, w, h, v, j)
@@ -204,7 +277,7 @@ function drawallhex()
       if v.im.dodgew ~= nil then
         dsw = v.im.dodgew
       end
-      
+
       if v.im.extrah ~= nil then
         extrah = -v.im.extrah
       end
@@ -249,6 +322,10 @@ end
 
 
 
+
+
+
+
 --for non lethal things
 function hboxcss(theid, P1, P2, P3, P4, special)
 
@@ -264,8 +341,8 @@ function hboxcss(theid, P1, P2, P3, P4, special)
       dsw = p.im.dodgew
     end
     if p.im.extrah ~= nil then
-        extrah = -p.im.extrah
-      end
+      extrah = -p.im.extrah
+    end
 
     if theid ~= i and
     (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j) 
@@ -300,14 +377,14 @@ function hboxcs(theid, P1, P2, P3, P4, special)
       dsw = p.im.dodgew
     end
     if p.im.extrah ~= nil then
-        extrah = -p.im.extrah
-      end
+      extrah = -p.im.extrah
+    end
 
     if theid ~= i and
-    (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j) 
-      or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
-      or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
-      or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
+    (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+      or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+      or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+      or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
       or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
     )
     then
@@ -322,8 +399,8 @@ end
 
 
 function hexplatcheck2(y1, x1, x2, ex, why, w, why2, v)
-  
-    
+
+
   midv2 = {x = (ex+w/2)+v, y=why2}
   midv = {x = ex+w/2, y=why}
   local linep1 = {x = x1, y = y1}
@@ -336,8 +413,8 @@ function hexplatcheck2(y1, x1, x2, ex, why, w, why2, v)
 end
 
 function hexplatcheck(y1, x1, x2, ex, why, w, h, v, j)
-  
-    
+
+
   midv2 = {x = (ex+w/2)+v, y=why+h-j}
   midv = {x = ex+w/2, y=why+h}
   local linep1 = {x = x1, y = y1}
@@ -394,7 +471,7 @@ function retlineplatcheck(ex, why,v, j)
   midv = {x = ex, y=why, n = 2}
 
   if why > 100000 or ex < -10 or ex > 10000  then
-    return false
+    return nil
   end
 
   for j = #themap.plats, 1, -1 do 
@@ -432,6 +509,18 @@ end
 function hboxwall()
   for i,p in ipairs(hitt) do 
 
+    dsh = 0
+    dsw = 0
+    extrah = 0
+    if p.im.dodgeh ~= nil then
+      dsh = p.im.dodgeh
+    end
+    if p.im.dodgew ~= nil then
+      dsw = p.im.dodgew
+    end
+    if p.im.extrah ~= nil then
+      extrah = -p.im.extrah
+    end
 
 
     if p.flinch or p.a1 or p.a2 or p.a3 or p.a4 then p.wjt = 0 end
@@ -474,6 +563,7 @@ function hboxwall()
       wall = themap.walls[j]
 
 
+
       if
       ((p.x+p.v*walljumprange < wall.x and p.x >= wall.x) or (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x)) and
       ((p.v < 0 and p.right) or (p.v > 0 and p.left)) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch and not p.busy and p.animcounter == 0
@@ -489,14 +579,12 @@ function hboxwall()
         p.walllr = p.lr
         p.wallx = wall.x+wallside
         p.v = 0
-      elseif wall.y1==-1 and (p.x+p.v < wall.x and p.mid >= wall.x) or (p.x+p.width+p.v > wall.x and p.x+p.width <= wall.x) and p.wjt == 0 then
+      elseif wall.y1==-1 and ((p.x+p.v < wall.x and p.mid >= wall.x) or (p.x+p.width+p.v > wall.x and p.x+p.width <= wall.x)) and p.wjt == 0 then
         if (p.x+p.v < wall.x and p.x >= wall.x) then
           wallside = 1 
         else
           wallside = -1 
         end
-
-
 
 
         if p.flinch and math.abs(p.v) > vforwallflinch then 
@@ -518,7 +606,49 @@ function hboxwall()
           p.v = 0
         end
 
+  end
+  
+  
+  
+  
+  
+    if (p.v > 0 and (p.mid+(dsw/2)+p.v > wall.x and p.mid+(dsw/2) < wall.x)) or
+  (p.v < 0 and (p.mid-(dsw/2)+p.v < wall.x and p.mid-(dsw/2) > wall.x)) then
+    
+          if p.flinch then
+          slowww = true
+        end
+        xx.wallrubbletimer = 1
+    
+      
+  end
+  
+  if xx.wallrubbletimer > 0 and rampcanhit then
+    xx.wallrubbletimer = xx.wallrubbletimer - 1*rampspeed
+  local retrub =  rethexcheck(wall.x, wall.y1, wall.x, wall.y2, 
+p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+    p.v=p.v*2/3
+
+
+      if  retrub[1] ~= 0 then
+        bob = retrub
+        
+for i = lof(retrub[1], retrub[2]), hof(retrub[1], retrub[2]), 6 do 
+        --for i = lof(retrub[1], retrub[2]), lof(retrub[1], retrub[2]), 4 do 
+          if wall.glasswall~=nil then
+            if i < wall.glasswall then makenglass(wall.x,i,p.v,p.j, 1)
+            else makenrubble("vert", wall.x,i,p.v,p.j, 1)
+          end
+          else
+          makenrubble("vert", wall.x,i,p.v,p.j, 1)
+              
+          end
+          --makenrubble("vert",me.x,me.y,1,1, 200)
+        end
       end
+  end
+  
+
     end
 
 
@@ -527,15 +657,33 @@ function hboxwall()
 
 end
 
+
+function retowallcheck(ex, why,vee, jay)
+  for j = #themap.walls, 1, -1 do
+    local wallace = themap.walls[j]
+    local res = retpint({x = wallace.x, y = wallace.y1}, {x = wallace.x, y = wallace.y2}, {x = ex, y = why}, {x = ex+vee, y = why-jay})
+    if res[2] > 0 then
+    return res
+    end
+
+  end
+  return {0, 0}
+
+end
+
+
+
+
+
 function hboxp()
   for i,p in ipairs(hitt) do
     for j = #themap.plats, 1, -1 do 
       plat = themap.plats[j]
       xx = p
-      
+
       extrah = 0
       dodgeh = 0
-    if p.im.extrah ~= nil then
+      if p.im.extrah ~= nil then
         extrah = -p.im.extrah
       end
       if p.im.dodgeh ~= nil then
@@ -566,9 +714,9 @@ function hboxp()
           repplay(xx.land)
           xx.slowdown = false
         end
-        
+
         p.y = plat.y-p.height
-        
+
         p.g = true
         p.j = 0
         p.plat = plat;
@@ -581,12 +729,12 @@ function hboxp()
         p.plat = noplat
       end
 
-end
-if p.im.extrah ~= nil then
-  p.oldpy = p.y+p.height-p.im.extrah
-      else
-  p.oldpy = p.y+p.height
-  end
+    end
+    if p.im.extrah ~= nil then
+      p.oldpy = p.y+p.height-p.im.extrah
+    else
+      p.oldpy = p.y+p.height
+    end
   end
 
 

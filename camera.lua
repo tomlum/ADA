@@ -82,7 +82,7 @@ cammovement = function ()
   --   youcamlwall = false
   -- end
 
-  if midypoint >= floor - ((enviro.screenheight/2) + (feet2bottom)-30)*cscale
+  if midypoint >= themap.floor - ((enviro.screenheight/2) + (feet2bottom)-30)*cscale
   then
     youcamfloor = true
     mecamfloor = true
@@ -168,7 +168,7 @@ camerafol = function ()
 
   elseif youcamfloor 
   then
-    youyrig = floor - enviro.screenheight*cscale + feet2bottom*cscale 
+    youyrig = themap.floor - enviro.screenheight*cscale + feet2bottom*cscale 
   elseif not vertone and you.y < me.y then
     youyrig = you.y - head2ceiling*cscale
   end
@@ -179,7 +179,7 @@ camerafol = function ()
 
   elseif mecamfloor 
   then
-    meyrig = floor - enviro.screenheight*cscale + feet2bottom*cscale
+    meyrig = themap.floor - enviro.screenheight*cscale + feet2bottom*cscale
   elseif not vertone and me.y < you.y then
     meyrig = me.y - head2ceiling*cscale
   end
@@ -492,7 +492,7 @@ function drawx(xx)
   if themap.name == "library" then 
     love.graphics.draw(enviro.paralax2, xx.x/1.5 + (screenwidth/4)/1.5 - 400,xx.y/1.2 + enviro.screenheight / 1.2 - 12 - paralaxoffset-940)
   end
-  blurdraw(1/cscale, function()
+  blurdraw(.8/(cscale), function()
   love.graphics.draw(enviro.paralax, xx.x / 2 + ((screenwidth/4)/2*cscale*2.5) - 200, (xx.y/2) + (enviro.screenheight/2*cscale) - 12 - paralaxoffset - 800)
   end)
   

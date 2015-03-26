@@ -1,4 +1,3 @@
---AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH--AIR BOLT THROW KNOCKS YOU IN OPPOSITE DIRECTION OF YEAH
 
 amountstuckinwall = 40
 
@@ -518,7 +517,21 @@ function gandg(xx)
 
 
 
-
+function retfindIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, seg1, seg2)
+    local a1,b1,a2,b2 = l1p2y-l1p1y, l1p1x-l1p2x, l2p2y-l2p1y, l2p1x-l2p2x
+    local c1,c2 = a1*l1p1x+b1*l1p1y, a2*l2p1x+b2*l2p1y
+    local det,x,y = a1*b2 - a2*b1
+           if det==0 then  return {0, 0} end
+    x,y = (b2*c1-b1*c2)/det, (a1*c2-a2*c1)/det
+    if seg1 or seg2 then
+        local min,max = math.min, math.max
+        if seg1 and not (min(l1p1x,l1p2x) <= x and x <= max(l1p1x,l1p2x) and min(l1p1y,l1p2y) <= y and y <= max(l1p1y,l1p2y)) or
+           seg2 and not (min(l2p1x,l2p2x) <= x and x <= max(l2p1x,l2p2x) and min(l2p1y,l2p2y) <= y and y <= max(l2p1y,l2p2y)) then
+            return {0, 0}
+        end
+    end
+    return {x, y}
+end
 
 
   function findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, seg1, seg2)
@@ -548,6 +561,14 @@ function gandg(xx)
 
   function pint(p11,p12,p21,p22)
     return findIntersect(p11.x+.2,p11.y+.2,p12.x,p12.y,p21.x+.2,p21.y+.2,p22.x,p22.y,true,true)
+  end
+  
+  function retpint(p11,p12,p21,p22)
+    local fred = retfindIntersect(p11.x,p11.y,p12.x,p12.y,p21.x,p21.y,p22.x,p22.y,true,true)
+    if fred[1] == nil then
+      return {0,0}
+      else return fred
+    end
   end
 
 

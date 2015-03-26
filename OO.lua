@@ -8,12 +8,12 @@ op4 = {im=love.graphics.newImage("me/attack/op4.png"),c=love.graphics.newImage("
 op5 = {im=love.graphics.newImage("me/attack/op5.png"),c=love.graphics.newImage("me/attack/op3c.png"), xoff = 9,yoff = 12}
 
 
-ao21 = {im=love.graphics.newImage("me/attack/ao21.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9,yoff = 15}
-ao22 = {im=love.graphics.newImage("me/attack/ao22.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9,yoff = 15}
+ao21 = {im=love.graphics.newImage("me/attack/ao21.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9,yoff = 15, extrah = 5}
+ao22 = {im=love.graphics.newImage("me/attack/ao22.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9,yoff = 15, extrah = 5}
 
 
-ao23 = {im=love.graphics.newImage("me/attack/ao23.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9,yoff = 15}
-ao24 = {im=love.graphics.newImage("me/attack/ao24.png"),c=love.graphics.newImage("me/attack/ao3c.png"), xoff = 9-5,yoff = 15-17}
+ao23 = {im=love.graphics.newImage("me/attack/ao23.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9,yoff = 15, extrah = 5}
+ao24 = {im=love.graphics.newImage("me/attack/ao24.png"),c=love.graphics.newImage("me/attack/ao3c.png"), xoff = 9-5,yoff = 15-17, extrah = 5}
 
 
 ok2 = {im=love.graphics.newImage("me/attack/ok2.png"),c=love.graphics.newImage("me/attack/ok2c.png"), xoff = 9,yoff = 15}
@@ -26,18 +26,21 @@ at.o.p.dam = 10
 at.o.p.ft = 25
 at.o.p.max = 2
 at.o.p.z = .08
+at.o.p.j = -20
 
 at.o.ak = {}
 at.o.ak.dam = 15
 at.o.ak.ft = 20
 at.o.ak.max = 5
 at.o.ak.z = .08
+at.o.ak.j = -20
 
 
 at.o.k = {}
 at.o.k.dam = 15
 at.o.k.ft = 20
 at.o.k.z = .08
+at.o.k.j = -20
 
 
 function orangeyouglad(xx)
@@ -96,11 +99,21 @@ function orangeyouglad(xx)
 
       elseif xx.animcounter < 40 then
         if xx.animcounter == 8 and rampcanhit then
+         
 
-          xx.oplat = retlineplatcheck(xx.mid+xx.v+(xx.lr*72), xx.y+32,xx.v+(19*xx.lr), xx.j-36) 
+          xx.oplat = retlineplatcheck(xx.mid+(xx.lr*72), xx.y+32,xx.v+(19*xx.lr), xx.j-36) 
           if xx.oplat ~= nil then
             makenrubble("vert", xx.mid+xx.v+(xx.lr*91),xx.oplat.y,1,1, 4)
             makenrubble("vert", xx.mid+xx.v+(xx.lr*91),xx.oplat.y,-1,1, 4)
+            
+            
+             local check = retowallcheck(xx.mid+(xx.lr*72), xx.y+32,xx.v+(19*xx.lr), xx.j-36) 
+          xx.owall = check[1]
+          xx.ohit = check[2]
+          if xx.ohit ~= 0 then
+          makenrubble("horiz", xx.owall,xx.ohit,xx.lr*3,0, 4)
+          end
+            
           end
           hboxcs(xx.id, 
             {x=xx.mid+(xx.lr*59), y = xx.y+24},
@@ -111,6 +124,7 @@ function orangeyouglad(xx)
 
               xx.cancombo = true
               z.v = z.v/5
+              z.j = z.j+at.o.p.j
               if not (z.block and z.lr == -xx.lr) then
                 z.health = z.health - at.o.p.dam
                 z.flinch = true
@@ -168,27 +182,54 @@ function orangeyouglad(xx)
 
         if xx.animcounter == 13+5 and rampcanhit then
 
-          xx.oplat = retlineplatcheck(xx.mid+xx.v+(xx.lr*72), xx.y+32,xx.v+(19*xx.lr), xx.j-36) 
+          xx.oplat = retlineplatcheck(xx.mid+(xx.lr*50), xx.y+27,xx.v+(49*xx.lr), xx.j-38) 
           if xx.oplat ~= nil then
-            makenrubble("vert", xx.mid+xx.v+(xx.lr*91),xx.oplat.y,1,1, 6)
-            makenrubble("vert", xx.mid+xx.v+(xx.lr*91),xx.oplat.y,-1,1, 6)
+            makenrubble("vert", xx.mid+xx.v+(xx.lr*99),xx.oplat.y,1,1, 6)
+            makenrubble("vert", xx.mid+xx.v+(xx.lr*99),xx.oplat.y,-1,1, 6)
           end
-          local temp = retlineplatcheck(xx.mid+xx.v+(xx.lr*72), xx.y+32,xx.v+(19*xx.lr), xx.j-36) 
+          local temp = retlineplatcheck(xx.mid-(xx.lr*50), xx.y+27,xx.v-(49*xx.lr), xx.j-38) 
           if temp ~= nil then
             xx.oplat = temp
-            makenrubble("vert", xx.mid+xx.v-(xx.lr*91),xx.oplat.y,1,1, 6)
-            makenrubble("vert", xx.mid+xx.v-(xx.lr*91),xx.oplat.y,-1,1, 6)
+            makenrubble("vert", xx.mid+xx.v-(xx.lr*99),xx.oplat.y,1,1, 6)
+            makenrubble("vert", xx.mid+xx.v-(xx.lr*99),xx.oplat.y,-1,1, 6)
 
+        end
+        
+             local check = retowallcheck(xx.mid, xx.y,xx.v+99*xx.lr, xx.j-65)
+          xx.owall = check[1]
+          xx.ohit = check[2]
+          if xx.ohit ~= 0 then
+          makenrubble("horiz", xx.owall,xx.ohit,xx.lr*3,0, 4)
+          if xx.oplat == nil then
+            xx.oplat = {y=-1}
           end
+        end
+        
+        
+        
+             check = retowallcheck(xx.mid, xx.y,xx.v-99*xx.lr, xx.j-65)
+          xx.owall = check[1]
+          xx.ohit = check[2]
+          if xx.ohit ~= 0 then
+          makenrubble("horiz", xx.owall,xx.ohit,xx.lr*3,0, 4)
+          if xx.oplat == nil then
+            xx.oplat = {y=-1}
+          end
+          end
+        
+        
+        
+          for i = -1, 2 do
           hboxcs(xx.id, 
-            {x=xx.mid+(xx.lr*50), y = xx.y+27},
-            {x=xx.mid+xx.v+(xx.lr*59), y = xx.y+27-xx.j},
-            {x=xx.mid+xx.v+(xx.lr*99), y = xx.y+60-xx.j},
-            {x=xx.mid+(xx.lr*97), y = xx.y+65},
+            {x=xx.mid+(xx.lr*50)*i, y = xx.y+27},
+            {x=xx.mid+xx.v+(xx.lr*59)*i, y = xx.y+27-xx.j},
+            {x=xx.mid+xx.v+(xx.lr*99)*i, y = xx.y+60-xx.j},
+            {x=xx.mid+(xx.lr*97)*i, y = xx.y+65},
             function(z)
 
               xx.cancombo = true
               z.v = z.v/5
+              z.j = z.j+at.o.k.j
               if not (z.block and z.lr == -xx.lr) then
                 z.health = z.health - at.o.k.dam
                 z.flinch = true
@@ -196,29 +237,13 @@ function orangeyouglad(xx)
               end
               shakez(at.o.k.z)
 
-            end)
-          hboxcs(xx.id, 
-            {x=xx.mid-(xx.lr*50), y = xx.y+27},
-            {x=xx.mid+xx.v-(xx.lr*59), y = xx.y+27-xx.j},
-            {x=xx.mid+xx.v-(xx.lr*99), y = xx.y+60-xx.j},
-            {x=xx.mid-(xx.lr*97), y = xx.y+65},
-            function(z)
-
-              xx.cancombo = true
-              z.v = z.v/5
-              if not (z.block and z.lr == -xx.lr) then
-                z.health = z.health - at.o.k.dam
-                z.flinch = true
-                z.ft = z.ft+at.o.k.ft
-              end
-              shakez(at.o.k.z)
-
-            end)
+          end)
+        end
 
          
         end
  if xx.animcounter >= 15 then 
-            if xx.a4b and not xx.holda then
+            if xx.a4b and not xx.holda and xx.oplat~=nil then
               xx.animcounter = 101
             end
 
@@ -253,11 +278,23 @@ function orangeyouglad(xx)
       elseif xx.animcounter < 25 then
 
         if xx.animcounter == 6 and rampcanhit then
-          xx.oplat = retlineplatcheck(xx.mid+xx.v+(xx.lr*72), xx.y+78,xx.v+26*xx.lr, xx.j-66)
+          xx.oplat = retlineplatcheck(xx.mid, xx.y,xx.v+81*xx.lr, xx.j-138)
           if xx.oplat ~= nil then 
             makenrubble("vert", xx.mid+xx.v+(xx.lr*80),xx.oplat.y,1,1, 5)
             makenrubble("vert", xx.mid+xx.v+(xx.lr*80),xx.oplat.y,-1,1, 5)
           end
+          
+             
+             local check = retowallcheck(xx.mid, xx.y,xx.v+81*xx.lr, xx.j-138)
+          xx.owall = check[1]
+          xx.ohit = check[2]
+          if xx.ohit ~= 0 then
+          makenrubble("horiz", xx.owall,xx.ohit,xx.lr*3,0, 4)
+          if xx.oplat == nil then
+            xx.oplat = {y=-1}
+          end
+          end
+          
           hboxcs(xx.id, 
             {x=xx.mid+(xx.lr*49), y = xx.y+70},
             {x=xx.mid+xx.v+(xx.lr*56), y = xx.y+70-xx.j},
@@ -267,12 +304,13 @@ function orangeyouglad(xx)
 
               xx.cancombo = true
               z.v = z.v/5
+              z.j = z.j+at.o.ak.j
               if not (z.block and z.lr == -xx.lr) then
-                z.health = z.health - at.o.p.dam
+                z.health = z.health - at.o.ak.dam
                 z.flinch = true
-                z.ft = z.ft+at.o.p.ft
+                z.ft = z.ft+at.o.ak.ft
               end
-              shakez(at.o.p.z)
+              shakez(at.o.ak.z)
 
             end)
         end
@@ -292,10 +330,14 @@ function orangeyouglad(xx)
 
 
 
-      elseif xx.animcounter < 23 then
+      elseif xx.animcounter < 27 then
 
-        if xx.oplat ~= nil then 
+        if xx.oplat ~= nil then
+          if xx.oplat.y == -1 then
+            xx.j = 20
+            else
           xx.j = 10
+          end
         end
         xx.oplat = nil
         combo(xx)
@@ -305,7 +347,7 @@ function orangeyouglad(xx)
           xx.im = ao23
         end
 
-      elseif xx.animcounter < 60 then
+      elseif xx.animcounter < 160 then
         combo(xx)
 
       elseif xx.animcounter < 1000 then

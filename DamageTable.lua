@@ -52,10 +52,11 @@ walljumpv2 = 8
 
 whiffradius = 150
 
+jumpheight = .6
 
 papertime = 100
 --speed necessary to move it
-paperweight = 12
+paperweight = 8
 
 blanddam = 15
 bsft = 30

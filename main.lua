@@ -2,10 +2,10 @@
 --if not in the air then some kind of unblocking animation
 --apple w is window close
 --SHAEZ TIED TO RUMBLE?!?!?!?
-
 therampspeed = .1
 drawboxes = true
-fightclub = false
+fightclub = true
+menu = "map"
 fullscreen = false
 readout = true
 mute = false
@@ -255,8 +255,8 @@ require "OO"
 loader = require "love-loader"
 
 
-moop = 0
-
+bob = retpint({x= 0, y = 0}, {x= 0, y = 100}, {x= -5, y = 10}, {x= 5, y = 20})
+blob = mlof({10, 2, 4, 5, 6, 7})
 
 
 
@@ -368,8 +368,7 @@ end
 
 function love.update()
   --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
-
-  speedramp = love.keyboard.isDown("x")
+  if love.keyboard.isDown("x")  then speedramp = true end
   if speedramp then 
     rampspeed = therampspeed
     if ramptimer >= 1 then 
@@ -445,6 +444,7 @@ function love.update()
 
     if menu == "preplay" or menu == "play" then 
       menu = "play"
+  gavinanddan()
       
       if musfadein > 0 then 
     musfade = musfade + musfadein
@@ -495,7 +495,6 @@ function love.update()
         --used to be here platformcheckx()
 
 
-        fallthroughglassfloor()
 
 
         if themap.name == "library" then libwallbreak() 
@@ -792,16 +791,13 @@ function love.update()
     love.graphics.print("fadein "..tostring(fadein), 10, 130)
     love.graphics.print("allfade "..tostring(allfade), 10, 150)
     love.graphics.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
-    love.graphics.print("tileset "..tostring(tileset), 10, 230)
+    love.graphics.print("slowt "..tostring(slowt), 10, 230)
+    love.graphics.print("me.oplat "..tostring(me.oplat), 10, 250)
     love.graphics.setColor(255,0,0)
-    love.graphics.print("mme.oldcolorn"..tostring(me.oldcolorn), 10, 260)
-    if spines[1]~= nil then
-    love.graphics.print("mspines[1].spinecolor"..tostring(spines[24].spinecolor), 10, 280)
-    love.graphics.print("mspines[1].spinecolor2"..tostring(spines[24].spinecolor2), 10, 310)
-    love.graphics.print("mspines[1].spines[1].v"..tostring(spines[24].v), 10, 330)
-    end
-    love.graphics.print("mspines[1].spines[1me.rightc.c.n"..tostring(me.rightc.n), 10, 350)
-    love.graphics.print("mspines[1].spines[1me.leftc.c.n"..tostring(me.leftc.n), 10, 370)
+    
+    
+    
+    
     end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end

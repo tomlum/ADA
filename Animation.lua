@@ -100,12 +100,12 @@ function drawmytrail(xx)
   for i = #xx.trail, 1, -1 do
     cur = xx.trail[i]
 
-    
+
     if cur.im.xoff == nil then cur.im.xoff = 0 end
     if cur.im.yoff == nil then cur.im.yoff = 0 end
     love.graphics.setColor(cur.color.c.r,cur.color.c.g,cur.color.c.b,(255/traillength)*(traillength/cur.t))
     love.graphics.draw(cur.im.im, cur.xanimate-cur.im.xoff*cur.lr, cur.y-cur.im.yoff, 0, cur.lr, 1)
- 
+
     love.graphics.setColor(255, 255, 255, 255)
 
   end
@@ -119,9 +119,9 @@ whatlevel = function()
 
   if placespeople then
     placespeople = false
-    
-you.initwy = 0
-me.initwy = 0
+
+    you.initwy = 0
+    me.initwy = 0
     finishedloading = false
     playfade = 0
     me.deathclock = 0
@@ -142,7 +142,7 @@ me.initwy = 0
     you.ft = 0
     minzoom = defaultminzoom
     maxzoom = defaultmaxzoom
-    
+
 
     if themode == "spectrum" then 
       you.lives = 5
@@ -187,7 +187,6 @@ me.initwy = 0
       loader.newImage(enviro,'lightson',"enviro/lightson.png")
       loader.newImage(enviro,'lightsoff', "enviro/lightsoff.png")
       loader.newImage(enviro,'floor', "enviro/astreet.png")
-      loader.newImage(enviro,'partitionwall',"enviro/partition2.png")
       loader.newImage(enviro,'rafters',"enviro/rafters.png")
       loader.newImage(enviro,'buildingwall',"enviro/buildingwall.png")
 
@@ -205,16 +204,16 @@ me.initwy = 0
       enviro.rightwall = 6600-20
       enviro.ds = 5
       thesong = song1
-    
-    -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
-    -- enviro.sky = love.graphics.newImage("enviro/librarysky.png")
-    -- enviro.librarylpartition = love.graphics.newImage("enviro/librarylpartition.png")
-    -- enviro.libraryrpartition = love.graphics.newImage("enviro/libraryrpartition.png")
-    -- enviro.plibrary = love.graphics.newImage("enviro/libraryplayer.png")
-    -- enviro.thelibraryveneer = love.graphics.newImage("enviro/libraryveneer.png")
-    -- enviro.paralax2 = love.graphics.newImage("enviro/libraryparalax2.png")
-    -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
-    -- enviro.stage = love.graphics.newImage("enviro/library2.png")
+
+      -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
+      -- enviro.sky = love.graphics.newImage("enviro/librarysky.png")
+      -- enviro.librarylpartition = love.graphics.newImage("enviro/librarylpartition.png")
+      -- enviro.libraryrpartition = love.graphics.newImage("enviro/libraryrpartition.png")
+      -- enviro.plibrary = love.graphics.newImage("enviro/libraryplayer.png")
+      -- enviro.thelibraryveneer = love.graphics.newImage("enviro/libraryveneer.png")
+      -- enviro.paralax2 = love.graphics.newImage("enviro/libraryparalax2.png")
+      -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
+      -- enviro.stage = love.graphics.newImage("enviro/library2.png")
 
     elseif themap.name == "library" then
       loader.start(function()
@@ -256,12 +255,12 @@ me.initwy = 0
       enviro.ds = 5
       thesong = song2
 
-  end
-  
+    end
+
     me.oldpy = me.y
     you.oldpy = you.y
 
-end
+  end
 end
 ma1fade= 100
 ma2fade= 100
@@ -289,9 +288,9 @@ end
 
 function drawa(xx)
   drawmytrail(xx)
-  
-    if xx.im.xoff == nil then xx.im.xoff = 0 end
-    if xx.im.yoff == nil then xx.im.yoff = 0 end
+
+  if xx.im.xoff == nil then xx.im.xoff = 0 end
+  if xx.im.yoff == nil then xx.im.yoff = 0 end
 
   if xx.im.cxoff == nil then xx.im.cxoff = xx.im.xoff end
   if xx.im.cyoff == nil then xx.im.cyoff = xx.im.yoff end
@@ -312,7 +311,7 @@ function drawa(xx)
 
 
   if xx.im.c ~= nil and mode~="retry" then 
-    
+
     love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
     love.graphics.draw(xx.im.c, xx.xanimate-xx.im.cxoff*xx.lr, xx.y-xx.im.cyoff, 0, xx.lr, 1)
   end
@@ -339,15 +338,15 @@ function actionshotstuff(xx)
         xx.currentanim = xx.color.n
         combo(xx)
         xx.actionshot = false
-        
-    musfadein = 10
+
+        musfadein = 10
         xx.actiontimer = 0
 
       end
     end
     minzoom = minzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
     maxzoom = maxzoom + .02+((xx.actiontimer)^2)/300000 --(math.exp(1)^wobbletimer)*math.cos(2*math.pi*wobbletimer)
-  
+
   end
 
   ColorChange(xx)
@@ -355,7 +354,7 @@ function actionshotstuff(xx)
 
   if xx.actiontimer == 1 
   then xx.actionshot = false 
-    
+
     musfadein = 10
     xx.actiontimer = 0
 
@@ -486,7 +485,7 @@ drawstreetstuff = function()
   drawrubble()
   love.graphics.draw(enviro.rafters,5608-502, 1536)
   love.graphics.draw(enviro.buildingwall,-1542, 0)
-  love.graphics.draw(enviro.partitionwall,themaps[1].rightwall-20, 0)
+  love.graphics.draw(partition,themaps[1].rightwall-20, 0)
 
 end
 drawlibrarystuff = function()
@@ -502,8 +501,8 @@ drawfloorsstuff = function()
   drawglass()
   drawpapers()
   love.graphics.draw(enviro.pfloors,0,0)
-  love.graphics.draw(partition,-1800+270, 1,0, 10,3.11)
-  love.graphics.draw(partition,enviro.rightwall-270, 1,0, 10,3.11)
+  love.graphics.draw(partition,21, 1,0, -1,3.11)
+  love.graphics.draw(partition,themaps[3].rightwall-21, 0, 0, 1, 3.11)
   floorsveneer()
 end
 
@@ -549,27 +548,8 @@ function drawpapers()
       v.j = v.j + you.j*.01 + .1
     end
 
-    for p,q in ipairs(me.tornado)  do
-      if math.abs(q.x-v.x) < 25 and math.abs(q.y - v.y) < 50 
-      then 
-        if v.x < me.thecenter then
-          v.v = math.random(-1,10)
-        else
-          v.v = math.random(-10,1)
-        end
-        v.j = math.random(5,10)
-      end
-    end
-    for p,q in ipairs(you.tornado) do
-      if math.abs(q.x-v.x) < 25 and math.abs(q.y - v.y) < 50 
-      then if v.x < you.thecenter then
-        v.v = math.random(-1,10)
-      else
-        v.v = math.random(-10,1)
-      end
-      v.j = math.random(5,10)
-    end
-  end
+    
+   
   if v.n < papertime then
     v.n = v.n + 1
   else v.n = 0
@@ -653,8 +633,8 @@ end
 rubbletimer = 0
 function drawrubble()
   if rubbletimer > 100 then rubbletimer = 0
-    else
-  rubbletimer = rubbletimer + 1*rampspeed
+  else
+    rubbletimer = rubbletimer + 1*rampspeed
   end
 
   for i = #rubble, 1, -1 do
@@ -708,13 +688,20 @@ function makenrubble(ty, ex,why,vee,jay, n)
 
     for i = n, 1, -1 do
       if vee > 0 then
-        table.insert(rubble,{x = ex, y = why, v=math.random(0, vee) + math.random(), j = jay+1*math.random(5)+math.random()})
+        table.insert(rubble,{x = ex+i, y = why, v=math.random(0, vee) + math.random(), j = jay+1*math.random(5)+math.random(), rot = math.random() + math.random(1,5)})
       else
-        table.insert(rubble,{x = ex, y = why, v=math.random(0, vee) - math.random(), j = jay+1*math.random(5)+math.random()})
+        table.insert(rubble,{x = ex+i, y = why, v=math.random(0, vee) - math.random(), j = jay+1*math.random(5)+math.random(), rot = math.random() + math.random(1,5)})
       end
     end
   end
 end
+
+function makenglass(ex,why,vee,jay,n)
+  for i = 1, n do
+    table.insert(glasseses,{x = ex, y = why, v=vee + math.random()+math.random(-1,0), j = jay+math.random()+math.random(-3,2)})
+  end
+end
+
 function makeglass (ex,why,vee,jay)
   if vee > 0 then
     table.insert(glasseses,{x = ex, y = why, v=vee + math.random(5), j = jay+1*math.random(5)})
@@ -927,10 +914,10 @@ function floorsveneer()
     elseif lvfade2 < 255 then lvfade2 = lvfade2 + 5
     end
     love.graphics.setColor(255,255,255,lvfade)
-    love.graphics.draw(enviro.stagesveneer1, 416, 1898)
+    love.graphics.draw(enviro.floorsveneer1, 416, 1898)
     love.graphics.setColor(255,255,255)
     love.graphics.setColor(255,255,255,lvfade2)
-    love.graphics.draw(enviro.stagesveneer2, 3157, 2829)
+    love.graphics.draw(enviro.floorsveneer2, 3157, 2829)
     love.graphics.setColor(255,255,255)
   end
 end
@@ -993,88 +980,6 @@ function floorswallbreak()
 
   mespeed = math.sqrt((me.v*me.v)+(me.j*me.j))
   youspeed = math.sqrt((you.v*you.v)+(you.j*you.j))
-  if ((me.mid > 3159 and me.mid + me.v <= 3159) or (me.mid < 3159 and me.mid + me.v >= 3159)) and me.y > 2829 
-  then repplay(wallbreaks)
-    makerubble(me.mid,me.y,me.v,me.j)
-    wallslowmehdown()
-  end
-  if ((me.mid > 2140 and me.mid + me.v <= 2140) or (me.mid < 2140 and me.mid + me.v >= 2140)) and me.y > 1619 and me.y < 5586
-  then repplay(glassbreaks)
-    makeglass(me.mid,me.y,me.v,me.j)
-
-  end
-
-  if ((you.mid > 2140 and you.mid + you.v <= 2140) or (you.mid < 2140 and you.mid + you.v >= 2140)) and you.y > 1619 and you.y < 5586
-  then repplay(glassbreaks)
-    makeglass(you.mid,you.y,you.v,you.j)
-
-  end
-
-  if ((you.mid > 3159 and you.mid + you.v <= 3159) or (you.mid < 3159 and you.mid + you.v >= 3159)) and you.y > 2829 
-  then repplay(wallbreaks)
-    makerubble(you.mid,you.y,you.v,you.j)
-    wallslowyouhdown()
-  end
-
-  if ((me.mid > 419 and me.mid + me.v <= 419) or (me.mid < 419 and me.mid + me.v >= 419)) and me.y > 1905 and me.y < 5586
-  then repplay(glassbreaks)
-    makeglass(me.mid,me.y,me.v,me.j)
-
-  end
-
-  if ((me.mid > 419 and me.mid + me.v <= 419) or (me.mid < 419 and me.mid + me.v >= 419)) and me.y < 1905
-  then repplay(wallbreaks)
-    makeglass(me.mid,me.y,me.v,me.j)
-
-  end
-
-  if ((you.mid > 419 and you.mid + you.v <= 419) or (you.mid < 419 and you.mid + you.v >= 419)) and you.y > 1905 and you.y < 5586
-  then repplay(glassbreaks)
-    makeglass(you.mid,you.y,you.v,you.j)
-
-  end
-  if ((you.mid > 419 and you.mid + you.v <= 419) or (you.mid < 419 and you.mid + you.v >= 419)) and you.y < 1905
-  then repplay(wallbreaks)
-    makeglass(you.mid,you.y,you.v,you.j)
-
-  end
-
-  if me.mid > 2183 and me.mid < 2723 and me.y > 2693 and me.y - me.j < 2693
-  then 
-    repplay(wallbreaks)
-    makefloorglass(me.mid,me.y,me.v,me.j)
-  end
-
-  if me.mid > 2183 and me.mid < 2723 and me.feet < 2693 and me.feet - me.j > 2693
-  then 
-    repplay(wallbreaks)
-    makefloorglass(me.mid,me.feet,me.v,me.j)
-  end
-
-  if you.mid > 2183 and you.mid < 2723 and you.y > 2693 and you.y - you.j < 2693
-  then 
-    repplay(wallbreaks)
-    makefloorglass(you.mid,you.y,you.v,you.j)
-  end
-
-  if you.mid > 2183 and you.mid < 2723 and you.feet < 2693 and you.feet - you.j > 2693
-  then 
-    repplay(wallbreaks)
-    makefloorglass(you.mid,you.feet,you.v,you.j)
-  end
-  if ((you.mid > 2140 and you.mid + you.v <= 2140) or (you.mid < 2140 and you.mid + you.v >= 2140)) and you.feet > 5616 and you.feet < 5780
-  then 
-    repplay(wallbreaks)
-    makerubble(you.mid,you.feet,you.v,you.j)
-    wallslowyouhdown()
-  end
-
-  if ((me.mid > 2140 and me.mid + me.v <= 2140) or (me.mid < 2140 and me.mid + me.v >= 2140)) and me.feet > 5616 and me.feet < 5780 
-  then 
-    repplay(wallbreaks)
-    makerubble(me.mid,me.feet,me.v,me.j)
-    wallslowmehdown()
-  end
 
   if findxIntersect(600,4419,633,4455,me.mid+me.v,me.y-me.j+30,me.mid,me.y+30) and mespeed > paperweight then
     makepapers(me.mid,me.y,me.v, me.j, 8)
@@ -1132,72 +1037,6 @@ function floorswallbreak()
   if findxIntersect(1558,5573,1581,5590,you.mid+you.v,you.y-you.j+30,you.mid,you.y+30) and youspeed > paperweight then
     makepapers(you.mid,you.y,you.v,you.j, 1)
   end
-
-  for p,q in ipairs(me.tornado) do
-    if math.random()>.5 then
-      if findxIntersect(600,4419,633,4455,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(1528,3574,1542,3587,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(1882,4366,1965,4472,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(1803,5002,1832,5019,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(718,4994,751,5018,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(838,5278,856,5304,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(1524,5282,1538,5304,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(1712,5269,1725,5278,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(1558,5573,1581,5590,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-    end
-    for p,q in ipairs(you.tornado) do
-
-      if findxIntersect(600,4419,633,4455,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(1528,3574,1542,3587,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(1882,4366,1965,4472,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(1803,5002,1832,5019,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(718,4994,751,5018,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(838,5278,856,5304,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(1524,5282,1538,5304,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(1712,5269,1725,5278,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-      if findxIntersect(1558,5573,1581,5590,q.x+q.v,q.y,q.x,q.y) then
-        makepapers(q.x,q.y,q.v,windpush,1)
-      end
-
-    end
-  end
-
-
-
 end
 
 
@@ -1248,9 +1087,9 @@ drawspine = function()
     soup=true
     spinestartx = 615
     for i=1, 24 do
-    table.insert(spines, {x=spinestartx, y=0, n=24-i, v=0, spinecolor = 0, spinecolor2 = 0})
-      
-      
+      table.insert(spines, {x=spinestartx, y=0, n=24-i, v=0, spinecolor = 0, spinecolor2 = 0})
+
+
     end
 
 
@@ -1282,55 +1121,55 @@ drawspine = function()
         v.v = spines[i+1].v
         v.x = v.x + v.v 
         if v.v == 14.5 then 
-            v.spinecolor = spines[i+1].spinecolor
-          elseif v.v == -14.5 then 
-            v.spinecolor2 = spines[i+1].spinecolor2
+          v.spinecolor = spines[i+1].spinecolor
+        elseif v.v == -14.5 then 
+          v.spinecolor2 = spines[i+1].spinecolor2
         end
       else
         if v.v == 14.5 then 
-            if v.spinecolor2 == 0 then v.spinecolor2 = 1
+          if v.spinecolor2 == 0 then v.spinecolor2 = 1
           else v.spinecolor2 = 0
-            end
-        elseif v.v == -14.5 then 
-            if v.spinecolor == 0 then v.spinecolor = 1
-          else v.spinecolor = 0
-            end
           end
-        
+        elseif v.v == -14.5 then 
+          if v.spinecolor == 0 then v.spinecolor = 1
+          else v.spinecolor = 0
+          end
+        end
+
         v.v = soscillator
         v.x = v.x + v.v
       end
     end
 
-      if v.v >= 0 then
-        if v.spinecolor == 0 then 
-          love.graphics.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
-        elseif v.spinecolor == 1 then 
-          love.graphics.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
-        end
-        love.graphics.sdraw(enviro.spine, v.x, (v.n * (40+spinespacing))+spineymove)
-
-        if v.spinecolor2 == 0 then 
-          love.graphics.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
-        elseif v.spinecolor2 == 1 then 
-          love.graphics.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
-        end
-        love.graphics.sdraw(enviro.spine, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
-      else
-        if v.spinecolor2 == 0 then 
-          love.graphics.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
-        elseif v.spinecolor2 == 1 then 
-          love.graphics.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
-        end
-        love.graphics.sdraw(enviro.spine, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
-
-        if v.spinecolor == 0 then 
-          love.graphics.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
-        elseif v.spinecolor == 1 then 
-          love.graphics.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
-        end
-        love.graphics.sdraw(enviro.spine, v.x, (v.n * (40+spinespacing))+spineymove)
+    if v.v >= 0 then
+      if v.spinecolor == 0 then 
+        love.graphics.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
+      elseif v.spinecolor == 1 then 
+        love.graphics.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
       end
+      love.graphics.sdraw(enviro.spine, v.x, (v.n * (40+spinespacing))+spineymove)
+
+      if v.spinecolor2 == 0 then 
+        love.graphics.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
+      elseif v.spinecolor2 == 1 then 
+        love.graphics.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
+      end
+      love.graphics.sdraw(enviro.spine, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
+    else
+      if v.spinecolor2 == 0 then 
+        love.graphics.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
+      elseif v.spinecolor2 == 1 then 
+        love.graphics.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
+      end
+      love.graphics.sdraw(enviro.spine, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
+
+      if v.spinecolor == 0 then 
+        love.graphics.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
+      elseif v.spinecolor == 1 then 
+        love.graphics.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
+      end
+      love.graphics.sdraw(enviro.spine, v.x, (v.n * (40+spinespacing))+spineymove)
+    end
   end
 
 end
@@ -1559,8 +1398,8 @@ death = function(xx, yy)
       xx.idletimer = 0
     end
   end
-  
-  
+
+
   walkxx = function (xx)
 
     xx.walktimer = xx.walktimer + 1*rampspeed
@@ -1748,3 +1587,35 @@ death = function(xx, yy)
 end
 
 
+
+slowtime = 95
+speedramp = false
+slowmot = 0
+function gavinanddan()
+  if slowmot > 0 then
+    slowmot = slowmot - 1
+    speedramp = true
+    musfadein = -3
+    
+
+  elseif slowww then 
+    slowww = false 
+    slowmot = slowtime
+    
+  else 
+    speedramp = false
+    slowmot = 0
+    if musfade == 0 then
+      musfadein = 10
+    musfade = 255
+    repplay(collides)
+      --deathsound:play()
+      --bcs:play()
+    end
+
+
+  end
+
+
+
+end

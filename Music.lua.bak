@@ -33,15 +33,25 @@ openingsong:setLooping(true)
 
 
 SFXV = 1
+--TEsound.volume("all",.1)
+
+ss = {}
 
 function repplay(x)
  if not mute then
+  --[[ local name = toString(2)
+   if ss.name ~= nil then 
+   else
+     ss.name = true
+     end
+     ]]--
 	if x:isStopped() then
 			x:play()
 		else x:rewind()
 			x:play()
 		end
-    end
+  end
+  
     
 
 end
@@ -77,7 +87,7 @@ me.bpsound:setPitch(.8 + (math.random() * .3) )
 me.cp:setPitch(.8 + (math.random() * .3) )
 you.cp:setPitch(.8 + (math.random() * .3) )
 me.slidesound:setPitch(.8 + (math.random() * .3) )
-me.slidesound2:setPitch(.8 + (math.random() * .3) )
+you.slidesound:setPitch(.8 + (math.random() * .3) )
 me.runsound:setPitch(1.3 + (math.random() * .3) )
 you.runsound:setPitch(1.3 + (math.random() * .3) )
 me.jumpd:setPitch(1.65 + (math.random() * .3) )
@@ -93,7 +103,7 @@ blocksound:setPitch(.8+ (math.random() * .3) )
 blocksound2:setPitch(.8 + (math.random() * .3) )
 me.flapsnd:setPitch(.8+ (math.random() * .3) )
 you.flapsnd:setPitch(.8 + (math.random() * .3) )
-whiff1:setPitch(1.6 + (math.random() * .3) )
+me.whiff:setPitch(1.6 + (math.random() * .3) )
 whiff2:setPitch(1.6 + (math.random() * .3) )
 tornadosound1:setPitch(1.6 + (math.random() * .3) )
 tornadosound2:setPitch(1.6 + (math.random() * .3) )
@@ -117,7 +127,7 @@ elseif me.im ~= slide then msready = true
 end
 
 if you.im == slide and not you.dodge and ysready then
-			me.slidesound2:play()
+			repplay(you.slidesound)
 			ysready = false
 elseif you.im ~= slide then ysready = true
 end
@@ -158,8 +168,9 @@ collidesar[8]:setVolume(SFXV - .82)
 
 
 colorgsound = love.audio.newSource("sounds/gsound.mp3", "stream")
-colorgsound:setVolume(0)
-colorgsound:setPitch(1)
+
+colorpsound = love.audio.newSource("sounds/psound.mp3", "stream")
+
 
 adj = .14
 
@@ -269,8 +280,8 @@ mov2:setPitch(1.2)
 
 me.slidesound = love.audio.newSource("sounds/slide.wav", "static")
 me.slidesound:setVolume(SFXV-.82)
-me.slidesound2 = love.audio.newSource("sounds/slide.wav", "static")
-me.slidesound2:setVolume(SFXV-.82)
+you.slidesound = love.audio.newSource("sounds/slide.wav", "static")
+you.slidesound:setVolume(SFXV-.82)
 
 me.runsound = love.audio.newSource("sounds/run.wav", "static")
 me.runsound:setVolume(SFXV-.8)
@@ -374,14 +385,17 @@ cg2 = love.audio.newSource("sounds/cg.wav", "static")
 cg2:setVolume(SFXV-.67-adj)
 cg2:setPitch(1.3)
 
+whiff = love.audio.newSource("sounds/green.mp3", "static")
+whiff:setVolume(SFXV-.9-adj)
+
 
 me.green = love.audio.newSource("sounds/green.mp3", "static")
 me.green:setVolume(SFXV-.8-adj)
 you.green = love.audio.newSource("sounds/green.mp3", "static")
 you.green:setVolume(SFXV-.8-adj)
 
-whiff1 = love.audio.newSource("sounds/green.mp3", "static")
-whiff1:setVolume(SFXV-.83-adj)
+me.whiff = love.audio.newSource("sounds/green.mp3", "static")
+me.whiff:setVolume(SFXV-.83-adj)
 whiff2 = love.audio.newSource("sounds/green.mp3", "static")
 whiff2:setVolume(SFXV-.83-adj)
 

@@ -1,4 +1,4 @@
-menu = "color"
+
 oldmenu = "begin"
 notilebouncing = true
 --menu that fades into another???
@@ -24,12 +24,14 @@ themaps[2]= {name = "library",
 
 themaps[3]= {name = "floors", 
   plats = {}, walls = {},
-  floor = 896,
+  floor = 5898,
   lightx = 442+2.5,
   lighty = 311+2.5,
   lightcolor = {r = 255, g = 99, b = 0},
   rightwall = 5000
 }
+
+
 
 themaps[100]= {name = "fightclub", 
   plats = {}, walls = {},
@@ -667,7 +669,7 @@ function drawmenus()
     end
 
     love.graphics.setColor(allfade,allfade,allfade)
-    love.graphics.sdraw(enviro.sky, 0, 0, 0, 10, 1)
+    love.graphics.sdraw(enviro.sky, 0, 0, 0, 150, 1)
   love.graphics.sdraw(enviro.paralax, -dollyx/2,  -enviro.paralax:getHeight()+900-letterboxheight-30)
     love.graphics.sdraw(enviro.stage, -dollyx, -themap.floor+900 -letterboxheight-30)
     love.graphics.setColor(0,0,0)

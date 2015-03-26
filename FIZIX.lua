@@ -36,8 +36,77 @@ table.insert(themaps[100].plats, {n=1, y = 896, x1 = 0, x2 = 100000, floor = tru
 table.insert(themaps[100].plats, {n=2, y = 465, x1 = 32, x2 = 236})
 table.insert(themaps[100].plats, {n=3, y = 541, x1 = 839, x2 = 1016})
 table.insert(themaps[100].plats, {n=4, y = 719, x1 = 655, x2 = 1560})
-table.insert(themaps[100].walls, {n=1, y1 = -1, x=0, barrier = true})
-table.insert(themaps[100].walls, {n=2, y1 = -1, x=2000, barrier = true})
+table.insert(themaps[100].walls, {n=1, y1 = -1, y2 = themaps[100].floor, x=0, barrier = true})
+table.insert(themaps[100].walls, {n=2, y1 = -1, y2 = themaps[100].floor, x=2000, barrier = true})
+
+table.insert(themaps[100].walls, {n=2, y1 = 3, y2 = themaps[100].floor+1, x=500})
+
+
+
+
+
+
+
+table.insert(themaps[3].plats, {y = themaps[3].floor, x1 = 0, x2 = 100000, floor = true})
+table.insert(themaps[3].walls, {y1 = -1, y2 = themaps[3].floor+1, x=0})
+table.insert(themaps[3].walls, {y1 = -1, y2 = themaps[3].floor+1, x=themaps[3].rightwall})
+
+
+table.insert(themaps[3].plats, {y = 2688, x1 = 2154, x2 = 2726,glass = true})
+
+table.insert(themaps[3].plats, {y = 5616, x1 = 419, x2 = 2139})
+table.insert(themaps[3].plats, {y = 2756, x1 = 419, x2 = 2139})
+table.insert(themaps[3].plats, {y = 2756-286, x1 = 419, x2 = 809})
+table.insert(themaps[3].plats, {y = 2756-286, x1 = 1756, x2 = 2139})
+table.insert(themaps[3].plats, {y = 2756-286*2, x1 = 419, x2 = 645})
+table.insert(themaps[3].plats, {y = 2756-286*2, x1 = 2075, x2 = 2139})
+table.insert(themaps[3].plats, {y = 2756-286*3, x1 = 419, x2 = 636})
+table.insert(themaps[3].plats, {y = 2756-286*3, x1 = 2070, x2 = 2139})
+table.insert(themaps[3].plats, {y = 2756-286*4, x1 = 2072, x2 = 2139})
+for i=1, 8 do
+table.insert(themaps[3].plats, {y = 5616-286*i, x1 = 419, x2 = 2139})
+end
+
+for i=1, 10 do
+  local bleh = 0
+  local blehy = 0
+  if i == 1 then
+  bleh = 4901
+  elseif i == 2 then
+  bleh = 4898
+  elseif i == 3 then
+  bleh = 4895
+  elseif i == 4 then
+  bleh = 4889
+  elseif i == 5 then
+  bleh = 4906
+  elseif i == 6 then
+  bleh = 4899
+  elseif i == 7 then
+  bleh = 4784
+  elseif i == 8 then
+  bleh = 4699
+  elseif i == 9 then
+  bleh = 4889
+  elseif i == 10 then
+  bleh = 3847
+  blehy = 79
+  table.insert(themaps[3].plats, {y = themaps[3].floor-299*i-blehy, x1 = 4335, x2 = 4908})
+  end
+table.insert(themaps[3].plats, {y = themaps[3].floor-299*i-blehy, x1 = 3160, x2 = bleh})
+end
+
+table.insert(themaps[3].walls, {y1 = 1900, y2 = themaps[3].floor+1, x=419, glasswall = 5618})
+table.insert(themaps[3].walls, {y1 = 2763, y2 = 5618, x=2139, glasswall = 5618})
+table.insert(themaps[3].walls, {y1 = 1613, y2 = 2184, x=2139})
+table.insert(themaps[3].walls, {y1 = 2830, y2 = themaps[3].floor+1, x=3159})
+
+
+
+
+table.insert(themaps[3].plats, {y = themaps[3].floor, x1 = 0, x2 = 100000, floor = true})
+
+
 
 
 
@@ -192,17 +261,22 @@ you.runpace = defrunpace
 
 --if me.running then jump height is half
 
-function fallthroughglassfloor()
+function fallthroughglassfloor(xx)
 
-  if themap.name == "floors" and
-  me.mid > 2154 and me.mid < 2726 and me.y < 3000 and me.y > 2000 and me.running
-  then me.g = false me.y = me.y + 2 me.onplat = false
+  if xx.running and xx.plat.glass ~= nil then
+    xx.j = -4
+    xx.y = xx.y + 5
+    xx.gothroughplats = true
+    for i = -10, 10 do
+    makenglass(xx.mid+i,xx.plat.y,xx.v/2,xx.j, 1)
+    end
   end
 
 end
 
 
 function runrunrun(xx)
+  fallthroughglassfloor(xx)
     if not xx.g then xx.running = false end
 
     if xx.running and math.abs(xx.push) > 0 then 
@@ -439,7 +513,7 @@ transferofenergy(xx)
     if z.up and xx.j > 0 and z.type ==0
     and xx.jmax > 0 
     and xx.firstjump
-    then xx.jmax = xx.jmax - .7*rampspeed
+    then xx.jmax = xx.jmax - jumpheight*rampspeed
       --the end arc/fall of any jump or the mini jump
     else
       xx.firstjump = false
