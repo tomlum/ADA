@@ -99,22 +99,10 @@ function orangeyouglad(xx)
 
       elseif xx.animcounter < 40 then
         if xx.animcounter == 8 and rampcanhit then
-         
 
-          xx.oplat = retlineplatcheck(xx.mid+(xx.lr*72), xx.y+32,xx.v+(19*xx.lr), xx.j-36) 
-          if xx.oplat ~= nil then
-            makenrubble("vert", xx.mid+xx.v+(xx.lr*91),xx.oplat.y,1,1, 4)
-            makenrubble("vert", xx.mid+xx.v+(xx.lr*91),xx.oplat.y,-1,1, 4)
-            
-            
-             local check = retowallcheck(xx.mid+(xx.lr*72), xx.y+32,xx.v+(19*xx.lr), xx.j-36) 
-          xx.owall = check[1]
-          xx.ohit = check[2]
-          if xx.ohit ~= 0 then
-          makenrubble("horiz", xx.owall,xx.ohit,xx.lr*3,0, 4)
-          end
-            
-          end
+          xx.oplat = nil
+          ocontactstuff(xx, xx.mid+(xx.lr*72), xx.y+32,xx.v+(19*xx.lr), xx.j-36) 
+
           hboxcs(xx.id, 
             {x=xx.mid+(xx.lr*59), y = xx.y+24},
             {x=xx.mid+xx.v+(xx.lr*64), y = xx.y+24-xx.j},
@@ -182,6 +170,10 @@ function orangeyouglad(xx)
 
         if xx.animcounter == 13+5 and rampcanhit then
 
+          xx.oplat = nil
+ ocontactstuff(xx, xx.mid+(xx.lr*50), xx.y+27,xx.v+(49*xx.lr), xx.j-38) 
+ ocontactstuff(xx, xx.mid-(xx.lr*50), xx.y+27,xx.v-(49*xx.lr), xx.j-38)
+ --[[
           xx.oplat = retlineplatcheck(xx.mid+(xx.lr*50), xx.y+27,xx.v+(49*xx.lr), xx.j-38) 
           if xx.oplat ~= nil then
             makenrubble("vert", xx.mid+xx.v+(xx.lr*99),xx.oplat.y,1,1, 6)
@@ -193,62 +185,74 @@ function orangeyouglad(xx)
             makenrubble("vert", xx.mid+xx.v-(xx.lr*99),xx.oplat.y,1,1, 6)
             makenrubble("vert", xx.mid+xx.v-(xx.lr*99),xx.oplat.y,-1,1, 6)
 
-        end
-        
-             local check = retowallcheck(xx.mid, xx.y,xx.v+99*xx.lr, xx.j-65)
+          end
+
+          local check = retowallcheck(xx.mid, xx.y,xx.v+99*xx.lr, xx.j-65)
           xx.owall = check[1]
           xx.ohit = check[2]
           if xx.ohit ~= 0 then
-          makenrubble("horiz", xx.owall,xx.ohit,xx.lr*3,0, 4)
-          if xx.oplat == nil then
-            xx.oplat = {y=-1}
-          end
-        end
-        
-        
-        
-             check = retowallcheck(xx.mid, xx.y,xx.v-99*xx.lr, xx.j-65)
-          xx.owall = check[1]
-          xx.ohit = check[2]
-          if xx.ohit ~= 0 then
-          makenrubble("horiz", xx.owall,xx.ohit,xx.lr*3,0, 4)
-          if xx.oplat == nil then
-            xx.oplat = {y=-1}
-          end
-          end
-        
-        
-        
-          for i = -1, 2 do
-          hboxcs(xx.id, 
-            {x=xx.mid+(xx.lr*50)*i, y = xx.y+27},
-            {x=xx.mid+xx.v+(xx.lr*59)*i, y = xx.y+27-xx.j},
-            {x=xx.mid+xx.v+(xx.lr*99)*i, y = xx.y+60-xx.j},
-            {x=xx.mid+(xx.lr*97)*i, y = xx.y+65},
-            function(z)
 
-              xx.cancombo = true
-              z.v = z.v/5
-              z.j = z.j+at.o.k.j
-              if not (z.block and z.lr == -xx.lr) then
-                z.health = z.health - at.o.k.dam
-                z.flinch = true
-                z.ft = z.ft+at.o.k.ft
-              end
-              shakez(at.o.k.z)
+            if check[3]~= nil then
 
-          end)
-        end
+              makenglass(xx.owall,xx.ohit,xx.lr*3,0, 4)
+            else
 
-         
-        end
- if xx.animcounter >= 15 then 
-            if xx.a4b and not xx.holda and xx.oplat~=nil then
-              xx.animcounter = 101
+              makenrubble("horiz", xx.owall,xx.ohit,xx.lr*3,0, 4)
             end
-
-            combo(xx)
+            if xx.oplat == nil and check[3]~= nil then
+              xx.oplat = {y=-1}
+            end
           end
+
+
+
+          check = retowallcheck(xx.mid, xx.y,xx.v-99*xx.lr, xx.j-65)
+          xx.owall = check[1]
+          xx.ohit = check[2]
+          if xx.ohit ~= 0 then
+            makenglass(xx.owall,xx.ohit,xx.lr*3,0, 4)
+
+            if check[3]~= nil then
+              makenrubble("horiz", xx.owall,xx.ohit,xx.lr*3,0, 4)
+            end
+            if xx.oplat == nil and check[3]~= nil then
+              xx.oplat = {y=-1}
+            end
+          end
+]]--
+
+
+          for i = -1, 2 do
+            hboxcs(xx.id, 
+              {x=xx.mid+(xx.lr*50)*i, y = xx.y+27},
+              {x=xx.mid+xx.v+(xx.lr*59)*i, y = xx.y+27-xx.j},
+              {x=xx.mid+xx.v+(xx.lr*99)*i, y = xx.y+60-xx.j},
+              {x=xx.mid+(xx.lr*97)*i, y = xx.y+65},
+              function(z)
+
+                xx.cancombo = true
+                z.v = z.v/5
+                z.j = z.j+at.o.k.j
+                if not (z.block and z.lr == -xx.lr) then
+                  z.health = z.health - at.o.k.dam
+                  z.flinch = true
+                  z.ft = z.ft+at.o.k.ft
+                end
+                shakez(at.o.k.z)
+
+              end)
+          end
+
+
+        end
+        if xx.animcounter >= 15 then 
+          if xx.a4b and not xx.holda and xx.oplat~=nil then
+            xx.animcounter = 101
+            xx.oplat = nil
+          end
+
+          combo(xx)
+        end
 
 
 
@@ -278,23 +282,11 @@ function orangeyouglad(xx)
       elseif xx.animcounter < 25 then
 
         if xx.animcounter == 6 and rampcanhit then
-          xx.oplat = retlineplatcheck(xx.mid, xx.y,xx.v+81*xx.lr, xx.j-138)
-          if xx.oplat ~= nil then 
-            makenrubble("vert", xx.mid+xx.v+(xx.lr*80),xx.oplat.y,1,1, 5)
-            makenrubble("vert", xx.mid+xx.v+(xx.lr*80),xx.oplat.y,-1,1, 5)
-          end
           
-             
-             local check = retowallcheck(xx.mid, xx.y,xx.v+81*xx.lr, xx.j-138)
-          xx.owall = check[1]
-          xx.ohit = check[2]
-          if xx.ohit ~= 0 then
-          makenrubble("horiz", xx.owall,xx.ohit,xx.lr*3,0, 4)
-          if xx.oplat == nil then
-            xx.oplat = {y=-1}
-          end
-          end
-          
+          xx.oplat = nil
+          ocontactstuff(xx, xx.mid, xx.y,xx.v+81*xx.lr, xx.j-138)
+
+
           hboxcs(xx.id, 
             {x=xx.mid+(xx.lr*49), y = xx.y+70},
             {x=xx.mid+xx.v+(xx.lr*56), y = xx.y+70-xx.j},
@@ -333,10 +325,12 @@ function orangeyouglad(xx)
       elseif xx.animcounter < 27 then
 
         if xx.oplat ~= nil then
-          if xx.oplat.y == -1 then
+          if xx.oplat[3] ~= nil then
+            xx.j = xx.j
+          elseif xx.oplat.y == -1 then
             xx.j = 20
-            else
-          xx.j = 10
+          else
+            xx.j = 10
           end
         end
         xx.oplat = nil
@@ -358,4 +352,38 @@ function orangeyouglad(xx)
     end
   end
 end
+end
+
+
+function ocontactstuff(xx, ex, why, vee, jay)
+
+  if xx.oplat == nil and retlineplatcheck(ex, why,vee, jay) == nil then xx.oplat = nil end
+  if retlineplatcheck(ex, why,vee, jay) ~= nil then 
+    xx.oplat = retlineplatcheck(ex, why,vee, jay)
+    if xx.glass~=nil then 
+    makenglass(ex+xx.v+vee,xx.oplat.y,1,1, 5)
+    makenglass(ex+xx.v+vee,xx.oplat.y,-1,1, 5)
+      
+      else
+    makenrubble("vert", ex+xx.v+vee,xx.oplat.y,1,1, 5)
+    makenrubble("vert", ex+xx.v+vee,xx.oplat.y,-1,1, 5)
+      end
+  end
+
+
+  local check = retowallcheck(ex, why,vee, jay)
+  xx.owall = check[1]
+  xx.ohit = check[2]
+  if xx.ohit ~= 0 then
+    if check[3]~= nil then
+      makenglass(xx.owall,xx.ohit,vee/math.abs(vee),0, 4)
+    else
+      makenrubble("horiz", xx.owall,xx.ohit,vee/math.abs(vee),0, 4)
+
+    end
+    if xx.oplat == nil and check[3]==nil then
+      xx.oplat = {y=-1}
+    end
+  end
+
 end

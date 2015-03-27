@@ -39,7 +39,7 @@ table.insert(themaps[100].plats, {n=4, y = 719, x1 = 655, x2 = 1560})
 table.insert(themaps[100].walls, {n=1, y1 = -1, y2 = themaps[100].floor, x=0, barrier = true})
 table.insert(themaps[100].walls, {n=2, y1 = -1, y2 = themaps[100].floor, x=2000, barrier = true})
 
-table.insert(themaps[100].walls, {n=2, y1 = 3, y2 = themaps[100].floor+1, x=500})
+table.insert(themaps[100].walls, {n=2, y1 = 3, y2 = themaps[100].floor+1, x=500, glasswall = themaps[3].floor})
 
 
 
@@ -97,7 +97,7 @@ table.insert(themaps[3].plats, {y = themaps[3].floor-299*i-blehy, x1 = 3160, x2 
 end
 
 table.insert(themaps[3].walls, {y1 = 1900, y2 = themaps[3].floor+1, x=419, glasswall = 5618})
-table.insert(themaps[3].walls, {y1 = 2763, y2 = 5618, x=2139, glasswall = 5618})
+table.insert(themaps[3].walls, {y1 = 2763, y2 = 5618, x=2139, glasswall = 5778})
 table.insert(themaps[3].walls, {y1 = 1613, y2 = 2184, x=2139})
 table.insert(themaps[3].walls, {y1 = 2830, y2 = themaps[3].floor+1, x=3159})
 

@@ -636,7 +636,7 @@ p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-he
 for i = lof(retrub[1], retrub[2]), hof(retrub[1], retrub[2]), 6 do 
         --for i = lof(retrub[1], retrub[2]), lof(retrub[1], retrub[2]), 4 do 
           if wall.glasswall~=nil then
-            if i < wall.glasswall then makenglass(wall.x,i,p.v,p.j, 1)
+            if (wall.glasswall > 0 and i < wall.glasswall) or (wall.glasswall < 0 and i > -wall.glasswall) then makenglass(wall.x,i,p.v,p.j, 1)
             else makenrubble("vert", wall.x,i,p.v,p.j, 1)
           end
           else
@@ -663,6 +663,11 @@ function retowallcheck(ex, why,vee, jay)
     local wallace = themap.walls[j]
     local res = retpint({x = wallace.x, y = wallace.y1}, {x = wallace.x, y = wallace.y2}, {x = ex, y = why}, {x = ex+vee, y = why-jay})
     if res[2] > 0 then
+      if wallace.glasswall~=nil then 
+        if (wallace.glasswall > 0 and res[2] < wallace.glasswall) or (wallace.glasswall < 0 and res[2] > -wallace.glasswall) then
+            res[3] = true
+          end
+        end
     return res
     end
 
