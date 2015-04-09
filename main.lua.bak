@@ -1,24 +1,27 @@
+--504 ERROR ON FLOORS AND DOWNSPECIAL
+
 --todo
 --if not in the air then some kind of unblocking animation
 --apple w is window close
 --SHAEZ TIED TO RUMBLE?!?!?!?
-
-
 therampspeed = .1
 drawboxes = true
-fightclub = false
+fightclub = true
+menu = "title"
 fullscreen = false
 readout = true
 mute = false
 eh = false
+volume=0
+love.audio.setVolume(volume)
 --airgrab
-
+test123 = false
 --PARALX ZOOMS OUT SLIGHTLY DIFFERENTLY TO CAMERA ZOOM
 
 --if you use one color too long you start to turn that color and have permanent those effects?  or you burn out?s
 --or you take up to double damage? become fragile, but stronger?
 
---if landing lower the frnum of frames on the pre fall back
+--if landing lower the num of frames on the pre fall back
 --fix zoomout relative to distance slight jump
 
 --placement of cam funcs causes weirdness for actionshot
@@ -26,6 +29,8 @@ eh = false
 putmehere = 975
 putyouhere = 1025
 --to be rampspeedified (or if not rampcanhitified)
+
+--she thought it was like the book
 --idle
 
 
@@ -250,11 +255,12 @@ require "ATTACK"
 require "GG"
 require "BB"
 require "pp"
+require "OO"
 loader = require "love-loader"
 
 
-moop = 0
-
+bob = retpint({x= 0, y = 0}, {x= 0, y = 100}, {x= -5, y = 10}, {x= 5, y = 20})
+blob = mlof({10, 2, 4, 5, 6, 7})
 
 
 
@@ -267,7 +273,7 @@ function love.load()
   if debug then 
     require("mobdebug").start() 
   end
-  finishedLoading = false
+  finishedloading = false
 
   stagey = 0
   stagenum = 0
@@ -346,7 +352,7 @@ function love.load()
     menu = "play"
     themap = themaps[100]
     placespeople = true
-    while(not finishedLoading) do
+    while(not finishedloading) do
       whatlevel()
       loader.update() 
     end
@@ -366,8 +372,7 @@ end
 
 function love.update()
   --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
-
-  speedramp = love.keyboard.isDown("x")
+  if love.keyboard.isDown("x")  then speedramp = true end
   if speedramp then 
     rampspeed = therampspeed
     if ramptimer >= 1 then 
@@ -383,7 +388,7 @@ function love.update()
     rampspeed = 1
   end
 
-  if not finishedLoading then
+  if not finishedloading then
     loader.update()   end
 
 
@@ -443,6 +448,30 @@ function love.update()
 
     if menu == "preplay" or menu == "play" then 
       menu = "play"
+  gavinanddan()
+      
+      if musfadein > 0 then 
+    musfade = musfade + musfadein
+    if musfade + musfadein >= 255 then
+      musfadein = 0
+      musfade = 255
+    end
+  elseif musfadein < 0 then
+    musfade = musfade + musfadein
+    if musfade +musfadein <= 0 then
+      musfadein = 0
+      musfade = 0
+    end
+  end
+
+  if thesong~= nil then
+    if musfade == 0 then
+      thesong:pause()
+    else
+      thesong:play()
+      thesong:setPitch(musfade/255)
+    end
+  end
 
       if slowt == SlowRate and not pause and not me.actionshot 
       then
@@ -470,7 +499,6 @@ function love.update()
         --used to be here platformcheckx()
 
 
-        fallthroughglassfloor()
 
 
         if themap.name == "library" then libwallbreak() 
@@ -725,7 +753,7 @@ function love.update()
           go()
         end
         drawroulettenumbers()
-
+        cinemabars()
 
       end
     end
@@ -767,14 +795,19 @@ function love.update()
     love.graphics.print("fadein "..tostring(fadein), 10, 130)
     love.graphics.print("allfade "..tostring(allfade), 10, 150)
     love.graphics.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
-    love.graphics.print("tileset "..tostring(tileset), 10, 230)
+    love.graphics.print("slowt "..tostring(slowt), 10, 230)
+    love.graphics.print("xx.hit "..tostring(xx.hit), 10, 250)
     love.graphics.setColor(255,0,0)
-    love.graphics.print("dollyx "..tostring(dollyx), 10, 260)
-    love.graphics.print("themode "..tostring(themode), 10, 280)
-    love.graphics.print("finishedloading "..tostring(finishedloading), 10, 320)
-    love.graphics.print("separatespines "..tostring(separatespines), 10, 350)
+    
     end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
 
+  
+   if #joysticks > 0 then
+    rumblemodule(me)
+  end
+  if #joysticks > 1 then
+    rumblemodule(you)
+  end
   end

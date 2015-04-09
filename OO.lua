@@ -8,17 +8,33 @@ op4 = {im=love.graphics.newImage("me/attack/op4.png"),c=love.graphics.newImage("
 op5 = {im=love.graphics.newImage("me/attack/op5.png"),c=love.graphics.newImage("me/attack/op3c.png"), xoff = 9,yoff = 12}
 
 
-ao21 = {im=love.graphics.newImage("me/attack/ao21.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9,yoff = 15, extrah = 5}
-ao22 = {im=love.graphics.newImage("me/attack/ao22.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9,yoff = 15, extrah = 5}
+ao21 = {im=love.graphics.newImage("me/attack/ao21.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9, yoff = 17, extrah = 5, cxoff = -2, cyoff = -8}
+ao22 = {im=love.graphics.newImage("me/attack/ao22.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9, cxoff = -2, cyoff = -8, extrah = 5}
 
 
-ao23 = {im=love.graphics.newImage("me/attack/ao23.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9,yoff = 15, extrah = 5}
-ao24 = {im=love.graphics.newImage("me/attack/ao24.png"),c=love.graphics.newImage("me/attack/ao3c.png"), xoff = 9-5,yoff = 15-17, extrah = 5}
+ao23 = {im=love.graphics.newImage("me/attack/ao23.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9,yoff = 17, extrah = 5, cxoff = -2, cyoff = -8}
+ao24 = {im=love.graphics.newImage("me/attack/ao24.png"),c=love.graphics.newImage("me/attack/ao3c.png"), xoff = 9-5,yoff = 0, cyoff = 0, extrah = 5}
 
 
 ok2 = {im=love.graphics.newImage("me/attack/ok2.png"),c=love.graphics.newImage("me/attack/ok2c.png"), xoff = 9,yoff = 15}
 ok3 = {im=love.graphics.newImage("me/attack/ok3.png"),c=love.graphics.newImage("me/attack/ok3c.png"), xoff = 97,yoff = 5,cxoff = 23-15, cyoff = -3}
 ok4 = {im=love.graphics.newImage("me/attack/ok4.png"),c=love.graphics.newImage("me/attack/ok4c.png"), xoff = 45,yoff = 0,cxoff = -1,cyoff = -6}
+
+
+o32 = {im=love.graphics.newImage("me/attack/o32.png"),c=love.graphics.newImage("me/attack/op2c.png"), 
+  xoff = 9,yoff = 15, cxoff = 9, cyoff = 15}
+
+o33 = {im=love.graphics.newImage("me/attack/o33.png"),c=love.graphics.newImage("me/attack/o33c.png"), 
+  cxoff = 9,cyoff = 15}
+
+ao31 = {im=love.graphics.newImage("me/attack/ao31.png"),c=love.graphics.newImage("me/attack/ao31c.png"), xoff = 9, yoff = 0, cxoff = -2, cyoff = -8}
+ao32 = {im=love.graphics.newImage("me/attack/ao32.png"),c=love.graphics.newImage("me/attack/ao32c.png"), yoff =2, cxoff = -2, cyoff = -7}
+
+
+
+aop1 = {im=love.graphics.newImage("me/attack/aop1.png"),c=love.graphics.newImage("me/attack/aop1c.png"), xoff = 9,yoff = 17, extrah = 5}
+aop2 = {im=love.graphics.newImage("me/attack/aop2.png"),c=love.graphics.newImage("me/attack/aop2c.png"),yoff = 32, extrah = 5, cxoff = 0, cyoff = 0}
+
 
 at.o = {}
 at.o.p = {}
@@ -28,12 +44,18 @@ at.o.p.max = 2
 at.o.p.z = .08
 at.o.p.j = -20
 
+at.o.ap = {}
+at.o.ap.dam = 10
+at.o.ap.ft = 25
+at.o.ap.z = .08
+at.o.ap.j = -20
+
 at.o.ak = {}
 at.o.ak.dam = 15
 at.o.ak.ft = 20
 at.o.ak.max = 5
 at.o.ak.z = .08
-at.o.ak.j = -20
+at.o.ak.j = -10
 
 
 at.o.k = {}
@@ -41,6 +63,13 @@ at.o.k.dam = 15
 at.o.k.ft = 20
 at.o.k.z = .08
 at.o.k.j = -20
+
+at.o.u = {}
+at.o.u.dam = 15
+at.o.u.ft = 30
+at.o.u.j = 25
+at.o.u.v = 0
+
 
 
 function orangeyouglad(xx)
@@ -59,17 +88,27 @@ function orangeyouglad(xx)
   if xx.animcounter == 0 then
 
     if xx.g then 
-      if (xx.a2b or xx.a3b) then
+
+      if (xx.a1) then
+        xx.type = 3
+        xx.animcounter = 1
+      elseif (xx.a2 or xx.a3) then
         xx.type = 1
         xx.animcounter = 1
-        eh = true
       elseif xx.a4 then
         xx.type = 2
         xx.animcounter = 1
         xx.combo = xx.combo + 1
       end
     else
-      if xx.a4 then
+      
+      if (xx.a1) then
+        xx.type = 6
+        xx.animcounter = 1
+      elseif (xx.a2 or xx.a3) then
+        xx.type = 4
+        xx.animcounter = 1
+      elseif xx.a4 then
         xx.type = 5
         xx.animcounter = 1
         xx.combo = xx.combo + 1
@@ -171,9 +210,9 @@ function orangeyouglad(xx)
         if xx.animcounter == 13+5 and rampcanhit then
 
           xx.oplat = nil
- ocontactstuff(xx, xx.mid+(xx.lr*50), xx.y+27,xx.v+(49*xx.lr), xx.j-38) 
- ocontactstuff(xx, xx.mid-(xx.lr*50), xx.y+27,xx.v-(49*xx.lr), xx.j-38)
- --[[
+          ocontactstuff(xx, xx.mid+(xx.lr*50), xx.y+27,xx.v+(49*xx.lr), xx.j-38) 
+          ocontactstuff(xx, xx.mid-(xx.lr*50), xx.y+27,xx.v-(49*xx.lr), xx.j-38)
+          --[[
           xx.oplat = retlineplatcheck(xx.mid+(xx.lr*50), xx.y+27,xx.v+(49*xx.lr), xx.j-38) 
           if xx.oplat ~= nil then
             makenrubble("vert", xx.mid+xx.v+(xx.lr*99),xx.oplat.y,1,1, 6)
@@ -219,10 +258,10 @@ function orangeyouglad(xx)
               xx.oplat = {y=-1}
             end
           end
-]]--
+          ]]--
 
 
-          for i = -1, 2 do
+          for i = -1, 1 do
             hboxcs(xx.id, 
               {x=xx.mid+(xx.lr*50)*i, y = xx.y+27},
               {x=xx.mid+xx.v+(xx.lr*59)*i, y = xx.y+27-xx.j},
@@ -270,6 +309,120 @@ function orangeyouglad(xx)
         xx.animcounter = 0
       end
 
+    elseif xx.type == 3 then
+      if xx.animcounter < 3 then
+          xx.im = op1
+
+      elseif xx.animcounter<=7 then
+          xx.im = o32
+
+
+      elseif xx.animcounter < 40-20 then
+          xx.im = o33
+        if xx.animcounter == 8 and rampcanhit then
+
+          xx.oplat = nil
+          ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 
+
+          hboxcs(xx.id, 
+            {x=xx.mid+(xx.lr*53), y = xx.y+24},
+            {x=xx.mid+xx.v+(xx.lr*63), y = xx.y-xx.j},
+            {x=xx.mid+xx.v+(xx.lr*46), y = xx.y+65-xx.j},
+            {x=xx.mid+(xx.lr*36), y = xx.y+65},
+            function(z)
+
+              xx.cancombo = true
+              z.v = z.v+at.o.u.v*xx.lr
+              z.j = z.j+at.o.u.j
+              if not (z.block and z.lr == -xx.lr) then
+                z.health = z.health - at.o.p.dam
+                z.flinch = true
+                z.ft = z.ft+at.o.u.ft
+              end
+              shakez(at.o.p.z)
+
+            end)
+        end
+
+
+        if xx.animcounter >= 10 then 
+          combo(xx)
+        end
+
+
+      elseif xx.animcounter < 42-20 then
+        combo(xx)
+          xx.im = op2
+
+      elseif xx.animcounter < 44-20 then
+        combo(xx)
+          xx.im = op1
+      elseif xx.animcounter < 1000 then
+        xx.animcounter = 0
+      end
+elseif xx.type == 4 then
+      if xx.animcounter < 6 then
+          xx.im = aop1
+
+      elseif xx.animcounter < 40 then
+          xx.im = aop2
+        if xx.animcounter == 6 and rampcanhit then
+
+          ocontactstuff(xx, xx.mid+(xx.lr*43), xx.y-24,xx.v+(19*xx.lr), xx.j-57) 
+          ocontactstuff(xx, xx.mid+(xx.lr*43), xx.y+24+31,xx.v+(19*xx.lr), xx.j+57) 
+
+          hboxcs(xx.id, 
+            {x=xx.mid+(xx.lr*43), y = xx.y-24},
+            {x=xx.mid+xx.v+(xx.lr*46), y = xx.y-32-xx.j},
+            {x=xx.mid+xx.v+(xx.lr*62), y = xx.y+33-xx.j},
+            {x=xx.mid+(xx.lr*60), y = xx.y+33},
+            function(z)
+
+              xx.cancombo = true
+              z.v = z.v/5
+              z.j = z.j+at.o.ap.j
+              if not (z.block and z.lr == -xx.lr) then
+                z.health = z.health - at.o.ap.dam
+                z.flinch = true
+                z.ft = z.ft+at.o.ap.ft
+              end
+              shakez(at.o.ap.z)
+
+          end)
+        hboxcs(xx.id, 
+            {x=xx.mid+(xx.lr*43), y = xx.y+24+31},
+            {x=xx.mid+xx.v+(xx.lr*46), y = xx.y+32+31-xx.j},
+            {x=xx.mid+xx.v+(xx.lr*62), y = xx.y-33+31-xx.j},
+            {x=xx.mid+(xx.lr*60), y = xx.y-33+31},
+            function(z)
+
+              xx.cancombo = true
+              z.v = z.v/5
+              z.j = z.j-at.o.ap.j
+              if not (z.block and z.lr == -xx.lr) then
+                z.health = z.health - at.o.ap.dam
+                z.flinch = true
+                z.ft = z.ft+at.o.ap.ft
+              end
+              shakez(at.o.ap.z)
+
+            end)
+        end
+
+
+        if xx.animcounter >= 10 then 
+          combo(xx)
+        end
+
+
+      elseif xx.animcounter < 42 then
+        combo(xx)
+          xx.im = aop1
+      elseif xx.animcounter < 1000 then
+        xx.animcounter = 0
+      end
+
+
     else if xx.type == 5 then
       if xx.animcounter < 6 then
         if xx.repcounter%2==0 then
@@ -282,7 +435,7 @@ function orangeyouglad(xx)
       elseif xx.animcounter < 25 then
 
         if xx.animcounter == 6 and rampcanhit then
-          
+
           xx.oplat = nil
           ocontactstuff(xx, xx.mid, xx.y,xx.v+81*xx.lr, xx.j-138)
 
@@ -349,7 +502,57 @@ function orangeyouglad(xx)
       end
 
 
-    end
+  elseif xx.type == 6 then
+      if xx.animcounter < 3 then
+          xx.im = aop1
+
+      elseif xx.animcounter<=7 then
+          xx.im = ao31
+
+
+      elseif xx.animcounter < 40 then
+          xx.im = ao32
+        if xx.animcounter == 8 and rampcanhit then
+
+          xx.oplat = nil
+          ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 
+
+          hboxcs(xx.id, 
+            {x=xx.mid+(xx.lr*53), y = xx.y+24},
+            {x=xx.mid+xx.v+(xx.lr*63), y = xx.y-xx.j},
+            {x=xx.mid+xx.v+(xx.lr*46), y = xx.y+65-xx.j},
+            {x=xx.mid+(xx.lr*36), y = xx.y+65},
+            function(z)
+
+              xx.cancombo = true
+              z.v = z.v+at.o.u.v*xx.lr
+              z.j = z.j+at.o.u.j
+              if not (z.block and z.lr == -xx.lr) then
+                z.health = z.health - at.o.p.dam
+                z.flinch = true
+                z.ft = z.ft+at.o.u.ft
+              end
+              shakez(at.o.p.z)
+
+            end)
+        end
+
+
+        if xx.animcounter >= 15 then 
+          combo(xx)
+        end
+
+
+      elseif xx.animcounter < 42 then
+        combo(xx)
+          xx.im = ao31
+
+      elseif xx.animcounter < 44 then
+        combo(xx)
+          xx.im = aop1
+      elseif xx.animcounter < 1000 then
+        xx.animcounter = 0
+      end
   end
 end
 end
@@ -361,13 +564,13 @@ function ocontactstuff(xx, ex, why, vee, jay)
   if retlineplatcheck(ex, why,vee, jay) ~= nil then 
     xx.oplat = retlineplatcheck(ex, why,vee, jay)
     if xx.glass~=nil then 
-    makenglass(ex+xx.v+vee,xx.oplat.y,1,1, 5)
-    makenglass(ex+xx.v+vee,xx.oplat.y,-1,1, 5)
-      
-      else
-    makenrubble("vert", ex+xx.v+vee,xx.oplat.y,1,1, 5)
-    makenrubble("vert", ex+xx.v+vee,xx.oplat.y,-1,1, 5)
-      end
+      makenglass(ex+xx.v+vee,xx.oplat.y,1,1, 5)
+      makenglass(ex+xx.v+vee,xx.oplat.y,-1,1, 5)
+
+    else
+      makenrubble("vert", ex+xx.v+vee,xx.oplat.y,1,1, 5)
+      makenrubble("vert", ex+xx.v+vee,xx.oplat.y,-1,1, 5)
+    end
   end
 
 
@@ -386,4 +589,5 @@ function ocontactstuff(xx, ex, why, vee, jay)
     end
   end
 
+end
 end

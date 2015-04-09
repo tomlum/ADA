@@ -26,7 +26,7 @@ you.greenkhit = false
 
 at.g = {}
 at.g.p = {}
-at.g.p.dam = 4
+at.g.p.dam = 6
 at.g.p.kb = 2
 at.g.p.ft = 10
 at.g.p.max = 4
@@ -34,9 +34,10 @@ at.g.p.max = 4
 
 
 at.g.u = {}
-at.g.u.dam = 2
+at.g.u.dam = 5
 at.g.u.kb = 4
-at.g.u.j = 26
+at.g.u.j = 20
+at.g.u.mv = 10
 at.g.u.ft = 20
 
 
@@ -244,7 +245,7 @@ function gandg(xx)
           xx.repcounter = 0
         end
 
-      elseif xx.type ==3 then
+      elseif xx.type == 3 then
         if xx.animcounter < 5 then
           xx.im = greena21
           if xx.animcounter == 1 then
@@ -255,13 +256,18 @@ function gandg(xx)
 
           if xx.animcounter >=5 and xx.animcounter < 7 then 
             xx.im = greena1s
+          if rampcanhit then
+            table.insert(xx.trail, 
+              {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0;})
+          end
+            xx.v = at.g.u.mv*xx.lr
           end
           if xx.animcounter == 5 then
             repplay(xx.greens)
             hboxcs(xx.id, 
-              {x=xx.mid+(xx.lr*-33), y = xx.y+8},
-              {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-40-xx.j},
+              {x=xx.mid+(xx.lr*3), y = xx.y+8},
               {x=xx.mid+xx.v+(xx.lr*33), y = xx.y-40-xx.j},
+              {x=xx.mid+xx.v+(xx.lr*33), y = xx.y+10-xx.j},
               {x=xx.mid, y = xx.y+30},
 
               function(z)

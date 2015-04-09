@@ -95,6 +95,9 @@ for i=1, 10 do
   end
 table.insert(themaps[3].plats, {y = themaps[3].floor-299*i-blehy, x1 = 3160, x2 = bleh})
 end
+table.insert(themaps[3].plats, {y = 5778, x1 = 2142, x2 = 2299})
+table.insert(themaps[3].plats, {y = 3004, x1 = 581, x2 = 1039})
+
 
 table.insert(themaps[3].walls, {y1 = 1900, y2 = themaps[3].floor+1, x=419, glasswall = 5618})
 table.insert(themaps[3].walls, {y1 = 2763, y2 = 5618, x=2139, glasswall = 5778})
@@ -105,7 +108,9 @@ table.insert(themaps[3].walls, {y1 = 2830, y2 = themaps[3].floor+1, x=3159})
 
 
 table.insert(themaps[3].plats, {y = themaps[3].floor, x1 = 0, x2 = 100000, floor = true})
-
+for i,v in ipairs(themaps[3].plats) do
+  themaps[3].plats[i].n = i
+end
 
 
 
@@ -428,7 +433,12 @@ transferofenergy(xx)
 
 
 
-  xx.feet = xx.y + 60
+        extrah = 0
+        if xx.im.extrah ~= nil then
+          extrah = -xx.im.extrah
+        end
+  xx.feet = xx.y+xx.height-extrah
+  
   if xx.g 
   then 
     if xx.j < 0 then xx.j = 0 

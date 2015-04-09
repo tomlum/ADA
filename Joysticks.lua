@@ -27,6 +27,7 @@ else
   end
 end
 
+
 function rumblemodule(xx)
   base = (xx.cct/colorchangetime)*colorvib
   if xx.rumbleint >= 1 then
@@ -137,6 +138,8 @@ function doubledown(xx)
   end
 
 end
+
+
 function downs() 
   if 
 ((me.down and not me.dirholda) or (you.down and not you.dirholda)) then return true else return false

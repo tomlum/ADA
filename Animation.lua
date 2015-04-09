@@ -73,10 +73,53 @@ yourtriangles = {}
 
 
 
+
+barsmovein = 0
+barey = 0
+bardis = 100
+function cinemabars()
+
+
+  if barsmovein > 0 then 
+    barey = barey + barsmovein
+    if barey >= bardis then
+      barsmovein = 0
+      barey = bardis 
+    end
+  elseif barsmovein < 0 then
+    barey = barey + barsmovein
+    if barey <= 0 then
+      barsmovein = 0
+      barey = 0
+    end
+  end
+  love.graphics.setColor(0,0,0)
+  love.graphics.srectangle("fill",0,0,1440,barey)
+  love.graphics.srectangle("fill",0,900,1440,-barey)
+  love.graphics.setColor(255,255,255)
+
+  if slowww then barsmovein = 3
+  elseif barey > 0 and slowmot == 0 then
+    barsmovein = -20
+  end
+
+
+end
+
+
+
+
+
+
+
 traillength = 4
+
 
 me.trail={}
 you.trail={}
+
+
+
 
 
 function updatemytrail(xx)
@@ -256,9 +299,10 @@ whatlevel = function()
       thesong = song2
 
     end
-
-    me.oldpy = me.y
-    you.oldpy = you.y
+    
+    for i,v in ipairs(hitt) do
+      hitt[i].oldpy = hitt[i].y 
+      end
 
   end
 end
@@ -482,14 +526,12 @@ function drawstreetprestuff()
 end
 drawstreetstuff = function()
   love.graphics.draw(enviro.stagefloor, 0, floor-1, 0, 1, 20)
-  drawrubble()
   love.graphics.draw(enviro.rafters,5608-502, 1536)
   love.graphics.draw(enviro.buildingwall,-1542, 0)
   love.graphics.draw(partition,themaps[1].rightwall-20, 0)
 
 end
 drawlibrarystuff = function()
-  drawrubble()
   love.graphics.draw(enviro.plibrary,0,0)
   love.graphics.draw(enviro.librarylpartition,-1630, -61)
   love.graphics.draw(enviro.libraryrpartition,enviro.rightwall-200, -61)
@@ -497,8 +539,6 @@ drawlibrarystuff = function()
 end
 
 drawfloorsstuff = function()
-  drawrubble()
-  drawglass()
   drawpapers()
   love.graphics.draw(enviro.pfloors,0,0)
   love.graphics.draw(partition,21, 1,0, -1,3.11)
@@ -548,23 +588,23 @@ function drawpapers()
       v.j = v.j + you.j*.01 + .1
     end
 
-    
-   
-  if v.n < papertime then
-    v.n = v.n + 1
-  else v.n = 0
-    v.lr = -v.lr
+
+
+    if v.n < papertime then
+      v.n = v.n + 1
+    else v.n = 0
+      v.lr = -v.lr
+    end
   end
-end
 
 
-if v.n < 10 then love.graphics.draw(paper1,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-elseif v.n < 20 then love.graphics.draw(paper2,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-elseif v.n < 30 then love.graphics.draw(paper3,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-elseif v.n < papertime -20 then love.graphics.draw(paper4,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-elseif v.n < papertime -10 then love.graphics.draw(paper3,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-elseif v.n < papertime then love.graphics.draw(paper2,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-end
+  if v.n < 10 then love.graphics.draw(paper1,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+  elseif v.n < 20 then love.graphics.draw(paper2,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+  elseif v.n < 30 then love.graphics.draw(paper3,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+  elseif v.n < papertime -20 then love.graphics.draw(paper4,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+  elseif v.n < papertime -10 then love.graphics.draw(paper3,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+  elseif v.n < papertime then love.graphics.draw(paper2,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+  end
 
 end
 end
@@ -652,7 +692,7 @@ function drawrubble()
     blackn = math.random(80,150)
   end
   love.graphics.setColor(blackn,blackn,blackn)
-  love.graphics.draw(enviro.rubble,v.x-2*math.cos(rubbletimer/10),v.y-2*math.sin(rubbletimer/10),rubbletimer/10+v.rot,2.2,2.2)
+  love.graphics.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,2.2,2.2,2,2)
   love.graphics.setColor(255,255,255)
 end
 end
@@ -1359,7 +1399,7 @@ death = function(xx, yy)
     you.mid = you.x + 15
 
     if not xx.slowdown and not xx.slide and not xx.stop and not xx.pause and not xx.flinch
-    and (xx.dodgetype~=2 and xx.dodgetype >-1)
+    and (xx.dodgetype~=2 and xx.dodgetype >-1) and xx.wjt ==0
     then
       if xx.right then xx.lr = 1
       elseif xx.left then xx.lr = -1
@@ -1563,6 +1603,13 @@ death = function(xx, yy)
     end
   end
 
+  function makenslashsparks(ex,why,vee, jay, arr,gee,bee, n)
+    if rampcanhit then
+      for i = 0, n do
+        table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(lof(jay,-4),hof(jay,4))+math.random(),r=arr,g=gee,b=bee,rot=math.random(0,360)})
+      end
+    end
+  end
 
   function drawsparks()
 
@@ -1596,19 +1643,19 @@ function gavinanddan()
     slowmot = slowmot - 1
     speedramp = true
     musfadein = -3
-    
+
 
   elseif slowww then 
     slowww = false 
     slowmot = slowtime
-    
+
   else 
     speedramp = false
     slowmot = 0
     if musfade == 0 then
       musfadein = 10
-    musfade = 255
-    repplay(collides)
+      musfade = 255
+      repplay(collides)
       --deathsound:play()
       --bcs:play()
     end

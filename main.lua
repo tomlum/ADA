@@ -1,15 +1,23 @@
+--SURVIVLA GAME MODE
+--hug button
+--chrome/metallic so as to suit monochromaticity
+--motion blur
+
+
+
+--504 ERROR ON FLOORS AND DOWNSPECIAL
+
 --todo
 --if not in the air then some kind of unblocking animation
 --apple w is window close
 --SHAEZ TIED TO RUMBLE?!?!?!?
 therampspeed = .1
-drawboxes = true
+drawboxes = false
 fightclub = true
-menu = "map"
+menu = "title"
 fullscreen = false
-readout = true
+readout = false
 mute = false
-eh = false
 volume=0
 love.audio.setVolume(volume)
 --airgrab
@@ -19,7 +27,7 @@ test123 = false
 --if you use one color too long you start to turn that color and have permanent those effects?  or you burn out?s
 --or you take up to double damage? become fragile, but stronger?
 
---if landing lower the frnum of frames on the pre fall back
+--if landing lower the num of frames on the pre fall back
 --fix zoomout relative to distance slight jump
 
 --placement of cam funcs causes weirdness for actionshot
@@ -27,6 +35,7 @@ test123 = false
 putmehere = 975
 putyouhere = 1025
 --to be rampspeedified (or if not rampcanhitified)
+
 --idle
 
 
@@ -252,6 +261,7 @@ require "GG"
 require "BB"
 require "pp"
 require "OO"
+require "ai"
 loader = require "love-loader"
 
 
@@ -431,7 +441,7 @@ function love.update()
 
 
 
-    if #joysticks > 0 then
+    if #joysticks ==1  then
       jjstick(me,me.joystick)
     elseif #joysticks > 1 then
       jjstick(me,me.joystick)
@@ -503,6 +513,7 @@ function love.update()
 
 
         platformcheckx()
+        monplatupdate()
 
         you.y = you.y - you.j*.9*rampspeed
         me.y = me.y - me.j*.9*rampspeed
@@ -532,8 +543,6 @@ function love.update()
         orientlr(me)
         orientlr(you)
 
-        you.feet = you.y + 60
-        me.feet = me.y + 60
         --if here then non slideycling to person
         --camerafol()
 
@@ -631,7 +640,7 @@ function love.update()
         camshakeflinch()
 
       end
-
+monupdate()
 
 
 
@@ -649,6 +658,8 @@ function love.update()
       end
     end
 
+
+    postmonupdate(xx)
 
   end
 
@@ -677,7 +688,7 @@ function love.update()
 
 
 
-      if (themode == "duel" and (you.health < 0 or me.health < 0)) or (themode == "spectrum" and (you.lives <= 0 or me.lives <= 0)) then 
+      if (themode == "duel" and (you.health < 0 or me.health < 0)) or (themode == "spectrum" and (you.lives <= 0 or me.lives <= 0)) or (themode == "koth" and (you.score >= kothscoretowin or me.score >= kothscoretowin))then 
           menu = "retry"
 
 
@@ -749,7 +760,7 @@ function love.update()
           go()
         end
         drawroulettenumbers()
-
+        cinemabars()
 
       end
     end
@@ -771,7 +782,10 @@ function love.update()
         ..
         "       type: "..tostring(me.type),10,30)
       love.graphics.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
-      love.graphics.print("falling "..tostring(you.falling).."|| ft "..tostring(you.ft).."|| flinchway "..tostring(you.flinchway), 10, 70)
+      love.graphics.print("j "..tostring(you.j), 10, 70)
+      if #hitt == 3 then
+        love.graphics.print(tostring(hitt[3].mode), 10, 90)
+        end
     end
 
 
@@ -792,13 +806,15 @@ function love.update()
     love.graphics.print("allfade "..tostring(allfade), 10, 150)
     love.graphics.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
     love.graphics.print("slowt "..tostring(slowt), 10, 230)
-    love.graphics.print("me.oplat "..tostring(me.oplat), 10, 250)
+    love.graphics.print("#joysticks"..tostring(#love.joystick.getJoysticks()), 10, 250)
+    love.graphics.print("#hitt"..tostring(#hitt), 10, 280)
+    for i,v in ipairs(love.joystick.getJoysticks()) do
+      love.graphics.print("hey"..v:getName()..tostring(i), 200, 20+20*i)
+    end
     love.graphics.setColor(255,0,0)
     
-    
-    
-    
-    end
+  end
+  if love.keyboard.isDown("6") and #hitt < 3 then spawnmon(camera.x+math.random(0,100), camera.y+10) end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
 

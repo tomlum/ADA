@@ -515,13 +515,13 @@ function drawx(xx)
     drawa(me)
 
   end
-  if fightclub then
-    drawdust()
     drawsparks()
+    drawdust()
+    drawglass()
     drawrubble()
-  end
+    love.graphics.rectangle("fill", 500, 0, 2, themaps[100].floor+1)
   drawcolorstuff(me)
-
+mondraw()
 
   love.graphics.setColor(155,155,155)
   drawcolorstuff(you)
@@ -537,56 +537,5 @@ function drawx(xx)
   end
   if fightclub then drawallhex() end
   
-end
-function drawleft()
-
-  love.graphics.draw(enviro.sky, camera.x, 0, 0, 500, 1.1)
-  --love.graphics.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
-  if themap.name == "library" then 
-    love.graphics.draw(enviro.paralax2, camera.x/1.5 + (screenwidth/4)/1.5 - 400,camera.y/1.2 + enviro.screenheight / 1.2 - 12 - paralaxoffset-940)
-  end
-  blurdraw(1/cscale, function()
-  love.graphics.draw(enviro.paralax, camera.x / 2 + ((screenwidth/4)/2*cscale) - 200, (camera.y/2) + (enviro.screenheight/2*cscale) - 12 - paralaxoffset - 800)
-  end)
   
-  love.graphics.draw(enviro.stage, 0, 0)
-  if themap.name == "street" then
-    drawstreetprestuff()
-  end
-
-  if me.flinch then 
-    
-    drawa(me)
-
-    drawa(you)
-
-  else
-
-    
-    drawa(you)
-
-    drawa(me)
-
-  end
-  if fightclub then
-    drawdust()
-    drawsparks()
-    drawrubble()
-  end
-  drawcolorstuff(me)
-
-  love.graphics.setColor(155,155,155)
-  drawcolorstuff(you)
-  love.graphics.setColor(255, 255, 255, 255)
-
-
-  if themap.name == "street" then
-    drawstreetstuff()
-  elseif themap.name == "library" then
-    drawlibrarystuff()
-  elseif themap.name == "floors" then
-    drawfloorsstuff()
-  end
-  if fightclub then drawallhex() end
 end
-

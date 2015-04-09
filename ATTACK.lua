@@ -144,7 +144,7 @@ you.cantreturntothis = 0
 
 
 function combo(xx, func)
-  
+    xx.hit = false
 
   if xx.color.n ~= xx.cchangeto.n and xx.cancombo
   then
@@ -161,7 +161,7 @@ function combo(xx, func)
       xx.combo = xx.combo + 1
 
 
-    elseif xx.a2 or xx.a3 then
+  elseif xx.a2 or xx.a3 then
       xx.numofspikes = 0
       if func~= nil then func() end
       if xx.color.n==0 then
@@ -190,7 +190,8 @@ function combo(xx, func)
 
       end
 
-    elseif xx.a4 and (xx.oldtype ~= 2 or xx.actionshot) then
+  elseif xx.a4 and (xx.oldtype ~= 2 or xx.actionshot) then
+    
       if func~= nil then func() end
       if xx.color.n==0  then
         xx.combo = xx.combo + 1
@@ -213,6 +214,7 @@ function combo(xx, func)
 
       end
     elseif xx.a1 then
+      
       xx.numofspikes = 0
       if func~= nil then func() end
       if xx.color.n==0 then
@@ -318,8 +320,7 @@ function attackmanage(xx)
   --  if xx.flinch then xx.animcounter = 0
   --  end
   if xx.animcounter == 0 then
-    xx.repcounter = 0
-    xx.bbpc = 0
+    xx.hit = false
     xx.repcounter = 0
     xx.currentanim = xx.color.n
   end

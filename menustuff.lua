@@ -42,6 +42,41 @@ themaps[100]= {name = "fightclub",
 themap = themaps[1]
 
 
+---[[
+function xrubble(xx)
+  for i = #themap.walls, 1, -1 do 
+    local wall = themap.walls[i]
+    if rampcanhit and ((xx.mid + xx.v > wall.x and xx.mid < wall.x) or
+      (xx.mid + xx.v < wall.x and xx.mid > wall.x)
+    )
+    and 
+    (
+      xx.y >= wall.y1 
+      or
+      xx.feet <= wall.y2
+    ) then
+    for i = xx.y, xx.feet do
+      if wall.glasswall~=nil then
+        if (wall.glasswall > 0 and i < wall.glasswall) or (wall.glasswall < 0 and i > -wall.glasswall) then 
+          makenglass(wall.x,i,xx.v,xx.j, 1)
+        else makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
+        end
+      else
+        makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
+
+      end
+
+
+    end
+
+
+    break
+  end
+
+end
+end
+
+
 letterboxheight = 80
 menuspeed = 10
 modes = love.graphics.newImage("enviro/mode.png")
@@ -51,9 +86,11 @@ wiper = love.graphics.newImage("enviro/wiper.png")
 map = love.graphics.newImage("enviro/map.png")
 ptile = love.graphics.newImage("enviro/ptile.png")
 gtile = love.graphics.newImage("enviro/gtile.png")
+otile = love.graphics.newImage("enviro/otile.png")
 tile = love.graphics.newImage("enviro/tile.png")
 plogo = love.graphics.newImage("enviro/plogo.png")
 glogo = love.graphics.newImage("enviro/glogo.png")
+ologo = love.graphics.newImage("enviro/ologo.png")
 questionlogo = love.graphics.newImage("enviro/questionmark.png")
 shoulder = love.graphics.newImage("enviro/shoulder.png")
 ready = love.graphics.newImage("enviro/ready.png")
@@ -178,8 +215,8 @@ function initmenu()
     allfade = 255
     fadein = 0
 
-elseif menu == "pan" and oldmenu ~= "pan" then
-  thesong:play()
+  elseif menu == "pan" and oldmenu ~= "pan" then
+    thesong:play()
     spines = {}
     fadein = 0
     musfadein = 0
@@ -670,7 +707,7 @@ function drawmenus()
 
     love.graphics.setColor(allfade,allfade,allfade)
     love.graphics.sdraw(enviro.sky, 0, 0, 0, 150, 1)
-  love.graphics.sdraw(enviro.paralax, -dollyx/2,  -enviro.paralax:getHeight()+900-letterboxheight-30)
+    love.graphics.sdraw(enviro.paralax, -dollyx/2,  -enviro.paralax:getHeight()+900-letterboxheight-30)
     love.graphics.sdraw(enviro.stage, -dollyx, -themap.floor+900 -letterboxheight-30)
     love.graphics.setColor(0,0,0)
     love.graphics.srectangle("fill", 0, 0, 1440, hof(letterboxheight, 450-3^(dollyx/50)))

@@ -63,7 +63,7 @@ spiketimer = 0
 me.spikechargetimer = 0
 spikecooldown = 15
 
-p4ft = 10
+p4ft = 15
 
 mespikeprime = false
 mespikeairprime = false
@@ -171,7 +171,7 @@ function spikeupdate(xx)
           xx.hitsomeonewithpurp = true
 
           z.v = z.v + math.abs((vv[3]-vv[1])/70)*cur.lr
-          z.j = z.j + -(vv[4]-vv[2])/30
+          z.j = z.j + -(vv[4]-vv[2])/35
           z.y = z.y-30
           z.flinch = true
           z.ft = z.ft + p4ft
@@ -198,7 +198,7 @@ function spikeupdate(xx)
         function(z)
           xx.hitsomeonewithpurp = true
           z.v = -z.v + (cur.lr*2)
-          z.j = z.j + 10
+          z.j = z.j + 7
           z.flinch = true
           z.ft = z.ft + p4ft
           z.health = z.health - at.p.k.dam/3
@@ -445,7 +445,7 @@ function pandp(xx)
               {x=xx.mid, y = xx.y+35},
               {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+26},
               {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+49},
-              {x=xx.mid, y = me.y+6},
+              {x=xx.mid, y = xx.y+6},
               function(z)
                 xx.cancombo = true
                 z.health = z.health - at.p.p.dam
