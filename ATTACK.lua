@@ -58,7 +58,7 @@ function grab(xx)
       xx.im = airgrab2
       end
       if xx.animcounter == 4 then
-      hboxcs(xx.id, 
+      hboxcs(xx, xx.id, 
         {x=xx.mid, y = xx.y+24},
         {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
         {x=xx.mid, y = xx.y+30},

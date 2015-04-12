@@ -1,3 +1,12 @@
+--ai head won't rerotate if within range
+
+
+
+
+
+
+
+
 --SURVIVLA GAME MODE
 --hug button
 --chrome/metallic so as to suit monochromaticity
@@ -13,10 +22,14 @@
 --SHAEZ TIED TO RUMBLE?!?!?!?
 therampspeed = .1
 drawboxes = false
-fightclub = true
-menu = "title"
+fightclub = false
+menu = "play"
+ if menu == "play" then
+noload = true
+   mapnum = 2
+   placespeople = true end
 fullscreen = false
-readout = false
+readout = true
 mute = false
 volume=0
 love.audio.setVolume(volume)
@@ -264,6 +277,10 @@ require "OO"
 require "ai"
 loader = require "love-loader"
 
+if noload then
+  
+themap = themaps[2]
+ end
 
 bob = retpint({x= 0, y = 0}, {x= 0, y = 100}, {x= -5, y = 10}, {x= 5, y = 20})
 blob = mlof({10, 2, 4, 5, 6, 7})
@@ -507,9 +524,6 @@ function love.update()
 
 
 
-        if themap.name == "library" then libwallbreak() 
-        elseif themap.name == "floors" then floorswallbreak() 
-        end
 
 
         platformcheckx()
@@ -775,7 +789,6 @@ monupdate()
         love.graphics.print("invince", 100, 100)
       end
       love.graphics.setColor(20,20,20)
-      love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
       love.graphics.print(tostring(me.combo),10,20)
       love.graphics.print(tostring(me.color.n)..
         "       animcounter: "..tostring(me.animcounter)
@@ -799,6 +812,7 @@ monupdate()
     ]]--
     love.graphics.setColor(255,255,255)
     if readout then
+      love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
     love.graphics.setColor(255,10,0)
     love.graphics.print("themenu "..tostring(menu), 10, 90)
     love.graphics.print("oldmenu "..tostring(oldmenu), 10, 110)
@@ -807,14 +821,14 @@ monupdate()
     love.graphics.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
     love.graphics.print("slowt "..tostring(slowt), 10, 230)
     love.graphics.print("#joysticks"..tostring(#love.joystick.getJoysticks()), 10, 250)
-    love.graphics.print("#hitt"..tostring(#hitt), 10, 280)
+    love.graphics.print("#hittmon"..tostring(#hittmon), 10, 280)
     for i,v in ipairs(love.joystick.getJoysticks()) do
       love.graphics.print("hey"..v:getName()..tostring(i), 200, 20+20*i)
     end
     love.graphics.setColor(255,0,0)
     
   end
-  if love.keyboard.isDown("6") and #hitt < 3 then spawnmon(camera.x+math.random(0,100), camera.y+10) end
+  if love.keyboard.isDown("6") and #hittmon < 20 then spawnmon(camera.x+math.random(0,200), camera.y+10) end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
 

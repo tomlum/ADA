@@ -204,7 +204,6 @@ whatlevel = function()
         end)
 
       enviro.rightwall = 2000
-
       loader.newImage(enviro,'stage', "enviro/fightclub.png")
       loader.newImage(enviro,"paralax","enviro/READY.png")
       loader.newImage(enviro,"sky","enviro/ready.png")
@@ -233,14 +232,6 @@ whatlevel = function()
       loader.newImage(enviro,'rafters',"enviro/rafters.png")
       loader.newImage(enviro,'buildingwall',"enviro/buildingwall.png")
 
-      -- 	enviro.sky = love.graphics.newImage("enviro/sky.png")
-      -- lightson = love.graphics.newImage("enviro/lightson.png")
-      -- lightsoff = love.graphics.newImage("enviro/lightsoff.png")
-      -- 	enviro.stage = love.graphics.newImage("enviro/astreet.png")
-      -- 	enviro.paralax = love.graphics.newImage("enviro/paralax.png")
-      -- 	enviro.partitionwall = love.graphics.newImage("enviro/partition2.png")
-      -- enviro.rafters = love.graphics.newImage("enviro/rafters.png")
-      -- enviro.buildingwall = love.graphics.newImage("enviro/buildingwall.png")
       lighttimer = 0
       me.x = 1000
       you.x = 1020
@@ -248,28 +239,32 @@ whatlevel = function()
       enviro.ds = 5
       thesong = song1
 
-      -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
-      -- enviro.sky = love.graphics.newImage("enviro/librarysky.png")
-      -- enviro.librarylpartition = love.graphics.newImage("enviro/librarylpartition.png")
-      -- enviro.libraryrpartition = love.graphics.newImage("enviro/libraryrpartition.png")
-      -- enviro.plibrary = love.graphics.newImage("enviro/libraryplayer.png")
-      -- enviro.thelibraryveneer = love.graphics.newImage("enviro/libraryveneer.png")
-      -- enviro.paralax2 = love.graphics.newImage("enviro/libraryparalax2.png")
-      -- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
-      -- enviro.stage = love.graphics.newImage("enviro/library2.png")
+  
 
-    elseif themap.name == "library" then
+  elseif themap.name == "library" then
+    
+      if noload then 
+        
+          enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
+      enviro.paralax2 = love.graphics.newImage("enviro/libraryparalax2.png")
+      enviro.stage = love.graphics.newImage("enviro/library.png")
+      enviro.sky = love.graphics.newImage("enviro/librarysky.png")
+   
+      enviro.plibrary = love.graphics.newImage("enviro/libraryplayer.png")
+      enviro.thelibraryveneer = love.graphics.newImage("enviro/libraryveneer.png")
+        
+        
+        else
       loader.start(function()
           finishedloading = true
         end)
       loader.newImage(enviro,'paralax',"enviro/libraryparalax.png")
       loader.newImage(enviro,'paralax2', "enviro/libraryparalax2.png")
-      loader.newImage(enviro,'stage', "enviro/library2.png")
+      loader.newImage(enviro,'stage', "enviro/library.png")
       loader.newImage(enviro,'sky',"enviro/librarysky.png")
-      loader.newImage(enviro,'librarylpartition', "enviro/librarylpartition.png")
-      loader.newImage(enviro,'libraryrpartition', "enviro/libraryrpartition.png")
       loader.newImage(enviro,'plibrary', "enviro/libraryplayer.png")
       loader.newImage(enviro, 'thelibraryveneer',"enviro/libraryveneer.png")
+      end
 
       me.x = 700
       you.x = 2000
@@ -532,9 +527,11 @@ drawstreetstuff = function()
 
 end
 drawlibrarystuff = function()
+  if rampcanhit and math.random() > .5 then makenwater(602,930,0,2,1)
+    end
   love.graphics.draw(enviro.plibrary,0,0)
-  love.graphics.draw(enviro.librarylpartition,-1630, -61)
-  love.graphics.draw(enviro.libraryrpartition,enviro.rightwall-200, -61)
+  love.graphics.draw(partition,21, 1,0, -1,3.11)
+  love.graphics.draw(partition,themaps[3].rightwall-21, 0, 0, 1, 3.11)
   libraryveneer()
 end
 
@@ -649,6 +646,15 @@ function drawglass()
 end
 end
 
+function drawparticles()
+  drawsparks()
+    drawdust()
+    drawglass()
+    drawrubble()
+    drawwater()
+  
+end
+
 function drawdust()
 
   for i = #dust, 1, -1 do
@@ -671,6 +677,7 @@ function drawdust()
 end
 end
 rubbletimer = 0
+
 function drawrubble()
   if rubbletimer > 100 then rubbletimer = 0
   else
@@ -696,6 +703,69 @@ function drawrubble()
   love.graphics.setColor(255,255,255)
 end
 end
+
+
+
+waterdrops = {}
+function drawwater()
+  
+  for i = #waterdrops, 1, -1 do
+    local temp = waterdrops[i]
+    local v = temp
+    if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then 
+      temp.j = 0
+      if temp.fade==nil then
+        temp.fade = 100
+        temp.v = temp.v/2
+        end
+      end
+      for j,k in ipairs(hitt) do 
+        hline(v, 10000,
+          {x=v.x, y=v.y},
+          {x=v.x+v.v, y=v.y-v.j},
+          function(fjeoifj)
+            v.v=-v.v/2
+            v.j = -v.j/2
+             if temp.fade==nil then
+        temp.fade = 100
+        temp.v = temp.v/2
+      else
+        temp.fade = temp.fade - 2
+        end
+
+          end
+          )
+        
+      end
+  
+  if not me.actionshot and not you.actionshot and not pause then
+    v.y = v.y - v.j*rampspeed
+    v.x = v.x + v.v*rampspeed
+    v.j = v.j - .1*rampspeed
+    blackn = math.random(150,255)
+    if temp.fade ~= nil then
+      
+    if v.fade < 0 then
+      table.remove(waterdrops, i)
+      else
+      v.fade = v.fade - 1
+      end
+      end
+  end
+  love.graphics.setColor(50,50,blackn)
+  
+  if temp.fade ~= nil then
+love.graphics.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,1.5*(v.fade/100),1.5*(v.fade/100),((v.fade/100)*1.5)/2,((v.fade/100)*1.5)/2)
+else
+  love.graphics.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,1.5,1.5,1,1)
+  end
+end
+  love.graphics.setColor(255,255,255)
+end
+
+
+
+
 function makerunrubble(why,ex,vee, lr)
   if rampcanhit then
     for i = 10, 1, -1 do
@@ -713,6 +783,13 @@ function makeslidedust(why,ex,vee)
   end
 
 end
+
+
+
+
+
+
+
 
 function makenrubble(ty, ex,why,vee,jay, n)
 
@@ -741,6 +818,15 @@ function makenglass(ex,why,vee,jay,n)
     table.insert(glasseses,{x = ex, y = why, v=vee + math.random()+math.random(-1,0), j = jay+math.random()+math.random(-3,2)})
   end
 end
+
+
+function makenwater(ex,why,vee,jay,n)
+  for i = 1, n do
+    table.insert(waterdrops,{x = ex, y = why, v=vee + math.random()+math.random(-1,0), j = jay+math.random()+math.random(-3,2), rot = math.random()})
+  end
+end
+
+
 
 function makeglass (ex,why,vee,jay)
   if vee > 0 then
@@ -933,12 +1019,12 @@ function wallslowmevdown()
 end
 function libraryveneer()
   if themap.name == "library" then
-    if lvfade > 0  and ((me.mid > 1605 and me.mid < 3202 and me.feet > 874) or (you.mid > 1605 and you.mid < 3202 and you.feet > 874))
+    if lvfade > 0  and ((me.mid > 1605 and me.mid < 3202 and me.feet > 0) or (you.mid > 1605 and you.mid < 3202 and you.feet > 0))
     then lvfade = lvfade - 5
     elseif lvfade < 255 then lvfade = lvfade + 5
     end
     love.graphics.setColor(255,255,255,lvfade)
-    love.graphics.draw(enviro.thelibraryveneer, 0, 0)
+    love.graphics.draw(enviro.thelibraryveneer, 1535, 0)
     love.graphics.setColor(255,255,255)
   end
 end
@@ -961,129 +1047,6 @@ function floorsveneer()
     love.graphics.setColor(255,255,255)
   end
 end
-
-function libwallbreak()
-  if me.mid < 1610 and me.mid + me.v > 1610 and me.y > 893 and me.y <1643 
-  then repplay(wallbreaks)
-    makerubble(me.mid,me.y,me.v,me.j)
-    wallslowmehdown()
-  end
-  if me.mid > 1610 and me.mid + me.v < 1610 and me.y > 893 and me.y <1643 
-  then repplay(wallbreaks)
-    makerubble(me.mid,me.y,me.v,me.j)
-    wallslowmehdown()
-  end
-  if me.mid > 1660 and me.mid < 3196 and me.y < 882 and me.y - me.j > 882
-  then 
-    repplay(wallbreaks)
-    makefloorrubble(me.mid,me.y,me.v,me.j)
-    wallslowmevdown()
-  end
-  if me.mid > 1660 and me.mid < 3196 and me.y > 882 and me.y - me.j < 882
-  then 
-    repplay(wallbreaks)
-    makefloorrubble(me.mid,me.y,me.v,me.j)
-    wallslowmevdown()
-  end
-  if you.mid < 1610 and you.mid + you.v > 1610 and you.y > 893 and you.y <1643 
-  then repplay(wallbreaks)
-    makerubble(you.mid,you.y,you.v,you.j)
-    wallslowyouhdown()
-  end
-  if you.mid > 1610 and you.mid + you.v < 1610 and you.y > 893 and you.y <1643 
-  then repplay(wallbreaks)
-    makerubble(you.mid,you.y,you.v,you.j)
-    wallslowyouhdown()
-  end
-  if you.mid > 1660 and you.mid < 3196 and you.y < 882 and you.y - you.j > 882
-  then 
-    repplay(wallbreaks)
-    makefloorrubble(you.mid,you.y,you.v,you.j)
-    wallslowyouvdown()
-  end
-  if you.mid > 1660 and you.mid < 3196 and you.y > 882 and you.y - you.j < 882
-  then 
-    repplay(wallbreaks)
-    makefloorrubble(you.mid,you.y,you.v,you.j)
-    wallslowyouvdown()
-  end
-
-
-  --if me.im = jump then a new shoulder jump?
-
-
-end
-
-
-
-function floorswallbreak()
-
-  mespeed = math.sqrt((me.v*me.v)+(me.j*me.j))
-  youspeed = math.sqrt((you.v*you.v)+(you.j*you.j))
-
-  if findxIntersect(600,4419,633,4455,me.mid+me.v,me.y-me.j+30,me.mid,me.y+30) and mespeed > paperweight then
-    makepapers(me.mid,me.y,me.v, me.j, 8)
-  end
-  if findxIntersect(1528,3574,1542,3587,me.mid+me.v,me.y-me.j+30,me.mid,me.y+30) and mespeed > paperweight then
-    makepapers(me.mid,me.y,me.v, me.j, 2)
-  end
-  if findxIntersect(1882,4366,1965,4472,me.mid+me.v,me.y-me.j+30,me.mid,me.y+30) and mespeed > paperweight then
-    makepapers(me.mid,me.y,me.v, me.j, 40)
-  end
-  if findxIntersect(1803,5002,1832,5019,me.mid+me.v,me.y-me.j+30,me.mid,me.y+30) and mespeed > paperweight then
-    makepapers(me.mid,me.y,me.v, me.j, 5)
-  end
-  if findxIntersect(718,4994,751,5018,me.mid+me.v,me.y-me.j+30,me.mid,me.y+30) and mespeed > paperweight then
-    makepapers(me.mid,me.y,me.v, me.j, 6)
-  end
-
-  if findxIntersect(838,5278,856,5304,me.mid+me.v,me.y-me.j+30,me.mid,me.y+30) and mespeed > paperweight then
-    makepapers(me.mid,me.y,me.v, me.j, 5)
-  end
-  if findxIntersect(1524,5282,1538,5304,me.mid+me.v,me.y-me.j+30,me.mid,me.y+30) and mespeed > paperweight then
-    makepapers(me.mid,me.y,me.v, me.j, 4)
-  end
-  if findxIntersect(1712,5269,1725,5278,me.mid+me.v,me.y-me.j+30,me.mid,me.y+30) and mespeed > paperweight then
-    makepapers(me.mid,me.y,me.v, me.j, 1)
-  end
-  if findxIntersect(1558,5573,1581,5590,me.mid+me.v,me.y-me.j+30,me.mid,me.y+30) and mespeed > paperweight then
-    makepapers(me.mid,me.y,me.v, me.j, 1)
-  end
-
-  if findxIntersect(600,4419,633,4455,you.mid+you.v,you.y-you.j+30,you.mid,you.y+30) and youspeed > paperweight then
-    makepapers(you.mid,you.y,you.v,you.j, 8)
-  end
-  if findxIntersect(1528,3574,1542,3587,you.mid+you.v,you.y-you.j+30,you.mid,you.y+30) and youspeed > paperweight then
-    makepapers(you.mid,you.y,you.v,you.j, 2)
-  end
-  if findxIntersect(1882,4366,1965,4472,you.mid+you.v,you.y-you.j+30,you.mid,you.y+30) and youspeed > paperweight then
-    makepapers(you.mid,you.y,you.v,you.j, 40)
-  end
-  if findxIntersect(1803,5002,1832,5019,you.mid+you.v,you.y-you.j+30,you.mid,you.y+30) and youspeed > paperweight then
-    makepapers(you.mid,you.y,you.v,you.j, 5)
-  end
-  if findxIntersect(718,4994,751,5018,you.mid+you.v,you.y-you.j+30,you.mid,you.y+30) and youspeed > paperweight then
-    makepapers(you.mid,you.y,you.v,you.j, 6)
-  end
-  if findxIntersect(838,5278,856,5304,you.mid+you.v,you.y-you.j+30,you.mid,you.y+30) and youspeed > paperweight then
-    makepapers(you.mid,you.y,you.v,you.j, 5)
-  end
-  if findxIntersect(1524,5282,1538,5304,you.mid+you.v,you.y-you.j+30,you.mid,you.y+30) and youspeed > paperweight then
-    makepapers(you.mid,you.y,you.v,you.j, 4)
-  end
-  if findxIntersect(1712,5269,1725,5278,you.mid+you.v,you.y-you.j+30,you.mid,you.y+30) and youspeed > paperweight then
-    makepapers(you.mid,you.y,you.v,you.j, 1)
-  end
-  if findxIntersect(1558,5573,1581,5590,you.mid+you.v,you.y-you.j+30,you.mid,you.y+30) and youspeed > paperweight then
-    makepapers(you.mid,you.y,you.v,you.j, 1)
-  end
-end
-
-
-
-
-
-
 
 spines = {}
 function aboutso(x,y)

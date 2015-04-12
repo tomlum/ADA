@@ -46,7 +46,6 @@ function spawnmon(ex, why)
 
     eyedee = hof(eyedee, i+1)
   end
-    eyedee = hof(eyedee, 1)
   
   local temp = {x = ex, y = why, v = 0, j = 0, oldpy = why,
     flinch = false, ft = 0, block = false, weight = 1, width = 40, height = 50, id = eyedee, im = ei1, mid = ex+35/2, lr = 1, wallrubbletimer = 0, health = 1+0*monbasehealth, gothroughplats = false,headrot = 0, headrot2 = 0, headvel = 0, push = 0, mode = "idle", animt = 0, oldemode = "bleh", drawwidth = 24, flinchway = 1, cantfly = false, c = {r = 25, g=25, b= 25}, hit = false}
@@ -54,7 +53,7 @@ function spawnmon(ex, why)
   table.insert(hittmon, temp)
 end
 
-function disintegrate(xx,i)
+function disintegrate(xx)
   if xx.health < 0 then
     for i = xx.y, xx.y+xx.height do
       if xx.v==0 then
@@ -64,7 +63,7 @@ function disintegrate(xx,i)
     makenslashsparks(xx.mid,i,xx.v*(math.abs(xx.y+xx.height-i))/5, xx.j, xx.c.r,xx.c.g,xx.c.b,2)
     end
     end
-    table.remove(hittmon,i)
+    table.remove(hittmon,xx.id)
   end
   
 end
@@ -97,7 +96,7 @@ function postmonupdate()
   
   for i,xx in ipairs(hittmon) do
  
-    disintegrate(xx,i)
+    disintegrate(xx)
     
     end
   
@@ -347,17 +346,16 @@ function monbite(xx)
               xx.hit = false
 elseif xx.animt <4*5+10+10 then 
   xx.im = ea6
-  if xx.animt < 4*4+1 and rampcanhit then
-
-     hboxcs(xx, xx.id, 
+  if xx.animt < 4*5+10+11 and rampcanhit then
+     hboxcs(xx.id, 
             {x=xx.mid, y = xx.y+15},
-            {x=xx.mid+63*math.cos(xx.headrot)*xx.lr, y = xx.y+15+63*math.sin(xx.headrot)*xx.lr},
+            {x=xx.mid+63*math.cos(xx.headrot), y = xx.y+15+63*math.sin(xx.headrot)},
              {x=xx.mid, y = xx.y+15},
-            {x=xx.mid+63*math.cos(xx.headrot)*xx.lr, y = xx.y+15+63*math.sin(xx.headrot)*xx.lr},
+            {x=xx.mid+63*math.cos(xx.headrot), y = xx.y+15+63*math.sin(xx.headrot)},
             function(z)
 
-              z.v = z.v/3 + math.cos(xx.headrot)*at.e.b.v*xx.lr
-              z.j = z.j/3 + math.sin(xx.headrot)*at.e.b.j*xx.lr
+              z.v = z.v/3 + math.cos(xx.headrot)*at.e.b.v
+              z.j = z.j/3 + math.sin(xx.headrot)*at.e.b.j
               z.g = false
               if not (z.block and z.lr == -xx.lr) then
                 z.health = z.health - at.e.b.dam
@@ -398,7 +396,7 @@ function trackplayer(xx)
       xx.flyyoufool = false
     end
   end
-if not (xx.mode == "attack" and xx.animt < 4*6+13+10 ) then
+if xx.mode ~= "attack" then
   xx.headrot2 = hof(math.atan((xx.target.y+xx.target.height/5-xx.y)/(xx.target.mid-xx.mid)), math.rad(-60))
   if xx.headrot2 > math.rad(-50) then
     xx.headrot2 = lof(math.atan((xx.target.y+xx.target.height/5-xx.y)/(xx.target.mid-xx.mid)), math.rad(30))
@@ -416,7 +414,7 @@ if not (xx.mode == "attack" and xx.animt < 4*6+13+10 ) then
   --xx.headrot = math.atan((np.y-xx.y)/(np.x-xx.x))
 
   local hrot = math.deg(xx.headrot)
-  if not (xx.mode == "attack" and xx.animt < 4*6+13+10 )  then
+  if xx.mode ~= "attack" then
   if xx.target.x < xx.x and (xx.headrot >= math.rad(-58) or xx.headrot <= math.rad(28)) and xx.lr > 0  then
     xx.lr = -1
     if xx.headrot > 0 then

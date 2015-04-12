@@ -515,11 +515,10 @@ function drawx(xx)
     drawa(me)
 
   end
-    drawsparks()
-    drawdust()
-    drawglass()
-    drawrubble()
+    drawparticles()
+    if fightclub then
     love.graphics.rectangle("fill", 500, 0, 2, themaps[100].floor+1)
+    end
   drawcolorstuff(me)
 mondraw()
 

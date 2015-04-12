@@ -175,7 +175,7 @@ function breadandbutter(xx)
         end
         repplay(xx.blues)
         if xx.animcounter >0 then
-          hboxcs(xx.id, 
+          hboxcs(xx, xx.id, 
             {x=xx.mid, y = xx.y+24},
             {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
             {x=xx.mid, y = xx.y+30},
@@ -217,7 +217,7 @@ function breadandbutter(xx)
         xx.im = kick1
       elseif xx.animcounter < 18 then
         xx.im = kick2
-          hboxcs(xx.id, 
+          hboxcs(xx, xx.id, 
             {x=xx.mid, y = xx.y+31},
             {x=xx.mid+xx.v+(xx.lr*28), y = xx.y+31-xx.j},
             {x=xx.mid+me.v+(xx.lr*28), y = xx.y+39-xx.j},
@@ -250,7 +250,7 @@ function breadandbutter(xx)
       elseif xx.animcounter < 16 then
         xx.im = uppercut
         if xx.animcounter <=12 then
-          hboxcs(xx.id, 
+          hboxcs(xx, xx.id, 
             {x=xx.mid, y = xx.y+20},
             {x=xx.mid+xx.v+(xx.lr*11), y = xx.y+4-xx.j},
             {x=xx.mid+xx.v+(xx.lr*17), y = xx.y+4-xx.j},
@@ -277,7 +277,7 @@ function breadandbutter(xx)
       elseif xx.animcounter<=20 then
         xx.im = dropkick2
         if xx.animcounter <10 then
-          hboxcs(xx.id, 
+          hboxcs(xx, xx.id, 
             {x=xx.mid, y = xx.y+18},
             {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+18-xx.j},
             {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+26-xx.j},
@@ -322,7 +322,7 @@ function breadandbutter(xx)
           xx.j = xx.j - 7
           xx.landingcounter = at.bb.ak.penalty
         end
-        hboxcs(xx.id, 
+        hboxcs(xx, xx.id, 
           {x=xx.mid+8, y = xx.y+40},
           {x=xx.mid+xx.v+(xx.lr*14), y = xx.y+64-xx.j},
           {x=xx.mid+xx.v+(xx.lr*6), y = xx.y+64-xx.j},
@@ -356,7 +356,7 @@ function breadandbutter(xx)
       elseif xx.animcounter < 16 then
         xx.im = jumpuppercut
         if xx.animcounter <= 12 then
-          hboxcs(xx.id, 
+          hboxcs(xx, xx.id, 
             {x=xx.mid, y = xx.y+30},
             {x=xx.mid+xx.v+(xx.lr*11), y = xx.y+8-xx.j},
             {x=xx.mid+xx.v+(xx.lr*17), y = xx.y+8-xx.j},
@@ -383,7 +383,7 @@ function breadandbutter(xx)
       elseif xx.animcounter < 7 then
         xx.im = brun1
       elseif xx.animcounter < 9 then
-           hboxcs(xx.id, 
+           hboxcs(xx, xx.id, 
             {x=xx.mid, y = xx.y+19},
             {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+23-xx.j},
             {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+29-xx.j},

@@ -17,6 +17,30 @@ me.jmax = jmax
 me.plat = noplat
 you.plat = noplat
 
+table.insert(themaps[2].plats, {y = themaps[1].floor, x1 = 0, x2 = 100000, floor = true})
+table.insert(themaps[2].plats, {y = 964, x1 = 1404, x2 = 100000, floor = true})
+table.insert(themaps[2].plats, {y = 644, x1 = 1616, x2 = 3196})
+table.insert(themaps[2].plats, {y = 426, x1 = 3003, x2 = 3118})
+table.insert(themaps[2].plats, {y = 327, x1 = 2637, x2 = 2637+115})
+table.insert(themaps[2].plats, {y = 327, x1 = 2271, x2 = 2271+115})
+table.insert(themaps[2].plats, {y = 327, x1 = 1907, x2 = 1907+115})
+
+
+table.insert(themaps[2].plats, {y = 327, x1 = 2637, x2 = 2637+115})
+
+table.insert(themaps[2].plats, {y = 934, x1 = 527, x2 = 677})
+
+table.insert(themaps[2].plats, {y = 933, x1 = 1893, x2 = 2135})
+table.insert(themaps[2].plats, {y = 933, x1 = 2321, x2 = 2563})
+table.insert(themaps[2].plats, {y = 933, x1 = 2749, x2 = 2991})
+
+table.insert(themaps[2].plats, {y = 0, x1 = 1535, x2 = 3200})
+
+table.insert(themaps[2].walls, {y1 = 0, y2 = 806, x=1614})
+
+table.insert(themaps[2].walls, {y1 = 964, y2 = 3000, x=1408, barrier = true})
+table.insert(themaps[2].walls, {y1 = -1, y2 = themaps[2].floor, x=0, barrier = true})
+table.insert(themaps[2].walls, {y1 = -1, y2 = themaps[2].floor, x=themaps[2].rightwall, barrier = true})
 
 table.insert(themaps[1].plats, {n=1, y = themaps[1].floor, x1 = 0, x2 = 100000, floor = true})
 table.insert(themaps[1].plats, {n=2, y = 1379, x1 = 1120, x2 = 1529})
@@ -444,7 +468,7 @@ transferofenergy(xx)
     if xx.j < 0 then xx.j = 0 
     end
     if z.up and not xx.flinch and not xx.block and not xx.jstop and not xx.busy
-    and not z.a1 and not z.a2 and not z.a3 and not xx.bur and not xxpurp
+    and not z.a1 and not z.a2 and not z.a3 and not xx.bur and not xxpurp and xx.animcounter == 0
     then 
       if xx.running then
         xx.jt = runjt

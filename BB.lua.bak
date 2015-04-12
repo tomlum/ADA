@@ -30,7 +30,7 @@ at.bb.rp.z = .05
 
 
 at.bb.ap = {}
-at.bb.ap.kb = 6
+at.bb.ap.kb = 12
 at.bb.ap.ft = 10
 at.bb.ap.dam = 6
 at.bb.ap.z = .05
@@ -96,7 +96,7 @@ kick2 = {im = love.graphics.newImage("me/attack/kick2.png"), c = love.graphics.n
 kick3 = {im = love.graphics.newImage("me/attack/kick3.png"), c = love.graphics.newImage("me/attack/kick3c.png"), xoff = 15, yoff = 10}
 uppercut = {im=love.graphics.newImage("me/attack/uppercut.png"),c=love.graphics.newImage("me/attack/uppercutc.png"), xoff = 15}
 jumpuppercut = {im=love.graphics.newImage("me/attack/jumpuppercut.png"),c=love.graphics.newImage("me/attack/jumpuppercutc.png")}
-dropkick1 = {im=love.graphics.newImage("me/attack/dropkick1.png"),c=love.graphics.newImage("me/attack/dropkick1c.png"), xoff = 5,yoff = -7}
+dropkick1 = {im=love.graphics.newImage("me/attack/dropkick1.png"),c=love.graphics.newImage("me/attack/dropkick1c.png"), xoff = 5,yoff = -7,extrah=10}
 dropkick2 = {im=love.graphics.newImage("me/attack/dropkick2.png"),c=love.graphics.newImage("me/attack/dropkick2c.png"), xoff = 8,yoff = -7,extrah=-15}
 divekick = {im=love.graphics.newImage("me/attack/divekick.png"),c=love.graphics.newImage("me/attack/divekickc.png"), xoff = 5,yoff = -7,extrah=15}
 
@@ -128,7 +128,6 @@ function breadandbutter(xx)
       if xx.running and (xx.a2b or xx.a3b) then
         xx.type = 7
         xx.animcounter = 1
-        eh = true
       elseif (xx.a2 or xx.a3) and xx.color.n == 0 and not xx.holda then
         xx.type = 1
         xx.animcounter = 1
@@ -175,7 +174,7 @@ function breadandbutter(xx)
           xx.im = punch5
         end
         repplay(xx.blues)
-        if xx.animcounter >0 and not xx.hit then
+        if xx.animcounter >0 then
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y+24},
             {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
@@ -218,7 +217,6 @@ function breadandbutter(xx)
         xx.im = kick1
       elseif xx.animcounter < 18 then
         xx.im = kick2
-        if xx.animcounter == 12 then
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y+31},
             {x=xx.mid+xx.v+(xx.lr*28), y = xx.y+31-xx.j},
@@ -238,7 +236,6 @@ function breadandbutter(xx)
               shakez(at.bb.k.z)
 
             end)
-        end
       elseif xx.animcounter < 43 then
         xx.im = kick3
         if xx.animcounter >= 17 then 
@@ -252,12 +249,12 @@ function breadandbutter(xx)
         xx.im = punch6
       elseif xx.animcounter < 16 then
         xx.im = uppercut
-        if xx.animcounter == 9 then
+        if xx.animcounter <=12 then
           hboxcs(xx.id, 
-            {x=xx.mid, y = xx.y+30},
-            {x=xx.mid+xx.v+(xx.lr*11), y = xx.y+8-xx.j},
-            {x=xx.mid+xx.v+(xx.lr*17), y = xx.y+8-xx.j},
             {x=xx.mid, y = xx.y+20},
+            {x=xx.mid+xx.v+(xx.lr*11), y = xx.y+4-xx.j},
+            {x=xx.mid+xx.v+(xx.lr*17), y = xx.y+4-xx.j},
+            {x=xx.mid, y = xx.y+30},
 
             function(z)
               xx.cancombo = true
@@ -321,7 +318,7 @@ function breadandbutter(xx)
 
       elseif xx.animcounter<=25 then
         xx.im = divekick
-        if xx.animcounter == 10 then
+        if xx.animcounter == 10 and rampcanhit then
           xx.j = xx.j - 7
           xx.landingcounter = at.bb.ak.penalty
         end
@@ -358,7 +355,7 @@ function breadandbutter(xx)
       if xx.animcounter < 5 then
       elseif xx.animcounter < 16 then
         xx.im = jumpuppercut
-        if xx.animcounter == 6 then
+        if xx.animcounter <= 12 then
           hboxcs(xx.id, 
             {x=xx.mid, y = xx.y+30},
             {x=xx.mid+xx.v+(xx.lr*11), y = xx.y+8-xx.j},
@@ -386,7 +383,6 @@ function breadandbutter(xx)
       elseif xx.animcounter < 7 then
         xx.im = brun1
       elseif xx.animcounter < 9 then
-        if xx.animcounter == 7 then
            hboxcs(xx.id, 
             {x=xx.mid, y = xx.y+19},
             {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+23-xx.j},
@@ -403,7 +399,6 @@ function breadandbutter(xx)
 
             end)
           
-          end
         xx.im = brun2
       elseif xx.animcounter < 30 then
         xx.im = brun3

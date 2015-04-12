@@ -7,7 +7,7 @@ noplat = {n=0;}
 themaps = {}
 themaps[1]= {name = "street", 
   plats = {}, walls = {},
-  floor = 1896,
+  floor = 1027,
   lightx = 707+2.5,
   lighty = 142+2.5,
   lightcolor = {r = 40, g = 255, b = 0},
@@ -15,11 +15,11 @@ themaps[1]= {name = "street",
 }
 themaps[2]= {name = "library", 
   plats = {}, walls = {},
-  floor = 896,
+  floor = 1027,
   lightx = 293.5,
   lighty = 229.5,
   lightcolor = {r = 87, g = 0, b = 158},
-  rightwall = 4000
+  rightwall = 3829
 }
 
 themaps[3]= {name = "floors", 
@@ -51,9 +51,8 @@ function xrubble(xx)
     )
     and 
     (
-      xx.y >= wall.y1 
-      or
-      xx.feet <= wall.y2
+      (xx.y+(xx.feet-xx.y)/2 >= wall.y1 and 
+      xx.y+(xx.feet-xx.y)/2 <= wall.y2 )
     ) then
     for i = xx.y, xx.feet do
       if wall.glasswall~=nil then

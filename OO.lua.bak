@@ -142,7 +142,7 @@ function orangeyouglad(xx)
           xx.oplat = nil
           ocontactstuff(xx, xx.mid+(xx.lr*72), xx.y+32,xx.v+(19*xx.lr), xx.j-36) 
 
-          hboxcs(xx, xx.id, 
+          hboxcs(xx.id, 
             {x=xx.mid+(xx.lr*59), y = xx.y+24},
             {x=xx.mid+xx.v+(xx.lr*64), y = xx.y+24-xx.j},
             {x=xx.mid+xx.v+(xx.lr*91), y = xx.y+60-xx.j},
@@ -262,7 +262,7 @@ function orangeyouglad(xx)
 
 
           for i = -1, 1 do
-            hboxcs(xx, xx.id, 
+            hboxcs(xx.id, 
               {x=xx.mid+(xx.lr*50)*i, y = xx.y+27},
               {x=xx.mid+xx.v+(xx.lr*59)*i, y = xx.y+27-xx.j},
               {x=xx.mid+xx.v+(xx.lr*99)*i, y = xx.y+60-xx.j},
@@ -324,7 +324,7 @@ function orangeyouglad(xx)
           xx.oplat = nil
           ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 
 
-          hboxcs(xx, xx.id, 
+          hboxcs(xx.id, 
             {x=xx.mid+(xx.lr*53), y = xx.y+24},
             {x=xx.mid+xx.v+(xx.lr*63), y = xx.y-xx.j},
             {x=xx.mid+xx.v+(xx.lr*46), y = xx.y+65-xx.j},
@@ -371,7 +371,7 @@ elseif xx.type == 4 then
           ocontactstuff(xx, xx.mid+(xx.lr*43), xx.y-24,xx.v+(19*xx.lr), xx.j-57) 
           ocontactstuff(xx, xx.mid+(xx.lr*43), xx.y+24+31,xx.v+(19*xx.lr), xx.j+57) 
 
-          hboxcs(xx, xx.id, 
+          hboxcs(xx.id, 
             {x=xx.mid+(xx.lr*43), y = xx.y-24},
             {x=xx.mid+xx.v+(xx.lr*46), y = xx.y-32-xx.j},
             {x=xx.mid+xx.v+(xx.lr*62), y = xx.y+33-xx.j},
@@ -389,7 +389,7 @@ elseif xx.type == 4 then
               shakez(at.o.ap.z)
 
           end)
-        hboxcs(xx, xx.id, 
+        hboxcs(xx.id, 
             {x=xx.mid+(xx.lr*43), y = xx.y+24+31},
             {x=xx.mid+xx.v+(xx.lr*46), y = xx.y+32+31-xx.j},
             {x=xx.mid+xx.v+(xx.lr*62), y = xx.y-33+31-xx.j},
@@ -440,7 +440,7 @@ elseif xx.type == 4 then
           ocontactstuff(xx, xx.mid, xx.y,xx.v+81*xx.lr, xx.j-138)
 
 
-          hboxcs(xx, xx.id, 
+          hboxcs(xx.id, 
             {x=xx.mid+(xx.lr*49), y = xx.y+70},
             {x=xx.mid+xx.v+(xx.lr*56), y = xx.y+70-xx.j},
             {x=xx.mid+xx.v+(xx.lr*83), y = xx.y+130-xx.j},
@@ -517,7 +517,7 @@ elseif xx.type == 4 then
           xx.oplat = nil
           ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 
 
-          hboxcs(xx, xx.id, 
+          hboxcs(xx.id, 
             {x=xx.mid+(xx.lr*53), y = xx.y+24},
             {x=xx.mid+xx.v+(xx.lr*63), y = xx.y-xx.j},
             {x=xx.mid+xx.v+(xx.lr*46), y = xx.y+65-xx.j},
