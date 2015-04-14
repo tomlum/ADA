@@ -1,3 +1,7 @@
+boltsflyrelative = true
+
+
+
 kothscoretowin = 5000
 
 waveframerate = 8 --(2 is fast, higher is lower)
@@ -13,8 +17,6 @@ superjumpratio = 1.4
 initjmax = 17+2
 --basically min j
 jt = 0
-risegrav = 1.3
-dropgrav = .4
 
 jforlanding = 20
 landingfric = .3
@@ -26,15 +28,40 @@ frameswhilelandcantmove = 8
 --set to 0 for whiplash like turning
 whiplash = 1 
 
-maxgravity = 28
-defspeedminit = 7
-speedminit = defspeedminit
-speedlimit = speedminit
-accel = .5
-minmaxdif = 4
 
+--THE BIG ONES
+--THE BIG ONES
+--THE BIG ONES
+defspeedminit = 6
+minmaxdif = 4
+accel = .5
+
+awaypenalty = .7
+
+initrunspeed = 8
+defrunpace = 19
+
+jumpheight = .6
+risegrav = 1.3
+dropgrav = .4
+maxgravity = 28
 
 maxhealth = 280
+
+
+
+
+
+
+
+
+
+speedminit = defspeedminit
+speedlimit = speedminit
+
+
+
+
 shakedis = 2
 noshake = false
 
@@ -54,7 +81,6 @@ walljumpv2 = 8
 
 whiffradius = 150
 
-jumpheight = .6
 
 papertime = 100
 --speed necessary to move it
@@ -177,8 +203,6 @@ minvfordust = 3
 --higher means more fric
 fricrate = .75
 
-initrunspeed = 10
-defrunpace = 19
 
 --slowdown rate
 adecrate = .2

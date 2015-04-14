@@ -107,7 +107,7 @@ end
 
 function spikeupdate(xx)
   
-   if xx.purpgroundtimer < 0 and xx.purpgroundtimer+1*rampspeed >= 0 then
+   if xx.purpgroundtimer < 0 and xx.purpgroundtimer+1 >= 0 then
     xx.purpgroundtimer = 0
       xx.numofspikes = 2*at.p.ak.n
     for sn = 0, at.p.ak.n do
@@ -142,7 +142,7 @@ function spikeupdate(xx)
 
     end
   elseif xx.purpgroundtimer < 0 then
-    xx.purpgroundtimer = xx.purpgroundtimer + 1*rampspeed
+    xx.purpgroundtimer = xx.purpgroundtimer + 1*ramp(xx)
   elseif xx.landingcounter >= at.p.ak.exposedtime and xx.landingcounter-1 < at.p.ak.exposedtime then
     xx.numofspikes = 0
     

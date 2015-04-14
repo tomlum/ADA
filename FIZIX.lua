@@ -3,8 +3,17 @@
 --land from height and make rocks fly up?
 --wind ability allows you to move more freely in the air, allows you to drop faster and change direction
 
-
-awaypenalty = .7
+me.rampspeed = 1
+you.rampspeed = 1
+function relativity(xx)
+  if xx.id == 1 then
+    xx. = 1
+    else
+  xx. = 
+  end
+  
+  
+end
 
 floor = 1900 - 2
 you.tempfloor = floor
@@ -87,6 +96,13 @@ table.insert(themaps[3].plats, {y = 2756-286*2, x1 = 2075, x2 = 2139})
 table.insert(themaps[3].plats, {y = 2756-286*3, x1 = 419, x2 = 636})
 table.insert(themaps[3].plats, {y = 2756-286*3, x1 = 2070, x2 = 2139})
 table.insert(themaps[3].plats, {y = 2756-286*4, x1 = 2072, x2 = 2139})
+
+
+function ramp(xx)
+  return xx.rampspeed
+end
+
+
 for i=1, 8 do
 table.insert(themaps[3].plats, {y = 5616-286*i, x1 = 419, x2 = 2139})
 end
@@ -231,7 +247,7 @@ end
 
 fric = function (xx) 
 
-  xx.v = rodib(xx.v,fricrate*rampspeed,xx.push)
+  xx.v = rodib(xx.v,fricrate*ramp(xx),xx.push)
 
   if not xx.landing
   then
@@ -407,6 +423,8 @@ me.gothroughplats = false
 you.gothroughplats = false
 me.speedpenalty = 1
 you.speedpenalty = 1
+
+
  
 function speedpenaltycalc(xx,yy)
    if
@@ -418,6 +436,7 @@ function speedpenaltycalc(xx,yy)
 end
 
 function movex(xx,yy)
+  relativity(xx)
 speedpenaltycalc(xx,yy)
    runrunrun(xx)
 transferofenergy(xx)
@@ -505,7 +524,7 @@ transferofenergy(xx)
 
     if xx.landingcounter > 0
     then
-      xx.landingcounter = xx.landingcounter - 1*rampspeed
+      xx.landingcounter = xx.landingcounter - 1*ramp(xx)
     else xx.landingcounter = 0
     end
     if z.blockb and (not xx.holda and xx.a1b) and math.abs(z.j) + math.abs(z.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j) and xx.j > 0
@@ -519,17 +538,17 @@ transferofenergy(xx)
       xx.j = climbj
       xx.v = xx.v/2
     elseif z.left and xx.v >= 1 + xx.push*1.5
-    then xx.v = xx.v - adecrate*rampspeed
+    then xx.v = xx.v - adecrate*ramp(xx)
       xx.slowdown = true
 
     elseif z.right and xx.v <= -1 + xx.push*1.5
-    then xx.v = xx.v + adecrate*rampspeed
+    then xx.v = xx.v + adecrate*ramp(xx)
       xx.slowdown = true
     elseif z.left and xx.v > - maxairmove + xx.push*1.5
-    then xx.v = xx.v -amovrate*rampspeed
+    then xx.v = xx.v -amovrate*ramp(xx)
       xx.slowdown = false
     elseif z.right and xx.v < maxairmove + xx.push*1.5
-    then xx.v = xx.v +amovrate*rampspeed
+    then xx.v = xx.v +amovrate*ramp(xx)
       xx.slowdown = false
 
     elseif xx.push > 0 then
@@ -547,19 +566,19 @@ transferofenergy(xx)
     if z.up and xx.j > 0 and z.type ==0
     and xx.jmax > 0 
     and xx.firstjump
-    then xx.jmax = xx.jmax - jumpheight*rampspeed
+    then xx.jmax = xx.jmax - jumpheight*ramp(xx)
       --the end arc/fall of any jump or the mini jump
     else
       xx.firstjump = false
       if xx.jt > 0
-      then xx.jt = xx.jt -  1*rampspeed
+      then xx.jt = xx.jt -  1*ramp(xx)
       elseif xx.jt <= 0 and xx.j > - maxgravity*xx.color.s.weight
-      then xx.jt = xx.jt -  1*rampspeed
+      then xx.jt = xx.jt -  1*ramp(xx)
         if xx.j >= 0 and not xx.float then
-          xx.j = xx.j - risegrav*rampspeed*xx.color.s.weight
+          xx.j = xx.j - risegrav*ramp(xx)*xx.color.s.weight
         elseif not xx.float then
 
-          xx.j = xx.j - dropgrav*rampspeed*xx.color.s.weight
+          xx.j = xx.j - dropgrav*ramp(xx)*xx.color.s.weight
         end
         --elseif xx.jt <= 0 and xx.ht > 0
         --then xx.j = 0

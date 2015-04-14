@@ -73,12 +73,12 @@ function monplatupdate()
  for i,xx in ipairs(hittmon) do
 
     if rampcanhit and xx.g then
-      xx.v = rodib(xx.v,fricrate*rampspeed,xx.push)
+      xx.v = rodib(xx.v,fricrate*ramp(xx),xx.push)
     end
 
 
-    xx.x = xx.x+xx.v*rampspeed
-    xx.y = xx.y-xx.j*rampspeed
+    xx.x = xx.x+xx.v*ramp(xx)
+    xx.y = xx.y-xx.j*ramp(xx)
 
 
     xx.push = rodib(xx.push,1,0)
@@ -142,15 +142,15 @@ function monupdate()
       if xx.j > -maxgravity  then
         if xx.j > 0 then
           xx.im = eau
-          xx.j = xx.j - risegrav*rampspeed*xx.weight
+          xx.j = xx.j - risegrav*ramp(xx)*xx.weight
         else
           xx.im = ead
-          xx.j = xx.j - dropgrav*rampspeed*xx.weight
+          xx.j = xx.j - dropgrav*ramp(xx)*xx.weight
           if xx.flyyoufool and xx.j < -5 then
             xx.j = flapj*math.log(math.abs(xx.target.y-xx.y))/4
             if xx.mode == "chase" then
 
-              xx.v = xx.chaselr*rampspeed
+              xx.v = xx.chaselr*ramp(xx)
             end
           end
         end
@@ -201,7 +201,7 @@ function walkanimation(xx)
       xx.im = ew2
       xx.v = xx.v +(
         --(1-(math.random()/100))+
-        xx.chaselr)*rampspeed
+        xx.chaselr)*ramp(xx)
       markerv = xx.v
     end
   end
@@ -273,7 +273,7 @@ function idleanim(xx)
 
   if xx.animt > 62 then xx.animt = 0
   else
-    xx.animt = xx.animt + 1*rampspeed
+    xx.animt = xx.animt + 1*ramp(xx)
   end
 
   if xx.animt >50 then xx.im = ei2 else xx.im = ei1 end
@@ -285,7 +285,7 @@ function monflinching(xx)
   
   if xx.mode == "flinch" then
     if xx.ft > 0 then 
-      xx.ft = xx.ft - .5*rampspeed
+      xx.ft = xx.ft - .5*ramp(xx)
     else xx.ft = 0
       xx.flinch = false
     end
@@ -339,7 +339,7 @@ end
 
 function monbite(xx) 
   xx.attacking = true
-  xx.animt = xx.animt + 1*rampspeed
+  xx.animt = xx.animt + 1*ramp(xx)
   if xx.animt <4 then xx.im = ea2
   elseif xx.animt <4*2 then xx.im = ea3
   elseif xx.animt <4*3 then xx.im = ea4

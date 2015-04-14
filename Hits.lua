@@ -2,6 +2,12 @@
 --also remember that flinch dir depends on the object hitting dir not necessarily the lr of the other person
 --DUDE, MAYBE MAKE ALL BLOCKS SHOULD BE INTEGERS
 --also remember that flinch dir depends on the object hitting dir not necessarily the lr of the other person
+
+
+
+
+
+
 me.hit = false
 me.hit = false
 --for dis from height to feet in fall anim
@@ -642,7 +648,7 @@ function hboxwall()
       if ( p.flinch or p.a1 or p.a2 or p.a3 or p.a4) then p.wjt = 0 end
 
       if p.wjt > 0 then 
-        p.wjt = p.wjt + 1*rampspeed
+        p.wjt = p.wjt + 1*ramp(p)
         --[[
         if p.wjt > 8 then 
           p.wjt = 0

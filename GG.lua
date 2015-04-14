@@ -436,8 +436,8 @@ function gandg(xx)
       if v.t >= greendissolvetime then
         table.remove(xx.bolts, i)
       end--[[
-      local xnex =  v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed
-      local ynex = v.y+(v.speed * math.sin(math.rad(v.angle)))*rampspeed
+      local xnex =  v.x+(v.speed * math.cos(math.rad(v.angle)))*
+      local ynex = v.y+(v.speed * math.sin(math.rad(v.angle)))*
   for i = #you.spikes, 1, -1 do 
     local spike1 = you.spikes[i-1] 
       if pint({x = spike1[1], y = spike1[2]}, {x = spike1[3], y = spike1[4]}, {x = v.x, y = v.y}, {x = xnex, y = ynex}) or
@@ -453,10 +453,18 @@ function gandg(xx)
 ]]--
       for j,k in ipairs(themap.walls) do 
         if k.barrier then
-          if (v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed > k.x+amountstuckinwall) 
+          if boltsflyrelative then
+          if (v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) > k.x+amountstuckinwall) 
+          or 
+          (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) < k.x-amountstuckinwall) then
+            v.stuck = true
+          end
+        else
+           if (v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed > k.x+amountstuckinwall) 
           or 
           (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed < k.x-amountstuckinwall) then
             v.stuck = true
+          end
           end
         end
       end
@@ -465,8 +473,14 @@ function gandg(xx)
 
       if v.y <= themap.floor+10 and not v.stuck then
         table.insert(xx.bolttrail, {angle = v.angle, speed = v.speed, x = v.x, y = v.y, t = 0})
+        if boltsflyrelative then
+        v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx)
+        v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*ramp(xx)
+          
+          else
         v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed
         v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*rampspeed
+        end
       else v.stuck = true
       end
       if not v.stuck then hline(xx, xx.id, 

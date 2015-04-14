@@ -723,9 +723,21 @@ function drawwater()
         hline(v, 10000,
           {x=v.x, y=v.y},
           {x=v.x+v.v, y=v.y-v.j},
-          function(fjeoifj)
+          function(p)
+            if math.abs(v.v * p.v) == v.v * p.v  then
             v.v=-v.v/2
-            v.j = -v.j/2
+          else
+            v.v=-v.v/2+p.v
+            
+          end
+          
+          if math.abs(v.j * p.j) == v.j * p.j  then
+            v.j=-v.j/2
+          else
+            v.j=-v.j/2+p.j
+            
+            end
+          
              if temp.fade==nil then
         temp.fade = 100
         temp.v = temp.v/2
@@ -1382,7 +1394,7 @@ death = function(xx, yy)
 
   idleanimatex = function(xx)
     if xx.idletimer < 17 then 
-      xx.idletimer = xx.idletimer + 1*rampspeed
+      xx.idletimer = xx.idletimer + 1*ramp(xx)
       if xx.health<maxhealth/2 then
         xx.im = idle3
       else
@@ -1405,7 +1417,7 @@ death = function(xx, yy)
 
   walkxx = function (xx)
 
-    xx.walktimer = xx.walktimer + 1*rampspeed
+    xx.walktimer = xx.walktimer + 1*ramp(xx)
 
     if xx.running and not xx.dodge then 
 
@@ -1453,44 +1465,29 @@ death = function(xx, yy)
       end
     end
   end
-  landycheck = function ()
-    if you.landingcounter <= 0	
-    then you.landing = false
+  landxcheck = function (xx)
+    if xx.landingcounter <= 0	
+    then xx.landing = false
     else
-      you.landingcounter = you.landingcounter - 1*rampspeed
-    end
-  end
-  landmecheck = function ()
-    if me.landingcounter <= 0	
-    then me.landing = false
-    else
-      me.landingcounter = me.landingcounter - 1*rampspeed
+      xx.landingcounter = xx.landingcounter - 1*ramp(xx)
     end
   end
   you.slidetimer = 0
   me.slidetimer = 0
-  slideycheck = function ()
-    if you.slidetimer < 6
+  slidexcheck = function ()
+    if xx.slidetimer < 6
     then 
-      you.slidetimer = you.slidetimer + 1*rampspeed
-    elseif you.slidetimer >= 6
-    then you.slide = false
+      xx.slidetimer = xx.slidetimer + 1*ramp(xx)
+    elseif xx.slidetimer >= 6
+    then xx.slide = false
 
     end
   end
-  slidemecheck = function ()
-    if me.slidetimer < 6
-    then 
-      me.slidetimer = me.slidetimer + 1*rampspeed
-    elseif me.slidetimer >= 6
-    then me.slide = false
-
-    end
-  end
+ 
 
   animate = function ()
-    landycheck()
-    slideycheck()
+    landycheck(you)
+    slidexcheck(you)
     if you.slide 
     then you.im = slide
       makeslidedust(you.y+50,you.mid + 15 * you.lr,you.v)
@@ -1509,8 +1506,8 @@ death = function(xx, yy)
     end
 
 
-    landmecheck()
-    slidemecheck()
+    landxcheck(me)
+    slidexcheck(me)
     if me.slide 
     then me.im = slide
       makeslidedust(me.y+50,me.mid + 20 * me.lr,me.v)
@@ -1587,7 +1584,7 @@ death = function(xx, yy)
       v.y = v.y - v.j*rampspeed
       v.x = v.x + v.v*rampspeed
       v.j = v.j - .1*rampspeed
-      v.rot = v.rot + math.random() * rampspeed 
+      v.rot = v.rot + math.random() *rampspeed 
     end
     love.graphics.setColor(v.r,v.g,v.b,math.random(150,255))
     love.graphics.draw(enviro.spark,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)

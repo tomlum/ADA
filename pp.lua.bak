@@ -161,7 +161,7 @@ function spikeupdate(xx)
     elseif cur.t > 0 and cur.t<5  then
       spikegrow(cur,1, xx)
     elseif cur.t <=7 and cur.t >=5 then
-      hboxcs(xx.id, 
+      hboxcs(xx, xx.id, 
         {x=vv[1], y = vv[2]},
         {x=vv[3], y = vv[4]},
         {x=vv[5], y = vv[6]},
@@ -179,7 +179,7 @@ function spikeupdate(xx)
 
         end)
     elseif cur.t >=6 then
-      hboxcs(0, 
+      hboxcs(xx,0, 
         {x=vv[1], y = vv[2]},
         {x=vv[3], y = vv[4]},
         {x=vv[5], y = vv[6]},
@@ -190,7 +190,7 @@ function spikeupdate(xx)
             z.flinchway = -z.flinchway
           end
         end)
-      hboxcs(0, 
+      hboxcs(xx,0, 
         {x=vv[3], y = vv[4]},
         {x=vv[3], y = vv[4]},
         {x=vv[3], y = vv[4]},
@@ -352,7 +352,7 @@ function pandp(xx)
         elseif xx.animcounter <  at.p.p2.t+2 then
           xx.im = pp1back
           if xx.animcounter >=at.p.p2.t and xx.animcounter < at.p.p2.t+1 then
-            hboxcs(xx.id, 
+            hboxcs(xx, xx.id, 
               {x=xx.mid, y = xx.y+6},
               {x=xx.mid+xx.v+(xx.lr*46), y = xx.y+35},
               {x=xx.mid+xx.v+(xx.lr*60), y = xx.y+40},
@@ -371,7 +371,7 @@ function pandp(xx)
           end
         elseif xx.animcounter < at.p.p2.t+4 then
           xx.im = pp1back2
-          hboxcs(xx.id, 
+          hboxcs(xx, xx.id, 
             {x=xx.mid+(xx.lr * -17), y = xx.y-31},
             {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38},
             {x=xx.mid+xx.v+(xx.lr*50), y = xx.y+28},
@@ -400,7 +400,7 @@ function pandp(xx)
                 z.flinch = true
                 z.ft = z.ft+at.p.p.ft*2/3
               end end)
-            hboxcs(xx.id, 
+            hboxcs(xx, xx.id, 
               {x=xx.mid, y = xx.y+22},
               {x=xx.mid+xx.v+(xx.lr*-55), y = xx.y+66},
               {x=xx.mid+xx.v+(xx.lr*-44), y = xx.y+65},
@@ -441,7 +441,7 @@ function pandp(xx)
                 z.ft = z.ft+at.p.p.ft*2/3
               end end)
 
-            hboxcs(xx.id, 
+            hboxcs(xx, xx.id, 
               {x=xx.mid, y = xx.y+35},
               {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+26},
               {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+49},
@@ -611,7 +611,7 @@ function pandp(xx)
           elseif xx.animcounter < 50 then
             xx.im = apa23
             if xx.animcounter == 17 then
-              hboxcs(xx.id, 
+              hboxcs(xx, xx.id, 
                 {x=xx.mid, y = xx.y+15},
                 {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+29-xx.j},
                 {x=xx.mid+xx.v+(xx.lr*18), y = xx.y+57-xx.j},
@@ -658,7 +658,7 @@ function pandp(xx)
             if xx.animcounter == 15 then
               xx.j = xx.j + at.p.au.kj 
               xx.v = xx.v - at.p.au.kb 
-              hboxcs(xx.id, 
+              hboxcs(xx, xx.id, 
                 {x=xx.mid+(xx.lr * -17), y = xx.y-31},
                 {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38-xx.j},
                 {x=xx.mid+xx.v+(xx.lr*50), y = xx.y+28-xx.j},

@@ -164,7 +164,7 @@ camerafol = function ()
   youxrig = you.mid - (screenwidth*cscale*.75)
 
   if not mecamfloor and you.y > me.y then 
-    youyrig = you.feet - enviro.screenheight*cscale + feet2bottom*cscale
+    youyrig = you.y+60 - enviro.screenheight*cscale + feet2bottom*cscale
 
   elseif youcamfloor 
   then
@@ -175,7 +175,7 @@ camerafol = function ()
 
 
   if not youcamfloor and you.y < me.y then 
-    meyrig = me.feet - enviro.screenheight*cscale + feet2bottom*cscale
+    meyrig = me.y+60 - enviro.screenheight*cscale + feet2bottom*cscale
 
   elseif mecamfloor 
   then

@@ -1,4 +1,3 @@
-
 oldmenu = "begin"
 notilebouncing = true
 --menu that fades into another???
@@ -603,18 +602,22 @@ function drawmenus()
     if me.rightbump and not me.holda then 
       me.rightc = thecolors[me.selectedcolor+1]
       repplay(me.selected)
+      repplay(thecolors[me.selectedcolor+1].sound)
     elseif me.leftbump and not me.holda then 
       me.leftc = thecolors[me.selectedcolor+1]
       repplay(me.selected)
+      repplay(thecolors[me.selectedcolor+1].sound)
     end
 
 
     if you.rightbump and not you.holda then 
       you.rightc = thecolors[you.selectedcolor+1]
       repplay(you.selected)
+      repplay(thecolors[you.selectedcolor+1].sound)
     elseif you.leftbump and not you.holda then 
       you.leftc = thecolors[you.selectedcolor+1]
       repplay(you.selected)
+      repplay(thecolors[you.selectedcolor+1].sound)
     end
 
     if me.block and not me.holda and not me.readytoplay then 

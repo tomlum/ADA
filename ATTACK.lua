@@ -274,7 +274,7 @@ function nottoomanyuppercuts(xx)
       xx.cancombo = false
       xx.uppercuttimer = 0
     end
-    xx.uppercuttimer = xx.uppercuttimer-1*rampspeed
+    xx.uppercuttimer = xx.uppercuttimer-1*ramp(xx)
     xx.a1 = false
   else xx.uppercuthit = false
   end
@@ -337,7 +337,7 @@ function attackmanage(xx)
 
 
   --  if(math.abs(xx.j) > math.abs(xx.oldj)) then
-  --    xx.j = xx.oldj + (xx.j-xx.oldj)*(rampspeed)
+  --    xx.j = xx.oldj + (xx.j-xx.oldj)*(ramp(xx))
   --  end
 
   --xx.oldj = xx.j
@@ -346,11 +346,11 @@ function attackmanage(xx)
 end
 function postattackmanage(xx)
   if(math.abs(xx.v) > math.abs(xx.oldv)) then
-    xx.v = xx.oldv + ((xx.v-xx.oldv)/xx.color.s.weight)*(rampspeed)
+    xx.v = xx.oldv + ((xx.v-xx.oldv)/xx.color.s.weight)*(ramp(xx))
   end
   if(math.abs(xx.ft) > math.abs(xx.oldft)) then
     rumbleme(xx,(math.log(xx.ft-xx.oldft)+.5)/5)
-    xx.ft = xx.oldft + (xx.ft-xx.oldft)*(rampspeed)*xx.color.s.brittle
+    xx.ft = xx.oldft + (xx.ft-xx.oldft)*(ramp(xx))*xx.color.s.brittle
   end
   xx.oldft = xx.ft
 end
@@ -533,7 +533,7 @@ newforwarddodge = function(xx)
     end
 
     if xx.dodgedelaycounter > 0 then 
-      xx.dodgedelaycounter = xx.dodgedelaycounter - 1*rampspeed
+      xx.dodgedelaycounter = xx.dodgedelaycounter - 1*ramp(xx)
       xx.stop = true
       xx.dodge = false
       xx.dodgetype = 0
@@ -541,8 +541,8 @@ newforwarddodge = function(xx)
 
 
     if xx.dodgecounter > 1 then 
-      xx.dodgecounter = xx.dodgecounter-1*rampspeed
-      if xx.dodgecounter-1*rampspeed<1 then
+      xx.dodgecounter = xx.dodgecounter-1*ramp(xx)
+      if xx.dodgecounter-1*<1 then
         xx.dodgecounter = 1
       end
 
@@ -618,7 +618,7 @@ newforwarddodge = function(xx)
     end
     if xx.dodgetype~=0 then
       if(math.abs(xx.v) > math.abs(xx.oldv)) then
-        xx.v = xx.oldv + (xx.v-xx.oldv)*(rampspeed)
+        xx.v = xx.oldv + (xx.v-xx.oldv)*(ramp(xx))
       end
     end
     if not simpledodge then
@@ -733,9 +733,9 @@ newforwarddodge = function(xx)
     if xx.ft > 0 then xx.flinch = true end
     
     if xx.health < xx.oldhealth then
-      xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(rampspeed)/xx.color.s.def
+      xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(ramp(xx))/xx.color.s.def
       local dif = xx.oldhealth - xx.health
-      makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,math.floor(dif/rampspeed * 2/3))
+      makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,math.floor(dif/ramp(xx) * 2/3))
     end
     xx.oldhealth = xx.health
 
@@ -755,11 +755,11 @@ newforwarddodge = function(xx)
       xx.hittheground = false 
     end
 
-    if xx.ft == 0 or (xx.ft < 0 and xx.ft + 1*rampspeed >=0) or (xx.ft > 0 and xx.ft - 1*rampspeed <=0) then 
+    if xx.ft == 0 or (xx.ft < 0 and xx.ft + 1*ramp(xx) >=0) or (xx.ft > 0 and xx.ft - 1*ramp(xx) <=0) then 
       xx.flinch = false 
       xx.ft = 0
-    elseif xx.ft < 0 then xx.ft = xx.ft + 1*rampspeed
-    elseif xx.ft > 0 then xx.ft = xx.ft - 1*rampspeed
+    elseif xx.ft < 0 then xx.ft = xx.ft + 1*ramp(xx)
+    elseif xx.ft > 0 then xx.ft = xx.ft - 1*ramp(xx)
     end
     --camshakeflinch()
 
@@ -790,10 +790,10 @@ newforwarddodge = function(xx)
 
 
     if xx.falltimer < 0 then
-      if xx.falltimer + 1*rampspeed > 0 then
+      if xx.falltimer + 1*ramp(xx) > 0 then
         xx.falltimer = 0
       else
-        xx.falltimer = xx.falltimer + 1*rampspeed
+        xx.falltimer = xx.falltimer + 1*ramp(xx)
       end
       xx.flinch = true
       xx.stop = true
@@ -835,16 +835,16 @@ newforwarddodge = function(xx)
 
           xx.flinch = true
           xx.stop = true
-          if xx.extratimer - 1*rampspeed < 1 then
+          if xx.extratimer - 1*ramp(xx) < 1 then
             xx.extratimer = 1
           else
-            xx.extratimer = xx.extratimer - 1*rampspeed
+            xx.extratimer = xx.extratimer - 1*ramp(xx)
           end
         end
 
       end
 
-      if xx.falltimer > 0 then xx.falltimer = xx.falltimer - 1*rampspeed
+      if xx.falltimer > 0 then xx.falltimer = xx.falltimer - 1*ramp(xx)
       else 
         xx.hittheground = true
       end

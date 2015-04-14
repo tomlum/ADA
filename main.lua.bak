@@ -1,17 +1,30 @@
---504 ERROR ON FLOORS AND DOWNSPECIAL
+
+
+
+
+
+--hug button
+--chrome/metallic so as to suit monochromaticity
+--motion blur
+
+
+
 
 --todo
 --if not in the air then some kind of unblocking animation
 --apple w is window close
 --SHAEZ TIED TO RUMBLE?!?!?!?
 therampspeed = .1
-drawboxes = true
-fightclub = true
-menu = "title"
+drawboxes = false
+fightclub = false
+menu = "play"
+ if menu == "play" then
+noload = true
+   mapnum = 2
+   placespeople = true end
 fullscreen = false
 readout = true
 mute = false
-eh = false
 volume=0
 love.audio.setVolume(volume)
 --airgrab
@@ -30,7 +43,6 @@ putmehere = 975
 putyouhere = 1025
 --to be rampspeedified (or if not rampcanhitified)
 
---she thought it was like the book
 --idle
 
 
@@ -256,8 +268,13 @@ require "GG"
 require "BB"
 require "pp"
 require "OO"
+require "ai"
 loader = require "love-loader"
 
+if noload then
+  
+themap = themaps[2]
+ end
 
 bob = retpint({x= 0, y = 0}, {x= 0, y = 100}, {x= -5, y = 10}, {x= 5, y = 20})
 blob = mlof({10, 2, 4, 5, 6, 7})
@@ -435,7 +452,7 @@ function love.update()
 
 
 
-    if #joysticks > 0 then
+    if #joysticks ==1  then
       jjstick(me,me.joystick)
     elseif #joysticks > 1 then
       jjstick(me,me.joystick)
@@ -501,12 +518,10 @@ function love.update()
 
 
 
-        if themap.name == "library" then libwallbreak() 
-        elseif themap.name == "floors" then floorswallbreak() 
-        end
 
 
         platformcheckx()
+        monplatupdate()
 
         you.y = you.y - you.j*.9*rampspeed
         me.y = me.y - me.j*.9*rampspeed
@@ -536,8 +551,6 @@ function love.update()
         orientlr(me)
         orientlr(you)
 
-        you.feet = you.y + 60
-        me.feet = me.y + 60
         --if here then non slideycling to person
         --camerafol()
 
@@ -635,7 +648,7 @@ function love.update()
         camshakeflinch()
 
       end
-
+monupdate()
 
 
 
@@ -653,6 +666,8 @@ function love.update()
       end
     end
 
+
+    postmonupdate(xx)
 
   end
 
@@ -681,7 +696,7 @@ function love.update()
 
 
 
-      if (themode == "duel" and (you.health < 0 or me.health < 0)) or (themode == "spectrum" and (you.lives <= 0 or me.lives <= 0)) then 
+      if (themode == "duel" and (you.health < 0 or me.health < 0)) or (themode == "spectrum" and (you.lives <= 0 or me.lives <= 0)) or (themode == "koth" and (you.score >= kothscoretowin or me.score >= kothscoretowin))then 
           menu = "retry"
 
 
@@ -768,14 +783,16 @@ function love.update()
         love.graphics.print("invince", 100, 100)
       end
       love.graphics.setColor(20,20,20)
-      love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
       love.graphics.print(tostring(me.combo),10,20)
       love.graphics.print(tostring(me.color.n)..
         "       animcounter: "..tostring(me.animcounter)
         ..
         "       type: "..tostring(me.type),10,30)
       love.graphics.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
-      love.graphics.print("falling "..tostring(you.falling).."|| ft "..tostring(you.ft).."|| flinchway "..tostring(you.flinchway), 10, 70)
+      love.graphics.print("j "..tostring(you.j), 10, 70)
+      if #hitt == 3 then
+        love.graphics.print(tostring(hitt[3].mode), 10, 90)
+        end
     end
 
 
@@ -789,6 +806,7 @@ function love.update()
     ]]--
     love.graphics.setColor(255,255,255)
     if readout then
+      love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
     love.graphics.setColor(255,10,0)
     love.graphics.print("themenu "..tostring(menu), 10, 90)
     love.graphics.print("oldmenu "..tostring(oldmenu), 10, 110)
@@ -796,10 +814,15 @@ function love.update()
     love.graphics.print("allfade "..tostring(allfade), 10, 150)
     love.graphics.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
     love.graphics.print("slowt "..tostring(slowt), 10, 230)
-    love.graphics.print("xx.hit "..tostring(xx.hit), 10, 250)
+    love.graphics.print("#joysticks"..tostring(#love.joystick.getJoysticks()), 10, 250)
+    love.graphics.print("#hittmon"..tostring(#hittmon), 10, 280)
+    for i,v in ipairs(love.joystick.getJoysticks()) do
+      love.graphics.print("hey"..v:getName()..tostring(i), 200, 20+20*i)
+    end
     love.graphics.setColor(255,0,0)
     
-    end
+  end
+  if love.keyboard.isDown("6") and #hittmon < 20 then spawnmon(camera.x+math.random(0,200), camera.y+10) end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
 

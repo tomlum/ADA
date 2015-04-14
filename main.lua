@@ -1,20 +1,14 @@
---ai head won't rerotate if within range
 
 
 
 
 
-
-
-
---SURVIVLA GAME MODE
 --hug button
 --chrome/metallic so as to suit monochromaticity
 --motion blur
 
 
 
---504 ERROR ON FLOORS AND DOWNSPECIAL
 
 --todo
 --if not in the air then some kind of unblocking animation
@@ -23,6 +17,8 @@
 therampspeed = .1
 drawboxes = false
 fightclub = false
+putmehere = 975
+putyouhere = 1025
 menu = "play"
  if menu == "play" then
 noload = true
@@ -45,11 +41,7 @@ test123 = false
 
 --placement of cam funcs causes weirdness for actionshot
 --cant move right while sliding left?  pretty easy to do with base/push
-putmehere = 975
-putyouhere = 1025
---to be rampspeedified (or if not rampcanhitified)
 
---idle
 
 
 
@@ -397,7 +389,7 @@ function love.update()
   --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
   if love.keyboard.isDown("x")  then speedramp = true end
   if speedramp then 
-    rampspeed = therampspeed
+     rampspeed= therampspeed
     if ramptimer >= 1 then 
       ramptimer = 0
       rampcanhit = true
@@ -529,12 +521,12 @@ function love.update()
         platformcheckx()
         monplatupdate()
 
-        you.y = you.y - you.j*.9*rampspeed
-        me.y = me.y - me.j*.9*rampspeed
-        you.x = you.x + you.v*rampspeed
-        me.x = me.x + me.v*rampspeed
-        you.next = you.feet - you.j*.9
-        me.next = me.feet - me.j*.9
+        you.y = you.y - you.j*.9*you.rampspeed
+        me.y = me.y - me.j*.9*me.rampspeed
+        you.x = you.x + you.v*you.rampspeed
+        me.x = me.x + me.v*me.rampspeed
+        you.next = you.feet - you.j*.9*you.rampspeed
+        me.next = me.feet - me.j*.9*me.rampspeed
 
 
         me.oldv = me.v
@@ -622,9 +614,12 @@ function love.update()
             bump(me)
           end
 
-
+          --SEARCH IS THIS NECESSARY?
           if(math.abs(you.ft) > math.abs(you.oldft)) then
-            you.ft = you.oldft + (you.ft-you.oldft)*(rampspeed)
+            you.ft = you.oldft + (you.ft-you.oldft)*(you.rampspeed)
+          end
+          if(math.abs(me.ft) > math.abs(me.oldft)) then
+            me.ft = me.oldft + (me.ft-you.oldft)*(me.rampspeed)
           end
 
         end

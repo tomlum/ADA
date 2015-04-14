@@ -154,7 +154,7 @@ function gandg(xx)
             
         rumbleme(xx, 1)
 
-            hboxcs(xx.id, 
+            hboxcs(xx, xx.id, 
               {x=xx.mid, y = xx.y},
               {x=xx.mid+xx.v+(xx.lr*88), y = xx.y-xx.j},
               {x=xx.mid+xx.v+(xx.lr*88), y = xx.y+60-xx.j},
@@ -264,7 +264,7 @@ function gandg(xx)
           end
           if xx.animcounter == 5 then
             repplay(xx.greens)
-            hboxcs(xx.id, 
+            hboxcs(xx, xx.id, 
               {x=xx.mid+(xx.lr*3), y = xx.y+8},
               {x=xx.mid+xx.v+(xx.lr*33), y = xx.y-40-xx.j},
               {x=xx.mid+xx.v+(xx.lr*33), y = xx.y+10-xx.j},
@@ -301,7 +301,7 @@ function gandg(xx)
             xx.im = agreena22s
             repplay(xx.greens)
 
-            hboxcs(xx.id, 
+            hboxcs(xx, xx.id, 
               {x=xx.mid, y = xx.y},
               {x=xx.mid+xx.v+(xx.lr*88), y = xx.y-xx.j},
               {x=xx.mid+xx.v+(xx.lr*88), y = xx.y+60-xx.j},
@@ -341,7 +341,7 @@ function gandg(xx)
           if xx.animcounter == 5 then
             repplay(xx.greens)
             xx.j = at.g.au.mj
-            hboxcs(xx.id, 
+            hboxcs(xx, xx.id, 
               {x=xx.mid-(xx.lr*-33), y = xx.y+8},
               {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-40-xx.j},
               {x=xx.mid+xx.v+(xx.lr*33), y = xx.y-40-xx.j},
@@ -469,8 +469,8 @@ function gandg(xx)
         v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*rampspeed
       else v.stuck = true
       end
-      if not v.stuck then hboxcs(xx.id, {x=v.x, y=v.y}, 
-          {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y}, {x=v.x, y=v.y}, 
+      if not v.stuck then hline(xx, xx.id, 
+          {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y},
           function(p)
             p.v = p.v + (v.speed/2 * math.cos(math.rad(v.angle)))
             p.j = p.j - (v.speed/2 * math.sin(math.rad(v.angle)))

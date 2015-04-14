@@ -1,6 +1,6 @@
---STEPPING UP ANIMATION IF CLIMBING, SO THAT YOU CAN GET UP EVEN IF JUST AT FEET NARROWLY MISS IT
+--Can configure aiming the green thing, hit directly up, left, right, down
 
---setvibration is in attack, currently commented out
+--STEPPING UP ANIMATION IF CLIMBING, SO THAT YOU CAN GET UP EVEN IF JUST AT FEET NARROWLY MISS IT
 
 --341a000000000000005f7000000000000
 
@@ -11,6 +11,116 @@ me.doubledown = false
 me.dubtimer = 0
 you.doubledown = false
 you.dubtimer = 0
+
+me.rumbleint = 0
+you.rumbleint = 0
+me.lrum = 0
+me.rrum = 0
+you.lrum = 0
+you.rrum = 0
+
+function rumbleme(xx,i)
+  if i > xx.rumbleint then
+  xx.rumbleint = i
+else
+  xx.rumbleint = xx.rumbleint + i/2
+  end
+end
+
+
+function rumblemodule(xx)
+  base = (xx.cct/colorchangetime)*colorvib
+  if xx.rumbleint >= 1 then
+    xx.lrum = 1
+    xx.rrum = lof(1, xx.rumbleint - 1)
+  else
+    xx.lrum = xx.rumbleint 
+    xx.rrum = 0
+  end
+  
+  xx.joystick:setVibration(xx.lrum,xx.rrum)
+  xx.rumbleint = hof(base,xx.rumbleint-.05)
+  
+  
+end
+
+
+
+
+me.clicka = false
+you.clicka = false
+me.holda = false
+you.holda = false
+
+
+
+
+me.dirholda = false
+you.dirholda = false
+function holdmanage(xx)
+  if (xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.block) or (menu ~= "play" and (xx.rightbump or xx.leftbump)) then
+    if not xx.holda then
+      xx.holda = true
+    end
+  else xx.holda = false
+  end
+
+  if (xx.up or xx.down or xx.left or xx.right) then
+    if not xx.dirholda then
+      xx.dirholda = true
+    end
+  else xx.dirholda = false
+  end
+
+end
+
+
+function combomanage(xx)
+
+  if (xx.a1 or xx.a2 or xx.a3 or xx.a4) then
+    if not xx.clicka then
+      xx.clicka = true
+      xx.readya = true
+    else 
+      xx.readya = false
+    end
+  else
+    xx.clicka = false
+    xx.readya = false
+  end
+
+
+  --  if xx.anibusy --or not xx.readya
+  --  then
+  --    cancelas(xx)
+  --  end
+
+  xx.anibusy = false
+
+  if xx.animcounter > 0 then
+    xx.block = false
+    xx.jstop = true
+    if rampcanhit then
+      xx.animcounter = xx.animcounter+1
+    end
+  elseif xx.animcounter == 0 then 
+    xx.hitsomeonewithpurp = false
+    xx.combo = 0
+    xx.cancombo = false
+    xx.type = 0
+    xx.repcounter = 0
+  end
+
+
+
+end
+function cancelas(xx) 
+  xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false
+end
+
+
+
+
 function doubledown(xx)
 
   xx.dubtimer = rodib(xx.dubtimer,1*rampspeed,0)
@@ -30,8 +140,23 @@ function doubledown(xx)
 end
 
 
+function downs() 
+  if 
+((me.down and not me.dirholda) or (you.down and not you.dirholda)) then return true else return false
+end
+end
+
+function ups() 
+  if 
+((me.up and not me.dirholda) or (you.up and not you.dirholda)) then return true else return false
+end
+end
 
 --things that you need regardless of the input type
+
+--abletochangecolor
+me.atcc = true
+you.atcc = true
 function controlsstuff(xx)
   doubledown(xx)
   
@@ -43,7 +168,18 @@ function controlsstuff(xx)
           xx.right = xx.rightb
           xx.left = xx.leftb
           if xx.down then xx.right = false xx.left = false end
-  
+  if (xx.cct > 0 and not (xx.rightbumpb or xx.leftbumpb)) or (xx.rightbumpb and xx.leftbumpb) then
+    xx.atcc = false
+  elseif xx.cct <=0 then
+    xx.atcc = true
+  end
+  if xx.atcc then
+    xx.rightbump = xx.rightbumpb
+    xx.leftbump = xx.leftbumpb
+  else
+    xx.rightbump = false
+    xx.leftbump = false
+  end
     if xx.blockb then 
       xx.a1 = false
       xx.a2 = false
@@ -57,33 +193,6 @@ function keyboardcontrols()
 
 
 
-
-        if me.health<0 or you.health<0 then
-
-          me.up = false
-          me.down = false
-          me.leftbump = false
-          me.rightbump = false
-          me.a1b = false
-          me.a2b = false
-          me.a3b = false
-          me.a4b = false
-          me.block = false
-
-
-
-          you.up = false
-          you.down = false
-          you.leftbump = false
-          you.rightbump = false
-          you.a1b = false
-          you.a2b = false
-          you.a3b = false
-          you.a4b = false
-          you.block = false
-
-        else
-
           me.start = love.keyboard.isDown("q")
           me.up = love.keyboard.isDown("w")
           me.down = love.keyboard.isDown("s")
@@ -95,8 +204,8 @@ function keyboardcontrols()
           me.a4b = love.keyboard.isDown("g")
           me.blockb = love.keyboard.isDown("e")
           me.run = love.keyboard.isDown("r")
-          me.rightbump = love.keyboard.isDown("2")
-          me.leftbump = love.keyboard.isDown("1")
+          me.rightbumpb = love.keyboard.isDown("2")
+          me.leftbumpb = love.keyboard.isDown("1")
 
 
 
@@ -111,12 +220,10 @@ function keyboardcontrols()
           you.blockb = love.keyboard.isDown("o")
           you.start = love.keyboard.isDown("u")
           you.run = love.keyboard.isDown("p")
-          you.rightbump = love.keyboard.isDown("0")
-          you.leftbump = love.keyboard.isDown("9")
+          you.rightbumpb = love.keyboard.isDown("0")
+          you.leftbumpb = love.keyboard.isDown("9")
 
      
-
-        end
 
 end
 
@@ -162,29 +269,39 @@ clickclick = false
 
 
 function c1accept()    
-  if (me.a1 or me.a2 or me.a3 or me.a4 or me.block or me.start) then
+  if (me.a1 or me.a2 or me.a3 or me.a4 or me.start) then
     return true
   else return false
   end
 end    
 
 function c2accept()    
-  if (you.a1 or you.a2 or you.a3 or you.a4 or you.block or you.start) then
+  if (you.a1 or you.a2 or you.a3 or you.a4 or you.start) then
     return true
   else return false
   end
 end    
 
+
+function cancels()
+  if
+  (me.block and not me.holda) or (you.block and not you.holda) then return true
+  else
+    return false
+  end
+end
+
+
 function clicks()
 
-  if MENU == "choose" and (me.block or you.block) then
+  if menu == "choose" and (me.block or you.block) then
     backtimer = backtimer + 1
     if backtimer > 50 then backtostage() 
     end
   else backtimer = 0
   end
 
-  if MENU ~= "play" then
+  if menu ~= "play" then
 
 
 
@@ -249,6 +366,7 @@ function jjstick(xx)
   xx.a1 = false
   xx.a2 = false
   xx.a3 = false
+  
 
   xx.gupv = 0
   xx.gv = boltspeed
@@ -296,15 +414,15 @@ function jjstick(xx)
 
 
   if xx.joystick:isGamepadDown("dpleft") then
-    xx.left = true
+    xx.leftb = true
   elseif xx.joystick:isGamepadDown("dpright") then
-    xx.right = true
+    xx.rightb = true
   end
 
   if xx.joystick:isGamepadDown("dpup") then
-    xx.up = true
+    xx.upb = true
   elseif xx.joystick:isGamepadDown("dpdown") then
-    xx.down = true
+    xx.downb = true
   end
 
   if xx.joystick:isGamepadDown("a") then
@@ -312,12 +430,12 @@ function jjstick(xx)
   end
 
 
-  if xx.joystick:isGamepadDown("rightshoulder") and xx.joystick:isGamepadDown("leftshoulder") then
-    xx.block = true
-  end 
-
   if xx.joystick:isGamepadDown("leftstick") then
     xx.run = true
+  end 
+  
+  if xx.joystick:isGamepadDown("rightstick") then
+    xx.blockb = true
   end 
   if xx.joystick:isGamepadDown("start") then
     xx.start = true
@@ -326,10 +444,10 @@ function jjstick(xx)
 
 
   if xx.joystick:getGamepadAxis("leftx") < -.4 then
-    xx.left = true
+    xx.leftb = true
   elseif 
-  xx.joystick:getGamepadAxis("leftx") > .4 then
-    xx.right = true
+  xx.joystick:getGamepadAxis("leftx")  > .4 then
+    xx.rightb = true
   end 
 
   if xx.run then
@@ -340,7 +458,8 @@ function jjstick(xx)
     elseif xx.joystick:getGamepadAxis("lefty") < - 2 then
       xx.up = true
     end 
-
+  
+  
 
   else
 
@@ -353,6 +472,8 @@ function jjstick(xx)
 
   end
 
+   
+
   -- if 
   --      xx.joystick:getGamepadAxis("righty") > .4 then
   --     xx.block = true
@@ -360,8 +481,8 @@ function jjstick(xx)
 
 
 
-    xx.rightbump = xx.joystick:getGamepadAxis("triggerright") > .5
-    xx.leftbump = xx.joystick:getGamepadAxis("triggerleft") > .5
+    xx.rightbumpb = xx.joystick:getGamepadAxis("triggerright") > .5
+    xx.leftbumpb = xx.joystick:getGamepadAxis("triggerleft") > .5
 
   xx.jly = xx.joystick:getGamepadAxis("lefty")
   xx.jlx = xx.joystick:getGamepadAxis("leftx")

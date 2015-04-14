@@ -123,7 +123,7 @@ end
 
 function doubledown(xx)
 
-  xx.dubtimer = rodib(xx.dubtimer,1*rampspeed,0)
+  xx.dubtimer = rodib(xx.dubtimer,1,0)
   
   if not xx.down and xx.doubledown then
     xx.dubtimer = 0
