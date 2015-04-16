@@ -361,6 +361,7 @@ end
 
 
 function actionshotstuff(xx)
+  
   if xx.actionshot then
     musfadein = -10
     xx.numofspikes = 0
@@ -520,7 +521,7 @@ function drawstreetprestuff()
 
 end
 drawstreetstuff = function()
-  love.graphics.draw(enviro.stagefloor, 0, floor-1, 0, 1, 20)
+  love.graphics.draw(enviro.stagefloor, 0, 0, 0, 1, 20)
   love.graphics.draw(enviro.rafters,5608-502, 1536)
   love.graphics.draw(enviro.buildingwall,-1542, 0)
   love.graphics.draw(partition,themaps[1].rightwall-20, 0)
@@ -1474,7 +1475,7 @@ death = function(xx, yy)
   end
   you.slidetimer = 0
   me.slidetimer = 0
-  slidexcheck = function ()
+  slidexcheck = function (xx)
     if xx.slidetimer < 6
     then 
       xx.slidetimer = xx.slidetimer + 1*ramp(xx)
@@ -1486,7 +1487,7 @@ death = function(xx, yy)
  
 
   animate = function ()
-    landycheck(you)
+    landxcheck(you)
     slidexcheck(you)
     if you.slide 
     then you.im = slide

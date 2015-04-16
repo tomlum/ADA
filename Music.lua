@@ -39,13 +39,13 @@ ss = {}
 
 function repplay(x)
   if not mute then
-    if  < 1 then
+    if rampspeed < 1 then
       if x:getPitch()>.2 then
-        x:setPitch(x:getPitch()*RAMPSPEED)
+        x:setPitch(x:getPitch()*rampspeed)
       end
     else
       if x:getPitch() < .2 then
-        x:setPitch(x:getPitch()/)
+        x:setPitch(x:getPitch()/rampspeed)
       end
       --[[ local name = toString(2)
       if ss.name ~= nil then 

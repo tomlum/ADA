@@ -128,25 +128,23 @@ function gandg(xx)
 
       elseif xx.animcounter < 40 then
         xx.im = greena22
-        if xx.repcounter<=3 then
+        if xx.repcounter<=3 and xx.rampcanhit then
           table.insert(xx.trail, 
             {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0;})
 
         end
 
-        if xx.animcounter == 4 then
+        if xx.animcounter <= 5 then
 
           if xx.repcounter ==1 then
-            xx.v = xx.v + (xx.lr*17)
+            xx.v = xx.v + (xx.lr*17)/2*xx.rampspeed
+            xx.origgreenlr  = xx.lr
           elseif xx.repcounter==2 then
-            if rampcanhit then
-              xx.lr=-xx.lr 
-            end
-            xx.v = xx.v + (xx.lr*22)
+              xx.lr=-xx.origgreenlr  
+            xx.v = xx.v + (xx.lr*22)/2*xx.rampspeed
           elseif xx.repcounter==3 then
-            if rampcanhit then
-              xx.lr=-xx.lr end
-              xx.v = xx.v + (xx.lr*13)
+              xx.lr=xx.origgreenlr 
+              xx.v = xx.v + (xx.lr*13)/2*xx.rampspeed
             end
 
             xx.im = greena22s
@@ -229,7 +227,7 @@ function gandg(xx)
               xx.j = xx.j-(boltspeed/3 * math.sin(math.rad(at.g.k.angle)))
 
             end
-            if rampcanhit then
+            if xx.rampcanhit then
               
         rumbleme(xx, .7)
 
@@ -256,7 +254,7 @@ function gandg(xx)
 
           if xx.animcounter >=5 and xx.animcounter < 7 then 
             xx.im = greena1s
-          if rampcanhit then
+          if xx.rampcanhit then
             table.insert(xx.trail, 
               {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0;})
           end
@@ -290,13 +288,13 @@ function gandg(xx)
 
         elseif xx.animcounter < 30 then
           xx.im = agreena22
-          if rampcanhit then
+          if xx.rampcanhit then
             table.insert(xx.trail, 
               {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0;})
           end
 
-          if xx.animcounter == 3 then
-            xx.v = xx.v+10*xx.lr
+          if xx.animcounter <= 4 then
+            xx.v = xx.v+4*xx.lr*xx.rampspeed
 
             xx.im = agreena22s
             repplay(xx.greens)

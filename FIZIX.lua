@@ -5,17 +5,45 @@
 
 me.rampspeed = 1
 you.rampspeed = 1
+me.ramptimer = 0
+you.ramptimer = 0
+me.rampcanhit = 0
+you.rampcanhit = 0
+
+
+floor = 1900 - 2
+
 function relativity(xx)
-  if xx.id == 1 then
-    xx. = 1
-    else
-  xx. = 
+  
+  if speedramp then 
+    if xx.ramptimer >= 1 then 
+      xx.ramptimer = 0
+      xx.rampcanhit = true
+    else 
+      xx.ramptimer = xx.ramptimer + xx.rampspeed
+      xx.rampcanhit = false
+    end
+  else
+    xx.ramptimer = 0
+    xx.rampcanhit = true
+    xx.rampspeed = 1
   end
   
   
+  
+  
+  if rampspeed <1 then
+  
+    if xx.id == 1 then
+      xx.rampspeed = rampspeed
+    else
+      xx.rampspeed = rampspeed
+    end
+  end
+
+
 end
 
-floor = 1900 - 2
 you.tempfloor = floor
 me.tempfloor = floor
 
@@ -104,36 +132,36 @@ end
 
 
 for i=1, 8 do
-table.insert(themaps[3].plats, {y = 5616-286*i, x1 = 419, x2 = 2139})
+  table.insert(themaps[3].plats, {y = 5616-286*i, x1 = 419, x2 = 2139})
 end
 
 for i=1, 10 do
   local bleh = 0
   local blehy = 0
   if i == 1 then
-  bleh = 4901
+    bleh = 4901
   elseif i == 2 then
-  bleh = 4898
+    bleh = 4898
   elseif i == 3 then
-  bleh = 4895
+    bleh = 4895
   elseif i == 4 then
-  bleh = 4889
+    bleh = 4889
   elseif i == 5 then
-  bleh = 4906
+    bleh = 4906
   elseif i == 6 then
-  bleh = 4899
+    bleh = 4899
   elseif i == 7 then
-  bleh = 4784
+    bleh = 4784
   elseif i == 8 then
-  bleh = 4699
+    bleh = 4699
   elseif i == 9 then
-  bleh = 4889
+    bleh = 4889
   elseif i == 10 then
-  bleh = 3847
-  blehy = 79
-  table.insert(themaps[3].plats, {y = themaps[3].floor-299*i-blehy, x1 = 4335, x2 = 4908})
+    bleh = 3847
+    blehy = 79
+    table.insert(themaps[3].plats, {y = themaps[3].floor-299*i-blehy, x1 = 4335, x2 = 4908})
   end
-table.insert(themaps[3].plats, {y = themaps[3].floor-299*i-blehy, x1 = 3160, x2 = bleh})
+  table.insert(themaps[3].plats, {y = themaps[3].floor-299*i-blehy, x1 = 3160, x2 = bleh})
 end
 table.insert(themaps[3].plats, {y = 5778, x1 = 2142, x2 = 2299})
 table.insert(themaps[3].plats, {y = 3004, x1 = 581, x2 = 1039})
@@ -180,9 +208,9 @@ function bump(xx)
       function(z)
         if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
           if z.flinch then
-          z.push = xx.v
-            else
-          z.push = xx.v*2/3
+            z.push = xx.v
+          else
+            z.push = xx.v*2/3
           end
         end
       end)
@@ -205,7 +233,7 @@ function doublebump()
         end
       end)
   end
-  
+
   xx = you
   if not xx.dodge then
     hboxcss(xx.id, 
@@ -219,7 +247,7 @@ function doublebump()
         end
       end)
   end
-  
+
   me.v = me.v + me.newpush
   you.v = you.v + you.newpush
 end
@@ -236,13 +264,13 @@ function transferofenergy(xx)
       xx.v = xx.v + xx.j/10 
     else 
       if math.random() > .5 then
-      xx.v = xx.v + xx.j/20 
+        xx.v = xx.v + xx.j/20 
       else
-      xx.v = xx.v - xx.j/20
-        end
+        xx.v = xx.v - xx.j/20
       end
     end
-  
+  end
+
 end
 
 fric = function (xx) 
@@ -313,7 +341,7 @@ function fallthroughglassfloor(xx)
     xx.y = xx.y + 5
     xx.gothroughplats = true
     for i = -10, 10 do
-    makenglass(xx.mid+i,xx.plat.y,xx.v/2,xx.j, 1)
+      makenglass(xx.mid+i,xx.plat.y,xx.v/2,xx.j, 1)
     end
   end
 
@@ -322,49 +350,49 @@ end
 
 function runrunrun(xx)
   fallthroughglassfloor(xx)
-    if not xx.g then xx.running = false end
+  if not xx.g then xx.running = false end
 
-    if xx.running and math.abs(xx.push) > 0 then 
-      --xx.j = 14 xx.g = false
-      xx.v = xx.v + xx.push
+  if xx.running and math.abs(xx.push) > 0 then 
+    --xx.j = 14 xx.g = false
+    xx.v = xx.v + xx.push
+  end
+  if xx.flinch or math.abs(xx.v) <= speedminit then 
+    xx.running = false
+  elseif xx.running then 
+    xx.a1 = false
+    xx.a2 = false
+    xx.a3 = false
+    xx.a4 = false
+
+
+  end
+
+  if xx.run and xx.running and (xx.right or xx.left) and xx.run and not xx.block and not xx.slide and not xx.dodge then         
+    if xx.right and xx.v > 0 then
+      xx.v = xx.color.s.speed*runspeed*xx.speedpenalty
+    elseif xx.left and xx.v < 0 then
+      xx.v = -xx.color.s.speed*runspeed*xx.speedpenalty
     end
-    if xx.flinch or math.abs(xx.v) <= speedminit then 
-      xx.running = false
-    elseif xx.running then 
-      xx.a1 = false
-      xx.a2 = false
-      xx.a3 = false
-      xx.a4 = false
 
 
+
+
+
+  elseif math.abs(xx.v) > xx.color.s.speed*xx.speedpenalty*speedminit-accel*2 and (xx.left or xx.right) and xx.g  and xx.run and not xx.block and not xx.slide and not xx.dodge then
+    xx.a1 = false
+    xx.a2 = false
+    xx.a3 = false
+    xx.a4 = false
+    xx.running = true
+    xx.limitbreak = true
+    if xx.right and xx.v > 0 then
+      xx.v = runspeed
+    elseif xx.left and xx.v < 0 then
+      xx.v = -runspeed
     end
 
-    if xx.run and xx.running and (xx.right or xx.left) and xx.run and not xx.block and not xx.slide and not xx.dodge then         
-      if xx.right and xx.v > 0 then
-        xx.v = xx.color.s.speed*runspeed*xx.speedpenalty
-      elseif xx.left and xx.v < 0 then
-        xx.v = -xx.color.s.speed*runspeed*xx.speedpenalty
-      end
 
-
-
-
-
-    elseif math.abs(xx.v) > xx.color.s.speed*xx.speedpenalty*speedminit-accel*2 and (xx.left or xx.right) and xx.g  and xx.run and not xx.block and not xx.slide and not xx.dodge then
-      xx.a1 = false
-      xx.a2 = false
-      xx.a3 = false
-      xx.a4 = false
-      xx.running = true
-      xx.limitbreak = true
-      if xx.right and xx.v > 0 then
-        xx.v = runspeed
-      elseif xx.left and xx.v < 0 then
-        xx.v = -runspeed
-      end
-
-
-    end
+  end
 
 
 
@@ -425,33 +453,33 @@ me.speedpenalty = 1
 you.speedpenalty = 1
 
 
- 
+
 function speedpenaltycalc(xx,yy)
-   if
-   (xx.v * (xx.x - yy.x)/(math.abs(xx.x - yy.x))) > 0
+  if
+  (xx.v * (xx.x - yy.x)/(math.abs(xx.x - yy.x))) > 0
   then xx.speedpenalty = .7
   else
     xx.speedpenalty = 1
-    end
+  end
 end
 
 function movex(xx,yy)
   relativity(xx)
-speedpenaltycalc(xx,yy)
-   runrunrun(xx)
-transferofenergy(xx)
+  speedpenaltycalc(xx,yy)
+  runrunrun(xx)
+  transferofenergy(xx)
   z = xx
   if xx.landingcounter > landingwait then
-        xx.stop=true
-        xx.holda = true
-      end
-  
+    xx.stop=true
+    xx.holda = true
+  end
+
   if (xx.g and xx.doubledown) or (not xx.g and xx.down) then 
     xx.gothroughplats = true
   else
     xx.gothroughplats = false
   end
-  
+
   xx.forcethroughplats = false
 
   ------?????--------
@@ -476,12 +504,12 @@ transferofenergy(xx)
 
 
 
-        extrah = 0
-        if xx.im.extrah ~= nil then
-          extrah = -xx.im.extrah
-        end
+  extrah = 0
+  if xx.im.extrah ~= nil then
+    extrah = -xx.im.extrah
+  end
   xx.feet = xx.y+xx.height-extrah
-  
+
   if xx.g 
   then 
     if xx.j < 0 then xx.j = 0 
@@ -499,10 +527,10 @@ transferofenergy(xx)
         if xx.dubtimer > 0 then
           xx.j = jumpj*superjumpratio
         else
-          
-        xx.j = jumpj*xx.color.s.jump
+
+          xx.j = jumpj*xx.color.s.jump
         end
-        
+
       end
       xx.ht = 7
       xx.firstjump = true
@@ -516,7 +544,7 @@ transferofenergy(xx)
     and not z.right
     then 
       vroomleft(xx)
-   
+
     else
       fric(xx)
     end

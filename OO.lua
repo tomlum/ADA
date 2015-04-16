@@ -137,7 +137,7 @@ function orangeyouglad(xx)
 
 
       elseif xx.animcounter < 40 then
-        if xx.animcounter == 8 and rampcanhit then
+        if xx.animcounter == 8 and xx.rampcanhit then
 
           xx.oplat = nil
           ocontactstuff(xx, xx.mid+(xx.lr*72), xx.y+32,xx.v+(19*xx.lr), xx.j-36) 
@@ -207,7 +207,7 @@ function orangeyouglad(xx)
       elseif xx.animcounter < 50 then
         xx.im = ok3
 
-        if xx.animcounter == 13+5 and rampcanhit then
+        if xx.animcounter == 13+5 and xx.rampcanhit then
 
           xx.oplat = nil
           ocontactstuff(xx, xx.mid+(xx.lr*50), xx.y+27,xx.v+(49*xx.lr), xx.j-38) 
@@ -319,7 +319,7 @@ function orangeyouglad(xx)
 
       elseif xx.animcounter < 40-20 then
           xx.im = o33
-        if xx.animcounter == 8 and rampcanhit then
+        if xx.animcounter == 8 and xx.rampcanhit then
 
           xx.oplat = nil
           ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 
@@ -366,7 +366,7 @@ elseif xx.type == 4 then
 
       elseif xx.animcounter < 40 then
           xx.im = aop2
-        if xx.animcounter == 6 and rampcanhit then
+        if xx.animcounter == 6 and xx.rampcanhit then
 
           ocontactstuff(xx, xx.mid+(xx.lr*43), xx.y-24,xx.v+(19*xx.lr), xx.j-57) 
           ocontactstuff(xx, xx.mid+(xx.lr*43), xx.y+24+31,xx.v+(19*xx.lr), xx.j+57) 
@@ -432,9 +432,9 @@ elseif xx.type == 4 then
         end
 
 
-      elseif xx.animcounter < 25 then
+      elseif xx.animcounter < 23 then
 
-        if xx.animcounter == 6 and rampcanhit then
+        if xx.animcounter == 6 and xx.rampcanhit then
 
           xx.oplat = nil
           ocontactstuff(xx, xx.mid, xx.y,xx.v+81*xx.lr, xx.j-138)
@@ -512,7 +512,7 @@ elseif xx.type == 4 then
 
       elseif xx.animcounter < 40 then
           xx.im = ao32
-        if xx.animcounter == 8 and rampcanhit then
+        if xx.animcounter == 8 and xx.rampcanhit then
 
           xx.oplat = nil
           ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 

@@ -1,6 +1,6 @@
 
 
-
+--SEARCH IS THIS NECESSARY?
 
 
 --hug button
@@ -16,18 +16,18 @@
 --SHAEZ TIED TO RUMBLE?!?!?!?
 therampspeed = .1
 drawboxes = false
-fightclub = false
+fightclub = true
+volume=0
+fullscreen = false
+readout = false
 putmehere = 975
 putyouhere = 1025
-menu = "play"
+menu = "title"
  if menu == "play" then
 noload = true
    mapnum = 2
    placespeople = true end
-fullscreen = false
-readout = true
 mute = false
-volume=0
 love.audio.setVolume(volume)
 --airgrab
 test123 = false
@@ -615,12 +615,14 @@ function love.update()
           end
 
           --SEARCH IS THIS NECESSARY?
+          --[[
           if(math.abs(you.ft) > math.abs(you.oldft)) then
             you.ft = you.oldft + (you.ft-you.oldft)*(you.rampspeed)
           end
           if(math.abs(me.ft) > math.abs(me.oldft)) then
             me.ft = me.oldft + (me.ft-you.oldft)*(me.rampspeed)
           end
+          ]]--
 
         end
 
@@ -777,16 +779,10 @@ monupdate()
 
     if fightclub then
 
-      if me.invince then
-        love.graphics.print("invince", 100, 100)
-      end
-      if you.invince then
-        love.graphics.print("invince", 100, 100)
-      end
       love.graphics.setColor(20,20,20)
       love.graphics.print(tostring(me.combo),10,20)
       love.graphics.print(tostring(me.color.n)..
-        "       animcounter: "..tostring(me.animcounter)
+        "       animcounter: "..tostring(me.animcounter).."current"..tostring(me.currentanim)
         ..
         "       type: "..tostring(me.type),10,30)
       love.graphics.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)

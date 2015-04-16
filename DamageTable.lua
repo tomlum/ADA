@@ -1,4 +1,5 @@
 boltsflyrelative = true
+combopause = false
 
 
 
@@ -35,6 +36,8 @@ whiplash = 1
 defspeedminit = 6
 minmaxdif = 4
 accel = .5
+--higher means more fric
+fricrate = .6
 
 awaypenalty = .7
 
@@ -200,8 +203,6 @@ runjmax = 8
 minvfordust = 3
 
 
---higher means more fric
-fricrate = .75
 
 
 --slowdown rate
