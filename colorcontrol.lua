@@ -89,7 +89,6 @@ function ColorChange(xx)
 
   if xx.animcounter > 1 then
     xx.oldtype = xx.type
-    xx.oldcolorn = xx.color.n
   end
 
 end
@@ -119,7 +118,7 @@ function ColorChanging(xx)
     if xx.oldcctn ~= xx.cchangeto.n and xx.oldcctn ~= 0 then
       xx.atcc = false
     end
-    if xx.cct < colorchangetime and (xx.animcounter == 0 or xx.actionshot)  then
+    if xx.cct < colorchangetime and (not combopause or (xx.animcounter == 0 or xx.actionshot))  then
       if xx.cct > 0 then
       xx.colorsound:setPitch((xx.cct+1)/colorchangetime)
       xx.colorsound:setVolume(((xx.cct+1)/(colorchangetime+300)))

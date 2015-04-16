@@ -100,9 +100,7 @@ function combomanage(xx)
   if xx.animcounter > 0 then
     xx.block = false
     xx.jstop = true
-    if rampcanhit then
-      xx.animcounter = xx.animcounter+1
-    end
+      xx.animcounter = xx.animcounter+1*xx.rampspeed
   elseif xx.animcounter == 0 then 
     xx.hitsomeonewithpurp = false
     xx.combo = 0

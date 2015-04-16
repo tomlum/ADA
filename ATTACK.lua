@@ -38,7 +38,7 @@ function grab(xx)
     xx.busy = true 
     xx.stop = true
   end
-  
+
   if xx.blockb and (xx.a2b or xx.a3b) and xx.animcounter == 0 then
     xx.animcounter = 1
     xx.type = 8
@@ -46,45 +46,45 @@ function grab(xx)
 
 
     if xx.animcounter < 4 then
-    if xx.g then 
-      xx.im = punch1
-    else
-      xx.im = airgrab1
+      if xx.g then 
+        xx.im = punch1
+      else
+        xx.im = airgrab1
       end
     elseif xx.animcounter < 7 then
-    if xx.g then 
-      xx.im = punch2
-    else
-      xx.im = airgrab2
+      if xx.g then 
+        xx.im = punch2
+      else
+        xx.im = airgrab2
       end
       if xx.animcounter == 4 then
-      hboxcs(xx, xx.id, 
-        {x=xx.mid, y = xx.y+24},
-        {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
-        {x=xx.mid, y = xx.y+30},
-        {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32-xx.j},
-        function(z)
-          xx.animcounter = 100
-          xx.grabbingx = z
-          z.y = xx.y
-          z.j = xx.j
-          z.v = xx.v
+        hboxcs(xx, xx.id, 
+          {x=xx.mid, y = xx.y+24},
+          {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
+          {x=xx.mid, y = xx.y+30},
+          {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32-xx.j},
+          function(z)
+            xx.animcounter = 100
+            xx.grabbingx = z
+            z.y = xx.y
+            z.j = xx.j
+            z.v = xx.v
 
-      end)
-    end
-  elseif xx.animcounter < 20 then 
-    if xx.g then 
-      xx.im = punch3
-    else
-      xx.im = airgrab3
+          end)
+      end
+    elseif xx.animcounter < 20 then 
+      if xx.g then 
+        xx.im = punch3
+      else
+        xx.im = airgrab3
       end
     elseif xx.animcounter < 100 then
       xx.animcounter = 0
     elseif xx.animcounter < 130 then
-    if xx.g then 
-      xx.im = punch2
-    else
-      xx.im = airgrab2
+      if xx.g then 
+        xx.im = punch2
+      else
+        xx.im = airgrab2
       end
       xx.grabbingx.ft = 10
       if not xx.holda and (xx.a1 or xx.a2 or xx.a3 or xx.a4) then 
@@ -97,29 +97,29 @@ function grab(xx)
         xx.animcounter = 300
         shakez(throwz)
         xx.grabbingx.ft = throwft
-        
+
         if xx.jrx > 0 then
           xx.grabbingx.flinchway = -1
           xx.lr = 1
         else xx.grabbingx.flinchway = 1
           xx.lr = -1
-          end
         end
+      end
     elseif xx.animcounter <260 then
       xx.animcounter = 0
       xx.v = -xx.lr*5
       xx.grabbingx.ft = 0
     elseif xx.animcounter < 310 then
-     if xx.g then
-     xx.im = throw
-    else
-      xx.im = airthrow
+      if xx.g then
+        xx.im = throw
+      else
+        xx.im = airthrow
       end
     elseif xx.animcounter < 400 then
       xx.animcounter = 0
     end
 
-end
+  end
 end
 
 
@@ -144,115 +144,127 @@ you.cantreturntothis = 0
 
 
 function combo(xx, func)
-    xx.hit = false
+  xx.hit = false
+  
+  local oldanimc = xx.animcounter
 
   if xx.color.n ~= xx.cchangeto.n and xx.cancombo
   then
+
     if func~= nil then func() end
-    xx.actionshot = true
+    if combopause then
+      xx.actionshot = true
+    end
     xx.cancombo = false
   end
-  if not xx.holda and xx.currentanim == xx.color.n and xx.combo<xx.maxcombo then
 
-  if xx.g then 
-    if xx.im==greenk1 then
-      xx.type = 2
-      xx.animcounter = 1
-      xx.combo = xx.combo + 1
+  if not xx.holda and (not combopause or xx.currentanim == xx.color.n) and xx.combo<xx.maxcombo then
 
 
-  elseif xx.a2 or xx.a3 then
-      xx.numofspikes = 0
-      if func~= nil then func() end
-      if xx.color.n==0 then
-        xx.type = 1
-        if xx.repcounter < at.bb.p.max then
-          xx.repcounter = xx.repcounter+1
-          if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+    if xx.g then 
+      if xx.im==greenk1 then
+        xx.type = 2
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
+
+
+      elseif xx.a2 or xx.a3 then
+        xx.numofspikes = 0
+        if func~= nil then func() end
+        if xx.color.n==0 then
+          xx.type = 1
+          if xx.repcounter < at.bb.p.max then
+            xx.repcounter = xx.repcounter+1
+            if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+            xx.animcounter = 1
+          end
+        elseif xx.color.n==1 and xx.repcounter < at.p.p.max then
+          xx.type = 1
           xx.animcounter = 1
+          xx.repcounter = xx.repcounter + 1
+          if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+        elseif xx.color.n==2 and xx.repcounter < at.g.p.max then
+          xx.type = 1
+          xx.animcounter = 1
+          xx.repcounter = xx.repcounter + 1
+          if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+        elseif xx.color.n==3 and xx.repcounter < at.o.p.max then
+          xx.type = 1
+          xx.animcounter = 1
+          xx.repcounter = xx.repcounter + 1
+          if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+
+
         end
-      elseif xx.color.n==1 and xx.repcounter < at.p.p.max then
-        xx.type = 1
-        xx.animcounter = 1
-        xx.repcounter = xx.repcounter + 1
-        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
-      elseif xx.color.n==2 and xx.repcounter < at.g.p.max then
-        xx.type = 1
-        xx.animcounter = 1
-        xx.repcounter = xx.repcounter + 1
-        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
-      elseif xx.color.n==3 and xx.repcounter < at.o.p.max then
-        xx.type = 1
-        xx.animcounter = 1
-        xx.repcounter = xx.repcounter + 1
-        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+
+      elseif xx.a4 and (xx.oldtype ~= 2 or xx.actionshot) then
+
+        if func~= nil then func() end
+        if xx.color.n==0  then
+          xx.combo = xx.combo + 1
+          xx.animcounter = 1
+          xx.type = 2
+
+        elseif xx.color.n==1 and not xx.hitsomeonewithpurp then
+          xx.type = 2
+          xx.animcounter = 17
+          xx.repcounter = xx.repcounter + 1
+          xx.combo = xx.combo + 1
+        elseif xx.color.n==2 then
+          xx.type = 2
+          xx.animcounter = 1
+          xx.combo = xx.combo + 1
+        elseif xx.color.n==3 then
+          xx.type = 2
+          xx.animcounter = 7
+          xx.combo = xx.combo + 1
+
+        end
+      elseif xx.a1 then
+
+        xx.numofspikes = 0
+        if func~= nil then func() end
+        if xx.color.n==0 then
+          xx.type = 3
+          xx.animcounter = 1
+          xx.combo = xx.combo + 1
+        elseif xx.color.n==1 then
+          xx.type = 3
+          xx.animcounter = 1
+          xx.combo = xx.combo + 1
+        elseif xx.color.n==2 then
+          xx.type = 3
+          xx.animcounter = 1
+          xx.combo = xx.combo + 1
+        end
+
+
+
+      end
+    else
+      if xx.a4 then
+        if xx.color.n==3 and xx.repcounter < at.o.ak.max then
+          xx.animcounter = 1
+          xx.type = 5
+          xx.combo = xx.combo + 1
+          xx.repcounter = xx.repcounter + 1
+          if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+          xx.j = 2
+
+        end
 
 
       end
 
-  elseif xx.a4 and (xx.oldtype ~= 2 or xx.actionshot) then
-    
-      if func~= nil then func() end
-      if xx.color.n==0  then
-        xx.combo = xx.combo + 1
-        xx.animcounter = 1
-        xx.type = 2
 
-      elseif xx.color.n==1 and not xx.hitsomeonewithpurp then
-        xx.type = 2
-        xx.animcounter = 17
-        xx.repcounter = xx.repcounter + 1
-        xx.combo = xx.combo + 1
-      elseif xx.color.n==2 then
-        xx.type = 2
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-      elseif xx.color.n==3 then
-        xx.type = 2
-        xx.animcounter = 7
-        xx.combo = xx.combo + 1
-
-      end
-    elseif xx.a1 then
-      
-      xx.numofspikes = 0
-      if func~= nil then func() end
-      if xx.color.n==0 then
-        xx.type = 3
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-      elseif xx.color.n==1 then
-        xx.type = 3
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-      elseif xx.color.n==2 then
-        xx.type = 3
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-      end
-
-
-
-
-end
-else
-    if xx.a4 then
-      if xx.color.n==3 and xx.repcounter < at.o.ak.max then
-        xx.animcounter = 1
-        xx.type = 5
-        xx.combo = xx.combo + 1
-        xx.repcounter = xx.repcounter + 1
-        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
-        xx.j = 2
-        
-      end
-      
-      
     end
-
-
   end
+  if not xx.combopause and xx.animcounter < oldanimc and xx.animcounter > 0 and 
+    xx.currentanim ~= xx.color.n then
+    xx.repcounter = 0
+    xx.currentanim = xx.color.n
   end
+
 end
 
 
@@ -270,7 +282,9 @@ function nottoomanyuppercuts(xx)
   if xx.uppercuttimer > 0 then
     if xx.color.n ~= xx.cchangeto.n and xx.uppercuthit and xx.uppercuttimer > 30
     then
-      xx.actionshot = true
+      if combopause then
+        xx.actionshot = true
+      end
       xx.cancombo = false
       xx.uppercuttimer = 0
     end
@@ -295,8 +309,11 @@ me.oldft = 0
 you.oldft = 0
 
 function attackmanage(xx)
-  
-  
+
+  if xx.flinch then 
+    xx.animcounter = 0
+    xx.type = 0
+  end
 
   if xx.type < 4 and not xx.g and ((xx.type~=2 and xx.color.n~=2) or (xx.type~=2 and xx.color.n~=3)) then 
     xx.animcounter = 0
@@ -310,7 +327,7 @@ function attackmanage(xx)
   if xx.type == 7 and xx.color.n == 0 and xx.animcounter > 2 and xx.g then
     xx.animcounter = 0
   end
-  
+
   grab(xx)
 
   if xx.landing then xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false end
@@ -341,16 +358,16 @@ function attackmanage(xx)
   --  end
 
   --xx.oldj = xx.j
-  
+
 
 end
 function postattackmanage(xx)
   if(math.abs(xx.v) > math.abs(xx.oldv)) then
-    xx.v = xx.oldv + ((xx.v-xx.oldv)/xx.color.s.weight)*(ramp(xx))
+    xx.v = xx.oldv + ((xx.v-xx.oldv)/xx.color.s.weight)*(1)
   end
   if(math.abs(xx.ft) > math.abs(xx.oldft)) then
     rumbleme(xx,(math.log(xx.ft-xx.oldft)+.5)/5)
-    xx.ft = xx.oldft + (xx.ft-xx.oldft)*(ramp(xx))*xx.color.s.brittle
+    xx.ft = xx.oldft + (xx.ft-xx.oldft)*(1)*xx.color.s.brittle
   end
   xx.oldft = xx.ft
 end
@@ -542,7 +559,7 @@ newforwarddodge = function(xx)
 
     if xx.dodgecounter > 1 then 
       xx.dodgecounter = xx.dodgecounter-1*ramp(xx)
-      if xx.dodgecounter-1*<1 then
+      if xx.dodgecounter-1*ramp(xx)<1 then
         xx.dodgecounter = 1
       end
 
@@ -728,10 +745,10 @@ newforwarddodge = function(xx)
 
 
   function flinchingx(xx,yy)
-    
-    
+
+
     if xx.ft > 0 then xx.flinch = true end
-    
+
     if xx.health < xx.oldhealth then
       xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(ramp(xx))/xx.color.s.def
       local dif = xx.oldhealth - xx.health

@@ -3,10 +3,11 @@ notilebouncing = true
 --menu that fades into another???
 noplat = {n=0;}
 
+
 themaps = {}
 themaps[1]= {name = "street", 
   plats = {}, walls = {},
-  floor = 1027,
+  floor = 1896,
   lightx = 707+2.5,
   lighty = 142+2.5,
   lightcolor = {r = 40, g = 255, b = 0},
@@ -95,7 +96,7 @@ ready = love.graphics.newImage("enviro/ready.png")
 
 musfadein = 0
 musfade = 0
-tilezoom = .05
+tilezoom = .1
 colorfromwallspace = 100
 
 
@@ -602,22 +603,22 @@ function drawmenus()
     if me.rightbump and not me.holda then 
       me.rightc = thecolors[me.selectedcolor+1]
       repplay(me.selected)
-      repplay(thecolors[me.selectedcolor+1].sound)
+      --repplay(thecolors[me.selectedcolor+1].sound)
     elseif me.leftbump and not me.holda then 
       me.leftc = thecolors[me.selectedcolor+1]
       repplay(me.selected)
-      repplay(thecolors[me.selectedcolor+1].sound)
+      --repplay(thecolors[me.selectedcolor+1].sound)
     end
 
 
     if you.rightbump and not you.holda then 
       you.rightc = thecolors[you.selectedcolor+1]
       repplay(you.selected)
-      repplay(thecolors[you.selectedcolor+1].sound)
+      --repplay(thecolors[you.selectedcolor+1].sound)
     elseif you.leftbump and not you.holda then 
       you.leftc = thecolors[you.selectedcolor+1]
       repplay(you.selected)
-      repplay(thecolors[you.selectedcolor+1].sound)
+      --repplay(thecolors[you.selectedcolor+1].sound)
     end
 
     if me.block and not me.holda and not me.readytoplay then 

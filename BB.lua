@@ -193,7 +193,7 @@ function breadandbutter(xx)
 
             end)
         end
-        xx.v = xx.v + (xx.lr*3)
+        xx.v = xx.v + (xx.lr*3)*xx.rampspeed
 
       elseif xx.animcounter < 37 then
         if xx.repcounter%2==0  then
@@ -318,7 +318,7 @@ function breadandbutter(xx)
 
       elseif xx.animcounter<=25 then
         xx.im = divekick
-        if xx.animcounter == 10 and rampcanhit then
+        if xx.animcounter == 10 and xx.rampcanhit then
           xx.j = xx.j - 7
           xx.landingcounter = at.bb.ak.penalty
         end
