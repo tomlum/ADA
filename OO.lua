@@ -2,10 +2,10 @@
 
 
 op1 = {im=love.graphics.newImage("me/attack/op1.png"),c=love.graphics.newImage("me/attack/op1c.png"), xoff = 2}
-op2 = {im=love.graphics.newImage("me/attack/op2.png"),c=love.graphics.newImage("me/attack/op2c.png"), xoff = 9,yoff = 15}
-op3 = {im=love.graphics.newImage("me/attack/op3.png"),c=love.graphics.newImage("me/attack/op3c.png"), xoff = 9,yoff = 12}
-op4 = {im=love.graphics.newImage("me/attack/op4.png"),c=love.graphics.newImage("me/attack/op2c.png"), xoff = 9,yoff = 15}
-op5 = {im=love.graphics.newImage("me/attack/op5.png"),c=love.graphics.newImage("me/attack/op3c.png"), xoff = 9,yoff = 12}
+op2 = {im=love.graphics.newImage("me/attack/op2n.png"),c=love.graphics.newImage("me/attack/opcn.png"), xoff = 9,yoff = 10, cxoff = 9, cyoff = 22}
+op3 = {im=love.graphics.newImage("me/attack/op3n.png"),c=love.graphics.newImage("me/attack/opcn.png"), xoff = 9,yoff = 12, cxoff = 9, cyoff = 24}
+op4 = {im=love.graphics.newImage("me/attack/op4n.png"),c=love.graphics.newImage("me/attack/opcn.png"), xoff = 9,yoff = 10, cxoff = 9, cyoff = 22}
+op5 = {im=love.graphics.newImage("me/attack/op5n.png"),c=love.graphics.newImage("me/attack/opcn.png"), xoff = 9,yoff = 12, cxoff = 9, cyoff = 24}
 
 
 ao21 = {im=love.graphics.newImage("me/attack/ao21.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9, yoff = 17, extrah = 5, cxoff = -2, cyoff = -8}
@@ -21,14 +21,14 @@ ok3 = {im=love.graphics.newImage("me/attack/ok3.png"),c=love.graphics.newImage("
 ok4 = {im=love.graphics.newImage("me/attack/ok4.png"),c=love.graphics.newImage("me/attack/ok4c.png"), xoff = 45,yoff = 0,cxoff = -1,cyoff = -6}
 
 
-o32 = {im=love.graphics.newImage("me/attack/o32.png"),c=love.graphics.newImage("me/attack/op2c.png"), 
-  xoff = 9,yoff = 15, cxoff = 9, cyoff = 15}
+o32 = {im=love.graphics.newImage("me/attack/o32.png"),c=love.graphics.newImage("me/attack/op32c.png"), 
+  xoff = 9,yoff = -5, cxoff = 8, cyoff = 7}
 
 o33 = {im=love.graphics.newImage("me/attack/o33.png"),c=love.graphics.newImage("me/attack/o33c.png"), 
   cxoff = 9,cyoff = 15}
 
-ao31 = {im=love.graphics.newImage("me/attack/ao31.png"),c=love.graphics.newImage("me/attack/ao31c.png"), xoff = 9, yoff = 0, cxoff = -2, cyoff = -8}
-ao32 = {im=love.graphics.newImage("me/attack/ao32.png"),c=love.graphics.newImage("me/attack/ao32c.png"), yoff =2, cxoff = -2, cyoff = -7}
+ao31 = {im=love.graphics.newImage("me/attack/ao31.png"),c=love.graphics.newImage("me/attack/ao31c.png"), xoff = 9, yoff = 0, cxoff = -2+9, cyoff = -8}
+ao32 = {im=love.graphics.newImage("me/attack/ao32.png"),c=love.graphics.newImage("me/attack/ao32c.png"), yoff =2, cxoff = -2, cyoff = -5}
 
 
 
@@ -120,20 +120,13 @@ function orangeyouglad(xx)
   else
 
     if xx.type == 1 then
-      if xx.animcounter < 3 then
-        if xx.repcounter%2==0 then
-          xx.im = op1
-        else
-          xx.im = op1
-        end
-
-      elseif xx.animcounter<=7 then
+      if xx.animcounter<=7 then
         if xx.repcounter%2==0 then
           xx.im = op2
         else
           xx.im = op4
         end
-        repplay(xx.blues)
+        repplay(xx.orangesou)
 
 
       elseif xx.animcounter < 40 then
@@ -169,7 +162,7 @@ function orangeyouglad(xx)
           xx.im = op5
         end
 
-        if xx.animcounter >= 15 then 
+        if xx.animcounter >= 10 then 
           combo(xx)
         end
 

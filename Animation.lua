@@ -45,7 +45,6 @@ morph4 = love.graphics.newImage("me/attack/morph4.png")
 morph5 = love.graphics.newImage("me/attack/morph5.png")
 morph6 = love.graphics.newImage("me/attack/morph6.png")
 morph7 = love.graphics.newImage("me/attack/morph7.png")
-triangle = love.graphics.newImage("enviro/triangle.png")
 wallgrab = {im = love.graphics.newImage("me/attack/wallgrab.png"),
   c = love.graphics.newImage("me/attack/wallgrabc.png")
 }
@@ -230,7 +229,6 @@ whatlevel = function()
       loader.newImage(enviro,'lightsoff', "enviro/lightsoff.png")
       loader.newImage(enviro,'floor', "enviro/astreet.png")
       loader.newImage(enviro,'rafters',"enviro/rafters.png")
-      loader.newImage(enviro,'buildingwall',"enviro/buildingwall.png")
 
       lighttimer = 0
       me.x = 1000
@@ -331,8 +329,8 @@ function drawa(xx)
   if xx.im.xoff == nil then xx.im.xoff = 0 end
   if xx.im.yoff == nil then xx.im.yoff = 0 end
 
-  if xx.im.cxoff == nil then xx.im.cxoff = xx.im.xoff end
-  if xx.im.cyoff == nil then xx.im.cyoff = xx.im.yoff end
+  if xx.im.cxoff == nil then xx.im.cxoff = 0 end
+  if xx.im.cyoff == nil then xx.im.cyoff = 0 end
   if xx.id == 2 then
     p2shade()
   else
@@ -352,7 +350,7 @@ function drawa(xx)
   if xx.im.c ~= nil and mode~="retry" then 
 
     love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-    love.graphics.draw(xx.im.c, xx.xanimate-xx.im.cxoff*xx.lr, xx.y-xx.im.cyoff, 0, xx.lr, 1)
+    love.graphics.draw(xx.im.c, xx.xanimate-xx.im.xoff*xx.lr+xx.im.cxoff*xx.lr, xx.y-xx.im.yoff+xx.im.cyoff, 0, xx.lr, 1)
   end
   love.graphics.setColor(255, 255, 255, 255)
   drawcolorstuff(xx)
@@ -523,7 +521,7 @@ end
 drawstreetstuff = function()
   love.graphics.draw(enviro.stagefloor, 0, 0, 0, 1, 20)
   love.graphics.draw(enviro.rafters,5608-502, 1536)
-  love.graphics.draw(enviro.buildingwall,-1542, 0)
+  love.graphics.draw(partition,21, 1,0, -1,3.11)
   love.graphics.draw(partition,themaps[1].rightwall-20, 0)
 
 end
@@ -634,14 +632,14 @@ function drawglass()
   for i,v in ipairs(glasseses)do
   if #glasseses > 500 then table.remove(glasseses,500) end
   if not me.actionshot and not you.actionshot and not pause then
-    v.y = v.y - v.j*rampspeed
-    v.x = v.x + v.v*rampspeed
-    v.j = v.j - .3*rampspeed
+    v.y = v.y - v.j*2/3*rampspeed
+    v.x = v.x + v.v*2/3*rampspeed
+    v.j = v.j - .3*2/3*rampspeed
     glassn = math.random(155,255)
     glassclarity = math.random(55,255)
   end
   love.graphics.setColor(glassn,255,255,classclarity)
-  love.graphics.draw(enviro.glass,v.x,v.y,70/(v.v+v.y),math.random(-1.5,1.5),math.random(-1.5,1.5))
+  love.graphics.draw(enviro.glass,v.x,v.y,70/(v.v+v.y),math.random()*math.random(-1,1),math.random()*math.random(-1,1), 1, 1)
   love.graphics.setColor(255,255,255)
 
 end

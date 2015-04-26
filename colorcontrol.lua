@@ -64,7 +64,7 @@ end
 if fightclub then
   me.rightc = thecolors[3]
   you.rightc = thecolors[1]
-  me.leftc = thecolors[1]
+  me.leftc = thecolors[2]
   you.leftc = thecolors[2]
 else
   me.rightc = thecolors[0]

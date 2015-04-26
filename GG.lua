@@ -1,6 +1,7 @@
 
 amountstuckinwall = 40
 
+garrow = love.graphics.newImage("me/attack/garrow.png")
 
 greena21 = {im=love.graphics.newImage("me/attack/greena21.png"),c=love.graphics.newImage("me/attack/greena21c.png"), xoff = 10}
 greena22 = {im=love.graphics.newImage("me/attack/greena22.png"),c=love.graphics.newImage("me/attack/greena22c.png"), xoff = 20}
@@ -45,7 +46,7 @@ at.g.au = {}
 at.g.au.mj = 15
 
 at.g.k = {}
-at.g.k.dam = 10
+at.g.k.dam = 6
 at.g.k.angle = 0
 at.g.k.ft = 30
 
@@ -67,8 +68,8 @@ function gandg(xx)
    if #joysticks>=xx.id then
      xx.gangle = math.deg(math.atan(-xx.jry/math.abs(xx.jrx)))
     if xx.gangle > 75 then xx.gangle = 90 
-    elseif xx.gangle < 15 and xx.gangle < -15 then
-      gangle = 0
+    elseif xx.gangle < 15 and xx.gangle > -15 then
+      xx.gangle = 0
      end
      end
 
@@ -136,19 +137,22 @@ function gandg(xx)
 
         if xx.animcounter <= 5 then
 
+          if xx.rampcanhit then
           if xx.repcounter ==1 then
-            xx.v = xx.v + (xx.lr*17)/2*xx.rampspeed
+            xx.v = xx.v + (xx.lr*15)/2*ramp(xx)
             xx.origgreenlr  = xx.lr
           elseif xx.repcounter==2 then
               xx.lr=-xx.origgreenlr  
-            xx.v = xx.v + (xx.lr*22)/2*xx.rampspeed
+            xx.v = xx.v + (xx.lr*17)/2*ramp(xx)
           elseif xx.repcounter==3 then
               xx.lr=xx.origgreenlr 
-              xx.v = xx.v + (xx.lr*13)/2*xx.rampspeed
+              xx.v = xx.v + (xx.lr*8)/2*ramp(xx)
             end
+           end
 
             xx.im = greena22s
             repplay(xx.greens)
+
             
         rumbleme(xx, 1)
 
@@ -185,6 +189,7 @@ function gandg(xx)
           xx.animcounter = 0
           xx.repcounter = 0
         end
+
 
 
 
@@ -232,6 +237,8 @@ function gandg(xx)
         rumbleme(xx, .7)
 
               table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx), speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
+              table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)+3.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
+              table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)-3.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
               xx.greenhit = false
             end
           elseif xx.animcounter >= 12 and xx.greenhit then 
@@ -400,6 +407,10 @@ function gandg(xx)
   bolt = love.graphics.newImage("me/attack/bolt.png")
 
   function boltdraw(xx)
+      if #joysticks>=xx.id and xx.animcounter < 10 and xx.type ==2 and xx.color.n == 2 and not xx.holda then
+    love.graphics.draw(garrow,xx.mid + (40 * math.cos(math.rad(xx.gangle)))*xx.lr,
+      xx.y+xx.height/2 -(40 * math.sin(math.rad(xx.gangle))), math.rad(90-xx.gangle),1,1,2.5,2.5 )
+  end
     for i = #xx.bolts, 1, -1 do
       local v = xx.bolts[i]
       love.graphics.draw(bolt, 

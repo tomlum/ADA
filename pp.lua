@@ -611,12 +611,15 @@ function pandp(xx)
           elseif xx.animcounter < 50 then
             xx.im = apa23
             if xx.animcounter == 17 then
+              
+            repplay(xx.airpurp1)
               hboxcs(xx, xx.id, 
                 {x=xx.mid, y = xx.y+15},
                 {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+29-xx.j},
                 {x=xx.mid+xx.v+(xx.lr*18), y = xx.y+57-xx.j},
                 {x=xx.mid-5*xx.lr, y = me.y+70},
                 function(z)
+            repplay(xx.purpsound)
                   xx.cancombo = true
                   z.health = z.health - at.p.p.dam
                   z.v = xx.lr*at.p.p.kb
@@ -657,7 +660,8 @@ function pandp(xx)
             xx.im = apa12
             if xx.animcounter == 15 then
               xx.j = xx.j + at.p.au.kj 
-              xx.v = xx.v - at.p.au.kb 
+              xx.v = xx.v - at.p.au.kb*xx.lr 
+            repplay(xx.airpurp2)
               hboxcs(xx, xx.id, 
                 {x=xx.mid+(xx.lr * -17), y = xx.y-31},
                 {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38-xx.j},
@@ -665,6 +669,7 @@ function pandp(xx)
                 {x=xx.mid+(xx.lr*-31), y = me.y+13},
 
                 function(z)
+            repplay(xx.purpsound)
                   xx.cancombo = true
                   z.health = z.health - at.p.au.dam
                   z.v = z.v -xx.lr*at.p.au.kb/3 + xx.v

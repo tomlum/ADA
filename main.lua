@@ -1,7 +1,12 @@
-
-
+--IF WIGGLE STICKS OR TRIGGERS THE NCAN GET OUT OF FLINCH FASTER
 --SEARCH IS THIS NECESSARY?
-
+--bolts hitting invisible wall on library
+--glass shoots out too fast
+--jump while flinching
+--slowmo on non glass things etc, library above the wall thingy where the bolts get stuck
+--throw is a little too hard and uneven in distrribution
+--green punch not working great
+--beast mode, switch between beasts by alternating which is held?
 
 --hug button
 --chrome/metallic so as to suit monochromaticity
@@ -14,7 +19,7 @@
 --if not in the air then some kind of unblocking animation
 --apple w is window close
 --SHAEZ TIED TO RUMBLE?!?!?!?
-therampspeed = .1
+therampspeed = .25/2
 drawboxes = false
 fightclub = true
 volume=0
@@ -819,6 +824,14 @@ monupdate()
     love.graphics.setColor(255,0,0)
     
   end
+  love.graphics.print("you.flinch"..tostring(you.flinch), 10, 280)
+  love.graphics.print("you.ft"..tostring(you.ft), 10, 180)
+  love.graphics.print("you.falltimer"..tostring(you.falltimer), 10, 200)
+  
+  
+  
+  
+  love.graphics.print("me.jt"..tostring(me.jt), 10, 220)
   if love.keyboard.isDown("6") and #hittmon < 20 then spawnmon(camera.x+math.random(0,200), camera.y+10) end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end

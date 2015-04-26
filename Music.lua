@@ -39,12 +39,12 @@ ss = {}
 
 function repplay(x)
   if not mute then
-    if rampspeed < 1 then
-      if x:getPitch()>.2 then
+    if rampspeed < .9 then
+      if x:getPitch()>.7 then
         x:setPitch(x:getPitch()*rampspeed)
       end
     else
-      if x:getPitch() < .2 then
+      if x:getPitch() < .7 then
         x:setPitch(x:getPitch()/rampspeed)
       end
       --[[ local name = toString(2)
@@ -69,6 +69,10 @@ function repplay(x)
   randomizepitch = function ()
     me.blues:setPitch(.7 + (math.random() * .3) )
     you.blues:setPitch(.7 + (math.random() * .3) )
+    me.airpurp2:setPitch(.5 + (math.random() * .3) )
+    you.airpurp2:setPitch(.5 + (math.random() * .3) )
+    me.airpurp2:setPitch(.4 + (math.random() * .3) )
+    you.airpurp2:setPitch(.4 + (math.random() * .3) )
     me.greens:setPitch(1.2 + (math.random() * .3) )
     you.greens:setPitch(1.2 + (math.random() * .3) )
     you.purpsound:setPitch(.8 + (math.random() * .3) )
@@ -114,8 +118,8 @@ function repplay(x)
     you.flapsnd:setPitch(.8 + (math.random() * .3) )
     me.whiff:setPitch(1.6 + (math.random() * .3) )
     you.whiff:setPitch(1.6 + (math.random() * .3) )
-    tornadosound1:setPitch(1.6 + (math.random() * .3) )
-    tornadosound2:setPitch(1.6 + (math.random() * .3) )
+    me.orangesou:setPitch(.5 + (math.random() * .4) )
+    you.orangesou:setPitch(.5 + (math.random() * .4) )
 
   end
 
@@ -125,6 +129,12 @@ function repplay(x)
   me.blocksound:setPitch(1.2)
   you.blocksound = love.audio.newSource("sounds/blocksound.wav", "stream")
   you.blocksound:setVolume(.1)
+  you.blocksound:setPitch(1.2)
+  
+    me.orangesou = love.audio.newSource("sounds/orange2.wav", "stream")
+  me.orangesou:setVolume(.4)
+  you.orangesou = love.audio.newSource("sounds/orange2.wav", "stream")
+  you.orangesou:setVolume(.4)
 
 
   miscsounds = function()
@@ -145,14 +155,16 @@ function repplay(x)
   end
 
 
+ grabsou = love.audio.newSource("sounds/grab.wav", "stream")
+  grabsou:setVolume(SFXV - .5)
+   grabreleasesou = love.audio.newSource("sounds/grabrelease.wav", "stream")
+  grabreleasesou:setVolume(SFXV - .5)
+   throwsou = love.audio.newSource("sounds/throw.wav", "stream")
+  throwsou:setVolume(SFXV - .5)
 
   readysound = love.audio.newSource("sounds/ready.wav", "stream")
   readysound:setVolume(SFXV - .7)
 
-  tornadosound1 = love.audio.newSource("sounds/tornado.wav", "stream")
-  tornadosound1:setVolume(SFXV - .7)
-  tornadosound2 = love.audio.newSource("sounds/tornado.wav", "stream")
-  tornadosound2:setVolume(SFXV - .7)
 
   collides = love.audio.newSource("sounds/collide.wav", "stream")
   collides:setVolume(SFXV - .82)
@@ -473,12 +485,25 @@ function repplay(x)
   slowmo = love.audio.newSource("sounds/slowmo.mp3", "static")
   slowmo:setVolume(SFXV-.3-adj)
 
+
+me.airpurp2 = love.audio.newSource("sounds/blue.mp3", "static")
+  me.airpurp2:setVolume(SFXV-.6-adj)
+
+  you.airpurp2 = love.audio.newSource("sounds/blue.mp3", "static")
+  you.airpurp2:setVolume(SFXV-.6-adj)
+  
+  me.airpurp1 = love.audio.newSource("sounds/blue.mp3", "static")
+  me.airpurp1:setVolume(SFXV-.6-adj)
+
+  you.airpurp1 = love.audio.newSource("sounds/blue.mp3", "static")
+  you.airpurp1:setVolume(SFXV-.6-adj)
+
   me.blues = love.audio.newSource("sounds/blue.mp3", "static")
   me.blues:setVolume(SFXV-.6-adj)
   me.blues:setPitch(.7)
 
   you.blues = love.audio.newSource("sounds/blue.mp3", "static")
-  you.blues:setVolume(SFXV-.7-adj)
+  you.blues:setVolume(SFXV-.6-adj)
   you.blues:setPitch(.7)
 
   me.greens = love.audio.newSource("sounds/blue.mp3", "static")

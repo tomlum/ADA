@@ -3,6 +3,7 @@ notilebouncing = true
 --menu that fades into another???
 noplat = {n=0;}
 
+maxmodenum = 2
 
 themaps = {}
 themaps[1]= {name = "street", 
@@ -226,7 +227,10 @@ function initmenu()
     streetfadehold = 1
     streetfadestart = false
 
-  elseif menu == "retry" and oldmenu ~= "retry" then
+elseif menu == "retry" and oldmenu ~= "retry" then
+  
+    me.readytoplay = false
+    you.readytoplay = false
     fadein = 0
     allfade = 0
     musfade = 0
@@ -349,7 +353,7 @@ function drawmenus()
 
     if menu == "modes" then
 
-      if downs() and modenum < 1 then modenum = modenum + 1 mov:play()
+      if downs() and modenum < maxmodenum then modenum = modenum + 1 mov:play()
       elseif ups() and modenum > 0 then modenum = modenum - 1 mov:play()	
       end
     end
@@ -364,10 +368,13 @@ function drawmenus()
       selectorx = 285
       selectory = 167
       themode = "duel"
-
     elseif modenum == 1 then 
       selectorx = 326
       selectory = 411
+      themode = "spectrum"
+    elseif modenum == 2 then 
+      selectorx = 365
+      selectory = 642
       themode = "spectrum"
     end
     love.graphics.setColor(allfade,allfade,allfade,255)
@@ -600,6 +607,7 @@ function drawmenus()
     end
     you.drawontop()
 
+    if not me.readytoplay then
     if me.rightbump and not me.holda then 
       me.rightc = thecolors[me.selectedcolor+1]
       repplay(me.selected)
@@ -609,8 +617,8 @@ function drawmenus()
       repplay(me.selected)
       --repplay(thecolors[me.selectedcolor+1].sound)
     end
-
-
+  end
+if not you.readytoplay then
     if you.rightbump and not you.holda then 
       you.rightc = thecolors[you.selectedcolor+1]
       repplay(you.selected)
@@ -619,6 +627,7 @@ function drawmenus()
       you.leftc = thecolors[you.selectedcolor+1]
       repplay(you.selected)
       --repplay(thecolors[you.selectedcolor+1].sound)
+    end
     end
 
     if me.block and not me.holda and not me.readytoplay then 

@@ -841,7 +841,7 @@ xrubble(p)
 
       end
       if p.im.extrah ~= nil then
-        p.oldpy = p.y+p.height-p.im.extrah
+        p.oldpy = p.y+p.height-p.im.extrah-1
       else
         p.oldpy = p.y+p.height-1
       end

@@ -20,6 +20,7 @@
 -- objects[1]
 -- end
 
+blockrelease = {im=love.graphics.newImage("me/attack/blockrelease.png"),c=love.graphics.newImage("me/attack/blockreleasec.png"), xoff = 10, cxoff = 10-9, cyoff = -11}
 
 throw = {im=love.graphics.newImage("me/attack/throw.png"),c=love.graphics.newImage("me/attack/throwc.png"), xoff = 9, yoff = 10}
 airthrow = {im=love.graphics.newImage("me/attack/airthrow.png"),c=love.graphics.newImage("me/attack/airthrowc.png"), xoff = 10, yoff = 10}
@@ -57,7 +58,7 @@ function grab(xx)
       else
         xx.im = airgrab2
       end
-      if xx.animcounter == 4 then
+      if xx.animcounter < 5 then
         hboxcs(xx, xx.id, 
           {x=xx.mid, y = xx.y+24},
           {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
@@ -69,6 +70,7 @@ function grab(xx)
             z.y = xx.y
             z.j = xx.j
             z.v = xx.v
+            repplay(grabsou)
 
           end)
       end
@@ -106,10 +108,12 @@ function grab(xx)
         end
       end
     elseif xx.animcounter <260 then
+      repplay(grabreleasesou)
       xx.animcounter = 0
       xx.v = -xx.lr*5
       xx.grabbingx.ft = 0
     elseif xx.animcounter < 310 then
+      repplay(throwsou)
       if xx.g then
         xx.im = throw
       else
@@ -145,7 +149,7 @@ you.cantreturntothis = 0
 
 function combo(xx, func)
   xx.hit = false
-  
+
   local oldanimc = xx.animcounter
 
   if xx.color.n ~= xx.cchangeto.n and xx.cancombo
@@ -260,7 +264,7 @@ function combo(xx, func)
     end
   end
   if not xx.combopause and xx.animcounter < oldanimc and xx.animcounter > 0 and 
-    xx.currentanim ~= xx.color.n then
+  xx.currentanim ~= xx.color.n then
     xx.repcounter = 0
     xx.currentanim = xx.color.n
   end
@@ -362,9 +366,11 @@ function attackmanage(xx)
 
 end
 function postattackmanage(xx)
+  --[[
   if(math.abs(xx.v) > math.abs(xx.oldv)) then
-    xx.v = xx.oldv + ((xx.v-xx.oldv)/xx.color.s.weight)*(1)
+    xx.v = xx.oldv + ((xx.v-xx.oldv)/xx.color.s.weight)
   end
+  --]]--
   if(math.abs(xx.ft) > math.abs(xx.oldft)) then
     rumbleme(xx,(math.log(xx.ft-xx.oldft)+.5)/5)
     xx.ft = xx.oldft + (xx.ft-xx.oldft)*(1)*xx.color.s.brittle
@@ -661,6 +667,13 @@ newforwarddodge = function(xx)
   you.letgoofblock = false
   function blocknbusy(xx)
 
+    xx.stop = false
+
+    if xx.letgoofblock then
+      xx.stop = true
+      xx.im = blockrelease
+    end
+
     if not xx.blockb then xx.letgoofblock = false 
     end
 
@@ -678,7 +691,6 @@ newforwarddodge = function(xx)
 
     else 
       xx.block = false 
-      xx.stop = false
     end
 
 
@@ -747,7 +759,7 @@ newforwarddodge = function(xx)
   function flinchingx(xx,yy)
 
 
-    if xx.ft > 0 then xx.flinch = true end
+    
 
     if xx.health < xx.oldhealth then
       xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(ramp(xx))/xx.color.s.def
@@ -772,8 +784,7 @@ newforwarddodge = function(xx)
       xx.hittheground = false 
     end
 
-    if xx.ft == 0 or (xx.ft < 0 and xx.ft + 1*ramp(xx) >=0) or (xx.ft > 0 and xx.ft - 1*ramp(xx) <=0) then 
-      xx.flinch = false 
+    if (xx.ft <= 0 and xx.ft + 1*ramp(xx) >0) or (xx.ft >= 0 and xx.ft - 1*ramp(xx) <0)  then 
       xx.ft = 0
     elseif xx.ft < 0 then xx.ft = xx.ft + 1*ramp(xx)
     elseif xx.ft > 0 then xx.ft = xx.ft - 1*ramp(xx)
@@ -847,7 +858,10 @@ newforwarddodge = function(xx)
           elseif xx.j==0 then
             xx.falltimer = -getuptime
           end
-        elseif xx.extratimer == 0 and xx.j==0 and xx.v==0 then xx.extratimer = extrastayonthegroundtime
+        elseif xx.extratimer == 0 and xx.j==0
+        --and xx.v ==0
+        then xx.extratimer = extrastayonthegroundtime
+          xx.flinch = true
         elseif xx.extratimer > 0 then
 
           xx.flinch = true
@@ -914,6 +928,9 @@ newforwarddodge = function(xx)
 
     end
 
+    if xx.ft ~= 0 then xx.flinch = true 
+      else xx.flinch = false
+      end
 
     xx.oldflinch = xx.flinch
     xx.oldft = xx.ft

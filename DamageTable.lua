@@ -1,8 +1,6 @@
 boltsflyrelative = true
 combopause = false
 
-
-
 kothscoretowin = 5000
 
 waveframerate = 8 --(2 is fast, higher is lower)
@@ -12,7 +10,7 @@ vforwallflinch = 10
 walljumprange = 3.5
 
 
-initjumpj = 12+2+1
+initjumpj = 11
 superjumpratio = 1.4
 --
 initjmax = 17+2
@@ -45,8 +43,8 @@ initrunspeed = 8
 defrunpace = 19
 
 jumpheight = .6
-risegrav = 1.3
-dropgrav = .4
+risegrav = 1
+dropgrav = .3
 maxgravity = 28
 
 maxhealth = 280
