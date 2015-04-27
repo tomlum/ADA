@@ -13,6 +13,16 @@ you.rampcanhit = 0
 
 floor = 1900 - 2
 
+function iwanttobreakfree(xx)
+  if xx.flinch and xx.holda and not xx.oldholda then
+    xx.ft = xx.ft-.5*ramp(xx)
+    
+  end
+  
+xx.oldaholda = xx.holda 
+end
+
+
 function relativity(xx)
   
   if speedramp then 
@@ -206,7 +216,7 @@ function bump(xx)
       {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+xx.height},
       {x=xx.mid, y = xx.y+5},
       function(z)
-        if xx.color.n~= 2 and (xx.color.n~=1 and xx.type==1) then
+        if not(xx.color.n==2 and xx.type==1) and not (z.color.n==2 and z.type==1) then
         if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
           if z.flinch then
             z.v = (z.v*1/4) + (xx.v*3/4)
@@ -575,7 +585,12 @@ function movex(xx,yy)
       elseif xx.jt <= 0 and xx.j > - maxgravity*xx.color.s.weight
       then xx.jt = xx.jt -  1*ramp(xx)
         if xx.j >= 0 and not xx.float then
+          --[[if xx.jumptimer > 0 and xx. then
+            xx.jumptimer = xx.jumptimer - 1*ramp(xx)
+          else
+            ]]--
           xx.j = xx.j - risegrav*ramp(xx)*xx.color.s.weight
+          --end
         elseif not xx.float then
 
           xx.j = xx.j - dropgrav*ramp(xx)*xx.color.s.weight

@@ -10,10 +10,7 @@ vforwallflinch = 10
 walljumprange = 3.5
 
 
-initjumpj = 11
-superjumpratio = 1.4
 --
-initjmax = 17+2
 --basically min j
 jt = 0
 
@@ -42,7 +39,9 @@ awaypenalty = .7
 initrunspeed = 8
 defrunpace = 19
 
+initjmax = 17+9
 jumpheight = .6
+initjumpj = 12
 risegrav = 1
 dropgrav = .3
 maxgravity = 28
@@ -121,8 +120,6 @@ cminedam = 17
 bydam = 55
 dettime = 250
 
-grenadethrowv = 10
-grenadethrowy = 10
 
 
 boltdamage = 6

@@ -743,7 +743,7 @@ function hboxwall()
 
 
         if (p.v > 0 and (p.mid+(dsw/2)+p.v > wall.x and p.mid+(dsw/2) < wall.x)) or
-        (p.v < 0 and (p.mid-(dsw/2)+p.v < wall.x and p.mid-(dsw/2) > wall.x)) then
+        (p.v < 0 and (p.mid-(dsw/2)+p.v < wall.x and p.mid-(dsw/2) > wall.x)) and p.y < wall.y1 and p.y < wall.y2 then
 
           if p.flinch then
             slowww = true
@@ -841,9 +841,9 @@ xrubble(p)
 
       end
       if p.im.extrah ~= nil then
-        p.oldpy = p.y+p.height-p.im.extrah-1
+        p.oldpy = p.y+p.height-p.im.extrah-2
       else
-        p.oldpy = p.y+p.height-1
+        p.oldpy = p.y+p.height-2
       end
     end
     

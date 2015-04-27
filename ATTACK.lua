@@ -90,8 +90,8 @@ function grab(xx)
       end
       xx.grabbingx.ft = 10
       if not xx.holda and (xx.a1 or xx.a2 or xx.a3 or xx.a4) then 
-        xx.grabbingx.j =  -xx.jry*30
-        xx.grabbingx.v =  xx.jrx*20
+        xx.grabbingx.j =  -xx.jry*20
+        xx.grabbingx.v =  xx.jrx*15
         if not xx.g then
           xx.v = -xx.grabbingx.v*.8
           xx.j = -xx.grabbingx.j*.8
@@ -247,11 +247,11 @@ function combo(xx, func)
       end
     else
       if xx.a4 then
-        if xx.color.n==3 and xx.repcounter < at.o.ak.max then
+        if xx.color.n==3 and xx.o5repcounter < at.o.ak.max then
           xx.animcounter = 1
           xx.type = 5
           xx.combo = xx.combo + 1
-          xx.repcounter = xx.repcounter + 1
+          xx.o5repcounter = xx.o5repcounter + 1
           if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
           xx.j = 2
 
@@ -318,6 +318,7 @@ function attackmanage(xx)
     xx.animcounter = 0
     xx.type = 0
   end
+  
 
   if xx.type < 4 and not xx.g and ((xx.type~=2 and xx.color.n~=2) or (xx.type~=2 and xx.color.n~=3)) then 
     xx.animcounter = 0
@@ -362,7 +363,7 @@ function attackmanage(xx)
   --  end
 
   --xx.oldj = xx.j
-
+iwanttobreakfree(xx)
 
 end
 function postattackmanage(xx)

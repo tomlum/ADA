@@ -1,5 +1,9 @@
---IF WIGGLE STICKS OR TRIGGERS THE NCAN GET OUT OF FLINCH FASTER
+--new wall jump
+--if xx.v/minit < ratio then no a
+--
 --SEARCH IS THIS NECESSARY?
+--superjump? 
+--superjumpratio = 1.4
 --bolts hitting invisible wall on library
 --glass shoots out too fast
 --jump while flinching

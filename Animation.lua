@@ -1625,3 +1625,38 @@ function gavinanddan()
 
 
 end
+
+
+
+function xrubble(xx)
+  for i = #themap.walls, 1, -1 do 
+    local wall = themap.walls[i]
+    if rampcanhit and ((xx.mid + xx.v > wall.x and xx.mid < wall.x) or
+      (xx.mid + xx.v < wall.x and xx.mid > wall.x)
+    )
+    and 
+    (
+      (xx.y+(xx.feet-xx.y)/2 >= wall.y1 and 
+      xx.y+(xx.feet-xx.y)/2 <= wall.y2 )
+    ) then
+    for i = xx.y, xx.feet do
+      if wall.glasswall~=nil then
+        if (wall.glasswall > 0 and i < wall.glasswall) or (wall.glasswall < 0 and i > -wall.glasswall) then 
+          makenglass(wall.x,i,xx.v,xx.j, 1)
+        else makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
+        end
+      else
+        makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
+
+      end
+
+
+    end
+
+
+    break
+  end
+
+end
+end
+

@@ -17,7 +17,8 @@ ao24 = {im=love.graphics.newImage("me/attack/ao24.png"),c=love.graphics.newImage
 
 
 ok2 = {im=love.graphics.newImage("me/attack/ok2.png"),c=love.graphics.newImage("me/attack/ok2c.png"), xoff = 9,yoff = 15}
-ok3 = {im=love.graphics.newImage("me/attack/ok3.png"),c=love.graphics.newImage("me/attack/ok3c.png"), xoff = 97,yoff = 5,cxoff = 23-15, cyoff = -3}
+ok3 = {im=love.graphics.newImage("me/attack/ok3.png"),c=love.graphics.newImage("me/attack/ok3c.png"), xoff = 97,yoff = 5,
+cxoff = 90,cyoff = 19}
 ok4 = {im=love.graphics.newImage("me/attack/ok4.png"),c=love.graphics.newImage("me/attack/ok4c.png"), xoff = 45,yoff = 0,cxoff = -1,cyoff = -6}
 
 
@@ -25,15 +26,15 @@ o32 = {im=love.graphics.newImage("me/attack/o32.png"),c=love.graphics.newImage("
   xoff = 9,yoff = -5, cxoff = 8, cyoff = 7}
 
 o33 = {im=love.graphics.newImage("me/attack/o33.png"),c=love.graphics.newImage("me/attack/o33c.png"), 
-  cxoff = 9,cyoff = 15}
+  cxoff = 2,cyoff = 8}
 
 ao31 = {im=love.graphics.newImage("me/attack/ao31.png"),c=love.graphics.newImage("me/attack/ao31c.png"), xoff = 9, yoff = 0, cxoff = -2+9, cyoff = -8}
 ao32 = {im=love.graphics.newImage("me/attack/ao32.png"),c=love.graphics.newImage("me/attack/ao32c.png"), yoff =2, cxoff = -2, cyoff = -5}
 
 
 
-aop1 = {im=love.graphics.newImage("me/attack/aop1.png"),c=love.graphics.newImage("me/attack/aop1c.png"), xoff = 9,yoff = 17, extrah = 5}
-aop2 = {im=love.graphics.newImage("me/attack/aop2.png"),c=love.graphics.newImage("me/attack/aop2c.png"),yoff = 32, extrah = 5, cxoff = 0, cyoff = 0}
+aop1 = {im=love.graphics.newImage("me/attack/aop1.png"),c=love.graphics.newImage("me/attack/aop1c.png"), xoff = 5,yoff = 17, extrah = 5, cxoff = 5, cyoff = 24}
+aop2 = {im=love.graphics.newImage("me/attack/aop2.png"),c=love.graphics.newImage("me/attack/aop2c.png"),xoff = 2,yoff = 32, extrah = 5, cxoff = 5, cyoff = 40}
 
 
 at.o = {}
@@ -56,6 +57,8 @@ at.o.ak.ft = 20
 at.o.ak.max = 5
 at.o.ak.z = .08
 at.o.ak.j = -10
+me.o5repcounter = 0
+you.o5repcounter = 0
 
 
 at.o.k = {}
@@ -73,6 +76,8 @@ at.o.u.v = 0
 
 
 function orangeyouglad(xx)
+  if xx.g then 
+      xx.o5repcounter = 0 end
 
   if xx.flinch then 
     xx.oplat = nil
@@ -108,10 +113,11 @@ function orangeyouglad(xx)
       elseif (xx.a2 or xx.a3) then
         xx.type = 4
         xx.animcounter = 1
-      elseif xx.a4 then
+      elseif xx.a4 and xx.o5repcounter < at.o.ak.max  then
         xx.type = 5
         xx.animcounter = 1
         xx.combo = xx.combo + 1
+         xx.o5repcounter =  xx.o5repcounter +1
       end
 
     end
@@ -408,17 +414,17 @@ elseif xx.type == 4 then
         end
 
 
-      elseif xx.animcounter < 42 then
+      elseif xx.animcounter < 40 then
         combo(xx)
           xx.im = aop1
-      elseif xx.animcounter < 1000 then
+      else
         xx.animcounter = 0
       end
 
 
     else if xx.type == 5 then
       if xx.animcounter < 6 then
-        if xx.repcounter%2==0 then
+        if xx.o5repcounter%2==0 then
           xx.im = ao21
         else
           xx.im = ao23
@@ -460,7 +466,7 @@ elseif xx.type == 4 then
           xx.v = 0
         end
 
-        if xx.repcounter%2==0  then
+        if xx.o5repcounter%2==0  then
           xx.im = ao22
         else
           xx.im = ao24
@@ -481,13 +487,13 @@ elseif xx.type == 4 then
         end
         xx.oplat = nil
         combo(xx)
-        if xx.repcounter%2==0  then
+        if xx.o5repcounter%2==0  then
           xx.im = ao21
         else
           xx.im = ao23
         end
 
-      elseif xx.animcounter < 160 then
+      elseif xx.animcounter < 60 then
         combo(xx)
 
       elseif xx.animcounter < 1000 then

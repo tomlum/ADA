@@ -2,8 +2,8 @@
 --http://www.flutopedia.com/sound_color.htm
 
 
-colorchangetime = 20
-colorfadetime = 10
+colorchangetime = 13
+colorfadetime = 5
 colorvib = .1
 
 thecolors = {}

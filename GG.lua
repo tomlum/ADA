@@ -1,5 +1,6 @@
 
-amountstuckinwall = 40
+amountstuckinwall = 80
+amountstuckinfloor = 45
 
 garrow = love.graphics.newImage("me/attack/garrow.png")
 
@@ -463,9 +464,11 @@ function gandg(xx)
       for j,k in ipairs(themap.walls) do 
         if k.barrier then
           if boltsflyrelative then
-          if (v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) > k.x+amountstuckinwall) 
+          if ((v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) > k.x+amountstuckinwall) 
           or 
-          (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) < k.x-amountstuckinwall) then
+          (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) < k.x-amountstuckinwall)
+          
+          ) and v.y > k.y1 and v.y < k.y2 then
             v.stuck = true
           end
         else
@@ -480,7 +483,7 @@ function gandg(xx)
       
       
 
-      if v.y <= themap.floor+10 and not v.stuck then
+      if v.y <= themap.floor+amountstuckinfloor and not v.stuck then
         table.insert(xx.bolttrail, {angle = v.angle, speed = v.speed, x = v.x, y = v.y, t = 0})
         if boltsflyrelative then
         v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx)
