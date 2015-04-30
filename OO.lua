@@ -9,7 +9,7 @@ op5 = {im=love.graphics.newImage("me/attack/op5n.png"),c=love.graphics.newImage(
 
 
 ao21 = {im=love.graphics.newImage("me/attack/ao21.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9, yoff = 17, extrah = 5, cxoff = -2, cyoff = -8}
-ao22 = {im=love.graphics.newImage("me/attack/ao22.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9, cxoff = -2, cyoff = -8, extrah = 5}
+ao22 = {im=love.graphics.newImage("me/attack/ao22temp2.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9+10, cxoff = -2, cyoff = -8, extrah = 5}
 
 
 ao23 = {im=love.graphics.newImage("me/attack/ao23.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9,yoff = 17, extrah = 5, cxoff = -2, cyoff = -8}

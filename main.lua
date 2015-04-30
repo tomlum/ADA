@@ -29,8 +29,8 @@ fightclub = true
 volume=0
 fullscreen = false
 readout = false
-putmehere = 975
-putyouhere = 1025
+putmehere = 975-600
+putyouhere = 1025-600
 menu = "title"
  if menu == "play" then
 noload = true
@@ -831,6 +831,7 @@ monupdate()
   love.graphics.print("you.flinch"..tostring(you.flinch), 10, 280)
   love.graphics.print("you.ft"..tostring(you.ft), 10, 180)
   love.graphics.print("you.falltimer"..tostring(you.falltimer), 10, 200)
+  love.graphics.print("you.extratimer"..tostring(you.extratimer), 10, 200)
   
   
   

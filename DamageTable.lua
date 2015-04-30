@@ -32,7 +32,8 @@ defspeedminit = 6
 minmaxdif = 4
 accel = .5
 --higher means more fric
-fricrate = .6
+--friction
+fricrate = .6+2
 
 awaypenalty = .7
 

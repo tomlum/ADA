@@ -929,7 +929,7 @@ newforwarddodge = function(xx)
 
     end
 
-    if xx.ft ~= 0 then xx.flinch = true 
+    if xx.ft ~= 0 or xx.extratimer ~= 0 or xx.falltimer < 0 then xx.flinch = true 
       else xx.flinch = false
       end
 
