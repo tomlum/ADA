@@ -513,13 +513,12 @@ if stophit and meme.player~=nil then
 
 end
 
-
 function hexplatcheck2(y1, x1, x2, ex, why, w, why2, v)
 
 
   midv2 = {x = (ex+w/2)+v, y=why2}
-  midv = {x = ex+w/2, y=why}
-  local linep1 = {x = x1, y = y1}
+  midv = {x = ex+w/2+.001, y=why}
+  local linep1 = {x = x1+.001, y = y1}
   local linep2 = {x = x2, y = y1}
   if pint(linep1, linep2, midv, midv2) 
   then return true
@@ -742,16 +741,11 @@ function hboxwall()
 
 
 
-        if (p.v > 0 and (p.mid+(dsw/2)+p.v > wall.x and p.mid+(dsw/2) < wall.x)) or
-        (p.v < 0 and (p.mid-(dsw/2)+p.v < wall.x and p.mid-(dsw/2) > wall.x)) and p.y < wall.y1 and p.y < wall.y2 then
+      
 
-          if p.flinch then
-            slowww = true
-          end
+          
 xrubble(p)
 
-
-        end
         
 
       end
@@ -810,7 +804,6 @@ xrubble(p)
           or 
           (p.y == plat.y-p.height-extrah and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
         then
-
           if p.j ~= 0 and p.player~=nil then
             if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
               xx.landingcounter = xx.landingcounter + landingwait
@@ -841,9 +834,9 @@ xrubble(p)
 
       end
       if p.im.extrah ~= nil then
-        p.oldpy = p.y+p.height-p.im.extrah-2
+        p.oldpy = p.y+p.height-p.im.extrah
       else
-        p.oldpy = p.y+p.height-2
+        p.oldpy = p.y+p.height
       end
     end
     

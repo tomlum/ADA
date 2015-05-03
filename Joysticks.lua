@@ -188,7 +188,7 @@ function controlsstuff(xx)
 end
 
 function keyboardcontrols()
-
+        
 
 
           me.start = love.keyboard.isDown("q")
@@ -221,7 +221,7 @@ function keyboardcontrols()
           you.rightbumpb = love.keyboard.isDown("0")
           you.leftbumpb = love.keyboard.isDown("9")
 
-     
+          me.a1 = you.a1
 
 end
 

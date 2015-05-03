@@ -355,6 +355,17 @@ function drawa(xx)
   love.graphics.setColor(255, 255, 255, 255)
   drawcolorstuff(xx)
   bolttraildraw(xx)
+  
+    if drawfeet then
+        local pextra = 0
+    if xx.im.extrah ~= nil then
+      pextra = me.im.extrah
+    end
+    love.graphics.setColor(255,0,0)
+  love.graphics.rectangle("fill", xx.x, xx.oldpy, xx.width,1)
+    love.graphics.setColor(0,0,255)
+  love.graphics.rectangle("fill", xx.x, xx.y+me.height-xx.j-pextra, xx.width,1)
+  end
 end
 
 
@@ -414,7 +425,8 @@ function actionshotstuff(xx)
       thesong:setPitch(xx.actiontimer/actionshotdur)
     end
   else xx.actiontimer = 0
-  end
+end
+
 
 end
 
@@ -826,7 +838,7 @@ end
 
 function makenglass(ex,why,vee,jay,n)
   for i = 1, n do
-    table.insert(glasseses,{x = ex, y = why, v=vee + math.random()+math.random(-1,0), j = jay+math.random()+math.random(-3,2)})
+    table.insert(glasseses,{x = ex, y = why, v=vee*math.random(), j = jay*math.random()+math.random()*4})
   end
 end
 
@@ -1631,14 +1643,18 @@ end
 function xrubble(xx)
   for i = #themap.walls, 1, -1 do 
     local wall = themap.walls[i]
-    if rampcanhit and ((xx.mid + xx.v > wall.x and xx.mid < wall.x) or
-      (xx.mid + xx.v < wall.x and xx.mid > wall.x)
+    if (
+      (xx.mid + xx.v > wall.x and xx.mid <= wall.x) or
+      (xx.mid + xx.v < wall.x and xx.mid >= wall.x)
     )
     and 
     (
-      (xx.y+(xx.feet-xx.y)/2 >= wall.y1 and 
-      xx.y+(xx.feet-xx.y)/2 <= wall.y2 )
+      (xx.y+(xx.height)/2 >= wall.y1 and 
+      xx.y+(xx.height)/2 <= wall.y2 )
     ) then
+    if xx.flinch then
+            slowww = true
+          end
     for i = xx.y, xx.feet do
       if wall.glasswall~=nil then
         if (wall.glasswall > 0 and i < wall.glasswall) or (wall.glasswall < 0 and i > -wall.glasswall) then 

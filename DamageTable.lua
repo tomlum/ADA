@@ -33,7 +33,7 @@ minmaxdif = 4
 accel = .5
 --higher means more fric
 --friction
-fricrate = .6+2
+fricrate = .6
 
 awaypenalty = .7
 
@@ -47,7 +47,7 @@ risegrav = 1
 dropgrav = .3
 maxgravity = 28
 
-maxhealth = 280
+maxhealth = 180
 
 
 

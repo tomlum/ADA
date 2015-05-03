@@ -37,7 +37,7 @@ at.bb.ap.z = .05
 
 at.bb.k = {}
 at.bb.k.dam = 10
-at.bb.k.kb = 60
+at.bb.k.kb = 22
 at.bb.k.ft = 30
 at.bb.k.z = .07
 

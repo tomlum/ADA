@@ -8,18 +8,18 @@ op4 = {im=love.graphics.newImage("me/attack/op4n.png"),c=love.graphics.newImage(
 op5 = {im=love.graphics.newImage("me/attack/op5n.png"),c=love.graphics.newImage("me/attack/opcn.png"), xoff = 9,yoff = 12, cxoff = 9, cyoff = 24}
 
 
-ao21 = {im=love.graphics.newImage("me/attack/ao21.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9, yoff = 17, extrah = 5, cxoff = -2, cyoff = -8}
-ao22 = {im=love.graphics.newImage("me/attack/ao22temp2.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9+10, cxoff = -2, cyoff = -8, extrah = 5}
+ao21 = {im=love.graphics.newImage("me/attack/ao21.png"),c=love.graphics.newImage("me/attack/ao21c.png"), xoff = 9, yoff = 17, cxoff = 8, cyoff = 24}
+ao22 = {im=love.graphics.newImage("me/attack/ao22temp2.png"),c=love.graphics.newImage("me/attack/ao22c.png"), xoff = 9-5, cxoff = 5, cyoff = 8, extrah = 5}
 
 
-ao23 = {im=love.graphics.newImage("me/attack/ao23.png"),c=love.graphics.newImage("me/attack/ao2c.png"), xoff = 9,yoff = 17, extrah = 5, cxoff = -2, cyoff = -8}
-ao24 = {im=love.graphics.newImage("me/attack/ao24.png"),c=love.graphics.newImage("me/attack/ao3c.png"), xoff = 9-5,yoff = 0, cyoff = 0, extrah = 5}
+ao23 = {im=love.graphics.newImage("me/attack/ao23.png"),c=love.graphics.newImage("me/attack/ao23c.png"), xoff = 5,yoff = 17, extrah = 5, cxoff = 4, cyoff = 24}
+ao24 = {im=love.graphics.newImage("me/attack/ao24temp.png"),c=love.graphics.newImage("me/attack/ao24c.png"), xoff = 9-5, cyoff = 7, cxoff = 12, extrah = 5}
 
 
 ok2 = {im=love.graphics.newImage("me/attack/ok2.png"),c=love.graphics.newImage("me/attack/ok2c.png"), xoff = 9,yoff = 15}
 ok3 = {im=love.graphics.newImage("me/attack/ok3.png"),c=love.graphics.newImage("me/attack/ok3c.png"), xoff = 97,yoff = 5,
 cxoff = 90,cyoff = 19}
-ok4 = {im=love.graphics.newImage("me/attack/ok4.png"),c=love.graphics.newImage("me/attack/ok4c.png"), xoff = 45,yoff = 0,cxoff = -1,cyoff = -6}
+ok4 = {im=love.graphics.newImage("me/attack/ok4.png"),c=love.graphics.newImage("me/attack/ok4c.png"), xoff = 45,yoff = 0,cxoff = 47,cyoff = 6}
 
 
 o32 = {im=love.graphics.newImage("me/attack/o32.png"),c=love.graphics.newImage("me/attack/op32c.png"), 
@@ -66,6 +66,8 @@ at.o.k.dam = 15
 at.o.k.ft = 20
 at.o.k.z = .08
 at.o.k.j = -20
+at.o.k.mj = 17
+
 
 at.o.u = {}
 at.o.u.dam = 15
@@ -294,16 +296,14 @@ function orangeyouglad(xx)
 
 
 
-      elseif xx.animcounter < 42 then
+      elseif xx.animcounter < 52 then
         xx.im = ok2
 
-      elseif xx.animcounter < 44 then
-        combo(xx)
       elseif xx.animcounter < 100 then
         xx.animcounter = 0
       elseif xx.animcounter < 110 then
         xx.im = ok4
-        xx.j = 14
+        xx.j = at.o.k.mj
       elseif xx.animcounter < 1000 then
         xx.animcounter = 0
       end
@@ -493,7 +493,7 @@ elseif xx.type == 4 then
           xx.im = ao23
         end
 
-      elseif xx.animcounter < 60 then
+      elseif xx.animcounter < 40 then
         combo(xx)
 
       elseif xx.animcounter < 1000 then
