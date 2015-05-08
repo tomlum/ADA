@@ -314,6 +314,7 @@ you.oldft = 0
 
 function attackmanage(xx)
 
+  xx.greenkcondition = false
   if xx.flinch then 
     xx.animcounter = 0
     xx.type = 0
@@ -621,7 +622,7 @@ newforwarddodge = function(xx)
         xx.im = dodge21
       end
     elseif xx.dodgetype == 0 and xx.dodgerefreshtimer == 0 then
-      if xx.g and ((xx.lr > 0 and xx.rightb and xx.qualifyfordodge) or (xx.lr < 0 and xx.leftb and xx.qualifyfordodge))  then
+      if xx.g and ((xx.lr > 0 and xx.rightb and xx.qualifyfordodge) or (xx.lr < 0 and xx.leftb and xx.qualifyfordodge)) and xx.animcounter ==0  then
         xx.dodgetype = 1
         xx.dodgecounter = dodgetime
         xx.currentdodgev = xx.v

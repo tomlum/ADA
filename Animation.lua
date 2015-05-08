@@ -1,4 +1,13 @@
 
+
+
+walklegs1 = {im = love.graphics.newImage("me/walk/legs1.png"), c = love.graphics.newImage("me/walk/legs1c.png")}
+walklegs2 = {im = love.graphics.newImage("me/walk/legs2.png"), c = love.graphics.newImage("me/walk/legs2c.png")}
+walklegs3 = {im = love.graphics.newImage("me/walk/legs3.png"), c = love.graphics.newImage("me/walk/legs3c.png")}
+walklegs4 = {im = love.graphics.newImage("me/walk/legs4.png"), c = love.graphics.newImage("me/walk/legs4c.png")}
+walklegs5 = {im = love.graphics.newImage("me/walk/legs5.png"), c = love.graphics.newImage("me/walk/legs5c.png")}
+
+
 walk1im = love.graphics.newImage("me/walk/walk51.png")
 walk2im = love.graphics.newImage("me/walk/walk52.png")
 walk3im = love.graphics.newImage("me/walk/walk53.png")
@@ -9,7 +18,8 @@ walk2c = love.graphics.newImage("me/walk/walk52c.png")
 walk3c = love.graphics.newImage("me/walk/walk53c.png")
 walk4c = love.graphics.newImage("me/walk/walk54c.png")
 walk5c = love.graphics.newImage("me/walk/walk55c.png")
-walk1 = {im = walk1im, c = walk1c}
+ahead = love.graphics.newImage("me/idle/ahead.png")
+walk1 = {im = walk1im, c = walk1c, cxoff = 3, cyoff = 8}
 walk2 = {im = walk2im, c = walk2c}
 walk3 = {im = walk3im, c = walk3c}
 walk4 = {im = walk4im, c = walk4c}
@@ -325,6 +335,16 @@ end
 
 function drawa(xx)
   drawmytrail(xx)
+   if xx.greenkcondition then
+     if xx.lr > 0 then
+    love.graphics.draw(garmback,xx.mid -2*xx.lr,
+      xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,-7+4,-8+4)
+    else
+      
+    love.graphics.draw(garmfront,xx.mid -2*xx.lr,
+      xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,4,4)
+    end
+    end
 
   if xx.im.xoff == nil then xx.im.xoff = 0 end
   if xx.im.yoff == nil then xx.im.yoff = 0 end
@@ -345,6 +365,40 @@ function drawa(xx)
     p2shadefade(allfade)
   end
   love.graphics.draw(xim,xxx, xxy, 0, xlr, 1) 
+  if xx.im.legshuh ~= nil then
+    if xx.v == 0 or xx.slide then
+  love.graphics.draw(xx.im.legs,xxx, xxy+xx.im.legsy, 0, xlr, 1) 
+   else
+      if xx.walktimer < 7 then 
+        
+  love.graphics.draw(walklegs1.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+    love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+  love.graphics.draw(walklegs1.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+      elseif xx.walktimer >= 7 and xx.walktimer < 14 then
+  love.graphics.draw(walklegs2.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+    love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+  love.graphics.draw(walklegs2.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+      elseif xx.walktimer >= 14 and xx.walktimer < 21 then
+  love.graphics.draw(walklegs3.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+    love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+  love.graphics.draw(walklegs3.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+      elseif xx.walktimer >= 21 and xx.walktimer < 28 then
+  love.graphics.draw(walklegs4.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+    love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+  love.graphics.draw(walklegs4.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+      elseif xx.walktimer >= 28 and xx.walktimer < 35 then
+  love.graphics.draw(walklegs5.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+    love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+  love.graphics.draw(walklegs5.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+      else
+        xx.walktimer = 0
+      end
+      end
+    
+    
+    else
+  end
+    
 
 
   if xx.im.c ~= nil and mode~="retry" then 
@@ -352,6 +406,24 @@ function drawa(xx)
     love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
     love.graphics.draw(xx.im.c, xx.xanimate-xx.im.xoff*xx.lr+xx.im.cxoff*xx.lr, xx.y-xx.im.yoff+xx.im.cyoff, 0, xx.lr, 1)
   end
+  
+      if  xx.greenkcondition then
+      
+        if xx.lr > 0 then
+    love.graphics.draw(garmfront,xx.mid -2*xx.lr,
+      xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,4,4)
+    else
+      
+    love.graphics.draw(garmback,xx.mid -2*xx.lr,
+      xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,-7+4,-8+4)
+    
+    
+  love.graphics.draw(ahead,xx.mid-11*xx.lr, xx.y+6, 0, xlr, 1) 
+    
+    end
+    end
+
+  
   love.graphics.setColor(255, 255, 255, 255)
   drawcolorstuff(xx)
   bolttraildraw(xx)
@@ -359,7 +431,7 @@ function drawa(xx)
     if drawfeet then
         local pextra = 0
     if xx.im.extrah ~= nil then
-      pextra = me.im.extrah
+      pextra = xx.im.extrah
     end
     love.graphics.setColor(255,0,0)
   love.graphics.rectangle("fill", xx.x, xx.oldpy, xx.width,1)
@@ -1386,6 +1458,7 @@ death = function(xx, yy)
 
     if not xx.slowdown and not xx.slide and not xx.stop and not xx.pause and not xx.flinch
     and (xx.dodgetype~=2 and xx.dodgetype >-1) and xx.wjt ==0
+    and not xx.greenkcondition
     then
       if xx.right then xx.lr = 1
       elseif xx.left then xx.lr = -1
@@ -1428,7 +1501,13 @@ death = function(xx, yy)
 
   walkxx = function (xx)
 
+    if xx.v*xx.lr > 0 then
     xx.walktimer = xx.walktimer + 1*ramp(xx)
+  else
+    xx.walktimer = xx.walktimer - 1*ramp(xx)
+    end
+
+   
 
     if xx.running and not xx.dodge then 
 
@@ -1445,8 +1524,12 @@ death = function(xx, yy)
       elseif xx.walktimer >= 0 then xx.im = run1 
       end  
     else
+      
       if xx.walktimer < 7 then 
         xx.im = walk1
+        if xx.walktimer < 0 then 
+          xx.walktimer = 34
+        end
       elseif xx.walktimer >= 7 and xx.walktimer < 14 then
         xx.im = walk2
       elseif xx.walktimer >= 14 and xx.walktimer < 21 then

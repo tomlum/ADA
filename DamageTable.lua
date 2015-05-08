@@ -135,7 +135,7 @@ bluechargetime = 28
 
 boltdespawntime = 500
 chboltmultrate = 30
-boltspeed = 33
+boltspeed = 37
 
 bboltspeed = 37
 

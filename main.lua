@@ -1,4 +1,5 @@
 --new wall jump
+--WIGGLE GET OUT OF FLINCH FASTER
 --if xx.v/minit < ratio then no a
 --
 --SEARCH IS THIS NECESSARY?
@@ -22,7 +23,7 @@
 --SHAEZ TIED TO RUMBLE?!?!?!?
 therampspeed = .25/2
 drawboxes = false
-drawfeet = true
+drawfeet = false
 fightclub = true
 volume=0
 fullscreen = false
@@ -651,6 +652,8 @@ function love.update()
       holdmanage(you)
 
 
+        orientlr(me)
+        orientlr(you)
         
         cammovement()
         --if here then no slow mo twitter
@@ -833,6 +836,8 @@ monupdate()
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
 
+
+  love.graphics.print("me.up"..tostring(me.up), 200, 100)
   
    if #joysticks > 0 then
     rumblemodule(me)

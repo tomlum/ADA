@@ -2,11 +2,9 @@
 amountstuckinwall = 80
 amountstuckinfloor = 45
 
-garrow = love.graphics.newImage("me/attack/garrow.png")
-
-greena21 = {im=love.graphics.newImage("me/attack/greena21.png"),c=love.graphics.newImage("me/attack/greena21c.png"), xoff = 10}
-greena22 = {im=love.graphics.newImage("me/attack/greena22.png"),c=love.graphics.newImage("me/attack/greena22c.png"), xoff = 20}
-greena22s = {im=love.graphics.newImage("me/attack/greena22s.png"),c=love.graphics.newImage("me/attack/greena22c.png"), xoff = 20}
+greena21 = {im=love.graphics.newImage("me/attack/greena21.png"),c=love.graphics.newImage("me/attack/greena21c.png"), xoff = 16,yoff = -2, cxoff = 14, cyoff = 8}
+greena22 = {im=love.graphics.newImage("me/attack/greena22.png"),c=love.graphics.newImage("me/attack/greena22c.png"), xoff = 30+8, yoff = -3, cxoff = 32, cyoff = 13}
+greena22s = {im=love.graphics.newImage("me/attack/greena22s.png"),c=love.graphics.newImage("me/attack/greena22sc.png"), xoff = 30+8, yoff = 1, cxoff = 32, cyoff = 12}
 greena1s = {im=love.graphics.newImage("me/attack/greena1s.png"),c=love.graphics.newImage("me/attack/greena1c.png"), xoff = 20, yoff = 60}
 greena1 = {im=love.graphics.newImage("me/attack/greena1.png"),c=love.graphics.newImage("me/attack/greena1c.png"), xoff = 20, yoff = 60}
 
@@ -15,11 +13,18 @@ agreena22s = {im=love.graphics.newImage("me/attack/agreena22s.png"),c=love.graph
 
 agreena1 = {im=love.graphics.newImage("me/attack/agreena1.png"),c=love.graphics.newImage("me/attack/agreena1c.png"), xoff = 20, yoff = 60}
 agreena1s = {im=love.graphics.newImage("me/attack/agreena1s.png"),c=love.graphics.newImage("me/attack/agreena1c.png"), xoff = 20, yoff = 60}
+garmfront = love.graphics.newImage("me/attack/garmfront.png")
+garmback = love.graphics.newImage("me/attack/garmback.png")
 
-greenk1 = {im=love.graphics.newImage("me/attack/greenk1.png"),c=love.graphics.newImage("me/attack/greenk1c.png"), xoff = 40, yoff = 20}
-greenk2 = {im=love.graphics.newImage("me/attack/greenk2.png"),c=love.graphics.newImage("me/attack/greenk2c.png"), xoff = 10, yoff = 20}
+greenk03 = {im=love.graphics.newImage("me/attack/greenk03.png"),c=love.graphics.newImage("me/attack/greenk0c.png"), xoff = 1, yoff = -6, cxoff = 3, cyoff = 7}
+greenk01 = {im=love.graphics.newImage("me/attack/greenk01.png"),c=love.graphics.newImage("me/attack/greenk0c.png"), xoff = 1, yoff = -6, cxoff = 3, cyoff = 7}
+greenk02 = {im=love.graphics.newImage("me/attack/greenk02.png"),c=love.graphics.newImage("me/attack/greenk0c.png"), xoff = 4, yoff = -6, cxoff = 6, cyoff = 7}
 
-agk1 = {im=love.graphics.newImage("me/attack/agk1.png"),c=love.graphics.newImage("me/attack/agk1c.png"), xoff = 40, yoff =12}
+greenk1 = {im=love.graphics.newImage("me/attack/greenk1.png"), xoff = 2, yoff = -6, cxoff = 3, cyoff = 7, legshuh = true, legs = love.graphics.newImage("me/attack/greenk1legs.png"), legsy = 36}
+greenk2 = {im=love.graphics.newImage("me/attack/greenk2.png"),c=love.graphics.newImage("me/attack/greenk2c.png"), xoff = 0, yoff = -2, cxoff = 2, cyoff = 7}
+
+
+agk1 = {im=love.graphics.newImage("me/attack/agk1.png"), xoff = 2, yoff = -6, cxoff = 3, cyoff = 7}
 agk2 = {im=love.graphics.newImage("me/attack/agk2.png"),c=love.graphics.newImage("me/attack/agk2c.png"), xoff = 10, yoff =10}
 
 
@@ -72,6 +77,8 @@ function gandg(xx)
     elseif xx.gangle < 15 and xx.gangle > -15 then
       xx.gangle = 0
      end
+   else
+     xx.gangle = 0
      end
 
 
@@ -122,7 +129,7 @@ function gandg(xx)
   else
 
     if xx.type == 1 then
-      if xx.animcounter < 4 then
+      if xx.animcounter < 7 then
         xx.im = greena21
         
 
@@ -136,18 +143,18 @@ function gandg(xx)
 
         end
 
-        if xx.animcounter <= 5 then
+        if xx.animcounter <= 9 then
 
           if xx.rampcanhit then
           if xx.repcounter ==1 then
-            xx.v = xx.v + (xx.lr*15)/2*ramp(xx)
+            xx.v = xx.v + (xx.lr*15)/3*ramp(xx)
             xx.origgreenlr  = xx.lr
           elseif xx.repcounter==2 then
               xx.lr=-xx.origgreenlr  
-            xx.v = xx.v + (xx.lr*17)/2*ramp(xx)
+            xx.v = xx.v + (xx.lr*17)/3*ramp(xx)
           elseif xx.repcounter==3 then
               xx.lr=xx.origgreenlr 
-              xx.v = xx.v + (xx.lr*8)/2*ramp(xx)
+              xx.v = xx.v + (xx.lr*8)/3*ramp(xx)
             end
            end
 
@@ -194,43 +201,64 @@ function gandg(xx)
 
 
 
-      elseif xx.type == 2 then
-        if xx.animcounter < 10 then
+    elseif xx.type == 2 then
+      
+        if xx.animcounter < 4 then
+          xx.im = greenk03
+        elseif xx.animcounter < 7 then
+          xx.im = greenk01
+          elseif xx.animcounter < 12 then
+          xx.im = greenk02
           
+        elseif xx.animcounter < 14 then
+          xx.stop = false
+          xx.greenkcondition = true
+          if xx.joystick:getGamepadAxis("rightx") > 0 then
+            xx.lr = 1
+          else
+            xx.lr = -1
+          end
           if xx.g then
             xx.im = greenk1
           else
             xx.im = agk1
           end
-          xx.animcounter = 8
+          xx.animcounter = 12
           if not xx.holda then
             if (xx.a1b or xx.a2b or xx.a3b or xx.a4b)and #joysticks>=xx.id then
               at.g.k.angle = xx.gangle
-              xx.animcounter = 9
+              xx.animcounter = 14
               
             elseif xx.a1b then
               at.g.k.angle = 90
-              xx.animcounter = 9
+              xx.animcounter = 14
             elseif xx.a2b or xx.a3b then
               at.g.k.angle = 0
-              xx.animcounter = 9
+              xx.animcounter = 14
             elseif xx.a4b then
               at.g.k.angle = -90
-              xx.animcounter = 9
+              xx.animcounter = 14
+            elseif xx.color.n ~= 2 then
+              xx.animcounter = 0
             end
           end
         elseif xx.animcounter < 50 then
           if xx.g then
+            if xx.v ~= 0 or xx.animcounter <25 then
             xx.im = greenk2
+            end
           else
             xx.im = agk2
           end
 
-          if xx.animcounter == 10 then
+          if xx.animcounter == 15 then
             repplay(xx.greens)
             if not xx.g then
               xx.v = xx.v-(boltspeed/3 * math.cos(math.rad(at.g.k.angle)))*xx.lr
-              xx.j = xx.j-(boltspeed/3 * math.sin(math.rad(at.g.k.angle)))
+              xx.j = xx.j-(boltspeed/2 * math.sin(math.rad(at.g.k.angle)))
+              
+            else
+              xx.v = xx.v-(boltspeed/3 * math.cos(math.rad(at.g.k.angle)))*xx.lr
 
             end
             if xx.rampcanhit then
@@ -238,15 +266,15 @@ function gandg(xx)
         rumbleme(xx, .7)
 
               table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx), speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
-              table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)+3.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
-              table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)-3.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
+              table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)+2.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
+              table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)-2.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
               xx.greenhit = false
             end
-          elseif xx.animcounter >= 12 and xx.greenhit then 
+          elseif xx.animcounter >= 15 and xx.greenhit then 
             xx.cancombo = true
             combo(xx)
           end
-        elseif xx.animcounter >= 50 then
+        else
           xx.animcounter = 0
           xx.repcounter = 0
         end
@@ -408,10 +436,10 @@ function gandg(xx)
   bolt = love.graphics.newImage("me/attack/bolt.png")
 
   function boltdraw(xx)
-      if #joysticks>=xx.id and xx.animcounter < 10 and xx.type ==2 and xx.color.n == 2 and not xx.holda then
-    love.graphics.draw(garrow,xx.mid + (40 * math.cos(math.rad(xx.gangle)))*xx.lr,
-      xx.y+xx.height/2 -(40 * math.sin(math.rad(xx.gangle))), math.rad(90-xx.gangle),1,1,2.5,2.5 )
-  end
+      
+    
+    --love.graphics.draw(garrow,xx.mid + (40 * math.cos(math.rad(xx.gangle)))*xx.lr, xx.y+xx.height/2 -(40 * math.sin(math.rad(xx.gangle))), math.rad(90-xx.gangle),1,1,2.5,2.5 )
+
     for i = #xx.bolts, 1, -1 do
       local v = xx.bolts[i]
       love.graphics.draw(bolt, 

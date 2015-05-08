@@ -274,7 +274,7 @@ end
 
 
 function vroomright(xx)
-  if xx.animcounter ==0 then
+  if xx.animcounter == 0 or (xx.animcounter == 12 and xx.color.n == 2 and xx.type == 2) then
   if xx.v == 0+xx.push and not xx.running
   then xx.v = 1.5+xx.push
   elseif xx.v >0+xx.push and xx.v < (speedlimit -accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash and not xx.running
@@ -286,7 +286,7 @@ end
 end 
 
 function vroomleft(xx)
-  if xx.animcounter ==0 then
+  if xx.animcounter ==0 or (xx.animcounter == 12 and xx.color.n == 2 and xx.type == 2) then
   if xx.v == 0+xx.push and not xx.running
   then xx.v = -1.5+xx.push
   elseif xx.v < 0+xx.push and xx.v > (-speedlimit + accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash and not xx.running
@@ -496,8 +496,8 @@ function movex(xx,yy)
   then 
     if xx.j < 0 then xx.j = 0 
     end
-    if z.up and not xx.flinch and not xx.block and not xx.jstop and not xx.busy
-    and not z.a1 and not z.a2 and not z.a3 and not xx.bur and not xxpurp and xx.animcounter == 0
+    if (xx.up and not xx.flinch and not xx.block and not xx.jstop and not xx.busy and xx.animcounter == 0)
+    or (xx.up and xx.greenkcondition)
     then 
       if xx.running then
         xx.jt = runjt
@@ -518,12 +518,12 @@ function movex(xx,yy)
       xx.firstjump = true
       xx.g = false
       repplay(xx.jumpd)
-    elseif z.right and xx.v >= xx.push and xx.stop == false and not xx.flinch and xx.landingcounter < frameswhilelandcantmove
-    and not z.left and xx.animcounter == 0
+    elseif z.right and xx.v >= xx.push and not xx.stop and not xx.flinch and xx.landingcounter < frameswhilelandcantmove
+    and not z.left 
     then 
       vroomright(xx)
     elseif z.left and xx.v <= xx.push and xx.stop == false and not xx.flinch and xx.landingcounter < frameswhilelandcantmove
-    and not z.right and xx.animcounter == 0
+    and not z.right 
     then 
       vroomleft(xx)
 
@@ -573,7 +573,7 @@ function movex(xx,yy)
     end
 
     --landing
-    if z.up and xx.j > 0 and z.type ==0
+    if z.up and xx.j > 0 
     and xx.jmax > 0 
     and xx.firstjump and not xx.stop and not xx.flinch
     then xx.jmax = xx.jmax - jumpheight*ramp(xx)
