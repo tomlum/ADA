@@ -14,7 +14,7 @@
 --chrome/metallic so as to suit monochromaticity
 --motion blur
 
-
+lg = love.graphics
 
 
 --todo
@@ -274,6 +274,7 @@ require "GG"
 require "BB"
 require "pp"
 require "OO"
+require "RR"
 require "ai"
 loader = require "love-loader"
 
@@ -837,8 +838,6 @@ monupdate()
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
 
 
-  love.graphics.print("me.up"..tostring(me.up), 200, 100)
-  
    if #joysticks > 0 then
     rumblemodule(me)
   end

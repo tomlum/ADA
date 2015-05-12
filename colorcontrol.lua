@@ -15,7 +15,9 @@ thecolors[2] = {n=2,c={r = 40, g = 255, b = 0},
   s = {def=.7, speed = 1.3, jump = 1.1, weight = 1, brittle = 1}, tile = gtile, logo=glogo, sound = colorgsound}
 thecolors[3] = {n=3, tile = otile,c={r = 255, g = 99, b = 0}, logo=ologo, sound = colorgsound,
   s = {def=1, speed = 1, jump = 1.1, weight = .8, brittle = 2}}
-thecolors[4] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
+thecolors[4] = {n=4, tile = tile,c={r = 255, g = 0, b = 0}, logo=questionlogo, sound = colorpsound,
+  s = {def=1.2, speed = .7, jump = .6, weight = 1, brittle = 1}
+  }
 thecolors[5] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 thecolors[6] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 thecolors[7] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
@@ -62,7 +64,7 @@ function tilefadeinf(inf, f, rate)
 end
 
 if fightclub then
-  me.rightc = thecolors[3]
+  me.rightc = thecolors[4]
   you.rightc = thecolors[1]
   me.leftc = thecolors[2]
   you.leftc = thecolors[2]

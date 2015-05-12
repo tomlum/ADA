@@ -2,7 +2,7 @@
 
 
 idle1im = love.graphics.newImage("me/idle/idle1.png")
-idle1c = love.graphics.newImage("me/idle/idle1c.png")
+idle1c = nil
 idle2im = love.graphics.newImage("me/idle/idle2.png")
 idle2c = love.graphics.newImage("me/idle/idle2c.png")
 idle3im = love.graphics.newImage("me/idle/idle3.png")
@@ -17,11 +17,13 @@ idle4 = {im = idle4im, c = idle4c}
 at = {}
 
 
-
-
-
-
 me = {}
+you = {}
+me.shade=255
+you.shade=180
+
+
+
 
 me.id = 1
 	me.health = maxhealth
@@ -88,8 +90,6 @@ me.id = 1
 
 
 
-
-you = {}
 
 you.id = 2
 	you.health = maxhealth

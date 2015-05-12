@@ -18,7 +18,7 @@ walk2c = love.graphics.newImage("me/walk/walk52c.png")
 walk3c = love.graphics.newImage("me/walk/walk53c.png")
 walk4c = love.graphics.newImage("me/walk/walk54c.png")
 walk5c = love.graphics.newImage("me/walk/walk55c.png")
-ahead = love.graphics.newImage("me/idle/ahead.png")
+gahead = love.graphics.newImage("me/attack/gahead.png")
 walk1 = {im = walk1im, c = walk1c, cxoff = 3, cyoff = 8}
 walk2 = {im = walk2im, c = walk2c}
 walk3 = {im = walk3im, c = walk3c}
@@ -81,6 +81,21 @@ mytriangles = {}
 yourtriangles = {}
 
 
+cshader = love.graphics.newShader(
+  [[
+    vec4 greenscreen = vec4(0.0, 1.0, 0.0, 1.0);
+    extern vec4 palette[2];
+vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
+        {
+            vec4 texcolor = Texel(texture, texture_coords); 
+            if (texcolor ==   vec4(1.0, 1.0, 1.0, 1.0))
+              return palette[0]; 
+            if (texcolor == greenscreen)
+              return palette[1];  
+              
+            return texcolor; 
+        }
+  ]] )
 
 
 barsmovein = 0
@@ -325,13 +340,6 @@ actionshotdur = 70
 me.im = idle1
 you.im = idle1
 
-function p2shadefade(fade)
-  love.graphics.setColor(180, 180, 180,fade)
-end
-
-function p2shade()
-  love.graphics.setColor(180, 180, 180)
-end
 
 function drawa(xx)
   drawmytrail(xx)
@@ -351,20 +359,25 @@ function drawa(xx)
 
   if xx.im.cxoff == nil then xx.im.cxoff = 0 end
   if xx.im.cyoff == nil then xx.im.cyoff = 0 end
-  if xx.id == 2 then
-    p2shade()
-  else
-    love.graphics.setColor(255, 255, 255, 255)
-  end
   local xim = xx.im.im
   local xxx = xx.xanimate-xx.im.xoff*xx.lr
   local xxy = xx.y-xx.im.yoff
   local xlr = xx.lr
   if mode == "retry" and fadein < 0 then
     love.graphics.setColor(255,255,255,allfade)
-    p2shadefade(allfade)
   end
-  love.graphics.draw(xim,xxx, xxy, 0, xlr, 1) 
+  
+  
+  
+  lg.setShader(cshader)
+  cshader:send( "palette", { xx.shade/255, xx.shade/255, xx.shade/255, 1}, { xx.color.c.r/255, xx.color.c.g/255, xx.color.c.b/255, 1}) 
+  love.graphics.draw(xim,xxx, xxy, 0, xlr, 1)
+  lg.setShader()
+  
+  
+  
+  
+  
   if xx.im.legshuh ~= nil then
     if xx.v == 0 or xx.slide then
   love.graphics.draw(xx.im.legs,xxx, xxy+xx.im.legsy, 0, xlr, 1) 
@@ -418,7 +431,7 @@ function drawa(xx)
       xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,-7+4,-8+4)
     
     
-  love.graphics.draw(ahead,xx.mid-11*xx.lr, xx.y+6, 0, xlr, 1) 
+  love.graphics.draw(gahead,xx.mid-11*xx.lr, xx.y+6, 0, xlr, 1) 
     
     end
     end

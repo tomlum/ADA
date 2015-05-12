@@ -220,7 +220,7 @@ function breadandbutter(xx)
           hboxcs(xx, xx.id, 
             {x=xx.mid, y = xx.y+31},
             {x=xx.mid+xx.v+(xx.lr*28), y = xx.y+31-xx.j},
-            {x=xx.mid+me.v+(xx.lr*28), y = xx.y+39-xx.j},
+            {x=xx.mid+xx.v+(xx.lr*28), y = xx.y+39-xx.j},
             {x=xx.mid, y = xx.y+37},
             function(z)
               xx.cancombo = true

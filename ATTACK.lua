@@ -154,7 +154,7 @@ function combo(xx, func)
 
   if xx.color.n ~= xx.cchangeto.n and xx.cancombo
   then
-
+    xx.repcounter = 0
     if func~= nil then func() end
     if combopause then
       xx.actionshot = true
@@ -178,25 +178,31 @@ function combo(xx, func)
         if xx.color.n==0 then
           xx.type = 1
           if xx.repcounter < at.bb.p.max then
+            if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
             xx.repcounter = xx.repcounter+1
-            if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
             xx.animcounter = 1
           end
         elseif xx.color.n==1 and xx.repcounter < at.p.p.max then
+          if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
           xx.type = 1
           xx.animcounter = 1
           xx.repcounter = xx.repcounter + 1
-          if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
         elseif xx.color.n==2 and xx.repcounter < at.g.p.max then
+          if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
+          xx.repcounter = xx.repcounter+1
           xx.type = 1
           xx.animcounter = 1
-          xx.repcounter = xx.repcounter + 1
-          if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
         elseif xx.color.n==3 and xx.repcounter < at.o.p.max then
           xx.type = 1
           xx.animcounter = 1
+          if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
           xx.repcounter = xx.repcounter + 1
-          if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+elseif xx.color.n==4  then
+          xx.type = 1
+          xx.animcounter = 1
+          if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
+          xx.repcounter = xx.repcounter + 1
+
 
 
         end
@@ -265,7 +271,6 @@ function combo(xx, func)
   end
   if not xx.combopause and xx.animcounter < oldanimc and xx.animcounter > 0 and 
   xx.currentanim ~= xx.color.n then
-    xx.repcounter = 0
     xx.currentanim = xx.color.n
   end
 
@@ -312,14 +317,21 @@ you.oldj = 0
 me.oldft = 0
 you.oldft = 0
 
+
 function attackmanage(xx)
+
+  if xx.greenktimer > 0 then 
+    xx.greenktimer = xx.greenktimer - 1*ramp(xx)
+  else
+    xx.greenktimer = 0
+  end
 
   xx.greenkcondition = false
   if xx.flinch then 
     xx.animcounter = 0
     xx.type = 0
   end
-  
+
 
   if xx.type < 4 and not xx.g and ((xx.type~=2 and xx.color.n~=2) or (xx.type~=2 and xx.color.n~=3)) then 
     xx.animcounter = 0
@@ -355,6 +367,8 @@ function attackmanage(xx)
     gandg(xx)
   elseif xx.currentanim == 3 then
     orangeyouglad(xx)
+  elseif xx.currentanim == 4 then
+    randr(xx)
   end
 
 
@@ -364,7 +378,7 @@ function attackmanage(xx)
   --  end
 
   --xx.oldj = xx.j
-iwanttobreakfree(xx)
+  iwanttobreakfree(xx)
 
 end
 function postattackmanage(xx)
@@ -761,7 +775,7 @@ newforwarddodge = function(xx)
   function flinchingx(xx,yy)
 
 
-    
+
 
     if xx.health < xx.oldhealth then
       xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(ramp(xx))/xx.color.s.def
@@ -931,8 +945,8 @@ newforwarddodge = function(xx)
     end
 
     if xx.ft ~= 0 or xx.extratimer ~= 0 or xx.falltimer < 0 then xx.flinch = true 
-      else xx.flinch = false
-      end
+    else xx.flinch = false
+    end
 
     xx.oldflinch = xx.flinch
     xx.oldft = xx.ft

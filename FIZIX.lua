@@ -274,7 +274,7 @@ end
 
 
 function vroomright(xx)
-  if xx.animcounter == 0 or (xx.animcounter == 12 and xx.color.n == 2 and xx.type == 2) then
+  if xx.animcounter == 0 or xx.greenkcondition then
   if xx.v == 0+xx.push and not xx.running
   then xx.v = 1.5+xx.push
   elseif xx.v >0+xx.push and xx.v < (speedlimit -accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash and not xx.running
@@ -286,7 +286,7 @@ end
 end 
 
 function vroomleft(xx)
-  if xx.animcounter ==0 or (xx.animcounter == 12 and xx.color.n == 2 and xx.type == 2) then
+  if xx.animcounter ==0 or xx.greenkcondition then
   if xx.v == 0+xx.push and not xx.running
   then xx.v = -1.5+xx.push
   elseif xx.v < 0+xx.push and xx.v > (-speedlimit + accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash and not xx.running
