@@ -1,44 +1,25 @@
 
 
 
-walklegs1 = {im = love.graphics.newImage("me/walk/legs1.png"), c = love.graphics.newImage("me/walk/legs1c.png")}
-walklegs2 = {im = love.graphics.newImage("me/walk/legs2.png"), c = love.graphics.newImage("me/walk/legs2c.png")}
-walklegs3 = {im = love.graphics.newImage("me/walk/legs3.png"), c = love.graphics.newImage("me/walk/legs3c.png")}
-walklegs4 = {im = love.graphics.newImage("me/walk/legs4.png"), c = love.graphics.newImage("me/walk/legs4c.png")}
-walklegs5 = {im = love.graphics.newImage("me/walk/legs5.png"), c = love.graphics.newImage("me/walk/legs5c.png")}
+walklegs1 = {im = love.graphics.newImage("me/walk/legs1.png")}
+walklegs2 = {im = love.graphics.newImage("me/walk/legs2.png")}
+walklegs3 = {im = love.graphics.newImage("me/walk/legs3.png")}
+walklegs4 = {im = love.graphics.newImage("me/walk/legs4.png")}
+walklegs5 = {im = love.graphics.newImage("me/walk/legs5.png")}
 
 
-walk1im = love.graphics.newImage("me/walk/walk51.png")
-walk2im = love.graphics.newImage("me/walk/walk52.png")
-walk3im = love.graphics.newImage("me/walk/walk53.png")
-walk4im = love.graphics.newImage("me/walk/walk54.png")
-walk5im = love.graphics.newImage("me/walk/walk55.png")
-walk1c = love.graphics.newImage("me/walk/walk51c.png")
-walk2c = love.graphics.newImage("me/walk/walk52c.png")
-walk3c = love.graphics.newImage("me/walk/walk53c.png")
-walk4c = love.graphics.newImage("me/walk/walk54c.png")
-walk5c = love.graphics.newImage("me/walk/walk55c.png")
-gahead = love.graphics.newImage("me/attack/gahead.png")
-walk1 = {im = walk1im, c = walk1c, cxoff = 3, cyoff = 8}
-walk2 = {im = walk2im, c = walk2c}
-walk3 = {im = walk3im, c = walk3c}
-walk4 = {im = walk4im, c = walk4c}
-walk5 = {im = walk5im, c = walk5c}
-run1im = love.graphics.newImage("me/walk/run1.png")
-run2im = love.graphics.newImage("me/walk/run2.png")
-run3im = love.graphics.newImage("me/walk/run3.png")
-run4im = love.graphics.newImage("me/walk/run4.png")
-run1c = love.graphics.newImage("me/walk/run1c.png")
-run2c = love.graphics.newImage("me/walk/run2c.png")
-run3c = love.graphics.newImage("me/walk/run3c.png")
-run4c = love.graphics.newImage("me/walk/run4c.png")
-run1 = {im = run1im, c = run1c}
-run2 = {im = run2im, c = run2c}
-run3 = {im = run3im, c = run3c}
-run4 = {im = run4im, c = run4c}
-slideim = love.graphics.newImage("me/walk/slide.png")
-slidec = love.graphics.newImage("me/walk/slidec.png")
-slide = {im = slideim, c = slidec}
+
+gahead = love.graphics.newImage("me/attack/green/gahead.png")
+walk1 = {im = lg.newImage("me/walk/walk51.png")}
+walk2 = {im = lg.newImage("me/walk/walk52.png")}
+walk3 = {im = lg.newImage("me/walk/walk53.png")}
+walk4 = {im = lg.newImage("me/walk/walk54.png")}
+walk5 = {im = lg.newImage("me/walk/walk55.png")}
+run1 = {im = lg.newImage("me/walk/run1.png")}
+run2 = {im = lg.newImage("me/walk/run2.png")}
+run3 = {im = lg.newImage("me/walk/run3.png")}
+run4 = {im = lg.newImage("me/walk/run4.png")}
+slide = {im = lg.newImage("me/walk/slide.png")}
 
 fade1 = {im = love.graphics.newImage("me/attack/fade1.png")}
 fade2 = {im = love.graphics.newImage("me/attack/fade2.png")}
@@ -61,41 +42,109 @@ wallgrab = {im = love.graphics.newImage("me/attack/wallgrab.png"),
 partition = love.graphics.newImage("enviro/partition2.png")
 partition:setFilter("nearest")
 
-jumpriseim = love.graphics.newImage("me/jump/jumprise.png")
-jumprisec = love.graphics.newImage("me/jump/jumprisec.png")
-jumprise = {im = jumpriseim, c = jumprisec}
-jumpfallingim = love.graphics.newImage("me/jump/jumpfalling.png")
-jumpfallingc = love.graphics.newImage("me/jump/jumpfallingc.png")
-jumpfalling = {im = jumpfallingim, c = jumpfallingc, extrah = 5}
-landingim = love.graphics.newImage("me/jump/landing.png")
-landingc = love.graphics.newImage("me/jump/landingc.png")
-landing = {im = landingim, c = landingc}
-slowdownim = love.graphics.newImage("me/jump/slowdown.png")
-slowdownc = love.graphics.newImage("me/jump/slowdownc.png")
-slowdown = {im = slowdownim, c = slowdownc}
+jumprise = {im = lg.newImage("me/jump/jumprise.png"), extrah = 5}
+jumpfalling = {im = lg.newImage("me/jump/jumpfalling.png"), extrah = 5}
+landing = {im = lg.newImage("me/jump/landing.png"), yoff = -12}
+slowdown = {im = lg.newImage("me/jump/slowdown.png")}
 paper1 = love.graphics.newImage("enviro/paper1.png")
 paper2 = love.graphics.newImage("enviro/paper2.png")
 paper3 = love.graphics.newImage("enviro/paper3.png")
 paper4 = love.graphics.newImage("enviro/paper4.png")
-mytriangles = {}
-yourtriangles = {}
 
+
+
+sparkfaderate = 7
+
+
+fillshader = love.graphics.newShader(
+  [[
+  extern vec4 shade;
+  vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
+  {
+    vec4 texcolor = Texel(texture, texture_coords); 
+
+    if (texcolor[3]>.2)
+    return shade; 
+
+    return texcolor; 
+  }
+  ]] )
 
 cshader = love.graphics.newShader(
   [[
-    vec4 greenscreen = vec4(0.0, 1.0, 0.0, 1.0);
-    extern vec4 palette[2];
-vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
-        {
-            vec4 texcolor = Texel(texture, texture_coords); 
-            if (texcolor ==   vec4(1.0, 1.0, 1.0, 1.0))
-              return palette[0]; 
-            if (texcolor == greenscreen)
-              return palette[1];  
-              
-            return texcolor; 
-        }
-  ]] )
+  vec4 greenscreen = vec4(0.0, 1.0, 0.0, 1.0);
+  vec4 red = vec4(1.0, 0, 0.0, 1.0);
+  vec4 yellow = vec4(1.0, 1.0, 0.0, 1.0);
+  extern vec4 palette[4];
+  vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
+  {
+    vec4 texcolor = Texel(texture, texture_coords); 
+
+    if (texcolor[0] == texcolor[1] &&
+      texcolor[1] == texcolor[2] &&
+      texcolor[2] == texcolor[3] && 
+      texcolor[1] > .5)
+    return vec4(palette[0][0]*texcolor[0],palette[0][1]*texcolor[1],palette[0][2]*texcolor[2],texcolor[3]);
+    
+    if (texcolor == greenscreen)
+    return palette[1];  
+    
+    if (texcolor[1] == red[1] && 
+      texcolor[2] == red[2] && 
+      texcolor[0] > 0)
+    return vec4(palette[2][0]*texcolor[0],palette[2][1]*texcolor[0],palette[2][2]*texcolor[0],texcolor[3]); 
+   
+    
+    if (texcolor[0] + texcolor[1] +texcolor[2] < 1
+      && texcolor[3]> .7)
+    return vec4(palette[3][0]*(1-texcolor[0]),palette[3][1]*(1-texcolor[1]),palette[3][2]*(1-texcolor[2]),texcolor[3]);
+    
+    return texcolor; 
+  }
+  ]])
+
+--vector color transform
+
+
+
+function vct(l,a)
+  local vctr = l.r
+  local vctg = l.g
+  local vctb = l.b
+  if l.r == 0 then
+    vctr = 0
+  else
+    vctr = l.r/255
+  end
+
+
+  if l.g == 0 then
+    vctg = 0
+  else
+    vctg = l.g/255
+  end
+
+
+  if l.b == 0 then
+    vctb = 0
+  else
+    vctb = l.b/255
+  end
+  if a == nil then
+
+    return {vctr,vctg,vctb, 1}
+  else
+    return {vctr,vctg,vctb, a/255}
+  end
+end
+
+function rgbset(c)
+  lg.setColor(c.r, c.g, c.b)
+end
+
+function rgbset(c,a)
+  lg.setColor(c.r, c.g, c.b,a)
+end
 
 
 barsmovein = 0
@@ -130,6 +179,17 @@ function cinemabars()
 
 end
 
+--colorshader draw start
+function csds(xx)
+  lg.setShader(cshader)
+  cshader:send( "palette", 
+    {xx.shade/255, xx.shade/255, xx.shade/255, 1}, 
+    vct(xx.color.c),
+    vct(thecolors[xx.currentc].c), 
+    vct(xx.outline)
+
+  ) 
+end
 
 
 
@@ -170,8 +230,14 @@ function drawmytrail(xx)
 
     if cur.im.xoff == nil then cur.im.xoff = 0 end
     if cur.im.yoff == nil then cur.im.yoff = 0 end
-    love.graphics.setColor(cur.color.c.r,cur.color.c.g,cur.color.c.b,(255/traillength)*(traillength/cur.t))
+    lg.setShader(fillshader)
+    fillshader:send("shade", 
+      vct(thecolors[cur.colornum].c2, 
+        (255/traillength)*(traillength/cur.t)
+      ))
+
     love.graphics.draw(cur.im.im, cur.xanimate-cur.im.xoff*cur.lr, cur.y-cur.im.yoff, 0, cur.lr, 1)
+    lg.setShader()
 
     love.graphics.setColor(255, 255, 255, 255)
 
@@ -262,31 +328,31 @@ whatlevel = function()
       enviro.ds = 5
       thesong = song1
 
-  
 
-  elseif themap.name == "library" then
-    
+
+    elseif themap.name == "library" then
+
       if noload then 
-        
-          enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
-      enviro.paralax2 = love.graphics.newImage("enviro/libraryparalax2.png")
-      enviro.stage = love.graphics.newImage("enviro/library.png")
-      enviro.sky = love.graphics.newImage("enviro/librarysky.png")
-   
-      enviro.plibrary = love.graphics.newImage("enviro/libraryplayer.png")
-      enviro.thelibraryveneer = love.graphics.newImage("enviro/libraryveneer.png")
-        
-        
-        else
-      loader.start(function()
-          finishedloading = true
-        end)
-      loader.newImage(enviro,'paralax',"enviro/libraryparalax.png")
-      loader.newImage(enviro,'paralax2', "enviro/libraryparalax2.png")
-      loader.newImage(enviro,'stage', "enviro/library.png")
-      loader.newImage(enviro,'sky',"enviro/librarysky.png")
-      loader.newImage(enviro,'plibrary', "enviro/libraryplayer.png")
-      loader.newImage(enviro, 'thelibraryveneer',"enviro/libraryveneer.png")
+
+        enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
+        enviro.paralax2 = love.graphics.newImage("enviro/libraryparalax2.png")
+        enviro.stage = love.graphics.newImage("enviro/library.png")
+        enviro.sky = love.graphics.newImage("enviro/librarysky.png")
+
+        enviro.plibrary = love.graphics.newImage("enviro/libraryplayer.png")
+        enviro.thelibraryveneer = love.graphics.newImage("enviro/libraryveneer.png")
+
+
+      else
+        loader.start(function()
+            finishedloading = true
+          end)
+        loader.newImage(enviro,'paralax',"enviro/libraryparalax.png")
+        loader.newImage(enviro,'paralax2', "enviro/libraryparalax2.png")
+        loader.newImage(enviro,'stage', "enviro/library.png")
+        loader.newImage(enviro,'sky',"enviro/librarysky.png")
+        loader.newImage(enviro,'plibrary', "enviro/libraryplayer.png")
+        loader.newImage(enviro, 'thelibraryveneer',"enviro/libraryveneer.png")
       end
 
       me.x = 700
@@ -317,10 +383,10 @@ whatlevel = function()
       thesong = song2
 
     end
-    
+
     for i,v in ipairs(hitt) do
       hitt[i].oldpy = hitt[i].y 
-      end
+    end
 
   end
 end
@@ -343,22 +409,24 @@ you.im = idle1
 
 function drawa(xx)
   drawmytrail(xx)
-   if xx.greenkcondition then
-     if xx.lr > 0 then
-    love.graphics.draw(garmback,xx.mid -2*xx.lr,
-      xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,-7+4,-8+4)
+  if xx.greenkcondition then
+    csds(xx)
+    if xx.lr > 0 then
+      love.graphics.draw(garmback,xx.mid -2*xx.lr,
+        xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,-7+4,-8+4)
+
     else
-      
-    love.graphics.draw(garmfront,xx.mid -2*xx.lr,
-      xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,4,4)
+      love.graphics.draw(garmfront,xx.mid -2*xx.lr,
+        xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,4,4)
+
+
     end
-    end
+    lg.setShader()
+  end
 
   if xx.im.xoff == nil then xx.im.xoff = 0 end
   if xx.im.yoff == nil then xx.im.yoff = 0 end
 
-  if xx.im.cxoff == nil then xx.im.cxoff = 0 end
-  if xx.im.cyoff == nil then xx.im.cyoff = 0 end
   local xim = xx.im.im
   local xxx = xx.xanimate-xx.im.xoff*xx.lr
   local xxy = xx.y-xx.im.yoff
@@ -366,96 +434,97 @@ function drawa(xx)
   if mode == "retry" and fadein < 0 then
     love.graphics.setColor(255,255,255,allfade)
   end
-  
-  
-  
-  lg.setShader(cshader)
-  cshader:send( "palette", { xx.shade/255, xx.shade/255, xx.shade/255, 1}, { xx.color.c.r/255, xx.color.c.g/255, xx.color.c.b/255, 1}) 
-  love.graphics.draw(xim,xxx, xxy, 0, xlr, 1)
+
+
+
+  csds(xx)
+  lg.draw(xim,xxx, xxy, 0, xlr, 1)
   lg.setShader()
-  
-  
-  
-  
-  
+
+
+
+
+
   if xx.im.legshuh ~= nil then
+    csds(xx)
     if xx.v == 0 or xx.slide then
-  love.graphics.draw(xx.im.legs,xxx, xxy+xx.im.legsy, 0, xlr, 1) 
-   else
+
+      love.graphics.draw(xx.im.legs,xxx, xxy+xx.im.legsy, 0, xlr, 1) 
+    else
       if xx.walktimer < 7 then 
-        
-  love.graphics.draw(walklegs1.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
-    love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-  love.graphics.draw(walklegs1.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+
+        love.graphics.draw(walklegs1.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+        love.graphics.draw(walklegs1.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
       elseif xx.walktimer >= 7 and xx.walktimer < 14 then
-  love.graphics.draw(walklegs2.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
-    love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-  love.graphics.draw(walklegs2.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        love.graphics.draw(walklegs2.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+        love.graphics.draw(walklegs2.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
       elseif xx.walktimer >= 14 and xx.walktimer < 21 then
-  love.graphics.draw(walklegs3.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
-    love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-  love.graphics.draw(walklegs3.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        love.graphics.draw(walklegs3.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+        love.graphics.draw(walklegs3.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
       elseif xx.walktimer >= 21 and xx.walktimer < 28 then
-  love.graphics.draw(walklegs4.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
-    love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-  love.graphics.draw(walklegs4.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        love.graphics.draw(walklegs4.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+        love.graphics.draw(walklegs4.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
       elseif xx.walktimer >= 28 and xx.walktimer < 35 then
-  love.graphics.draw(walklegs5.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
-    love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-  love.graphics.draw(walklegs5.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        love.graphics.draw(walklegs5.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+        love.graphics.draw(walklegs5.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
       else
         xx.walktimer = 0
       end
-      end
-    
-    
-    else
-  end
-    
-
-
-  if xx.im.c ~= nil and mode~="retry" then 
-
-    love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-    love.graphics.draw(xx.im.c, xx.xanimate-xx.im.xoff*xx.lr+xx.im.cxoff*xx.lr, xx.y-xx.im.yoff+xx.im.cyoff, 0, xx.lr, 1)
-  end
-  
-      if  xx.greenkcondition then
-      
-        if xx.lr > 0 then
-    love.graphics.draw(garmfront,xx.mid -2*xx.lr,
-      xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,4,4)
-    else
-      
-    love.graphics.draw(garmback,xx.mid -2*xx.lr,
-      xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,-7+4,-8+4)
-    
-    
-  love.graphics.draw(gahead,xx.mid-11*xx.lr, xx.y+6, 0, xlr, 1) 
-    
-    end
     end
 
-  
+
+  else
+
+    lg.setShader()
+  end
+
+
+
+ 
+
+  if  xx.greenkcondition then
+
+    csds(xx)
+    if xx.lr > 0 then
+      lg.draw(garmfront,xx.mid -2*xx.lr,
+        xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,4,4)
+
+
+    else
+      love.graphics.draw(garmback,xx.mid -2*xx.lr,
+        xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,-7+4,-8+4)
+
+      love.graphics.draw(gahead,xx.mid-11*xx.lr, xx.y+6, 0, xlr, 1) 
+
+      lg.setShader()
+    end
+  end
+
+
   love.graphics.setColor(255, 255, 255, 255)
   drawcolorstuff(xx)
   bolttraildraw(xx)
-  
-    if drawfeet then
-        local pextra = 0
+
+  if drawfeet then
+    local pextra = 0
     if xx.im.extrah ~= nil then
       pextra = xx.im.extrah
     end
     love.graphics.setColor(255,0,0)
-  love.graphics.rectangle("fill", xx.x, xx.oldpy, xx.width,1)
+    love.graphics.rectangle("fill", xx.x, xx.oldpy, xx.width,1)
     love.graphics.setColor(0,0,255)
-  love.graphics.rectangle("fill", xx.x, xx.y+me.height-xx.j-pextra, xx.width,1)
+    love.graphics.rectangle("fill", xx.x, xx.y+me.height-xx.j-pextra, xx.width,1)
   end
 end
 
 
 function actionshotstuff(xx)
-  
+
   if xx.actionshot then
     musfadein = -10
     xx.numofspikes = 0
@@ -469,7 +538,7 @@ function actionshotstuff(xx)
         xx.im = greenk1
       else
         xx.repcounter = 0
-        xx.currentanim = xx.color.n
+        xx.currentc = xx.color.n
         combo(xx)
         xx.actionshot = false
 
@@ -510,7 +579,7 @@ function actionshotstuff(xx)
       thesong:setPitch(xx.actiontimer/actionshotdur)
     end
   else xx.actiontimer = 0
-end
+  end
 
 
 end
@@ -624,7 +693,7 @@ drawstreetstuff = function()
 end
 drawlibrarystuff = function()
   if rampcanhit and math.random() > .5 then makenwater(602,930,0,2,1)
-    end
+  end
   love.graphics.draw(enviro.plibrary,0,0)
   love.graphics.draw(partition,21, 1,0, -1,3.11)
   love.graphics.draw(partition,themaps[3].rightwall-21, 0, 0, 1, 3.11)
@@ -744,11 +813,11 @@ end
 
 function drawparticles()
   drawsparks()
-    drawdust()
-    drawglass()
-    drawrubble()
-    drawwater()
-  
+  drawdust()
+  drawglass()
+  drawrubble()
+  drawwater()
+
 end
 
 function drawdust()
@@ -804,7 +873,7 @@ end
 
 waterdrops = {}
 function drawwater()
-  
+
   for i = #waterdrops, 1, -1 do
     local temp = waterdrops[i]
     local v = temp
@@ -813,61 +882,61 @@ function drawwater()
       if temp.fade==nil then
         temp.fade = 100
         temp.v = temp.v/2
-        end
       end
-      for j,k in ipairs(hitt) do 
-        hline(v, 10000,
-          {x=v.x, y=v.y},
-          {x=v.x+v.v, y=v.y-v.j},
-          function(p)
-            if math.abs(v.v * p.v) == v.v * p.v  then
+    end
+    for j,k in ipairs(hitt) do 
+      hline(v, 10000,
+        {x=v.x, y=v.y},
+        {x=v.x+v.v, y=v.y-v.j},
+        function(p)
+          if math.abs(v.v * p.v) == v.v * p.v  then
             v.v=-v.v/2
           else
             v.v=-v.v/2+p.v
-            
+
           end
-          
+
           if math.abs(v.j * p.j) == v.j * p.j  then
             v.j=-v.j/2
           else
             v.j=-v.j/2+p.j
-            
-            end
-          
-             if temp.fade==nil then
-        temp.fade = 100
-        temp.v = temp.v/2
-      else
-        temp.fade = temp.fade - 2
-        end
 
           end
-          )
-        
+
+          if temp.fade==nil then
+            temp.fade = 100
+            temp.v = temp.v/2
+          else
+            temp.fade = temp.fade - 2
+          end
+
+        end
+      )
+
+    end
+
+    if not me.actionshot and not you.actionshot and not pause then
+      v.y = v.y - v.j*rampspeed
+      v.x = v.x + v.v*rampspeed
+      v.j = v.j - .1*rampspeed
+      blackn = math.random(150,255)
+      if temp.fade ~= nil then
+
+        if v.fade < 0 then
+          table.remove(waterdrops, i)
+        else
+          v.fade = v.fade - 1
+        end
       end
-  
-  if not me.actionshot and not you.actionshot and not pause then
-    v.y = v.y - v.j*rampspeed
-    v.x = v.x + v.v*rampspeed
-    v.j = v.j - .1*rampspeed
-    blackn = math.random(150,255)
+    end
+    love.graphics.setColor(50,50,blackn)
+
     if temp.fade ~= nil then
-      
-    if v.fade < 0 then
-      table.remove(waterdrops, i)
-      else
-      v.fade = v.fade - 1
-      end
-      end
+      love.graphics.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,1.5*(v.fade/100),1.5*(v.fade/100),((v.fade/100)*1.5)/2,((v.fade/100)*1.5)/2)
+    else
+      love.graphics.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,1.5,1.5,1,1)
+    end
   end
-  love.graphics.setColor(50,50,blackn)
-  
-  if temp.fade ~= nil then
-love.graphics.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,1.5*(v.fade/100),1.5*(v.fade/100),((v.fade/100)*1.5)/2,((v.fade/100)*1.5)/2)
-else
-  love.graphics.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,1.5,1.5,1,1)
-  end
-end
   love.graphics.setColor(255,255,255)
 end
 
@@ -1470,7 +1539,7 @@ death = function(xx, yy)
     you.mid = you.x + 15
 
     if not xx.slowdown and not xx.slide and not xx.stop and not xx.pause and not xx.flinch
-    and (xx.dodgetype~=2 and xx.dodgetype >-1) and xx.wjt ==0
+    and (xx.dodgetype~=2 and xx.dodgetype >-1) and xx.wjt ==0 and not xx.purplanding
     and not xx.greenkcondition
     then
       if xx.right then xx.lr = 1
@@ -1515,12 +1584,12 @@ death = function(xx, yy)
   walkxx = function (xx)
 
     if xx.v*xx.lr > 0 then
-    xx.walktimer = xx.walktimer + 1*ramp(xx)
-  else
-    xx.walktimer = xx.walktimer - 1*ramp(xx)
+      xx.walktimer = xx.walktimer + 1*ramp(xx)
+    else
+      xx.walktimer = xx.walktimer - 1*ramp(xx)
     end
 
-   
+
 
     if xx.running and not xx.dodge then 
 
@@ -1537,7 +1606,7 @@ death = function(xx, yy)
       elseif xx.walktimer >= 0 then xx.im = run1 
       end  
     else
-      
+
       if xx.walktimer < 7 then 
         xx.im = walk1
         if xx.walktimer < 0 then 
@@ -1556,22 +1625,7 @@ death = function(xx, yy)
       end
     end
   end
-  jumpy = function ()
-    if you.wjt == 0 then
-      if you.j > 0 then 
-        you.im = jumprise
-      else you.im = jumpfalling
-      end
-    end
-  end
-  jumpme = function ()
-    if me.wjt == 0 then
-      if me.j > 0 then 
-        me.im = jumprise
-      else me.im = jumpfalling
-      end
-    end
-  end
+  
   landxcheck = function (xx)
     if xx.landingcounter <= 0	
     then xx.landing = false
@@ -1590,46 +1644,39 @@ death = function(xx, yy)
 
     end
   end
- 
-
-  animate = function ()
-    landxcheck(you)
-    slidexcheck(you)
-    if you.slide 
-    then you.im = slide
-      makeslidedust(you.y+50,you.mid + 15 * you.lr,you.v)
 
 
-    elseif you.landing
-    then you.im = landing
-    elseif you.g and aboutso(you.v, you.push) and not you.slide 
-    then idleanimatex(you)
-      you.walktimer = 0
-    elseif not you.g
+  animate = function (xx)
+    landxcheck(xx)
+    slidexcheck(xx)
+    if xx.slide 
+    then xx.im = slide
+      makeslidedust(xx.y+50,xx.mid + 15 * xx.lr,xx.v)
+
+
+    elseif xx.landing
+    then 
+      if xx.purplanding then
+        xx.im = apk2
+
+        else
+      xx.im = landing
+      end
+    elseif xx.g and aboutso(xx.v, xx.push) and not xx.slide 
+    then idleanimatex(xx)
+      xx.walktimer = 0
+    elseif not xx.g
     then
-      jumpy()
+      if xx.wjt == 0 then
+        if xx.j > 0 then 
+          xx.im = jumprise
+        else xx.im = jumpfalling
+        end
+      end
     else
-      walkxx(you)
+      walkxx(xx)
     end
 
-
-    landxcheck(me)
-    slidexcheck(me)
-    if me.slide 
-    then me.im = slide
-      makeslidedust(me.y+50,me.mid + 20 * me.lr,me.v)
-
-    elseif me.landing
-    then me.im = landing
-    elseif me.g and aboutso(me.v, me.push) and not me.slide 
-    then idleanimatex(me)
-      me.walktimer = 0
-    elseif not me.g
-    then
-      jumpme()
-    else
-      walkxx(me)
-    end
 
   end
 
@@ -1651,10 +1698,10 @@ death = function(xx, yy)
 
   function makensparks(ex,why,vee, jay, arr,gee,bee, n)
     for i = n, 1, -1 do
-      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee, rot = math.random(0,360)})
-      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay)+math.random(),r=arr,g=gee,b=bee, rot = math.random(0,360)})
-      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0)+math.random(),r=arr,g=gee,b=bee, rot = math.random(0,360)})
-      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2)+math.random(),r=arr,g=gee,b=bee, rot = math.random(0,360)})
+      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360)})
+      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360)})
+      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360)})
+      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360)})
 
     end
 
@@ -1688,11 +1735,17 @@ death = function(xx, yy)
 
     for i,v in ipairs(sparks)do
     if not me.actionshot and not you.actionshot and not pause then
-      v.y = v.y - v.j*rampspeed
-      v.x = v.x + v.v*rampspeed
-      v.j = v.j - .1*rampspeed
+      v.y = v.y - v.j*rampspeed*.8
+      v.x = v.x + v.v*rampspeed*.8
+      v.j = v.j - .1*rampspeed*.8
       v.rot = v.rot + math.random() *rampspeed 
     end
+   
+    
+    
+    v.r = lof(v.r+math.random()*sparkfaderate*rampspeed,255)
+    v.g = lof(v.g+math.random()*sparkfaderate*rampspeed,255)
+    v.b = lof(v.b+math.random()*sparkfaderate*rampspeed,255)
     love.graphics.setColor(v.r,v.g,v.b,math.random(150,255))
     love.graphics.draw(enviro.spark,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)
     love.graphics.setColor(255,255,255)
@@ -1746,29 +1799,29 @@ function xrubble(xx)
     and 
     (
       (xx.y+(xx.height)/2 >= wall.y1 and 
-      xx.y+(xx.height)/2 <= wall.y2 )
-    ) then
-    if xx.flinch then
-            slowww = true
+        xx.y+(xx.height)/2 <= wall.y2 )
+      ) then
+      if xx.flinch then
+        slowww = true
+      end
+      for i = xx.y, xx.feet do
+        if wall.glasswall~=nil then
+          if (wall.glasswall > 0 and i < wall.glasswall) or (wall.glasswall < 0 and i > -wall.glasswall) then 
+            makenglass(wall.x,i,xx.v,xx.j, 1)
+          else makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
           end
-    for i = xx.y, xx.feet do
-      if wall.glasswall~=nil then
-        if (wall.glasswall > 0 and i < wall.glasswall) or (wall.glasswall < 0 and i > -wall.glasswall) then 
-          makenglass(wall.x,i,xx.v,xx.j, 1)
-        else makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
+        else
+          makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
+
         end
-      else
-        makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
+
 
       end
 
 
+      break
     end
 
-
-    break
   end
-
-end
 end
 

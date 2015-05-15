@@ -1,34 +1,32 @@
 --ppunch3 inserts some p's around
-ppunch1im = love.graphics.newImage("me/attack/ppunch1.png")
-ppunch2im = love.graphics.newImage("me/attack/ppunch2.png")
-ppunch3im = love.graphics.newImage("me/attack/ppunch3.png")
-ppunch1c = love.graphics.newImage("me/attack/ppunch1c.png")
-ppunch2c = love.graphics.newImage("me/attack/ppunch2c.png")
-ppunch3c = love.graphics.newImage("me/attack/ppunch3c.png")
-ppunch1 = {im = ppunch1im, c = ppunch1c, xoff = 15}
-ppunch2 = {im = ppunch2im, c = ppunch2c, xoff = 45}
-ppunch3 = {im = ppunch3im, c = ppunch3c, xoff = 45}
-stomp1 = {im=love.graphics.newImage("me/attack/stomp1.png"),c=love.graphics.newImage("me/attack/stomp1c.png")}
-stomp2 = {im=love.graphics.newImage("me/attack/stomp2.png"),c=love.graphics.newImage("me/attack/stomp2c.png")}
+ppunch1 = {im = lg.newImage("me/attack/purple/ppunch1.png"), ppunch1im}
+ppunch2 = {im = lg.newImage("me/attack/purple/ppunch2.png"), xoff = 5}
+ppunch3 = {im = lg.newImage("me/attack/purple/ppunch3.png"), xoff = 5, yoff = -5}
+stomp1 = {im=love.graphics.newImage("me/attack/purple/stomp1.png")}
+stomp2 = {im=love.graphics.newImage("me/attack/purple/stomp2.png")}
 
-pa11 = {im=love.graphics.newImage("me/attack/pa11.png"),c=love.graphics.newImage("me/attack/pa11c.png"), xoff = 15, yoff = 30}
-pa12 = {im=love.graphics.newImage("me/attack/pa12.png"),c=love.graphics.newImage("me/attack/pa12c.png"), xoff = 15}
-pa13 = {im=love.graphics.newImage("me/attack/pa13.png"),c=love.graphics.newImage("me/attack/pa13c.png"), xoff = 15}
+pa11 = {im=love.graphics.newImage("me/attack/purple/pa11.png"), xoff = 15, yoff = 30}
+pa12 = {im=love.graphics.newImage("me/attack/purple/pa12.png"), xoff = 2, yoff = -2}
+pa13 = {im=love.graphics.newImage("me/attack/purple/pa13.png"), xoff = 4, yoff = -6}
 
-apa21 = {im=love.graphics.newImage("me/attack/apa21.png"),c=love.graphics.newImage("me/attack/apa21c.png"), xoff = 15}
-apa22 = {im=love.graphics.newImage("me/attack/apa22.png"),c=love.graphics.newImage("me/attack/apa22c.png"), xoff = 15}
-apa23 = {im=love.graphics.newImage("me/attack/apa23.png"),c=love.graphics.newImage("me/attack/apa23c.png"), xoff = 45}
+apa21 = {im=love.graphics.newImage("me/attack/purple/apa21.png"), xoff = 2,yoff = -1, extrah = 5}
+apa22 = {im=love.graphics.newImage("me/attack/purple/apa22.png"), xoff = 0, yoff = -1, extrah = 5}
+apa23 = {im=love.graphics.newImage("me/attack/purple/apa23.png"), xoff = 3, yoff = -4, extrah = 5}
 
-apa11 = {im=love.graphics.newImage("me/attack/apa11.png"),c=love.graphics.newImage("me/attack/apa11c.png"), xoff = 45}
-apa12 = {im=love.graphics.newImage("me/attack/apa12.png"),c=love.graphics.newImage("me/attack/apa12c.png"), xoff = 45, yoff = 40}
-apa13 = {im=love.graphics.newImage("me/attack/apa13.png"),c=love.graphics.newImage("me/attack/apa13c.png"), xoff = 45, yoff = 20}
+apa11 = {im=love.graphics.newImage("me/attack/purple/apa11.png"), xoff = 5, yoff = -3, extrah = 5}
+apa12 = {im=love.graphics.newImage("me/attack/purple/apa12.png"), xoff = 13, yoff = 38, extrah = 5}
+apa13 = {im=love.graphics.newImage("me/attack/purple/apa13.png"), xoff = 35, yoff = 10, extrah = 5}
 
-pp1back = {im=love.graphics.newImage("me/attack/pp1back.png"),c=love.graphics.newImage("me/attack/pp1backc.png"), xoff = 45, yoff = 20}
-pp1back2 = {im=love.graphics.newImage("me/attack/pp1back2.png"),c=love.graphics.newImage("me/attack/pp1back2c.png"), xoff = 45, yoff = 40}
-pp1back3 = {im=love.graphics.newImage("me/attack/pp1back3.png"),c=love.graphics.newImage("me/attack/pp1back3c.png"), xoff = 45, yoff = 10}
-pp1back4 = {im=love.graphics.newImage("me/attack/pp1back4.png"),c=love.graphics.newImage("me/attack/pp1back3c.png"), xoff = 45, yoff = 10}
-apk1 = {im=love.graphics.newImage("me/attack/apk1.png"),c=love.graphics.newImage("me/attack/apk1c.png"), xoff = 15, yoff = 10}
-apk2 = {im=love.graphics.newImage("me/attack/apk2.png"),c=love.graphics.newImage("me/attack/apk2c.png"), xoff = 15, yoff = 30}
+pp1back = {im=love.graphics.newImage("me/attack/purple/pp1back.png"), xoff = -2, yoff = 2}
+pp1back2 = {im=love.graphics.newImage("me/attack/purple/pp1back2.png"), xoff = 10, yoff = 38}
+pp1back3 = {im=love.graphics.newImage("me/attack/purple/pp1back3.png"), xoff = 37, yoff = -4}
+pp1back4 = {im=love.graphics.newImage("me/attack/purple/pp1back4.png"), xoff = 37, yoff = -8}
+apk1 = {im=love.graphics.newImage("me/attack/purple/apk1.png"),extrah = 5}
+apk2 = {im=love.graphics.newImage("me/attack/purple/apk2.png"), xoff = 0, yoff = -15}
+
+
+me.purpland = false
+you.purpland = false
 
 spikesize = 12
 function spikegrow(cur, n, xx)
@@ -71,43 +69,12 @@ me.ptopspeed = 0
 you.ptopspeed = 0
 
 
+
+
 spikespace = 10
 
-function spikedraw(xx)
-  for i = #xx.spikes, 1, -1 do
-    love.graphics.setColor(thecolors[1].c.r,thecolors[1].c.g,thecolors[1].c.b)
-    local cur = xx.spikes[i] 
-    if cur.t >= -3 then
-
-
-      local vv = xx.spikes[i].verts 
-
-
-      local vvv = {}
-      vvv[1] = vv[1]+20*cur.lr
-      vvv[2] = vv[2]
-      vvv[3] = vv[3]
-      vvv[4] = vv[4]
-      vvv[5] = vv[5]
-      vvv[6] = vv[6]
-      love.graphics.polygon("fill", xx.spikes[i].verts)
-      love.graphics.setColor(89,0,104)
-      love.graphics.polygon("fill", vvv)
-      franratio = 1.5
-      love.graphics.setColor(thecolors[1].c.r/franratio,thecolors[1].c.g/franratio,thecolors[1].c.b/franratio)
-      love.graphics.polygon("line", xx.spikes[i].verts)
-
-    elseif cur.t<-3 then 
-      table.remove(xx.spikes,i)
-    end
-  end
-  love.graphics.setColor(255,255,255)
-end
-
-
-function spikeupdate(xx)
-  
-   if xx.purpgroundtimer < 0 and xx.purpgroundtimer+1 >= 0 then
+function dopurpakspikes(xx)
+  if xx.purpgroundtimer < 0 and xx.purpgroundtimer+1 >= 0 then
     xx.purpgroundtimer = 0
       xx.numofspikes = 2*at.p.ak.n
     for sn = 0, at.p.ak.n do
@@ -147,6 +114,46 @@ function spikeupdate(xx)
     xx.numofspikes = 0
     
   end
+  
+  
+  end
+
+
+function spikedraw(xx)
+  for i = #xx.spikes, 1, -1 do
+    vcs(thecolors[1].c)
+    local cur = xx.spikes[i] 
+    if cur.t >= -3 then
+
+
+      local vv = xx.spikes[i].verts 
+
+
+      local vvv = {}
+      vvv[1] = vv[1]+20*cur.lr
+      vvv[2] = vv[2]
+      vvv[3] = vv[3]
+      vvv[4] = vv[4]
+      vvv[5] = vv[5]
+      vvv[6] = vv[6]
+      love.graphics.polygon("fill", xx.spikes[i].verts)
+      love.graphics.setColor(thecolors[1].c.r/2,thecolors[1].c.g/2,thecolors[1].c.b/2)
+      love.graphics.polygon("fill", vvv)
+      franratio = 1.5
+      love.graphics.setColor(thecolors[1].c.r/franratio,thecolors[1].c.g/franratio,thecolors[1].c.b/franratio)
+      love.graphics.polygon("line", xx.spikes[i].verts)
+
+    elseif cur.t<-3 then 
+      table.remove(xx.spikes,i)
+    end
+  end
+  love.graphics.setColor(255,255,255)
+end
+
+
+function spikeupdate(xx)
+  
+   
 
   
   for i = #xx.spikes, 1, -1 do
@@ -641,7 +648,7 @@ function pandp(xx)
             xx.im=apk1
             xx.j = xx.j - 2
             xx.landingcounter = at.p.ak.penalty + at.p.ak.time
-             
+            xx.purplanding = true 
 
 
 
@@ -683,6 +690,7 @@ function pandp(xx)
             end
           elseif xx.animcounter < 50 then
             xx.im = apa13
+            
 
           end
         end

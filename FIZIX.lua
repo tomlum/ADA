@@ -16,15 +16,15 @@ floor = 1900 - 2
 function iwanttobreakfree(xx)
   if xx.flinch and xx.holda and not xx.oldholda then
     xx.ft = xx.ft-.5*ramp(xx)
-    
+
   end
-  
-xx.oldaholda = xx.holda 
+
+  xx.oldaholda = xx.holda 
 end
 
 
 function relativity(xx)
-  
+
   if speedramp then 
     if xx.ramptimer > 1 then 
       xx.ramptimer = 0
@@ -38,12 +38,12 @@ function relativity(xx)
     xx.rampcanhit = true
     xx.rampspeed = 1
   end
-  
-  
-  
-  
+
+
+
+
   if rampspeed <1 then
-  
+
     if xx.id == 1 then
       xx.rampspeed = .5
     else
@@ -217,13 +217,13 @@ function bump(xx)
       {x=xx.mid, y = xx.y+5},
       function(z)
         if not(xx.color.n==2 and xx.type==1) and not (z.color.n==2 and z.type==1) then
-        if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
-          if z.flinch then
-            z.v = (z.v*1/4) + (xx.v*3/4)
-          else
-            z.v = (z.v*1/4) + (xx.v*3/4)
+          if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
+            if z.flinch then
+              z.v = (z.v*1/4) + (xx.v*3/4)
+            else
+              z.v = (z.v*1/4) + (xx.v*3/4)
+            end
           end
-        end
         end
       end)
   end
@@ -274,27 +274,27 @@ end
 
 
 function vroomright(xx)
-  if xx.animcounter == 0 or xx.greenkcondition then
-  if xx.v == 0+xx.push and not xx.running
-  then xx.v = 1.5+xx.push
-  elseif xx.v >0+xx.push and xx.v < (speedlimit -accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash and not xx.running
-  then xx.v = xx.v + (accel+xx.push)*xx.color.s.speed*xx.speedpenalty
-  elseif xx.v >0+xx.push and xx.v >= (speedlimit -accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash  and not xx.running
-  then xx.v = (speedlimit -accel+xx.push)*xx.color.s.speed*xx.speedpenalty
-end
-end
+  if (xx.animcounter == 0 or xx.greenkcondition) and not (xx.landing and xx.purplanding) and not xx.running then
+    if xx.v == 0+xx.push
+    then xx.v = 1.5+xx.push
+    elseif xx.v >0+xx.push and xx.v < (speedlimit -accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash 
+    then xx.v = xx.v + (accel+xx.push)*xx.color.s.speed*xx.speedpenalty
+    elseif xx.v >0+xx.push and xx.v >= (speedlimit -accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash 
+    then xx.v = (speedlimit -accel+xx.push)*xx.color.s.speed*xx.speedpenalty
+    end
+  end
 end 
 
 function vroomleft(xx)
-  if xx.animcounter ==0 or xx.greenkcondition then
-  if xx.v == 0+xx.push and not xx.running
-  then xx.v = -1.5+xx.push
-  elseif xx.v < 0+xx.push and xx.v > (-speedlimit + accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash and not xx.running
-  then xx.v = xx.v - (accel+xx.push)*xx.color.s.speed*xx.speedpenalty
-  elseif xx.v < 0+xx.push and xx.v <= (-speedlimit + accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash and not xx.running
-  then xx.v = (-speedlimit + accel+xx.push)*xx.color.s.speed*xx.speedpenalty
-end
-end
+  if (xx.animcounter == 0 or xx.greenkcondition) and not (xx.landing and xx.purplanding) and not xx.running then
+    if xx.v == 0+xx.push 
+    then xx.v = -1.5+xx.push
+    elseif xx.v < 0+xx.push and xx.v > (-speedlimit + accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash
+    then xx.v = xx.v - (accel+xx.push)*xx.color.s.speed*xx.speedpenalty
+    elseif xx.v < 0+xx.push and xx.v <= (-speedlimit + accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash
+    then xx.v = (-speedlimit + accel+xx.push)*xx.color.s.speed*xx.speedpenalty
+    end
+  end
 end 
 
 
@@ -550,10 +550,11 @@ function movex(xx,yy)
     elseif z.left and xx.v >= 1 + xx.push*1.5
     then xx.v = xx.v - adecrate*ramp(xx)
       xx.slowdown = true
-
+    xx.im = slowdown
     elseif z.right and xx.v <= -1 + xx.push*1.5
     then xx.v = xx.v + adecrate*ramp(xx)
       xx.slowdown = true
+      xx.im = slowdown  
     elseif z.left and xx.v > - maxairmove + xx.push*1.5
     then xx.v = xx.v -amovrate*ramp(xx)
       xx.slowdown = false
@@ -586,9 +587,9 @@ function movex(xx,yy)
       then xx.jt = xx.jt -  1*ramp(xx)
         if xx.j >= 0 and not xx.float then
           --[[if xx.jumptimer > 0 and xx. then
-            xx.jumptimer = xx.jumptimer - 1*ramp(xx)
-          else
-            ]]--
+          xx.jumptimer = xx.jumptimer - 1*ramp(xx)
+        else
+          ]]--
           xx.j = xx.j - risegrav*ramp(xx)*xx.color.s.weight
           --end
         elseif not xx.float then

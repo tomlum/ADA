@@ -85,15 +85,15 @@ you.repcounter = 0
 you.bbpready = false
 
 
-punch1 = {im=love.graphics.newImage("me/attack/punch1.png"),c=love.graphics.newImage("me/attack/punch1c.png"),xoff = 15}
-punch2 = {im=love.graphics.newImage("me/attack/punch2.png"),c=love.graphics.newImage("me/attack/punch2c.png"),xoff = 15}
-punch3 = {im=love.graphics.newImage("me/attack/punch3.png"),c=love.graphics.newImage("me/attack/punch3c.png"),xoff = 15}
-punch4 = {im=love.graphics.newImage("me/attack/punch4.png"),c=love.graphics.newImage("me/attack/punch4c.png"),xoff = 15}
-punch5 = {im=love.graphics.newImage("me/attack/punch5.png"),c=love.graphics.newImage("me/attack/punch5c.png"),xoff = 15}
-punch6 = {im=love.graphics.newImage("me/attack/punch6.png"),c=love.graphics.newImage("me/attack/punch6c.png"),xoff = 15}
-kick1 = {im = love.graphics.newImage("me/attack/kick1.png"), c = love.graphics.newImage("me/attack/kick1c.png"), xoff = 15, yoff = 10}
-kick2 = {im = love.graphics.newImage("me/attack/kick2.png"), c = love.graphics.newImage("me/attack/kick2c.png"), xoff = 15, yoff = 10}
-kick3 = {im = love.graphics.newImage("me/attack/kick3.png"), c = love.graphics.newImage("me/attack/kick3c.png"), xoff = 15, yoff = 10}
+punch1 = {im=love.graphics.newImage("me/attack/bb/punch1.png"),xoff = -2}
+punch2 = {im=love.graphics.newImage("me/attack/bb/punch2.png"),xoff = -1,yoff = -3}
+punch3 = {im=love.graphics.newImage("me/attack/bb/punch3.png"), yoff = -4}
+punch4 = {im=love.graphics.newImage("me/attack/bb/punch4.png"),xoff = -1, yoff = -3}
+punch5 = {im=love.graphics.newImage("me/attack/bb/punch5.png"),xoff = -2, yoff = -2}
+punch6 = {im=love.graphics.newImage("me/attack/bb/punch6.png"),yoff = -5}
+kick1 = {im = love.graphics.newImage("me/attack/bb/kick1.png"), xoff = 1, yoff = 1}
+kick2 = {im = love.graphics.newImage("me/attack/bb/kick2.png"), xoff = -1, yoff = -1}
+kick3 = {im = love.graphics.newImage("me/attack/bb/kick3.png"), yoff = -3}
 uppercut = {im=love.graphics.newImage("me/attack/uppercut.png"),c=love.graphics.newImage("me/attack/uppercutc.png"), xoff = 15}
 jumpuppercut = {im=love.graphics.newImage("me/attack/jumpuppercut.png"),c=love.graphics.newImage("me/attack/jumpuppercutc.png")}
 dropkick1 = {im=love.graphics.newImage("me/attack/dropkick1.png"),c=love.graphics.newImage("me/attack/dropkick1c.png"), xoff = 5,yoff = -7,extrah=10}

@@ -1,18 +1,10 @@
 
 
 
-idle1im = love.graphics.newImage("me/idle/idle1.png")
-idle1c = nil
-idle2im = love.graphics.newImage("me/idle/idle2.png")
-idle2c = love.graphics.newImage("me/idle/idle2c.png")
-idle3im = love.graphics.newImage("me/idle/idle3.png")
-idle3c = love.graphics.newImage("me/idle/idle3c.png")
-idle4im = love.graphics.newImage("me/idle/idle4.png")
-idle4c = love.graphics.newImage("me/idle/idle4c.png")
-idle1 = {im = idle1im, c = idle1c}
-idle2 = {im = idle2im, c = idle2c}
-idle3 = {im = idle3im, c = idle3c}
-idle4 = {im = idle4im, c = idle4c}
+idle1 = {im = lg.newImage("me/idle/idle1.png")}
+idle2 = {im = lg.newImage("me/idle/idle2.png")}
+idle3 = {im = lg.newImage("me/idle/idle3.png")}
+idle4 = {im = lg.newImage("me/idle/idle4.png")}
 
 at = {}
 
@@ -21,6 +13,8 @@ me = {}
 you = {}
 me.shade=255
 you.shade=180
+me.outline={r=155,g=0,b=155}
+you.outline={r=25,g=155,b=155}
 
 
 

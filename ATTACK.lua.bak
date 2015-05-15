@@ -20,6 +20,7 @@
 -- objects[1]
 -- end
 
+blockrelease = {im=love.graphics.newImage("me/attack/blockrelease.png"),c=love.graphics.newImage("me/attack/blockreleasec.png"), xoff = 10, cxoff = 10-9, cyoff = -11}
 
 throw = {im=love.graphics.newImage("me/attack/throw.png"),c=love.graphics.newImage("me/attack/throwc.png"), xoff = 9, yoff = 10}
 airthrow = {im=love.graphics.newImage("me/attack/airthrow.png"),c=love.graphics.newImage("me/attack/airthrowc.png"), xoff = 10, yoff = 10}
@@ -38,7 +39,7 @@ function grab(xx)
     xx.busy = true 
     xx.stop = true
   end
-  
+
   if xx.blockb and (xx.a2b or xx.a3b) and xx.animcounter == 0 then
     xx.animcounter = 1
     xx.type = 8
@@ -46,50 +47,51 @@ function grab(xx)
 
 
     if xx.animcounter < 4 then
-    if xx.g then 
-      xx.im = punch1
-    else
-      xx.im = airgrab1
+      if xx.g then 
+        xx.im = punch1
+      else
+        xx.im = airgrab1
       end
     elseif xx.animcounter < 7 then
-    if xx.g then 
-      xx.im = punch2
-    else
-      xx.im = airgrab2
+      if xx.g then 
+        xx.im = punch2
+      else
+        xx.im = airgrab2
       end
-      if xx.animcounter == 4 then
-      hboxcs(xx, xx.id, 
-        {x=xx.mid, y = xx.y+24},
-        {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
-        {x=xx.mid, y = xx.y+30},
-        {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32-xx.j},
-        function(z)
-          xx.animcounter = 100
-          xx.grabbingx = z
-          z.y = xx.y
-          z.j = xx.j
-          z.v = xx.v
+      if xx.animcounter < 5 then
+        hboxcs(xx, xx.id, 
+          {x=xx.mid, y = xx.y+24},
+          {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
+          {x=xx.mid, y = xx.y+30},
+          {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32-xx.j},
+          function(z)
+            xx.animcounter = 100
+            xx.grabbingx = z
+            z.y = xx.y
+            z.j = xx.j
+            z.v = xx.v
+            repplay(grabsou)
 
-      end)
-    end
-  elseif xx.animcounter < 20 then 
-    if xx.g then 
-      xx.im = punch3
-    else
-      xx.im = airgrab3
+          end)
+      end
+    elseif xx.animcounter < 20 then 
+      if xx.g then 
+        xx.im = punch3
+      else
+        xx.im = airgrab3
       end
     elseif xx.animcounter < 100 then
       xx.animcounter = 0
     elseif xx.animcounter < 130 then
-    if xx.g then 
-      xx.im = punch2
-    else
-      xx.im = airgrab2
+      if xx.g then 
+        xx.im = punch2
+      else
+        xx.im = airgrab2
       end
       xx.grabbingx.ft = 10
       if not xx.holda and (xx.a1 or xx.a2 or xx.a3 or xx.a4) then 
-        xx.grabbingx.j =  -xx.jry*30
-        xx.grabbingx.v =  xx.jrx*20
+        xx.grabbingx.j =  -xx.jry*20
+        xx.grabbingx.v =  xx.jrx*15
         if not xx.g then
           xx.v = -xx.grabbingx.v*.8
           xx.j = -xx.grabbingx.j*.8
@@ -97,29 +99,31 @@ function grab(xx)
         xx.animcounter = 300
         shakez(throwz)
         xx.grabbingx.ft = throwft
-        
+
         if xx.jrx > 0 then
           xx.grabbingx.flinchway = -1
           xx.lr = 1
         else xx.grabbingx.flinchway = 1
           xx.lr = -1
-          end
         end
+      end
     elseif xx.animcounter <260 then
+      repplay(grabreleasesou)
       xx.animcounter = 0
       xx.v = -xx.lr*5
       xx.grabbingx.ft = 0
     elseif xx.animcounter < 310 then
-     if xx.g then
-     xx.im = throw
-    else
-      xx.im = airthrow
+      repplay(throwsou)
+      if xx.g then
+        xx.im = throw
+      else
+        xx.im = airthrow
       end
     elseif xx.animcounter < 400 then
       xx.animcounter = 0
     end
 
-end
+  end
 end
 
 
@@ -144,115 +148,132 @@ you.cantreturntothis = 0
 
 
 function combo(xx, func)
-    xx.hit = false
+  xx.hit = false
+
+  local oldanimc = xx.animcounter
 
   if xx.color.n ~= xx.cchangeto.n and xx.cancombo
   then
+    xx.repcounter = 0
     if func~= nil then func() end
-    xx.actionshot = true
+    if combopause then
+      xx.actionshot = true
+    end
     xx.cancombo = false
   end
-  if not xx.holda and xx.currentanim == xx.color.n and xx.combo<xx.maxcombo then
 
-  if xx.g then 
-    if xx.im==greenk1 then
-      xx.type = 2
-      xx.animcounter = 1
-      xx.combo = xx.combo + 1
+  if not xx.holda and (not combopause or xx.currentanim == xx.color.n) and xx.combo<xx.maxcombo then
 
 
-  elseif xx.a2 or xx.a3 then
-      xx.numofspikes = 0
-      if func~= nil then func() end
-      if xx.color.n==0 then
-        xx.type = 1
-        if xx.repcounter < at.bb.p.max then
-          xx.repcounter = xx.repcounter+1
-          if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+    if xx.g then 
+      if xx.im==greenk1 then
+        xx.type = 2
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
+
+
+      elseif xx.a2 or xx.a3 then
+        xx.numofspikes = 0
+        if func~= nil then func() end
+        if xx.color.n==0 then
+          xx.type = 1
+          if xx.repcounter < at.bb.p.max then
+            if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
+            xx.repcounter = xx.repcounter+1
+            xx.animcounter = 1
+          end
+        elseif xx.color.n==1 and xx.repcounter < at.p.p.max then
+          if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
+          xx.type = 1
           xx.animcounter = 1
+          xx.repcounter = xx.repcounter + 1
+        elseif xx.color.n==2 and xx.repcounter < at.g.p.max then
+          if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
+          xx.repcounter = xx.repcounter+1
+          xx.type = 1
+          xx.animcounter = 1
+        elseif xx.color.n==3 and xx.repcounter < at.o.p.max then
+          xx.type = 1
+          xx.animcounter = 1
+          if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
+          xx.repcounter = xx.repcounter + 1
+elseif xx.color.n==4  then
+          xx.type = 1
+          xx.animcounter = 1
+          if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
+          xx.repcounter = xx.repcounter + 1
+
+
+
         end
-      elseif xx.color.n==1 and xx.repcounter < at.p.p.max then
-        xx.type = 1
-        xx.animcounter = 1
-        xx.repcounter = xx.repcounter + 1
-        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
-      elseif xx.color.n==2 and xx.repcounter < at.g.p.max then
-        xx.type = 1
-        xx.animcounter = 1
-        xx.repcounter = xx.repcounter + 1
-        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
-      elseif xx.color.n==3 and xx.repcounter < at.o.p.max then
-        xx.type = 1
-        xx.animcounter = 1
-        xx.repcounter = xx.repcounter + 1
-        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+
+      elseif xx.a4 and (xx.oldtype ~= 2 or xx.actionshot) then
+
+        if func~= nil then func() end
+        if xx.color.n==0  then
+          xx.combo = xx.combo + 1
+          xx.animcounter = 1
+          xx.type = 2
+
+        elseif xx.color.n==1 and not xx.hitsomeonewithpurp then
+          xx.type = 2
+          xx.animcounter = 17
+          xx.repcounter = xx.repcounter + 1
+          xx.combo = xx.combo + 1
+        elseif xx.color.n==2 then
+          xx.type = 2
+          xx.animcounter = 1
+          xx.combo = xx.combo + 1
+        elseif xx.color.n==3 then
+          xx.type = 2
+          xx.animcounter = 7
+          xx.combo = xx.combo + 1
+
+        end
+      elseif xx.a1 then
+
+        xx.numofspikes = 0
+        if func~= nil then func() end
+        if xx.color.n==0 then
+          xx.type = 3
+          xx.animcounter = 1
+          xx.combo = xx.combo + 1
+        elseif xx.color.n==1 then
+          xx.type = 3
+          xx.animcounter = 1
+          xx.combo = xx.combo + 1
+        elseif xx.color.n==2 then
+          xx.type = 3
+          xx.animcounter = 1
+          xx.combo = xx.combo + 1
+        end
+
+
+
+      end
+    else
+      if xx.a4 then
+        if xx.color.n==3 and xx.o5repcounter < at.o.ak.max then
+          xx.animcounter = 1
+          xx.type = 5
+          xx.combo = xx.combo + 1
+          xx.o5repcounter = xx.o5repcounter + 1
+          if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+          xx.j = 2
+
+        end
 
 
       end
 
-  elseif xx.a4 and (xx.oldtype ~= 2 or xx.actionshot) then
-    
-      if func~= nil then func() end
-      if xx.color.n==0  then
-        xx.combo = xx.combo + 1
-        xx.animcounter = 1
-        xx.type = 2
 
-      elseif xx.color.n==1 and not xx.hitsomeonewithpurp then
-        xx.type = 2
-        xx.animcounter = 17
-        xx.repcounter = xx.repcounter + 1
-        xx.combo = xx.combo + 1
-      elseif xx.color.n==2 then
-        xx.type = 2
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-      elseif xx.color.n==3 then
-        xx.type = 2
-        xx.animcounter = 7
-        xx.combo = xx.combo + 1
-
-      end
-    elseif xx.a1 then
-      
-      xx.numofspikes = 0
-      if func~= nil then func() end
-      if xx.color.n==0 then
-        xx.type = 3
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-      elseif xx.color.n==1 then
-        xx.type = 3
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-      elseif xx.color.n==2 then
-        xx.type = 3
-        xx.animcounter = 1
-        xx.combo = xx.combo + 1
-      end
-
-
-
-
-end
-else
-    if xx.a4 then
-      if xx.color.n==3 and xx.repcounter < at.o.ak.max then
-        xx.animcounter = 1
-        xx.type = 5
-        xx.combo = xx.combo + 1
-        xx.repcounter = xx.repcounter + 1
-        if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
-        xx.j = 2
-        
-      end
-      
-      
     end
-
-
   end
+  if not xx.combopause and xx.animcounter < oldanimc and xx.animcounter > 0 and 
+  xx.currentanim ~= xx.color.n then
+    xx.currentanim = xx.color.n
   end
+
 end
 
 
@@ -270,11 +291,13 @@ function nottoomanyuppercuts(xx)
   if xx.uppercuttimer > 0 then
     if xx.color.n ~= xx.cchangeto.n and xx.uppercuthit and xx.uppercuttimer > 30
     then
-      xx.actionshot = true
+      if combopause then
+        xx.actionshot = true
+      end
       xx.cancombo = false
       xx.uppercuttimer = 0
     end
-    xx.uppercuttimer = xx.uppercuttimer-1*rampspeed
+    xx.uppercuttimer = xx.uppercuttimer-1*ramp(xx)
     xx.a1 = false
   else xx.uppercuthit = false
   end
@@ -294,9 +317,21 @@ you.oldj = 0
 me.oldft = 0
 you.oldft = 0
 
+
 function attackmanage(xx)
-  
-  
+
+  if xx.greenktimer > 0 then 
+    xx.greenktimer = xx.greenktimer - 1*ramp(xx)
+  else
+    xx.greenktimer = 0
+  end
+
+  xx.greenkcondition = false
+  if xx.flinch then 
+    xx.animcounter = 0
+    xx.type = 0
+  end
+
 
   if xx.type < 4 and not xx.g and ((xx.type~=2 and xx.color.n~=2) or (xx.type~=2 and xx.color.n~=3)) then 
     xx.animcounter = 0
@@ -310,7 +345,7 @@ function attackmanage(xx)
   if xx.type == 7 and xx.color.n == 0 and xx.animcounter > 2 and xx.g then
     xx.animcounter = 0
   end
-  
+
   grab(xx)
 
   if xx.landing then xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false end
@@ -332,25 +367,29 @@ function attackmanage(xx)
     gandg(xx)
   elseif xx.currentanim == 3 then
     orangeyouglad(xx)
+  elseif xx.currentanim == 4 then
+    randr(xx)
   end
 
 
 
   --  if(math.abs(xx.j) > math.abs(xx.oldj)) then
-  --    xx.j = xx.oldj + (xx.j-xx.oldj)*(rampspeed)
+  --    xx.j = xx.oldj + (xx.j-xx.oldj)*(ramp(xx))
   --  end
 
   --xx.oldj = xx.j
-  
+  iwanttobreakfree(xx)
 
 end
 function postattackmanage(xx)
+  --[[
   if(math.abs(xx.v) > math.abs(xx.oldv)) then
-    xx.v = xx.oldv + ((xx.v-xx.oldv)/xx.color.s.weight)*(rampspeed)
+    xx.v = xx.oldv + ((xx.v-xx.oldv)/xx.color.s.weight)
   end
+  --]]--
   if(math.abs(xx.ft) > math.abs(xx.oldft)) then
     rumbleme(xx,(math.log(xx.ft-xx.oldft)+.5)/5)
-    xx.ft = xx.oldft + (xx.ft-xx.oldft)*(rampspeed)*xx.color.s.brittle
+    xx.ft = xx.oldft + (xx.ft-xx.oldft)*(1)*xx.color.s.brittle
   end
   xx.oldft = xx.ft
 end
@@ -533,7 +572,7 @@ newforwarddodge = function(xx)
     end
 
     if xx.dodgedelaycounter > 0 then 
-      xx.dodgedelaycounter = xx.dodgedelaycounter - 1*rampspeed
+      xx.dodgedelaycounter = xx.dodgedelaycounter - 1*ramp(xx)
       xx.stop = true
       xx.dodge = false
       xx.dodgetype = 0
@@ -541,8 +580,8 @@ newforwarddodge = function(xx)
 
 
     if xx.dodgecounter > 1 then 
-      xx.dodgecounter = xx.dodgecounter-1*rampspeed
-      if xx.dodgecounter-1*rampspeed<1 then
+      xx.dodgecounter = xx.dodgecounter-1*ramp(xx)
+      if xx.dodgecounter-1*ramp(xx)<1 then
         xx.dodgecounter = 1
       end
 
@@ -597,7 +636,7 @@ newforwarddodge = function(xx)
         xx.im = dodge21
       end
     elseif xx.dodgetype == 0 and xx.dodgerefreshtimer == 0 then
-      if xx.g and ((xx.lr > 0 and xx.rightb and xx.qualifyfordodge) or (xx.lr < 0 and xx.leftb and xx.qualifyfordodge))  then
+      if xx.g and ((xx.lr > 0 and xx.rightb and xx.qualifyfordodge) or (xx.lr < 0 and xx.leftb and xx.qualifyfordodge)) and xx.animcounter ==0  then
         xx.dodgetype = 1
         xx.dodgecounter = dodgetime
         xx.currentdodgev = xx.v
@@ -618,7 +657,7 @@ newforwarddodge = function(xx)
     end
     if xx.dodgetype~=0 then
       if(math.abs(xx.v) > math.abs(xx.oldv)) then
-        xx.v = xx.oldv + (xx.v-xx.oldv)*(rampspeed)
+        xx.v = xx.oldv + (xx.v-xx.oldv)*(ramp(xx))
       end
     end
     if not simpledodge then
@@ -644,6 +683,13 @@ newforwarddodge = function(xx)
   you.letgoofblock = false
   function blocknbusy(xx)
 
+    xx.stop = false
+
+    if xx.letgoofblock then
+      xx.stop = true
+      xx.im = blockrelease
+    end
+
     if not xx.blockb then xx.letgoofblock = false 
     end
 
@@ -661,7 +707,6 @@ newforwarddodge = function(xx)
 
     else 
       xx.block = false 
-      xx.stop = false
     end
 
 
@@ -728,14 +773,14 @@ newforwarddodge = function(xx)
 
 
   function flinchingx(xx,yy)
-    
-    
-    if xx.ft > 0 then xx.flinch = true end
-    
+
+
+
+
     if xx.health < xx.oldhealth then
-      xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(rampspeed)/xx.color.s.def
+      xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(ramp(xx))/xx.color.s.def
       local dif = xx.oldhealth - xx.health
-      makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,math.floor(dif/rampspeed * 2/3))
+      makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,math.floor(dif/ramp(xx) * 2/3))
     end
     xx.oldhealth = xx.health
 
@@ -755,11 +800,10 @@ newforwarddodge = function(xx)
       xx.hittheground = false 
     end
 
-    if xx.ft == 0 or (xx.ft < 0 and xx.ft + 1*rampspeed >=0) or (xx.ft > 0 and xx.ft - 1*rampspeed <=0) then 
-      xx.flinch = false 
+    if (xx.ft <= 0 and xx.ft + 1*ramp(xx) >0) or (xx.ft >= 0 and xx.ft - 1*ramp(xx) <0)  then 
       xx.ft = 0
-    elseif xx.ft < 0 then xx.ft = xx.ft + 1*rampspeed
-    elseif xx.ft > 0 then xx.ft = xx.ft - 1*rampspeed
+    elseif xx.ft < 0 then xx.ft = xx.ft + 1*ramp(xx)
+    elseif xx.ft > 0 then xx.ft = xx.ft - 1*ramp(xx)
     end
     --camshakeflinch()
 
@@ -790,10 +834,10 @@ newforwarddodge = function(xx)
 
 
     if xx.falltimer < 0 then
-      if xx.falltimer + 1*rampspeed > 0 then
+      if xx.falltimer + 1*ramp(xx) > 0 then
         xx.falltimer = 0
       else
-        xx.falltimer = xx.falltimer + 1*rampspeed
+        xx.falltimer = xx.falltimer + 1*ramp(xx)
       end
       xx.flinch = true
       xx.stop = true
@@ -830,21 +874,24 @@ newforwarddodge = function(xx)
           elseif xx.j==0 then
             xx.falltimer = -getuptime
           end
-        elseif xx.extratimer == 0 and xx.j==0 and xx.v==0 then xx.extratimer = extrastayonthegroundtime
+        elseif xx.extratimer == 0 and xx.j==0
+        --and xx.v ==0
+        then xx.extratimer = extrastayonthegroundtime
+          xx.flinch = true
         elseif xx.extratimer > 0 then
 
           xx.flinch = true
           xx.stop = true
-          if xx.extratimer - 1*rampspeed < 1 then
+          if xx.extratimer - 1*ramp(xx) < 1 then
             xx.extratimer = 1
           else
-            xx.extratimer = xx.extratimer - 1*rampspeed
+            xx.extratimer = xx.extratimer - 1*ramp(xx)
           end
         end
 
       end
 
-      if xx.falltimer > 0 then xx.falltimer = xx.falltimer - 1*rampspeed
+      if xx.falltimer > 0 then xx.falltimer = xx.falltimer - 1*ramp(xx)
       else 
         xx.hittheground = true
       end
@@ -897,6 +944,9 @@ newforwarddodge = function(xx)
 
     end
 
+    if xx.ft ~= 0 or xx.extratimer ~= 0 or xx.falltimer < 0 then xx.flinch = true 
+    else xx.flinch = false
+    end
 
     xx.oldflinch = xx.flinch
     xx.oldft = xx.ft

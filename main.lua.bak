@@ -1,31 +1,41 @@
-
-
-
-
+--new wall jump
+--WIGGLE GET OUT OF FLINCH FASTER
+--if xx.v/minit < ratio then no a
+--
+--SEARCH IS THIS NECESSARY?
+--superjump? 
+--superjumpratio = 1.4
+--slowmo on non glass things etc, library above the wall thingy where the bolts get stuck
+--throw is a little too hard and uneven in distrribution
+--green punch not working great
+--beast mode, switch between beasts by alternating which is held?
 
 --hug button
 --chrome/metallic so as to suit monochromaticity
 --motion blur
 
-
+lg = love.graphics
 
 
 --todo
 --if not in the air then some kind of unblocking animation
 --apple w is window close
 --SHAEZ TIED TO RUMBLE?!?!?!?
-therampspeed = .1
+therampspeed = .25/2
 drawboxes = false
-fightclub = false
-menu = "play"
+drawfeet = false
+fightclub = true
+volume=0
+fullscreen = false
+readout = false
+putmehere = 975
+putyouhere = 1025
+menu = "title"
  if menu == "play" then
 noload = true
    mapnum = 2
    placespeople = true end
-fullscreen = false
-readout = true
 mute = false
-volume=0
 love.audio.setVolume(volume)
 --airgrab
 test123 = false
@@ -39,11 +49,7 @@ test123 = false
 
 --placement of cam funcs causes weirdness for actionshot
 --cant move right while sliding left?  pretty easy to do with base/push
-putmehere = 975
-putyouhere = 1025
---to be rampspeedified (or if not rampcanhitified)
 
---idle
 
 
 
@@ -268,6 +274,7 @@ require "GG"
 require "BB"
 require "pp"
 require "OO"
+require "RR"
 require "ai"
 loader = require "love-loader"
 
@@ -391,7 +398,7 @@ function love.update()
   --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
   if love.keyboard.isDown("x")  then speedramp = true end
   if speedramp then 
-    rampspeed = therampspeed
+     rampspeed= therampspeed
     if ramptimer >= 1 then 
       ramptimer = 0
       rampcanhit = true
@@ -523,12 +530,12 @@ function love.update()
         platformcheckx()
         monplatupdate()
 
-        you.y = you.y - you.j*.9*rampspeed
-        me.y = me.y - me.j*.9*rampspeed
-        you.x = you.x + you.v*rampspeed
-        me.x = me.x + me.v*rampspeed
-        you.next = you.feet - you.j*.9
-        me.next = me.feet - me.j*.9
+        you.y = you.y - you.j*.9*you.rampspeed
+        me.y = me.y - me.j*.9*me.rampspeed
+        you.x = you.x + you.v*you.rampspeed
+        me.x = me.x + me.v*me.rampspeed
+        you.next = you.feet - you.j*.9*you.rampspeed
+        me.next = me.feet - me.j*.9*me.rampspeed
 
 
         me.oldv = me.v
@@ -616,10 +623,15 @@ function love.update()
             bump(me)
           end
 
-
+          --SEARCH IS THIS NECESSARY?
+          --[[
           if(math.abs(you.ft) > math.abs(you.oldft)) then
-            you.ft = you.oldft + (you.ft-you.oldft)*(rampspeed)
+            you.ft = you.oldft + (you.ft-you.oldft)*(you.rampspeed)
           end
+          if(math.abs(me.ft) > math.abs(me.oldft)) then
+            me.ft = me.oldft + (me.ft-you.oldft)*(me.rampspeed)
+          end
+          ]]--
 
         end
 
@@ -641,6 +653,8 @@ function love.update()
       holdmanage(you)
 
 
+        orientlr(me)
+        orientlr(you)
         
         cammovement()
         --if here then no slow mo twitter
@@ -776,16 +790,10 @@ monupdate()
 
     if fightclub then
 
-      if me.invince then
-        love.graphics.print("invince", 100, 100)
-      end
-      if you.invince then
-        love.graphics.print("invince", 100, 100)
-      end
       love.graphics.setColor(20,20,20)
       love.graphics.print(tostring(me.combo),10,20)
       love.graphics.print(tostring(me.color.n)..
-        "       animcounter: "..tostring(me.animcounter)
+        "       animcounter: "..tostring(me.animcounter).."current"..tostring(me.currentanim)
         ..
         "       type: "..tostring(me.type),10,30)
       love.graphics.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
@@ -822,11 +830,14 @@ monupdate()
     love.graphics.setColor(255,0,0)
     
   end
+    love.graphics.setColor(255,0,255)
+  
+  
   if love.keyboard.isDown("6") and #hittmon < 20 then spawnmon(camera.x+math.random(0,200), camera.y+10) end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
 
-  
+
    if #joysticks > 0 then
     rumblemodule(me)
   end

@@ -1,40 +1,38 @@
 
 
 
-op1 = {im=love.graphics.newImage("me/attack/op1.png"),c=love.graphics.newImage("me/attack/op1c.png"), xoff = 2}
-op2 = {im=love.graphics.newImage("me/attack/op2n.png"),c=love.graphics.newImage("me/attack/opcn.png"), xoff = 9,yoff = 10, cxoff = 9, cyoff = 22}
-op3 = {im=love.graphics.newImage("me/attack/op3n.png"),c=love.graphics.newImage("me/attack/opcn.png"), xoff = 9,yoff = 12, cxoff = 9, cyoff = 24}
-op4 = {im=love.graphics.newImage("me/attack/op4n.png"),c=love.graphics.newImage("me/attack/opcn.png"), xoff = 9,yoff = 10, cxoff = 9, cyoff = 22}
-op5 = {im=love.graphics.newImage("me/attack/op5n.png"),c=love.graphics.newImage("me/attack/opcn.png"), xoff = 9,yoff = 12, cxoff = 9, cyoff = 24}
+op1 = {im=love.graphics.newImage("me/attack/orange/op1.png"), xoff = 2}
+op2 = {im=love.graphics.newImage("me/attack/orange/op2n.png"), xoff = 9,yoff = 10}
+op3 = {im=love.graphics.newImage("me/attack/orange/op3n.png"), xoff = 9,yoff = 12}
+op4 = {im=love.graphics.newImage("me/attack/orange/op4n.png"), xoff = 9,yoff = 12}
+op5 = {im=love.graphics.newImage("me/attack/orange/op5n.png"), xoff = 2,yoff = 12}
 
 
-ao21 = {im=love.graphics.newImage("me/attack/ao21.png"),c=love.graphics.newImage("me/attack/ao21c.png"), xoff = 9, yoff = 17, cxoff = 8, cyoff = 24}
-ao22 = {im=love.graphics.newImage("me/attack/ao22temp2.png"),c=love.graphics.newImage("me/attack/ao22c.png"), xoff = 9-5, cxoff = 5, cyoff = 8, extrah = 5}
+ao21 = {im=love.graphics.newImage("me/attack/orange/ao21.png"), xoff = 9, yoff = 17, extrah = 5}
+ao22 = {im=love.graphics.newImage("me/attack/orange/ao22.png"), xoff = 9-5, extrah = 5}
 
 
-ao23 = {im=love.graphics.newImage("me/attack/ao23.png"),c=love.graphics.newImage("me/attack/ao23c.png"), xoff = 5,yoff = 17, extrah = 5, cxoff = 4, cyoff = 24}
-ao24 = {im=love.graphics.newImage("me/attack/ao24temp.png"),c=love.graphics.newImage("me/attack/ao24c.png"), xoff = 9-5, cyoff = 7, cxoff = 12, extrah = 5}
+ao23 = {im=love.graphics.newImage("me/attack/orange/ao23.png"), xoff = 5,yoff = 17, extrah = 5}
+ao24 = {im=love.graphics.newImage("me/attack/orange/ao24.png"), xoff = 9-5, extrah = 5}
 
 
-ok2 = {im=love.graphics.newImage("me/attack/ok2.png"),c=love.graphics.newImage("me/attack/ok2c.png"), xoff = 9,yoff = 15}
-ok3 = {im=love.graphics.newImage("me/attack/ok3.png"),c=love.graphics.newImage("me/attack/ok3c.png"), xoff = 97,yoff = 5,
-cxoff = 90,cyoff = 19}
-ok4 = {im=love.graphics.newImage("me/attack/ok4.png"),c=love.graphics.newImage("me/attack/ok4c.png"), xoff = 45,yoff = 0,cxoff = 47,cyoff = 6}
+ok2 = {im=love.graphics.newImage("me/attack/orange/ok2.png"), xoff = 9,yoff = 15}
+ok3 = {im=love.graphics.newImage("me/attack/orange/ok3.png"), xoff = 84,yoff = -7}
+ok4 = {im=love.graphics.newImage("me/attack/orange/ok4.png"), xoff = 45,yoff = 0, extrah = 5}
 
 
-o32 = {im=love.graphics.newImage("me/attack/o32.png"),c=love.graphics.newImage("me/attack/op32c.png"), 
-  xoff = 9,yoff = -5, cxoff = 8, cyoff = 7}
+o32 = {im=love.graphics.newImage("me/attack/orange/o32.png"), 
+  xoff = 9,yoff = -5}
 
-o33 = {im=love.graphics.newImage("me/attack/o33.png"),c=love.graphics.newImage("me/attack/o33c.png"), 
-  cxoff = 2,cyoff = 8}
+o33 = {im=love.graphics.newImage("me/attack/orange/o33.png")}
 
-ao31 = {im=love.graphics.newImage("me/attack/ao31.png"),c=love.graphics.newImage("me/attack/ao31c.png"), xoff = 9, yoff = 0, cxoff = -2+9, cyoff = -8}
-ao32 = {im=love.graphics.newImage("me/attack/ao32.png"),c=love.graphics.newImage("me/attack/ao32c.png"), yoff =2, cxoff = -2, cyoff = -5}
+ao31 = {im=love.graphics.newImage("me/attack/orange/ao31.png"), xoff = 9, yoff = 0}
+ao32 = {im=love.graphics.newImage("me/attack/orange/ao32.png"), yoff =2}
 
 
 
-aop1 = {im=love.graphics.newImage("me/attack/aop1.png"),c=love.graphics.newImage("me/attack/aop1c.png"), xoff = 5,yoff = 17, extrah = 5, cxoff = 5, cyoff = 24}
-aop2 = {im=love.graphics.newImage("me/attack/aop2.png"),c=love.graphics.newImage("me/attack/aop2c.png"),xoff = 2,yoff = 32, extrah = 5, cxoff = 5, cyoff = 40}
+aop1 = {im=love.graphics.newImage("me/attack/orange/aop1.png"), xoff = 5,yoff = 17, extrah = 5}
+aop2 = {im=love.graphics.newImage("me/attack/orange/aop2.png"),yoff = 32, extrah = 5}
 
 
 at.o = {}

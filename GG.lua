@@ -3,34 +3,36 @@ amountstuckinwall = 80
 amountstuckinfloor = 45
 
 
-greena12 = {im=love.graphics.newImage("me/attack/greena12.png"),c=love.graphics.newImage("me/attack/greena12c.png"), xoff = 3,yoff = 6, cxoff = 2, cyoff = 15}
-greena13 = {im=love.graphics.newImage("me/attack/greena13.png"),c=love.graphics.newImage("me/attack/greena13c.png"), xoff = 3,yoff = 19, cxoff = 2, cyoff = 28}
-greena14 = {im=love.graphics.newImage("me/attack/greena14.png"),c=love.graphics.newImage("me/attack/greena14c.png"), xoff = 3,yoff = 33, cxoff = 2, cyoff = 40}
-greena15 = {im=love.graphics.newImage("me/attack/greena15.png"),c=love.graphics.newImage("me/attack/greena15c.png"), xoff = 3,yoff = 42, cxoff = 2, cyoff = 39}
+bolt = love.graphics.newImage("me/attack/green/bolt.png")
 
-greena21 = {im=love.graphics.newImage("me/attack/greena21.png"),c=love.graphics.newImage("me/attack/greena21c.png"), xoff = 16,yoff = -2, cxoff = 19, cyoff = 6}
-greena22 = {im=love.graphics.newImage("me/attack/greena22.png"),c=love.graphics.newImage("me/attack/greena22c.png"), xoff = 30+8, yoff = -3, cxoff = 32, cyoff = 13}
-greena22s = {im=love.graphics.newImage("me/attack/greena22s.png"),c=love.graphics.newImage("me/attack/greena22sc.png"), xoff = 30+8, yoff = 1, cxoff = 32, cyoff = 12}
+greena12 = {im=love.graphics.newImage("me/attack/green/greena12.png"), xoff = 3,yoff = 6}
+greena13 = {im=love.graphics.newImage("me/attack/green/greena13.png"), xoff = 3,yoff = 19}
+greena14 = {im=love.graphics.newImage("me/attack/green/greena14.png"), xoff = 3,yoff = 33}
+greena15 = {im=love.graphics.newImage("me/attack/green/greena15.png"), xoff = 3,yoff = 42}
 
-
-agreena22 = {im=love.graphics.newImage("me/attack/agreena22.png"),c=love.graphics.newImage("me/attack/agreena22c.png"), xoff = 20, xoff = 40, yoff = 4, cxoff = 32, cyoff = 12}
-agreena22s = {im=love.graphics.newImage("me/attack/agreena22s.png"),c=love.graphics.newImage("me/attack/agreena22c.png"), xoff = 40, yoff = 7, cxoff = 32, cyoff = 14}
-
-agreena1 = {im=love.graphics.newImage("me/attack/agreena1.png"),c=love.graphics.newImage("me/attack/agreena1c.png"), xoff = 20, yoff = 0, cxoff = 14, cyoff = 6}
-agreena1s = {im=love.graphics.newImage("me/attack/agreena1s.png"),c=love.graphics.newImage("me/attack/agreena1c.png"), xoff = 20, yoff = 44, cxoff = 14, cyoff = 50}
-garmfront = love.graphics.newImage("me/attack/garmfront.png")
-garmback = love.graphics.newImage("me/attack/garmback.png")
-
-greenk03 = {im=love.graphics.newImage("me/attack/greenk03.png"),c=love.graphics.newImage("me/attack/greenk0c.png"), xoff = 1, yoff = -6, cxoff = 3, cyoff = 7}
-greenk01 = {im=love.graphics.newImage("me/attack/greenk01.png"),c=love.graphics.newImage("me/attack/greenk0c.png"), xoff = 1, yoff = -6, cxoff = 3, cyoff = 7}
-greenk02 = {im=love.graphics.newImage("me/attack/greenk02.png"),c=love.graphics.newImage("me/attack/greenk0c.png"), xoff = 4, yoff = -6, cxoff = 6, cyoff = 7}
-
-greenk1 = {im=love.graphics.newImage("me/attack/greenk1.png"), xoff = 2, yoff = -6, cxoff = 3, cyoff = 7, legshuh = true, legs = love.graphics.newImage("me/attack/greenk1legs.png"), legsy = 36}
-greenk2 = {im=love.graphics.newImage("me/attack/greenk2.png"),c=love.graphics.newImage("me/attack/greenk2c.png"), xoff = 0, yoff = -2, cxoff = 2, cyoff = 7}
+greena21 = {im=love.graphics.newImage("me/attack/green/greena21.png"), xoff = 16,yoff = -2}
+greena22 = {im=love.graphics.newImage("me/attack/green/greena22.png"), xoff = 30+8, yoff = -3}
+greena22s = {im=love.graphics.newImage("me/attack/green/greena22s.png"), xoff = 30+8, yoff = 1}
 
 
-agk1 = {im=love.graphics.newImage("me/attack/agk1.png"), xoff = 2, yoff = -6, cxoff = 3, cyoff = 7}
-agk2 = {im=love.graphics.newImage("me/attack/agk2.png"),c=love.graphics.newImage("me/attack/agk2c.png"), xoff = 10, yoff =10}
+agreena22 = {im=love.graphics.newImage("me/attack/green/agreena22.png"), xoff = 20, xoff = 40, yoff = 4}
+agreena22s = {im=love.graphics.newImage("me/attack/green/agreena22s.png"), xoff = 40, yoff = 7}
+
+agreena1 = {im=love.graphics.newImage("me/attack/green/agreena1.png"), xoff = 20, yoff = 0}
+agreena1s = {im=love.graphics.newImage("me/attack/green/agreena1s.png"), xoff = 20, yoff = 44}
+
+garmfront = love.graphics.newImage("me/attack/green/garmfront.png")
+garmback = love.graphics.newImage("me/attack/green/garmback.png")
+
+greenk03 = {im=love.graphics.newImage("me/attack/green/greenk03.png"), xoff = 1, yoff = -6}
+greenk01 = {im=love.graphics.newImage("me/attack/green/greenk01.png"), xoff = 1, yoff = -6}
+greenk02 = {im=love.graphics.newImage("me/attack/green/greenk02.png"), xoff = 4, yoff = -6}
+
+greenk1 = {im=love.graphics.newImage("me/attack/green/greenk1.png"), xoff = 2, yoff = -6, legshuh = true, legs = love.graphics.newImage("me/attack/green/greenk1legs.png"), legsy = 36}
+greenk2 = {im=love.graphics.newImage("me/attack/green/greenk2.png"), xoff = 0, yoff = -2}
+
+
+agk1 = {im=love.graphics.newImage("me/attack/green/agk1.png"), xoff = 2, yoff = -6}
 
 
 me.greenkhit = false
@@ -147,9 +149,9 @@ function gandg(xx)
 
       elseif xx.animcounter < 40 then
         xx.im = greena22
-        if xx.repcounter<=3 and xx.rampcanhit then
+        if xx.repcounter<=3 and xx.rampcanhit and xx.v~= 0 then
           table.insert(xx.trail, 
-            {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0;})
+            {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0, colornum = xx.currentc})
 
         end
 
@@ -330,7 +332,7 @@ function gandg(xx)
         end
         if xx.rampcanhit then
           table.insert(xx.trail, 
-            {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0;})
+            {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0, colornum = xx.currentc})
         end
       
     elseif xx.animcounter >= 14 then
@@ -346,7 +348,7 @@ function gandg(xx)
       xx.im = agreena22
       if xx.rampcanhit then
         table.insert(xx.trail, 
-          {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0;})
+          {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0, colornum = xx.currentc})
       end
 
       if xx.animcounter <= 4 then
@@ -452,8 +454,6 @@ me.bolts = {}
 
 
 
-bolt = love.graphics.newImage("me/attack/bolt.png")
-
 function boltdraw(xx)
 
 
@@ -461,6 +461,7 @@ function boltdraw(xx)
 
   for i = #xx.bolts, 1, -1 do
     local v = xx.bolts[i]
+    rgbset(thecolors[2].c)
     love.graphics.draw(bolt, 
       v.x-(2.5*(math.cos(math.rad(v.angle)))),
       v.y+(2.5*(math.sin(math.rad(v.angle)))), math.rad(180+v.angle))
@@ -476,7 +477,7 @@ function bolttraildraw(xx)
 
     if v.t >= bolttraillength then table.remove(xx.bolttrail, i) else
       v.t = v.t + 1*rampspeed
-      love.graphics.setColor(255,255,255,50)--love.graphics.setColor(255,255,255,(255/bolttraillength)*(bolttraillength/xx.bolttrail[i].t))
+      rgbset(thecolors[2].c, (255/bolttraillength)*(bolttraillength/xx.bolttrail[i].t))
       love.graphics.draw(bolt, 
         v.x-(2.5*(math.cos(math.rad(v.angle)))),
         v.y+(2.5*(math.sin(math.rad(v.angle)))), math.rad(180+v.angle))

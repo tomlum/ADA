@@ -6,16 +6,48 @@ colorchangetime = 13
 colorfadetime = 5
 colorvib = .1
 
+
 thecolors = {}
-thecolors[0] = {n=0,c={r = 255, g = 255, b = 255},
+
+
+function colorshift(c,rate)
+local dr = math.floor(math.random(-rate,rate))
+local dg = math.floor(math.random(-rate,rate))
+local db = math.floor(math.random(-rate,rate))
+if c.r + dr > 255 or c.r+dr<0 then
+  c.r = c.r - dr
+else
+  c.r = c.r + dr
+end
+
+
+if c.g + dg > 255 or c.g+dg<0 then
+  c.g = c.g - dg
+else
+  c.g = c.g + dg
+end
+
+
+if c.b + db > 255 or c.b+db<0 then
+  c.b = c.b - db
+else
+  c.b = c.b + db
+end
+
+
+end
+
+
+thecolors[0] = {n=0,c={r = 255, g = 255, b = 255}, c2={r = 255, g = 255, b = 255},
   s = {def=1, speed = 1, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
-thecolors[1] = {n=1,c={r = 87, g = 0, b = 158},
+
+thecolors[1] = {n=1,c={r = 87, g = 0, b = 158},c2={r = 89, g = 0, b = 104},
   s = {def=1.2, speed = .8, jump = .7, weight = 1.3, brittle = 1}, tile = ptile, logo=plogo, sound = colorpsound}
-thecolors[2] = {n=2,c={r = 40, g = 255, b = 0},
+thecolors[2] = {n=2,c={r = 40, g = 25, b = 255},c2={r = 40, g = 25, b = 255},
   s = {def=.7, speed = 1.3, jump = 1.1, weight = 1, brittle = 1}, tile = gtile, logo=glogo, sound = colorgsound}
-thecolors[3] = {n=3, tile = otile,c={r = 255, g = 99, b = 0}, logo=ologo, sound = colorgsound,
+thecolors[3] = {n=3, tile = otile,c={r = 255, g = 99, b = 0},c2={r = 255, g = 99, b = 0}, logo=ologo, sound = colorgsound,
   s = {def=1, speed = 1, jump = 1.1, weight = .8, brittle = 2}}
-thecolors[4] = {n=4, tile = tile,c={r = 255, g = 0, b = 0}, logo=questionlogo, sound = colorpsound,
+thecolors[4] = {n=4, tile = tile,c={r = 255, g = 0, b = 0},c2={r = 255, g = 0, b = 0}, logo=questionlogo, sound = colorpsound,
   s = {def=1.2, speed = .7, jump = .6, weight = 1, brittle = 1}
   }
 thecolors[5] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
@@ -26,9 +58,23 @@ thecolors[9] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlog
 thecolors[10] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 thecolors[11] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 --transition color, weaker
-thecolors[100] = {n=-1,c={r = 0, g = 0, b = 0},
-  s = {def=.7, speed = 1, jump = 1, weight = 1, brittle = 1.1}, logo=questionlogo}
+thecolors[-1] = {n=-1,c={r = 0, g = 0, b = 0},
+  s = {def=.7, speed = 1, jump = 1, weight = 1, brittle = 1.1}, c2={r = 255, g = 255, b = 255}, logo=questionlogo}
 
+
+
+if fightclub then
+  me.rightc = thecolors[3]
+  you.rightc = thecolors[1]
+  me.leftc = thecolors[1]
+  you.leftc = thecolors[2]
+else
+  me.rightc = thecolors[0]
+  you.rightc = thecolors[0]
+  me.leftc = thecolors[0]
+  you.leftc = thecolors[0]
+
+end
 
 
 me.color = thecolors[0]
@@ -63,18 +109,7 @@ function tilefadeinf(inf, f, rate)
 
 end
 
-if fightclub then
-  me.rightc = thecolors[4]
-  you.rightc = thecolors[1]
-  me.leftc = thecolors[2]
-  you.leftc = thecolors[2]
-else
-  me.rightc = thecolors[0]
-  you.rightc = thecolors[0]
-  me.leftc = thecolors[0]
-  you.leftc = thecolors[0]
 
-end
 
 me.cchangeto = {n = 0, {r = 255, g = 255, b = 255}}
 you.cchangeto = {n = 0, {r = 255, g = 255, b = 255}}
@@ -157,7 +192,7 @@ function ColorChanging(xx)
     xx.runpace = defrunpace
     xx.color = thecolors[0]
   else 
-    xx.color = thecolors[100]
+    xx.color = thecolors[-1]
     xx.color.c.r = thecolors[0].c.r-xx.ctri * xx.cct
     xx.color.c.g = thecolors[0].c.g-xx.ctgi * xx.cct
     xx.color.c.b = thecolors[0].c.b-xx.ctbi * xx.cct
