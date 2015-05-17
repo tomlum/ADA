@@ -2,27 +2,27 @@
 ppunch1 = {im = lg.newImage("me/attack/purple/ppunch1.png"), ppunch1im}
 ppunch2 = {im = lg.newImage("me/attack/purple/ppunch2.png"), xoff = 5}
 ppunch3 = {im = lg.newImage("me/attack/purple/ppunch3.png"), xoff = 5, yoff = -5}
-stomp1 = {im=love.graphics.newImage("me/attack/purple/stomp1.png")}
-stomp2 = {im=love.graphics.newImage("me/attack/purple/stomp2.png")}
+stomp1 = {im=lg.newImage("me/attack/purple/stomp1.png")}
+stomp2 = {im=lg.newImage("me/attack/purple/stomp2.png")}
 
-pa11 = {im=love.graphics.newImage("me/attack/purple/pa11.png"), xoff = 15, yoff = 30}
-pa12 = {im=love.graphics.newImage("me/attack/purple/pa12.png"), xoff = 2, yoff = -2}
-pa13 = {im=love.graphics.newImage("me/attack/purple/pa13.png"), xoff = 4, yoff = -6}
+pa11 = {im=lg.newImage("me/attack/purple/pa11.png"), xoff = 15, yoff = 30}
+pa12 = {im=lg.newImage("me/attack/purple/pa12.png"), xoff = 2, yoff = -2}
+pa13 = {im=lg.newImage("me/attack/purple/pa13.png"), xoff = 4, yoff = -6}
 
-apa21 = {im=love.graphics.newImage("me/attack/purple/apa21.png"), xoff = 2,yoff = -1, extrah = 5}
-apa22 = {im=love.graphics.newImage("me/attack/purple/apa22.png"), xoff = 0, yoff = -1, extrah = 5}
-apa23 = {im=love.graphics.newImage("me/attack/purple/apa23.png"), xoff = 3, yoff = -4, extrah = 5}
+apa21 = {im=lg.newImage("me/attack/purple/apa21.png"), xoff = 2,yoff = -1, extrah = 5}
+apa22 = {im=lg.newImage("me/attack/purple/apa22.png"), xoff = 0, yoff = -1, extrah = 5}
+apa23 = {im=lg.newImage("me/attack/purple/apa23.png"), xoff = 3, yoff = -4, extrah = 5}
 
-apa11 = {im=love.graphics.newImage("me/attack/purple/apa11.png"), xoff = 5, yoff = -3, extrah = 5}
-apa12 = {im=love.graphics.newImage("me/attack/purple/apa12.png"), xoff = 13, yoff = 38, extrah = 5}
-apa13 = {im=love.graphics.newImage("me/attack/purple/apa13.png"), xoff = 35, yoff = 10, extrah = 5}
+apa11 = {im=lg.newImage("me/attack/purple/apa11.png"), xoff = 5, yoff = -3, extrah = 5}
+apa12 = {im=lg.newImage("me/attack/purple/apa12.png"), xoff = 13, yoff = 38, extrah = 5}
+apa13 = {im=lg.newImage("me/attack/purple/apa13.png"), xoff = 35, yoff = 10, extrah = 5}
 
-pp1back = {im=love.graphics.newImage("me/attack/purple/pp1back.png"), xoff = -2, yoff = 2}
-pp1back2 = {im=love.graphics.newImage("me/attack/purple/pp1back2.png"), xoff = 10, yoff = 38}
-pp1back3 = {im=love.graphics.newImage("me/attack/purple/pp1back3.png"), xoff = 37, yoff = -4}
-pp1back4 = {im=love.graphics.newImage("me/attack/purple/pp1back4.png"), xoff = 37, yoff = -8}
-apk1 = {im=love.graphics.newImage("me/attack/purple/apk1.png"),extrah = 5}
-apk2 = {im=love.graphics.newImage("me/attack/purple/apk2.png"), xoff = 0, yoff = -15}
+pp1back = {im=lg.newImage("me/attack/purple/pp1back.png"), xoff = -2, yoff = 2}
+pp1back2 = {im=lg.newImage("me/attack/purple/pp1back2.png"), xoff = 10, yoff = 38}
+pp1back3 = {im=lg.newImage("me/attack/purple/pp1back3.png"), xoff = 37, yoff = -4}
+pp1back4 = {im=lg.newImage("me/attack/purple/pp1back4.png"), xoff = 37, yoff = -8}
+apk1 = {im=lg.newImage("me/attack/purple/apk1.png"),extrah = 5}
+apk2 = {im=lg.newImage("me/attack/purple/apk2.png"), xoff = 0, yoff = -15}
 
 
 me.purpland = false
@@ -136,18 +136,18 @@ function spikedraw(xx)
       vvv[4] = vv[4]
       vvv[5] = vv[5]
       vvv[6] = vv[6]
-      love.graphics.polygon("fill", xx.spikes[i].verts)
-      love.graphics.setColor(thecolors[1].c.r/2,thecolors[1].c.g/2,thecolors[1].c.b/2)
-      love.graphics.polygon("fill", vvv)
+      lg.polygon("fill", xx.spikes[i].verts)
+      lg.setColor(thecolors[1].c.r/2,thecolors[1].c.g/2,thecolors[1].c.b/2)
+      lg.polygon("fill", vvv)
       franratio = 1.5
-      love.graphics.setColor(thecolors[1].c.r/franratio,thecolors[1].c.g/franratio,thecolors[1].c.b/franratio)
-      love.graphics.polygon("line", xx.spikes[i].verts)
+      lg.setColor(thecolors[1].c.r/franratio,thecolors[1].c.g/franratio,thecolors[1].c.b/franratio)
+      lg.polygon("line", xx.spikes[i].verts)
 
     elseif cur.t<-3 then 
       table.remove(xx.spikes,i)
     end
   end
-  love.graphics.setColor(255,255,255)
+  lg.setColor(255,255,255)
 end
 
 
@@ -164,7 +164,7 @@ function spikeupdate(xx)
       vv[3] = vv[3]-(7*cur.lr)
       vv[4] = vv[4]+(15)
       vv[5] = vv[5]-(6*cur.lr)
-      love.graphics.polygon("fill", vv)
+      lg.polygon("fill", vv)
     elseif cur.t > 0 and cur.t<5  then
       spikegrow(cur,1, xx)
     elseif cur.t <=7 and cur.t >=5 then
@@ -297,7 +297,7 @@ you.purpgroundtimer = 0
 function pandp(xx)
 
   if xx.hitsomeonewithpurp and xx.numofspikes>0 then 
-    combo(xx)
+    xx.cmbo=true--combo(xx)
     xx.cancombo = true
   end
   
@@ -472,7 +472,7 @@ function pandp(xx)
           elseif xx.animcounter < 55 then
             xx.im = ppunch3
             if xx.animcounter >= pa2busytime then 
-              combo(xx)
+              xx.cmbo=true--combo(xx)
             end
 
           elseif xx.animcounter >= 55 then
@@ -603,7 +603,7 @@ function pandp(xx)
                 end end)
 
             elseif xx.animcounter > 23 then
-              combo(xx)
+              xx.cmbo=true--combo(xx)
             end
           else 
             xx.animcounter = 0

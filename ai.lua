@@ -4,26 +4,26 @@
 
 hittmon = {}
 
-ehead1 = love.graphics.newImage("enemy/eh1.png")
+ehead1 = lg.newImage("enemy/eh1.png")
 
 
-ea2= {im=love.graphics.newImage("enemy/ea2.png"), head = love.graphics.newImage("enemy/ah2.png"), hpx = 2, hpy = 6, xoff = 7}
-ea3= {im=love.graphics.newImage("enemy/ea3.png"), head = love.graphics.newImage("enemy/ah3.png"), hpx = 3, hpy = 2+4, xoff = 12, yoff = 4} --2 or 10????
-ea4= {im=love.graphics.newImage("enemy/ea4.png"), head = love.graphics.newImage("enemy/ah4.png"), hpx = 3, hpy = 2+4, xoff = 12, yoff = 4+22} --2 or 10????
-ea5= {im=love.graphics.newImage("enemy/ea4.png"), head = love.graphics.newImage("enemy/ah5.png"), hpx = 3, hpy = 2+4, xoff = 12, yoff = 4+22}
-ea6= {im=love.graphics.newImage("enemy/ea4.png"), head = love.graphics.newImage("enemy/ah6.png"), hpx = 3, hpy = 2+4, xoff = 12, yoff = 4+22}
-ea7= {im=love.graphics.newImage("enemy/ea3.png"), head = love.graphics.newImage("enemy/ah7.png"), hpx = 3, hpy = 2+4, xoff = 12, yoff = 4}
-ea8= {im=love.graphics.newImage("enemy/ea2.png"), head = love.graphics.newImage("enemy/ah8.png"), hpx = 2, hpy = 6, xoff = 7}
+ea2= {im=lg.newImage("enemy/ea2.png"), head = lg.newImage("enemy/ah2.png"), hpx = 2, hpy = 6, xoff = 7}
+ea3= {im=lg.newImage("enemy/ea3.png"), head = lg.newImage("enemy/ah3.png"), hpx = 3, hpy = 2+4, xoff = 12, yoff = 4} --2 or 10????
+ea4= {im=lg.newImage("enemy/ea4.png"), head = lg.newImage("enemy/ah4.png"), hpx = 3, hpy = 2+4, xoff = 12, yoff = 4+22} --2 or 10????
+ea5= {im=lg.newImage("enemy/ea4.png"), head = lg.newImage("enemy/ah5.png"), hpx = 3, hpy = 2+4, xoff = 12, yoff = 4+22}
+ea6= {im=lg.newImage("enemy/ea4.png"), head = lg.newImage("enemy/ah6.png"), hpx = 3, hpy = 2+4, xoff = 12, yoff = 4+22}
+ea7= {im=lg.newImage("enemy/ea3.png"), head = lg.newImage("enemy/ah7.png"), hpx = 3, hpy = 2+4, xoff = 12, yoff = 4}
+ea8= {im=lg.newImage("enemy/ea2.png"), head = lg.newImage("enemy/ah8.png"), hpx = 2, hpy = 6, xoff = 7}
 
-ebf= {im=love.graphics.newImage("enemy/ebf.png"), head = ehead1, hpx = 3, hpy = 9, xoff = 4}
-eff= {im=love.graphics.newImage("enemy/eff.png"), head = ehead1, hpx = 0, hpy = 12, xoff = 7}
+ebf= {im=lg.newImage("enemy/ebf.png"), head = ehead1, hpx = 3, hpy = 9, xoff = 4}
+eff= {im=lg.newImage("enemy/eff.png"), head = ehead1, hpx = 0, hpy = 12, xoff = 7}
 
-ei1= {im=love.graphics.newImage("enemy/ei1.png"), head = ehead1, xoff = 7}
-ei2= {im=love.graphics.newImage("enemy/ei2.png"), head = ehead1, hpx = 4, hpy = 11, xoff = 7}
-ew1= {im=love.graphics.newImage("enemy/ew1.png"), head = ehead1, xoff = 7}
-ew2= {im=love.graphics.newImage("enemy/ew2.png"), head = ehead1, xoff = 7}
-ead= {im=love.graphics.newImage("enemy/ead.png"), head = ehead1, xoff = 7+4, yoff = 25}
-eau= {im=love.graphics.newImage("enemy/eau.png"), head = ehead1, xoff = 7}
+ei1= {im=lg.newImage("enemy/ei1.png"), head = ehead1, xoff = 7}
+ei2= {im=lg.newImage("enemy/ei2.png"), head = ehead1, hpx = 4, hpy = 11, xoff = 7}
+ew1= {im=lg.newImage("enemy/ew1.png"), head = ehead1, xoff = 7}
+ew2= {im=lg.newImage("enemy/ew2.png"), head = ehead1, xoff = 7}
+ead= {im=lg.newImage("enemy/ead.png"), head = ehead1, xoff = 7+4, yoff = 25}
+eau= {im=lg.newImage("enemy/eau.png"), head = ehead1, xoff = 7}
 
 flapj = 12
 monairspeed = 5
@@ -224,8 +224,8 @@ function mondraw()
       xx.im.hpy = 8
     end
 
-    love.graphics.draw(xx.im.head, xx.mid+xx.im.hpx*xx.lr, xx.y+xx.im.hpy,xx.headrot,xx.lr,1,5, 19)
-    love.graphics.draw(xx.im.im, xx.drawx, xx.y+5-xx.im.yoff,0,xx.lr,1)
+    lg.draw(xx.im.head, xx.mid+xx.im.hpx*xx.lr, xx.y+xx.im.hpy,xx.headrot,xx.lr,1,5, 19)
+    lg.draw(xx.im.im, xx.drawx, xx.y+5-xx.im.yoff,0,xx.lr,1)
   end
 
 end

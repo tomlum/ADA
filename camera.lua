@@ -12,7 +12,7 @@ defaultminzoom = .7
 defaultmaxzoom = .5
 minzoom = defaultminzoom
 maxzoom = defaultmaxzoom
-minzdis = love.graphics.getWidth()
+minzdis = lg.getWidth()
 maxzdis = 4500
 
 cscale = .7
@@ -393,14 +393,14 @@ camera.xfollow = true
 camera.yfollow = true
 
 function camera:set()
-  love.graphics.push()
-  love.graphics.rotate(-self.rotation)
-  love.graphics.scale(1 / self.scaleX, 1 / self.scaleY)
-  love.graphics.translate(-self.x, -self.y)
+  lg.push()
+  lg.rotate(-self.rotation)
+  lg.scale(1 / self.scaleX, 1 / self.scaleY)
+  lg.translate(-self.x, -self.y)
 end
 
 function camera:unset()
-  love.graphics.pop()
+  lg.pop()
 end
 
 function camera:move(dx, dy)
@@ -443,14 +443,14 @@ camera2.xfollow = true
 camera2.yfollow = true
 
 function camera2:set()
-  love.graphics.push()
-  love.graphics.rotate(-self.rotation)
-  love.graphics.scale(1 / self.scaleX, 1 / self.scaleY)
-  love.graphics.translate(-self.x, -self.y)
+  lg.push()
+  lg.rotate(-self.rotation)
+  lg.scale(1 / self.scaleX, 1 / self.scaleY)
+  lg.translate(-self.x, -self.y)
 end
 
 function camera2:unset()
-  love.graphics.pop()
+  lg.pop()
 end
 
 function camera2:move(dx, dy)
@@ -487,16 +487,16 @@ end
 
 function drawx(xx)
   
-  love.graphics.draw(enviro.sky, xx.x, 0, 0, 500, 1.1)
-  --love.graphics.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
+  lg.draw(enviro.sky, xx.x, 0, 0, 500, 1.1)
+  --lg.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
   if themap.name == "library" then 
-    love.graphics.draw(enviro.paralax2, xx.x/1.5 + (screenwidth/4)/1.5 - 400,xx.y/1.2 + enviro.screenheight / 1.2 - 12 - paralaxoffset-940)
+    lg.draw(enviro.paralax2, xx.x/1.5 + (screenwidth/4)/1.5 - 400,xx.y/1.2 + enviro.screenheight / 1.2 - 12 - paralaxoffset-940)
   end
   blurdraw(.8/(cscale), function()
-  love.graphics.draw(enviro.paralax, xx.x / 2 + ((screenwidth/4)/2*cscale*2.5) - 200, (xx.y/2) + (enviro.screenheight/2*cscale) - 12 - paralaxoffset - 800)
+  lg.draw(enviro.paralax, xx.x / 2 + ((screenwidth/4)/2*cscale*2.5) - 200, (xx.y/2) + (enviro.screenheight/2*cscale) - 12 - paralaxoffset - 800)
   end)
   
-  love.graphics.draw(enviro.stage, 0, 0)
+  lg.draw(enviro.stage, 0, 0)
   if themap.name == "street" then
     drawstreetprestuff()
   end
@@ -517,14 +517,14 @@ function drawx(xx)
   end
     drawparticles()
     if fightclub then
-    love.graphics.rectangle("fill", 500, 0, 2, themaps[100].floor+1)
+    lg.rectangle("fill", 500, 0, 2, themaps[100].floor+1)
     end
   drawcolorstuff(me)
 mondraw()
 
-  love.graphics.setColor(155,155,155)
+  lg.setColor(155,155,155)
   drawcolorstuff(you)
-  love.graphics.setColor(255, 255, 255, 255)
+  lg.setColor(255, 255, 255, 255)
 
 
   if themap.name == "street" then

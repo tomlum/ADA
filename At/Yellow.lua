@@ -655,7 +655,7 @@ for i,v in ipairs(yourmines) do
 
 
 
-	love.graphics.draw(grenade, v.x - 10, v.y - 16, v.rotate)
+	lg.draw(grenade, v.x - 10, v.y - 16, v.rotate)
 	end
 
 
@@ -727,7 +727,7 @@ table.insert(you.spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + mat
 
 
 
-	else love.graphics.draw(pmine, v.x - 5, v.y - 10)
+	else lg.draw(pmine, v.x - 5, v.y - 10)
 		if v.explode < 1 then
 		v.explode = v.explode + 1
 		end
@@ -812,17 +812,17 @@ table.insert(you.spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + mat
 		if v.explode > 0 then v.explode = v.explode + 1 end
 		if v.explode == 10 then 
 		table.remove(yourmines,i)
-		elseif v.explode > 8 then love.graphics.draw(cmine6, v.x - 100, v.y - 200)
+		elseif v.explode > 8 then lg.draw(cmine6, v.x - 100, v.y - 200)
 		
-		elseif v.explode > 6 then love.graphics.draw(cmine5, v.x - 100, v.y - 200)
+		elseif v.explode > 6 then lg.draw(cmine5, v.x - 100, v.y - 200)
 		
-		elseif v.explode >4 then love.graphics.draw(cmine4, v.x - 100, v.y - 200)
+		elseif v.explode >4 then lg.draw(cmine4, v.x - 100, v.y - 200)
 		
-		elseif v.explode > 2  then love.graphics.draw(cmine3, v.x - 100, v.y - 200)
+		elseif v.explode > 2  then lg.draw(cmine3, v.x - 100, v.y - 200)
 		
-		elseif v.explode >= 1 then love.graphics.draw(cmine2, v.x - 100, v.y - 200)
+		elseif v.explode >= 1 then lg.draw(cmine2, v.x - 100, v.y - 200)
 		
-		elseif v.explode == 0 then love.graphics.draw(mine, v.x - 5, v.y - 10)
+		elseif v.explode == 0 then lg.draw(mine, v.x - 5, v.y - 10)
 		end
 
 	elseif v.s == -10 then
@@ -830,19 +830,19 @@ table.insert(you.spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + mat
 		if v.explode == 12 then 
 		table.remove(yourmines,i)
 
-		elseif v.explode > 10 then love.graphics.draw(bombdet6, v.x - 150, v.y - 150)
+		elseif v.explode > 10 then lg.draw(bombdet6, v.x - 150, v.y - 150)
 
-		elseif v.explode > 8 then love.graphics.draw(bombdet5, v.x - 150, v.y - 150)
+		elseif v.explode > 8 then lg.draw(bombdet5, v.x - 150, v.y - 150)
 		
-		elseif v.explode > 6 then love.graphics.draw(bombdet4, v.x - 150, v.y - 150)
+		elseif v.explode > 6 then lg.draw(bombdet4, v.x - 150, v.y - 150)
 		
-		elseif v.explode >4 then love.graphics.draw(bombdet3, v.x - 150, v.y - 150)
+		elseif v.explode >4 then lg.draw(bombdet3, v.x - 150, v.y - 150)
 		
-		elseif v.explode > 2  then love.graphics.draw(bombdet2, v.x - 150, v.y - 150)
+		elseif v.explode > 2  then lg.draw(bombdet2, v.x - 150, v.y - 150)
 		
-		elseif v.explode >= 1 then love.graphics.draw(bombdet1, v.x - 150, v.y - 150)
+		elseif v.explode >= 1 then lg.draw(bombdet1, v.x - 150, v.y - 150)
 		repplay(cyellow2)
-		elseif v.explode == 0 then love.graphics.draw(airbomb, v.x - 15, v.y - 15)
+		elseif v.explode == 0 then lg.draw(airbomb, v.x - 15, v.y - 15)
 
 	end
 
@@ -850,17 +850,17 @@ table.insert(you.spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + mat
 		if v.explode > 0 then v.explode = v.explode + 1 end
 		if v.explode == 10 then 
 		table.remove(yourmines,i)
-		elseif v.explode > 8 then love.graphics.draw(mine6, v.x - 30, v.y - 60)
+		elseif v.explode > 8 then lg.draw(mine6, v.x - 30, v.y - 60)
 		
-		elseif v.explode > 6 then love.graphics.draw(mine5, v.x - 30, v.y - 60)
+		elseif v.explode > 6 then lg.draw(mine5, v.x - 30, v.y - 60)
 		
-		elseif v.explode >4 then love.graphics.draw(mine4, v.x - 30, v.y - 60)
+		elseif v.explode >4 then lg.draw(mine4, v.x - 30, v.y - 60)
 		
-		elseif v.explode > 2  then love.graphics.draw(mine3, v.x - 30, v.y - 60)
+		elseif v.explode > 2  then lg.draw(mine3, v.x - 30, v.y - 60)
 		
-		elseif v.explode >= 1 then love.graphics.draw(mine2, v.x - 30, v.y - 60)
+		elseif v.explode >= 1 then lg.draw(mine2, v.x - 30, v.y - 60)
 		
-		elseif v.explode == 0 then love.graphics.draw(mine, v.x - 5, v.y - 10)
+		elseif v.explode == 0 then lg.draw(mine, v.x - 5, v.y - 10)
 
 	end
 	end
@@ -1078,7 +1078,7 @@ if v.s == 1 or v.s == 0 or v.s == -1 then
 
 
 
-	love.graphics.draw(grenade, v.x - 10, v.y - 16,v.rotate)
+	lg.draw(grenade, v.x - 10, v.y - 16,v.rotate)
 	end
 
 
@@ -1149,7 +1149,7 @@ table.insert(me.spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math
 
 
 
-	else love.graphics.draw(pmine, v.x - 5, v.y - 10)
+	else lg.draw(pmine, v.x - 5, v.y - 10)
 		if v.explode < 1 then
 		v.explode = v.explode + 1
 		end
@@ -1241,17 +1241,17 @@ table.insert(me.spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math
 		if v.explode > 0 then v.explode = v.explode + 1 end
 		if v.explode == 10 then 
 		table.remove(mymines,i)
-		elseif v.explode > 8 then love.graphics.draw(cmine6, v.x - 100, v.y - 200)
+		elseif v.explode > 8 then lg.draw(cmine6, v.x - 100, v.y - 200)
 		
-		elseif v.explode > 6 then love.graphics.draw(cmine5, v.x - 100, v.y - 200)
+		elseif v.explode > 6 then lg.draw(cmine5, v.x - 100, v.y - 200)
 		
-		elseif v.explode >4 then love.graphics.draw(cmine4, v.x - 100, v.y - 200)
+		elseif v.explode >4 then lg.draw(cmine4, v.x - 100, v.y - 200)
 		
-		elseif v.explode > 2  then love.graphics.draw(cmine3, v.x - 100, v.y - 200)
+		elseif v.explode > 2  then lg.draw(cmine3, v.x - 100, v.y - 200)
 		
-		elseif v.explode >= 1 then love.graphics.draw(cmine2, v.x - 100, v.y - 200)
+		elseif v.explode >= 1 then lg.draw(cmine2, v.x - 100, v.y - 200)
 		
-		elseif v.explode == 0 then love.graphics.draw(mine, v.x - 5, v.y - 10)
+		elseif v.explode == 0 then lg.draw(mine, v.x - 5, v.y - 10)
 		end
 
 	elseif v.s == -10 then
@@ -1259,19 +1259,19 @@ table.insert(me.spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math
 		if v.explode == 12 then 
 		table.remove(mymines,i)
 
-		elseif v.explode > 10 then love.graphics.draw(bombdet6, v.x - 150, v.y - 150)
+		elseif v.explode > 10 then lg.draw(bombdet6, v.x - 150, v.y - 150)
 
-		elseif v.explode > 8 then love.graphics.draw(bombdet5, v.x - 150, v.y - 150)
+		elseif v.explode > 8 then lg.draw(bombdet5, v.x - 150, v.y - 150)
 		
-		elseif v.explode > 6 then love.graphics.draw(bombdet4, v.x - 150, v.y - 150)
+		elseif v.explode > 6 then lg.draw(bombdet4, v.x - 150, v.y - 150)
 		
-		elseif v.explode >4 then love.graphics.draw(bombdet3, v.x - 150, v.y - 150)
+		elseif v.explode >4 then lg.draw(bombdet3, v.x - 150, v.y - 150)
 		
-		elseif v.explode > 2  then love.graphics.draw(bombdet2, v.x - 150, v.y - 150)
+		elseif v.explode > 2  then lg.draw(bombdet2, v.x - 150, v.y - 150)
 		
-		elseif v.explode >= 1 then love.graphics.draw(bombdet1, v.x - 150, v.y - 150)
+		elseif v.explode >= 1 then lg.draw(bombdet1, v.x - 150, v.y - 150)
 		repplay(cyellow1)
-		elseif v.explode == 0 then love.graphics.draw(airbomb, v.x - 15, v.y - 15)
+		elseif v.explode == 0 then lg.draw(airbomb, v.x - 15, v.y - 15)
 
 	end
 
@@ -1279,17 +1279,17 @@ table.insert(me.spikes, {x = v.x + (0 + math.random(8)) * 1, y = v.y - 10 + math
 		if v.explode > 0 then v.explode = v.explode + 1 end
 		if v.explode == 10 then 
 		table.remove(mymines,i)
-		elseif v.explode > 8 then love.graphics.draw(mine6, v.x - 30, v.y - 60)
+		elseif v.explode > 8 then lg.draw(mine6, v.x - 30, v.y - 60)
 		
-		elseif v.explode > 6 then love.graphics.draw(mine5, v.x - 30, v.y - 60)
+		elseif v.explode > 6 then lg.draw(mine5, v.x - 30, v.y - 60)
 		
-		elseif v.explode >4 then love.graphics.draw(mine4, v.x - 30, v.y - 60)
+		elseif v.explode >4 then lg.draw(mine4, v.x - 30, v.y - 60)
 		
-		elseif v.explode > 2  then love.graphics.draw(mine3, v.x - 30, v.y - 60)
+		elseif v.explode > 2  then lg.draw(mine3, v.x - 30, v.y - 60)
 		
-		elseif v.explode >= 1 then love.graphics.draw(mine2, v.x - 30, v.y - 60)
+		elseif v.explode >= 1 then lg.draw(mine2, v.x - 30, v.y - 60)
 		
-		elseif v.explode == 0 then love.graphics.draw(mine, v.x - 5, v.y - 10)
+		elseif v.explode == 0 then lg.draw(mine, v.x - 5, v.y - 10)
 
 	end
 	end

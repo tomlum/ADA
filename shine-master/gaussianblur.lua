@@ -43,7 +43,7 @@ local function build_shader(sigma)
 
 	code[#code+1] = ("return c * vec4(%f) * color;}"):format(norm > 0 and 1/norm or 1)
 
-	return love.graphics.newShader(table.concat(code))
+	return lg.newShader(table.concat(code))
 end
 
 return {
@@ -51,39 +51,39 @@ requires = {'canvas', 'shader'},
 description = "Fast Gaussian blur shader",
 
 new = function(self)
-	self.canvas_h, self.canvas_v = love.graphics.newCanvas(), love.graphics.newCanvas()
+	self.canvas_h, self.canvas_v = lg.newCanvas(), lg.newCanvas()
 	self.shader = build_shader(1)
 	self.shader:send("direction",{1.0,0.0})
 end,
 
 draw = function(self, func)
-	local c = love.graphics.getCanvas()
-	local s = love.graphics.getShader()
-	local co = {love.graphics.getColor()}
+	local c = lg.getCanvas()
+	local s = lg.getShader()
+	local co = {lg.getColor()}
 
 	-- draw scene
 	self.canvas_h:clear()
 	self.canvas_h:renderTo(func)
 
-	love.graphics.setColor(co)
-	love.graphics.setShader(self.shader)
+	lg.setColor(co)
+	lg.setShader(self.shader)
 
-	local b = love.graphics.getBlendMode()
-	love.graphics.setBlendMode('premultiplied')
+	local b = lg.getBlendMode()
+	lg.setBlendMode('premultiplied')
 
 	-- first pass (horizontal blur)
-	self.shader:send('direction', {1 / love.graphics.getWidth(), 0})
+	self.shader:send('direction', {1 / lg.getWidth(), 0})
 	self.canvas_v:clear()
-	self.canvas_v:renderTo(function() love.graphics.draw(self.canvas_h, 0,0) end)
+	self.canvas_v:renderTo(function() lg.draw(self.canvas_h, 0,0) end)
 
 	-- second pass (vertical blur)
-	self.shader:send('direction', {0, 1 / love.graphics.getHeight()})
-	love.graphics.draw(self.canvas_v, 0,0)
+	self.shader:send('direction', {0, 1 / lg.getHeight()})
+	lg.draw(self.canvas_v, 0,0)
 
 	-- restore blendmode, shader and canvas
-	love.graphics.setBlendMode(b)
-	love.graphics.setShader(s)
-	love.graphics.setCanvas(c)
+	lg.setBlendMode(b)
+	lg.setShader(s)
+	lg.setCanvas(c)
 end,
 
 set = function(self, key, value)

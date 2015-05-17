@@ -210,7 +210,7 @@ function drawallhex()
       drawhexcheck(v.mid+v.lr*(dsw/2), v.y+(dsh)+hexbuffer/2, v.width+dsw-hexbuffer, v.height-dsh-hexbuffer-extrah, v.v, v.j)
     end
 
-    love.graphics.line(bx1,by1,bx2,by2)
+    lg.line(bx1,by1,bx2,by2)
   end
 end
 
@@ -232,17 +232,17 @@ function drawhexcheck(ex, why, w, h, v, j)
   adjn1 = (disn+1)%4
   adjn2 = (disn-1)%4
   oppn = (disn-2)%4
-  love.graphics.setColor(255,0,0)
-  love.graphics.line(d[disn].x,d[disn].y, d[adjn1].x,d[adjn1].y)
-  love.graphics.line(d[disn].x,d[disn].y, d[adjn2].x,d[adjn2].y)
-  love.graphics.setColor(255,255,255)
-  love.graphics.line(t[adjn1].x,t[adjn1].y, d[adjn1].x,d[adjn1].y)
-  love.graphics.line(t[adjn2].x,t[adjn2].y, d[adjn2].x,d[adjn2].y)
-  love.graphics.setColor(0,255,0)
-  love.graphics.line(t[oppn].x,t[oppn].y, t[adjn1].x,t[adjn1].y)
-  love.graphics.line(t[oppn].x,t[oppn].y, t[adjn2].x,t[adjn2].y)
+  lg.setColor(255,0,0)
+  lg.line(d[disn].x,d[disn].y, d[adjn1].x,d[adjn1].y)
+  lg.line(d[disn].x,d[disn].y, d[adjn2].x,d[adjn2].y)
+  lg.setColor(255,255,255)
+  lg.line(t[adjn1].x,t[adjn1].y, d[adjn1].x,d[adjn1].y)
+  lg.line(t[adjn2].x,t[adjn2].y, d[adjn2].x,d[adjn2].y)
+  lg.setColor(0,255,0)
+  lg.line(t[oppn].x,t[oppn].y, t[adjn1].x,t[adjn1].y)
+  lg.line(t[oppn].x,t[oppn].y, t[adjn2].x,t[adjn2].y)
 
-  love.graphics.setColor(255,255,255)
+  lg.setColor(255,255,255)
 
 
 end
@@ -415,7 +415,8 @@ local stophit = false
     then
       --flash = true
       special(p)
-      if p.block then p.letgoofblock = true end
+      if p.block then
+ p.letgoofblock = true end
     end
   end
     

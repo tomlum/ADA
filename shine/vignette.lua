@@ -27,8 +27,8 @@ requires = {'canvas', 'shader'},
 description = "Vignette overlay",
 
 new = function(self)
-	self.canvas = love.graphics.newCanvas()
-	self.shader = love.graphics.newShader[[
+	self.canvas = lg.newCanvas()
+	self.shader = lg.newShader[[
 		extern number radius;
 		extern number softness;
 		extern number opacity;
@@ -43,7 +43,7 @@ new = function(self)
 	self.shader:send("radius",1)
 	self.shader:send("softness",.45)
 	self.shader:send("opacity",.5)
-	self.shader:send("aspect", love.graphics.getWidth() / love.graphics.getHeight())
+	self.shader:send("aspect", lg.getWidth() / lg.getHeight())
 end,
 
 draw = function(self, func)

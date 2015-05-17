@@ -1,44 +1,23 @@
 
-placespeople = true
 
 
-idle1im = love.graphics.newImage("me/idle/idle1.png")
-idle1c = love.graphics.newImage("me/idle/idle1c.png")
-idle2im = love.graphics.newImage("me/idle/idle2.png")
-idle2c = love.graphics.newImage("me/idle/idle2c.png")
-idle3im = love.graphics.newImage("me/idle/idle3.png")
-idle3c = love.graphics.newImage("me/idle/idle3c.png")
-idle4im = love.graphics.newImage("me/idle/idle4.png")
-idle4c = love.graphics.newImage("me/idle/idle4c.png")
-idle1 = {im = idle1im, c = idle1c}
-idle2 = {im = idle2im, c = idle2c}
-idle3 = {im = idle3im, c = idle3c}
-idle4 = {im = idle4im, c = idle4c}
+idle1 = {im = lg.newImage("me/idle/idle1.png")}
+idle2 = {im = lg.newImage("me/idle/idle2.png")}
+idle3 = {im = lg.newImage("me/idle/idle3.png")}
+idle4 = {im = lg.newImage("me/idle/idle4.png")}
 
 at = {}
 
 
-backtostage = function()
-collide = true
-ln = 1
-rn = 1
-lcx = -screenwidth 
-rcx = screenwidth*1.5
-lset = false
-rset = false
-menu = "stage"
-sfade = 15
-startsfade = false
-juststartedpost = true
-end
-
-
-
-
-
-
-
 me = {}
+you = {}
+me.shade=255
+you.shade=180
+me.outline={r=155,g=0,b=155}
+you.outline={r=25,g=155,b=155}
+
+
+
 
 me.id = 1
 	me.health = maxhealth
@@ -105,8 +84,6 @@ me.id = 1
 
 
 
-
-you = {}
 
 you.id = 2
 	you.health = maxhealth
@@ -199,7 +176,7 @@ you.yoffset = 0
 
 
 	you.deathclock = 0
-	medeathclock = 0
+	me.deathclock = 0
 
 you.lefty = true
 me.righty = true
@@ -356,8 +333,6 @@ if themap.name == "street" then
 	me.x = 1000
 		you.x = 6000
 		floor = 1900 - 3
-		me.y = floor - 60
-		you.y = floor - 60
 elseif themap.name == "library" then 
 	me.x = 700
 		you.x = 2000
@@ -398,7 +373,7 @@ you.yoffset = 0
 
 
 	you.deathclock = 0
-	medeathclock = 0
+	me.deathclock = 0
 
 	you.lefty = true
 me.righty = true
@@ -670,44 +645,13 @@ if not fightclub then
 	enviro.x = love.graphics.newImage("enviro/x.png")
 
   slantbar = love.graphics.newImage("enviro/slantbar.png")
-	enviro.ptile = love.graphics.newImage("enviro/rp.png")
-	enviro.ptile:setFilter("nearest")
-	enviro.btile = love.graphics.newImage("enviro/rb.png")
-	enviro.btile:setFilter("nearest")
-	enviro.stile = love.graphics.newImage("enviro/rs.png")
-	enviro.stile:setFilter("nearest")
-	enviro.gtile = love.graphics.newImage("enviro/rg.png")
-	enviro.gtile:setFilter("nearest")
-	enviro.ytile = love.graphics.newImage("enviro/ry.png")
-	enviro.ytile:setFilter("nearest")
 
-	enviro.sptile = love.graphics.newImage("enviro/sptile.png")
-	enviro.sptile:setFilter("nearest")
-	enviro.sbtile = love.graphics.newImage("enviro/sbtile.png")
-	enviro.sbtile:setFilter("nearest")
-	enviro.sstile = love.graphics.newImage("enviro/sstile.png")
-	enviro.sstile:setFilter("nearest")
-	enviro.sgtile = love.graphics.newImage("enviro/sgtile.png")
-	enviro.sgtile:setFilter("nearest")
-	enviro.sytile = love.graphics.newImage("enviro/sytile.png")
-	enviro.sytile:setFilter("nearest")
 
-	enviro.pframe = love.graphics.newImage("enviro/pframe.png")
-	enviro.pframe:setFilter("nearest")
-	enviro.bframe = love.graphics.newImage("enviro/bframe.png")
-	enviro.bframe:setFilter("nearest")
-	enviro.gframe = love.graphics.newImage("enviro/gframe.png")
-	enviro.gframe:setFilter("nearest")
-	enviro.yframe = love.graphics.newImage("enviro/yframe.png")
-	enviro.yframe:setFilter("nearest")
-	enviro.sframe = love.graphics.newImage("enviro/sframe.png")
-	enviro.sframe:setFilter("nearest")
+
 	enviro.spine = love.graphics.newImage("enviro/spine.png")
 	enviro.spine:setFilter("nearest")
 
 
-	mode1 = love.graphics.newImage("enviro/mode1.png")
-	mode2 = love.graphics.newImage("enviro/mode2.png")
 	
 	enviro.v1 = love.graphics.newImage("enviro/v1.png")
 	enviro.v1 = love.graphics.newImage("enviro/v1.png")

@@ -4,17 +4,6 @@
 --also remember that flinch dir depends on the object hitting dir not necessarily the lr of the other person
 
 
-me.rampspeed = 1
-you.rampspeed = 1
-function relativity(xx)
-  if xx.id == 1 then
-    xx.rampspeed = 1
-    else
-  xx.rampspeed = rampspeed
-  end
-  
-  
-end
 
 
 
@@ -30,58 +19,6 @@ me.oldpy = me.y
 you.oldpy = you.y
 
 
-
-function lof(x,y)
-  if x < y then return x
-  else return y
-  end
-
-end
-
-function mlof(x)
-  local lof = x[1]
-  for i = 2, #x do
-    if lof > x[i] then lof = x[i]
-
-    end
-  end
-  return lof
-
-end
-
-function mlofgz(x)
-  local lof = 10000000
-  for i = 1, #x do
-
-    if x[i]>0 and lof > x[i] then lof = x[i]
-
-    end
-  end
-  if lof == 10000000 then
-    return 0 else
-    return lof
-  end
-
-end
-
-function mhof(x)
-  local hof = x[1]
-  for i = 2, #x do
-    if hof < x[i] then hof = x[i]
-
-    end
-  end
-  return hof
-
-end
-
-
-function hof(x,y)
-  if x > y then return x
-  else return y
-  end
-
-end
 
 function shakez(z)
   rumbleme(me,z*10)
@@ -524,13 +461,12 @@ if stophit and meme.player~=nil then
 
 end
 
-
 function hexplatcheck2(y1, x1, x2, ex, why, w, why2, v)
 
 
   midv2 = {x = (ex+w/2)+v, y=why2}
-  midv = {x = ex+w/2, y=why}
-  local linep1 = {x = x1, y = y1}
+  midv = {x = ex+w/2+.001, y=why}
+  local linep1 = {x = x1+.001, y = y1}
   local linep2 = {x = x2, y = y1}
   if pint(linep1, linep2, midv, midv2) 
   then return true
@@ -659,7 +595,7 @@ function hboxwall()
       if ( p.flinch or p.a1 or p.a2 or p.a3 or p.a4) then p.wjt = 0 end
 
       if p.wjt > 0 then 
-        p.wjt = p.wjt + 1*rampspeed
+        p.wjt = p.wjt + 1*ramp(p)
         --[[
         if p.wjt > 8 then 
           p.wjt = 0
@@ -753,16 +689,11 @@ function hboxwall()
 
 
 
-        if (p.v > 0 and (p.mid+(dsw/2)+p.v > wall.x and p.mid+(dsw/2) < wall.x)) or
-        (p.v < 0 and (p.mid-(dsw/2)+p.v < wall.x and p.mid-(dsw/2) > wall.x)) then
+      
 
-          if p.flinch then
-            slowww = true
-          end
+          
 xrubble(p)
 
-
-        end
         
 
       end
@@ -821,7 +752,6 @@ xrubble(p)
           or 
           (p.y == plat.y-p.height-extrah and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
         then
-
           if p.j ~= 0 and p.player~=nil then
             if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
               xx.landingcounter = xx.landingcounter + landingwait
@@ -854,7 +784,7 @@ xrubble(p)
       if p.im.extrah ~= nil then
         p.oldpy = p.y+p.height-p.im.extrah
       else
-        p.oldpy = p.y+p.height-1
+        p.oldpy = p.y+p.height
       end
     end
     

@@ -59,7 +59,7 @@ test123 = false
 
 
 
-blashader = love.graphics.newShader( "outline.glsl" )
+blashader = lg.newShader( "outline.glsl" )
 --do special features to second pp, shake if on plat and near, send person through plat if not floor
 --make spikes not be on not ground
 --front paralax?
@@ -97,7 +97,7 @@ blashader = love.graphics.newShader( "outline.glsl" )
 --ON HIT GLASS/WALL WHILE FLINCHED OR BOUNCE OFF EDGE WALL SLOW DOWN TIME OR PAUSE
 --if chargin up then time slows or stops, easy combo chain, camera zoom too? then zoom back out, the color hums
 bloop = 10
-love.graphics.setDefaultFilter("linear","nearest",1)
+lg.setDefaultFilter("linear","nearest",1)
 --maybe if slow then walkrate decreases so you can walk slowly if using controller
 --plane overhead night city veins simmulator for loading screens? or just a scene
 
@@ -402,8 +402,8 @@ end
 
 
 function love.update()
-colorshift(thecolors[2].c,8)
-colorshift(me.outline,6)
+--colorshift(thecolors[2].c,8)
+--colorshift(me.outline,6)
   --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
   if love.keyboard.isDown("x")  then speedramp = true end
   if speedramp then 
@@ -436,8 +436,8 @@ colorshift(me.outline,6)
     you.prevhealth = you.health
 
 
-    screenwidth = love.graphics.getWidth()
-    screenheight = love.graphics.getHeight()
+    screenwidth = lg.getWidth()
+    screenheight = lg.getHeight()
     enviro.screenheight = screenheight - barheight
     healthratio = (screenwidth/2)/maxhealth
 
@@ -695,7 +695,7 @@ monupdate()
 
 
 
-    --love.graphics.setShader(myShader)
+    --lg.setShader(myShader)
 
     me.xoffset = me.xoffset * me.lr
     you.xoffset = you.xoffset * you.lr
@@ -716,67 +716,67 @@ monupdate()
 
       else
 
-        love.graphics.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, screenwidth/1440,1)
-        love.graphics.setColor(155, 155, 155, 255)
-        love.graphics.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, -screenwidth/1440, 1)
-        love.graphics.setColor(255, 255, 255, 255)
+        lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, screenwidth/1440,1)
+        lg.setColor(155, 155, 155, 255)
+        lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, -screenwidth/1440, 1)
+        lg.setColor(255, 255, 255, 255)
 
-        love.graphics.setScissor(0, 0, screenwidth/2, enviro.screenheight)
+        lg.setScissor(0, 0, screenwidth/2, enviro.screenheight)
         camera:set()
         drawx(camera)
         camera:unset()
-        love.graphics.setScissor()
+        lg.setScissor()
 
 
-        love.graphics.setScissor(screenwidth/2, 0, screenwidth/2, enviro.screenheight)
+        lg.setScissor(screenwidth/2, 0, screenwidth/2, enviro.screenheight)
         camera2:set()
 
         drawx(camera2)
 
         camera2:unset()
-        love.graphics.setScissor()
+        lg.setScissor()
 
         if onescreen and not vertone then
           if me.x < you.x then 
 
-            love.graphics.setScissor(screenwidth/2, topy,twidth, enviro.screenheight/2)
+            lg.setScissor(screenwidth/2, topy,twidth, enviro.screenheight/2)
             camera:set()
             drawx(camera)
             camera:unset()
-            love.graphics.setScissor()
+            lg.setScissor()
 
-            love.graphics.setScissor(screenwidth/2-twidth+1, bottomy,twidth, enviro.screenheight/2)
+            lg.setScissor(screenwidth/2-twidth+1, bottomy,twidth, enviro.screenheight/2)
             camera2:set()
             drawx(camera2)
             camera2:unset()
-            love.graphics.setScissor()
+            lg.setScissor()
           elseif me.x >= you.x then
-            love.graphics.setScissor(screenwidth/2-twidth+1, topy,twidth, enviro.screenheight/2)
+            lg.setScissor(screenwidth/2-twidth+1, topy,twidth, enviro.screenheight/2)
             camera2:set()
             drawx(camera2)
             camera2:unset()
-            love.graphics.setScissor()
+            lg.setScissor()
 
-            love.graphics.setScissor(screenwidth/2, bottomy,twidth, enviro.screenheight/2)
+            lg.setScissor(screenwidth/2, bottomy,twidth, enviro.screenheight/2)
             camera:set()
             drawx(camera)
             camera:unset()
-            love.graphics.setScissor()
+            lg.setScissor()
           end
         end
 
-        love.graphics.setColor(255, 255, 255)
+        lg.setColor(255, 255, 255)
 
 
-        love.graphics.draw(enviro.wall, wallx, 0, 0, width, enviro.screenheight)
-        --love.graphics.draw(enviro.beige, beigex, 0, 0, bwidth/2, bheight)
-        --love.graphics.draw(enviro.beige, beigex, enviro.screenheight, 0, bwidth/2, -bbheight)
-        love.graphics.setColor(255, 255, 255, 255)
+        lg.draw(enviro.wall, wallx, 0, 0, width, enviro.screenheight)
+        --lg.draw(enviro.beige, beigex, 0, 0, bwidth/2, bheight)
+        --lg.draw(enviro.beige, beigex, enviro.screenheight, 0, bwidth/2, -bbheight)
+        lg.setColor(255, 255, 255, 255)
 
-        love.graphics.setColor(53, 53, 53)
+        lg.setColor(53, 53, 53)
 
-        love.graphics.rectangle("fill",(screenwidth/2)-twidth,(enviro.screenheight/2)-bwidth/2,twidth*2,bwidth)
-        love.graphics.setColor(255, 255, 255, 255)
+        lg.rectangle("fill",(screenwidth/2)-twidth,(enviro.screenheight/2)-bwidth/2,twidth*2,bwidth)
+        lg.setColor(255, 255, 255, 255)
 
         if not fightclub then
           go()
@@ -790,51 +790,52 @@ monupdate()
 
     if fightclub then
 
-      love.graphics.setColor(20,20,20)
-      love.graphics.print(tostring(me.combo),10,20)
-      love.graphics.print(tostring(me.color.n)..
+      lg.setColor(20,20,20)
+      lg.print(tostring(me.combo),10,20)
+      lg.print(tostring(me.color.n)..
         "       animcounter: "..tostring(me.animcounter).."current"..tostring(me.currentc)
         ..
         "       type: "..tostring(me.type),10,30)
-      love.graphics.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
-      love.graphics.print("j "..tostring(you.j), 10, 70)
+      lg.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
+      lg.print("j "..tostring(you.j), 10, 70)
       if #hitt == 3 then
-        love.graphics.print(tostring(hitt[3].mode), 10, 90)
+        lg.print(tostring(hitt[3].mode), 10, 90)
         end
     end
 
 
 
-    --love.graphics.setShader()
+    --lg.setShader()
     --[[
     boop = joystick:isVibrationSupported()
     if boop then
-      love.graphics.print("yeah",100,10,100)
+      lg.print("yeah",100,10,100)
     end
     ]]--
-    love.graphics.setColor(255,255,255)
+    lg.setColor(255,255,255)
     if readout then
-      love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
-    love.graphics.setColor(255,10,0)
-    love.graphics.print("themenu "..tostring(menu), 10, 90)
-    love.graphics.print("oldmenu "..tostring(oldmenu), 10, 110)
-    love.graphics.print("fadein "..tostring(fadein), 10, 130)
-    love.graphics.print("allfade "..tostring(allfade), 10, 150)
-    love.graphics.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
-    love.graphics.print("slowt "..tostring(slowt), 10, 230)
-    love.graphics.print("#joysticks"..tostring(#love.joystick.getJoysticks()), 10, 250)
-    love.graphics.print("#hittmon"..tostring(#hittmon), 10, 280)
+      lg.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+    lg.setColor(255,10,0)
+    lg.print("themenu "..tostring(menu), 10, 90)
+    lg.print("oldmenu "..tostring(oldmenu), 10, 110)
+    lg.print("fadein "..tostring(fadein), 10, 130)
+    lg.print("allfade "..tostring(allfade), 10, 150)
+    lg.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
+    lg.print("slowt "..tostring(slowt), 10, 230)
+    lg.print("#joysticks"..tostring(#love.joystick.getJoysticks()), 10, 250)
+    lg.print("#hittmon"..tostring(#hittmon), 10, 280)
     for i,v in ipairs(love.joystick.getJoysticks()) do
-      love.graphics.print("hey"..v:getName()..tostring(i), 200, 20+20*i)
+      lg.print("hey"..v:getName()..tostring(i), 200, 20+20*i)
     end
-    love.graphics.setColor(255,0,0)
+    lg.setColor(255,0,0)
     
   end
-    love.graphics.setColor(255,0,255)
+    lg.setColor(255,0,255)
+    
+    lg.print("me.health"..tostring(me.health),300,300)
+    lg.print("me.hit"..tostring(me.hit),300,320)
+    lg.print("me.rlvl"..tostring(me.rlvl),300,340)
   
-  
-    love.graphics.print("me.purpgroundtimer "..tostring(me.purpgroundtimer), 100, 180)
-    love.graphics.print("you.currentc "..tostring(you.currentc), 100, 200)
   
   if love.keyboard.isDown("6") and #hittmon < 20 then spawnmon(camera.x+math.random(0,200), camera.y+10) end
     if love.keyboard.isDown("4") then blursize = blursize + 1

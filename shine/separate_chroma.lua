@@ -28,8 +28,8 @@ description = "Separates red, green and blue components",
 
 new = function(self)
 	self.angle, self.radius = 0, 0
-	self.canvas = love.graphics.newCanvas()
-	self.shader = love.graphics.newShader[[
+	self.canvas = lg.newCanvas()
+	self.shader = lg.newShader[[
 		extern vec2 direction;
 		vec4 effect(vec4 color, Image texture, vec2 tc, vec2 _)
 		{
@@ -44,8 +44,8 @@ new = function(self)
 end,
 
 draw = function(self, func)
-	local dx = math.cos(self.angle) * self.radius / love.graphics.getWidth()
-	local dy = math.sin(self.angle) * self.radius / love.graphics.getHeight()
+	local dx = math.cos(self.angle) * self.radius / lg.getWidth()
+	local dy = math.sin(self.angle) * self.radius / lg.getHeight()
 	self.shader:send("direction", {dx,dy})
 	self:_apply_shader_to_scene(self.shader, self.canvas, func)
 end,

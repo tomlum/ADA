@@ -1,3 +1,9 @@
+--xx.currentc shifts when doing apk, also find a place to appropriately place 
+--xwx.purplanding = false maybe tie to being in the air and currentc
+
+--dull gold color
+--bright blue
+
 --new wall jump
 --WIGGLE GET OUT OF FLINCH FASTER
 --if xx.v/minit < ratio then no a
@@ -258,6 +264,7 @@ pausedonhit = false
 
 
 
+require "utilities"
 require "blur"
 require "menustuff"
 require "DamageTable"
@@ -395,6 +402,8 @@ end
 
 
 function love.update()
+colorshift(thecolors[2].c,8)
+colorshift(me.outline,6)
   --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
   if love.keyboard.isDown("x")  then speedramp = true end
   if speedramp then 
@@ -551,7 +560,8 @@ function love.update()
       camerafol()
 
       if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
-        animate()
+        animate(me)
+        animate(you)
 
 
 
@@ -668,16 +678,6 @@ monupdate()
 
       --down here to allow facemovement even during me.actionshot
 
-
-
-
-      if me.im == slowdown then
-        me.xoffset = 10
-      end
-
-      if you.im == slowdown then 
-        you.xoffset = 10
-      end
     end
 
 
@@ -793,7 +793,7 @@ monupdate()
       love.graphics.setColor(20,20,20)
       love.graphics.print(tostring(me.combo),10,20)
       love.graphics.print(tostring(me.color.n)..
-        "       animcounter: "..tostring(me.animcounter).."current"..tostring(me.currentanim)
+        "       animcounter: "..tostring(me.animcounter).."current"..tostring(me.currentc)
         ..
         "       type: "..tostring(me.type),10,30)
       love.graphics.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
@@ -832,6 +832,9 @@ monupdate()
   end
     love.graphics.setColor(255,0,255)
   
+  
+    love.graphics.print("me.purpgroundtimer "..tostring(me.purpgroundtimer), 100, 180)
+    love.graphics.print("you.currentc "..tostring(you.currentc), 100, 200)
   
   if love.keyboard.isDown("6") and #hittmon < 20 then spawnmon(camera.x+math.random(0,200), camera.y+10) end
     if love.keyboard.isDown("4") then blursize = blursize + 1

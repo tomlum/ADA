@@ -48,21 +48,21 @@ themap = themaps[1]
 
 letterboxheight = 80
 menuspeed = 10
-modes = love.graphics.newImage("enviro/mode.png")
-backstreet = love.graphics.newImage("enviro/backstreet.png")
-modeselector = love.graphics.newImage("enviro/modeselector.png")
-wiper = love.graphics.newImage("enviro/wiper.png")
-map = love.graphics.newImage("enviro/map.png")
-ptile = love.graphics.newImage("enviro/ptile.png")
-gtile = love.graphics.newImage("enviro/gtile.png")
-otile = love.graphics.newImage("enviro/otile.png")
-tile = love.graphics.newImage("enviro/tile.png")
-plogo = love.graphics.newImage("enviro/plogo.png")
-glogo = love.graphics.newImage("enviro/glogo.png")
-ologo = love.graphics.newImage("enviro/ologo.png")
-questionlogo = love.graphics.newImage("enviro/questionmark.png")
-shoulder = love.graphics.newImage("enviro/shoulder.png")
-ready = love.graphics.newImage("enviro/ready.png")
+modes = lg.newImage("enviro/mode.png")
+backstreet = lg.newImage("enviro/backstreet.png")
+modeselector = lg.newImage("enviro/modeselector.png")
+wiper = lg.newImage("enviro/wiper.png")
+map = lg.newImage("enviro/map.png")
+ptile = lg.newImage("enviro/ptile.png")
+gtile = lg.newImage("enviro/gtile.png")
+otile = lg.newImage("enviro/otile.png")
+tile = lg.newImage("enviro/tile.png")
+plogo = lg.newImage("enviro/plogo.png")
+glogo = lg.newImage("enviro/glogo.png")
+ologo = lg.newImage("enviro/ologo.png")
+questionlogo = lg.newImage("enviro/questionmark.png")
+shoulder = lg.newImage("enviro/shoulder.png")
+ready = lg.newImage("enviro/ready.png")
 
 musfadein = 0
 musfade = 0
@@ -93,20 +93,20 @@ table.insert(tiles2, {y=0,ud="bottom",lr=-1,j=inittilej, column = 2})
 table.insert(tiles2, {y=0,ud="bottom",lr=1,j=inittilej, column = 3})
 table.insert(tiles2, {y=0,ud="bottom",lr=-1,j=inittilej, column = 4})
 
-function love.graphics.sdraw(im, x, y, rot, sx, sy) 
+function lg.sdraw(im, x, y, rot, sx, sy) 
   if rot == nil then 
-    love.graphics.draw(im,x*(screenwidth/1440),y*(screenheight/900), 0, (screenwidth/1440), (screenheight/900))
+    lg.draw(im,x*(screenwidth/1440),y*(screenheight/900), 0, (screenwidth/1440), (screenheight/900))
   else
-    love.graphics.draw(im,x*(screenwidth/1440),y*(screenheight/900), rot, sx*(screenwidth/1440), sy*(screenheight/900))
+    lg.draw(im,x*(screenwidth/1440),y*(screenheight/900), rot, sx*(screenwidth/1440), sy*(screenheight/900))
   end
 end
 
-function love.graphics.srectangle(mode, x, y, width, height) 
-  love.graphics.rectangle(mode, x*screenwidth/1440, y*screenheight/900, width*screenwidth/1440, height*screenheight/900) 
+function lg.srectangle(mode, x, y, width, height) 
+  lg.rectangle(mode, x*screenwidth/1440, y*screenheight/900, width*screenwidth/1440, height*screenheight/900) 
 end
 
 
-love.graphics.setNewFont(20)
+lg.setNewFont(20)
 
 mapnum = 1
 
@@ -286,18 +286,18 @@ function drawmenus()
     end
 
 
-    love.graphics.setColor(allfade,allfade,allfade,255)
-    --love.graphics.setColor(255,255,255,255)
-    love.graphics.draw(enviro.sunback, 0, 0, 0, screenwidth/1440, screenheight/900)
-    love.graphics.draw(enviro.v3, 0, 0-stagey*(screenheight/400), 0, screenwidth/1440, screenheight/900)
-    love.graphics.draw(enviro.v2, 0, 0-stagey*(screenheight/375), 0, screenwidth/1440, screenheight/900)
-    love.graphics.draw(facade, 0, 0-stagey*(screenheight/350), 0, screenwidth/1440, screenheight/900)
+    lg.setColor(allfade,allfade,allfade,255)
+    --lg.setColor(255,255,255,255)
+    lg.draw(enviro.sunback, 0, 0, 0, screenwidth/1440, screenheight/900)
+    lg.draw(enviro.v3, 0, 0-stagey*(screenheight/400), 0, screenwidth/1440, screenheight/900)
+    lg.draw(enviro.v2, 0, 0-stagey*(screenheight/375), 0, screenwidth/1440, screenheight/900)
+    lg.draw(facade, 0, 0-stagey*(screenheight/350), 0, screenwidth/1440, screenheight/900)
 
     drawwaves()
-    love.graphics.setColor(255,255,255,allfade)
-    love.graphics.draw(enviro.ada, 0, 0, 0,screenwidth/1440,screenheight/900)
-    love.graphics.setColor(0,0,0)
-    love.graphics.srectangle("fill", 0, 900-stagey*4, 1440, 900)
+    lg.setColor(255,255,255,allfade)
+    lg.draw(enviro.ada, 0, 0, 0,screenwidth/1440,screenheight/900)
+    lg.setColor(0,0,0)
+    lg.srectangle("fill", 0, 900-stagey*4, 1440, 900)
 
 
   elseif menu == "modes" or menu == "premap" then
@@ -346,12 +346,12 @@ function drawmenus()
       selectory = 642
       themode = "spectrum"
     end
-    love.graphics.setColor(allfade,allfade,allfade,255)
-    blurdraw(2,function() love.graphics.sdraw(backstreet,wobx-maxwob*2,woby-maxwob*2) end)
-    love.graphics.setColor(allfade/2,allfade/2,allfade/1,255)
-    love.graphics.sdraw(modes,0,0)
-    love.graphics.sdraw(modeselector, selectorx, selectory)
-    love.graphics.sdraw(wiper,wipex,0)
+    lg.setColor(allfade,allfade,allfade,255)
+    blurdraw(2,function() lg.sdraw(backstreet,wobx-maxwob*2,woby-maxwob*2) end)
+    lg.setColor(allfade/2,allfade/2,allfade/1,255)
+    lg.sdraw(modes,0,0)
+    lg.sdraw(modeselector, selectorx, selectory)
+    lg.sdraw(wiper,wipex,0)
 
   elseif menu == "map" or menu == "precolor" then
 
@@ -375,13 +375,13 @@ function drawmenus()
     end
 
 
-    love.graphics.setColor(allfade,allfade,allfade,255)
-    love.graphics.draw(map,0,0, 0, screenwidth/1440, screenheight/900)
-    love.graphics.setColor(themaps[mapnum].lightcolor.r,themaps[mapnum].lightcolor.g,themaps[mapnum].lightcolor.b,math.random(150,255)*(allfade/255))
-    love.graphics.circle("fill",(themaps[mapnum].lightx)*(screenwidth/1440),(themaps[mapnum].lighty)*(screenheight/900),lightsize*(screenwidth/1440))
+    lg.setColor(allfade,allfade,allfade,255)
+    lg.draw(map,0,0, 0, screenwidth/1440, screenheight/900)
+    lg.setColor(themaps[mapnum].lightcolor.r,themaps[mapnum].lightcolor.g,themaps[mapnum].lightcolor.b,math.random(150,255)*(allfade/255))
+    lg.circle("fill",(themaps[mapnum].lightx)*(screenwidth/1440),(themaps[mapnum].lighty)*(screenheight/900),lightsize*(screenwidth/1440))
     local wordspacing = 20
     for i = 0, screenheight/wordspacing do
-      love.graphics.print(string.upper(themaps[mapnum].name), 1000*(screenwidth/1440), i*wordspacing)
+      lg.print(string.upper(themaps[mapnum].name), 1000*(screenwidth/1440), i*wordspacing)
     end
 
 
@@ -404,37 +404,37 @@ function drawmenus()
 
 
       if me.leftc.n == 0 then 
-        love.graphics.setColor((tilefade),(tilefade),(tilefade))
+        lg.setColor((tilefade),(tilefade),(tilefade))
       else
-        love.graphics.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
+        lg.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
       end
-      love.graphics.sdraw(shoulder, colorfromwallspace-80,tilesep)
+      lg.sdraw(shoulder, colorfromwallspace-80,tilesep)
 
 
 
       if me.rightc.n == 0 then 
-        love.graphics.setColor((tilefade),(tilefade),(tilefade))
+        lg.setColor((tilefade),(tilefade),(tilefade))
       else
-        love.graphics.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
+        lg.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
       end
-      love.graphics.sdraw(shoulder, 720-colorfromwallspace-140,-tilesep,0,-1,1)
+      lg.sdraw(shoulder, 720-colorfromwallspace-140,-tilesep,0,-1,1)
 
 
       if you.leftc.n == 0 then 
-        love.graphics.setColor((tilefade),(tilefade),(tilefade))
+        lg.setColor((tilefade),(tilefade),(tilefade))
       else
-        love.graphics.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
+        lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
       end
-      love.graphics.sdraw(shoulder, 720 +colorfromwallspace+140,-tilesep)
+      lg.sdraw(shoulder, 720 +colorfromwallspace+140,-tilesep)
 
 
 
       if you.rightc.n == 0 then 
-        love.graphics.setColor((tilefade),(tilefade),(tilefade))
+        lg.setColor((tilefade),(tilefade),(tilefade))
       else
-        love.graphics.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
+        lg.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
       end
-      love.graphics.sdraw(shoulder, 1440-colorfromwallspace+80,tilesep,0,-1,1)
+      lg.sdraw(shoulder, 1440-colorfromwallspace+80,tilesep,0,-1,1)
 
 
 
@@ -442,28 +442,45 @@ function drawmenus()
     end
 
     if tileset or allready then
-      love.graphics.setColor(255,255,255)
+      lg.setColor(255,255,255)
       drawspine()
 
     end
 
-    love.graphics.setColor(255,255,255)
-
-    if tileset then love.graphics.sdraw(thecolors[me.selectedcolor+1].logo,420+tilesep,-tilesep) 
-    end
+    lg.setColor(255,255,255)
 
     if tileset then 
-      p2shade()
-      if you.selectedcolor+1>2 then
-        love.graphics.sdraw(thecolors[you.selectedcolor+1].logo,1440-420-300-tilesep,-tilesep,0,1,1) 
+      lg.setShader(cshader)
+  cshader:send( "palette", 
+    {me.shade/255, me.shade/255, me.shade/255, 1}, 
+    vct(thecolors[me.selectedcolor+1].c),
+    vct(thecolors[me.selectedcolor+1].c), 
+    vct(me.outline)
+
+  ) 
+      lg.sdraw(thecolors[me.selectedcolor+1].logo,420+tilesep,-tilesep) 
+      lg.setShader()
+    end
+    if tileset then 
+      lg.setShader(cshader)
+  cshader:send( "palette", 
+    {you.shade/255, you.shade/255, you.shade/255, 1}, 
+    vct(thecolors[you.selectedcolor+1].c),
+    vct(thecolors[you.selectedcolor+1].c), 
+    vct(you.outline)
+
+  ) 
+      if you.selectedcolor+1>3 then
+        lg.sdraw(thecolors[you.selectedcolor+1].logo,1440-420-300-tilesep,-tilesep,0,1,1) 
       else
-        love.graphics.sdraw(thecolors[you.selectedcolor+1].logo,1440-420-tilesep,-tilesep,0,-1,1) 
+        lg.sdraw(thecolors[you.selectedcolor+1].logo,1440-420-tilesep,-tilesep,0,-1,1) 
+        lg.setShader()
       end
     end
 
 
 
-    love.graphics.setColor(allfade,allfade,allfade,255)
+    lg.setColor(allfade,allfade,allfade,255)
     for i,v in ipairs(tiles) do
       if v.ud == "top" then
         if v.y - v.j > 25 then 
@@ -496,24 +513,24 @@ function drawmenus()
 
       if i == me.selectedcolor+1 and tileset then
 
+
         if not me.readytoplay then
 
-          function me.drawontop() love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b) 
-            love.graphics.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-450*(tilezoom), 0, v.lr*(1+tilezoom), (1+tilezoom))
+          function me.drawontop() lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b) 
+            lg.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-450*(tilezoom), 0, v.lr*(1+tilezoom), (1+tilezoom))
           end
 
         else
           function me.drawontop() 
-            love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-            love.graphics.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))-tilesep/i, v.y, 0, v.lr, 1)
+            lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
+            lg.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))-tilesep/i, v.y, 0, v.lr, 1)
           end
         end
 
       else
-        love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-        love.graphics.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))-tilesep/i, v.y, 0, v.lr, 1)
+        lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
+        lg.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))-tilesep/i, v.y, 0, v.lr, 1)
       end
-
 
     end
     me.drawontop()
@@ -557,18 +574,18 @@ function drawmenus()
 
         if not you.readytoplay then
           function you.drawontop() 
-            love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-            love.graphics.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-(450*(tilezoom)), 0, -v.lr*(1+tilezoom), (1+tilezoom))
+            lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
+            lg.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-(450*(tilezoom)), 0, -v.lr*(1+tilezoom), (1+tilezoom))
           end
         else
           function you.drawontop() 
-            love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-            love.graphics.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))+tilesep/i, v.y, 0, -v.lr, 1)
+            lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
+            lg.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))+tilesep/i, v.y, 0, -v.lr, 1)
           end
         end
       else
-        love.graphics.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-        love.graphics.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))+tilesep/i, v.y, 0, -v.lr, 1)
+        lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
+        lg.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))+tilesep/i, v.y, 0, -v.lr, 1)
       end
 
 
@@ -615,9 +632,9 @@ if not you.readytoplay then
 
 
 
-    love.graphics.setColor(255, 255, 255)
+    lg.setColor(255, 255, 255)
     if me.readytoplay then
-      love.graphics.sdraw(ready, 100, 70+tilesep,0,5,5)
+      lg.sdraw(ready, 100, 70+tilesep,0,5,5)
     else
       if me.right and not me.dirholda then me.selectedcolor = (me.selectedcolor + 1)%(#tiles)
       elseif me.left and not me.dirholda then me.selectedcolor = (me.selectedcolor - 1)%(#tiles)
@@ -629,7 +646,7 @@ if not you.readytoplay then
     end
 
     if you.readytoplay then
-      love.graphics.sdraw(ready, 1440-100-(64*5), 70+tilesep,0,5,5)
+      lg.sdraw(ready, 1440-100-(64*5), 70+tilesep,0,5,5)
 
     else
       if you.right and not you.dirholda then you.selectedcolor = (you.selectedcolor - 1)%(#tiles2)
@@ -686,14 +703,14 @@ if not you.readytoplay then
 
     end
 
-    love.graphics.setColor(allfade,allfade,allfade)
-    love.graphics.sdraw(enviro.sky, 0, 0, 0, 150, 1)
-    love.graphics.sdraw(enviro.paralax, -dollyx/2,  -enviro.paralax:getHeight()+900-letterboxheight-30)
-    love.graphics.sdraw(enviro.stage, -dollyx, -themap.floor+900 -letterboxheight-30)
-    love.graphics.setColor(0,0,0)
-    love.graphics.srectangle("fill", 0, 0, 1440, hof(letterboxheight, 450-3^(dollyx/50)))
+    lg.setColor(allfade,allfade,allfade)
+    lg.sdraw(enviro.sky, 0, 0, 0, 150, 1)
+    lg.sdraw(enviro.paralax, -dollyx/2,  -enviro.paralax:getHeight()+900-letterboxheight-30)
+    lg.sdraw(enviro.stage, -dollyx, -themap.floor+900 -letterboxheight-30)
+    lg.setColor(0,0,0)
+    lg.srectangle("fill", 0, 0, 1440, hof(letterboxheight, 450-3^(dollyx/50)))
 
-    love.graphics.srectangle("fill", 0, 900, 1440, -hof(letterboxheight, 450-3^(dollyx/50)))
+    lg.srectangle("fill", 0, 900, 1440, -hof(letterboxheight, 450-3^(dollyx/50)))
     dollyx = dollyx + dollyv
 
 
@@ -707,35 +724,35 @@ if not you.readytoplay then
       end
     end
 
-    love.graphics.setColor(225,225,225)
+    lg.setColor(225,225,225)
 
     if fadein < 0 then
-      love.graphics.setColor(allfade,allfade,allfade)
+      lg.setColor(allfade,allfade,allfade)
     else
-      love.graphics.setColor(255,255,255)
+      lg.setColor(255,255,255)
     end
-    love.graphics.srectangle("fill", 0, 0, 1440, 900)
+    lg.srectangle("fill", 0, 0, 1440, 900)
 
 
 
 
-    love.graphics.setScissor(0, 0, screenwidth/2, enviro.screenheight)
+    lg.setScissor(0, 0, screenwidth/2, enviro.screenheight)
     camera:set()
     drawa(me)
 
-    love.graphics.setColor(255,255,255)
+    lg.setColor(255,255,255)
 
     drawa(you)
 
 
-    love.graphics.setColor(255,255,255)
+    lg.setColor(255,255,255)
 
     camera:unset()
-    love.graphics.setScissor()
+    lg.setScissor()
 
 
 
-    love.graphics.setScissor(screenwidth/2, 0, screenwidth/2, enviro.screenheight)
+    lg.setScissor(screenwidth/2, 0, screenwidth/2, enviro.screenheight)
     camera2:set()
 
     drawa(me)
@@ -743,14 +760,14 @@ if not you.readytoplay then
     drawa(you)
 
     camera2:unset()
-    love.graphics.setScissor()
+    lg.setScissor()
 
     death(me, you)
     death(you, me)
     retry()
 
-    love.graphics.setColor(0,0,0,allfade)
-    love.graphics.sdraw(enviro.retry, 0, 0)
+    lg.setColor(0,0,0,allfade)
+    lg.sdraw(enviro.retry, 0, 0)
 
     if beginretry then
       fadein = 5
@@ -898,17 +915,17 @@ function drawcity()
     elseif adastartfade then adafade = adafade - 3
     end
 
-    love.graphics.setColor(sfade,sfade,sfade,255)
-    love.graphics.draw(enviro.sunback, 0, 0, 0, screenwidth/1440, screenheight/900)
-    love.graphics.draw(enviro.v3, 0, 0-stagey*(screenheight/400), 0, screenwidth/1440, screenheight/900)
-    love.graphics.draw(enviro.v2, 0, 0-stagey*(screenheight/375), 0, screenwidth/1440, screenheight/900)
-    love.graphics.draw(facade, 0, 0-stagey*(screenheight/350), 0, screenwidth/1440, screenheight/900)
+    lg.setColor(sfade,sfade,sfade,255)
+    lg.draw(enviro.sunback, 0, 0, 0, screenwidth/1440, screenheight/900)
+    lg.draw(enviro.v3, 0, 0-stagey*(screenheight/400), 0, screenwidth/1440, screenheight/900)
+    lg.draw(enviro.v2, 0, 0-stagey*(screenheight/375), 0, screenwidth/1440, screenheight/900)
+    lg.draw(facade, 0, 0-stagey*(screenheight/350), 0, screenwidth/1440, screenheight/900)
 
     drawwaves()
-    love.graphics.setColor(255,255,255,adafade)
-    love.graphics.draw(enviro.ada, 0, 0, 0,screenwidth/1440,screenheight/900)
-    love.graphics.setColor(0,0,0)
-    love.graphics.rectangle("fill", 0, screenheight*1.2-stagey*4, screenwidth, screenheight)
+    lg.setColor(255,255,255,adafade)
+    lg.draw(enviro.ada, 0, 0, 0,screenwidth/1440,screenheight/900)
+    lg.setColor(0,0,0)
+    lg.rectangle("fill", 0, screenheight*1.2-stagey*4, screenwidth, screenheight)
 
   end
 

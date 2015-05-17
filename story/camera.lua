@@ -285,14 +285,14 @@ camera.xfollow = true
 camera.yfollow = true
 
 function camera:set()
-  love.graphics.push()
-  love.graphics.rotate(-self.rotation)
-  love.graphics.scale(1 / self.scaleX, 1 / self.scaleY)
-  love.graphics.translate(-self.x, -self.y)
+  lg.push()
+  lg.rotate(-self.rotation)
+  lg.scale(1 / self.scaleX, 1 / self.scaleY)
+  lg.translate(-self.x, -self.y)
 end
 
 function camera:unset()
-  love.graphics.pop()
+  lg.pop()
 end
 
 function camera:move(dx, dy)
@@ -332,14 +332,14 @@ camera2.xfollow = true
 camera2.yfollow = true
 
 function camera2:set()
-  love.graphics.push()
-  love.graphics.rotate(-self.rotation)
-  love.graphics.scale(1 / self.scaleX, 1 / self.scaleY)
-  love.graphics.translate(-self.x, -self.y)
+  lg.push()
+  lg.rotate(-self.rotation)
+  lg.scale(1 / self.scaleX, 1 / self.scaleY)
+  lg.translate(-self.x, -self.y)
 end
 
 function camera2:unset()
-  love.graphics.pop()
+  lg.pop()
 end
 
 function camera2:move(dx, dy)

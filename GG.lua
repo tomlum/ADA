@@ -3,36 +3,36 @@ amountstuckinwall = 80
 amountstuckinfloor = 45
 
 
-bolt = love.graphics.newImage("me/attack/green/bolt.png")
+bolt = lg.newImage("me/attack/green/bolt.png")
 
-greena12 = {im=love.graphics.newImage("me/attack/green/greena12.png"), xoff = 3,yoff = 6}
-greena13 = {im=love.graphics.newImage("me/attack/green/greena13.png"), xoff = 3,yoff = 19}
-greena14 = {im=love.graphics.newImage("me/attack/green/greena14.png"), xoff = 3,yoff = 33}
-greena15 = {im=love.graphics.newImage("me/attack/green/greena15.png"), xoff = 3,yoff = 42}
+greena12 = {im=lg.newImage("me/attack/green/greena12.png"), xoff = 3,yoff = 6}
+greena13 = {im=lg.newImage("me/attack/green/greena13.png"), xoff = 3,yoff = 19}
+greena14 = {im=lg.newImage("me/attack/green/greena14.png"), xoff = 3,yoff = 33}
+greena15 = {im=lg.newImage("me/attack/green/greena15.png"), xoff = 3,yoff = 42}
 
-greena21 = {im=love.graphics.newImage("me/attack/green/greena21.png"), xoff = 16,yoff = -2}
-greena22 = {im=love.graphics.newImage("me/attack/green/greena22.png"), xoff = 30+8, yoff = -3}
-greena22s = {im=love.graphics.newImage("me/attack/green/greena22s.png"), xoff = 30+8, yoff = 1}
-
-
-agreena22 = {im=love.graphics.newImage("me/attack/green/agreena22.png"), xoff = 20, xoff = 40, yoff = 4}
-agreena22s = {im=love.graphics.newImage("me/attack/green/agreena22s.png"), xoff = 40, yoff = 7}
-
-agreena1 = {im=love.graphics.newImage("me/attack/green/agreena1.png"), xoff = 20, yoff = 0}
-agreena1s = {im=love.graphics.newImage("me/attack/green/agreena1s.png"), xoff = 20, yoff = 44}
-
-garmfront = love.graphics.newImage("me/attack/green/garmfront.png")
-garmback = love.graphics.newImage("me/attack/green/garmback.png")
-
-greenk03 = {im=love.graphics.newImage("me/attack/green/greenk03.png"), xoff = 1, yoff = -6}
-greenk01 = {im=love.graphics.newImage("me/attack/green/greenk01.png"), xoff = 1, yoff = -6}
-greenk02 = {im=love.graphics.newImage("me/attack/green/greenk02.png"), xoff = 4, yoff = -6}
-
-greenk1 = {im=love.graphics.newImage("me/attack/green/greenk1.png"), xoff = 2, yoff = -6, legshuh = true, legs = love.graphics.newImage("me/attack/green/greenk1legs.png"), legsy = 36}
-greenk2 = {im=love.graphics.newImage("me/attack/green/greenk2.png"), xoff = 0, yoff = -2}
+greena21 = {im=lg.newImage("me/attack/green/greena21.png"), xoff = 16,yoff = -2}
+greena22 = {im=lg.newImage("me/attack/green/greena22.png"), xoff = 30+8, yoff = -3}
+greena22s = {im=lg.newImage("me/attack/green/greena22s.png"), xoff = 30+8, yoff = 1}
 
 
-agk1 = {im=love.graphics.newImage("me/attack/green/agk1.png"), xoff = 2, yoff = -6}
+agreena22 = {im=lg.newImage("me/attack/green/agreena22.png"), xoff = 20, xoff = 40, yoff = 4}
+agreena22s = {im=lg.newImage("me/attack/green/agreena22s.png"), xoff = 40, yoff = 7}
+
+agreena1 = {im=lg.newImage("me/attack/green/agreena1.png"), xoff = 20, yoff = 0}
+agreena1s = {im=lg.newImage("me/attack/green/agreena1s.png"), xoff = 20, yoff = 44}
+
+garmfront = lg.newImage("me/attack/green/garmfront.png")
+garmback = lg.newImage("me/attack/green/garmback.png")
+
+greenk03 = {im=lg.newImage("me/attack/green/greenk03.png"), xoff = 1, yoff = -6}
+greenk01 = {im=lg.newImage("me/attack/green/greenk01.png"), xoff = 1, yoff = -6}
+greenk02 = {im=lg.newImage("me/attack/green/greenk02.png"), xoff = 4, yoff = -6}
+
+greenk1 = {im=lg.newImage("me/attack/green/greenk1.png"), xoff = 2, yoff = -6, legshuh = true, legs = lg.newImage("me/attack/green/greenk1legs.png"), legsy = 36}
+greenk2 = {im=lg.newImage("me/attack/green/greenk2.png"), xoff = 0, yoff = -2}
+
+
+agk1 = {im=lg.newImage("me/attack/green/agk1.png"), xoff = 2, yoff = -6}
 
 
 me.greenkhit = false
@@ -201,7 +201,7 @@ function gandg(xx)
             end)
         end
 
-          combo(xx)
+          --xx.cmbo=true--combo(xx)
 
       elseif xx.animcounter >= 40 then
         xx.animcounter = 0
@@ -280,7 +280,7 @@ function gandg(xx)
           end
         elseif xx.animcounter >= 15 and xx.greenhit then 
           xx.cancombo = true
-          combo(xx)
+          xx.cmbo=true--combo(xx)
         end
       else
         xx.greenktimer = at.g.k.delay
@@ -457,12 +457,12 @@ me.bolts = {}
 function boltdraw(xx)
 
 
-  --love.graphics.draw(garrow,xx.mid + (40 * math.cos(math.rad(xx.gangle)))*xx.lr, xx.y+xx.height/2 -(40 * math.sin(math.rad(xx.gangle))), math.rad(90-xx.gangle),1,1,2.5,2.5 )
+  --lg.draw(garrow,xx.mid + (40 * math.cos(math.rad(xx.gangle)))*xx.lr, xx.y+xx.height/2 -(40 * math.sin(math.rad(xx.gangle))), math.rad(90-xx.gangle),1,1,2.5,2.5 )
 
   for i = #xx.bolts, 1, -1 do
     local v = xx.bolts[i]
     rgbset(thecolors[2].c)
-    love.graphics.draw(bolt, 
+    lg.draw(bolt, 
       v.x-(2.5*(math.cos(math.rad(v.angle)))),
       v.y+(2.5*(math.sin(math.rad(v.angle)))), math.rad(180+v.angle))
   end
@@ -478,7 +478,7 @@ function bolttraildraw(xx)
     if v.t >= bolttraillength then table.remove(xx.bolttrail, i) else
       v.t = v.t + 1*rampspeed
       rgbset(thecolors[2].c, (255/bolttraillength)*(bolttraillength/xx.bolttrail[i].t))
-      love.graphics.draw(bolt, 
+      lg.draw(bolt, 
         v.x-(2.5*(math.cos(math.rad(v.angle)))),
         v.y+(2.5*(math.sin(math.rad(v.angle)))), math.rad(180+v.angle))
     end

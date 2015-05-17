@@ -85,29 +85,29 @@ you.repcounter = 0
 you.bbpready = false
 
 
-punch1 = {im=love.graphics.newImage("me/attack/bb/punch1.png"),xoff = -2}
-punch2 = {im=love.graphics.newImage("me/attack/bb/punch2.png"),xoff = -1,yoff = -3}
-punch3 = {im=love.graphics.newImage("me/attack/bb/punch3.png"), yoff = -4}
-punch4 = {im=love.graphics.newImage("me/attack/bb/punch4.png"),xoff = -1, yoff = -3}
-punch5 = {im=love.graphics.newImage("me/attack/bb/punch5.png"),xoff = -2, yoff = -2}
-punch6 = {im=love.graphics.newImage("me/attack/bb/punch6.png"),yoff = -5}
-kick1 = {im = love.graphics.newImage("me/attack/bb/kick1.png"), xoff = 1, yoff = 1}
-kick2 = {im = love.graphics.newImage("me/attack/bb/kick2.png"), xoff = -1, yoff = -1}
-kick3 = {im = love.graphics.newImage("me/attack/bb/kick3.png"), yoff = -3}
-uppercut = {im=love.graphics.newImage("me/attack/uppercut.png"),c=love.graphics.newImage("me/attack/uppercutc.png"), xoff = 15}
-jumpuppercut = {im=love.graphics.newImage("me/attack/jumpuppercut.png"),c=love.graphics.newImage("me/attack/jumpuppercutc.png")}
-dropkick1 = {im=love.graphics.newImage("me/attack/dropkick1.png"),c=love.graphics.newImage("me/attack/dropkick1c.png"), xoff = 5,yoff = -7,extrah=10}
-dropkick2 = {im=love.graphics.newImage("me/attack/dropkick2.png"),c=love.graphics.newImage("me/attack/dropkick2c.png"), xoff = 8,yoff = -7,extrah=-15}
-divekick = {im=love.graphics.newImage("me/attack/divekick.png"),c=love.graphics.newImage("me/attack/divekickc.png"), xoff = 5,yoff = -7,extrah=15}
+punch1 = {im=lg.newImage("me/attack/bb/punch1.png"),xoff = -2}
+punch2 = {im=lg.newImage("me/attack/bb/punch2.png"),xoff = -1,yoff = -3}
+punch3 = {im=lg.newImage("me/attack/bb/punch3.png"), yoff = -4}
+punch4 = {im=lg.newImage("me/attack/bb/punch4.png"),xoff = -1, yoff = -3}
+punch5 = {im=lg.newImage("me/attack/bb/punch5.png"),xoff = -2, yoff = -2}
+punch6 = {im=lg.newImage("me/attack/bb/punch6.png"),yoff = -5}
+kick1 = {im = lg.newImage("me/attack/bb/kick1.png"), xoff = 1, yoff = 1}
+kick2 = {im = lg.newImage("me/attack/bb/kick2.png"), xoff = -1, yoff = -1}
+kick3 = {im = lg.newImage("me/attack/bb/kick3.png"), yoff = -3}
+uppercut = {im=lg.newImage("me/attack/bb/uppercut.png"), xoff = 1}
+jumpuppercut = {im=lg.newImage("me/attack/bb/jumpuppercut.png")}
+dropkick1 = {im=lg.newImage("me/attack/bb/dropkick1.png"), xoff = 5,yoff = -7,extrah=10}
+dropkick2 = {im=lg.newImage("me/attack/bb/dropkick2.png"), xoff = 8,yoff = -7,extrah=-15}
+divekick = {im=lg.newImage("me/attack/bb/divekick.png"), xoff = 1,yoff = -7,extrah=15}
 
-brun1 = {im=love.graphics.newImage("me/attack/brun1.png"),c=love.graphics.newImage("me/attack/brun1c.png"), xoff = 16,yoff = 15,extrah=-6}
-brun2 = {im=love.graphics.newImage("me/attack/brun2.png"),c=love.graphics.newImage("me/attack/brun2c.png"), xoff = 16,yoff = 15,extrah=-6}
-brun3 = {im=love.graphics.newImage("me/attack/brun3.png"),c=love.graphics.newImage("me/attack/brun3c.png"), xoff = 16,yoff = 15,extrah=-6}
+brun1 = {im=lg.newImage("me/attack/bb/brun1.png"), xoff = 12,yoff = 1,extrah=-6}
+brun2 = {im=lg.newImage("me/attack/bb/brun2.png"), xoff = 13,extrah=-6}
+brun3 = {im=lg.newImage("me/attack/bb/brun3.png"), xoff = 13,extrah=-6}
 
 
-airgrab1 = {im=love.graphics.newImage("me/attack/airgrab1.png"),c=love.graphics.newImage("me/attack/airgrab1c.png"),xoff=15}
-airgrab2 = {im=love.graphics.newImage("me/attack/airgrab2.png"),c=love.graphics.newImage("me/attack/airgrab2c.png"),xoff=15}
-airgrab3 = {im=love.graphics.newImage("me/attack/airgrab3.png"),c=love.graphics.newImage("me/attack/airgrab3c.png"),xoff=15}
+airgrab1 = {im=lg.newImage("me/attack/airgrab1.png"),xoff=0}
+airgrab2 = {im=lg.newImage("me/attack/airgrab2.png"),yoff = -3}
+airgrab3 = {im=lg.newImage("me/attack/airgrab3.png"),xoff=1}
 
 
 
@@ -203,7 +203,7 @@ function breadandbutter(xx)
         end
 
         if xx.animcounter >= 17 then 
-          combo(xx)
+          xx.cmbo=true--combo(xx)
         end
 
       elseif xx.animcounter >= 37 then
@@ -239,7 +239,7 @@ function breadandbutter(xx)
       elseif xx.animcounter < 43 then
         xx.im = kick3
         if xx.animcounter >= 17 then 
-          combo(xx)
+          xx.cmbo=true--combo(xx)
         end
       elseif xx.animcounter >= 43 then
         xx.animcounter = 0

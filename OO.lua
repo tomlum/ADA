@@ -1,38 +1,38 @@
 
 
 
-op1 = {im=love.graphics.newImage("me/attack/orange/op1.png"), xoff = 2}
-op2 = {im=love.graphics.newImage("me/attack/orange/op2n.png"), xoff = 9,yoff = 10}
-op3 = {im=love.graphics.newImage("me/attack/orange/op3n.png"), xoff = 9,yoff = 12}
-op4 = {im=love.graphics.newImage("me/attack/orange/op4n.png"), xoff = 9,yoff = 12}
-op5 = {im=love.graphics.newImage("me/attack/orange/op5n.png"), xoff = 2,yoff = 12}
+op1 = {im=lg.newImage("me/attack/orange/op1.png"), xoff = 2}
+op2 = {im=lg.newImage("me/attack/orange/op2n.png"), xoff = 9,yoff = 10}
+op3 = {im=lg.newImage("me/attack/orange/op3n.png"), xoff = 9,yoff = 12}
+op4 = {im=lg.newImage("me/attack/orange/op4n.png"), xoff = 9,yoff = 12}
+op5 = {im=lg.newImage("me/attack/orange/op5n.png"), xoff = 2,yoff = 12}
 
 
-ao21 = {im=love.graphics.newImage("me/attack/orange/ao21.png"), xoff = 9, yoff = 17, extrah = 5}
-ao22 = {im=love.graphics.newImage("me/attack/orange/ao22.png"), xoff = 9-5, extrah = 5}
+ao21 = {im=lg.newImage("me/attack/orange/ao21.png"), xoff = 9, yoff = 17, extrah = 5}
+ao22 = {im=lg.newImage("me/attack/orange/ao22.png"), xoff = 9-5, extrah = 5}
 
 
-ao23 = {im=love.graphics.newImage("me/attack/orange/ao23.png"), xoff = 5,yoff = 17, extrah = 5}
-ao24 = {im=love.graphics.newImage("me/attack/orange/ao24.png"), xoff = 9-5, extrah = 5}
+ao23 = {im=lg.newImage("me/attack/orange/ao23.png"), xoff = 5,yoff = 17, extrah = 5}
+ao24 = {im=lg.newImage("me/attack/orange/ao24.png"), xoff = 9-5, extrah = 5}
 
 
-ok2 = {im=love.graphics.newImage("me/attack/orange/ok2.png"), xoff = 9,yoff = 15}
-ok3 = {im=love.graphics.newImage("me/attack/orange/ok3.png"), xoff = 84,yoff = -7}
-ok4 = {im=love.graphics.newImage("me/attack/orange/ok4.png"), xoff = 45,yoff = 0, extrah = 5}
+ok2 = {im=lg.newImage("me/attack/orange/ok2.png"), xoff = 9,yoff = 15}
+ok3 = {im=lg.newImage("me/attack/orange/ok3.png"), xoff = 84,yoff = -7}
+ok4 = {im=lg.newImage("me/attack/orange/ok4.png"), xoff = 45,yoff = 0, extrah = 5}
 
 
-o32 = {im=love.graphics.newImage("me/attack/orange/o32.png"), 
+o32 = {im=lg.newImage("me/attack/orange/o32.png"), 
   xoff = 9,yoff = -5}
 
-o33 = {im=love.graphics.newImage("me/attack/orange/o33.png")}
+o33 = {im=lg.newImage("me/attack/orange/o33.png")}
 
-ao31 = {im=love.graphics.newImage("me/attack/orange/ao31.png"), xoff = 9, yoff = 0}
-ao32 = {im=love.graphics.newImage("me/attack/orange/ao32.png"), yoff =2}
+ao31 = {im=lg.newImage("me/attack/orange/ao31.png"), xoff = 9, yoff = 0}
+ao32 = {im=lg.newImage("me/attack/orange/ao32.png"), yoff =2}
 
 
 
-aop1 = {im=love.graphics.newImage("me/attack/orange/aop1.png"), xoff = 5,yoff = 17, extrah = 5}
-aop2 = {im=love.graphics.newImage("me/attack/orange/aop2.png"),yoff = 32, extrah = 5}
+aop1 = {im=lg.newImage("me/attack/orange/aop1.png"), xoff = 5,yoff = 17, extrah = 5}
+aop2 = {im=lg.newImage("me/attack/orange/aop2.png"),yoff = 32, extrah = 5}
 
 
 at.o = {}
@@ -169,12 +169,12 @@ function orangeyouglad(xx)
         end
 
         if xx.animcounter >= 10 then 
-          combo(xx)
+          xx.cmbo=true--combo(xx)
         end
 
 
       elseif xx.animcounter < 42 then
-        combo(xx)
+        xx.cmbo=true--combo(xx)
         if xx.repcounter%2==0  then
           xx.im = op2
         else
@@ -182,14 +182,14 @@ function orangeyouglad(xx)
         end
 
       elseif xx.animcounter < 44 then
-        combo(xx)
+        xx.cmbo=true--combo(xx)
 
         if xx.repcounter%2==0  then
           xx.im = op1
         else
           xx.im = op1
         end
-      elseif xx.animcounter < 70 then
+      elseif xx.animcounter < 50 then
         xx.stop = false
       elseif xx.animcounter < 1000 then
         xx.animcounter = 0
@@ -289,7 +289,7 @@ function orangeyouglad(xx)
             xx.oplat = nil
           end
 
-          combo(xx)
+          xx.cmbo=true--combo(xx)
         end
 
 
@@ -343,16 +343,16 @@ function orangeyouglad(xx)
 
 
         if xx.animcounter >= 10 then 
-          combo(xx)
+          xx.cmbo=true--combo(xx)
         end
 
 
       elseif xx.animcounter < 42-20 then
-        combo(xx)
+        xx.cmbo=true--combo(xx)
           xx.im = op2
 
       elseif xx.animcounter < 44-20 then
-        combo(xx)
+        xx.cmbo=true--combo(xx)
           xx.im = op1
       elseif xx.animcounter < 1000 then
         xx.animcounter = 0
@@ -408,12 +408,12 @@ elseif xx.type == 4 then
 
 
         if xx.animcounter >= 10 then 
-          combo(xx)
+          xx.cmbo=true--combo(xx)
         end
 
 
       elseif xx.animcounter < 40 then
-        combo(xx)
+        xx.cmbo=true--combo(xx)
           xx.im = aop1
       else
         xx.animcounter = 0
@@ -484,7 +484,7 @@ elseif xx.type == 4 then
           end
         end
         xx.oplat = nil
-        combo(xx)
+        xx.cmbo=true--combo(xx)
         if xx.o5repcounter%2==0  then
           xx.im = ao21
         else
@@ -492,7 +492,7 @@ elseif xx.type == 4 then
         end
 
       elseif xx.animcounter < 40 then
-        combo(xx)
+        xx.cmbo=true--combo(xx)
 
       elseif xx.animcounter < 1000 then
         xx.animcounter = 0
@@ -536,16 +536,16 @@ elseif xx.type == 4 then
 
 
         if xx.animcounter >= 15 then 
-          combo(xx)
+          xx.cmbo=true--combo(xx)
         end
 
 
       elseif xx.animcounter < 42 then
-        combo(xx)
+        xx.cmbo=true--combo(xx)
           xx.im = ao31
 
       elseif xx.animcounter < 44 then
-        combo(xx)
+        xx.cmbo=true--combo(xx)
           xx.im = aop1
       elseif xx.animcounter < 1000 then
         xx.animcounter = 0

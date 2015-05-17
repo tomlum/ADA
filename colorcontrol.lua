@@ -64,7 +64,7 @@ thecolors[-1] = {n=-1,c={r = 0, g = 0, b = 0},
 
 
 if fightclub then
-  me.rightc = thecolors[3]
+  me.rightc = thecolors[4]
   you.rightc = thecolors[1]
   me.leftc = thecolors[1]
   you.leftc = thecolors[2]

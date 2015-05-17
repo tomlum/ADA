@@ -20,10 +20,10 @@
 -- objects[1]
 -- end
 
-blockrelease = {im=love.graphics.newImage("me/attack/blockrelease.png"),c=love.graphics.newImage("me/attack/blockreleasec.png"), xoff = 10, cxoff = 10-9, cyoff = -11}
+blockrelease = {im=lg.newImage("me/attack/blockrelease.png"), xoff = 3, yoff = -4}
 
-throw = {im=love.graphics.newImage("me/attack/throw.png"),c=love.graphics.newImage("me/attack/throwc.png"), xoff = 9, yoff = 10}
-airthrow = {im=love.graphics.newImage("me/attack/airthrow.png"),c=love.graphics.newImage("me/attack/airthrowc.png"), xoff = 10, yoff = 10}
+throw = {im=lg.newImage("me/attack/throw.png"), xoff = 8, yoff = 5}
+airthrow = {im=lg.newImage("me/attack/airthrow.png"), xoff = 9, yoff = 5}
 
 throwft = 40
 throwz = .1
@@ -147,14 +147,21 @@ me.cantreturntothis = 0
 you.cantreturntothis = 0
 
 
+me.cmbo = false
+you.cmbo = false
 function combo(xx, func)
-  xx.hit = false
+ 
+ 
+ if xx.animcounter >0 and xx.animcounter <= 1 then
+ for i,v in ipairs(hitt) do
+  v.hit = false
+end
+end
 
   local oldanimc = xx.animcounter
 
   if xx.color.n ~= xx.cchangeto.n and xx.cancombo
   then
-    xx.repcounter = 0
     if func~= nil then func() end
     if combopause then
       xx.actionshot = true
@@ -162,8 +169,11 @@ function combo(xx, func)
     xx.cancombo = false
   end
 
-  if not xx.holda and (not combopause or xx.currentc == xx.color.n) and xx.combo<xx.maxcombo then
+  if not xx.holda and (not combopause or xx.currentc == xx.color.n) and xx.combo<xx.maxcombo and xx.cmbo then
 
+     for i,v in ipairs(hitt) do
+  v.hit = false
+  end
 
     if xx.g then 
       if xx.im==greenk1 then
@@ -173,6 +183,7 @@ function combo(xx, func)
 
 
       elseif xx.a2 or xx.a3 then
+
         xx.numofspikes = 0
         if func~= nil then func() end
         if xx.color.n==0 then
@@ -197,7 +208,7 @@ function combo(xx, func)
           xx.animcounter = 1
           if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
           xx.repcounter = xx.repcounter + 1
-        elseif xx.color.n==4  then
+        elseif xx.color.n==4 and xx.repcounter < at.r.p.max   then
           xx.type = 1
           xx.animcounter = 1
           if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
@@ -269,10 +280,15 @@ function combo(xx, func)
 
     end
   end
-  if not xx.combopause and xx.animcounter < oldanimc and xx.animcounter > 0 and 
+  if not xx.combopause 
+  and xx.animcounter < oldanimc 
+  and xx.animcounter > 0 
+  and 
   xx.currentc ~= xx.color.n then
     xx.currentc = xx.color.n
+    xx.repcounter = 0
   end
+  xx.cmbo = false
 
 end
 
@@ -319,6 +335,8 @@ you.oldft = 0
 
 
 function attackmanage(xx)
+  
+
 
   if xx.greenktimer > 0 then 
     xx.greenktimer = xx.greenktimer - 1*ramp(xx)
@@ -363,10 +381,13 @@ function attackmanage(xx)
   --  if xx.flinch then xx.animcounter = 0
   --  end
   if xx.animcounter == 0 and not xx.purplanding then
-    xx.hit = false
+  
     xx.repcounter = 0
     xx.currentc = xx.color.n
   end
+  
+  combo(xx)
+  
   if xx.currentc == 0 then
     breadandbutter(xx)
   elseif xx.currentc == 1 then
@@ -411,38 +432,38 @@ you.nododge = false
 
 
 
-dying ={im = love.graphics.newImage("me/attack/dying.png")}
-airdying = {im = love.graphics.newImage("me/attack/airdying.png")}
+dying ={im = lg.newImage("me/attack/dying.png")}
+airdying = {im = lg.newImage("me/attack/airdying.png")}
 
 
-climb = {im=love.graphics.newImage("me/attack/climb.png")}
-climb2 = {im=love.graphics.newImage("me/attack/climb2.png")}
-climb3 = {im=love.graphics.newImage("me/attack/climb3.png")}
+climb = {im=lg.newImage("me/attack/climb.png")}
+climb2 = {im=lg.newImage("me/attack/climb2.png")}
+climb3 = {im=lg.newImage("me/attack/climb3.png")}
 
 flinch = {im = lg.newImage("me/attack/flinch.png")}
 
 
-fallback = {im=love.graphics.newImage("me/attack/fallback.png"),xoff = 12, dodgeh = 32, dodgew = 26, yoff = -40}
-fallbackbounce = {im=love.graphics.newImage("me/attack/fallbackbounce.png"),c=love.graphics.newImage("me/attack/fallbackbouncec.png"),xoff = 12, dodgeh = 32, dodgew = 26}
-fallbackbouncedown = {im=love.graphics.newImage("me/attack/fallbackbouncedown.png"),c=love.graphics.newImage("me/attack/fallbackbouncedownc.png"),xoff = 12, dodgeh = 32, dodgew = 26}
-fallforward = {im=love.graphics.newImage("me/attack/fallforward.png"),c=love.graphics.newImage("me/attack/fallforwardc.png")}
-fallback1 = {im=love.graphics.newImage("me/attack/fallback1.png")}
-fallforward1 = {im=love.graphics.newImage("me/attack/fallforward1.png"),c=love.graphics.newImage("me/attack/fallforward1c.png")}
-gettingup1 = {im=love.graphics.newImage("me/attack/gettingup1.png"),c=love.graphics.newImage("me/attack/gettingup1c.png")}
-gettingup2 = {im=love.graphics.newImage("me/attack/gettingup2.png"),c=love.graphics.newImage("me/attack/gettingup2c.png")}
-gettingup11 = {im=love.graphics.newImage("me/attack/gettingup11.png"),c=love.graphics.newImage("me/attack/gettingup11c.png")}
+fallback = {im=lg.newImage("me/attack/fallback.png"),xoff = 12, dodgeh = 32, dodgew = 26, yoff = -40}
+fallbackbounce = {im=lg.newImage("me/attack/fallbackbounce.png"),xoff = 12, yoff = -40, dodgeh = 32, dodgew = 26}
+fallbackbouncedown = {im=lg.newImage("me/attack/fallbackbouncedown.png"),xoff = 12, yoff = -39, dodgeh = 32, dodgew = 26}
+fallforward = {im=lg.newImage("me/attack/fallforward.png"), yoff = -32}
+fallback1 = {im=lg.newImage("me/attack/fallback1.png")}
+fallforward1 = {im=lg.newImage("me/attack/fallforward1.png"), xoff = -1}
+gettingup1 = {im=lg.newImage("me/attack/gettingup1.png"), yoff = -9}
+gettingup2 = {im=lg.newImage("me/attack/gettingup2.png"),yoff = -7}
+gettingup11 = {im=lg.newImage("me/attack/gettingup11.png"),xoff = -4, yoff = -23}
 
-flinchback = {im=love.graphics.newImage("me/attack/flinchback.png"),yoff = -3}
+flinchback = {im=lg.newImage("me/attack/flinchback.png"),yoff = -3}
 block = {im = lg.newImage("me/attack/block.png")}
-dodgeback = {im = love.graphics.newImage("me/attack/dodgeback.png"), xoff = 3}
-dodgeback2 = {im = love.graphics.newImage("me/attack/dodgeback2.png"), xoff = 4, yoff = -2}
+dodgeback = {im = lg.newImage("me/attack/dodgeback.png"), xoff = 3}
+dodgeback2 = {im = lg.newImage("me/attack/dodgeback2.png"), xoff = 4, yoff = -3}
 
 
-dodge = {im=love.graphics.newImage("me/attack/dodge.png"), dodgeh = 32, dodgew = 10, yoff = -24}
-dodge2 = {im=love.graphics.newImage("me/attack/dodge2.png"), yoff = -17}
-dodge21 = {im=love.graphics.newImage("me/attack/dodge21.png"), xoff = 7, yoff = -21}
+dodge = {im=lg.newImage("me/attack/dodge.png"), dodgeh = 32, dodgew = 10, yoff = -24}
+dodge2 = {im=lg.newImage("me/attack/dodge2.png"),xoff = 10, yoff = -17}
+dodge21 = {im=lg.newImage("me/attack/dodge21.png"), xoff = 10, yoff = -21}
 
-invis = {im=love.graphics.newImage("me/attack/invis.png"),c=love.graphics.newImage("me/attack/invis.png")}
+invis = {im=lg.newImage("me/attack/invis.png"),c=lg.newImage("me/attack/invis.png")}
 
 
 
@@ -685,6 +706,12 @@ newforwarddodge = function(xx)
   me.letgoofblock = false
   you.letgoofblock = false
   function blocknbusy(xx)
+    if xx.currentc==4 then 
+      if xx.letgoofblock then
+        xx.rlvl = xx.rlvl + 1
+        end
+      xx.letgoofblock = false 
+      end
 
     xx.stop = false
 
@@ -701,7 +728,12 @@ newforwarddodge = function(xx)
     end
 
     if xx.blockb and xx.dodgedelaycounter == 0 and not xx.a1 and not xx.a2 and not xx.a3 and xx.g and not xx.dodge and not xx.landing and not xx.letgoofblock
-    then xx.im = block
+    then 
+      if xx.currentc == 4 then
+        xx.im = redblock
+        else
+      xx.im = block
+      end
       xx.block = true
       xx.stop = true
 

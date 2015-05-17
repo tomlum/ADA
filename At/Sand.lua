@@ -1120,10 +1120,10 @@ if v.x < you.thecenter + v.v*(v.v/(tornadowidth*2)) then
 v.x = v.x + v.v/tornadowidth
 else v.x = you.thecenter - v.v*(v.v/(tornadowidth*2))
 	end
-	love.graphics.setColor(255,255,255,ytorfado)
+	lg.setColor(255,255,255,ytorfado)
   
-love.graphics.draw(tor,you.thecenter + (you.thecenter-v.x)+20,v.y,0,-1,1)
-love.graphics.draw(tor,v.x,v.y,0,1.5,1.5)
+lg.draw(tor,you.thecenter + (you.thecenter-v.x)+20,v.y,0,-1,1)
+lg.draw(tor,v.x,v.y,0,1.5,1.5)
 
 
 
@@ -1189,9 +1189,9 @@ else v.x = me.thecenter - v.v*(v.v/(tornadowidth*2))
 end
 
   
-	love.graphics.setColor(255,255,255,torfado)
-love.graphics.draw(tor,me.thecenter + (me.thecenter-v.x)+20,v.y,0,-1,1)
-love.graphics.draw(tor,v.x,v.y,0,1.5,1.5)
+	lg.setColor(255,255,255,torfado)
+lg.draw(tor,me.thecenter + (me.thecenter-v.x)+20,v.y,0,-1,1)
+lg.draw(tor,v.x,v.y,0,1.5,1.5)
 
 
 

@@ -6,8 +6,8 @@ success = love.window.setMode(1440, 900, {resizable=true, fullscreen = false, vs
 
 function love.load()
 
-screenwidth = love.graphics.getWidth()
-	screenheight = love.graphics.getHeight()
+screenwidth = lg.getWidth()
+	screenheight = lg.getHeight()
 
 chapter = 1
 
@@ -21,9 +21,9 @@ end
 
 require "camera"
 
-background1 = love.graphics.newImage("backs/background.png")
+background1 = lg.newImage("backs/background.png")
 background1:setFilter("nearest")
-paralax1 = love.graphics.newImage("backs/paralax1.png")
+paralax1 = lg.newImage("backs/paralax1.png")
 paralax1:setFilter("nearest")
 
 me={}
@@ -59,8 +59,8 @@ end
 function love.update()
 
 
-	screenwidth = love.graphics.getWidth()
-	screenheight = love.graphics.getHeight()
+	screenwidth = lg.getWidth()
+	screenheight = lg.getHeight()
 
 if chapter == 1 then
 
@@ -106,15 +106,15 @@ function love.draw()
 
 if chapter == 1 then 
 	
-	love.graphics.setScissor(0, 0, screenwidth/2, screenheight)
+	lg.setScissor(0, 0, screenwidth/2, screenheight)
 	camera:set()
-	love.graphics.draw(paralax1,0,0,0,20, 20)
-	love.graphics.draw(background1,0,0,0,20, 20)
-	love.graphics.rectangle("fill",me.x,me.y,70,120)
-  love.graphics.rectangle("fill",you.x,you.y,70,120)
+	lg.draw(paralax1,0,0,0,20, 20)
+	lg.draw(background1,0,0,0,20, 20)
+	lg.rectangle("fill",me.x,me.y,70,120)
+  lg.rectangle("fill",you.x,you.y,70,120)
 
 	camera:unset()
-	love.graphics.setScissor()
+	lg.setScissor()
 
 
 
@@ -122,17 +122,17 @@ if chapter == 1 then
 
 
 	
-	love.graphics.setScissor(screenwidth/2, 0, screenwidth/2, screenheight)
+	lg.setScissor(screenwidth/2, 0, screenwidth/2, screenheight)
   
 	camera2:set()
-		love.graphics.draw(paralax1,0,0,0,20, 20)
-	love.graphics.draw(background1,0,0,0,20, 20)
-	love.graphics.rectangle("fill",me.x,me.y,70,120)
-  love.graphics.rectangle("fill",you.x,you.y,70,120)
+		lg.draw(paralax1,0,0,0,20, 20)
+	lg.draw(background1,0,0,0,20, 20)
+	lg.rectangle("fill",me.x,me.y,70,120)
+  lg.rectangle("fill",you.x,you.y,70,120)
 
 
 	camera2:unset()
-	love.graphics.setScissor()
+	lg.setScissor()
 
 
 

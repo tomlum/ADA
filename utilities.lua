@@ -1,7 +1,7 @@
 
 function vcs(c)
   
-  love.graphics.setColor(c.r,c.g,c.b)
+  lg.setColor(c.r,c.g,c.b)
   end
 
 function colorchange(v)

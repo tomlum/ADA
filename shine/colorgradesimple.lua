@@ -27,8 +27,8 @@ requires = {'canvas', 'shader'},
 description = "Simple linear color grading of red, green and blue channel",
 
 new = function(self)
-	self.canvas = love.graphics.newCanvas()
-	self.shader = love.graphics.newShader[[
+	self.canvas = lg.newCanvas()
+	self.shader = lg.newShader[[
 		extern vec3 grade;
 		vec4 effect(vec4 color, Image texture, vec2 tc, vec2 _)
 		{

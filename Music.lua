@@ -39,6 +39,7 @@ ss = {}
 
 function repplay(x)
   if not mute then
+    --[[
     if rampspeed < .9 then
       if x:getPitch()>.7 then
         x:setPitch(x:getPitch()*rampspeed)
@@ -47,13 +48,13 @@ function repplay(x)
       if x:getPitch() < .7 then
         x:setPitch(x:getPitch()/rampspeed)
       end
-      --[[ local name = toString(2)
+      local name = toString(2)
       if ss.name ~= nil then 
       else
         ss.name = true
       end
-      ]]--
       end
+      ]]--
       if x:isStopped() then
         x:play()
       else x:rewind()

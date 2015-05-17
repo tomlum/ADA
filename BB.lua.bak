@@ -85,29 +85,29 @@ you.repcounter = 0
 you.bbpready = false
 
 
-punch1 = {im=love.graphics.newImage("me/attack/punch1.png"),c=love.graphics.newImage("me/attack/punch1c.png"),xoff = 15}
-punch2 = {im=love.graphics.newImage("me/attack/punch2.png"),c=love.graphics.newImage("me/attack/punch2c.png"),xoff = 15}
-punch3 = {im=love.graphics.newImage("me/attack/punch3.png"),c=love.graphics.newImage("me/attack/punch3c.png"),xoff = 15}
-punch4 = {im=love.graphics.newImage("me/attack/punch4.png"),c=love.graphics.newImage("me/attack/punch4c.png"),xoff = 15}
-punch5 = {im=love.graphics.newImage("me/attack/punch5.png"),c=love.graphics.newImage("me/attack/punch5c.png"),xoff = 15}
-punch6 = {im=love.graphics.newImage("me/attack/punch6.png"),c=love.graphics.newImage("me/attack/punch6c.png"),xoff = 15}
-kick1 = {im = love.graphics.newImage("me/attack/kick1.png"), c = love.graphics.newImage("me/attack/kick1c.png"), xoff = 15, yoff = 10}
-kick2 = {im = love.graphics.newImage("me/attack/kick2.png"), c = love.graphics.newImage("me/attack/kick2c.png"), xoff = 15, yoff = 10}
-kick3 = {im = love.graphics.newImage("me/attack/kick3.png"), c = love.graphics.newImage("me/attack/kick3c.png"), xoff = 15, yoff = 10}
-uppercut = {im=love.graphics.newImage("me/attack/uppercut.png"),c=love.graphics.newImage("me/attack/uppercutc.png"), xoff = 15}
-jumpuppercut = {im=love.graphics.newImage("me/attack/jumpuppercut.png"),c=love.graphics.newImage("me/attack/jumpuppercutc.png")}
-dropkick1 = {im=love.graphics.newImage("me/attack/dropkick1.png"),c=love.graphics.newImage("me/attack/dropkick1c.png"), xoff = 5,yoff = -7,extrah=10}
-dropkick2 = {im=love.graphics.newImage("me/attack/dropkick2.png"),c=love.graphics.newImage("me/attack/dropkick2c.png"), xoff = 8,yoff = -7,extrah=-15}
-divekick = {im=love.graphics.newImage("me/attack/divekick.png"),c=love.graphics.newImage("me/attack/divekickc.png"), xoff = 5,yoff = -7,extrah=15}
+punch1 = {im=lg.newImage("me/attack/bb/punch1.png"),xoff = -2}
+punch2 = {im=lg.newImage("me/attack/bb/punch2.png"),xoff = -1,yoff = -3}
+punch3 = {im=lg.newImage("me/attack/bb/punch3.png"), yoff = -4}
+punch4 = {im=lg.newImage("me/attack/bb/punch4.png"),xoff = -1, yoff = -3}
+punch5 = {im=lg.newImage("me/attack/bb/punch5.png"),xoff = -2, yoff = -2}
+punch6 = {im=lg.newImage("me/attack/bb/punch6.png"),yoff = -5}
+kick1 = {im = lg.newImage("me/attack/bb/kick1.png"), xoff = 1, yoff = 1}
+kick2 = {im = lg.newImage("me/attack/bb/kick2.png"), xoff = -1, yoff = -1}
+kick3 = {im = lg.newImage("me/attack/bb/kick3.png"), yoff = -3}
+uppercut = {im=lg.newImage("me/attack/bb/uppercut.png"), xoff = 1}
+jumpuppercut = {im=lg.newImage("me/attack/bb/jumpuppercut.png")}
+dropkick1 = {im=lg.newImage("me/attack/bb/dropkick1.png"), xoff = 5,yoff = -7,extrah=10}
+dropkick2 = {im=lg.newImage("me/attack/bb/dropkick2.png"), xoff = 8,yoff = -7,extrah=-15}
+divekick = {im=lg.newImage("me/attack/bb/divekick.png"), xoff = 1,yoff = -7,extrah=15}
 
-brun1 = {im=love.graphics.newImage("me/attack/brun1.png"),c=love.graphics.newImage("me/attack/brun1c.png"), xoff = 16,yoff = 15,extrah=-6}
-brun2 = {im=love.graphics.newImage("me/attack/brun2.png"),c=love.graphics.newImage("me/attack/brun2c.png"), xoff = 16,yoff = 15,extrah=-6}
-brun3 = {im=love.graphics.newImage("me/attack/brun3.png"),c=love.graphics.newImage("me/attack/brun3c.png"), xoff = 16,yoff = 15,extrah=-6}
+brun1 = {im=lg.newImage("me/attack/bb/brun1.png"), xoff = 12,yoff = 1,extrah=-6}
+brun2 = {im=lg.newImage("me/attack/bb/brun2.png"), xoff = 13,extrah=-6}
+brun3 = {im=lg.newImage("me/attack/bb/brun3.png"), xoff = 13,extrah=-6}
 
 
-airgrab1 = {im=love.graphics.newImage("me/attack/airgrab1.png"),c=love.graphics.newImage("me/attack/airgrab1c.png"),xoff=15}
-airgrab2 = {im=love.graphics.newImage("me/attack/airgrab2.png"),c=love.graphics.newImage("me/attack/airgrab2c.png"),xoff=15}
-airgrab3 = {im=love.graphics.newImage("me/attack/airgrab3.png"),c=love.graphics.newImage("me/attack/airgrab3c.png"),xoff=15}
+airgrab1 = {im=lg.newImage("me/attack/airgrab1.png"),xoff=0}
+airgrab2 = {im=lg.newImage("me/attack/airgrab2.png"),yoff = -3}
+airgrab3 = {im=lg.newImage("me/attack/airgrab3.png"),xoff=1}
 
 
 
@@ -175,7 +175,7 @@ function breadandbutter(xx)
         end
         repplay(xx.blues)
         if xx.animcounter >0 then
-          hboxcs(xx.id, 
+          hboxcs(xx, xx.id, 
             {x=xx.mid, y = xx.y+24},
             {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
             {x=xx.mid, y = xx.y+30},
@@ -193,7 +193,7 @@ function breadandbutter(xx)
 
             end)
         end
-        xx.v = xx.v + (xx.lr*3)
+        xx.v = xx.v + (xx.lr*3)*xx.rampspeed
 
       elseif xx.animcounter < 37 then
         if xx.repcounter%2==0  then
@@ -203,7 +203,7 @@ function breadandbutter(xx)
         end
 
         if xx.animcounter >= 17 then 
-          combo(xx)
+          --combo(xx)
         end
 
       elseif xx.animcounter >= 37 then
@@ -217,10 +217,10 @@ function breadandbutter(xx)
         xx.im = kick1
       elseif xx.animcounter < 18 then
         xx.im = kick2
-          hboxcs(xx.id, 
+          hboxcs(xx, xx.id, 
             {x=xx.mid, y = xx.y+31},
             {x=xx.mid+xx.v+(xx.lr*28), y = xx.y+31-xx.j},
-            {x=xx.mid+me.v+(xx.lr*28), y = xx.y+39-xx.j},
+            {x=xx.mid+xx.v+(xx.lr*28), y = xx.y+39-xx.j},
             {x=xx.mid, y = xx.y+37},
             function(z)
               xx.cancombo = true
@@ -239,7 +239,7 @@ function breadandbutter(xx)
       elseif xx.animcounter < 43 then
         xx.im = kick3
         if xx.animcounter >= 17 then 
-          combo(xx)
+          --combo(xx)
         end
       elseif xx.animcounter >= 43 then
         xx.animcounter = 0
@@ -250,7 +250,7 @@ function breadandbutter(xx)
       elseif xx.animcounter < 16 then
         xx.im = uppercut
         if xx.animcounter <=12 then
-          hboxcs(xx.id, 
+          hboxcs(xx, xx.id, 
             {x=xx.mid, y = xx.y+20},
             {x=xx.mid+xx.v+(xx.lr*11), y = xx.y+4-xx.j},
             {x=xx.mid+xx.v+(xx.lr*17), y = xx.y+4-xx.j},
@@ -277,7 +277,7 @@ function breadandbutter(xx)
       elseif xx.animcounter<=20 then
         xx.im = dropkick2
         if xx.animcounter <10 then
-          hboxcs(xx.id, 
+          hboxcs(xx, xx.id, 
             {x=xx.mid, y = xx.y+18},
             {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+18-xx.j},
             {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+26-xx.j},
@@ -318,11 +318,11 @@ function breadandbutter(xx)
 
       elseif xx.animcounter<=25 then
         xx.im = divekick
-        if xx.animcounter == 10 and rampcanhit then
+        if xx.animcounter == 10 and xx.rampcanhit then
           xx.j = xx.j - 7
           xx.landingcounter = at.bb.ak.penalty
         end
-        hboxcs(xx.id, 
+        hboxcs(xx, xx.id, 
           {x=xx.mid+8, y = xx.y+40},
           {x=xx.mid+xx.v+(xx.lr*14), y = xx.y+64-xx.j},
           {x=xx.mid+xx.v+(xx.lr*6), y = xx.y+64-xx.j},
@@ -356,7 +356,7 @@ function breadandbutter(xx)
       elseif xx.animcounter < 16 then
         xx.im = jumpuppercut
         if xx.animcounter <= 12 then
-          hboxcs(xx.id, 
+          hboxcs(xx, xx.id, 
             {x=xx.mid, y = xx.y+30},
             {x=xx.mid+xx.v+(xx.lr*11), y = xx.y+8-xx.j},
             {x=xx.mid+xx.v+(xx.lr*17), y = xx.y+8-xx.j},
@@ -383,7 +383,7 @@ function breadandbutter(xx)
       elseif xx.animcounter < 7 then
         xx.im = brun1
       elseif xx.animcounter < 9 then
-           hboxcs(xx.id, 
+           hboxcs(xx, xx.id, 
             {x=xx.mid, y = xx.y+19},
             {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+23-xx.j},
             {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+29-xx.j},

@@ -1,59 +1,6 @@
 mymines = {}
 yourmines = {}
 
-aby22 = love.graphics.newImage("me/attack/ay22.png")
-aby23 = love.graphics.newImage("me/attack/ay23.png")
-aby24 = love.graphics.newImage("me/attack/ay24.png")
-aby2 = love.graphics.newImage("me/attack/ay2.png")
-aby3 = love.graphics.newImage("me/attack/ay3.png")
-aby4 = love.graphics.newImage("me/attack/ay4.png")
-abyend = love.graphics.newImage("me/attack/ayend.png")
-aby2end = love.graphics.newImage("me/attack/ay2end.png")
-jyready = love.graphics.newImage("me/attack/jyready.png")
-jpyready = love.graphics.newImage("me/attack/jpyready.png")
-jythrow = love.graphics.newImage("me/attack/jythrow.png")
-yready = love.graphics.newImage("me/attack/yready.png")
-pyready = love.graphics.newImage("me/attack/pyready.png")
-ythrow = love.graphics.newImage("me/attack/ythrow.png")
-yblue = love.graphics.newImage("me/attack/yblue.png")
-yblue2 = love.graphics.newImage("me/attack/yblue2.png")
-yblue3 = love.graphics.newImage("me/attack/yblue3.png")
-yblue4 = love.graphics.newImage("me/attack/yblue4.png")
-yblue5 = love.graphics.newImage("me/attack/yblue5.png")
-yblueend = love.graphics.newImage("me/attack/yblueend.png")
-yblueend2 = love.graphics.newImage("me/attack/yblueend2.png")
-jycready = love.graphics.newImage("me/attack/jycready.png")
-jycthrow = love.graphics.newImage("me/attack/jycthrow.png")
-ycready = love.graphics.newImage("me/attack/ycready.png")
-ycthrow = love.graphics.newImage("me/attack/ycthrow.png")
-pmine = love.graphics.newImage("me/attack/py.png")
-mine = love.graphics.newImage("me/attack/y.png")
-mine2 = love.graphics.newImage("me/attack/y2.png")
-mine3 = love.graphics.newImage("me/attack/y3.png")
-mine4 = love.graphics.newImage("me/attack/y4.png")
-mine5 = love.graphics.newImage("me/attack/y5.png")
-mine6 = love.graphics.newImage("me/attack/y6.png")
-cmine2 = love.graphics.newImage("me/attack/yc1.png")
-cmine3 = love.graphics.newImage("me/attack/yc2.png")
-cmine4 = love.graphics.newImage("me/attack/yc3.png")
-cmine5 = love.graphics.newImage("me/attack/yc4.png")
-cmine6 = love.graphics.newImage("me/attack/yc5.png")
-
-grenade = love.graphics.newImage("me/attack/grenade.png")
-gyready = love.graphics.newImage("me/attack/gyready.png")
-gythrow = love.graphics.newImage("me/attack/gythrow.png")
-jgyready = love.graphics.newImage("me/attack/jgyready.png")
-jgythrow = love.graphics.newImage("me/attack/jgythrow.png")
-
-airbomb = love.graphics.newImage("me/attack/airbomb.png")
-bombdet1 = love.graphics.newImage("me/attack/bombdet1.png")
-bombdet2 = love.graphics.newImage("me/attack/bombdet2.png")
-bombdet3 = love.graphics.newImage("me/attack/bombdet3.png")
-bombdet4 = love.graphics.newImage("me/attack/bombdet4.png")
-bombdet5 = love.graphics.newImage("me/attack/bombdet5.png")
-bombdet6 = love.graphics.newImage("me/attack/bombdet6.png")
-
-
 megyhold = 0
 megyct = false
 
@@ -198,7 +145,7 @@ if youbyhold > 0 then
 	youbell = true
 	if youarmsreach(55) and sameheight() and youbexpc < 100 and not you.dodge and youbexpc == 0
 	then youbexpc = 1
-	youactionshot = true
+	you.actionshot = true
 	me.flinch = true
 	me.ft = byft
 	me.v = you.lr * 50

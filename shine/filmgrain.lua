@@ -27,14 +27,14 @@ requires = {'canvas', 'shader'},
 description = "Film grain overlay",
 
 new = function(self)
-	self.canvas = love.graphics.newCanvas()
+	self.canvas = lg.newCanvas()
 	self.noisetex = love.image.newImageData(100,100)
 	self.noisetex:mapPixel(function()
 		local l = love.math.random() * 255
 		return l,l,l,l
 	end)
-	self.noisetex = love.graphics.newImage(self.noisetex)
-	self.shader = love.graphics.newShader[[
+	self.noisetex = lg.newImage(self.noisetex)
+	self.shader = lg.newShader[[
 		extern number opacity;
 		extern number grainsize;
 		extern number noise;
@@ -55,7 +55,7 @@ new = function(self)
 
 	self.shader:send("noise",0)
 	self.shader:send("noisetex", self.noisetex)
-	self.shader:send("tex_ratio", {love.graphics.getWidth() / self.noisetex:getWidth(), love.graphics.getHeight() / self.noisetex:getHeight()})
+	self.shader:send("tex_ratio", {lg.getWidth() / self.noisetex:getWidth(), lg.getHeight() / self.noisetex:getHeight()})
 end,
 
 draw = function(self, func)

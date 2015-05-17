@@ -29,25 +29,25 @@ shine.__index = shine
 
 -- commonly used utility function
 function shine._apply_shader_to_scene(_, shader, canvas, func)
-	local c = love.graphics.getCanvas()
-	local s = love.graphics.getShader()
-	local co = {love.graphics.getColor()}
+	local c = lg.getCanvas()
+	local s = lg.getShader()
+	local co = {lg.getColor()}
 
 	-- draw scene to canvas
 	canvas:clear()
 	canvas:renderTo(func)
 
 	-- apply shader to canvas
-	love.graphics.setColor(co)
-	love.graphics.setShader(shader)
-	local b = love.graphics.getBlendMode()
-	love.graphics.setBlendMode('premultiplied')
-	love.graphics.draw(canvas, 0,0)
-	love.graphics.setBlendMode(b)
+	lg.setColor(co)
+	lg.setShader(shader)
+	local b = lg.getBlendMode()
+	lg.setBlendMode('premultiplied')
+	lg.draw(canvas, 0,0)
+	lg.setBlendMode(b)
 
 	-- reset shader and canvas
-	love.graphics.setShader(s)
-	love.graphics.setCanvas(c)
+	lg.setShader(s)
+	lg.setCanvas(c)
 end
 
 -- effect chaining
@@ -94,7 +94,7 @@ return setmetatable({}, {__index = function(self, key)
 
 	setmetatable(effect, shine)
 	for _, v in ipairs(effect.requires) do
-		if not love.graphics.isSupported(v) then
+		if not lg.isSupported(v) then
 			error(v.." not supported by the graphics card", 2)
 		end
 	end

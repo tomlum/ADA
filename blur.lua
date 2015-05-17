@@ -4,9 +4,9 @@ blursize = 10
 
 
 function gblur(f)
- love.graphics.setShader(gshader)
+ lg.setShader(gshader)
  f()
- love.graphics.setShader()
+ lg.setShader()
 
 end
 
@@ -14,14 +14,14 @@ end
 --trippy effect!!!!
 function blurdraw2(s,f)
 
-  love.graphics.setShader(blur1)
-  love.graphics.setShader(blur2)
+  lg.setShader(blur1)
+  lg.setShader(blur2)
   blur1.send(blur1,"blurSize", s/1000)
   blur2.send(blur2,"blurSize", s/1000)
 
   f()
 
-  love.graphics.setShader()
+  lg.setShader()
 
 
 
@@ -32,15 +32,15 @@ end
 --good with wobble
 function HIGHCONTRAST(s,f)
 
-  constrastshader.send(constrastshader,'direction', {1 / love.graphics.getWidth(), 1/love.graphics.getHeight()})
+  constrastshader.send(constrastshader,'direction', {1 / lg.getWidth(), 1/lg.getHeight()})
   constrastshader.send(constrastshader,'radius', s)
 
 
-  love.graphics.setShader(constrastshader)
+  lg.setShader(constrastshader)
 
   f()
 
-  love.graphics.setShader()
+  lg.setShader()
 
 
 
@@ -50,15 +50,15 @@ end
 function blurdraw(s,f)
 
 
-  --love.graphics.setBlendMode('premultiplied')
+  --lg.setBlendMode('premultiplied')
 
-  boxblur2.send(boxblur2,'direction', {0,1 / love.graphics.getHeight()})
+  boxblur2.send(boxblur2,'direction', {0,1 / lg.getHeight()})
   boxblur2.send(boxblur2,'radius', s)
 
-  love.graphics.setShader(boxblur2)
+  lg.setShader(boxblur2)
   f()
 
-  love.graphics.setShader()
+  lg.setShader()
 
 
 
@@ -69,23 +69,23 @@ end
 function blurdraw22(s,f)
 
 
-  --love.graphics.setBlendMode('premultiplied')
+  --lg.setBlendMode('premultiplied')
 
   boxblur1.send(boxblur1,'direction', {1 / 
-      love.graphics.getWidth(), 0})
+      lg.getWidth(), 0})
   boxblur1.send(boxblur1,'radius', s)
-  boxblur2.send(boxblur2,'direction', {0,1 / love.graphics.getHeight()})
+  boxblur2.send(boxblur2,'direction', {0,1 / lg.getHeight()})
   boxblur2.send(boxblur2,'radius', s)
 
-  --love.graphics.setBlendMode("multiplicative")
-  love.graphics.setBlendMode("replace")
-  love.graphics.setShader(boxblur1)
+  --lg.setBlendMode("multiplicative")
+  lg.setBlendMode("replace")
+  lg.setShader(boxblur1)
   f()
-  love.graphics.setShader(boxblur2)
+  lg.setShader(boxblur2)
   f()
 
-  love.graphics.setShader()
-  love.graphics.setBlendMode("alpha")
+  lg.setShader()
+  lg.setBlendMode("alpha")
 
 
 
@@ -97,7 +97,7 @@ end
 
 
 
-  myblur = love.graphics.newShader [[
+  myblur = lg.newShader [[
   extern vec2 direction;
   extern number radius;
   vec4 effect(vec4 color, Image texture, vec2 tc, vec2 _)
@@ -117,7 +117,7 @@ end
   ]]
 
 
-  boxblur4 = love.graphics.newShader [[
+  boxblur4 = lg.newShader [[
   extern vec2 direction;
   extern number radius;
   vec4 effect(vec4 color, Image texture, vec2 tc, vec2 _)
@@ -136,7 +136,7 @@ end
 
   ]]
 
-  contrastshader = love.graphics.newShader [[
+  contrastshader = lg.newShader [[
   extern vec2 direction;
   extern number radius;
   vec4 effect(vec4 color, Image texture, vec2 tc, vec2 _)
@@ -155,7 +155,7 @@ end
 
   ]]
 
-  boxblur1 = love.graphics.newShader [[
+  boxblur1 = lg.newShader [[
   extern vec2 direction;
   extern number radius;
   vec4 effect(vec4 color, Image texture, vec2 tc, vec2 _)
@@ -170,7 +170,7 @@ end
   }
   ]]
 
-  boxblur2 = love.graphics.newShader [[
+  boxblur2 = lg.newShader [[
   extern vec2 direction;
   extern number radius;
   vec4 effect(vec4 color, Image texture, vec2 tc, vec2 _)
@@ -189,7 +189,7 @@ end
 
 
 
-  blur1 = love.graphics.newShader [[
+  blur1 = lg.newShader [[
 
   extern number blurSize;
   extern number radius;
@@ -214,7 +214,7 @@ end
   blur1.send(blur1,"blurSize", 2)
 
 
-  blur2 = love.graphics.newShader [[
+  blur2 = lg.newShader [[
 
   extern number blurSize;
   vec4 effect(vec4 color, Image texture, vec2 vTexCoord, vec2 pixel_coords)

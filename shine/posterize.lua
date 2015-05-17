@@ -27,8 +27,8 @@ requires = {'canvas', 'shader'},
 description = "Posterize effect to quantize color bands",
 
 new = function(self)
-	self.canvas = love.graphics.newCanvas()
-	self.shader = love.graphics.newShader[[
+	self.canvas = lg.newCanvas()
+	self.shader = lg.newShader[[
 		extern number num_bands;
 		vec3 rgb2hsv(vec3 c)
 		{

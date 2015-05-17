@@ -1,15 +1,15 @@
 
 
 
-walklegs1 = {im = love.graphics.newImage("me/walk/legs1.png")}
-walklegs2 = {im = love.graphics.newImage("me/walk/legs2.png")}
-walklegs3 = {im = love.graphics.newImage("me/walk/legs3.png")}
-walklegs4 = {im = love.graphics.newImage("me/walk/legs4.png")}
-walklegs5 = {im = love.graphics.newImage("me/walk/legs5.png")}
+walklegs1 = {im = lg.newImage("me/walk/legs1.png")}
+walklegs2 = {im = lg.newImage("me/walk/legs2.png")}
+walklegs3 = {im = lg.newImage("me/walk/legs3.png")}
+walklegs4 = {im = lg.newImage("me/walk/legs4.png")}
+walklegs5 = {im = lg.newImage("me/walk/legs5.png")}
 
 
 
-gahead = love.graphics.newImage("me/attack/green/gahead.png")
+gahead = lg.newImage("me/attack/green/gahead.png")
 walk1 = {im = lg.newImage("me/walk/walk51.png")}
 walk2 = {im = lg.newImage("me/walk/walk52.png")}
 walk3 = {im = lg.newImage("me/walk/walk53.png")}
@@ -21,42 +21,41 @@ run3 = {im = lg.newImage("me/walk/run3.png")}
 run4 = {im = lg.newImage("me/walk/run4.png")}
 slide = {im = lg.newImage("me/walk/slide.png")}
 
-fade1 = {im = love.graphics.newImage("me/attack/fade1.png")}
-fade2 = {im = love.graphics.newImage("me/attack/fade2.png")}
-fade3 = {im = love.graphics.newImage("me/attack/fade3.png")}
-fade4 = {im = love.graphics.newImage("me/attack/fade4.png")}
-fade5 = {im = love.graphics.newImage("me/attack/fade5.png")}
-fade6 = {im = love.graphics.newImage("me/attack/fade6.png")}
-fade7 = {im = love.graphics.newImage("me/attack/fade7.png")}
-fade8 = {im = love.graphics.newImage("me/attack/fade8.png")}
-morph1 = love.graphics.newImage("me/attack/morph1.png")
-morph2 = love.graphics.newImage("me/attack/morph2.png")
-morph3 = love.graphics.newImage("me/attack/morph3.png")
-morph4 = love.graphics.newImage("me/attack/morph4.png")
-morph5 = love.graphics.newImage("me/attack/morph5.png")
-morph6 = love.graphics.newImage("me/attack/morph6.png")
-morph7 = love.graphics.newImage("me/attack/morph7.png")
-wallgrab = {im = love.graphics.newImage("me/attack/wallgrab.png"),
-  c = love.graphics.newImage("me/attack/wallgrabc.png")
+fade1 = {im = lg.newImage("me/attack/fade1.png")}
+fade2 = {im = lg.newImage("me/attack/fade2.png")}
+fade3 = {im = lg.newImage("me/attack/fade3.png")}
+fade4 = {im = lg.newImage("me/attack/fade4.png")}
+fade5 = {im = lg.newImage("me/attack/fade5.png")}
+fade6 = {im = lg.newImage("me/attack/fade6.png")}
+fade7 = {im = lg.newImage("me/attack/fade7.png")}
+fade8 = {im = lg.newImage("me/attack/fade8.png")}
+morph1 = lg.newImage("me/attack/morph1.png")
+morph2 = lg.newImage("me/attack/morph2.png")
+morph3 = lg.newImage("me/attack/morph3.png")
+morph4 = lg.newImage("me/attack/morph4.png")
+morph5 = lg.newImage("me/attack/morph5.png")
+morph6 = lg.newImage("me/attack/morph6.png")
+morph7 = lg.newImage("me/attack/morph7.png")
+wallgrab = {im = lg.newImage("me/attack/wallgrab.png")
 }
-partition = love.graphics.newImage("enviro/partition2.png")
+partition = lg.newImage("enviro/partition2.png")
 partition:setFilter("nearest")
 
 jumprise = {im = lg.newImage("me/jump/jumprise.png"), extrah = 5}
 jumpfalling = {im = lg.newImage("me/jump/jumpfalling.png"), extrah = 5}
 landing = {im = lg.newImage("me/jump/landing.png"), yoff = -12}
 slowdown = {im = lg.newImage("me/jump/slowdown.png")}
-paper1 = love.graphics.newImage("enviro/paper1.png")
-paper2 = love.graphics.newImage("enviro/paper2.png")
-paper3 = love.graphics.newImage("enviro/paper3.png")
-paper4 = love.graphics.newImage("enviro/paper4.png")
+paper1 = lg.newImage("enviro/paper1.png")
+paper2 = lg.newImage("enviro/paper2.png")
+paper3 = lg.newImage("enviro/paper3.png")
+paper4 = lg.newImage("enviro/paper4.png")
 
 
 
 sparkfaderate = 7
 
 
-fillshader = love.graphics.newShader(
+fillshader = lg.newShader(
   [[
   extern vec4 shade;
   vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
@@ -70,7 +69,7 @@ fillshader = love.graphics.newShader(
   }
   ]] )
 
-cshader = love.graphics.newShader(
+cshader = lg.newShader(
   [[
   vec4 greenscreen = vec4(0.0, 1.0, 0.0, 1.0);
   vec4 red = vec4(1.0, 0, 0.0, 1.0);
@@ -166,10 +165,10 @@ function cinemabars()
       barey = 0
     end
   end
-  love.graphics.setColor(0,0,0)
-  love.graphics.srectangle("fill",0,0,1440,barey)
-  love.graphics.srectangle("fill",0,900,1440,-barey)
-  love.graphics.setColor(255,255,255)
+  lg.setColor(0,0,0)
+  lg.srectangle("fill",0,0,1440,barey)
+  lg.srectangle("fill",0,900,1440,-barey)
+  lg.setColor(255,255,255)
 
   if slowww then barsmovein = 3
   elseif barey > 0 and slowmot == 0 then
@@ -236,10 +235,10 @@ function drawmytrail(xx)
         (255/traillength)*(traillength/cur.t)
       ))
 
-    love.graphics.draw(cur.im.im, cur.xanimate-cur.im.xoff*cur.lr, cur.y-cur.im.yoff, 0, cur.lr, 1)
+    lg.draw(cur.im.im, cur.xanimate-cur.im.xoff*cur.lr, cur.y-cur.im.yoff, 0, cur.lr, 1)
     lg.setShader()
 
-    love.graphics.setColor(255, 255, 255, 255)
+    lg.setColor(255, 255, 255, 255)
 
   end
 
@@ -299,8 +298,8 @@ whatlevel = function()
       loader.newImage(enviro,"sky","enviro/ready.png")
       me.x = putmehere
       you.x = putyouhere
-      me.im =idle1
-      you.im =idle1
+      me.im = idle1
+      you.im = idle1
       me.y = themaps[100].floor - 60
       you.y = themaps[100].floor - 60
       floor = themaps[100].floor
@@ -323,7 +322,7 @@ whatlevel = function()
 
       lighttimer = 0
       me.x = 1000
-      you.x = 1020
+      you.x = 6000
       enviro.rightwall = 6600-20
       enviro.ds = 5
       thesong = song1
@@ -334,13 +333,13 @@ whatlevel = function()
 
       if noload then 
 
-        enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
-        enviro.paralax2 = love.graphics.newImage("enviro/libraryparalax2.png")
-        enviro.stage = love.graphics.newImage("enviro/library.png")
-        enviro.sky = love.graphics.newImage("enviro/librarysky.png")
+        enviro.paralax = lg.newImage("enviro/libraryparalax.png")
+        enviro.paralax2 = lg.newImage("enviro/libraryparalax2.png")
+        enviro.stage = lg.newImage("enviro/library.png")
+        enviro.sky = lg.newImage("enviro/librarysky.png")
 
-        enviro.plibrary = love.graphics.newImage("enviro/libraryplayer.png")
-        enviro.thelibraryveneer = love.graphics.newImage("enviro/libraryveneer.png")
+        enviro.plibrary = lg.newImage("enviro/libraryplayer.png")
+        enviro.thelibraryveneer = lg.newImage("enviro/libraryveneer.png")
 
 
       else
@@ -412,11 +411,11 @@ function drawa(xx)
   if xx.greenkcondition then
     csds(xx)
     if xx.lr > 0 then
-      love.graphics.draw(garmback,xx.mid -2*xx.lr,
+      lg.draw(garmback,xx.mid -2*xx.lr,
         xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,-7+4,-8+4)
 
     else
-      love.graphics.draw(garmfront,xx.mid -2*xx.lr,
+      lg.draw(garmfront,xx.mid -2*xx.lr,
         xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,4,4)
 
 
@@ -432,7 +431,7 @@ function drawa(xx)
   local xxy = xx.y-xx.im.yoff
   local xlr = xx.lr
   if mode == "retry" and fadein < 0 then
-    love.graphics.setColor(255,255,255,allfade)
+    lg.setColor(255,255,255,allfade)
   end
 
 
@@ -449,29 +448,29 @@ function drawa(xx)
     csds(xx)
     if xx.v == 0 or xx.slide then
 
-      love.graphics.draw(xx.im.legs,xxx, xxy+xx.im.legsy, 0, xlr, 1) 
+      lg.draw(xx.im.legs,xxx, xxy+xx.im.legsy, 0, xlr, 1) 
     else
       if xx.walktimer < 7 then 
 
-        love.graphics.draw(walklegs1.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
-        love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-        love.graphics.draw(walklegs1.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        lg.draw(walklegs1.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        lg.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+        lg.draw(walklegs1.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
       elseif xx.walktimer >= 7 and xx.walktimer < 14 then
-        love.graphics.draw(walklegs2.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
-        love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-        love.graphics.draw(walklegs2.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        lg.draw(walklegs2.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        lg.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+        lg.draw(walklegs2.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
       elseif xx.walktimer >= 14 and xx.walktimer < 21 then
-        love.graphics.draw(walklegs3.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
-        love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-        love.graphics.draw(walklegs3.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        lg.draw(walklegs3.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        lg.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+        lg.draw(walklegs3.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
       elseif xx.walktimer >= 21 and xx.walktimer < 28 then
-        love.graphics.draw(walklegs4.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
-        love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-        love.graphics.draw(walklegs4.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        lg.draw(walklegs4.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        lg.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+        lg.draw(walklegs4.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
       elseif xx.walktimer >= 28 and xx.walktimer < 35 then
-        love.graphics.draw(walklegs5.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
-        love.graphics.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-        love.graphics.draw(walklegs5.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        lg.draw(walklegs5.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        lg.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
+        lg.draw(walklegs5.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
       else
         xx.walktimer = 0
       end
@@ -496,17 +495,17 @@ function drawa(xx)
 
 
     else
-      love.graphics.draw(garmback,xx.mid -2*xx.lr,
+      lg.draw(garmback,xx.mid -2*xx.lr,
         xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,-7+4,-8+4)
 
-      love.graphics.draw(gahead,xx.mid-11*xx.lr, xx.y+6, 0, xlr, 1) 
+      lg.draw(gahead,xx.mid-11*xx.lr, xx.y+6, 0, xlr, 1) 
 
       lg.setShader()
     end
   end
 
 
-  love.graphics.setColor(255, 255, 255, 255)
+  lg.setColor(255, 255, 255, 255)
   drawcolorstuff(xx)
   bolttraildraw(xx)
 
@@ -515,10 +514,10 @@ function drawa(xx)
     if xx.im.extrah ~= nil then
       pextra = xx.im.extrah
     end
-    love.graphics.setColor(255,0,0)
-    love.graphics.rectangle("fill", xx.x, xx.oldpy, xx.width,1)
-    love.graphics.setColor(0,0,255)
-    love.graphics.rectangle("fill", xx.x, xx.y+me.height-xx.j-pextra, xx.width,1)
+    lg.setColor(255,0,0)
+    lg.rectangle("fill", xx.x, xx.oldpy, xx.width,1)
+    lg.setColor(0,0,255)
+    lg.rectangle("fill", xx.x, xx.y+me.height-xx.j-pextra, xx.width,1)
   end
 end
 
@@ -539,7 +538,7 @@ function actionshotstuff(xx)
       else
         xx.repcounter = 0
         xx.currentc = xx.color.n
-        combo(xx)
+        xx.cmbo=true--combo(xx)
         xx.actionshot = false
 
         musfadein = 10
@@ -600,46 +599,46 @@ function drawtriangles()
   for i,v in ipairs(mytriangles) do
     for p,q in ipairs(mytriangles[i])
     do 
-      if p == 1 then love.graphics.setColor(a21r, a21g, a21b)
-      elseif p == 2 then love.graphics.setColor(a31r, a31g, a31b)
-      elseif p == 3 then love.graphics.setColor(a41r, a41g, a41b)
+      if p == 1 then lg.setColor(a21r, a21g, a21b)
+      elseif p == 2 then lg.setColor(a31r, a31g, a31b)
+      elseif p == 3 then lg.setColor(a41r, a41g, a41b)
       end
       if q == 1 then
-        love.graphics.draw(triangle, ((520 + (p * 50)-ln)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,0, screenwidth/1440, screenheight/900)
+        lg.draw(triangle, ((520 + (p * 50)-ln)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,0, screenwidth/1440, screenheight/900)
       elseif q == 2 then 
 
-        love.graphics.draw(triangle, ((570 + (p * 50)-ln)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,1.57079633, screenwidth/1440, screenheight/900)
+        lg.draw(triangle, ((570 + (p * 50)-ln)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,1.57079633, screenwidth/1440, screenheight/900)
       elseif q == 3 then 
 
-        love.graphics.draw(triangle, ((570 + (p * 50)-ln)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*2, screenwidth/1440, screenheight/900)
+        lg.draw(triangle, ((570 + (p * 50)-ln)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*2, screenwidth/1440, screenheight/900)
       elseif q == 4 then 
 
-        love.graphics.draw(triangle, ((520 + (p * 50)-ln)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*3, screenwidth/1440, screenheight/900)
+        lg.draw(triangle, ((520 + (p * 50)-ln)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*3, screenwidth/1440, screenheight/900)
       end
     end
   end
   for i,v in ipairs(yourtriangles) do
     for p,q in ipairs(yourtriangles[i])
     do 
-      if p == 1 then love.graphics.setColor(a22r, a22g, a22b)
-      elseif p == 2 then love.graphics.setColor(a32r, a32g, a32b)
-      elseif p == 3 then love.graphics.setColor(a42r, a42g, a42b)
+      if p == 1 then lg.setColor(a22r, a22g, a22b)
+      elseif p == 2 then lg.setColor(a32r, a32g, a32b)
+      elseif p == 3 then lg.setColor(a42r, a42g, a42b)
       end
       if q == 1 then
-        love.graphics.draw(triangle, ((1440 - 520 - 50 - (p * 50)+rn)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,0, screenwidth/1440, screenheight/900)
+        lg.draw(triangle, ((1440 - 520 - 50 - (p * 50)+rn)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,0, screenwidth/1440, screenheight/900)
       elseif q == 2 then 
 
-        love.graphics.draw(triangle, ((1440 - 470 - 50 - (p * 50)+rn)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,1.57079633, screenwidth/1440, screenheight/900)
+        lg.draw(triangle, ((1440 - 470 - 50 - (p * 50)+rn)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,1.57079633, screenwidth/1440, screenheight/900)
       elseif q == 3 then 
 
-        love.graphics.draw(triangle, ((1440 - 470 - 50 - (p * 50)+rn)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*2, screenwidth/1440, screenheight/900)
+        lg.draw(triangle, ((1440 - 470 - 50 - (p * 50)+rn)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*2, screenwidth/1440, screenheight/900)
       elseif q == 4 then 
 
-        love.graphics.draw(triangle, ((1440 - 520 - 50 - (p * 50)+rn)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*3, screenwidth/1440, screenheight/900)
+        lg.draw(triangle, ((1440 - 520 - 50 - (p * 50)+rn)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*3, screenwidth/1440, screenheight/900)
       end
     end
   end
-  love.graphics.setColor(255,255,255)
+  lg.setColor(255,255,255)
 end
 
 lights = function ()
@@ -680,37 +679,37 @@ you.walllr = 0
 you.wallx = 0
 
 function drawstreetprestuff()
-  love.graphics.draw(enviro.light, 4448, 1525)
+  lg.draw(enviro.light, 4448, 1525)
   lights()
 
 end
 drawstreetstuff = function()
-  love.graphics.draw(enviro.stagefloor, 0, 0, 0, 1, 20)
-  love.graphics.draw(enviro.rafters,5608-502, 1536)
-  love.graphics.draw(partition,21, 1,0, -1,3.11)
-  love.graphics.draw(partition,themaps[1].rightwall-20, 0)
+  lg.draw(enviro.stagefloor, 0, 0, 0, 1, 20)
+  lg.draw(enviro.rafters,5608-502, 1536)
+  lg.draw(partition,21, 1,0, -1,3.11)
+  lg.draw(partition,themaps[1].rightwall-20, 0)
 
 end
 drawlibrarystuff = function()
   if rampcanhit and math.random() > .5 then makenwater(602,930,0,2,1)
   end
-  love.graphics.draw(enviro.plibrary,0,0)
-  love.graphics.draw(partition,21, 1,0, -1,3.11)
-  love.graphics.draw(partition,themaps[3].rightwall-21, 0, 0, 1, 3.11)
+  lg.draw(enviro.plibrary,0,0)
+  lg.draw(partition,21, 1,0, -1,3.11)
+  lg.draw(partition,themaps[3].rightwall-21, 0, 0, 1, 3.11)
   libraryveneer()
 end
 
 drawfloorsstuff = function()
   drawpapers()
-  love.graphics.draw(enviro.pfloors,0,0)
-  love.graphics.draw(partition,21, 1,0, -1,3.11)
-  love.graphics.draw(partition,themaps[3].rightwall-21, 0, 0, 1, 3.11)
+  lg.draw(enviro.pfloors,0,0)
+  lg.draw(partition,21, 1,0, -1,3.11)
+  lg.draw(partition,themaps[3].rightwall-21, 0, 0, 1, 3.11)
   floorsveneer()
 end
 
-enviro.rubble = love.graphics.newImage("enviro/rubble.png")
-enviro.glass = love.graphics.newImage("enviro/glass.png")
-enviro.spark = love.graphics.newImage("enviro/spark.png")
+enviro.rubble = lg.newImage("enviro/rubble.png")
+enviro.glass = lg.newImage("enviro/glass.png")
+enviro.spark = lg.newImage("enviro/spark.png")
 rubble = {}
 glasseses = {}
 dust = {}
@@ -760,12 +759,12 @@ function drawpapers()
   end
 
 
-  if v.n < 10 then love.graphics.draw(paper1,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-  elseif v.n < 20 then love.graphics.draw(paper2,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-  elseif v.n < 30 then love.graphics.draw(paper3,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-  elseif v.n < papertime -20 then love.graphics.draw(paper4,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-  elseif v.n < papertime -10 then love.graphics.draw(paper3,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
-  elseif v.n < papertime then love.graphics.draw(paper2,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+  if v.n < 10 then lg.draw(paper1,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+  elseif v.n < 20 then lg.draw(paper2,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+  elseif v.n < 30 then lg.draw(paper3,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+  elseif v.n < papertime -20 then lg.draw(paper4,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+  elseif v.n < papertime -10 then lg.draw(paper3,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
+  elseif v.n < papertime then lg.draw(paper2,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
   end
 
 end
@@ -804,9 +803,9 @@ function drawglass()
     glassn = math.random(155,255)
     glassclarity = math.random(55,255)
   end
-  love.graphics.setColor(glassn,255,255,classclarity)
-  love.graphics.draw(enviro.glass,v.x,v.y,70/(v.v+v.y),math.random()*math.random(-1,1),math.random()*math.random(-1,1), 1, 1)
-  love.graphics.setColor(255,255,255)
+  lg.setColor(glassn,255,255,classclarity)
+  lg.draw(enviro.glass,v.x,v.y,70/(v.v+v.y),math.random()*math.random(-1,1),math.random()*math.random(-1,1), 1, 1)
+  lg.setColor(255,255,255)
 
 end
 end
@@ -835,9 +834,9 @@ function drawdust()
     v.j = v.j - .5*rampspeed
     dustn = math.random(100,200)
   end
-  love.graphics.setColor(dustn,dustn,dustn,150)
-  love.graphics.draw(enviro.rubble,v.x,v.y-2,70/(v.v+v.y),1.5,1.5)
-  love.graphics.setColor(255,255,255)
+  lg.setColor(dustn,dustn,dustn,150)
+  lg.draw(enviro.rubble,v.x,v.y-2,70/(v.v+v.y),1.5,1.5)
+  lg.setColor(255,255,255)
 
 end
 end
@@ -863,9 +862,9 @@ function drawrubble()
     v.j = v.j - .2*rampspeed
     blackn = math.random(80,150)
   end
-  love.graphics.setColor(blackn,blackn,blackn)
-  love.graphics.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,2.2,2.2,2,2)
-  love.graphics.setColor(255,255,255)
+  lg.setColor(blackn,blackn,blackn)
+  lg.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,2.2,2.2,2,2)
+  lg.setColor(255,255,255)
 end
 end
 
@@ -929,15 +928,15 @@ function drawwater()
         end
       end
     end
-    love.graphics.setColor(50,50,blackn)
+    lg.setColor(50,50,blackn)
 
     if temp.fade ~= nil then
-      love.graphics.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,1.5*(v.fade/100),1.5*(v.fade/100),((v.fade/100)*1.5)/2,((v.fade/100)*1.5)/2)
+      lg.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,1.5*(v.fade/100),1.5*(v.fade/100),((v.fade/100)*1.5)/2,((v.fade/100)*1.5)/2)
     else
-      love.graphics.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,1.5,1.5,1,1)
+      lg.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,1.5,1.5,1,1)
     end
   end
-  love.graphics.setColor(255,255,255)
+  lg.setColor(255,255,255)
 end
 
 
@@ -1200,9 +1199,9 @@ function libraryveneer()
     then lvfade = lvfade - 5
     elseif lvfade < 255 then lvfade = lvfade + 5
     end
-    love.graphics.setColor(255,255,255,lvfade)
-    love.graphics.draw(enviro.thelibraryveneer, 1535, 0)
-    love.graphics.setColor(255,255,255)
+    lg.setColor(255,255,255,lvfade)
+    lg.draw(enviro.thelibraryveneer, 1535, 0)
+    lg.setColor(255,255,255)
   end
 end
 
@@ -1216,12 +1215,12 @@ function floorsveneer()
     then lvfade2 = lvfade2 - 5
     elseif lvfade2 < 255 then lvfade2 = lvfade2 + 5
     end
-    love.graphics.setColor(255,255,255,lvfade)
-    love.graphics.draw(enviro.floorsveneer1, 416, 1898)
-    love.graphics.setColor(255,255,255)
-    love.graphics.setColor(255,255,255,lvfade2)
-    love.graphics.draw(enviro.floorsveneer2, 3157, 2829)
-    love.graphics.setColor(255,255,255)
+    lg.setColor(255,255,255,lvfade)
+    lg.draw(enviro.floorsveneer1, 416, 1898)
+    lg.setColor(255,255,255)
+    lg.setColor(255,255,255,lvfade2)
+    lg.draw(enviro.floorsveneer2, 3157, 2829)
+    lg.setColor(255,255,255)
   end
 end
 
@@ -1236,19 +1235,19 @@ end
 retry = function()
 
   if you.dead and me.dead then 
-    love.graphics.setColor(0, 0, 0, retryfade)
-    love.graphics.draw(enviro.retry, 0, 0, 0, screenwidth/1440, screenheight/900)
-    love.graphics.setColor(255, 255, 255, 255)
+    lg.setColor(0, 0, 0, retryfade)
+    lg.draw(enviro.retry, 0, 0, 0, screenwidth/1440, screenheight/900)
+    lg.setColor(255, 255, 255, 255)
   elseif you.dead then 
-    love.graphics.setColor(me.color.c.r,me.color.c.g,me.color.c.b, retryfade)
-    --love.graphics.draw(enviro.v, 0, 0, 0, screenwidth/1440, screenheight/900)
-    love.graphics.draw(enviro.retry, 0, 0, 0, screenwidth/1440, screenheight/900)
-    love.graphics.setColor(255, 255, 255, 255)
+    lg.setColor(me.color.c.r,me.color.c.g,me.color.c.b, retryfade)
+    --lg.draw(enviro.v, 0, 0, 0, screenwidth/1440, screenheight/900)
+    lg.draw(enviro.retry, 0, 0, 0, screenwidth/1440, screenheight/900)
+    lg.setColor(255, 255, 255, 255)
   elseif me.dead then
-    love.graphics.setColor(you.color.c.r,you.color.c.g,you.color.c.b, retryfade)
-    love.graphics.draw(enviro.v, screenwidth, 0, 0, -screenwidth/1440, screenheight/900)
-    love.graphics.draw(enviro.retry, 0, 0, 0, screenwidth/1440, screenheight/900)
-    love.graphics.setColor(255, 255, 255, 255)
+    lg.setColor(you.color.c.r,you.color.c.g,you.color.c.b, retryfade)
+    lg.draw(enviro.v, screenwidth, 0, 0, -screenwidth/1440, screenheight/900)
+    lg.draw(enviro.retry, 0, 0, 0, screenwidth/1440, screenheight/900)
+    lg.setColor(255, 255, 255, 255)
   end
 
 end
@@ -1323,32 +1322,32 @@ drawspine = function()
 
     if v.v >= 0 then
       if v.spinecolor == 0 then 
-        love.graphics.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
+        lg.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
       elseif v.spinecolor == 1 then 
-        love.graphics.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
+        lg.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
       end
-      love.graphics.sdraw(enviro.spine, v.x, (v.n * (40+spinespacing))+spineymove)
+      lg.sdraw(enviro.spine, v.x, (v.n * (40+spinespacing))+spineymove)
 
       if v.spinecolor2 == 0 then 
-        love.graphics.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
+        lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
       elseif v.spinecolor2 == 1 then 
-        love.graphics.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
+        lg.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
       end
-      love.graphics.sdraw(enviro.spine, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
+      lg.sdraw(enviro.spine, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
     else
       if v.spinecolor2 == 0 then 
-        love.graphics.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
+        lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
       elseif v.spinecolor2 == 1 then 
-        love.graphics.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
+        lg.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
       end
-      love.graphics.sdraw(enviro.spine, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
+      lg.sdraw(enviro.spine, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
 
       if v.spinecolor == 0 then 
-        love.graphics.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
+        lg.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
       elseif v.spinecolor == 1 then 
-        love.graphics.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
+        lg.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
       end
-      love.graphics.sdraw(enviro.spine, v.x, (v.n * (40+spinespacing))+spineymove)
+      lg.sdraw(enviro.spine, v.x, (v.n * (40+spinespacing))+spineymove)
     end
   end
 
@@ -1407,7 +1406,7 @@ drawwaves = function()
         v.y = v.y - v.v
       end
     end
-    love.graphics.draw(enviro.wave, v.x, v.y+(screenheight*.7)-stagey*(screenheight/350), 0, screenwidth/1440, screenheight/700)
+    lg.draw(enviro.wave, v.x, v.y+(screenheight*.7)-stagey*(screenheight/350), 0, screenwidth/1440, screenheight/700)
 
   end
 end
@@ -1419,7 +1418,7 @@ function go()
   end
   if gotimer < 40 then
     gotimer = gotimer + 1
-    love.graphics.draw(enviro.go,screenwidth/4 -5 + math.random(10),screenheight/4-5 + math.random(10),0,screenwidth/1440,screenheight/900)
+    lg.draw(enviro.go,screenwidth/4 -5 + math.random(10),screenheight/4-5 + math.random(10),0,screenwidth/1440,screenheight/900)
     gosound:play()
   end
 end
@@ -1430,18 +1429,18 @@ function drawroulettenumbers()
   numshake = math.random(-5,5)
   if themode == "roulette" then
     if you.deathclock < 5 and you.deathclock > 0 then
-      love.graphics.draw(enviro.x,0,0,0,screenwidth/1440,screenheight/900)
-      if you.lives == 4 then love.graphics.draw(enviro.iv,screenwidth - (530/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
-      elseif you.lives == 3 then love.graphics.draw(enviro.iii,screenwidth - (530/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
-      elseif you.lives == 2 then love.graphics.draw(enviro.ii,screenwidth - (530/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
-      elseif you.lives == 1 then love.graphics.draw(enviro.i,screenwidth - (530/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
+      lg.draw(enviro.x,0,0,0,screenwidth/1440,screenheight/900)
+      if you.lives == 4 then lg.draw(enviro.iv,screenwidth - (530/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
+      elseif you.lives == 3 then lg.draw(enviro.iii,screenwidth - (530/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
+      elseif you.lives == 2 then lg.draw(enviro.ii,screenwidth - (530/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
+      elseif you.lives == 1 then lg.draw(enviro.i,screenwidth - (530/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
       end
     elseif me.deathclock < 5 and me.deathclock > 0 then
-      love.graphics.draw(enviro.x,0,0,0,screenwidth/1440,screenheight/900)
-      if me.lives == 4 then love.graphics.draw(enviro.iv,(30/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
-      elseif me.lives == 3 then love.graphics.draw(enviro.iii,(30/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
-      elseif me.lives == 2 then love.graphics.draw(enviro.ii,(30/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
-      elseif me.lives == 1 then love.graphics.draw(enviro.i,(30/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
+      lg.draw(enviro.x,0,0,0,screenwidth/1440,screenheight/900)
+      if me.lives == 4 then lg.draw(enviro.iv,(30/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
+      elseif me.lives == 3 then lg.draw(enviro.iii,(30/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
+      elseif me.lives == 2 then lg.draw(enviro.ii,(30/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
+      elseif me.lives == 1 then lg.draw(enviro.i,(30/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
       end
     end
   end
@@ -1746,9 +1745,9 @@ death = function(xx, yy)
     v.r = lof(v.r+math.random()*sparkfaderate*rampspeed,255)
     v.g = lof(v.g+math.random()*sparkfaderate*rampspeed,255)
     v.b = lof(v.b+math.random()*sparkfaderate*rampspeed,255)
-    love.graphics.setColor(v.r,v.g,v.b,math.random(150,255))
-    love.graphics.draw(enviro.spark,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)
-    love.graphics.setColor(255,255,255)
+    lg.setColor(v.r,v.g,v.b,math.random(150,255))
+    lg.draw(enviro.spark,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)
+    lg.setColor(255,255,255)
 
   end
 end

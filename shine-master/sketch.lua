@@ -28,17 +28,17 @@ requires = {'canvas', 'shader'},
 description = "Sketched drawing style",
 
 new = function(self)
-	self.canvas = love.graphics.newCanvas()
+	self.canvas = lg.newCanvas()
 	self.noisetex = love.image.newImageData(100,100)
 	self.noisetex:mapPixel(function()
 		local l = love.math.random() * 255
 		return l,l,l,l
 	end)
-	self.noisetex = love.graphics.newImage(self.noisetex)
+	self.noisetex = lg.newImage(self.noisetex)
 	self.noisetex:setWrap ("repeat", "repeat")
 	self.noisetex:setFilter("nearest", "nearest")
 
-	self.shader = love.graphics.newShader[[
+	self.shader = lg.newShader[[
 		extern number amp;
 		extern number screen_center_x;
 		extern number screen_center_y;

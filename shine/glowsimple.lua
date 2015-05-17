@@ -43,7 +43,7 @@ local function build_blur_shader(sigma)
 
 	code[#code+1] = ("return c * vec4(%f) * color;}"):format(1 / norm)
 
-	return love.graphics.newShader(table.concat(code))
+	return lg.newShader(table.concat(code))
 end
 
 return {
@@ -51,9 +51,9 @@ requires = {'canvas', 'shader'},
 description = "Simple glow shader based on gassian blurring",
 
 new = function(self)
-	self.canvas  = {love.graphics.newCanvas(), love.graphics.newCanvas()}
+	self.canvas  = {lg.newCanvas(), lg.newCanvas()}
 	self.shader_blur = build_blur_shader(5)
-	self.shader_thresh = love.graphics.newShader[[
+	self.shader_thresh = lg.newShader[[
 	extern number min_luma;
 	vec4 effect(vec4 color, Image texture, vec2 tc, vec2 _)
 	{
@@ -66,37 +66,37 @@ new = function(self)
 end,
 
 draw = function(self, func)
-	local c = love.graphics.getCanvas()
-	local s = love.graphics.getShader()
-	local co = {love.graphics.getColor()}
+	local c = lg.getCanvas()
+	local s = lg.getShader()
+	local co = {lg.getColor()}
 
 	-- draw scene to screen
 	func()
 
 	-- draw scene with brigthness treshold
-	love.graphics.setShader(self.shader_thresh)
+	lg.setShader(self.shader_thresh)
 	self.canvas[1]:clear()
 	self.canvas[1]:renderTo(func)
 
-	love.graphics.setColor(co)
-	local b = love.graphics.getBlendMode()
-	love.graphics.setBlendMode('premultiplied')
+	lg.setColor(co)
+	local b = lg.getBlendMode()
+	lg.setBlendMode('premultiplied')
 
-	love.graphics.setShader(self.shader_blur)
+	lg.setShader(self.shader_blur)
 	-- first pass (horizontal blur)
-	self.shader_blur:send('direction', {1 / love.graphics.getWidth(), 0})
+	self.shader_blur:send('direction', {1 / lg.getWidth(), 0})
 	self.canvas[2]:clear()
-	self.canvas[2]:renderTo(function() love.graphics.draw(self.canvas[1], 0,0) end)
+	self.canvas[2]:renderTo(function() lg.draw(self.canvas[1], 0,0) end)
 
 	-- second pass (vertical blur)
-	love.graphics.setBlendMode('additive')
-	self.shader_blur:send('direction', {0, 1 / love.graphics.getHeight()})
-	love.graphics.draw(self.canvas[2], 0,0)
+	lg.setBlendMode('additive')
+	self.shader_blur:send('direction', {0, 1 / lg.getHeight()})
+	lg.draw(self.canvas[2], 0,0)
 
 	-- restore blendmode, shader and canvas
-	love.graphics.setBlendMode(b)
-	love.graphics.setShader(s)
-	love.graphics.setCanvas(c)
+	lg.setBlendMode(b)
+	lg.setShader(s)
+	lg.setCanvas(c)
 end,
 
 set = function(self, key, value)

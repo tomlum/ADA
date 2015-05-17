@@ -39,7 +39,7 @@ local resourceKinds = {
     resourceKey = "imageData",
     constructor = love.image.newImageData,
     postProcess = function(data)
-      return love.graphics.newImage(data)
+      return lg.newImage(data)
     end
   },
   source = {
@@ -60,7 +60,7 @@ local resourceKinds = {
     end,
     postProcess = function(data, resource)
       local path, size = unpack(resource.requestParams)
-      return love.graphics.newFont(data, size)
+      return lg.newFont(data, size)
     end
   },
   stream = {

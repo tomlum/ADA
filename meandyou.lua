@@ -13,8 +13,8 @@ me = {}
 you = {}
 me.shade=255
 you.shade=180
-me.outline={r=155,g=0,b=155}
-you.outline={r=25,g=155,b=155}
+me.outline={r=53,g=53,b=53}
+you.outline={r=53,g=53,b=53}
 
 
 
@@ -35,11 +35,11 @@ me.id = 1
 	me.yoffset = 0
 	me.feet = me.y + 60
 	--the face/crest image
-	me.face = love.graphics.newImage("me/face/face1.png")
+	me.face = lg.newImage("me/face/face1.png")
 	me.facex = me.x + 12
 	me.facedis = 2
 	me.facey = me.feet - 54
-	me.crest = love.graphics.newImage("me/crest/crest1.png")
+	me.crest = lg.newImage("me/crest/crest1.png")
 	me.crestx = me.xanimate - 13
 	me.crestdis = 1
 	me.cresty = me.y + 27
@@ -101,11 +101,11 @@ you.id = 2
 	you.yoffset = 0
 	you.feet = you.y + 60
 	--the face/crest image
-	you.face = love.graphics.newImage("me/face/face2.png")
+	you.face = lg.newImage("me/face/face2.png")
 	you.facex = you.x + 12
 	you.facedis = 2
 	you.facey = you.feet - 54
-	you.crest = love.graphics.newImage("me/crest/crest2.png")
+	you.crest = lg.newImage("me/crest/crest2.png")
 	you.crestx = you.xanimate - 13
 	you.cresty = you.y + 27
 	you.crestdis = 1
@@ -205,11 +205,11 @@ me.righty = true
 	me.feet = me.y + 60
 	--the face/crest image
 	me.lefty = false
-	me.face = love.graphics.newImage("me/face/face1.png")
+	me.face = lg.newImage("me/face/face1.png")
 	me.facex = me.x + 12
 	me.facedis = 2
 	me.facey = me.feet - 54
-	me.crest = love.graphics.newImage("me/crest/crest1.png")
+	me.crest = lg.newImage("me/crest/crest1.png")
 	me.crestx = me.xanimate - 13
 	me.crestdis = 1
 	me.cresty = me.y + 27
@@ -269,11 +269,11 @@ me.righty = true
 	you.feet = you.y + 60
 	--the face/crest image
 	you.lefty = true
-	you.face = love.graphics.newImage("me/face/face2.png")
+	you.face = lg.newImage("me/face/face2.png")
 	you.facex = you.x + 12
 	you.facedis = 2
 	you.facey = you.feet - 54
-	you.crest = love.graphics.newImage("me/crest/crest2.png")
+	you.crest = lg.newImage("me/crest/crest2.png")
 	you.crestx = you.xanimate - 13
 	you.cresty = you.y + 27
 	you.crestdis = 1
@@ -465,11 +465,11 @@ startsfade = false
 	me.feet = me.y + 60
 	--the face/crest image
 	me.lefty = false
-	me.face = love.graphics.newImage("me/face/face1.png")
+	me.face = lg.newImage("me/face/face1.png")
 	me.facex = me.x + 12
 	me.facedis = 2
 	me.facey = me.feet - 54
-	me.crest = love.graphics.newImage("me/crest/crest1.png")
+	me.crest = lg.newImage("me/crest/crest1.png")
 	me.crestx = me.xanimate - 13
 	me.crestdis = 1
 	me.cresty = me.y + 27
@@ -530,11 +530,11 @@ startsfade = false
 	you.feet = you.y + 60
 	--the face/crest image
 	you.lefty = true
-	you.face = love.graphics.newImage("me/face/face2.png")
+	you.face = lg.newImage("me/face/face2.png")
 	you.facex = you.x + 12
 	you.facedis = 2
 	you.facey = you.feet - 54
-	you.crest = love.graphics.newImage("me/crest/crest2.png")
+	you.crest = lg.newImage("me/crest/crest2.png")
 	you.crestx = you.xanimate - 13
 	you.cresty = you.y + 27
 	you.crestdis = 1
@@ -594,32 +594,32 @@ you.xoffset = 0
 
 	waitforitplay = -1
 
-	screenwidth = love.graphics.getWidth()
-	screenheight = love.graphics.getHeight()
+	screenwidth = lg.getWidth()
+	screenheight = lg.getHeight()
 	head2ceiling = 30
 	feet2bottom = 30
 	barheight = 50
 	paralaxoffset = 10
 	enviro = {}
-	enviro.wave = love.graphics.newImage("enviro/wave2.png")
+	enviro.wave = lg.newImage("enviro/wave2.png")
 	enviro.dolly = 0
 	enviro.ds = 5
 	streetfadestart = false
 	streetfade = 255
 	streetfadehold = 50 + math.random(50) 
 
-	enviro.retry = love.graphics.newImage("enviro/retry.png")
+	enviro.retry = lg.newImage("enviro/retry.png")
 	enviro.retry:setFilter("nearest")
 
-	ready = love.graphics.newImage("enviro/READY.png")
+	ready = lg.newImage("enviro/READY.png")
 	ready:setFilter("nearest")
 
-	face1 = love.graphics.newImage("me/face/face1.png")
-	face2 = love.graphics.newImage("me/face/face2.png")
-	face3 = love.graphics.newImage("me/face/face3.png")
-	face4 = love.graphics.newImage("me/face/face4.png")
-	face5 = love.graphics.newImage("me/face/face5.png")
-	face6 = love.graphics.newImage("me/face/face6.png")
+	face1 = lg.newImage("me/face/face1.png")
+	face2 = lg.newImage("me/face/face2.png")
+	face3 = lg.newImage("me/face/face3.png")
+	face4 = lg.newImage("me/face/face4.png")
+	face5 = lg.newImage("me/face/face5.png")
+	face6 = lg.newImage("me/face/face6.png")
 	face1:setFilter("nearest")
 	face2:setFilter("nearest")
 	face3:setFilter("nearest")
@@ -629,59 +629,57 @@ you.xoffset = 0
 
 if not fightclub then 
 	
-	enviro.v = love.graphics.newImage("enviro/v.png")
+	enviro.v = lg.newImage("enviro/v.png")
 
 	playfadeout = 0
 
 
 	
-	enviro.vert = love.graphics.newImage("enviro/vert.png")
-	enviro.horiz = love.graphics.newImage("enviro/horiz.png")
+	enviro.vert = lg.newImage("enviro/vert.png")
+	enviro.horiz = lg.newImage("enviro/horiz.png")
 
-	enviro.iv = love.graphics.newImage("enviro/iv.png")
-	enviro.iii = love.graphics.newImage("enviro/iii.png")
-	enviro.ii = love.graphics.newImage("enviro/ii.png")
-	enviro.i = love.graphics.newImage("enviro/i.png")
-	enviro.x = love.graphics.newImage("enviro/x.png")
+	enviro.iv = lg.newImage("enviro/iv.png")
+	enviro.iii = lg.newImage("enviro/iii.png")
+	enviro.ii = lg.newImage("enviro/ii.png")
+	enviro.i = lg.newImage("enviro/i.png")
+	enviro.x = lg.newImage("enviro/x.png")
 
-  slantbar = love.graphics.newImage("enviro/slantbar.png")
+  slantbar = lg.newImage("enviro/slantbar.png")
 
 
 
-	enviro.spine = love.graphics.newImage("enviro/spine.png")
+	enviro.spine = lg.newImage("enviro/spine.png")
 	enviro.spine:setFilter("nearest")
 
 
 	
-	enviro.v1 = love.graphics.newImage("enviro/v1.png")
-	enviro.v1 = love.graphics.newImage("enviro/v1.png")
-	enviro.v2 = love.graphics.newImage("enviro/v2.png")
-	enviro.v3 = love.graphics.newImage("enviro/v3.png")
+	enviro.v1 = lg.newImage("enviro/v1.png")
+	enviro.v1 = lg.newImage("enviro/v1.png")
+	enviro.v2 = lg.newImage("enviro/v2.png")
+	enviro.v3 = lg.newImage("enviro/v3.png")
 
 	facade = enviro.v1
 
-	enviro.sunback = love.graphics.newImage("enviro/sunback.png")
+	enviro.sunback = lg.newImage("enviro/sunback.png")
 	enviro.v1:setFilter("nearest")
 	enviro.v2:setFilter("nearest")
 	enviro.v3:setFilter("nearest")
 	enviro.sunback:setFilter("nearest")
-	--enviro.sunset = love.graphics.newImage("enviro/sunset.png")
+	--enviro.sunset = lg.newImage("enviro/sunset.png")
 	--enviro.sunset:setFilter("nearest")
-	enviro.ada = love.graphics.newImage("enviro/Ada.png")
+	enviro.ada = lg.newImage("enviro/Ada.png")
 	enviro.ada:setFilter("nearest")
-	enviro.go = love.graphics.newImage("enviro/go.png")
+	enviro.go = lg.newImage("enviro/go.png")
 	enviro.go:setFilter("nearest")
 	enviro.screenheight = screenheight - barheight
-	--enviro.stage = love.graphics.newImage("enviro/astreet.png")
-	-- enviro.stage = love.graphics.newImage("enviro/library2.png")
-	--enviro.paralax = love.graphics.newImage("enviro/paralax.png")
-	-- enviro.paralax = love.graphics.newImage("enviro/libraryparalax.png")
+	--enviro.stage = lg.newImage("enviro/astreet.png")
+	-- enviro.stage = lg.newImage("enviro/library2.png")
+	--enviro.paralax = lg.newImage("enviro/paralax.png")
+	-- enviro.paralax = lg.newImage("enviro/libraryparalax.png")
 	enviro.leftwall = 0
 	enviro.rightwall = 3700  --6600-20
   end
-	enviro.wall = love.graphics.newImage("enviro/wall.png")
-	enviro.beige = love.graphics.newImage("enviro/beige.png")
-	enviro.beige:setFilter("nearest")
-	enviro.light = love.graphics.newImage("enviro/lightson.png")
-	enviro.healthbar = love.graphics.newImage("enviro/healthbar.png")
-	enviro.stagefloor = love.graphics.newImage("enviro/floor.png")
+	enviro.wall = lg.newImage("enviro/wall.png")
+	enviro.light = lg.newImage("enviro/lightson.png")
+	enviro.healthbar = lg.newImage("enviro/healthbar.png")
+	enviro.stagefloor = lg.newImage("enviro/floor.png")
