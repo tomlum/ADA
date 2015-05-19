@@ -7,8 +7,8 @@
 --partition, the hole in the ceiling, the right edge of the apartment
 
 
-	head2ceiling = 50
-	feet2bottom = 50
+	head2ceiling = 10
+	feet2bottom = 10
 
 defaultminzoom = .7
 defaultmaxzoom = .5
@@ -27,7 +27,6 @@ function drawcolorstuff(xx)
   boltdraw(xx)
 end
 
-enviro.screenheight = 0
 
 
 function camreturntozoom()
@@ -52,7 +51,7 @@ end
 cammovement = function ()
   winheight = (lg.getHeight()-barheight)
   camreturntozoom()
-  beigedif = (winheight/2 - head2ceiling - feet2bottom+120)
+  beigedif = (winheight/2 - head2ceiling - feet2bottom+120*cscale)
   jumpj = initjumpj * cscale/minzoom
   --
   jmax = initjmax * cscale/minzoom
@@ -345,13 +344,13 @@ function topbottomcam()
 
 
     topy = 0
-    bottomy = enviro.screenheight/2
+    bottomy = winheight/2
 
   else
 
 
     bottomy = 0
-    topy = enviro.screenheight/2
+    topy = winheight/2
 
   end
 
@@ -482,10 +481,10 @@ function drawx(xx)
   lg.draw(enviro.sky, xx.x, 0, 0, 500, 1.1)
   --lg.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
   if themap.name == "library" then 
-    lg.draw(enviro.paralax2, xx.x/1.5 + (screenwidth/4)/1.5 - 400,xx.y/1.2 + enviro.screenheight / 1.2 - 12 - paralaxoffset-940)
+    lg.draw(enviro.paralax2, xx.x/1.5 + (screenwidth/4)/1.5 - 400,xx.y/1.2 + winheight / 1.2 - 12 - paralaxoffset-940)
   end
   blurdraw(.2/(cscale), function()
-  lg.draw(enviro.paralax, xx.x / 2 + ((screenwidth/4)/2*cscale*2.5) - 200, (xx.y/2) + (enviro.screenheight/2*cscale) - 12 - paralaxoffset - 800)
+  lg.draw(enviro.paralax, xx.x / 2 + ((screenwidth/4)/2*cscale*2.5) - 200, (xx.y/2) + (winheight/2*cscale) - 12 - paralaxoffset - 800)
   end)
   
   lg.draw(enviro.stage, 0, 0)
