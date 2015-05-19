@@ -1,5 +1,4 @@
---have paralx tied to cscale so it zooms at a different rate
---have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate--have paralx tied to cscale so it zooms at a different rate
+
 
 --IF Y DIF GREAT THEN GROW THE LINE MORE have an 'or' clause
 --HAVE IT SPLIT VERT ALSO? if horiz is same but different vert?
@@ -7,8 +6,8 @@
 --partition, the hole in the ceiling, the right edge of the apartment
 
 
-	head2ceiling = 10
-	feet2bottom = 10
+	head2ceiling = 30
+	feet2bottom = 30
 
 defaultminzoom = .7
 defaultmaxzoom = .5
@@ -525,6 +524,5 @@ mondraw()
   end
   if fightclub then drawallhex() end
   
-    lg.rectangle("fill",400,midypoint,2,2)
   
 end

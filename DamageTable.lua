@@ -28,6 +28,8 @@ whiplash = 1
 --THE BIG ONES
 --THE BIG ONES
 --THE BIG ONES
+actionrampspeed = .8
+actionbarey = 10
 defspeedminit = 6
 minmaxdif = 4
 accel = .5

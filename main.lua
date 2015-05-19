@@ -1,3 +1,4 @@
+require "utilities"
 --xx.currentc shifts when doing apk, also find a place to appropriately place 
 --xwx.purplanding = false maybe tie to being in the air and currentc
 
@@ -19,8 +20,6 @@
 --hug button
 --chrome/metallic so as to suit monochromaticity
 --motion blur
-
-lg = love.graphics
 
 
 --todo
@@ -215,7 +214,7 @@ math.randomseed(os.clock())
 if fullscreen then 
   love.window.setMode(1280, 800, {resizable=true, fullscreen = true, vsync=true})
 else
-  love.window.setMode(1280/1.5, 400, {resizable=true, fullscreen = false, vsync=true})
+  love.window.setMode(1280/1.5, 800/1.5, {resizable=true, fullscreen = false, vsync=true})
 end
 
 
@@ -270,7 +269,6 @@ pausedonhit = false
 
 
 
-require "utilities"
 require "blur"
 require "menustuff"
 require "DamageTable"
@@ -721,7 +719,8 @@ function love.update()
 
 
       else
-
+          
+  cclear()
         lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, screenwidth/1440,1)
         lg.setColor(155, 155, 155, 255)
         lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, -screenwidth/1440, 1)
@@ -773,6 +772,8 @@ function love.update()
             lg.setScissor()
           end
         end
+        
+  cclear()
 
         if cameramonitor then
           bo(0, 0, screenwidth/2, winheight, "light purple")
@@ -857,6 +858,7 @@ function love.update()
 
     end
     lg.setColor(255,0,255)
+      colorcombomonitor(me, 100, 200)
 
     if cameramonitor then
       cameramonitorf(100,100)
@@ -866,6 +868,9 @@ function love.update()
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
 
+if not slowww and onescreen and vertone then
+      lg.print("yo", 100, 100)
+      end
 
     if #joysticks > 0 then
       rumblemodule(me)

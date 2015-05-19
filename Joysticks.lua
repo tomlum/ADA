@@ -100,7 +100,11 @@ function combomanage(xx)
   if xx.animcounter > 0 then
     xx.block = false
     xx.jstop = true
+    if onescreen and vertone then
+      xx.animcounter = xx.animcounter+1
+      else
       xx.animcounter = xx.animcounter+1*xx.rampspeed
+      end
   elseif xx.animcounter == 0 then 
     xx.hitsomeonewithpurp = false
     xx.combo = 0

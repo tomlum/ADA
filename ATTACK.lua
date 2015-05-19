@@ -150,13 +150,13 @@ you.cantreturntothis = 0
 me.cmbo = false
 you.cmbo = false
 function combo(xx)
- 
- 
- if xx.animcounter > 0 and xx.animcounter <= 2 then
- for i,v in ipairs(hitt) do
-  v.hit = false
-end
-end
+
+
+  if xx.animcounter > 0 and xx.animcounter <= 2 then
+    for i,v in ipairs(hitt) do
+      v.hit = false
+    end
+  end
 
   local oldanimc = xx.animcounter
 
@@ -170,11 +170,14 @@ end
   end
 
   if not xx.holda and (not combopause or xx.currentc == xx.color.n) and xx.combo<xx.maxcombo and xx.cmbo then
-if xx.a1 or xx.a2 or xx.a3 or xx.a4 then
-     for i,v in ipairs(hitt) do
-  v.hit = false
-end
-end
+    if xx.a1 or xx.a2 or xx.a3 or xx.a4 then
+      if xx.currentc~=xx.color.n and xx.combo<xx.maxcombo then
+        xx.repcounter = 0
+        end
+      for i,v in ipairs(hitt) do
+        v.hit = false
+      end
+    end
 
     if xx.g then 
       if xx.im==greenk1 then
@@ -184,6 +187,7 @@ end
 
 
       elseif xx.a2 or xx.a3 then
+
 
         xx.numofspikes = 0
         if func~= nil then func() end
@@ -287,7 +291,7 @@ end
   and 
   xx.currentc ~= xx.color.n then
     xx.currentc = xx.color.n
-    xx.repcounter = 0
+    --xx.repcounter = 0
   end
   xx.cmbo = false
 
@@ -336,7 +340,7 @@ you.oldft = 0
 
 
 function attackmanage(xx)
-  
+
 
 
   if xx.greenktimer > 0 then 
@@ -382,13 +386,13 @@ function attackmanage(xx)
   --  if xx.flinch then xx.animcounter = 0
   --  end
   if xx.animcounter == 0 and not xx.purplanding then
-  
+
     xx.repcounter = 0
     xx.currentc = xx.color.n
   end
-  
+
   combo(xx)
-  
+
   if xx.currentc == 0 then
     breadandbutter(xx)
   elseif xx.currentc == 1 then
@@ -710,9 +714,9 @@ newforwarddodge = function(xx)
     if xx.currentc==4 and xx.type ~= 2 then 
       if xx.letgoofblock then
         xx.rlvl = xx.rlvl + 1
-        end
-      xx.letgoofblock = false 
       end
+      xx.letgoofblock = false 
+    end
 
     xx.stop = false
 
@@ -732,8 +736,8 @@ newforwarddodge = function(xx)
     then 
       if xx.currentc == 4 then
         xx.im = redblock
-        else
-      xx.im = block
+      else
+        xx.im = block
       end
       xx.block = true
       xx.stop = true

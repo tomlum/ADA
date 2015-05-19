@@ -1,4 +1,7 @@
 require "xkcdcolor" 
+require "monitors"
+lg = love.graphics
+
 
 
 --box outline
@@ -13,17 +16,17 @@ end
 function cclear()
 lg.setColor(255,255,255)
 end
-function cameramonitorf(x,y)
- 
-    lg.print("cscale"..tostring(cscale),x,y)
-    lg.print("beigedif"..tostring(beigedif),x,y+20)
-    lg.print("ydif"..tostring(ydif),x,y+40)
-    lg.print("me.y"..tostring(me.y),x,y+60)
-    lg.print("midypoint"..tostring(midypoint),x,y+80)
-    lg.print("mecamfloor"..tostring(mecamfloor),x,y+100)
-    lg.print("youcamfloor"..tostring(youcamfloor),x,y+120)
-    lg.print("vertone"..tostring(vertone),x,y+140)
-end
+
+
+
+
+
+
+
+
+
+
+
 function clone (t) -- deep-copy a table
     if type(t) ~= "table" then return t end
     local meta = getmetatable(t)

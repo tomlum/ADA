@@ -39,17 +39,21 @@ function relativity(xx)
     xx.rampcanhit = true
     xx.rampspeed = 1
   end
+  
+  if not slowww and onescreen and vertone then
+       rampspeed = actionrampspeed
+  end
 
 
 
 
   if rampspeed <1 then
 
-    if xx.id == 1 then
-      xx.rampspeed = .5
-    else
+    --if xx.id == 1 then
+    --  xx.rampspeed = .5
+    --else
       xx.rampspeed = rampspeed
-    end
+    --end
   end
 
 

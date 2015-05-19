@@ -60,6 +60,7 @@ at.g.au.mj = 15
 
 at.g.k = {}
 at.g.k.dam = 6
+at.g.k.kb = 16
 at.g.k.angle = 0
 at.g.k.ft = 30
 at.g.k.delay = 50
@@ -547,8 +548,12 @@ function boltupdate(xx)
     if not v.stuck then hline(xx, xx.id, 
         {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y},
         function(p)
+          if math.abs(p.v) < at.g.k.kb then
           p.v = p.v + (v.speed/2 * math.cos(math.rad(v.angle)))
+          end
+          if math.abs(p.j) < at.g.k.kb then
           p.j = p.j - (v.speed/2 * math.sin(math.rad(v.angle)))
+          end
           p.flinch = true
           if (v.speed * math.cos(math.rad(v.angle))) > 0 then p.flinchway = -1 
           else
