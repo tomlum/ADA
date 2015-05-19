@@ -596,8 +596,6 @@ you.xoffset = 0
 
 	screenwidth = lg.getWidth()
 	screenheight = lg.getHeight()
-	head2ceiling = 30
-	feet2bottom = 30
 	barheight = 50
 	paralaxoffset = 10
 	enviro = {}

@@ -366,7 +366,9 @@ local stophit = false
       extrah = -p.im.extrah
     end
 
-    if (theid==0 or (theid ~= i and not meme.hit))  and
+    if 
+    (theid==0 or (theid ~= i)) 
+    and
     (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
     )
     then
@@ -375,12 +377,13 @@ local stophit = false
       end
       --flash = true
       special(p)
+      p.hit = true
       if p.block then p.letgoofblock = true end
     end
   end
-if stophit and meme.player~=nil then
-        meme.hit = true
- end
+--if stophit and meme.player~=nil then
+        --meme.hit = true
+ --end
 
 end
 
@@ -405,7 +408,7 @@ local stophit = false
       extrah = -p.im.extrah
     end
 
-    if 
+    if not p.hit and
     (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
       or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
       or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
@@ -416,7 +419,11 @@ local stophit = false
       --flash = true
       special(p)
       if p.block then
+        if p.color.n~=nil and p.color.n==4 then
+          makensparks(p.v+p.mid,p.y+30,sparkspeed, 7, p.color.c.r,p.color.c.g,p.color.c.b,2)
+          end
  p.letgoofblock = true end
+
     end
   end
     
@@ -440,7 +447,7 @@ local stophit = false
       extrah = -p.im.extrah
     end
 
-    if (theid==0 or (theid ~= i and not meme.hit))  and
+    if not p.hit and (theid==0 or (theid ~= i))  and
     (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
       or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
       or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
@@ -448,18 +455,22 @@ local stophit = false
       or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
     )
     then
-      if theid>0 then
-        stophit = true
-      end
+      p.hit = true
       --flash = true
       special(p)
-      if p.block then p.letgoofblock = true end
+      if p.block then
+        
+        if p.color.n~=nil and p.color.n==4 then
+          makensparks(p.v+p.mid,p.y+30,sparkspeed, 7, p.color.c.r,p.color.c.g,p.color.c.b,5)
+          end
+        p.letgoofblock = true end
     end
   end
+  --[[
 if stophit and meme.player~=nil then
         meme.hit = true
  end
-
+]]--
 end
 
 function hexplatcheck2(y1, x1, x2, ex, why, w, why2, v)
@@ -642,7 +653,7 @@ function hboxwall()
         local wall = themap.walls[j]
 
 
-        if p.player~=nil
+        if p.player~=nil and not p.flinch
         and ((p.x+p.v*walljumprange < wall.x and p.x >= wall.x) or (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x)) and
         ((p.v < 0 and p.right) or (p.v > 0 and p.left)) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch and not p.busy and p.animcounter == 0
         then

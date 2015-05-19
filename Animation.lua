@@ -84,20 +84,20 @@ cshader = lg.newShader(
       texcolor[2] == texcolor[3] && 
       texcolor[1] > .5)
     return vec4(palette[0][0]*texcolor[0],palette[0][1]*texcolor[1],palette[0][2]*texcolor[2],texcolor[3]);
-    
+
     if (texcolor == greenscreen)
     return palette[1];  
-    
+
     if (texcolor[1] == red[1] && 
       texcolor[2] == red[2] && 
       texcolor[0] > 0)
     return vec4(palette[2][0]*texcolor[0],palette[2][1]*texcolor[0],palette[2][2]*texcolor[0],texcolor[3]); 
-   
-    
+
+
     if (texcolor[0] + texcolor[1] +texcolor[2] < 1
       && texcolor[3]> .7)
     return vec4(palette[3][0]*(1-texcolor[0]),palette[3][1]*(1-texcolor[1]),palette[3][2]*(1-texcolor[2]),texcolor[3]);
-    
+
     return texcolor; 
   }
   ]])
@@ -181,13 +181,23 @@ end
 --colorshader draw start
 function csds(xx)
   lg.setShader(cshader)
-  cshader:send( "palette", 
-    {xx.shade/255, xx.shade/255, xx.shade/255, 1}, 
-    vct(xx.color.c),
-    vct(thecolors[xx.currentc].c), 
-    vct(xx.outline)
+  if xx.currentc == 4 or xx.cchangeto.n == 4 then
+    cshader:send( "palette", 
+      {xx.shade/255, xx.shade/255, xx.shade/255, 1}, 
+      vct({r = xx.color.c.r/(xx.rlvl+1),g = xx.color.c.g/(xx.rlvl+1),b = xx.color.c.b/(xx.rlvl+1)}),
+      vct({r = thecolors[xx.currentc].c.r/(xx.rlvl+1), g = thecolors[xx.currentc].c.g/(xx.rlvl+1), b = thecolors[xx.currentc].c.b/(xx.rlvl+1)}), 
+      vct(xx.outline)
 
-  ) 
+    ) 
+  else
+    cshader:send( "palette", 
+      {xx.shade/255, xx.shade/255, xx.shade/255, 1}, 
+      vct(xx.color.c),
+      vct(thecolors[xx.currentc].c), 
+      vct(xx.outline)
+
+    ) 
+  end
 end
 
 
@@ -231,7 +241,7 @@ function drawmytrail(xx)
     if cur.im.yoff == nil then cur.im.yoff = 0 end
     lg.setShader(fillshader)
     fillshader:send("shade", 
-      vct(thecolors[cur.colornum].c2, 
+      vct(thecolors[cur.colornum].c, 
         (255/traillength)*(traillength/cur.t)
       ))
 
@@ -306,20 +316,30 @@ whatlevel = function()
 
 
 
-    elseif themap.name == "street" then
+    elseif mapnum == 1 then
       me.y = themaps[1].floor - 200
       you.y = themaps[1].floor - 200
-      loader.newImage(enviro,'stage', "enviro/astreet.png")
-      loader.start(function()
-          finishedloading = true
-        end)
-      loader.newImage(enviro,"paralax","enviro/paralax.png")
-      loader.newImage(enviro,"sky","enviro/sky.png")
-      loader.newImage(enviro,'lightson',"enviro/lightson.png")
-      loader.newImage(enviro,'lightsoff', "enviro/lightsoff.png")
-      loader.newImage(enviro,'floor', "enviro/astreet.png")
-      loader.newImage(enviro,'rafters',"enviro/rafters.png")
+      if noload then
+        enviro.stage=lg.newImage( "enviro/astreet.png")
+        enviro.paralax=lg.newImage("enviro/paralax.png")
+        enviro.sky=lg.newImage("enviro/sky.png")
+        enviro.lightson=lg.newImage("enviro/lightson.png")
+        enviro.lightsoff=lg.newImage( "enviro/lightsoff.png")
+        enviro.floor=lg.newImage( "enviro/astreet.png")
+        enviro.rafters=lg.newImage("enviro/rafters.png")
 
+      else
+        loader.newImage(enviro,'stage', "enviro/astreet.png")
+        loader.start(function()
+            finishedloading = true
+          end)
+        loader.newImage(enviro,"paralax","enviro/paralax.png")
+        loader.newImage(enviro,"sky","enviro/sky.png")
+        loader.newImage(enviro,'lightson',"enviro/lightson.png")
+        loader.newImage(enviro,'lightsoff', "enviro/lightsoff.png")
+        loader.newImage(enviro,'floor', "enviro/astreet.png")
+        loader.newImage(enviro,'rafters',"enviro/rafters.png")
+      end
       lighttimer = 0
       me.x = 1000
       you.x = 6000
@@ -329,7 +349,7 @@ whatlevel = function()
 
 
 
-    elseif themap.name == "library" then
+    elseif mapnum == 2 then
 
       if noload then 
 
@@ -363,16 +383,27 @@ whatlevel = function()
 
       thesong = song2
 
-    elseif themap.name == "floors" then
-      loader.start(function()
-          finishedloading = true
-        end)
-      loader.newImage(enviro,'paralax',"enviro/floorsparalax.png")
-      loader.newImage(enviro,'stage', "enviro/floors.png")
-      loader.newImage(enviro,'sky',"enviro/floorssky.png")
-      loader.newImage(enviro,'pfloors', "enviro/floorsplayer.png")
-      loader.newImage(enviro, 'floorsveneer2',"enviro/floorsveneer2.png")
-      loader.newImage(enviro, 'floorsveneer1',"enviro/floorsveneer1.png")
+    elseif mapnum == 3 then
+      if noload then 
+
+        enviro.paralax = lg.newImage("enviro/floorsparalax.png")
+        enviro.stage = lg.newImage( "enviro/floors.png")
+        enviro.sky = lg.newImage("enviro/floorssky.png")
+        enviro.pfloors = lg.newImage( "enviro/floorsplayer.png")
+        enviro.floorsveneer2 = lg.newImage("enviro/floorsveneer2.png")
+        enviro.floorsveneer1 = lg.newImage("enviro/floorsveneer1.png")
+
+      else
+        loader.start(function()
+            finishedloading = true
+          end)
+        loader.newImage(enviro,'paralax',"enviro/floorsparalax.png")
+        loader.newImage(enviro,'stage', "enviro/floors.png")
+        loader.newImage(enviro,'sky',"enviro/floorssky.png")
+        loader.newImage(enviro,'pfloors', "enviro/floorsplayer.png")
+        loader.newImage(enviro, 'floorsveneer2',"enviro/floorsveneer2.png")
+        loader.newImage(enviro, 'floorsveneer1',"enviro/floorsveneer1.png")
+      end
       me.x = 500
       you.x = 3000
       me.y = 300
@@ -484,7 +515,7 @@ function drawa(xx)
 
 
 
- 
+
 
   if  xx.greenkcondition then
 
@@ -700,7 +731,6 @@ drawlibrarystuff = function()
 end
 
 drawfloorsstuff = function()
-  drawpapers()
   lg.draw(enviro.pfloors,0,0)
   lg.draw(partition,21, 1,0, -1,3.11)
   lg.draw(partition,themaps[3].rightwall-21, 0, 0, 1, 3.11)
@@ -816,6 +846,7 @@ function drawparticles()
   drawglass()
   drawrubble()
   drawwater()
+  drawpapers()
 
 end
 
@@ -857,13 +888,13 @@ function drawrubble()
   for i,v in ipairs(rubble)do
   if table.getn(rubble) > 500 then table.remove(rubble,500) end
   if not me.actionshot and not you.actionshot and not pause then
-    v.y = v.y - v.j*rampspeed
-    v.x = v.x + v.v*rampspeed
-    v.j = v.j - .2*rampspeed
+    v.y = v.y - v.j*rampspeed/1.5
+    v.x = v.x + v.v*rampspeed/1.5
+    v.j = v.j - .2*rampspeed/1.5
     blackn = math.random(80,150)
   end
   lg.setColor(blackn,blackn,blackn)
-  lg.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,2.2,2.2,2,2)
+  lg.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,2,2,1,1)
   lg.setColor(255,255,255)
 end
 end
@@ -1624,7 +1655,7 @@ death = function(xx, yy)
       end
     end
   end
-  
+
   landxcheck = function (xx)
     if xx.landingcounter <= 0	
     then xx.landing = false
@@ -1658,8 +1689,8 @@ death = function(xx, yy)
       if xx.purplanding then
         xx.im = apk2
 
-        else
-      xx.im = landing
+      else
+        xx.im = landing
       end
     elseif xx.g and aboutso(xx.v, xx.push) and not xx.slide 
     then idleanimatex(xx)
@@ -1739,9 +1770,9 @@ death = function(xx, yy)
       v.j = v.j - .1*rampspeed*.8
       v.rot = v.rot + math.random() *rampspeed 
     end
-   
-    
-    
+
+
+
     v.r = lof(v.r+math.random()*sparkfaderate*rampspeed,255)
     v.g = lof(v.g+math.random()*sparkfaderate*rampspeed,255)
     v.b = lof(v.b+math.random()*sparkfaderate*rampspeed,255)
@@ -1803,13 +1834,16 @@ function xrubble(xx)
       if xx.flinch then
         slowww = true
       end
-      for i = xx.y, xx.feet do
+      for i = xx.y, xx.feet, 1 do
         if wall.glasswall~=nil then
-          if (wall.glasswall > 0 and i < wall.glasswall) or (wall.glasswall < 0 and i > -wall.glasswall) then 
+          if (wall.glasswall > 0 and i < wall.glasswall) or (wall.glasswall < 0 and i > -wall.glasswall)
+          and math.floor(i%2)==0
+          then 
             makenglass(wall.x,i,xx.v,xx.j, 1)
-          else makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
+          elseif math.floor(i%5)==0 then
+            makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
           end
-        else
+        elseif math.floor(i%5)==0 then
           makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
 
         end

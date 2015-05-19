@@ -10,6 +10,7 @@ you.ramptimer = 0
 me.rampcanhit = 0
 you.rampcanhit = 0
 
+jumpj = 0
 
 floor = 1900 - 2
 

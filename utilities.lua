@@ -1,3 +1,43 @@
+require "xkcdcolor" 
+
+
+--box outline
+function bo(x,y,w,h,color)
+  setColor(color)
+  lg.rectangle("line", x, y, w, h)
+  
+  cclear()
+end
+
+
+function cclear()
+lg.setColor(255,255,255)
+end
+function cameramonitorf(x,y)
+ 
+    lg.print("cscale"..tostring(cscale),x,y)
+    lg.print("beigedif"..tostring(beigedif),x,y+20)
+    lg.print("ydif"..tostring(ydif),x,y+40)
+    lg.print("me.y"..tostring(me.y),x,y+60)
+    lg.print("midypoint"..tostring(midypoint),x,y+80)
+    lg.print("mecamfloor"..tostring(mecamfloor),x,y+100)
+    lg.print("youcamfloor"..tostring(youcamfloor),x,y+120)
+    lg.print("vertone"..tostring(vertone),x,y+140)
+end
+function clone (t) -- deep-copy a table
+    if type(t) ~= "table" then return t end
+    local meta = getmetatable(t)
+    local target = {}
+    for k, v in pairs(t) do
+        if type(v) == "table" then
+            target[k] = clone(v)
+        else
+            target[k] = v
+        end
+    end
+    setmetatable(target, meta)
+    return target
+end
 
 function vcs(c)
   

@@ -7,6 +7,8 @@
 --partition, the hole in the ceiling, the right edge of the apartment
 
 
+	head2ceiling = 50
+	feet2bottom = 50
 
 defaultminzoom = .7
 defaultmaxzoom = .5
@@ -48,8 +50,9 @@ function camreturntozoom()
 end
 
 cammovement = function ()
+  winheight = (lg.getHeight()-barheight)
   camreturntozoom()
-  beigedif = (enviro.screenheight - head2ceiling - feet2bottom - 90)*cscale
+  beigedif = (winheight/2 - head2ceiling - feet2bottom+120)
   jumpj = initjumpj * cscale/minzoom
   --
   jmax = initjmax * cscale/minzoom
@@ -57,14 +60,14 @@ cammovement = function ()
 
   ydif = math.abs((you.y) - (me.y))
 
-  if ydif <= beigedif then
+  if ydif/cscale <= beigedif then
     vertone = true
   else vertone = false
   end
 
   if me.y <= you.y then 
-    midypoint = me.y + (ydif/2) + 30*cscale
-  else midypoint = you.y + (ydif/2) + 30*cscale
+    midypoint = (me.y + (ydif/2) + 30)
+  else midypoint = (you.y + (ydif/2) + 30)
   end
 
 
@@ -82,7 +85,7 @@ cammovement = function ()
   --   youcamlwall = false
   -- end
 
-  if midypoint >= themap.floor - ((enviro.screenheight/2) + (feet2bottom)-30)*cscale
+  if midypoint >= themap.floor - ((winheight/2) - (feet2bottom))*cscale
   then
     youcamfloor = true
     mecamfloor = true
@@ -147,11 +150,6 @@ camerafol = function ()
 
 
 
-  if me.y <= you.y then 
-    midypoint = me.y + (ydif/2) + 30*cscale
-  else midypoint = you.y + (ydif/2) + 30*cscale
-  end
-
 
   --indicator function for when at wall, then midpoint becomes some other constant point
 
@@ -164,22 +162,22 @@ camerafol = function ()
   youxrig = you.mid - (screenwidth*cscale*.75)
 
   if not mecamfloor and you.y > me.y then 
-    youyrig = you.y+60 - enviro.screenheight*cscale + feet2bottom*cscale
+    youyrig = you.y+60 - winheight*cscale + feet2bottom*cscale
 
   elseif youcamfloor 
   then
-    youyrig = themap.floor - enviro.screenheight*cscale + feet2bottom*cscale 
+    youyrig = themap.floor - winheight*cscale + feet2bottom*cscale
   elseif not vertone and you.y < me.y then
     youyrig = you.y - head2ceiling*cscale
   end
 
 
   if not youcamfloor and you.y < me.y then 
-    meyrig = me.y+60 - enviro.screenheight*cscale + feet2bottom*cscale
+    meyrig = me.y+60 - winheight*cscale + feet2bottom*cscale
 
   elseif mecamfloor 
   then
-    meyrig = themap.floor - enviro.screenheight*cscale + feet2bottom*cscale
+    meyrig = themap.floor - winheight*cscale + feet2bottom*cscale
   elseif not vertone and me.y < you.y then
     meyrig = me.y - head2ceiling*cscale
   end
@@ -279,15 +277,12 @@ camerafol = function ()
 
   --if one screen and leftwall then midpoint = some fixed point away from the wall
 
-  if youcamfloor and mecamfloor 
-  then bothfloor = true
-  else bothfloor = false
-  end
+  bothfloor = youcamfloor and mecamfloor
+  
 
   if vertone and not bothfloor then 
-    camera.y = midypoint - (screenheight*cscale/2) + 30
+    camera.y = midypoint - winheight/4
     camera2.y = camera.y  
-
   end
 
 
@@ -318,17 +313,14 @@ camerafol = function ()
     wallx = 0
   end
 
-  bheight = (head2ceiling + 60 + 60)/24
-  bbheight = (feet2bottom + 60 + 60)/24
-  if ydif > beigedif*4 then 
+  if ydif/cscale > beigedif*4 then 
     bwidth = 15
-    beigex = (screenwidth/2-6) + ((1-bwidth) * 6)
-  elseif ydif >= beigedif  then
-    bwidth =1 + ((ydif-beigedif)/(beigedif*4)) * 15
-  elseif ydif <= beigedif
+  elseif ydif/cscale >= beigedif  then
+    bwidth =1 + ((ydif/cscale-beigedif)/(beigedif*4)) * 15
+
+  elseif ydif/cscale <= beigedif
   then
     bwidth = 0
-    beigex = 0
 
 
 
@@ -492,7 +484,7 @@ function drawx(xx)
   if themap.name == "library" then 
     lg.draw(enviro.paralax2, xx.x/1.5 + (screenwidth/4)/1.5 - 400,xx.y/1.2 + enviro.screenheight / 1.2 - 12 - paralaxoffset-940)
   end
-  blurdraw(.8/(cscale), function()
+  blurdraw(.2/(cscale), function()
   lg.draw(enviro.paralax, xx.x / 2 + ((screenwidth/4)/2*cscale*2.5) - 200, (xx.y/2) + (enviro.screenheight/2*cscale) - 12 - paralaxoffset - 800)
   end)
   
@@ -516,9 +508,7 @@ function drawx(xx)
 
   end
     drawparticles()
-    if fightclub then
-    lg.rectangle("fill", 500, 0, 2, themaps[100].floor+1)
-    end
+    
   drawcolorstuff(me)
 mondraw()
 
@@ -536,5 +526,6 @@ mondraw()
   end
   if fightclub then drawallhex() end
   
+    lg.rectangle("fill",400,midypoint,2,2)
   
 end

@@ -344,7 +344,7 @@ function monbite(xx)
   elseif xx.animt <4*2 then xx.im = ea3
   elseif xx.animt <4*3 then xx.im = ea4
   elseif xx.animt <4*4 then xx.im = ea5
-              xx.hit = false
+              --xx.hit = false
 elseif xx.animt <4*5+10+10 then 
   xx.im = ea6
   if xx.animt < 4*4+1 and rampcanhit then

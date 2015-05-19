@@ -151,7 +151,7 @@ function gandg(xx)
         xx.im = greena22
         if xx.repcounter<=3 and xx.rampcanhit and xx.v~= 0 then
           table.insert(xx.trail, 
-            {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0, colornum = xx.currentc})
+            {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0, colornum = 2})
 
         end
 
@@ -201,7 +201,8 @@ function gandg(xx)
             end)
         end
 
-          --xx.cmbo=true--combo(xx)
+          xx.cmbo=true
+          --combo(xx)
 
       elseif xx.animcounter >= 40 then
         xx.animcounter = 0
@@ -332,7 +333,7 @@ function gandg(xx)
         end
         if xx.rampcanhit then
           table.insert(xx.trail, 
-            {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0, colornum = xx.currentc})
+            {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0, colornum = 2})
         end
       
     elseif xx.animcounter >= 14 then
@@ -348,7 +349,7 @@ function gandg(xx)
       xx.im = agreena22
       if xx.rampcanhit then
         table.insert(xx.trail, 
-          {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0, colornum = xx.currentc})
+          {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0, colornum = 2})
       end
 
       if xx.animcounter <= 4 then

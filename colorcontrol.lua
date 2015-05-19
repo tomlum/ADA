@@ -6,6 +6,19 @@ colorchangetime = 13
 colorfadetime = 5
 colorvib = .1
 
+gold = {r = 232, g = 207, b = 0}
+purple = {r = 87, g = 0, b = 158}
+orange = {r = 255, g = 99, b = 0}
+red = {r = 255, g = 0, b = 0}
+green = {r = 0, g = 255, b = 0}
+seafoam = {r=0,g=255,b=255}
+turq = {r=145,g=222,b=161}
+pink = {r=255,g=0,b=255}
+
+color1 = turq
+color2 = gold
+color3 = seafoam
+color4 = green
 
 thecolors = {}
 
@@ -41,14 +54,14 @@ end
 thecolors[0] = {n=0,c={r = 255, g = 255, b = 255}, c2={r = 255, g = 255, b = 255},
   s = {def=1, speed = 1, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
 
-thecolors[1] = {n=1,c={r = 87, g = 0, b = 158},c2={r = 89, g = 0, b = 104},
+thecolors[1] = {n=1,c=color1,c2=c1,
   s = {def=1.2, speed = .8, jump = .7, weight = 1.3, brittle = 1}, tile = ptile, logo=plogo, sound = colorpsound}
-thecolors[2] = {n=2,c={r = 40, g = 25, b = 255},c2={r = 40, g = 25, b = 255},
+thecolors[2] = {n=2,c=color2,c2=c1,
   s = {def=.7, speed = 1.3, jump = 1.1, weight = 1, brittle = 1}, tile = gtile, logo=glogo, sound = colorgsound}
-thecolors[3] = {n=3, tile = otile,c={r = 255, g = 99, b = 0},c2={r = 255, g = 99, b = 0}, logo=ologo, sound = colorgsound,
+thecolors[3] = {n=3, tile = otile,c=color3,c2=c1, logo=ologo, sound = colorgsound,
   s = {def=1, speed = 1, jump = 1.1, weight = .8, brittle = 2}}
-thecolors[4] = {n=4, tile = tile,c={r = 255, g = 0, b = 0},c2={r = 255, g = 0, b = 0}, logo=questionlogo, sound = colorpsound,
-  s = {def=1.2, speed = .7, jump = .6, weight = 1, brittle = 1}
+thecolors[4] = {n=4, tile = tile,c=color4,c2=c1, logo=questionlogo, sound = colorpsound,
+  s = {def=.8, speed = 1.2, jump = 1.1, weight = .9, brittle = 1.2}
   }
 thecolors[5] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 thecolors[6] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
@@ -63,11 +76,11 @@ thecolors[-1] = {n=-1,c={r = 0, g = 0, b = 0},
 
 
 
-if fightclub then
-  me.rightc = thecolors[4]
-  you.rightc = thecolors[1]
-  me.leftc = thecolors[1]
-  you.leftc = thecolors[2]
+if fightclub or noload then
+  me.rightc = thecolors[mercolor]
+  you.rightc = thecolors[yourcolor]
+  me.leftc = thecolors[melcolor]
+  you.leftc = thecolors[youlcolor]
 else
   me.rightc = thecolors[0]
   you.rightc = thecolors[0]
@@ -184,7 +197,7 @@ function ColorChanging(xx)
 
   if xx.cct == colorchangetime then 
     if xx.color.n == -1 then
-      xx.color = xx.cchangeto
+      xx.color = clone(xx.cchangeto)
       xx.runpace = defrunpace /  (xx.color.s.speed*3/4)
     end
   elseif xx.cct <= 0  then

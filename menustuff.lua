@@ -108,7 +108,6 @@ end
 
 lg.setNewFont(20)
 
-mapnum = 1
 
 lightsize = 7
 maxwob = 10

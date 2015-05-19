@@ -27,6 +27,10 @@ lg = love.graphics
 --if not in the air then some kind of unblocking animation
 --apple w is window close
 --SHAEZ TIED TO RUMBLE?!?!?!?
+melcolor = 2
+mercolor = 3
+youlcolor = 1
+yourcolor = 2
 therampspeed = .25/2
 drawboxes = false
 drawfeet = false
@@ -36,11 +40,13 @@ fullscreen = false
 readout = false
 putmehere = 975
 putyouhere = 1025
-menu = "title"
- if menu == "play" then
-noload = true
-   mapnum = 2
-   placespeople = true end
+menu = "play"
+cameramonitor = false
+if menu == "play" then
+  noload = true
+  mapnum = 3
+  placespeople = true 
+end
 mute = false
 love.audio.setVolume(volume)
 --airgrab
@@ -209,7 +215,7 @@ math.randomseed(os.clock())
 if fullscreen then 
   love.window.setMode(1280, 800, {resizable=true, fullscreen = true, vsync=true})
 else
-  love.window.setMode(1280/2, 800/2, {resizable=true, fullscreen = false, vsync=true})
+  love.window.setMode(1280/1.5, 800/1.5, {resizable=true, fullscreen = false, vsync=true})
 end
 
 
@@ -286,9 +292,9 @@ require "ai"
 loader = require "love-loader"
 
 if noload then
-  
-themap = themaps[2]
- end
+
+  themap = themaps[mapnum]
+end
 
 bob = retpint({x= 0, y = 0}, {x= 0, y = 100}, {x= -5, y = 10}, {x= 5, y = 20})
 blob = mlof({10, 2, 4, 5, 6, 7})
@@ -402,12 +408,12 @@ end
 
 
 function love.update()
---colorshift(thecolors[2].c,8)
---colorshift(me.outline,6)
+  --colorshift(thecolors[2].c,8)
+  --colorshift(me.outline,6)
   --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
   if love.keyboard.isDown("x")  then speedramp = true end
   if speedramp then 
-     rampspeed= therampspeed
+    rampspeed= therampspeed
     if ramptimer >= 1 then 
       ramptimer = 0
       rampcanhit = true
@@ -481,30 +487,30 @@ function love.update()
 
     if menu == "preplay" or menu == "play" then 
       menu = "play"
-  gavinanddan()
-      
-      if musfadein > 0 then 
-    musfade = musfade + musfadein
-    if musfade + musfadein >= 255 then
-      musfadein = 0
-      musfade = 255
-    end
-  elseif musfadein < 0 then
-    musfade = musfade + musfadein
-    if musfade +musfadein <= 0 then
-      musfadein = 0
-      musfade = 0
-    end
-  end
+      gavinanddan()
 
-  if thesong~= nil then
-    if musfade == 0 then
-      thesong:pause()
-    else
-      thesong:play()
-      thesong:setPitch(musfade/255)
-    end
-  end
+      if musfadein > 0 then 
+        musfade = musfade + musfadein
+        if musfade + musfadein >= 255 then
+          musfadein = 0
+          musfade = 255
+        end
+      elseif musfadein < 0 then
+        musfade = musfade + musfadein
+        if musfade +musfadein <= 0 then
+          musfadein = 0
+          musfade = 0
+        end
+      end
+
+      if thesong~= nil then
+        if musfade == 0 then
+          thesong:pause()
+        else
+          thesong:play()
+          thesong:setPitch(musfade/255)
+        end
+      end
 
       if slowt == SlowRate and not pause and not me.actionshot 
       then
@@ -659,20 +665,20 @@ function love.update()
         isanyonedead()
 
         miscsounds()
-      holdmanage(me)
-      holdmanage(you)
+        holdmanage(me)
+        holdmanage(you)
 
 
         orientlr(me)
         orientlr(you)
-        
+
         cammovement()
         --if here then no slow mo twitter
         camerafol()
         camshakeflinch()
 
       end
-monupdate()
+      monupdate()
 
 
 
@@ -711,7 +717,7 @@ monupdate()
 
 
       if (themode == "duel" and (you.health < 0 or me.health < 0)) or (themode == "spectrum" and (you.lives <= 0 or me.lives <= 0)) or (themode == "koth" and (you.score >= kothscoretowin or me.score >= kothscoretowin))then 
-          menu = "retry"
+        menu = "retry"
 
 
       else
@@ -721,14 +727,16 @@ monupdate()
         lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, -screenwidth/1440, 1)
         lg.setColor(255, 255, 255, 255)
 
-        lg.setScissor(0, 0, screenwidth/2, enviro.screenheight)
+
+        lg.setScissor(0, 0, screenwidth/2, winheight)
         camera:set()
         drawx(camera)
         camera:unset()
         lg.setScissor()
 
 
-        lg.setScissor(screenwidth/2, 0, screenwidth/2, enviro.screenheight)
+
+        lg.setScissor(screenwidth/2, 0, screenwidth/2, winheight)
         camera2:set()
 
         drawx(camera2)
@@ -739,25 +747,26 @@ monupdate()
         if onescreen and not vertone then
           if me.x < you.x then 
 
-            lg.setScissor(screenwidth/2, topy,twidth, enviro.screenheight/2)
+            lg.setScissor(screenwidth/2, topy,twidth+1, winheight/2+1)
             camera:set()
             drawx(camera)
             camera:unset()
             lg.setScissor()
 
-            lg.setScissor(screenwidth/2-twidth+1, bottomy,twidth, enviro.screenheight/2)
+            lg.setScissor(screenwidth/2-twidth, bottomy,twidth+1, winheight/2+1)
             camera2:set()
             drawx(camera2)
             camera2:unset()
             lg.setScissor()
           elseif me.x >= you.x then
-            lg.setScissor(screenwidth/2-twidth+1, topy,twidth, enviro.screenheight/2)
+
+            lg.setScissor(screenwidth/2-twidth, topy,twidth+1, enviro.screenheight/2+1)
             camera2:set()
             drawx(camera2)
             camera2:unset()
             lg.setScissor()
 
-            lg.setScissor(screenwidth/2, bottomy,twidth, enviro.screenheight/2)
+            lg.setScissor(screenwidth/2, bottomy,twidth+1, enviro.screenheight/2+1)
             camera:set()
             drawx(camera)
             camera:unset()
@@ -765,17 +774,34 @@ monupdate()
           end
         end
 
-        lg.setColor(255, 255, 255)
+        if cameramonitor then
+          bo(0, 0, screenwidth/2, winheight, "light purple")
+          bo(screenwidth/2, 0, screenwidth/2, winheight, "red")
+          
+          if onescreen and not vertone then
+            if me.x < you.x then 
+          bo(screenwidth/2, topy,twidth, winheight/2, "teal")
+          bo(screenwidth/2-twidth+1, bottomy,twidth, winheight/2,"yellow")
+            elseif me.x >= you.x then
+          bo(screenwidth/2-twidth+1, topy,twidth, enviro.screenheight/2, "teal")
+          bo(screenwidth/2, bottomy,twidth, enviro.screenheight/2, "yellow")
+            end
+            
+            end
+        end
+
+        lg.setColor(10, 10, 10)
+
+
 
 
         lg.draw(enviro.wall, wallx, 0, 0, width, enviro.screenheight)
-        --lg.draw(enviro.beige, beigex, 0, 0, bwidth/2, bheight)
-        --lg.draw(enviro.beige, beigex, enviro.screenheight, 0, bwidth/2, -bbheight)
+        
         lg.setColor(255, 255, 255, 255)
 
         lg.setColor(53, 53, 53)
 
-        lg.rectangle("fill",(screenwidth/2)-twidth,(enviro.screenheight/2)-bwidth/2,twidth*2,bwidth)
+        lg.rectangle("fill",(lg.getWidth()/2)-twidth,(enviro.screenheight/2)-bwidth/2,twidth*2,bwidth)
         lg.setColor(255, 255, 255, 255)
 
         if not fightclub then
@@ -800,7 +826,7 @@ monupdate()
       lg.print("j "..tostring(you.j), 10, 70)
       if #hitt == 3 then
         lg.print(tostring(hitt[3].mode), 10, 90)
-        end
+      end
     end
 
 
@@ -815,37 +841,36 @@ monupdate()
     lg.setColor(255,255,255)
     if readout then
       lg.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
-    lg.setColor(255,10,0)
-    lg.print("themenu "..tostring(menu), 10, 90)
-    lg.print("oldmenu "..tostring(oldmenu), 10, 110)
-    lg.print("fadein "..tostring(fadein), 10, 130)
-    lg.print("allfade "..tostring(allfade), 10, 150)
-    lg.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
-    lg.print("slowt "..tostring(slowt), 10, 230)
-    lg.print("#joysticks"..tostring(#love.joystick.getJoysticks()), 10, 250)
-    lg.print("#hittmon"..tostring(#hittmon), 10, 280)
-    for i,v in ipairs(love.joystick.getJoysticks()) do
-      lg.print("hey"..v:getName()..tostring(i), 200, 20+20*i)
+      lg.setColor(255,10,0)
+      lg.print("themenu "..tostring(menu), 10, 90)
+      lg.print("oldmenu "..tostring(oldmenu), 10, 110)
+      lg.print("fadein "..tostring(fadein), 10, 130)
+      lg.print("allfade "..tostring(allfade), 10, 150)
+      lg.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
+      lg.print("slowt "..tostring(slowt), 10, 230)
+      lg.print("#joysticks"..tostring(#love.joystick.getJoysticks()), 10, 250)
+      lg.print("#hittmon"..tostring(#hittmon), 10, 280)
+      for i,v in ipairs(love.joystick.getJoysticks()) do
+        lg.print("hey"..v:getName()..tostring(i), 200, 20+20*i)
+      end
+      lg.setColor(255,0,0)
+
     end
-    lg.setColor(255,0,0)
-    
-  end
     lg.setColor(255,0,255)
-    
-    lg.print("me.health"..tostring(me.health),300,300)
-    lg.print("me.hit"..tostring(me.hit),300,320)
-    lg.print("me.rlvl"..tostring(me.rlvl),300,340)
-  
-  
-  if love.keyboard.isDown("6") and #hittmon < 20 then spawnmon(camera.x+math.random(0,200), camera.y+10) end
+
+    if cameramonitor then
+      cameramonitorf(100,100)
+    end
+
+    if love.keyboard.isDown("6") and #hittmon < 20 then spawnmon(camera.x+math.random(0,200), camera.y+10) end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
 
 
-   if #joysticks > 0 then
-    rumblemodule(me)
-  end
-  if #joysticks > 1 then
-    rumblemodule(you)
-  end
+    if #joysticks > 0 then
+      rumblemodule(me)
+    end
+    if #joysticks > 1 then
+      rumblemodule(you)
+    end
   end

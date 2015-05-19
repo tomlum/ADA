@@ -149,10 +149,10 @@ you.cantreturntothis = 0
 
 me.cmbo = false
 you.cmbo = false
-function combo(xx, func)
+function combo(xx)
  
  
- if xx.animcounter >0 and xx.animcounter <= 1 then
+ if xx.animcounter > 0 and xx.animcounter <= 2 then
  for i,v in ipairs(hitt) do
   v.hit = false
 end
@@ -170,10 +170,11 @@ end
   end
 
   if not xx.holda and (not combopause or xx.currentc == xx.color.n) and xx.combo<xx.maxcombo and xx.cmbo then
-
+if xx.a1 or xx.a2 or xx.a3 or xx.a4 then
      for i,v in ipairs(hitt) do
   v.hit = false
-  end
+end
+end
 
     if xx.g then 
       if xx.im==greenk1 then
@@ -208,7 +209,7 @@ end
           xx.animcounter = 1
           if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
           xx.repcounter = xx.repcounter + 1
-        elseif xx.color.n==4 and xx.repcounter < at.r.p.max   then
+        elseif xx.color.n==4  then
           xx.type = 1
           xx.animcounter = 1
           if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
@@ -706,7 +707,7 @@ newforwarddodge = function(xx)
   me.letgoofblock = false
   you.letgoofblock = false
   function blocknbusy(xx)
-    if xx.currentc==4 then 
+    if xx.currentc==4 and xx.type ~= 2 then 
       if xx.letgoofblock then
         xx.rlvl = xx.rlvl + 1
         end

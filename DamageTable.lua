@@ -85,7 +85,7 @@ whiffradius = 150
 
 papertime = 100
 --speed necessary to move it
-paperweight = 8
+paperweight = 4
 
 blanddam = 15
 bsft = 30
