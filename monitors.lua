@@ -18,6 +18,10 @@ function cameramonitorf(x,y)
   lg.print("mecamfloor"..tostring(mecamfloor),x,y+100)
   lg.print("youcamfloor"..tostring(youcamfloor),x,y+120)
   lg.print("vertone"..tostring(vertone),x,y+140)
+  lg.print("minzoom"..tostring(minzoom),x,y+160)
+  lg.print("maxzoom"..tostring(maxzoom),x,y+180)
+  lg.print("head2ceiling"..tostring(head2ceiling),x,y+200)
+  lg.print("feet2bottom"..tostring(feet2bottom),x,y+220)
 end
 
 function dangermonitorf(x,y)

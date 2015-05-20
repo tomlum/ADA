@@ -31,8 +31,9 @@ whiplash = 1
 dangerrampspeed = .8
 dangerrampdelta = rampnormaldelta*1.5
 dangerbarey = 50
-dangerzoom = .4
-dangerzoomdelta = .003
+--only for maxzoom
+dangerzoom = .45
+dangerzoomdelta = .001
 defspeedminit = 6
 minmaxdif = 4
 accel = .5

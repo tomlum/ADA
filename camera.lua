@@ -5,9 +5,15 @@
 
 --partition, the hole in the ceiling, the right edge of the apartment
 
+var2tb = true
+defhead2ceiling = 70
+deffeet2bottom = 70
+head2ceiling = defhead2ceiling
+feet2bottom = deffeet2bottom
+--danger 2 top bottom
+danger2tb = 5
 
-head2ceiling = 30
-feet2bottom = 30
+
 
 defaultminzoom = .7
 defaultmaxzoom = .5
@@ -19,7 +25,7 @@ maxzdis = 4500
 cscale = .7
 
 growrate = .02
-shrinkrate = .005
+shrinkrate = .001
 
 function drawcolorstuff(xx)
   spikedraw(xx)
@@ -29,6 +35,10 @@ end
 
 
 function camreturntozoom()
+
+
+
+
   if not dangerclose then
     if minzoom < defaultminzoom then
       if minzoom + shrinkrate > defaultminzoom then
@@ -67,9 +77,34 @@ function camreturntozoom()
 end
 
 cammovement = function ()
+
+  if dangerclose and var2tb then
+
+    if head2ceiling > 5
+    then
+      feet2bottom = feet2bottom - 1
+      head2ceiling = head2ceiling - 1
+
+    else
+      head2ceiling = danger2tb
+      feet2bottom = danger2tb
+    end
+  else
+    if head2ceiling < defhead2ceiling 
+    then
+      feet2bottom = feet2bottom + 1
+      head2ceiling = head2ceiling + 1
+
+    else
+      head2ceiling = defhead2ceiling
+      feet2bottom = deffeet2bottom
+    end
+
+  end
+
   winheight = (lg.getHeight()-barheight)
   camreturntozoom()
-  beigedif = (winheight/2 - head2ceiling - feet2bottom+120)
+  beigedif = (winheight - head2ceiling - feet2bottom-120)
   jumpj = initjumpj * cscale/minzoom
   --
   jmax = initjmax * cscale/minzoom
