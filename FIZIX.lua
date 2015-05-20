@@ -586,7 +586,7 @@ function movex(xx,yy)
     --landing
     if z.up and xx.j > 0 
     and xx.jmax > 0 
-    and xx.firstjump and not xx.stop and not xx.flinch
+    and xx.firstjump and not xx.flinch
     then xx.jmax = xx.jmax - jumpheight*ramp(xx)
       --the end arc/fall of any jump or the mini jump
     else

@@ -32,7 +32,7 @@ youlcolor = 1
 yourcolor = 2
 therampspeed = .2
 rampspeed= therampspeed
-rampnormaldelta = .005
+rampnormaldelta = .008
 drawboxes = false
 drawfeet = false
 fightclub = true
@@ -863,11 +863,8 @@ function love.update()
 
     end
     lg.setColor(255,0,255)
-      lg.print("dangerclose"..tostring(dangerclose), 100, 380)
-      lg.print("rampspeed"..tostring(rampspeed), 100, 400)
-    if cameramonitor then
+     
       cameramonitorf(100,100)
-    end
 
     if love.keyboard.isDown("6") and #hittmon < 20 then spawnmon(camera.x+math.random(0,200), camera.y+10) end
     if love.keyboard.isDown("4") then blursize = blursize + 1

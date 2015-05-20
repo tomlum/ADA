@@ -6,8 +6,8 @@
 --partition, the hole in the ceiling, the right edge of the apartment
 
 
-	head2ceiling = 30
-	feet2bottom = 30
+head2ceiling = 30
+feet2bottom = 30
 
 defaultminzoom = .7
 defaultmaxzoom = .5
@@ -30,29 +30,46 @@ end
 
 function camreturntozoom()
   if not dangerclose then
-  if minzoom < defaultminzoom then
-    if minzoom + shrinkrate > defaultminzoom then
-      minzoom = defaultminzoom
-      maxzoom = defaultmaxzoom
-    else minzoom = minzoom + shrinkrate
-      maxzoom = maxzoom + shrinkrate
+    if minzoom < defaultminzoom then
+      if minzoom + shrinkrate > defaultminzoom then
+        minzoom = defaultminzoom
+        maxzoom = defaultmaxzoom
+      else minzoom = minzoom + shrinkrate
+        maxzoom = maxzoom + shrinkrate
+      end
+
+    elseif maxzoom > defaultminzoom then
+      if minzoom - shrinkrate < defaultminzoom then
+        minzoom = defaultminzoom
+        maxzoom = defaultmaxzoom
+      else maxzoom = minzoom - growrate
+        maxzoom = maxzoom - growrate
+      end
     end
-    
-  elseif minzoom > defaultminzoom then
-    if minzoom - shrinkrate < defaultminzoom then
-      minzoom = defaultminzoom
-      maxzoom = defaultmaxzoom
-    else minzoom = minzoom - growrate
-      maxzoom = maxzoom - growrate
+  else
+    if maxzoom < dangerzoom then
+      if minzoom + dangerzoomdelta > dangerzoom then
+        minzoom = dangerzoom + (defaultminzoom-defaultmaxzoom)
+        maxzoom = dangerzoom
+      else minzoom = minzoom + dangerzoomdelta
+        maxzoom = maxzoom + dangerzoomdelta
+      end
+
+    elseif maxzoom > dangerzoom then
+      if minzoom - dangerzoomdelta < dangerzoom then
+        minzoom = dangerzoom + (defaultminzoom-defaultmaxzoom)
+        maxzoom = dangerzoom
+      else minzoom = minzoom - dangerzoomdelta
+        maxzoom = maxzoom - dangerzoomdelta
+      end
     end
-  end
   end
 end
 
 cammovement = function ()
   winheight = (lg.getHeight()-barheight)
   camreturntozoom()
-  beigedif = (winheight/2 - head2ceiling - feet2bottom+120*cscale)
+  beigedif = (winheight/2 - head2ceiling - feet2bottom+120)
   jumpj = initjumpj * cscale/minzoom
   --
   jmax = initjmax * cscale/minzoom
@@ -278,10 +295,10 @@ camerafol = function ()
   --if one screen and leftwall then midpoint = some fixed point away from the wall
 
   bothfloor = youcamfloor and mecamfloor
-  
+
 
   if vertone and not bothfloor then 
-    camera.y = midypoint - winheight/4
+    camera.y = midypoint - (winheight/2)*cscale
     camera2.y = camera.y  
   end
 
@@ -478,39 +495,39 @@ end
 
 
 function drawx(xx)
-  
+
   lg.draw(enviro.sky, xx.x, 0, 0, 500, 1.1)
   --lg.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
   if themap.name == "library" then 
     lg.draw(enviro.paralax2, xx.x/1.5 + (screenwidth/4)/1.5 - 400,xx.y/1.2 + winheight / 1.2 - 12 - paralaxoffset-940)
   end
   blurdraw(.2/(cscale), function()
-  lg.draw(enviro.paralax, xx.x / 2 + ((screenwidth/4)/2*cscale*2.5) - 200, (xx.y/2) + (winheight/2*cscale) - 12 - paralaxoffset - 800)
-  end)
-  
+      lg.draw(enviro.paralax, xx.x / 2 + ((screenwidth/4)/2*cscale*2.5) - 200, (xx.y/2) + (winheight/2*cscale) - 12 - paralaxoffset - 800)
+    end)
+
   lg.draw(enviro.stage, 0, 0)
   if themap.name == "street" then
     drawstreetprestuff()
   end
 
   if me.flinch then 
-    
+
     drawa(me)
 
     drawa(you)
 
   else
 
-    
+
     drawa(you)
 
     drawa(me)
 
   end
-    drawparticles()
-    
+  drawparticles()
+
   drawcolorstuff(me)
-mondraw()
+  mondraw()
 
   lg.setColor(155,155,155)
   drawcolorstuff(you)
@@ -525,6 +542,6 @@ mondraw()
     drawfloorsstuff()
   end
   if fightclub then drawallhex() end
-  
-  
+
+
 end

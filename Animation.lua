@@ -62,7 +62,7 @@ fillshader = lg.newShader(
   {
     vec4 texcolor = Texel(texture, texture_coords); 
 
-    if (texcolor[3]>.2)
+    if (texcolor[3]>.1)
     return shade; 
 
     return texcolor; 
@@ -151,15 +151,18 @@ barey = 0
 bardis = 100
 function cinemabars()
 
-dangeronescreen = ydif/dangerzoom <= beigedif
-dangervertone = xdif <= screenwidth*dangerzoom/2
-dangerclose = dangerCloseIsAThing and dangeronescreen and dangervertone and not slowww
+  dangeronescreen = ydif/dangerzoom <= beigedif
+  dangervertone = xdif <= screenwidth*dangerzoom/2
+  dangerclose = dangerCloseIsAThing and dangeronescreen and dangervertone and not slowww
+
+  local tbardis = bardis
+  if dangerclose then tbardis = dangerbarey end
 
   if barsmovein > 0 then 
     barey = barey + barsmovein
-    if barey >= bardis then
+    if barey >= tbardis then
       barsmovein = 0
-      barey = bardis 
+      barey = tbardis 
     end
   elseif barsmovein < 0 then
     barey = barey + barsmovein
@@ -168,27 +171,30 @@ dangerclose = dangerCloseIsAThing and dangeronescreen and dangervertone and not 
       barey = 0
     end
   end
+
+
+
+  if dangerclose then
+    --[[
+    if maxzoom > dangerzoom then
+      maxzoom = maxzoom - dangerzoomdelta
+      minzoom = minzoom - dangerzoomdelta
+    end]]--
+
+    if barey < dangerbarey then
+      barsmovein = 2
+    end
+
+  elseif slowww then barsmovein = 3
+  elseif barey > 0 and slowmot == 0 then
+    barsmovein = -4
+  end
+
+  lg.setShader()
   lg.setColor(0,0,0)
   lg.srectangle("fill",0,0,1440,barey)
   lg.srectangle("fill",0,900,1440,-barey)
   lg.setColor(255,255,255)
-
-
-   if dangerclose then
-     
-     if maxzoom > dangerzoom then
-       maxzoom = maxzoom - dangerzoomdelta
-       minzoom = minzoom - dangerzoomdelta
-     end
-     
-     if barey < dangerbarey then
-       barsmovein = 5
-       end
-
-  elseif slowww then barsmovein = 3
-  elseif barey > 0 and slowmot == 0 then
-    barsmovein = -20
-  end
 
 
 
@@ -221,8 +227,8 @@ end
 
 
 
-traillength = 4
-
+traillength = 5
+trailfadeness = 10
 
 me.trail={}
 you.trail={}
@@ -256,15 +262,25 @@ function drawmytrail(xx)
     if cur.im.xoff == nil then cur.im.xoff = 0 end
     if cur.im.yoff == nil then cur.im.yoff = 0 end
     lg.setShader(fillshader)
+    if cur.dangertrail ~= nil then
     fillshader:send("shade", 
+      vct(thecolors[cur.colornum].c, 
+        (255/traillength)*(traillength/cur.t)/trailfadeness
+      ))
+    else
+      fillshader:send("shade", 
       vct(thecolors[cur.colornum].c, 
         (255/traillength)*(traillength/cur.t)
       ))
+      end
 
     lg.draw(cur.im.im, cur.xanimate-cur.im.xoff*cur.lr, cur.y-cur.im.yoff, 0, cur.lr, 1)
+    if cur.legs ~= nil then
+      if cur.im.legsy == nil then cur.im.legsy = 0 end
+      lg.draw(cur.legs,cur.xanimate-cur.im.xoff*cur.lr, cur.y-cur.im.yoff+cur.im.legsy, 0, cur.lr, 1)
+    end
     lg.setShader()
-
-    lg.setColor(255, 255, 255, 255)
+    cclear()
 
   end
 
@@ -454,6 +470,12 @@ you.im = idle1
 
 
 function drawa(xx)
+  if dangerclose then
+    table.insert(xx.trail, 
+      {color = clone(xx.color), im = clone(xx.im), lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0, colornum = xx.currentc, legs = clone(xx.curimlegs), legsy = xx.im.legsy,dangertrail = true})
+
+
+  end
   drawmytrail(xx)
   if xx.greenkcondition then
     csds(xx)
@@ -476,6 +498,9 @@ function drawa(xx)
   local xxx = xx.xanimate-xx.im.xoff*xx.lr
   local xxy = xx.y-xx.im.yoff
   local xlr = xx.lr
+
+
+
   if mode == "retry" and fadein < 0 then
     lg.setColor(255,255,255,allfade)
   end
@@ -489,42 +514,29 @@ function drawa(xx)
 
 
 
-
-  if xx.im.legshuh ~= nil then
+  if xx.im.legsy ~= nil then
     csds(xx)
-    if xx.v == 0 or xx.slide then
-
-      lg.draw(xx.im.legs,xxx, xxy+xx.im.legsy, 0, xlr, 1) 
-    else
+    xx.curimlegs = xx.im.legs
+    if not (xx.v == 0 or xx.slide) then
       if xx.walktimer < 7 then 
 
-        lg.draw(walklegs1.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
-        lg.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-        lg.draw(walklegs1.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        xx.curimlegs = walklegs1.im
       elseif xx.walktimer >= 7 and xx.walktimer < 14 then
-        lg.draw(walklegs2.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
-        lg.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-        lg.draw(walklegs2.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        xx.curimlegs = walklegs2.im
       elseif xx.walktimer >= 14 and xx.walktimer < 21 then
-        lg.draw(walklegs3.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
-        lg.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-        lg.draw(walklegs3.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        xx.curimlegs = walklegs3.im
       elseif xx.walktimer >= 21 and xx.walktimer < 28 then
-        lg.draw(walklegs4.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
-        lg.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-        lg.draw(walklegs4.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        xx.curimlegs = walklegs4.im
       elseif xx.walktimer >= 28 and xx.walktimer < 35 then
-        lg.draw(walklegs5.im,xxx, xxy+xx.im.legsy, 0, xlr, 1)
-        lg.setColor(xx.color.c.r,xx.color.c.g,xx.color.c.b,255)
-        lg.draw(walklegs5.c,xxx, xxy+xx.im.legsy, 0, xlr, 1)
+        xx.curimlegs = walklegs5.im
       else
         xx.walktimer = 0
       end
     end
-
+    lg.draw(xx.curimlegs,xxx, xxy+xx.im.legsy, 0, xlr, 1)
 
   else
-
+    xx.curimlegs = nil
     lg.setShader()
   end
 
@@ -565,7 +577,7 @@ function drawa(xx)
     lg.setColor(0,0,255)
     lg.rectangle("fill", xx.x, xx.y+me.height-xx.j-pextra, xx.width,1)
   end
-  
+
 end
 
 
@@ -622,7 +634,7 @@ function actionshotstuff(xx)
   elseif xx.actiontimer > 0 
   then xx.actiontimer = xx.actiontimer - 1
     if not musicmute then
-      thesong:setPitch(xx.actiontimer/actionshotdur)
+      thesong:setPitch(rampspeed)
     end
   else xx.actiontimer = 0
   end

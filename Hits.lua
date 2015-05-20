@@ -22,8 +22,13 @@ you.oldpy = you.y
 
 function shakez(z)
   rumbleme(me,z*10)
+  if dangerclose then
+  minzoom = dangerzoom - z/2
+  maxzoom = dangerzoom - z/2
+else
   minzoom = defaultminzoom - z
   maxzoom = defaultmaxzoom - z
+  end
 end
 
 

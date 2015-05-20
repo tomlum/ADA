@@ -286,6 +286,7 @@ function orangeyouglad(xx)
         if xx.animcounter >= 15 then 
           if xx.a4b and not xx.holda and xx.oplat~=nil then
             xx.animcounter = 101
+          
             xx.oplat = nil
           end
 
@@ -301,7 +302,9 @@ function orangeyouglad(xx)
         xx.animcounter = 0
       elseif xx.animcounter < 110 then
         xx.im = ok4
-        xx.j = at.o.k.mj
+        xx.jmax = at.o.k.mj
+        xx.j = at.o.k.mj/2
+        xx.firstjump = true
       elseif xx.animcounter < 1000 then
         xx.animcounter = 0
       end

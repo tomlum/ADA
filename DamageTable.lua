@@ -30,9 +30,9 @@ whiplash = 1
 --THE BIG ONES
 dangerrampspeed = .8
 dangerrampdelta = rampnormaldelta*1.5
-dangerbarey = 10
-dangerzoom = .45
-dangerzoomdelta = .01
+dangerbarey = 50
+dangerzoom = .4
+dangerzoomdelta = .003
 defspeedminit = 6
 minmaxdif = 4
 accel = .5

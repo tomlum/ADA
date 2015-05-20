@@ -11,7 +11,7 @@ end
 function cameramonitorf(x,y)
 
   lg.print("cscale"..tostring(cscale),x,y)
-  lg.print("beigedif"..tostring(beigedif),x,y+20)
+  lg.print("beigedif*cscale"..tostring(beigedif*cscale),x,y+20)
   lg.print("ydif"..tostring(ydif),x,y+40)
   lg.print("me.y"..tostring(me.y),x,y+60)
   lg.print("midypoint"..tostring(midypoint),x,y+80)
@@ -19,3 +19,12 @@ function cameramonitorf(x,y)
   lg.print("youcamfloor"..tostring(youcamfloor),x,y+120)
   lg.print("vertone"..tostring(vertone),x,y+140)
 end
+
+function dangermonitorf(x,y)
+ lg.print("dangerclose"..tostring(dangerclose), x, y)
+      lg.print("rampspeed"..tostring(rampspeed), x, y+20)
+      lg.print("cscale"..tostring(cscale), x, y+40)
+      lg.print("dangerzoom"..tostring(dangerzoom), x, y+60)
+      lg.print("minzoom"..tostring(minzoom), x, y+80)
+      lg.print("maxzoom"..tostring(maxzoom), x, y+100)
+     end

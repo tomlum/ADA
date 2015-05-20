@@ -28,7 +28,7 @@ greenk03 = {im=lg.newImage("me/attack/green/greenk03.png"), xoff = 1, yoff = -6}
 greenk01 = {im=lg.newImage("me/attack/green/greenk01.png"), xoff = 1, yoff = -6}
 greenk02 = {im=lg.newImage("me/attack/green/greenk02.png"), xoff = 4, yoff = -6}
 
-greenk1 = {im=lg.newImage("me/attack/green/greenk1.png"), xoff = 2, yoff = -6, legshuh = true, legs = lg.newImage("me/attack/green/greenk1legs.png"), legsy = 36}
+greenk1 = {im=lg.newImage("me/attack/green/greenk1.png"), xoff = 2, yoff = -6, legs = lg.newImage("me/attack/green/greenk1legs.png"), legsy = 36}
 greenk2 = {im=lg.newImage("me/attack/green/greenk2.png"), xoff = 0, yoff = -2}
 
 
