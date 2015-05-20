@@ -37,11 +37,16 @@ function relativity(xx)
   else
     xx.ramptimer = 0
     xx.rampcanhit = true
-    xx.rampspeed = 1
+    xx.rampspeed = rampspeed
   end
-  
-  if not slowww and onescreen and vertone then
-       rampspeed = actionrampspeed
+
+  if dangerclose then
+    if rampspeed - dangerrampdelta > dangerrampspeed
+    then
+      rampspeed = rampspeed - dangerrampdelta
+    else
+      rampspeed = dangerrampspeed
+    end
   end
 
 
@@ -52,7 +57,7 @@ function relativity(xx)
     --if xx.id == 1 then
     --  xx.rampspeed = .5
     --else
-      xx.rampspeed = rampspeed
+    xx.rampspeed = rampspeed
     --end
   end
 
@@ -555,7 +560,7 @@ function movex(xx,yy)
     elseif z.left and xx.v >= 1 + xx.push*1.5
     then xx.v = xx.v - adecrate*ramp(xx)
       xx.slowdown = true
-    xx.im = slowdown
+      xx.im = slowdown
     elseif z.right and xx.v <= -1 + xx.push*1.5
     then xx.v = xx.v + adecrate*ramp(xx)
       xx.slowdown = true

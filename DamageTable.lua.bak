@@ -21,7 +21,7 @@ shortlandwait = 10
 frameswhilelandcantmove = 8
 
 
---set to 0 for whiplash like turning(?)
+--set to 0 for whiplash like turning
 whiplash = 1 
 
 
@@ -29,10 +29,7 @@ whiplash = 1
 --THE BIG ONES
 --THE BIG ONES
 dangerrampspeed = .8
-dangerrampdelta = rampnormaldelta*1.5
-dangerbarey = 10
-dangerzoom = .45
-dangerzoomdelta = .01
+actionbarey = 10
 defspeedminit = 6
 minmaxdif = 4
 accel = .5

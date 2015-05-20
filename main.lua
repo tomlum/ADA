@@ -21,7 +21,7 @@ require "utilities"
 --chrome/metallic so as to suit monochromaticity
 --motion blur
 
-
+dangerCloseIsAThing = true
 --todo
 --if not in the air then some kind of unblocking animation
 --apple w is window close
@@ -30,7 +30,9 @@ melcolor = 2
 mercolor = 3
 youlcolor = 1
 yourcolor = 2
-therampspeed = .25/2
+therampspeed = .2
+rampspeed= therampspeed
+rampnormaldelta = .005
 drawboxes = false
 drawfeet = false
 fightclub = true
@@ -404,7 +406,6 @@ end
 
 
 
-
 function love.update()
   --colorshift(thecolors[2].c,8)
   --colorshift(me.outline,6)
@@ -422,7 +423,11 @@ function love.update()
   else
     ramptimer = 0
     rampcanhit = true
+    if rampspeed + rampnormaldelta < 1 then
+      rampspeed = rampspeed + rampnormaldelta
+    else
     rampspeed = 1
+    end
   end
 
   if not finishedloading then
@@ -858,8 +863,8 @@ function love.update()
 
     end
     lg.setColor(255,0,255)
-      colorcombomonitor(me, 100, 200)
-
+      lg.print("dangerclose"..tostring(dangerclose), 100, 380)
+      lg.print("rampspeed"..tostring(rampspeed), 100, 400)
     if cameramonitor then
       cameramonitorf(100,100)
     end

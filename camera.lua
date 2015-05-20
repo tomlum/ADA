@@ -19,7 +19,7 @@ maxzdis = 4500
 cscale = .7
 
 growrate = .02
-shrinkrate = .01
+shrinkrate = .005
 
 function drawcolorstuff(xx)
   spikedraw(xx)
@@ -29,6 +29,7 @@ end
 
 
 function camreturntozoom()
+  if not dangerclose then
   if minzoom < defaultminzoom then
     if minzoom + shrinkrate > defaultminzoom then
       minzoom = defaultminzoom
@@ -44,6 +45,7 @@ function camreturntozoom()
     else minzoom = minzoom - growrate
       maxzoom = maxzoom - growrate
     end
+  end
   end
 end
 

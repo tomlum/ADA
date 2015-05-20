@@ -151,6 +151,9 @@ barey = 0
 bardis = 100
 function cinemabars()
 
+dangeronescreen = ydif/dangerzoom <= beigedif
+dangervertone = xdif <= screenwidth*dangerzoom/2
+dangerclose = dangerCloseIsAThing and dangeronescreen and dangervertone and not slowww
 
   if barsmovein > 0 then 
     barey = barey + barsmovein
@@ -170,10 +173,16 @@ function cinemabars()
   lg.srectangle("fill",0,900,1440,-barey)
   lg.setColor(255,255,255)
 
-   if not slowww and onescreen and vertone then
-     if barey < actionbarey then
+
+   if dangerclose then
+     
+     if maxzoom > dangerzoom then
+       maxzoom = maxzoom - dangerzoomdelta
+       minzoom = minzoom - dangerzoomdelta
+     end
+     
+     if barey < dangerbarey then
        barsmovein = 5
-       rampspeed = actionrampspeed
        end
 
   elseif slowww then barsmovein = 3
