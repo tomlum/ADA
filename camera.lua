@@ -6,12 +6,12 @@
 --partition, the hole in the ceiling, the right edge of the apartment
 
 var2tb = true
-defhead2ceiling = 70
-deffeet2bottom = 70
+defhead2ceiling = 90
+deffeet2bottom = 90
 head2ceiling = defhead2ceiling
 feet2bottom = deffeet2bottom
 --danger 2 top bottom
-danger2tb = 5
+danger2tb = dangerbarey
 
 
 
@@ -80,23 +80,37 @@ cammovement = function ()
 
   if dangerclose and var2tb then
 
-    if head2ceiling > 5
+    if head2ceiling > danger2tb
     then
-      feet2bottom = feet2bottom - 1
-      head2ceiling = head2ceiling - 1
+      head2ceiling = head2ceiling/1.01
 
     else
       head2ceiling = danger2tb
+    end
+    
+    
+    if feet2bottom > danger2tb and not bothfloor
+    then
+      feet2bottom = feet2bottom/1.01
+
+    elseif not bothfloor then
       feet2bottom = danger2tb
     end
+    
   else
     if head2ceiling < defhead2ceiling 
     then
-      feet2bottom = feet2bottom + 1
-      head2ceiling = head2ceiling + 1
-
+      local change = math.log(defhead2ceiling-head2ceiling)/3
+      head2ceiling = head2ceiling + change
     else
       head2ceiling = defhead2ceiling
+    end
+    
+    if feet2bottom < deffeet2bottom 
+    then
+      local change = math.log(deffeet2bottom-feet2bottom)/1.5
+      feet2bottom = feet2bottom + change
+    else
       feet2bottom = deffeet2bottom
     end
 

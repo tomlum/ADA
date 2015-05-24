@@ -62,7 +62,7 @@ fillshader = lg.newShader(
   {
     vec4 texcolor = Texel(texture, texture_coords); 
 
-    if (texcolor[3]>.1)
+    if (texcolor[3]>.01)
     return shade; 
 
     return texcolor; 
@@ -202,21 +202,40 @@ end
 
 --colorshader draw start
 function csds(xx)
+  
+  local bleed = ((maxhealth-xx.health)/maxhealth)
+  local shadee = {
+    r=xx.shade.r - 
+    (xx.shade.r - xx.shade.r/255*(xx.color.c.r))*bleed,
+    g=xx.shade.g -
+    (xx.shade.g - xx.shade.g/255*(xx.color.c.g))*bleed,
+  b=xx.shade.b -
+  (xx.shade.b - xx.shade.b/255*(xx.color.c.b))*bleed
+  }
+  
+  local outlinee = {
+    r=xx.outline.r - 
+    (xx.outline.r - xx.outline.r/150*(xx.color.c.r))*bleed,
+    g=xx.outline.g -
+    (xx.outline.g - xx.outline.r/150*(xx.color.c.g))*bleed,
+  b=xx.outline.b -
+  (xx.outline.b - xx.outline.r/150*(xx.color.c.b))*bleed
+    }
+  
   lg.setShader(cshader)
   if xx.currentc == 4 or xx.cchangeto.n == 4 then
     cshader:send( "palette", 
-      {xx.shade/255, xx.shade/255, xx.shade/255, 1}, 
-      vct({r = xx.color.c.r/(xx.rlvl+1),g = xx.color.c.g/(xx.rlvl+1),b = xx.color.c.b/(xx.rlvl+1)}),
-      vct({r = thecolors[xx.currentc].c.r/(xx.rlvl+1), g = thecolors[xx.currentc].c.g/(xx.rlvl+1), b = thecolors[xx.currentc].c.b/(xx.rlvl+1)}), 
-      vct(xx.outline)
-
+     vct(shadee), 
+      vct({r = xx.color.c.r/(xx.rlvl/15+1),g = xx.color.c.g/(xx.rlvl/15+1),b = xx.color.c.b/(xx.rlvl/15+1)}),
+      vct({r = thecolors[xx.currentc].c.r/(xx.rlvl/10+1), g = thecolors[xx.currentc].c.g/(xx.rlvl/10+1), b = thecolors[xx.currentc].c.b/(xx.rlvl/10+1)}), 
+      vct(outlinee)
     ) 
   else
     cshader:send( "palette", 
-      {xx.shade/255, xx.shade/255, xx.shade/255, 1}, 
+      vct(shadee), 
       vct(xx.color.c),
       vct(thecolors[xx.currentc].c), 
-      vct(xx.outline)
+      vct(outlinee)
 
     ) 
   end
@@ -323,7 +342,7 @@ whatlevel = function()
       me.lives = 5
       maxhealth = 70
     elseif themode == "duel" then 
-      maxhealth = 380
+      maxhealth = 180
     end
     me.health = maxhealth
     you.health = maxhealth

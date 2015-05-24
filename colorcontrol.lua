@@ -6,6 +6,12 @@ colorchangetime = 8
 colorfadetime = 5
 colorvib = .1
 
+
+me.shade={r=120,g=120,b=120}
+you.shade={r=190,g=190,b=190}
+me.outline={r=53,g=53,b=53}
+you.outline={r=53,g=53,b=53}
+
 gold = {r = 232, g = 207, b = 0}
 purple = {r = 87, g = 0, b = 158}
 orange = {r = 255, g = 99, b = 0}
@@ -15,10 +21,10 @@ seafoam = {r=0,g=255,b=255}
 turq = {r=145,g=222,b=161}
 pink = {r=255,g=0,b=255}
 
-color1 = turq
-color2 = gold
-color3 = seafoam
-color4 = green
+color1 = xcolor("dark mauve")
+color2 = xcolor("dark gold")
+color3 =  xcolor("dark seafoam")
+color4 = xcolor("lemon")
 
 thecolors = {}
 
@@ -51,16 +57,16 @@ end
 end
 
 
-thecolors[0] = {n=0,c={r = 255, g = 255, b = 255}, c2={r = 255, g = 255, b = 255},
+thecolors[0] = {n=0,c={r = 255, g = 255, b = 255}, c2=c,
   s = {def=1, speed = 1, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
 
-thecolors[1] = {n=1,c=color1,c2=c1,
+thecolors[1] = {n=1,c=color1,c2=c,
   s = {def=1.2, speed = .8, jump = .7, weight = 1.3, brittle = 1}, tile = ptile, logo=plogo, sound = colorpsound}
-thecolors[2] = {n=2,c=color2,c2=c1,
+thecolors[2] = {n=2,c=color2,c2=c,
   s = {def=.7, speed = 1.3, jump = 1.1, weight = 1, brittle = 1}, tile = gtile, logo=glogo, sound = colorgsound}
-thecolors[3] = {n=3, tile = otile,c=color3,c2=c1, logo=ologo, sound = colorgsound,
+thecolors[3] = {n=3, tile = otile,c=color3,c2=c, logo=ologo, sound = colorgsound,
   s = {def=1, speed = 1, jump = 1.1, weight = .8, brittle = 2}}
-thecolors[4] = {n=4, tile = tile,c=color4,c2=c1, logo=questionlogo, sound = colorpsound,
+thecolors[4] = {n=4, tile = tile,c=color4,c2=c, logo=questionlogo, sound = colorpsound,
   s = {def=.8, speed = 1.2, jump = 1.1, weight = .9, brittle = 1.2}
   }
 thecolors[5] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}

@@ -451,7 +451,7 @@ function drawmenus()
     if tileset then 
       lg.setShader(cshader)
   cshader:send( "palette", 
-    {me.shade/255, me.shade/255, me.shade/255, 1}, 
+    {me.shade.r, me.shade.g, me.shade.b, 1}, 
     vct(thecolors[me.selectedcolor+1].c),
     vct(thecolors[me.selectedcolor+1].c), 
     vct(me.outline)
@@ -463,7 +463,7 @@ function drawmenus()
     if tileset then 
       lg.setShader(cshader)
   cshader:send( "palette", 
-    {you.shade/255, you.shade/255, you.shade/255, 1}, 
+    {you.shade.r, you.shade.g, you.shade.b, 1}, 
     vct(thecolors[you.selectedcolor+1].c),
     vct(thecolors[you.selectedcolor+1].c), 
     vct(you.outline)

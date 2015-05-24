@@ -26,8 +26,8 @@ dangerCloseIsAThing = true
 --if not in the air then some kind of unblocking animation
 --apple w is window close
 --SHAEZ TIED TO RUMBLE?!?!?!?
-melcolor = 2
-mercolor = 3
+melcolor = 3
+mercolor = 4
 youlcolor = 1
 yourcolor = 2
 therampspeed = .2
@@ -37,7 +37,7 @@ drawboxes = false
 drawfeet = false
 fightclub = true
 volume=0
-fullscreen = true
+fullscreen = false
 readout = false
 putmehere = 975
 putyouhere = 1025
@@ -864,15 +864,16 @@ function love.update()
     end
     lg.setColor(255,0,255)
      
-      cameramonitorf(100,100)
+      --cameramonitorf(100,100)
+      fallmonitor(me, 100,100)
+      
+      lg.print("me.rlvl"..tostring(me.rlvl), 700, 300)
 
     if love.keyboard.isDown("6") and #hittmon < 20 then spawnmon(camera.x+math.random(0,200), camera.y+10) end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
 
-if not slowww and onescreen and vertone then
-      lg.print("yo", 100, 100)
-      end
+      lg.print("me.hit"..tostring(me.hit), 500, 100)
 
     if #joysticks > 0 then
       rumblemodule(me)

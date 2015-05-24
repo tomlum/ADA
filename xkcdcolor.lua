@@ -5,6 +5,10 @@
 -------------------------------------------------------------------------------
 local rgb = {}
 
+function xcolor( name )
+   return rgb[ name ]
+end
+
 function setColor( name )
    local color = rgb[ name ]
    if color then
@@ -20,6 +24,8 @@ local function load( color, name )
   local b = tonumber( "0x" .. string.sub( color, 5, 6 ) )
   rgb[ name ] = { r = r, g = g, b = b }
 end
+
+
 
 -------------------------------------------------------------------------------
 load( "ACC2D9", "cloudy blue" )

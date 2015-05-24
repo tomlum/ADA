@@ -24,13 +24,13 @@ frameswhilelandcantmove = 8
 --set to 0 for whiplash like turning(?)
 whiplash = 1 
 
-
+superjumpratio = 1.5
 --THE BIG ONES
 --THE BIG ONES
 --THE BIG ONES
-dangerrampspeed = .8
+dangerrampspeed = .75
 dangerrampdelta = rampnormaldelta*1.5
-dangerbarey = 50
+dangerbarey = 10
 --only for maxzoom
 dangerzoom = .45
 dangerzoomdelta = .001
@@ -53,7 +53,7 @@ risegrav = 1
 dropgrav = .3
 maxgravity = 28
 
-maxhealth = 180
+maxhealth = 0
 
 
 

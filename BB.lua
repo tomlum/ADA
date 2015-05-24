@@ -15,7 +15,7 @@ you.repcounter = 0
 
 at.bb = {}
 at.bb.p = {}
-at.bb.p.dam = 5
+at.bb.p.dam = 50
 at.bb.p.kb = 7
 at.bb.p.ft = 15
 at.bb.p.max = 3

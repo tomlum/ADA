@@ -931,8 +931,10 @@ newforwarddodge = function(xx)
 
       end
 
-      if xx.falltimer > 0 then xx.falltimer = xx.falltimer - 1*ramp(xx)
-      else 
+      if xx.falltimer > 0 and xx.falltimer - 1*ramp(xx) > 0 then 
+        xx.falltimer = xx.falltimer - 1*ramp(xx)
+    else 
+      
         xx.hittheground = true
       end
 

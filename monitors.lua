@@ -1,5 +1,13 @@
 
 
+function fallmonitor(xx, x, y)
+  lg.print("me.ft"..tostring(xx.ft), x, y)
+  lg.print("me.falltimer"..tostring(xx.falltimer), x, y+20)
+  lg.print("me.falling"..tostring(xx.falling), x, y+40)
+  lg.print("me.flinch"..tostring(xx.flinch), x, y+60)
+  lg.print("me.extratimer"..tostring(xx.extratimer), x, y+80)
+end
+
 function colorcombomonitor(xx, x, y)
   lg.print("me.animcounter"..tostring(xx.animcounter), x, y)
   lg.print("me.cmbo"..tostring(xx.cmbo), x, y+20)
