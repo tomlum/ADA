@@ -1,4 +1,5 @@
 
+plathighlight = lg.newImage("enviro/plathighlight.png")
 
 
 idle1 = {im = lg.newImage("me/idle/idle1.png")}
@@ -13,7 +14,8 @@ me = {}
 you = {}
 
 
-
+me.score = 0
+you.score = 0
 
 me.id = 1
 me.health = maxhealth

@@ -1,7 +1,7 @@
 boltsflyrelative = true
 combopause = false
 
-kothscoretowin = 5000
+kothscoretowin = 10000
 
 waveframerate = 8 --(2 is fast, higher is lower)
 
@@ -53,7 +53,7 @@ risegrav = 1
 dropgrav = .3
 maxgravity = 28
 
-maxhealth = 0
+      maxhealth = 70
 
 
 

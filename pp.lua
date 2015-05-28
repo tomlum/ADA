@@ -234,18 +234,18 @@ at.p.p.dam = 12
 at.p.p.ft = 25
 at.p.p.kb = 2
 at.p.p.max = 4
-at.p.p.z = .07
+at.p.p.z = 4
 
 at.p.ap = {}
 at.p.ap.kj = -15
-at.p.ap.z = .07
+at.p.ap.z = 4
 
 at.p.au = {}
 at.p.au.dam = 12
 at.p.au.ft = 25
 at.p.au.kb = 10
 at.p.au.kj = 15
-at.p.au.z = .07
+at.p.au.z = 4
 
 at.p.p2 = {}
 at.p.p2.dam = 12
@@ -253,7 +253,7 @@ at.p.p2.ft = 65
 at.p.p2.kb = 15
 at.p.p2.kj = 15 
 at.p.p2.t = 10
-at.p.p2.z = .07
+at.p.p2.z = 5
 
 
 at.p.u = {}
@@ -261,13 +261,12 @@ at.p.u.dam = 3
 at.p.u.ft = 30
 at.p.u.kb = 0
 at.p.u.kj = 24
-at.p.u.z = .07
-at.p.u.r = .5
+at.p.u.z = 4
 
 at.p.k = {}
 at.p.k.max = 6
 at.p.k.kb = 6
-at.p.k.dam = 3
+at.p.k.dam = 5
 
 at.p.ak = {}
 at.p.ak.penalty = 50
@@ -592,8 +591,6 @@ function pandp(xx)
 
             repplay(xx.purpsound)
             repplay(xx.purp2)
-            me.shake = true 
-                  rumbleme(me, at.p.u.r)
             hall(xx.id, function(z) if z.plat.n == xx.plat.n then
                   z.j = at.p.u.kj 
                   xx.cancombo = true

@@ -44,6 +44,7 @@ at.g.p.dam = 6
 at.g.p.kb = 2
 at.g.p.ft = 10
 at.g.p.max = 4
+at.g.p.z = 2
 
 
 
@@ -52,7 +53,9 @@ at.g.u.dam = 5
 at.g.u.kb = 4
 at.g.u.j = 25
 at.g.u.mv = 10
-at.g.u.ft = 20
+at.g.u.ft = 25
+at.g.u.z = 2.5
+greena1adj = 10
 
 
 at.g.au = {}
@@ -199,6 +202,7 @@ function gandg(xx)
                 z.flinch = true
                 z.ft = z.ft+at.g.p.ft
               end
+              shakez(at.g.p.z)
             end)
         end
 
@@ -291,9 +295,12 @@ function gandg(xx)
       end
 
     elseif xx.type == 3 then
-      if xx.animcounter < 5 then
+      if xx.animcounter < 5+greena1adj then
         xx.im = greena21
-      elseif xx.animcounter < 20 then
+      elseif xx.animcounter < 20+greena1adj then
+        if xx.animcounter < 8+greena1adj then
+          xx.v = xx.v + (xx.lr*5)
+          end
         
         hboxcs(xx, xx.id, 
           {x=xx.mid+(xx.lr*18), y = xx.y+16},
@@ -303,6 +310,7 @@ function gandg(xx)
 
           function(z)
             xx.cancombo = true
+            shakez(at.g.u.z)
             z.health = z.health - at.g.u.dam
             z.v = at.g.u.kb*xx.lr
             z.j = at.g.u.j
@@ -311,25 +319,25 @@ function gandg(xx)
             makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
           end)
         
-        if xx.animcounter < 7-2 then
+        if xx.animcounter < 7-2+greena1adj then
         xx.im = greena21
         repplay(xx.greens)
-        elseif xx.animcounter < 7 then
+        elseif xx.animcounter < 7+greena1adj then
           xx.im = greena12
-        elseif xx.animcounter < 11-2 then
+        elseif xx.animcounter < 11-2+greena1adj then
         xx.im = greena21
         repplay(xx.greens)
-        elseif xx.animcounter < 11 then
+        elseif xx.animcounter < 11+greena1adj then
           xx.im = greena13
-        elseif xx.animcounter < 15-2 then
+        elseif xx.animcounter < 15-2+greena1adj then
         xx.im = greena21
         repplay(xx.greens)
-        elseif xx.animcounter < 15 then
+        elseif xx.animcounter < 15+greena1adj then
           xx.im = greena14
-        elseif xx.animcounter < 20-2 then
+        elseif xx.animcounter < 20-2+greena1adj then
         xx.im = greena21
         repplay(xx.greens)
-        elseif xx.animcounter < 20 then
+        elseif xx.animcounter < 20+greena1adj then
           xx.im = greena15
         end
         if xx.rampcanhit then
@@ -337,7 +345,7 @@ function gandg(xx)
             {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0, colornum = 2})
         end
       
-    elseif xx.animcounter >= 14 then
+    elseif xx.animcounter >= 14+greena1adj then
       xx.animcounter = 0
       xx.repcounter = 0
     end

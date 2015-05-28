@@ -262,13 +262,31 @@ function combo(xx)
           xx.type = 3
           xx.animcounter = 1
           xx.combo = xx.combo + 1
+        elseif xx.color.n==3 then
+          xx.type = 3
+          xx.animcounter = 1
+          xx.combo = xx.combo + 1
+        elseif xx.color.n==4 then
+          xx.type = 3
+          xx.animcounter = 1
+          xx.combo = xx.combo + 1
         end
 
 
 
       end
     else
-      if xx.a4 then
+      
+      if xx.a2 or xx.a3 then
+        if xx.color.n==4 then
+          xx.type = 4
+          xx.animcounter = 1
+          xx.repcounter = xx.repcounter + 1
+        end
+        
+        
+
+      elseif xx.a4 then
         if xx.color.n==3 and xx.o5repcounter < at.o.ak.max then
           xx.animcounter = 1
           xx.type = 5
@@ -931,10 +949,13 @@ newforwarddodge = function(xx)
 
       end
 
-      if xx.falltimer > 0 and xx.falltimer - 1*ramp(xx) > 0 then 
+      if xx.falltimer > 0  then 
+        if xx.falltimer - 1*ramp(xx) > 0 then
         xx.falltimer = xx.falltimer - 1*ramp(xx)
+      else
+        xx.falltimer = 0
+        end
     else 
-      
         xx.hittheground = true
       end
 

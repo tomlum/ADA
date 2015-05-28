@@ -40,20 +40,20 @@ at.o.p = {}
 at.o.p.dam = 10
 at.o.p.ft = 25
 at.o.p.max = 2
-at.o.p.z = .08
+at.o.p.z = .4
 at.o.p.j = -20
 
 at.o.ap = {}
 at.o.ap.dam = 10
 at.o.ap.ft = 25
-at.o.ap.z = .08
+at.o.ap.z = 3.5
 at.o.ap.j = -20
 
 at.o.ak = {}
 at.o.ak.dam = 15
 at.o.ak.ft = 20
 at.o.ak.max = 5
-at.o.ak.z = .08
+at.o.ak.z = 4.5
 at.o.ak.j = -10
 me.o5repcounter = 0
 you.o5repcounter = 0
@@ -62,7 +62,7 @@ you.o5repcounter = 0
 at.o.k = {}
 at.o.k.dam = 15
 at.o.k.ft = 20
-at.o.k.z = .08
+at.o.k.z = 4
 at.o.k.j = -20
 at.o.k.mj = 17
 
@@ -72,7 +72,7 @@ at.o.u.dam = 15
 at.o.u.ft = 30
 at.o.u.j = 25
 at.o.u.v = 0
-
+at.o.u.z = 4
 
 
 function orangeyouglad(xx)
@@ -339,7 +339,7 @@ function orangeyouglad(xx)
                   z.flinch = true
                   z.ft = z.ft+at.o.u.ft
                 end
-                shakez(at.o.p.z)
+                shakez(at.o.u.z)
 
               end)
           end

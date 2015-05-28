@@ -1,13 +1,10 @@
 
 
-
 walklegs1 = {im = lg.newImage("me/walk/legs1.png")}
 walklegs2 = {im = lg.newImage("me/walk/legs2.png")}
 walklegs3 = {im = lg.newImage("me/walk/legs3.png")}
 walklegs4 = {im = lg.newImage("me/walk/legs4.png")}
 walklegs5 = {im = lg.newImage("me/walk/legs5.png")}
-
-
 
 gahead = lg.newImage("me/attack/green/gahead.png")
 walk1 = {im = lg.newImage("me/walk/walk51.png")}
@@ -53,6 +50,81 @@ paper4 = lg.newImage("enviro/paper4.png")
 
 
 sparkfaderate = 7
+
+hour = 0
+minute = 0
+
+tod = {1,1,1}
+function movetod(delta)
+  if minute + delta > 60 then
+    minute = 0
+    hour = hour + 1
+  else minute = minute + delta
+  end
+
+  if hour > 23 then hour = 0 
+  end
+
+
+  if hour < 6 then 
+    tod = {.6,.6,.8}
+
+  elseif hour < 7 then
+    if minute < 30 then
+      tod = {
+        .6+.4*(minute/30),
+        .6+.4*(minute/30),
+        .8}
+    else
+      tod ={
+        1,
+        1,
+        .8+.2*((minute-30)/30)}
+
+    end
+
+  elseif hour < 20 then
+    tod = {1,1,1}
+  elseif hour < 21 then
+    if minute > 30 then
+      tod = {
+        1-.4*((minute-30)/30),
+        1-.4*((minute-30)/30),
+        .8}
+    else
+      tod ={
+        1,
+        1,
+        1-.2*(minute/30)}
+
+    end
+
+  else tod = {.6,.6,.8}
+  end
+
+end
+
+function tods()
+
+  lg.setShader(todshader)
+  todshader:send("todd", 
+    {tod[1], tod[2], tod[3], 1}
+  ) 
+
+end
+
+todshader = lg.newShader(
+  [[
+  extern vec4 todd;
+  vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
+  {
+    vec4 texcolor = Texel(texture, texture_coords); 
+
+    return vec4(todd[0]*texcolor[0],todd[1]*texcolor[1],todd[2]*texcolor[2],1);;
+  }
+  ]] )
+
+
 
 
 fillshader = lg.newShader(
@@ -151,8 +223,8 @@ barey = 0
 bardis = 100
 function cinemabars()
 
-  dangeronescreen = ydif/dangerzoom <= beigedif
-  dangervertone = xdif <= screenwidth*dangerzoom/2
+  dangervertone = ydif/dangerzoom <= beigedif
+  dangeronescreen = xdif <= screenwidth*dangerzoom/2 + tolandr*2
   dangerclose = dangerCloseIsAThing and dangeronescreen and dangervertone and not slowww
 
   local tbardis = bardis
@@ -202,30 +274,30 @@ end
 
 --colorshader draw start
 function csds(xx)
-  
+
   local bleed = ((maxhealth-xx.health)/maxhealth)
   local shadee = {
     r=xx.shade.r - 
-    (xx.shade.r - xx.shade.r/255*(xx.color.c.r))*bleed,
+    (xx.shade.r - xx.shade.r/255*(xx.color.c.r))*bleed/2,
     g=xx.shade.g -
-    (xx.shade.g - xx.shade.g/255*(xx.color.c.g))*bleed,
-  b=xx.shade.b -
-  (xx.shade.b - xx.shade.b/255*(xx.color.c.b))*bleed
+    (xx.shade.g - xx.shade.g/255*(xx.color.c.g))*bleed/2,
+    b=xx.shade.b -
+    (xx.shade.b - xx.shade.b/255*(xx.color.c.b))*bleed/2
   }
-  
+
   local outlinee = {
     r=xx.outline.r - 
-    (xx.outline.r - xx.outline.r/150*(xx.color.c.r))*bleed,
+    (xx.outline.r - xx.outline.r/200*(xx.color.c.r))*bleed,
     g=xx.outline.g -
-    (xx.outline.g - xx.outline.r/150*(xx.color.c.g))*bleed,
-  b=xx.outline.b -
-  (xx.outline.b - xx.outline.r/150*(xx.color.c.b))*bleed
-    }
-  
+    (xx.outline.g - xx.outline.r/200*(xx.color.c.g))*bleed,
+    b=xx.outline.b -
+    (xx.outline.b - xx.outline.r/200*(xx.color.c.b))*bleed
+  }
+
   lg.setShader(cshader)
   if xx.currentc == 4 or xx.cchangeto.n == 4 then
     cshader:send( "palette", 
-     vct(shadee), 
+      vct(shadee), 
       vct({r = xx.color.c.r/(xx.rlvl/15+1),g = xx.color.c.g/(xx.rlvl/15+1),b = xx.color.c.b/(xx.rlvl/15+1)}),
       vct({r = thecolors[xx.currentc].c.r/(xx.rlvl/10+1), g = thecolors[xx.currentc].c.g/(xx.rlvl/10+1), b = thecolors[xx.currentc].c.b/(xx.rlvl/10+1)}), 
       vct(outlinee)
@@ -282,16 +354,16 @@ function drawmytrail(xx)
     if cur.im.yoff == nil then cur.im.yoff = 0 end
     lg.setShader(fillshader)
     if cur.dangertrail ~= nil then
-    fillshader:send("shade", 
-      vct(thecolors[cur.colornum].c, 
-        (255/traillength)*(traillength/cur.t)/trailfadeness
-      ))
+      fillshader:send("shade", 
+        vct(thecolors[cur.colornum].c, 
+          (255/traillength)*(traillength/cur.t)/trailfadeness
+        ))
     else
       fillshader:send("shade", 
-      vct(thecolors[cur.colornum].c, 
-        (255/traillength)*(traillength/cur.t)
-      ))
-      end
+        vct(thecolors[cur.colornum].c, 
+          (255/traillength)*(traillength/cur.t)
+        ))
+    end
 
     lg.draw(cur.im.im, cur.xanimate-cur.im.xoff*cur.lr, cur.y-cur.im.yoff, 0, cur.lr, 1)
     if cur.legs ~= nil then
@@ -495,6 +567,7 @@ function drawa(xx)
 
 
   end
+
   drawmytrail(xx)
   if xx.greenkcondition then
     csds(xx)
@@ -508,8 +581,11 @@ function drawa(xx)
 
 
     end
+
     lg.setShader()
   end
+
+
   if xx.im.xoff == nil then xx.im.xoff = 0 end
   if xx.im.yoff == nil then xx.im.yoff = 0 end
 
@@ -562,7 +638,6 @@ function drawa(xx)
 
 
 
-
   if  xx.greenkcondition then
 
     csds(xx)
@@ -582,6 +657,7 @@ function drawa(xx)
   end
 
 
+
   lg.setColor(255, 255, 255, 255)
   drawcolorstuff(xx)
   bolttraildraw(xx)
@@ -596,6 +672,9 @@ function drawa(xx)
     lg.setColor(0,0,255)
     lg.rectangle("fill", xx.x, xx.y+me.height-xx.j-pextra, xx.width,1)
   end
+
+
+
 
 end
 
@@ -1309,27 +1388,22 @@ function aboutso(x,y)
   else return false
   end
 end
-
+--[[
 retry = function()
 
-  if you.dead and me.dead then 
-    lg.setColor(0, 0, 0, retryfade)
-    lg.draw(enviro.retry, 0, 0, 0, screenwidth/1440, screenheight/900)
-    lg.setColor(255, 255, 255, 255)
-  elseif you.dead then 
+  if (you.dead and me.dead) then 
+  elseif you.dead or you.score > me.score then 
     lg.setColor(me.color.c.r,me.color.c.g,me.color.c.b, retryfade)
-    --lg.draw(enviro.v, 0, 0, 0, screenwidth/1440, screenheight/900)
-    lg.draw(enviro.retry, 0, 0, 0, screenwidth/1440, screenheight/900)
-    lg.setColor(255, 255, 255, 255)
-  elseif me.dead then
+    lg.sdraw(enviro.v, 100, 100, 0, 1, 1)
+  elseif me.dead or me.score > you.score then
     lg.setColor(you.color.c.r,you.color.c.g,you.color.c.b, retryfade)
-    lg.draw(enviro.v, screenwidth, 0, 0, -screenwidth/1440, screenheight/900)
-    lg.draw(enviro.retry, 0, 0, 0, screenwidth/1440, screenheight/900)
-    lg.setColor(255, 255, 255, 255)
+    lg.sdraw(enviro.v, screenwidth-100, 100, 0, -1, 1)
   end
 
+    lg.setColor(0, 0, 0, retryfade)
+    lg.draw(enviro.retry, 0, 0, 0, screenwidth/1440, screenheight/900)
 end
-
+]]--
 
 oscillator = 0
 oup=true
@@ -1525,7 +1599,11 @@ function drawroulettenumbers()
 end
 
 death = function(xx, yy)
-  if themode == "duel" or (themode == "spectrum" and (me.lives == 0 or you.lives == 0)) then
+  if themode == "koth" and (me.score >= kothscoretowin or you.score >= kothscoretowin) and allfade < 1 then
+          beginretry = true
+  
+  
+  elseif themode == "duel" or (themode == "spectrum" and (me.lives == 0 or you.lives == 0)) then
     if xx.health<0 then 
       xx.dead = true
       if xx.deathclock < 143 then

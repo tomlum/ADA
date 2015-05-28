@@ -15,17 +15,17 @@ you.repcounter = 0
 
 at.bb = {}
 at.bb.p = {}
-at.bb.p.dam = 50
+at.bb.p.dam = 5
 at.bb.p.kb = 7
 at.bb.p.ft = 15
 at.bb.p.max = 3
-at.bb.p.z = .05
+at.bb.p.z = 3
 
 at.bb.rp = {}
 at.bb.rp.dam = 5
 at.bb.rp.kb = 10
 at.bb.rp.ft = 30
-at.bb.rp.z = .05
+at.bb.rp.z = 5
 
 
 
@@ -33,13 +33,13 @@ at.bb.ap = {}
 at.bb.ap.kb = 12
 at.bb.ap.ft = 10
 at.bb.ap.dam = 6
-at.bb.ap.z = .05
+at.bb.ap.z = 3
 
 at.bb.k = {}
 at.bb.k.dam = 10
 at.bb.k.kb = 22
 at.bb.k.ft = 30
-at.bb.k.z = .07
+at.bb.k.z = 4
 
 at.bb.ak = {}
 at.bb.ak.dam = 5
@@ -47,7 +47,7 @@ at.bb.ak.kb = 4
 at.bb.ak.ft = 8
 at.bb.ak.kj = -5
 at.bb.ak.penalty = 26
-at.bb.ak.z = .05
+at.bb.ak.z = 5
 
 
 at.bb.u = {}
@@ -55,7 +55,7 @@ at.bb.u.dam = 7
 at.bb.u.kb = 2
 at.bb.u.j = 22
 at.bb.u.ft = 20
-at.bb.u.z = .05
+at.bb.u.z = 3
 
 at.bb.run = {}
 at.bb.run.j = 6

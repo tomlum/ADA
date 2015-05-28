@@ -303,12 +303,7 @@ function drawmenus()
 
     if cancels() then menu = "title" end
 
-    if modenum == 0 then
-      themode = "duel"
-    elseif modenum == 0 then
-      themode = "spectrum"
-    end
-
+   
 
 
     if menu == "premap" then
@@ -343,7 +338,7 @@ function drawmenus()
     elseif modenum == 2 then 
       selectorx = 365
       selectory = 642
-      themode = "spectrum"
+      themode = "koth"
     end
     lg.setColor(allfade,allfade,allfade,255)
     blurdraw(2,function() lg.sdraw(backstreet,wobx-maxwob*2,woby-maxwob*2) end)
@@ -733,37 +728,57 @@ if not you.readytoplay then
     lg.srectangle("fill", 0, 0, 1440, 900)
 
 
-
-
-    lg.setScissor(0, 0, screenwidth/2, enviro.screenheight)
-    camera:set()
-    drawa(me)
-
-    lg.setColor(255,255,255)
-
-    drawa(you)
-
-
-    lg.setColor(255,255,255)
-
-    camera:unset()
-    lg.setScissor()
+lg.setScissor(0, 0, screenwidth/2, winheight)
+      camera:set()
+      drawx(camera)
+      camera:unset()
+      lg.setScissor()
 
 
 
-    lg.setScissor(screenwidth/2, 0, screenwidth/2, enviro.screenheight)
-    camera2:set()
+      lg.setScissor(screenwidth/2, 0, screenwidth/2, winheight)
+      camera2:set()
 
-    drawa(me)
+      drawx(camera2)
 
-    drawa(you)
+      camera2:unset()
+      lg.setScissor()
 
-    camera2:unset()
-    lg.setScissor()
+      if onescreen and not vertone then
+        if me.x < you.x then 
+
+          lg.setScissor(screenwidth/2, topy,screenwidth, winheight/2+1)
+          camera:set()
+          drawx(camera)
+          camera:unset()
+          lg.setScissor()
+
+          lg.setScissor(screenwidth/2-twidth, bottomy,screenwidth, winheight/2+1)
+          camera2:set()
+          drawx(camera2)
+          camera2:unset()
+          lg.setScissor()
+        elseif me.x >= you.x then
+
+          lg.setScissor(screenwidth/2-twidth, topy,screenwidth, enviro.screenheight/2+1)
+          camera2:set()
+          drawx(camera2)
+          camera2:unset()
+          lg.setScissor()
+
+          lg.setScissor(screenwidth/2, bottomy,screenwidth, enviro.screenheight/2+1)
+          camera:set()
+          drawx(camera)
+          camera:unset()
+          lg.setScissor()
+        end
+      end
+
+
 
     death(me, you)
     death(you, me)
-    retry()
+    --retry()
 
     lg.setColor(0,0,0,allfade)
     lg.sdraw(enviro.retry, 0, 0)

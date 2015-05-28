@@ -9,7 +9,7 @@
 
 
 me.hit = false
-me.hit = false
+you.hit = false
 --for dis from height to feet in fall anim
 wallhangtime = 20
 walljumpd = 12
@@ -23,11 +23,11 @@ you.oldpy = you.y
 function shakez(z)
   rumbleme(me,z*10)
   if dangerclose then
-  minzoom = dangerzoom + (defaultminzoom-defaultmaxzoom) - z/2
-  maxzoom = dangerzoom  - z/2
-else
-  minzoom = defaultminzoom - z
-  maxzoom = defaultmaxzoom - z
+    minzoom = dangerzoom + (defaultminzoom-defaultmaxzoom) - dangerzoomdelta * 10*z
+    maxzoom = dangerzoom  - dangerzoomdelta * 10*z
+  else
+    minzoom = defaultminzoom - z
+    maxzoom = defaultmaxzoom - z
   end
 end
 
@@ -288,8 +288,8 @@ function hboxcss(theid, P1, P2, P3, P4, special)
       special(p)
     end
   end
-  
-  
+
+
   for i,p in ipairs(hittmon) do
     dsh = 0
     dsw = 0
@@ -324,40 +324,40 @@ end
 
 
 function hline(meme, theid, P1, P2, special)
-local stophit = false
+  local stophit = false
 
   if meme.player ~= nil then
-  for i,p in ipairs(hittmon) do
-    
-       
-    dsh = 0
-    dsw = 0
-    extrah = 0
-    if p.im.dodgeh ~= nil then
-      dsh = p.im.dodgeh
-    end
-    if p.im.dodgew ~= nil then
-      dsw = p.im.dodgew
-    end
-    if p.im.extrah ~= nil then
-      extrah = -p.im.extrah
+    for i,p in ipairs(hittmon) do
+
+
+      dsh = 0
+      dsw = 0
+      extrah = 0
+      if p.im.dodgeh ~= nil then
+        dsh = p.im.dodgeh
+      end
+      if p.im.dodgew ~= nil then
+        dsw = p.im.dodgew
+      end
+      if p.im.extrah ~= nil then
+        extrah = -p.im.extrah
+      end
+
+      if (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j))
+      then
+        --flash = true
+        special(p)
+        if p.block then p.letgoofblock = true end
+      end
     end
 
-    if (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j))
-    then
-      --flash = true
-      special(p)
-      if p.block then p.letgoofblock = true end
-    end
-  end
-    
-    
-    
-    
+
+
+
   end
 
   for i,p in ipairs(hitt) do
-    
+
     dsh = 0
     dsw = 0
     extrah = 0
@@ -377,500 +377,515 @@ local stophit = false
     (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
     )
     then
-      if theid>0 then
-        stophit = true
+      p.hit = true
+      if p.counter then 
+        p.counteractivate = true
+      else
+        if theid>0 then
+          stophit = true
+        end
+        --flash = true
+        special(p)
+        if p.block then 
+
+          if p.counter and p.lr * meme.lr < 0 then 
+            p.counteractivate = true
+          end
+          p.letgoofblock = true end
+        end
       end
-      --flash = true
-      special(p)
-      p.hit = true
-      if p.block then p.letgoofblock = true end
     end
+    --if stophit and meme.player~=nil then
+    --meme.hit = true
+    --end
+
   end
---if stophit and meme.player~=nil then
-        --meme.hit = true
- --end
-
-end
 
 
-function hboxcs(meme, theid, P1, P2, P3, P4, special)
-local stophit = false
+  function hboxcs(meme, theid, P1, P2, P3, P4, special)
+    local stophit = false
 
-  if meme.player ~= nil then
-  for i,p in ipairs(hittmon) do
-    
-       
-    dsh = 0
-    dsw = 0
-    extrah = 0
-    if p.im.dodgeh ~= nil then
-      dsh = p.im.dodgeh
-    end
-    if p.im.dodgew ~= nil then
-      dsw = p.im.dodgew
-    end
-    if p.im.extrah ~= nil then
-      extrah = -p.im.extrah
-    end
+    if meme.player ~= nil then
+      for i,p in ipairs(hittmon) do
 
-    if not p.hit and
-    (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-      or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-      or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-      or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-      or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
-    )
-    then
-      --flash = true
-      special(p)
-      if p.block then
-        if p.color.n~=nil and p.color.n==4 then
-          makensparks(p.v+p.mid,p.y+30,sparkspeed, 7, p.color.c.r,p.color.c.g,p.color.c.b,2)
+
+        dsh = 0
+        dsw = 0
+        extrah = 0
+        if p.im.dodgeh ~= nil then
+          dsh = p.im.dodgeh
+        end
+        if p.im.dodgew ~= nil then
+          dsw = p.im.dodgew
+        end
+        if p.im.extrah ~= nil then
+          extrah = -p.im.extrah
+        end
+
+        if not p.hit and
+        (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+          or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+          or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+          or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+          or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
+        )
+        then
+          --flash = true
+          special(p)
+          if p.block then
+
+            if p.color.n~=nil and p.color.n==4 then
+              makensparks(p.v+p.mid,p.y+30,sparkspeed, 7, p.color.c.r,p.color.c.g,p.color.c.b,2)
+            end
+            p.letgoofblock = true end
+
           end
- p.letgoofblock = true end
+        end
 
-    end
-  end
-    
-    
-    
-    
-  end
 
-  for i,p in ipairs(hitt) do
-    
-    dsh = 0
-    dsw = 0
-    extrah = 0
-    if p.im.dodgeh ~= nil then
-      dsh = p.im.dodgeh
-    end
-    if p.im.dodgew ~= nil then
-      dsw = p.im.dodgew
-    end
-    if p.im.extrah ~= nil then
-      extrah = -p.im.extrah
-    end
 
-    if not p.hit and (theid==0 or (theid ~= i))  and
-    (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-      or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-      or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-      or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-      or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
-    )
-    then
-      p.hit = true
-      --flash = true
-      special(p)
-      if p.block then
-        
-        if p.color.n~=nil and p.color.n==4 then
-          makensparks(p.v+p.mid,p.y+30,sparkspeed, 7, p.color.c.r,p.color.c.g,p.color.c.b,5)
+
+      end
+
+      for i,p in ipairs(hitt) do
+
+        dsh = 0
+        dsw = 0
+        extrah = 0
+        if p.im.dodgeh ~= nil then
+          dsh = p.im.dodgeh
+        end
+        if p.im.dodgew ~= nil then
+          dsw = p.im.dodgew
+        end
+        if p.im.extrah ~= nil then
+          extrah = -p.im.extrah
+        end
+
+        if not p.hit and (theid==0 or (theid ~= i))  and
+        (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+          or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+          or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+          or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+          or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
+        )
+        then
+          p.hit = true
+
+          if p.counter then 
+            p.counteractivate = true
+          else
+            --flash = true
+            special(p)
+            if p.block then
+
+              if p.color.n~=nil and p.color.n==4 then
+                makensparks(p.v+p.mid,p.y+30,sparkspeed, 7, p.color.c.r,p.color.c.g,p.color.c.b,5)
+              end
+              p.letgoofblock = true end
+            end
           end
-        p.letgoofblock = true end
-    end
-  end
-  --[[
-if stophit and meme.player~=nil then
-        meme.hit = true
- end
-]]--
-end
-
-function hexplatcheck2(y1, x1, x2, ex, why, w, why2, v)
-
-
-  midv2 = {x = (ex+w/2)+v, y=why2}
-  midv = {x = ex+w/2+.001, y=why}
-  local linep1 = {x = x1+.001, y = y1}
-  local linep2 = {x = x2, y = y1}
-  if pint(linep1, linep2, midv, midv2) 
-  then return true
-  else return false
-  end
-
-end
-
-function hexplatcheck(y1, x1, x2, ex, why, w, h, v, j)
-
-
-  midv2 = {x = (ex+w/2)+v, y=why+h-j}
-  midv = {x = ex+w/2, y=why+h}
-  local linep1 = {x = x1, y = y1}
-  local linep2 = {x = x2, y = y1}
-  if pint(linep1, linep2, midv, midv2) 
-  then return true
-  else return false
-  end
-
-end
-
-velforclimb = 20
-
-function climbplatcheck(ex, why, lr, h, v, j)
-  midv2 = {x = (ex)+15*lr, y=why-j}
-  midv = {x = (ex)+15*lr, y=why+h-j}
-
-
-  for j = #themap.plats, 1, -1 do 
-    plat = themap.plats[j]
-    local linep1 = {x = plat.x1, y = plat.y}
-    local linep2 = {x = plat.x2, y = plat.y}
-    if (plat.floor==nil) and pint(linep1, linep2, midv, midv2) 
-    then return true
-    end
-  end
-  return false
-
-end
-
-function lineplatcheck(ex, why,v, j)
-  midv2 = {x = (ex)+v, y=why-j, n = 2}
-  midv = {x = ex, y=why, n = 2}
-
-  if why > 100000 or ex < -10 or ex > 10000  then
-    return false
-  end
-
-  for j = #themap.plats, 1, -1 do 
-    plat = themap.plats[j]
-    local linep1 = {x = plat.x1, y = plat.y}
-    local linep2 = {x = plat.x2, y = plat.y}
-    if pint(linep1, linep2, midv, midv2) 
-    then return true
-    end
-  end
-  return false
-
-end
-
-
-function retlineplatcheck(ex, why,v, j)
-  midv2 = {x = (ex)+v, y=why-j, n = 2}
-  midv = {x = ex, y=why, n = 2}
-
-  if why > 100000 or ex < -10 or ex > 10000  then
-    return nil
-  end
-
-  for j = #themap.plats, 1, -1 do 
-    plat = themap.plats[j]
-    local linep1 = {x = plat.x1, y = plat.y}
-    local linep2 = {x = plat.x2, y = plat.y}
-    if pint(linep1, linep2, midv, midv2) 
-    then return plat
-    end
-  end
-  return nil
-
-end
-
-me.im = idle1
-you.im = idle2
-
-
-function hall(theid, func)
-  for i,p in ipairs(hitt) do
-    if theid ~= i then
-      func(p)
-    end
-  end
-  
-  for i,p in ipairs(hittmon) do
-    if theid ~= i then
-      func(p)
-    end
-  end
-
-end
-
-
-
-
-
-
-
-
-function hboxwall()
-  for i,p in ipairs(hitt) do
-
-    dsh = 0
-    dsw = 0
-    extrah = 0
-    if p.im.dodgeh ~= nil then
-      dsh = p.im.dodgeh
-    end
-    if p.im.dodgew ~= nil then
-      dsw = p.im.dodgew
-    end
-    if p.im.extrah ~= nil then
-      extrah = -p.im.extrah
-    end
-
-    if p.player~=nil then
-      if ( p.flinch or p.a1 or p.a2 or p.a3 or p.a4) then p.wjt = 0 end
-
-      if p.wjt > 0 then 
-        p.wjt = p.wjt + 1*ramp(p)
+        end
         --[[
-        if p.wjt > 8 then 
-          p.wjt = 0
-          if p.v >= 0 then p.lr = 1
-          else p.lr = -1
-          end
-        else
-          ]]--
-          if p.wjt > wallhangtime then 
-            p.wjt = 0 
-            p.lr = p.walllr
-            if #joysticks>=p.id then
-              p.jt = walljumpjt
-              p.j = -p.jly*walljumpd
-              p.v = p.jlx*walljumpd
+        if stophit and meme.player~=nil then
+          meme.hit = true
+        end
+        ]]--
+      end
 
-            else
-              if p.up then
-                p.jt = p.jt + walljumpjt2
-                p.j = walljumpvv2
-                p.v = walljumpv2 *-p.walllr
+      function hexplatcheck2(y1, x1, x2, ex, why, w, why2, v)
+
+
+        midv2 = {x = (ex+w/2)+v, y=why2}
+        midv = {x = ex+w/2+.001, y=why}
+        local linep1 = {x = x1+.001, y = y1}
+        local linep2 = {x = x2, y = y1}
+        if pint(linep1, linep2, midv, midv2) 
+        then return true
+        else return false
+        end
+
+      end
+
+      function hexplatcheck(y1, x1, x2, ex, why, w, h, v, j)
+
+
+        midv2 = {x = (ex+w/2)+v, y=why+h-j}
+        midv = {x = ex+w/2, y=why+h}
+        local linep1 = {x = x1, y = y1}
+        local linep2 = {x = x2, y = y1}
+        if pint(linep1, linep2, midv, midv2) 
+        then return true
+        else return false
+        end
+
+      end
+
+      velforclimb = 20
+
+      function climbplatcheck(ex, why, lr, h, v, j)
+        midv2 = {x = (ex)+15*lr, y=why-j}
+        midv = {x = (ex)+15*lr, y=why+h-j}
+
+
+        for j = #themap.plats, 1, -1 do 
+          plat = themap.plats[j]
+          local linep1 = {x = plat.x1, y = plat.y}
+          local linep2 = {x = plat.x2, y = plat.y}
+          if (plat.floor==nil) and pint(linep1, linep2, midv, midv2) 
+          then return true
+          end
+        end
+        return false
+
+      end
+
+      function lineplatcheck(ex, why,v, j)
+        midv2 = {x = (ex)+v, y=why-j, n = 2}
+        midv = {x = ex, y=why, n = 2}
+
+        if why > 100000 or ex < -10 or ex > 10000  then
+          return false
+        end
+
+        for j = #themap.plats, 1, -1 do 
+          plat = themap.plats[j]
+          local linep1 = {x = plat.x1, y = plat.y}
+          local linep2 = {x = plat.x2, y = plat.y}
+          if pint(linep1, linep2, midv, midv2) 
+          then return true
+          end
+        end
+        return false
+
+      end
+
+
+      function retlineplatcheck(ex, why,v, j)
+        midv2 = {x = (ex)+v, y=why-j, n = 2}
+        midv = {x = ex, y=why, n = 2}
+
+        if why > 100000 or ex < -10 or ex > 10000  then
+          return nil
+        end
+
+        for j = #themap.plats, 1, -1 do 
+          plat = themap.plats[j]
+          local linep1 = {x = plat.x1, y = plat.y}
+          local linep2 = {x = plat.x2, y = plat.y}
+          if pint(linep1, linep2, midv, midv2) 
+          then return plat
+          end
+        end
+        return nil
+
+      end
+
+      me.im = idle1
+      you.im = idle2
+
+
+      function hall(theid, func)
+        for i,p in ipairs(hitt) do
+          if theid ~= i then
+            func(p)
+          end
+        end
+
+        for i,p in ipairs(hittmon) do
+          if theid ~= i then
+            func(p)
+          end
+        end
+
+      end
+
+
+
+
+
+
+
+
+      function hboxwall()
+        for i,p in ipairs(hitt) do
+
+          dsh = 0
+          dsw = 0
+          extrah = 0
+          if p.im.dodgeh ~= nil then
+            dsh = p.im.dodgeh
+          end
+          if p.im.dodgew ~= nil then
+            dsw = p.im.dodgew
+          end
+          if p.im.extrah ~= nil then
+            extrah = -p.im.extrah
+          end
+
+          if p.player~=nil then
+            if ( p.flinch or p.a1 or p.a2 or p.a3 or p.a4) then p.wjt = 0 end
+
+            if p.wjt > 0 then 
+              p.wjt = p.wjt + 1*ramp(p)
+              --[[
+              if p.wjt > 8 then 
+                p.wjt = 0
+                if p.v >= 0 then p.lr = 1
+                else p.lr = -1
+                end
               else
-                p.jt = p.jt + walljumpjt
-                p.j = walljumpvv
-                p.v = walljumpv *-p.walllr
+                ]]--
+                if p.wjt > wallhangtime then 
+                  p.wjt = 0 
+                  p.lr = p.walllr
+                  if #joysticks>=p.id then
+                    p.jt = walljumpjt
+                    p.j = -p.jly*walljumpd
+                    p.v = p.jlx*walljumpd
+
+                  else
+                    if p.up then
+                      p.jt = p.jt + walljumpjt2
+                      p.j = walljumpvv2
+                      p.v = walljumpv2 *-p.walllr
+                    else
+                      p.jt = p.jt + walljumpjt
+                      p.j = walljumpvv
+                      p.v = walljumpv *-p.walllr
+                    end
+                  end
+                else 
+                  p.x = p.wallx
+                  p.v = 0
+                  p.j = 0
+                  p.im = wallgrab
+                  p.y = p.initwy
+                  p.lr = p.walllr
+
+
+                end
               end
             end
-          else 
-            p.x = p.wallx
-            p.v = 0
-            p.j = 0
-            p.im = wallgrab
-            p.y = p.initwy
-            p.lr = p.walllr
 
 
-          end
-        end
-      end
+            for j = #themap.walls, 1, -1 do 
+              local wall = themap.walls[j]
 
 
-      for j = #themap.walls, 1, -1 do 
-        local wall = themap.walls[j]
+              if p.player~=nil and not p.flinch
+              and ((p.x+p.v*walljumprange < wall.x and p.x >= wall.x) or (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x)) and
+              ((p.v < 0 and p.right) or (p.v > 0 and p.left)) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch and not p.busy and p.animcounter == 0
+              then
+                if (p.x+p.v*walljumprange < wall.x and p.x >= wall.x) then
+                  wallside = 1 
+                elseif (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x) then
+                  wallside = -1 -p.width
+                end
+
+                p.wjt = 1 
+                p.initwy = p.y - p.j
+                p.walllr = -p.lr
+                p.wallx = wall.x+wallside
+                p.v = 0
+              elseif (wall.y1==-1 or  wall.barrier~=nil) and p.feet > wall.y1 and ((p.x+p.v < wall.x and p.mid >= wall.x) or (p.x+p.width+p.v > wall.x and p.x+p.width <= wall.x)) and p.wjt == 0 then
+                if (p.x+p.v < wall.x and p.x >= wall.x) then
+                  wallside = 1 
+                else
+                  wallside = -1 
+                end
 
 
-        if p.player~=nil and not p.flinch
-        and ((p.x+p.v*walljumprange < wall.x and p.x >= wall.x) or (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x)) and
-        ((p.v < 0 and p.right) or (p.v > 0 and p.left)) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch and not p.busy and p.animcounter == 0
-        then
-          if (p.x+p.v*walljumprange < wall.x and p.x >= wall.x) then
-            wallside = 1 
-          elseif (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x) then
-            wallside = -1 -p.width
-          end
+                if p.flinch and math.abs(p.v) > vforwallflinch then 
 
-          p.wjt = 1 
-          p.initwy = p.y - p.j
-          p.walllr = -p.lr
-          p.wallx = wall.x+wallside
-          p.v = 0
-        elseif (wall.y1==-1 or  wall.barrier~=nil) and p.feet > wall.y1 and ((p.x+p.v < wall.x and p.mid >= wall.x) or (p.x+p.width+p.v > wall.x and p.x+p.width <= wall.x)) and p.wjt == 0 then
-          if (p.x+p.v < wall.x and p.x >= wall.x) then
-            wallside = 1 
-          else
-            wallside = -1 
-          end
+                  p.health = p.health - math.abs(p.v/3)
+                  p.v = -p.v/2
+                  if p.g then
+                    p.j = math.abs(p.v)
+                  else
+                    p.j = p.j - math.abs(p.v/3)
+                  end
+                  makenrubble("vert", p.mid, p.feet,p.v, p.j/2,20)
+                  repplay(p.wallhit)
+                  p.g = false
+                  p.y = p.y - 10
+
+                else
+
+                  p.v = 0
+                end
+
+              end
 
 
-          if p.flinch and math.abs(p.v) > vforwallflinch then 
 
-            p.health = p.health - math.abs(p.v/3)
-            p.v = -p.v/2
-            if p.g then
-              p.j = math.abs(p.v)
-            else
-              p.j = p.j - math.abs(p.v/3)
+
+
+
+
+
+              xrubble(p)
+
+
+
             end
-            makenrubble("vert", p.mid, p.feet,p.v, p.j/2,20)
-            repplay(p.wallhit)
-            p.g = false
-            p.y = p.y - 10
 
-          else
 
-            p.v = 0
           end
 
+
         end
 
 
-
-
-
-      
-
-          
-xrubble(p)
-
-        
-
-      end
-
-
-    end
-
-
-  end
-
-
-  function retowallcheck(ex, why,vee, jay)
-    for j = #themap.walls, 1, -1 do
-      local wallace = themap.walls[j]
-      local res = retpint({x = wallace.x, y = wallace.y1}, {x = wallace.x, y = wallace.y2}, {x = ex, y = why}, {x = ex+vee, y = why-jay})
-      if res[2] > 0 then
-        if wallace.glasswall~=nil then 
-          if (wallace.glasswall > 0 and res[2] < wallace.glasswall) or (wallace.glasswall < 0 and res[2] > -wallace.glasswall) then
-            res[3] = true
-          end
-        end
-        return res
-      end
-
-    end
-    return {0, 0}
-
-  end
-
-
-
-
-
-  function hboxp()
-    for i,p in ipairs(hitt) do
-      for j = #themap.plats, 1, -1 do 
-        plat = themap.plats[j]
-        xx = p
-
-        extrah = 0
-        dodgeh = 0
-        if p.im.extrah ~= nil then
-          extrah = -p.im.extrah
-        end
-        if p.im.dodgeh ~= nil then
-          dodgeh= p.im.dodgeh
-        end
-
-
-
-        if p.im.yoff==nil then
-          p.im.yoff = 0
-        end
-        if (not p.gothroughplats or plat.floor~=nil) and (
-          (hexplatcheck2(plat.y, plat.x1, plat.x2, p.x, p.oldpy, p.width, p.y+p.height-extrah-p.j, p.v) and p.j <= 0)
-          or 
-          (p.y == plat.y-p.height-extrah and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
-        then
-          if p.j ~= 0 and p.player~=nil then
-            if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
-              xx.landingcounter = xx.landingcounter + landingwait
-              xx.landing = true 
-              xx.v = xx.v * landingfric
-            else
-              xx.landingcounter = xx.landingcounter + shortlandwait
-              xx.landing = true 
-              xx.v = xx.v * landingfric
+        function retowallcheck(ex, why,vee, jay)
+          for j = #themap.walls, 1, -1 do
+            local wallace = themap.walls[j]
+            local res = retpint({x = wallace.x, y = wallace.y1}, {x = wallace.x, y = wallace.y2}, {x = ex, y = why}, {x = ex+vee, y = why-jay})
+            if res[2] > 0 then
+              if wallace.glasswall~=nil then 
+                if (wallace.glasswall > 0 and res[2] < wallace.glasswall) or (wallace.glasswall < 0 and res[2] > -wallace.glasswall) then
+                  res[3] = true
+                end
+              end
+              return res
             end
-            repplay(xx.land)
-            xx.slowdown = false
+
           end
+          return {0, 0}
 
-          p.y = plat.y-p.height
-
-          p.g = true
-          p.j = 0
-          p.plat = plat;
-
-
-
-          break
-        else
-          p.g = false
-          p.plat = noplat
-        end
-
-      end
-      if p.im.extrah ~= nil then
-        p.oldpy = p.y+p.height-p.im.extrah
-      else
-        p.oldpy = p.y+p.height
-      end
-    end
-    
-    
-    for i,p in ipairs(hittmon) do
-      for j = #themap.plats, 1, -1 do 
-        plat = themap.plats[j]
-        xx = p
-
-        extrah = 0
-        dodgeh = 0
-        if p.im.extrah ~= nil then
-          extrah = -p.im.extrah
-        end
-        if p.im.dodgeh ~= nil then
-          dodgeh= p.im.dodgeh
         end
 
 
 
-        if p.im.yoff==nil then
-          p.im.yoff = 0
-        end
-        if (not p.gothroughplats or plat.floor~=nil) and (
-          (hexplatcheck2(plat.y, plat.x1, plat.x2, p.x, p.oldpy, p.width, p.y+p.height-extrah-p.j, p.v) and p.j <= 0)
-          or 
-          (p.y == plat.y-p.height-extrah and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
-        then
 
-          if p.j ~= 0 and p.player~=nil then
-            if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
-              xx.landingcounter = xx.landingcounter + landingwait
-              xx.landing = true 
-              xx.v = xx.v * landingfric
-            else
-              xx.landingcounter = xx.landingcounter + shortlandwait
-              xx.landing = true 
-              xx.v = xx.v * landingfric
+
+        function hboxp()
+          for i,p in ipairs(hitt) do
+            for j = #themap.plats, 1, -1 do 
+              plat = themap.plats[j]
+              xx = p
+
+              extrah = 0
+              dodgeh = 0
+              if p.im.extrah ~= nil then
+                extrah = -p.im.extrah
+              end
+              if p.im.dodgeh ~= nil then
+                dodgeh= p.im.dodgeh
+              end
+
+
+
+              if p.im.yoff==nil then
+                p.im.yoff = 0
+              end
+              if (not p.gothroughplats or plat.floor~=nil) and (
+                (hexplatcheck2(plat.y, plat.x1, plat.x2, p.x, p.oldpy, p.width, p.y+p.height-extrah-p.j, p.v) and p.j <= 0)
+                or 
+                (p.y == plat.y-p.height-extrah and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
+              then
+                if p.j ~= 0 and p.player~=nil then
+                  if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
+                    xx.landingcounter = xx.landingcounter + landingwait
+                    xx.landing = true 
+                    xx.v = xx.v * landingfric
+                  else
+                    xx.landingcounter = xx.landingcounter + shortlandwait
+                    xx.landing = true 
+                    xx.v = xx.v * landingfric
+                  end
+                  repplay(xx.land)
+                  xx.slowdown = false
+                end
+
+                p.y = plat.y-p.height
+
+                p.g = true
+                p.j = 0
+                p.plat = plat;
+
+
+
+                break
+              else
+                p.g = false
+                p.plat = noplat
+              end
+
             end
-            repplay(xx.land)
-            xx.slowdown = false
+            if p.im.extrah ~= nil then
+              p.oldpy = p.y+p.height-p.im.extrah
+            else
+              p.oldpy = p.y+p.height
+            end
           end
 
-          p.y = plat.y-p.height
 
-          p.g = true
-          p.j = 0
-          p.plat = plat;
+          for i,p in ipairs(hittmon) do
+            for j = #themap.plats, 1, -1 do 
+              plat = themap.plats[j]
+              xx = p
+
+              extrah = 0
+              dodgeh = 0
+              if p.im.extrah ~= nil then
+                extrah = -p.im.extrah
+              end
+              if p.im.dodgeh ~= nil then
+                dodgeh= p.im.dodgeh
+              end
 
 
 
-          break
-        else
-          p.g = false
-          p.plat = noplat
+              if p.im.yoff==nil then
+                p.im.yoff = 0
+              end
+              if (not p.gothroughplats or plat.floor~=nil) and (
+                (hexplatcheck2(plat.y, plat.x1, plat.x2, p.x, p.oldpy, p.width, p.y+p.height-extrah-p.j, p.v) and p.j <= 0)
+                or 
+                (p.y == plat.y-p.height-extrah and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
+              then
+
+                if p.j ~= 0 and p.player~=nil then
+                  if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
+                    xx.landingcounter = xx.landingcounter + landingwait
+                    xx.landing = true 
+                    xx.v = xx.v * landingfric
+                  else
+                    xx.landingcounter = xx.landingcounter + shortlandwait
+                    xx.landing = true 
+                    xx.v = xx.v * landingfric
+                  end
+                  repplay(xx.land)
+                  xx.slowdown = false
+                end
+
+                p.y = plat.y-p.height
+
+                p.g = true
+                p.j = 0
+                p.plat = plat;
+
+
+
+                break
+              else
+                p.g = false
+                p.plat = noplat
+              end
+
+            end
+            if p.im.extrah ~= nil then
+              p.oldpy = p.y+p.height-p.im.extrah
+            else
+              p.oldpy = p.y+p.height-1
+            end
+          end
+
+
+
+
+
         end
-
-      end
-      if p.im.extrah ~= nil then
-        p.oldpy = p.y+p.height-p.im.extrah
-      else
-        p.oldpy = p.y+p.height-1
-      end
-    end
-
-
-
-
-
-  end
 
 

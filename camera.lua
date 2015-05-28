@@ -13,6 +13,7 @@ feet2bottom = deffeet2bottom
 --danger 2 top bottom
 danger2tb = dangerbarey
 
+tolandr=0
 
 
 defaultminzoom = .7
@@ -30,13 +31,43 @@ shrinkrate = .001
 function drawcolorstuff(xx)
   spikedraw(xx)
   boltdraw(xx)
+
+  if xx.drawslash then
+    lg.setShader(fillshader)
+    fillshader:send("shade", 
+      vct(thecolors[xx.currentc].c
+      ))
+    if xx.im.sdir ~= nil then
+      lg.draw(xx.im.slash,xx.mid,
+        xx.y, -math.rad(90), 1, 1, 0, 36)
+
+    else
+      lg.draw(xx.im.slash,xx.mid +15*xx.lr,
+        xx.y, 0,xx.lr, 1)
+
+    end
+
+    lg.setShader()
+  end
+
 end
 
 
 
 function camreturntozoom()
 
+  if onescreen and vertone then
+    tolandr = lg.getWidth()/14
 
+
+  else
+    if tolandr - 1 > 0 then
+      tolandr = tolandr/1.03
+    else
+      tolandr = 0
+    end
+
+  end
 
 
   if not dangerclose then
@@ -49,7 +80,7 @@ function camreturntozoom()
       end
 
     elseif maxzoom > defaultminzoom then
-      if minzoom - shrinkrate < defaultminzoom then
+      if minzoom - growrate < defaultminzoom then
         minzoom = defaultminzoom
         maxzoom = defaultmaxzoom
       else maxzoom = minzoom - growrate
@@ -58,7 +89,7 @@ function camreturntozoom()
     end
   else
     if maxzoom < dangerzoom then
-      if minzoom + dangerzoomdelta > dangerzoom then
+      if minzoom + dangerzoomdelta > dangerzoom + (defaultminzoom-defaultmaxzoom) then
         minzoom = dangerzoom + (defaultminzoom-defaultmaxzoom)
         maxzoom = dangerzoom
       else minzoom = minzoom + dangerzoomdelta
@@ -87,8 +118,8 @@ cammovement = function ()
     else
       head2ceiling = danger2tb
     end
-    
-    
+
+
     if feet2bottom > danger2tb and not bothfloor
     then
       feet2bottom = feet2bottom/1.01
@@ -96,7 +127,7 @@ cammovement = function ()
     elseif not bothfloor then
       feet2bottom = danger2tb
     end
-    
+
   else
     if head2ceiling < defhead2ceiling 
     then
@@ -105,7 +136,7 @@ cammovement = function ()
     else
       head2ceiling = defhead2ceiling
     end
-    
+
     if feet2bottom < deffeet2bottom 
     then
       local change = math.log(deffeet2bottom-feet2bottom)/1.5
@@ -209,7 +240,7 @@ camerafol = function ()
 
 
 
-  if xdif <= screenwidth*cscale/2 then 
+  if xdif <= screenwidth*cscale/2 + tolandr*2 then 
     onescreen = true
   else onescreen = false
   end
@@ -224,8 +255,8 @@ camerafol = function ()
   end
 
 
-  mexrig = me.mid - (screenwidth*cscale*.25)
-  youxrig = you.mid - (screenwidth*cscale*.75)
+  mexrig = me.mid - (screenwidth*cscale*.25)+tolandr 
+  youxrig = you.mid - (screenwidth*cscale*.75)-tolandr
 
   if not mecamfloor and you.y > me.y then 
     youyrig = you.y+60 - winheight*cscale + feet2bottom*cscale
@@ -264,8 +295,8 @@ camerafol = function ()
 
   if you.x < me.x then
 
-    youxrig = me.mid - (screenwidth*cscale*.75)
-    mexrig = you.mid - (screenwidth*cscale*.25)
+    youxrig = me.mid - (screenwidth*cscale*.75)-tolandr 
+    mexrig = you.mid - (screenwidth*cscale*.25)+tolandr
 
     tempyrig = meyrig
     meyrig = youyrig
@@ -544,7 +575,8 @@ end
 
 
 function drawx(xx)
-
+  if menu ~= "retry" then
+  tods()
   lg.draw(enviro.sky, xx.x, 0, 0, 500, 1.1)
   --lg.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
   if themap.name == "library" then 
@@ -554,9 +586,12 @@ function drawx(xx)
       lg.draw(enviro.paralax, xx.x / 2 + ((screenwidth/4)/2*cscale*2.5) - 200, (xx.y/2) + (winheight/2*cscale) - 12 - paralaxoffset - 800)
     end)
 
+  tods()
   lg.draw(enviro.stage, 0, 0)
   if themap.name == "street" then
     drawstreetprestuff()
+  end
+  lg.setShader()
   end
 
   if me.flinch then 
@@ -572,16 +607,30 @@ function drawx(xx)
 
     drawa(me)
 
-  end
+end
+if menu ~= "retry" then
   drawparticles()
 
   drawcolorstuff(me)
-  mondraw()
-
-  lg.setColor(155,155,155)
   drawcolorstuff(you)
-  lg.setColor(255, 255, 255, 255)
 
+  mondraw()
+  end
+if themode == "koth" then
+drawhighlight()
+if menu == "retry" then
+  if me.score >= kothscoretowin then 
+kotharrowdraw(me)
+else
+kotharrowdraw(you)
+end
+  else
+kotharrowdraw(me)
+kotharrowdraw(you)
+end
+end
+
+if menu ~= "retry" then
 
   if themap.name == "street" then
     drawstreetstuff()
@@ -591,6 +640,6 @@ function drawx(xx)
     drawfloorsstuff()
   end
   if fightclub then drawallhex() end
-
+end
 
 end

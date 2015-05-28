@@ -8,6 +8,15 @@ redcounter = {im=lg.newImage("me/attack/red/redcounter.png"), xoff = 25,yoff = -
 
 redblock = {im=lg.newImage("me/attack/red/redblock.png"), yoff = -4}
 redcounter = {im=lg.newImage("me/attack/red/redcounter.png"), xoff = 9, yoff = -3}
+redaslash = lg.newImage("me/attack/red/redaslash.png")
+redap1 = {im=lg.newImage("me/attack/red/redap1.png"),
+  xoff = 15,slash = redaslash,extrah = 5}
+redap2 = {im=lg.newImage("me/attack/red/redap2.png"),
+  xoff = 15, yoff = -1,slash = redaslash,extrah = 5}
+redap3 = {im=lg.newImage("me/attack/red/redap3.png"),
+  xoff = 8, yoff = 4,slash = redaslash,extrah = 5}
+redap4 = {im=lg.newImage("me/attack/red/redap4.png"),
+  xoff = 3, yoff = 4,slash = redaslash,extrah = 5}
 
 redcounter2 = {im=lg.newImage("me/attack/red/redcounter2.png"), xoff = 25, yoff = -4}
 counterat1 = {im=lg.newImage("me/attack/red/counterat1.png"), xoff = 1, yoff = -4}
@@ -24,9 +33,18 @@ counterat44 = {im=lg.newImage("me/attack/red/counterat44.png"), xoff = 4, yoff =
 
 counterat45 = {im=lg.newImage("me/attack/red/counterat45.png"), xoff = 1, yoff = -4}
 
+redu1 = {im=lg.newImage("me/attack/red/redu1.png"), xoff = 12,yoff = -3}
+redu12 = {im=lg.newImage("me/attack/red/redu12.png"), xoff = 12,yoff = -10}
+redu2 = {im=lg.newImage("me/attack/red/redu2.png"), yoff = 16}
+
+redau1 = {im=lg.newImage("me/attack/red/redau1.png"), xoff = 4,yoff = 15}
+redau2 = {im=lg.newImage("me/attack/red/redau2.png"), xoff = 27
+,slash = redaslash, sdir = "up"}
 
 me.rlvltimer = 0
 you.rlvltimer = 0
+me.drawslash = false
+you.drawslash = false
 me.rlvl = 0
 you.rlvl = 0
 me.oldrlvl = 0
@@ -38,27 +56,53 @@ at.r = {}
 at.r.p = {}
 at.r.p.maxv = 12
 at.r.p.dam = 6
-at.r.p.kb = 1
+at.r.p.kb = 0
 at.r.p.ft = 8
 at.r.p.delta = 4
-at.r.p.z = .05
+at.r.p.z = 3.5
 redadj = 15
+
+at.r.u = {}
+at.r.u.dam = 5
+at.r.u.kb = 1
+at.r.u.j = 15
+at.r.u.ft = 26
+at.r.u.delta = 4
+at.r.u.z = 3.5
+at.r.u.mv = 4
+
+at.r.ap = {}
+at.r.ap.dam = 6
+at.r.ap.kb = 1
+at.r.ap.ft = 8
+at.r.ap.delta = 4
+at.r.ap.z = 3
+
+at.r.au = {}
+at.r.au.dam = 6
+at.r.au.j = 12
+at.r.au.ft = 8
+at.r.au.delta = 4
+at.r.au.z = 3
 
 at.r.k = {}
 at.r.k.dam = 15
 at.r.k.kb = 22
 at.r.k.ft = 25
 at.r.k.delta = 7
-at.r.k.z = .05
+at.r.k.z = 6
 
 --burnout
 at.r.bo={}
 at.r.bo.max = 4
 at.r.bo.dam = 30
+at.r.bo.ft = 30
 --red stat delta
 rsdel = .14
 
 function randr(xx)
+  xx.counter = false
+  xx.drawslash = false
 
 
   if xx.rlvl ~= xx.oldrlvl then
@@ -67,6 +111,8 @@ function randr(xx)
     if xx.rlvl >= at.r.bo.max then
       xx.rlvl = 0
       xx.health = xx.health - at.r.bo.dam
+      xx.ft = at.r.bo.ft
+      makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,20)
     end
 
     if xx.color.n == 4 then
@@ -110,7 +156,24 @@ function randr(xx)
         xx.repcounter = 1
         xx.type = 2
         xx.hit = false
+      elseif (xx.a1) and not xx.holda then
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
+        xx.repcounter = 1
+        xx.type = 3
 
+      end
+    else
+      if (xx.a2 or xx.a3) and not xx.holda then
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
+        xx.repcounter = 1
+        xx.type = 4
+      elseif (xx.a1) and not xx.holda then
+        xx.animcounter = 1
+        xx.combo = xx.combo + 1
+        xx.repcounter = 1
+        xx.type = 6
       end
     end
   else
@@ -128,7 +191,7 @@ function randr(xx)
         elseif xx.animcounter < 28+3-redadj - reddelta*xx.rlvl+xx.repcounter*2  then
           xx.im = redp2
           if math.abs(xx.v)<at.r.p.maxv then
-            xx.v = xx.v + xx.lr*3
+            xx.v = xx.v + xx.lr*(3+xx.rlvl/3)
           end
         elseif xx.animcounter < 60-redadj - reddelta*xx.rlvl+xx.repcounter*2 then
           xx.im = redp3
@@ -141,9 +204,9 @@ function randr(xx)
               function(z)
 
                 xx.cancombo = true
-                z.v = z.v/3+xx.lr*at.r.p.kb+xx.v
+                z.v = z.v/3+xx.lr*(at.r.p.kb+xx.rlvl/3)+xx.v
                 if not (z.block and z.lr == -xx.lr) then
-                  z.health = z.health - at.r.p.dam+at.r.p.delta*xx.rlvl
+                  z.health = z.health - (at.r.p.dam+at.r.p.delta*xx.rlvl)
                   z.flinch = true
                   z.ft = z.ft+at.r.p.ft+at.r.p.delta*xx.rlvl
                 end
@@ -160,12 +223,13 @@ function randr(xx)
 
       elseif xx.repcounter%2 == 0 then
         if xx.animcounter < 28-7-redadj - reddelta*xx.rlvl+xx.repcounter*2 then
+          
           xx.im = redp3
 
         elseif xx.animcounter < 28-7+4-redadj - reddelta*xx.rlvl+xx.repcounter*2  then
           xx.im = redp4
           if math.abs(xx.v)<at.r.p.maxv then
-            xx.v = xx.v + xx.lr*2
+            xx.v = xx.v + xx.lr*(2+xx.rlvl/3)
           end
         elseif xx.animcounter < 60-7-redadj - reddelta*xx.rlvl+xx.repcounter*2 then
           xx.im = redp5
@@ -179,15 +243,15 @@ function randr(xx)
               function(z)
 
                 xx.cancombo = true
-                z.v = z.v/3+xx.lr*at.r.p.kb+xx.v
+                z.v = z.v/3+xx.lr*(at.r.p.kb+xx.rlvl/3)+xx.v
                 if not (z.block and z.lr == -xx.lr) then
-                  z.health = z.health - at.r.p.dam+at.r.p.delta*xx.rlvl
+                  z.health = z.health - (at.r.p.dam+at.r.p.delta*xx.rlvl)
                   z.flinch = true
                   z.ft = z.ft+at.r.p.ft+at.r.p.delta*xx.rlvl
                 end
                 shakez(at.r.p.z)
 
-              end)
+            end)
           end
 
           xx.cmbo=true--combo(xx)
@@ -206,7 +270,8 @@ function randr(xx)
       if xx.animcounter < 30 then 
         xx.im = redcounter
         xx.block = true
-        if xx.hit then
+        xx.counter = true
+        if xx.counteractivate then
           xx.animcounter = 100
         end
 
@@ -225,9 +290,9 @@ function randr(xx)
           end
         end
       elseif xx.rlvl == 3 then
-        if xx.animcounter < 110 then
+        if xx.animcounter < 108 then
           xx.im = counterat42
-        elseif xx.animcounter < 120 then
+        elseif xx.animcounter < 115 then
           if xx.animcounter < 121 then
             hboxcs(xx, xx.id, 
               {x=xx.mid+(xx.lr*5), y = xx.y+12},
@@ -238,7 +303,7 @@ function randr(xx)
                 xx.cancombo = true
                 z.v = z.v/3+xx.lr*at.r.k.kb+xx.v
                 if not (z.block and z.lr == -xx.lr) then
-                  z.health = z.health - at.r.p.dam+at.r.p.delta*xx.rlvl
+                  z.health = z.health - (at.r.p.dam+at.r.p.delta*xx.rlvl)
                   z.flinch = true
                   z.ft = z.ft+at.r.k.ft+at.r.p.delta*xx.rlvl
                 end
@@ -246,15 +311,15 @@ function randr(xx)
               end)
           end
           xx.im = counterat4
-        elseif xx.animcounter < 124 then
+        elseif xx.animcounter < 124+15 then
           xx.im = counterat43
-        elseif xx.animcounter < 127 then
+        elseif xx.animcounter < 127+15 then
           xx.im = counterat44
-        elseif xx.animcounter < 130 then
+        elseif xx.animcounter < 130+15 then
           xx.im = counterat45
         else
           xx.animcounter = 0
-            xx.rlvl = 0
+          xx.rlvl = 0
         end
 
       elseif xx.animcounter < 115 and xx.rlvl < 3 then
@@ -270,7 +335,7 @@ function randr(xx)
               xx.cancombo = true
               z.v = z.v/3+xx.lr*at.r.k.kb+xx.v
               if not (z.block and z.lr == -xx.lr) then
-                z.health = z.health - at.r.k.dam+at.r.p.delta*xx.rlvl
+                z.health = z.health - (at.r.k.dam+at.r.p.delta*xx.rlvl)
                 z.flinch = true
                 z.ft = z.ft+at.r.k.ft+at.r.k.delta*xx.rlvl
               end
@@ -289,7 +354,7 @@ function randr(xx)
               xx.cancombo = true
               z.v = z.v/3+xx.lr*at.r.k.kb+xx.v
               if not (z.block and z.lr == -xx.lr) then
-                z.health = z.health - at.r.k.dam+at.r.p.delta*xx.rlvl
+                z.health = z.health - (at.r.k.dam+at.r.p.delta*xx.rlvl)
                 z.flinch = true
                 z.ft = z.ft+at.r.k.ft+at.r.k.delta*xx.rlvl
               end
@@ -305,7 +370,7 @@ function randr(xx)
                 xx.cancombo = true
                 z.v = z.v/3+xx.lr*at.r.k.kb+xx.v
                 if not (z.block and z.lr == -xx.lr) then
-                  z.health = z.health - at.r.k.dam+at.r.p.delta*xx.rlvl
+                  z.health = z.health - (at.r.k.dam+at.r.p.delta*xx.rlvl)
                   z.flinch = true
                   z.ft = z.ft+at.r.k.ft+at.r.k.delta*xx.rlvl
                 end
@@ -324,7 +389,7 @@ function randr(xx)
                 xx.cancombo = true
                 z.v = z.v/3+xx.lr*at.r.k.kb+xx.v
                 if not (z.block and z.lr == -xx.lr) then
-                  z.health = z.health - at.r.k.dam+at.r.p.delta*xx.rlvl
+                  z.health = z.health - (at.r.k.dam+at.r.p.delta*xx.rlvl)
                   z.flinch = true
                   z.ft = z.ft+at.r.k.ft+at.r.k.delta*xx.rlvl
                 end
@@ -341,7 +406,135 @@ function randr(xx)
 
           end
 
+    elseif xx.type == 3 then
+      if xx.animcounter < 15 - reddelta*xx.rlvl then
+        xx.im = redu1 
+        xx.block = true
+      elseif xx.animcounter < 20 - reddelta*xx.rlvl*2 then
+        xx.im = redu12
+      elseif xx.animcounter < 30 - reddelta*xx.rlvl*2 then
+        xx.im = redu2
+        if xx.animcounter < 22 - reddelta*xx.rlvl*2 then
+        xx.v = xx.v+xx.lr*(at.r.u.mv+xx.rlvl/2)
+        
+         hboxcs(xx, xx.id, 
+              {x=xx.mid, y = xx.y},
+              {x=xx.mid+xx.v+(xx.lr*20), y = xx.y-16-xx.j},
+              {x=xx.mid+xx.v+(xx.lr*20), y = xx.y-4-xx.j},
+              {x=xx.mid+(xx.lr*5), y = xx.y+27},
+              function(z)
+                xx.cancombo = true
+                z.v = z.v/3+xx.lr*at.r.u.kb+xx.v/2
+                z.j = z.j/3+at.r.u.j+(xx.rlvl+1)*2+xx.j
+                if not (z.block and z.lr == -xx.lr) then
+                  z.health = z.health - (at.r.u.dam+at.r.u.delta*xx.rlvl)
+                  z.flinch = true
+                  z.ft = z.ft+at.r.u.ft+at.r.u.delta*xx.rlvl
+                end
+                shakez(at.r.u.z)end)
+      
+        
+        end
+      else xx.animcounter = 0
+        
+        
+        
+        
+      end
+
+      elseif xx.type == 4 then
+        if xx.animcounter < 3 - reddelta*xx.rlvl+xx.repcounter*4 then
+          
+          if xx.animcounter < 1 - reddelta*xx.rlvl/2 then
+            xx.float = true
+            xx.j = 0
+            end
+          
+          if xx.repcounter % 4 == 1 then
+          xx.im = redap1
+        elseif xx.repcounter % 4 == 2 then
+          xx.im = redap2
+        elseif xx.repcounter % 4 == 3  then
+          xx.im = redap3
+        elseif xx.repcounter % 4 == 0  then
+          xx.im = redap4
+          end
+            xx.j = xx.j/2
+        elseif xx.animcounter < 50 - reddelta*xx.rlvl+xx.repcounter*4 then
+          
+         if xx.repcounter % 4 == 1 then
+          xx.im = redap2
+        elseif xx.repcounter % 4 == 2 then
+          xx.im = redap3
+        elseif xx.repcounter % 4 == 3  then
+          xx.im = redap4
+        elseif xx.repcounter % 4 == 0  then
+          xx.im = redap1
+          end
+          
+          
+          if xx.animcounter < 5 - reddelta*xx.rlvl+xx.repcounter*4 then
+          xx.drawslash = true
+          
+          hboxcs(xx, xx.id, 
+              {x=xx.mid, y = xx.y},
+              {x=xx.mid+xx.v+(xx.lr*52), y = xx.y+36-xx.j},
+              {x=xx.mid+xx.v+(xx.lr*52), y = xx.y+36-xx.j},
+              {x=xx.mid, y = xx.y+72},
+              function(z)
+                xx.cancombo = true
+                z.v = z.v/3+xx.lr*at.r.ap.kb+xx.v
+                if not (z.block and z.lr == -xx.lr) then
+                  z.health = z.health - (at.r.ap.dam+at.r.p.delta*xx.rlvl)
+                  z.flinch = true
+                  z.ft = z.ft+at.r.ap.ft+at.r.ap.delta*xx.rlvl
+                end
+                shakez(at.r.ap.z)end)
+          
+        else
+          xx.cmbo=true
+          end
+        
+        end
+
+elseif xx.type == 6 then
+      if xx.animcounter < 8 - reddelta*xx.rlvl then
+        xx.im = redau1 
+      elseif xx.animcounter < 25 - reddelta*xx.rlvl then
+        xx.im = redau2
+        if xx.animcounter < 10 - reddelta*xx.rlvl then
+        xx.drawslash = true
+        
+         hboxcs(xx, xx.id, 
+              {x=xx.mid+(xx.lr*36), y = xx.y},
+              {x=xx.mid+xx.v, y = xx.y-37-xx.j},
+              {x=xx.mid+xx.v, y = xx.y-37-xx.j},
+              {x=xx.mid-(xx.lr*36), y = xx.y},
+              function(z)
+                xx.cancombo = true
+                z.v = z.v/3+xx.v
+                z.j = z.j/3+at.r.au.j+(xx.rlvl+1)*2+xx.j
+                
+                  z.health = z.health - (at.r.au.dam+at.r.au.delta*xx.rlvl)
+                  z.flinch = true
+                  z.ft = z.ft+at.r.au.ft+at.r.au.delta*xx.rlvl
+                shakez(at.r.u.z)end)
+        
+        end
+      else xx.animcounter = 0
+        
+        
+        
+        
+      end
 
         end
+
+
+
       end
+
+
+
+      xx.counteractivate = false
     end

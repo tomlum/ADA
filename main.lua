@@ -29,8 +29,9 @@ dangerCloseIsAThing = true
 melcolor = 3
 mercolor = 4
 youlcolor = 1
-yourcolor = 2
+yourcolor = 4
 therampspeed = .2
+    mapnum = 1
 rampspeed= therampspeed
 rampnormaldelta = .008
 drawboxes = false
@@ -41,11 +42,11 @@ fullscreen = false
 readout = false
 putmehere = 975
 putyouhere = 1025
-menu = "play"
+menu = "title"
 cameramonitor = false
 if menu == "play" then
   noload = true
-  mapnum = 3
+  mapnum = 2
   placespeople = true 
 end
 mute = false
@@ -289,6 +290,7 @@ require "pp"
 require "OO"
 require "RR"
 require "ai"
+require "koth"
 loader = require "love-loader"
 
 if noload then
@@ -315,7 +317,7 @@ function love.load()
   stagey = 0
   stagenum = 0
   modenum = 0
-  themode = "none"
+  themode = "koth"
 
 
   tileoffset = 77
@@ -385,9 +387,10 @@ function love.load()
   you.actiontimer = 0
 
   if fightclub then 
-    themode = "duel"
+    themode = "koth"
     menu = "play"
-    themap = themaps[100]
+    mapnum = 100
+    themap = themaps[mapnum]
     placespeople = true
     while(not finishedloading) do
       whatlevel()
@@ -426,7 +429,7 @@ function love.update()
     if rampspeed + rampnormaldelta < 1 then
       rampspeed = rampspeed + rampnormaldelta
     else
-    rampspeed = 1
+      rampspeed = 1
     end
   end
 
@@ -539,6 +542,8 @@ function love.update()
         movex(me,you)
         movex(you,me)
         --used to be here platformcheckx()
+
+
 
 
 
@@ -713,110 +718,114 @@ function love.update()
       drawmenus()
 
 
-    elseif menu == "play"
+    elseif menu == "play" 
 
     then
 
+      if themode == "koth" then
+        randomizeplat()
+      end
 
 
-      if (themode == "duel" and (you.health < 0 or me.health < 0)) or (themode == "spectrum" and (you.lives <= 0 or me.lives <= 0)) or (themode == "koth" and (you.score >= kothscoretowin or me.score >= kothscoretowin))then 
+      if 
+      (themode == "duel" and (you.health < 0 or me.health < 0)) or 
+      (themode == "spectrum" and (you.lives <= 0 or me.lives <= 0)) 
+      or 
+      (themode == "koth" and (you.score >= kothscoretowin or me.score >= kothscoretowin))
+      then 
         menu = "retry"
 
 
       else
-          
-  cclear()
+
+        cclear()
         lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, screenwidth/1440,1)
-        lg.setColor(155, 155, 155, 255)
         lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, -screenwidth/1440, 1)
-        lg.setColor(255, 255, 255, 255)
+
+      end
+      lg.setScissor(0, 0, screenwidth/2, winheight)
+      camera:set()
+      drawx(camera)
+      camera:unset()
+      lg.setScissor()
 
 
-        lg.setScissor(0, 0, screenwidth/2, winheight)
-        camera:set()
-        drawx(camera)
-        camera:unset()
-        lg.setScissor()
 
+      lg.setScissor(screenwidth/2, 0, screenwidth/2, winheight)
+      camera2:set()
 
+      drawx(camera2)
 
-        lg.setScissor(screenwidth/2, 0, screenwidth/2, winheight)
-        camera2:set()
+      camera2:unset()
+      lg.setScissor()
 
-        drawx(camera2)
+      if onescreen and not vertone then
+        if me.x < you.x then 
 
-        camera2:unset()
-        lg.setScissor()
+          lg.setScissor(screenwidth/2, topy,twidth+1, winheight/2+1)
+          camera:set()
+          drawx(camera)
+          camera:unset()
+          lg.setScissor()
+
+          lg.setScissor(screenwidth/2-twidth, bottomy,twidth+1, winheight/2+1)
+          camera2:set()
+          drawx(camera2)
+          camera2:unset()
+          lg.setScissor()
+        elseif me.x >= you.x then
+
+          lg.setScissor(screenwidth/2-twidth, topy,twidth+1, enviro.screenheight/2+1)
+          camera2:set()
+          drawx(camera2)
+          camera2:unset()
+          lg.setScissor()
+
+          lg.setScissor(screenwidth/2, bottomy,twidth+1, enviro.screenheight/2+1)
+          camera:set()
+          drawx(camera)
+          camera:unset()
+          lg.setScissor()
+        end
+      end
+
+      cclear()
+
+      if cameramonitor then
+        bo(0, 0, screenwidth/2, winheight, "light purple")
+        bo(screenwidth/2, 0, screenwidth/2, winheight, "red")
 
         if onescreen and not vertone then
           if me.x < you.x then 
-
-            lg.setScissor(screenwidth/2, topy,twidth+1, winheight/2+1)
-            camera:set()
-            drawx(camera)
-            camera:unset()
-            lg.setScissor()
-
-            lg.setScissor(screenwidth/2-twidth, bottomy,twidth+1, winheight/2+1)
-            camera2:set()
-            drawx(camera2)
-            camera2:unset()
-            lg.setScissor()
+            bo(screenwidth/2, topy,twidth, winheight/2, "teal")
+            bo(screenwidth/2-twidth+1, bottomy,twidth, winheight/2,"yellow")
           elseif me.x >= you.x then
-
-            lg.setScissor(screenwidth/2-twidth, topy,twidth+1, enviro.screenheight/2+1)
-            camera2:set()
-            drawx(camera2)
-            camera2:unset()
-            lg.setScissor()
-
-            lg.setScissor(screenwidth/2, bottomy,twidth+1, enviro.screenheight/2+1)
-            camera:set()
-            drawx(camera)
-            camera:unset()
-            lg.setScissor()
+            bo(screenwidth/2-twidth+1, topy,twidth, enviro.screenheight/2, "teal")
+            bo(screenwidth/2, bottomy,twidth, enviro.screenheight/2, "yellow")
           end
+
         end
-        
-  cclear()
-
-        if cameramonitor then
-          bo(0, 0, screenwidth/2, winheight, "light purple")
-          bo(screenwidth/2, 0, screenwidth/2, winheight, "red")
-          
-          if onescreen and not vertone then
-            if me.x < you.x then 
-          bo(screenwidth/2, topy,twidth, winheight/2, "teal")
-          bo(screenwidth/2-twidth+1, bottomy,twidth, winheight/2,"yellow")
-            elseif me.x >= you.x then
-          bo(screenwidth/2-twidth+1, topy,twidth, enviro.screenheight/2, "teal")
-          bo(screenwidth/2, bottomy,twidth, enviro.screenheight/2, "yellow")
-            end
-            
-            end
-        end
-
-        lg.setColor(10, 10, 10)
-
-
-
-
-        lg.draw(enviro.wall, wallx, 0, 0, width, enviro.screenheight)
-        
-        lg.setColor(255, 255, 255, 255)
-
-        lg.setColor(53, 53, 53)
-
-        lg.rectangle("fill",(lg.getWidth()/2)-twidth,(enviro.screenheight/2)-bwidth/2,twidth*2,bwidth)
-        lg.setColor(255, 255, 255, 255)
-
-        if not fightclub then
-          go()
-        end
-        drawroulettenumbers()
-        cinemabars()
-
       end
+
+      lg.setColor(10, 10, 10)
+
+
+
+
+      lg.draw(enviro.wall, wallx, 0, 0, width, enviro.screenheight)
+
+
+      lg.setColor(53, 53, 53)
+
+      lg.rectangle("fill",(lg.getWidth()/2)-twidth,(enviro.screenheight/2)-bwidth/2,twidth*2,bwidth)
+      lg.setColor(255, 255, 255, 255)
+
+      if not fightclub then
+        go()
+      end
+      drawroulettenumbers()
+      cinemabars()
+
     end
 
 
@@ -863,17 +872,21 @@ function love.update()
 
     end
     lg.setColor(255,0,255)
-     
-      --cameramonitorf(100,100)
-      fallmonitor(me, 100,100)
-      
-      lg.print("me.rlvl"..tostring(me.rlvl), 700, 300)
+
+    --cameramonitorf(100,100)
+    fallmonitor(me, 100,100)
+
+    lg.print("me.rlvl"..tostring(me.rlvl), 700, 300)
 
     if love.keyboard.isDown("6") and #hittmon < 20 then spawnmon(camera.x+math.random(0,200), camera.y+10) end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
-
-      lg.print("me.hit"..tostring(me.hit), 500, 100)
+    if love.keyboard.isDown("q") then hour = 6 mimnute = 0 end
+    if kothplat ~= nil then
+      lg.print("vertone"..tostring(vertone), 500, 100)
+    end
+    lg.print("onescreen"..tostring(onescreen), 500, 120)
+    lg.print("1-(xx.score/kothscoretowin) "..tostring(1-(me.score/kothscoretowin)), 500, 140)
 
     if #joysticks > 0 then
       rumblemodule(me)
