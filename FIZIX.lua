@@ -14,9 +14,59 @@ jumpj = 0
 
 floor = 1900 - 2
 
+
+
 function respawn(xx)
+  local newplat = kothplat
+  while(newplat == kothplat) do
+    local rannum = math.random(1,#themaps[mapnum].plats)
+    newplat = themaps[mapnum].plats[rannum]
+    xx.gohere = {}
+    xx.gohere.x = math.random(newplat.x1+15, newplat.x2-15)
+    xx.gohere.y = newplat.y-100
+    
+    xx.gohered = {}
+    xx.gohered.x = (xx.x-xx.gohere.x)/40
+    xx.gohered.y = (xx.y-xx.gohere.y)/40
+    
+  end
 
 
+  
+
+
+end
+
+function respawntravel(xx)
+  if xx.gohere ~= nil then
+    xx.gothroughplats = true
+    xx.float = true
+    xx.im = invis
+    local xready = false
+    local yready = false
+  local xtraveldis = xx.x - xx.gohere.x
+  if math.abs(xtraveldis) > 5 then
+    xx.stop = true
+    xx.x = xx.x-xx.gohered.x
+    xx.v = 0
+  else
+    xready = true
+  end
+
+  local ytraveldis = xx.y - xx.gohere.y
+  if math.abs(ytraveldis) > 5 then
+    xx.stop = true
+    xx.y = xx.y-xx.gohered.y
+    xx.j = 0
+  else
+    yready = true
+  end
+  
+  if xready and yready then
+    xx.gohere = nil
+    end
+  
+  end
 end
 
 function iwanttobreakfree(xx)
@@ -81,8 +131,8 @@ me.jmax = jmax
 me.plat = noplat
 you.plat = noplat
 
-table.insert(themaps[2].plats, {n=1,y = themaps[2].floor, x1 = 0, x2 = 100000, floor = true})
-table.insert(themaps[2].plats, {n=2,y = 964, x1 = 1404, x2 = 100000, floor = true})
+table.insert(themaps[2].plats, {n=1,y = themaps[2].floor, x1 = 0, x2 = 1404, floor = true})
+table.insert(themaps[2].plats, {n=2,y = 964, x1 = 1404, x2 = themaps[2].rightwall, floor = true})
 table.insert(themaps[2].plats, {n=3,y = 644, x1 = 1616, x2 = 3196})
 table.insert(themaps[2].plats, {n=4,y = 426, x1 = 3003, x2 = 3118})
 table.insert(themaps[2].plats, {n=5,y = 327, x1 = 2637, x2 = 2637+115})
@@ -106,7 +156,7 @@ table.insert(themaps[2].walls, {n=15,y1 = 964, y2 = 3000, x=1408, barrier = true
 table.insert(themaps[2].walls, {n=16,y1 = -1, y2 = themaps[2].floor, x=0, barrier = true})
 table.insert(themaps[2].walls, {n=17,y1 = -1, y2 = themaps[2].floor, x=themaps[2].rightwall, barrier = true})
 
-table.insert(themaps[1].plats, {n=1, y = themaps[1].floor, x1 = 0, x2 = 100000, floor = true})
+table.insert(themaps[1].plats, {n=1, y = themaps[1].floor, x1 = 0, x2 = themaps[1].rightwall, floor = true})
 table.insert(themaps[1].plats, {n=2, y = 1379, x1 = 1120, x2 = 1529})
 table.insert(themaps[1].plats, {n=3, y = 1379, x1 = 1120, x2 = 1529})
 table.insert(themaps[1].plats, {n=4, y = 1627, x1 = 2245, x2 = 2751})
@@ -120,7 +170,7 @@ table.insert(themaps[1].walls, {n=11, y1 = -1, x=0, barrier = true})
 table.insert(themaps[1].walls, {n=12, y1 = -1, x=themaps[1].rightwall, barrier = true})
 
 
-table.insert(themaps[100].plats, {n=1, y = 896, x1 = 0, x2 = 100000, floor = true})
+table.insert(themaps[100].plats, {n=1, y = 896, x1 = 0, x2 = 2000, floor = true})
 table.insert(themaps[100].plats, {n=2, y = 465, x1 = 32, x2 = 236})
 table.insert(themaps[100].plats, {n=3, y = 541, x1 = 839, x2 = 1016})
 table.insert(themaps[100].plats, {n=4, y = 719, x1 = 655, x2 = 1560})
@@ -463,6 +513,7 @@ function speedpenaltycalc(xx,yy)
 end
 
 function movex(xx,yy)
+  respawntravel(xx)
   relativity(xx)
   speedpenaltycalc(xx,yy)
   runrunrun(xx)

@@ -779,7 +779,7 @@ function hline(meme, theid, P1, P2, special)
               if p.im.yoff==nil then
                 p.im.yoff = 0
               end
-              if (not p.gothroughplats or plat.floor~=nil) and (
+              if xx.gohere == nil and (not p.gothroughplats or plat.floor~=nil) and (
                 (hexplatcheck2(plat.y, plat.x1, plat.x2, p.x, p.oldpy, p.width, p.y+p.height-extrah-p.j, p.v) and p.j <= 0)
                 or 
                 (p.y == plat.y-p.height-extrah and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))

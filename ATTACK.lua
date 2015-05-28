@@ -444,6 +444,7 @@ function postattackmanage(xx)
     xx.ft = xx.oldft + (xx.ft-xx.oldft)*(1)*xx.color.s.brittle
   end
   xx.oldft = xx.ft
+  tempdeath(xx)
 end
 
 
@@ -537,26 +538,6 @@ function camshakeflinch()
 
 end
 
-function isanyonedead()
-
-  if me.health <= 0 then 
-    me.stop = true
-    me.jstop = true
-    if not me.g then me.im = airdying
-    else
-      me.im = dying
-    end
-
-  elseif you.health <= 0 then 
-    you.stop = true
-    you.jstop = true
-    if not you.g then you.im = airdying
-    else
-      you.im = dying
-
-    end
-  end
-end
 
 
 

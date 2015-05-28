@@ -670,8 +670,6 @@ function love.update()
 
 
 
-        isanyonedead()
-
         miscsounds()
         holdmanage(me)
         holdmanage(you)
@@ -881,9 +879,12 @@ function love.update()
     if love.keyboard.isDown("6") and #hittmon < 20 then spawnmon(camera.x+math.random(0,200), camera.y+10) end
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
-    if love.keyboard.isDown("q") then hour = 6 mimnute = 0 end
+    if love.keyboard.isDown("q") then 
+      you.y = you.y - 100
+      you.gothroughplats = true
+      end
     if kothplat ~= nil then
-      lg.print("vertone"..tostring(vertone), 500, 100)
+      lg.print("you.health"..tostring(you.health), 500, 100)
     end
     lg.print("onescreen"..tostring(onescreen), 500, 120)
     lg.print("1-(xx.score/kothscoretowin) "..tostring(1-(me.score/kothscoretowin)), 500, 140)
