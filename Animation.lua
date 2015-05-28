@@ -418,6 +418,8 @@ whatlevel = function()
     elseif themode == "koth" then 
       maxhealth = 50
     end
+      me.score = 0
+      you.score = 0
     me.health = maxhealth
     you.health = maxhealth
     me.oldhealth = me.health

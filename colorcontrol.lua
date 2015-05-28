@@ -219,6 +219,12 @@ function ColorChanging(xx)
   
   xx.oldcctn = xx.cchangeto.n
   
+   if xx.color.n == 4 then
+      local t = thecolors[4].s
+      xx.color.s = {def=t.def+rsdel*xx.rlvl, speed = t.speed-rsdel*xx.rlvl, jump = t.jump-rsdel*xx.rlvl, weight = t.weight+rsdel*xx.rlvl, brittle = t.brittle-rsdel*xx.rlvl}
+
+    end
+  
 end
 
 

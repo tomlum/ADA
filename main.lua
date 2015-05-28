@@ -317,7 +317,7 @@ function love.load()
   stagey = 0
   stagenum = 0
   modenum = 0
-  themode = "koth"
+  themode = "duel"
 
 
   tileoffset = 77
@@ -880,13 +880,12 @@ function love.update()
     if love.keyboard.isDown("4") then blursize = blursize + 1
     elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
     if love.keyboard.isDown("q") then 
-      you.y = you.y - 100
-      you.gothroughplats = true
+      me.score = me.score + 10
       end
     if kothplat ~= nil then
       lg.print("you.health"..tostring(you.health), 500, 100)
     end
-    lg.print("onescreen"..tostring(onescreen), 500, 120)
+    lg.print("me.rightbumpb"..tostring(me.rightbumpb), 500, 120)
     lg.print("1-(xx.score/kothscoretowin) "..tostring(1-(me.score/kothscoretowin)), 500, 140)
 
     if #joysticks > 0 then

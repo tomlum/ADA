@@ -24,6 +24,44 @@ end
 
 
 
+--resting orbital decimal interval base
+function rodib(val,i,base)
+  if val > base then 
+    if val - i < base then
+      return base
+    else
+      return val - i
+    end
+  elseif val < base then 
+    if val + i > base then
+      return base
+    else
+      return val + i
+    end
+  else return base
+  end
+end
+
+
+function returntobase(val,i,base)
+  if val > base then 
+    if val - i < base then
+      val = base
+    else
+      val = val - i
+    end
+  elseif val < base then 
+    if val + i > base then
+      val = base
+    else
+      val = val + i
+    end
+  end
+end
+
+
+
+
 
 
 

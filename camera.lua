@@ -52,6 +52,16 @@ function drawcolorstuff(xx)
 
 end
 
+function shakez(z)
+  rumbleme(me,z/10)
+  if dangerclose then
+    minzoom = dangerzoom + (defaultminzoom-defaultmaxzoom) - dangerzoomdelta * 10*z
+    maxzoom = dangerzoom  - dangerzoomdelta * 10*z
+  else
+    minzoom = defaultminzoom - growrate*z
+    maxzoom = defaultmaxzoom - growrate*z
+  end
+end
 
 
 function camreturntozoom()

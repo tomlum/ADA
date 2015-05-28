@@ -1,7 +1,6 @@
 boltsflyrelative = true
 combopause = false
 
-kothscoretowin = 10000
 
 waveframerate = 8 --(2 is fast, higher is lower)
 

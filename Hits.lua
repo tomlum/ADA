@@ -19,55 +19,6 @@ me.oldpy = me.y
 you.oldpy = you.y
 
 
-
-function shakez(z)
-  rumbleme(me,z*10)
-  if dangerclose then
-    minzoom = dangerzoom + (defaultminzoom-defaultmaxzoom) - dangerzoomdelta * 10*z
-    maxzoom = dangerzoom  - dangerzoomdelta * 10*z
-  else
-    minzoom = defaultminzoom - z
-    maxzoom = defaultmaxzoom - z
-  end
-end
-
-
---resting orbital decimal interval base
-function rodib(val,i,base)
-  if val > base then 
-    if val - i < base then
-      return base
-    else
-      return val - i
-    end
-  elseif val < base then 
-    if val + i > base then
-      return base
-    else
-      return val + i
-    end
-  else return base
-  end
-end
-
-
-function returntobase(val,i,base)
-  if val > base then 
-    if val - i < base then
-      val = base
-    else
-      val = val - i
-    end
-  elseif val < base then 
-    if val + i > base then
-      val = base
-    else
-      val = val + i
-    end
-  end
-end
-
-
 hexbuffer = 10
 
 function sideofline(cx1, cy1, cx2, cy2, x,y)

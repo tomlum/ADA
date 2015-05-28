@@ -302,7 +302,7 @@ function orangeyouglad(xx)
           xx.animcounter = 0
         elseif xx.animcounter < 110 then
           xx.im = ok4
-          xx.jmax = at.o.k.mj
+          xx.jmax = at.o.k.mj*xx.color.s.jump
           xx.j = at.o.k.mj/2
           xx.firstjump = true
         elseif xx.animcounter < 1000 then
@@ -482,12 +482,12 @@ function orangeyouglad(xx)
               xx.j = xx.j
             elseif xx.oplat.y == -1 then
 
-              xx.jmax = at.o.k.mj
+              xx.jmax = at.o.k.mj*xx.color.s.jump
               xx.j = at.o.k.mj/2
               xx.firstjump = true
             else
 
-              xx.jmax = at.o.k.mj
+              xx.jmax = at.o.k.mj*xx.color.s.jump
               xx.j = at.o.k.mj/2
               xx.firstjump = true
             end

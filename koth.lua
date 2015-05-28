@@ -1,7 +1,9 @@
+
+kothscoretowin = 100
 ranplattimer = 0
 karrow = lg.newImage("enviro/karrow.png")
 krown = lg.newImage("enviro/krown.png")
-
+kothcolor = {r = 253, g= 253, b = 25}
 krownshader = lg.newShader(
   [[
   extern vec4 ncolor;
@@ -25,6 +27,7 @@ krownshader = lg.newShader(
 
 kotharrowradius = 30
 function kotharrowdraw(xx)
+  colorshift(kothcolor,2)
   if kothplat ~= nil and not (xx.plat~=nil and xx.plat.n==kothplat.n) then
     local platx = (kothplat.x2 - kothplat.x1)/2+kothplat.x1
 
@@ -37,6 +40,7 @@ function kotharrowdraw(xx)
     if (platx-xx.mid) > 0 then
       kangle = kangle + math.rad(180)
     end
+    love.graphics.setColor(kothcolor.r,kothcolor.g,kothcolor.b)
     lg.draw(karrow,xx.mid+kotharrowradius*math.cos(kangle),
       xx.y+30+kotharrowradius*math.sin(kangle), kangle+math.rad(45),1,1,0,10)
   else
@@ -59,17 +63,16 @@ function kotharrowdraw(xx)
     lg.setShader()
   end
   
-  if  (me.score >= kothscoretowin or you.score >= kothscoretowin) then
-          beginretry = true
-          end
+ 
   
 end
 
 function drawhighlight()
-  love.graphics.setColor(255,255,0)
+  love.graphics.setColor(kothcolor.r,kothcolor.g,kothcolor.b)
   if kothplat ~= nil then
     lg.draw(plathighlight, kothplat.x1, kothplat.y, 0, kothplat.x2-kothplat.x1, -1)
   end
+ cclear()
 
 end
 

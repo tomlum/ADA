@@ -569,15 +569,14 @@ function movex(xx,yy)
     then 
       if xx.running then
         xx.jt = runjt
-        xx.jmax = runjmax
+        xx.jmax = runjmax*xx.color.s.jump
         xx.j = runj
       else
         xx.jt = jt
         xx.jmax = jmax*xx.color.s.jump
         if xx.dubtimer > 0 then
-          xx.j = jumpj*superjumpratio
+          xx.j = jumpj*superjumpratio*xx.color.s.speed
         else
-
           xx.j = jumpj*xx.color.s.speed
         end
 
