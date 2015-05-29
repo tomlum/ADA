@@ -47,6 +47,14 @@ redak1 = {im=lg.newImage("me/attack/red/redak1.png"),
 redak2 = {im=lg.newImage("me/attack/red/redak2.png"),
   xoff = 6,extrah = 5}
 
+redk10 = {im=lg.newImage("me/attack/red/redk10.png"),
+  xoff = 3, yoff = 4, extrah = 5}
+redk11 = {im=lg.newImage("me/attack/red/redk11.png"),
+  xoff = 13, yoff = -6, extrah = 5}
+
+redak11 = {im=lg.newImage("me/attack/red/redak11.png"),
+  xoff = 12,extrah = 5}
+
 me.rlvltimer = 0
 you.rlvltimer = 0
 me.drawslash = false
@@ -69,7 +77,7 @@ at.r.p.z = 3.5
 redadj = 15
 
 at.r.u = {}
-at.r.u.dam = 5
+at.r.u.dam = 4
 at.r.u.kb = 1
 at.r.u.j = 15
 at.r.u.ft = 26
@@ -85,7 +93,7 @@ at.r.ap.delta = 4
 at.r.ap.z = 3
 
 at.r.au = {}
-at.r.au.dam = 6
+at.r.au.dam = 5
 at.r.au.j = 12
 at.r.au.ft = 8
 at.r.au.delta = 4
@@ -101,7 +109,7 @@ at.r.k.z = 6
 at.r.ak = {}
 at.r.ak.dam = 5
 at.r.ak.j = 5
-at.r.ak.ft = 17
+at.r.ak.ft = 6
 at.r.ak.delta = 5
 at.r.ak.z = 5
 
@@ -119,6 +127,7 @@ function randr(xx)
 
 
   if xx.rlvl ~= xx.oldrlvl then
+    
     xx.rlvltimer = timeasred
 
     if xx.rlvl >= at.r.bo.max then
@@ -126,9 +135,16 @@ function randr(xx)
       xx.health = xx.health - at.r.bo.dam
       xx.ft = at.r.bo.ft
       makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,20)
+      repplay(xx.flinch1)
+        repplay(xx.flinch2)
+        repplay(xx.redshattersou)
+    else
+      
+    xx.redblocksou:setPitch(1/(xx.rlvl+1)+.5)
+    repplay(xx.redblocksou)
     end
 
-   
+
 
 
   end
@@ -183,7 +199,7 @@ function randr(xx)
         xx.combo = xx.combo + 1
         xx.repcounter = 1
         xx.type = 6
-      elseif (xx.a4) and not xx.holda and xx.j < 0 then
+      elseif (xx.a4) and not xx.holda  then
         xx.animcounter = 1
         xx.combo = xx.combo + 1
         xx.repcounter = 1
@@ -210,6 +226,7 @@ function randr(xx)
         elseif xx.animcounter < 60-redadj - reddelta*xx.rlvl+xx.repcounter*2 then
           xx.im = redp3
           if xx.animcounter <=29+3-redadj - reddelta*xx.rlvl+xx.repcounter*2 then
+            repplay(xx.redsound)
             hboxcs(xx, xx.id, 
               {x=xx.mid+(xx.lr*9), y = xx.y+29},
               {x=xx.mid+xx.v+(xx.lr*51), y = xx.y+24-xx.j},
@@ -249,6 +266,7 @@ function randr(xx)
           xx.im = redp5
 
           if xx.animcounter <=29-7+4-redadj - reddelta*xx.rlvl+xx.repcounter*2 then
+            repplay(xx.redsound)
             hboxcs(xx, xx.id, 
               {x=xx.mid+(xx.lr*15), y = xx.y+13+15},
               {x=xx.mid+xx.v+(xx.lr*20), y = xx.y+13+11-xx.j},
@@ -282,6 +300,9 @@ function randr(xx)
 
     elseif xx.type == 2 then
       if xx.animcounter < 30 then 
+        if xx.a4b and not xx.holda and xx.rlvl > 0 then
+          xx.animcounter = 200
+        end
         xx.im = redcounter
         xx.block = true
         xx.counter = true
@@ -303,6 +324,32 @@ function randr(xx)
             v.hit = false
           end
         end
+
+      elseif xx.animcounter >= 200 then
+        if xx.animcounter < 207 - reddelta*xx.rlvl then
+          xx.im = redk10
+
+        elseif xx.animcounter < 230 - reddelta*xx.rlvl then
+          if xx.animcounter < 208 - reddelta*xx.rlvl then
+            hradial(xx.id, {x=xx.mid, y = xx.y+30}, 70+90*xx.rlvl, 
+              function(p)
+                xx.cancombo = true
+                radialthrow(xx, p, (xx.rlvl*1.5+5)*((70+90*xx.rlvl)-math.sqrt((p.y-xx.y)^2 + (p.mid-xx.x)^2))/(72+10*xx.rlvl))
+                makensparks(xx.mid,xx.y+30,xx.v+3, xx.j-3, xx.color.c.r/(xx.rlvl/15+1),xx.color.c.g/(xx.rlvl/15+1),xx.color.c.b/(xx.rlvl/15+1), 5*(xx.rlvl+1))
+                          makensparks(xx.mid,xx.y+30,xx.v-3, xx.j-3, xx.color.c.r/(xx.rlvl/15+1),xx.color.c.g/(xx.rlvl/15+1),xx.color.c.b/(xx.rlvl/15+1), 5*(xx.rlvl+1))
+              end
+            )
+            xx.rlvl = 0
+          end
+          xx.im = redk11
+
+
+        else xx.animcounter = 0
+
+        end
+
+
+
       elseif xx.rlvl == 3 then
         if xx.animcounter < 108 then
           xx.im = counterat42
@@ -323,6 +370,7 @@ function randr(xx)
                 end
                 shakez(at.r.k.z)
               end)
+
           end
           xx.im = counterat4
         elseif xx.animcounter < 124+15 then
@@ -356,6 +404,7 @@ function randr(xx)
               shakez(at.r.k.z)
 
             end)
+            repplay(xx.redsound3)
         elseif xx.rlvl == 1 then
           xx.im = counterat2
 
@@ -373,6 +422,7 @@ function randr(xx)
                 z.ft = z.ft+at.r.k.ft+at.r.k.delta*xx.rlvl
               end
               shakez(at.r.k.z)end)
+            repplay(xx.redsound3)
 
 
             hboxcs(xx, xx.id, 
@@ -408,6 +458,7 @@ function randr(xx)
                   z.ft = z.ft+at.r.k.ft+at.r.k.delta*xx.rlvl
                 end
                 shakez(at.r.k.z)end)
+            repplay(xx.redsound3)
             elseif xx.rlvl == 3 then
               xx.im = counterat42
 
@@ -446,6 +497,7 @@ function randr(xx)
                     z.ft = z.ft+at.r.u.ft+at.r.u.delta*xx.rlvl
                   end
                   shakez(at.r.u.z)end)
+            repplay(xx.redsound2)
 
 
               end
@@ -504,6 +556,7 @@ function randr(xx)
                       z.ft = z.ft+at.r.ap.ft+at.r.ap.delta*xx.rlvl
                     end
                     shakez(at.r.ap.z)end)
+            repplay(xx.redsound2)
 
                 else
                   xx.cmbo=true
@@ -514,7 +567,7 @@ function randr(xx)
             elseif xx.type == 6 then
               if xx.animcounter < 8 - reddelta*xx.rlvl then
                 xx.im = redau1 
-              elseif xx.animcounter < 25 - reddelta*xx.rlvl then
+              elseif xx.animcounter < 40 - reddelta*xx.rlvl then
                 xx.im = redau2
                 if xx.animcounter < 10 - reddelta*xx.rlvl then
                   xx.drawslash = true
@@ -533,6 +586,7 @@ function randr(xx)
                       z.flinch = true
                       z.ft = z.ft+at.r.au.ft+at.r.au.delta*xx.rlvl
                       shakez(at.r.u.z)end)
+            repplay(xx.redsound)
 
                   end
                 else xx.animcounter = 0
@@ -545,7 +599,12 @@ function randr(xx)
 
               elseif xx.type == 5 then
                 if xx.animcounter < 50  then
+                  if xx.j > 0 then xx.animcounter = 1 end
+                  if xx.a4b and not xx.holda and xx.rlvl > 0 then
+                    xx.animcounter = 200
+                  end
                   xx.im = redak1 
+                  if xx.j < -2 then
                   xx.j = xx.j - (xx.rlvl+1)/3
                   hboxcs(xx, xx.id, 
                     {x=xx.mid, y = xx.y},
@@ -561,14 +620,15 @@ function randr(xx)
                         z.g = false
                       end
                       z.j = z.j/3-at.r.ak.j-(xx.rlvl+1)*2-xx.j
+            repplay(xx.redsound3)
 
                       z.health = z.health - (at.r.ak.dam+at.r.ak.delta*xx.rlvl)
                       z.flinch = true
                       z.ft = z.ft+at.r.ak.ft+at.r.ak.delta*xx.rlvl
-                      makensparks(xx.mid,xx.y,xx.v+3, xx.j-3, xx.color.c.r/(xx.rlvl/15+1),xx.color.c.g/(xx.rlvl/15+1),xx.color.c.b/(xx.rlvl/15+1), 10*(xx.rlvl+1))
+                      makensparks(xx.mid,xx.y+30,xx.v+3, xx.j-3, xx.color.c.r/(xx.rlvl/15+1),xx.color.c.g/(xx.rlvl/15+1),xx.color.c.b/(xx.rlvl/15+1), 10*(xx.rlvl+1))
                       xx.rlvl = 0
                       shakez(at.r.ak.z)end)
-                    
+end
 
 
                   elseif xx.animcounter < 100 then 
@@ -578,6 +638,25 @@ function randr(xx)
                   elseif xx.animcounter < 135 then
                     xx.im = redap2
                     xx.cmbo = true
+                  elseif xx.animcounter < 200 then
+                    xx.animcounter = 0
+                  elseif xx.animcounter < 230 - reddelta*xx.rlvl then
+                    if xx.animcounter < 202 - reddelta*xx.rlvl then
+                      hradial(xx.id, {x=xx.mid, y = xx.y+30}, 70+90*xx.rlvl, 
+                        function(p)
+                          xx.cancombo = true
+                          radialthrow(xx, p, (xx.rlvl*2+7)*((70+90*xx.rlvl)-math.sqrt((p.y-xx.y)^2 + (p.mid-xx.x)^2))/(72+10*xx.rlvl))
+                          
+                          makensparks(xx.mid,xx.y+30,xx.v+3, xx.j-3, xx.color.c.r/(xx.rlvl/15+1),xx.color.c.g/(xx.rlvl/15+1),xx.color.c.b/(xx.rlvl/15+1), 5*(xx.rlvl+1))
+                          makensparks(xx.mid,xx.y+30,xx.v-3, xx.j-3, xx.color.c.r/(xx.rlvl/15+1),xx.color.c.g/(xx.rlvl/15+1),xx.color.c.b/(xx.rlvl/15+1), 5*(xx.rlvl+1))
+                          
+                        end
+                      )
+                      xx.rlvl = 0
+                    end
+                    xx.im = redak11
+
+
                   else xx.animcounter = 0
 
 

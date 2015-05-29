@@ -280,12 +280,15 @@ function orangeyouglad(xx)
 
                 end)
             end
-
+            
+          repplay(xx.orangesou4)
+          
 
           end
           if xx.animcounter >= 15 then 
             if xx.a4b and not xx.holda and xx.oplat~=nil then
               xx.animcounter = 101
+              repplay(xx.flapsou)
 
               xx.oplat = nil
             end
@@ -313,16 +316,17 @@ function orangeyouglad(xx)
         if xx.animcounter < 3 then
           xx.im = op1
 
-        elseif xx.animcounter<=7 then
+        elseif xx.animcounter<7 then
           xx.im = o32
 
 
         elseif xx.animcounter < 40-20 then
           xx.im = o33
-          if xx.animcounter == 8 and xx.rampcanhit then
+          if xx.animcounter <= 8 and xx.rampcanhit then
 
             xx.oplat = nil
             ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 
+          repplay(xx.orangesou2)
 
             hboxcs(xx, xx.id, 
               {x=xx.mid+(xx.lr*53), y = xx.y+24},
@@ -407,6 +411,7 @@ function orangeyouglad(xx)
                 shakez(at.o.ap.z)
 
               end)
+          repplay(xx.orangesou2)
           end
 
 
@@ -457,7 +462,8 @@ function orangeyouglad(xx)
                 end
                 shakez(at.o.ak.z)
 
-              end)
+            end)
+          repplay(xx.orangesou2)
           end
 
 
@@ -465,6 +471,8 @@ function orangeyouglad(xx)
             xx.float = true
             xx.j = 0
             xx.v = 0
+            
+  rumbleme(xx,1/10)
           end
 
           if xx.o5repcounter%2==0  then
@@ -512,13 +520,13 @@ function orangeyouglad(xx)
         if xx.animcounter < 3 then
           xx.im = aop1
 
-        elseif xx.animcounter<=7 then
+        elseif xx.animcounter<7 then
           xx.im = ao31
 
 
         elseif xx.animcounter < 40 then
           xx.im = ao32
-          if xx.animcounter == 8 and xx.rampcanhit then
+          if xx.animcounter <= 8 and xx.rampcanhit then
 
             xx.oplat = nil
             ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 
@@ -541,6 +549,7 @@ function orangeyouglad(xx)
                 shakez(at.o.p.z)
 
               end)
+          repplay(xx.orangesou2)
           end
 
 

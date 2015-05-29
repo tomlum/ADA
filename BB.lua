@@ -15,7 +15,7 @@ you.repcounter = 0
 
 at.bb = {}
 at.bb.p = {}
-at.bb.p.dam = 500
+at.bb.p.dam = 5
 at.bb.p.kb = 7
 at.bb.p.ft = 15
 at.bb.p.max = 3
@@ -300,12 +300,14 @@ function breadandbutter(xx)
                 shakez(at.bb.ap.z)
               end
 
-            end)
+          end)
         end
 
       elseif xx.animcounter < 25 then
         xx.im=dropkick1
+          xx.cmbo = true
       elseif xx.animcounter < 40 then
+          xx.cmbo = true
 
       elseif xx.animcounter >= 40 then
         xx.animcounter = 0

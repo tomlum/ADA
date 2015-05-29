@@ -37,7 +37,7 @@ rampnormaldelta = .008
 drawboxes = false
 drawfeet = false
 fightclub = true
-volume=0
+volume=.5
 fullscreen = false
 readout = false
 putmehere = 975
@@ -276,10 +276,10 @@ require "blur"
 require "menustuff"
 require "DamageTable"
 require "meandyou"
-require "Music"
 require "colorcontrol"
 require "camera"
 require "Hits"
+require "Music"
 require "FIZIX"
 require "Animation"
 require "Joysticks"
@@ -387,7 +387,7 @@ function love.load()
   you.actiontimer = 0
 
   if fightclub then 
-    themode = "koth"
+    themode = "duel"
     menu = "play"
     mapnum = 100
     themap = themaps[mapnum]

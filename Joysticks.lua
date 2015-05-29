@@ -58,7 +58,7 @@ you.holda = false
 me.dirholda = false
 you.dirholda = false
 function holdmanage(xx)
-  if (xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.block) or (menu ~= "play" and (xx.rightbump or xx.leftbump)) then
+  if (xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.blockb) or (menu ~= "play" and (xx.rightbump or xx.leftbump)) then
     if not xx.holda then
       xx.holda = true
     end

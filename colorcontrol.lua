@@ -175,6 +175,8 @@ function ColorChanging(xx)
       xx.atcc = false
     end
     if xx.cct < colorchangetime and (not combopause or (xx.animcounter == 0 or xx.actionshot))  then
+      xx.cct = xx.cct + 1
+      --[[
       if xx.cct > 0 then
       xx.colorsound:setPitch((xx.cct+1)/colorchangetime)
       xx.colorsound:setVolume(((xx.cct+1)/(colorchangetime+300)))
@@ -183,22 +185,23 @@ function ColorChanging(xx)
       xx.colorsound:setPitch(.01)
       xx.colorsound:setVolume(.01)
       end
-      xx.cct = xx.cct + 1
       if xx.cct%1 == 0 then
       repplay(xx.colorsound)
-      end
+    end
+    ]]--
     end
     xx.ctri = (thecolors[0].c.r-xx.cchangeto.c.r)/colorchangetime
     xx.ctgi = (thecolors[0].c.g-xx.cchangeto.c.g)/colorchangetime
     xx.ctbi = (thecolors[0].c.b-xx.cchangeto.c.b)/colorchangetime
 
-
   elseif xx.cct > 0 then
     xx.cct = xx.cct - 3
+    --[[
     if xx.cct > 0 then
       xx.colorsound:setPitch((xx.cct+1)/colorchangetime)
       xx.colorsound:setVolume(((xx.cct+1)/(colorchangetime+300)))
-      end
+    end
+    ]]--
   end
 
   if xx.cct == colorchangetime then 

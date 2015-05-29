@@ -131,8 +131,8 @@ me.jmax = jmax
 me.plat = noplat
 you.plat = noplat
 
-table.insert(themaps[2].plats, {n=1,y = themaps[2].floor, x1 = 0, x2 = 1404, floor = true})
-table.insert(themaps[2].plats, {n=2,y = 964, x1 = 1404, x2 = themaps[2].rightwall, floor = true})
+table.insert(themaps[2].plats, {n=1,y = themaps[2].floor, x1 = 0, x2 = 1404+1, floor = true})
+table.insert(themaps[2].plats, {n=2,y = 964, x1 = 1404, x2 = themaps[2].rightwall+1, floor = true})
 table.insert(themaps[2].plats, {n=3,y = 644, x1 = 1616, x2 = 3196})
 table.insert(themaps[2].plats, {n=4,y = 426, x1 = 3003, x2 = 3118})
 table.insert(themaps[2].plats, {n=5,y = 327, x1 = 2637, x2 = 2637+115})
@@ -156,7 +156,7 @@ table.insert(themaps[2].walls, {n=15,y1 = 964, y2 = 3000, x=1408, barrier = true
 table.insert(themaps[2].walls, {n=16,y1 = -1, y2 = themaps[2].floor, x=0, barrier = true})
 table.insert(themaps[2].walls, {n=17,y1 = -1, y2 = themaps[2].floor, x=themaps[2].rightwall, barrier = true})
 
-table.insert(themaps[1].plats, {n=1, y = themaps[1].floor, x1 = 0, x2 = themaps[1].rightwall, floor = true})
+table.insert(themaps[1].plats, {n=1, y = themaps[1].floor, x1 = 0, x2 = themaps[1].rightwall+1, floor = true})
 table.insert(themaps[1].plats, {n=2, y = 1379, x1 = 1120, x2 = 1529})
 table.insert(themaps[1].plats, {n=3, y = 1379, x1 = 1120, x2 = 1529})
 table.insert(themaps[1].plats, {n=4, y = 1627, x1 = 2245, x2 = 2751})
@@ -170,7 +170,7 @@ table.insert(themaps[1].walls, {n=11, y1 = -1, x=0, barrier = true})
 table.insert(themaps[1].walls, {n=12, y1 = -1, x=themaps[1].rightwall, barrier = true})
 
 
-table.insert(themaps[100].plats, {n=1, y = 896, x1 = 0, x2 = 2000, floor = true})
+table.insert(themaps[100].plats, {n=1, y = 896, x1 = 0, x2 = 2000+1, floor = true})
 table.insert(themaps[100].plats, {n=2, y = 465, x1 = 32, x2 = 236})
 table.insert(themaps[100].plats, {n=3, y = 541, x1 = 839, x2 = 1016})
 table.insert(themaps[100].plats, {n=4, y = 719, x1 = 655, x2 = 1560})
@@ -185,7 +185,7 @@ table.insert(themaps[100].walls, {n=2, y1 = 3, y2 = themaps[100].floor+1, x=500,
 
 
 
-table.insert(themaps[3].plats, {n=1, y = themaps[3].floor, x1 = 0, x2 = 100000, floor = true})
+table.insert(themaps[3].plats, {n=1, y = themaps[3].floor, x1 = 0, x2 = themaps[3].rightwall+1, floor = true})
 table.insert(themaps[3].walls, {y1 = -1, y2 = themaps[3].floor+1, x=0})
 table.insert(themaps[3].walls, {y1 = -1, y2 = themaps[3].floor+1, x=themaps[3].rightwall})
 
@@ -252,7 +252,7 @@ table.insert(themaps[3].walls, {y1 = 2830, y2 = themaps[3].floor+1, x=3159})
 
 
 
-table.insert(themaps[3].plats, {y = themaps[3].floor, x1 = 0, x2 = 100000, floor = true})
+table.insert(themaps[3].plats, {y = themaps[3].floor, x1 = 0, x2 = themaps[3].rightwall+1, floor = true})
 for i,v in ipairs(themaps[3].plats) do
   themaps[3].plats[i].n = i
 end

@@ -205,7 +205,33 @@ end
 
 
 
+function hradial(theid, P1, radius, special)
 
+  for i,p in ipairs(hitt) do
+   
+    local dis = math.sqrt((p.y-P1.y)^2 + (p.mid-P1.x)^2)
+
+    if theid ~= i and
+    dis<radius
+    then
+      special(p)
+    end
+  end
+
+
+  for i,p in ipairs(hittmon) do
+    local dis = math.sqrt((p.y-P1.y)^2 + (p.mid-P1.x)^2)
+
+    if theid ~= i and
+    dis<radius
+    then
+      special(p)
+    end
+  end
+
+
+
+end
 
 
 
