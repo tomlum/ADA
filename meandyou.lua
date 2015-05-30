@@ -32,15 +32,6 @@ me.mid = me.x / 2 + me.xleft / 2
 me.y = 1500 - 3 - 60
 me.yoffset = 0
 me.feet = me.y + 60
---the face/crest image
-me.face = lg.newImage("me/face/face1.png")
-me.facex = me.x + 12
-me.facedis = 2
-me.facey = me.feet - 54
-me.crest = lg.newImage("me/crest/crest1.png")
-me.crestx = me.xanimate - 13
-me.crestdis = 1
-me.cresty = me.y + 27
 me.slowdown = false
 --horizontal velocity
 me.v = 0
@@ -98,15 +89,6 @@ you.xanimate = you.xleft
 you.y = 1500 - 3 - 60
 you.yoffset = 0
 you.feet = you.y + 60
---the face/crest image
-you.face = lg.newImage("me/face/face2.png")
-you.facex = you.x + 12
-you.facedis = 2
-you.facey = you.feet - 54
-you.crest = lg.newImage("me/crest/crest2.png")
-you.crestx = you.xanimate - 13
-you.cresty = you.y + 27
-you.crestdis = 1
 you.slowdown = false
 --horizontal velocity
 you.v = 0
@@ -203,14 +185,6 @@ function loadmeandyou2()
   me.feet = me.y + 60
   --the face/crest image
   me.lefty = false
-  me.face = lg.newImage("me/face/face1.png")
-  me.facex = me.x + 12
-  me.facedis = 2
-  me.facey = me.feet - 54
-  me.crest = lg.newImage("me/crest/crest1.png")
-  me.crestx = me.xanimate - 13
-  me.crestdis = 1
-  me.cresty = me.y + 27
   me.slowdown = false
   --horizontal velocity
   me.v = 0
@@ -267,14 +241,6 @@ function loadmeandyou2()
   you.feet = you.y + 60
   --the face/crest image
   you.lefty = true
-  you.face = lg.newImage("me/face/face2.png")
-  you.facex = you.x + 12
-  you.facedis = 2
-  you.facey = you.feet - 54
-  you.crest = lg.newImage("me/crest/crest2.png")
-  you.crestx = you.xanimate - 13
-  you.cresty = you.y + 27
-  you.crestdis = 1
   you.slowdown = false
   --horizontal velocity
   you.v = 0
@@ -463,14 +429,6 @@ function loadmeandyou()
   me.feet = me.y + 60
   --the face/crest image
   me.lefty = false
-  me.face = lg.newImage("me/face/face1.png")
-  me.facex = me.x + 12
-  me.facedis = 2
-  me.facey = me.feet - 54
-  me.crest = lg.newImage("me/crest/crest1.png")
-  me.crestx = me.xanimate - 13
-  me.crestdis = 1
-  me.cresty = me.y + 27
   me.slowdown = false
   --horizontal velocity
   me.v = 0
@@ -528,14 +486,6 @@ function loadmeandyou()
   you.feet = you.y + 60
   --the face/crest image
   you.lefty = true
-  you.face = lg.newImage("me/face/face2.png")
-  you.facex = you.x + 12
-  you.facedis = 2
-  you.facey = you.feet - 54
-  you.crest = lg.newImage("me/crest/crest2.png")
-  you.crestx = you.xanimate - 13
-  you.cresty = you.y + 27
-  you.crestdis = 1
   you.slowdown = false
   --horizontal velocity
   you.v = 0

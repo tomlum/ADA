@@ -5,7 +5,7 @@ ppunch3 = {im = lg.newImage("me/attack/purple/ppunch3.png"), xoff = 5, yoff = -5
 stomp1 = {im=lg.newImage("me/attack/purple/stomp1.png")}
 stomp2 = {im=lg.newImage("me/attack/purple/stomp2.png")}
 
-pa11 = {im=lg.newImage("me/attack/purple/pa11.png"), xoff = 15, yoff = 30}
+pa11 = {im=lg.newImage("me/attack/purple/pa11.png"), xoff = -2, yoff = 20}
 pa12 = {im=lg.newImage("me/attack/purple/pa12.png"), xoff = 2, yoff = -2}
 pa13 = {im=lg.newImage("me/attack/purple/pa13.png"), xoff = 4, yoff = -6}
 

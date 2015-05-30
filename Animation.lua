@@ -143,10 +143,12 @@ fillshader = lg.newShader(
 
 cshader = lg.newShader(
   [[
-  vec4 greenscreen = vec4(0.0, 1.0, 0.0, 1.0);
+  vec4 lscreen = vec4(0.0, 1.0, 0.0, 1.0);
+  vec4 fscreen = vec4(0.0, 1.0, 1.0, 1.0);
+  vec4 rscreen = vec4(1.0, 1.0, 0.0, 1.0);
   vec4 red = vec4(1.0, 0, 0.0, 1.0);
   vec4 yellow = vec4(1.0, 1.0, 0.0, 1.0);
-  extern vec4 palette[4];
+  extern vec4 palette[6];
   vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
   {
     vec4 texcolor = Texel(texture, texture_coords); 
@@ -157,8 +159,12 @@ cshader = lg.newShader(
       texcolor[1] > .5)
     return vec4(palette[0][0]*texcolor[0],palette[0][1]*texcolor[1],palette[0][2]*texcolor[2],texcolor[3]);
 
-    if (texcolor == greenscreen)
+    if (texcolor == fscreen)
     return palette[1];  
+    if (texcolor == lscreen)
+    return palette[4];
+    if (texcolor == rscreen)
+    return palette[5];
 
     if (texcolor[1] == red[1] && 
       texcolor[2] == red[2] && 
@@ -273,7 +279,7 @@ function cinemabars()
 end
 
 --colorshader draw start
-function csds(xx)
+function csds(xx, flip)
 
   local bleed = ((maxhealth-xx.health)/maxhealth)
   local shadee = {
@@ -284,6 +290,13 @@ function csds(xx)
     b=xx.shade.b -
     (xx.shade.b - xx.shade.b/255*(xx.color.c.b))*bleed/2
   }
+
+    local rc = vct(xx.leftc.c)
+    local lc = vct(xx.rightc.c)
+  if (xx.lr < 0 and flip~=nil) or xx.lr > 0 then
+    lc = vct(xx.leftc.c)
+    rc = vct(xx.rightc.c)
+  end
 
   local outlinee = {
     r=xx.outline.r - 
@@ -298,16 +311,20 @@ function csds(xx)
   if xx.currentc == 4 or xx.cchangeto.n == 4 then
     cshader:send( "palette", 
       vct(shadee), 
-      vct({r = xx.color.c.r/(xx.rlvl/15+1),g = xx.color.c.g/(xx.rlvl/15+1),b = xx.color.c.b/(xx.rlvl/15+1)}),
-      vct({r = thecolors[xx.currentc].c.r/(xx.rlvl/10+1), g = thecolors[xx.currentc].c.g/(xx.rlvl/10+1), b = thecolors[xx.currentc].c.b/(xx.rlvl/10+1)}), 
-      vct(outlinee)
+      vct({r = xx.color.c.r/(xx.rlvl/10+1),g = xx.color.c.g/(xx.rlvl/10+1),b = xx.color.c.b/(xx.rlvl/10+1)}),
+      vct({r = thecolors[xx.currentc].c.r/(xx.rlvl/6+1), g = thecolors[xx.currentc].c.g/(xx.rlvl/6+1), b = thecolors[xx.currentc].c.b/(xx.rlvl/6+1)}), 
+      vct(outlinee),
+      lc,
+      rc
     ) 
   else
     cshader:send( "palette", 
       vct(shadee), 
       vct(xx.color.c),
       vct(thecolors[xx.currentc].c), 
-      vct(outlinee)
+      vct(outlinee),
+      lc,
+      rc
 
     ) 
   end
@@ -577,12 +594,13 @@ function drawa(xx)
 
   drawmytrail(xx)
   if xx.greenkcondition then
-    csds(xx)
     if xx.lr > 0 then
+    csds(xx)
       lg.draw(garmback,xx.mid -2*xx.lr,
         xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,-7+4,-8+4)
 
     else
+    csds(xx,true)
       lg.draw(garmfront,xx.mid -2*xx.lr,
         xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,4,4)
 
@@ -647,13 +665,14 @@ function drawa(xx)
 
   if  xx.greenkcondition then
 
-    csds(xx)
     if xx.lr > 0 then
+    csds(xx)
       lg.draw(garmfront,xx.mid -2*xx.lr,
         xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,4,4)
 
 
     else
+    csds(xx,true)
       lg.draw(garmback,xx.mid -2*xx.lr,
         xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,-7+4,-8+4)
 

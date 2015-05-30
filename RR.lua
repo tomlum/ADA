@@ -117,7 +117,7 @@ at.r.ak.z = 5
 at.r.bo={}
 at.r.bo.max = 4
 at.r.bo.dam = 30
-at.r.bo.ft = 30
+at.r.bo.ft = 40
 --red stat delta
 rsdel = .14
 
@@ -339,6 +339,7 @@ function randr(xx)
                           makensparks(xx.mid,xx.y+30,xx.v-3, xx.j-3, xx.color.c.r/(xx.rlvl/15+1),xx.color.c.g/(xx.rlvl/15+1),xx.color.c.b/(xx.rlvl/15+1), 5*(xx.rlvl+1))
               end
             )
+            repplay(xx.redpushsou)
             xx.rlvl = 0
           end
           xx.im = redk11
@@ -511,10 +512,7 @@ function randr(xx)
           elseif xx.type == 4 then
             if xx.animcounter < 3 - reddelta*xx.rlvl+xx.repcounter*4 then
 
-              if xx.animcounter < 1 - reddelta*xx.rlvl/2 then
-                xx.float = true
-                xx.j = 0
-              end
+           
 
               if xx.repcounter % 4 == 1 then
                 xx.im = redap1
@@ -525,7 +523,7 @@ function randr(xx)
               elseif xx.repcounter % 4 == 0  then
                 xx.im = redap4
               end
-              xx.j = xx.j/2
+              xx.j = xx.j/1.1
             elseif xx.animcounter < 50 - reddelta*xx.rlvl+xx.repcounter*4 then
 
               if xx.repcounter % 4 == 1 then
@@ -571,6 +569,7 @@ function randr(xx)
                 xx.im = redau2
                 if xx.animcounter < 10 - reddelta*xx.rlvl then
                   xx.drawslash = true
+                  xx.j = xx.j + 7
 
                   hboxcs(xx, xx.id, 
                     {x=xx.mid+xx.v, y = xx.y-37-xx.j},
@@ -653,6 +652,7 @@ end
                         end
                       )
                       xx.rlvl = 0
+            repplay(xx.redpushsou)
                     end
                     xx.im = redak11
 

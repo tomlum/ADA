@@ -2,8 +2,9 @@ require "xkcdcolor"
 require "monitors"
 lg = love.graphics
 
-
-
+function dis(p1, p2)
+  return math.sqrt((p1.y-p2.y)^2 + (p1.x-p2.x)^2)
+end
 --box outline
 function bo(x,y,w,h,color)
   setColor(color)

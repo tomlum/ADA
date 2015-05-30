@@ -1,5 +1,5 @@
 
-amountstuckinwall = 80
+amountstuckinwall = boltspeed - 1
 amountstuckinfloor = 45
 
 
@@ -522,9 +522,9 @@ function boltupdate(xx)
     for j,k in ipairs(themap.walls) do 
       if k.barrier then
         if boltsflyrelative then
-          if ((v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) > k.x+amountstuckinwall) 
+          if ((v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) > k.x+amountstuckinwall and v.x > k.x) 
             or 
-            (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) < k.x-amountstuckinwall)
+            (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) < k.x-amountstuckinwall and v.x < k.x)
 
             ) and v.y > k.y1 and v.y < k.y2 then
             v.stuck = true
@@ -553,7 +553,16 @@ function boltupdate(xx)
       end
     else v.stuck = true
     end
-    if not v.stuck then hline(xx, xx.id, 
+    if not v.stuck then 
+      
+      hradial(xx.id, {x = v.x, y = v.y}, 200, function()
+          repplay(xx.whiff)
+          end
+        
+        
+        )
+      
+      hline(xx, xx.id, 
         {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y},
         function(p)
           if math.abs(p.v) < at.g.k.kb then

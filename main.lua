@@ -28,8 +28,8 @@ dangerCloseIsAThing = true
 --SHAEZ TIED TO RUMBLE?!?!?!?
 melcolor = 3
 mercolor = 4
-youlcolor = 1
-yourcolor = 4
+youlcolor = 2
+yourcolor = 1
 therampspeed = .2
     mapnum = 1
 rampspeed= therampspeed

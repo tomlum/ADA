@@ -118,10 +118,15 @@ function repplay(x)
     xx.redsound3:setPitch(.8 + (math.random() * .4) )
     xx.flapsou:setPitch((.4 + (math.random() * .4) ))
     xx.redshattersou:setPitch(.8 + (math.random() * .4) )
+    xx.redpushsou:setPitch(.9 + (math.random() * .4) )
 end
   end
 
 for i,xx in ipairs(hitt) do
+  
+  
+  xx.redpushsou = love.audio.newSource("sounds/redpush.wav", "stream")
+xx.redpushsou:setVolume(.1)
   
   xx.redshattersou = love.audio.newSource("sounds/redshatter.wav", "stream")
 xx.redshattersou:setVolume(.7)
@@ -330,7 +335,7 @@ xx.redsound3:setVolume(.4)
   xx.green:setVolume(SFXV-.8-adj)
 
   xx.whiff = love.audio.newSource("sounds/green.mp3", "static")
-  xx.whiff:setVolume(SFXV-.83-adj)
+  xx.whiff:setVolume(SFXV-.7-adj)
 
   xx.wallhit = love.audio.newSource("sounds/Purple.wav", "static")
   xx.wallhit:setVolume(SFXV-.47-adj)
