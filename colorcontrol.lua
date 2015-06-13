@@ -21,10 +21,10 @@ seafoam = {r=0,g=255,b=255}
 turq = {r=145,g=222,b=161}
 pink = {r=255,g=0,b=255}
 
-color1 = xcolor("neon pink")
-color2 = xcolor("neon green")
-color3 =  xcolor("neon blue")
-color4 = xcolor("neon red")
+color1 = xcolor("dusty teal")
+color2 = xcolor("orange pink")
+color3 =  xcolor("neon yellow")
+color4 = xcolor("neon purple")
 
 --color1 = xcolor("dark mauve")
 --color2 = xcolor("dark gold")
@@ -61,18 +61,18 @@ end
 
 end
 
-
+speeddif = .1
 thecolors[0] = {n=0,c={r = 255, g = 255, b = 255}, c2=c,
-  s = {def=1, speed = 1, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
+  s = {def=1, speed = 1-speeddif, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
 
 thecolors[1] = {n=1,c=color1,c2=c,
-  s = {def=1.2, speed = .8, jump = .7, weight = 1.3, brittle = 1}, tile = ptile, logo=plogo, sound = colorpsound}
+  s = {def=1.2, speed = .8-speeddif, jump = .7, weight = 1.3, brittle = 1}, tile = ptile, logo=apa11, sound = colorpsound}
 thecolors[2] = {n=2,c=color2,c2=c,
-  s = {def=.7, speed = 1.3, jump = 1.1, weight = 1, brittle = 1}, tile = gtile, logo=glogo, sound = colorgsound}
-thecolors[3] = {n=3, tile = otile,c=color3,c2=c, logo=ologo, sound = colorgsound,
-  s = {def=1, speed = 1, jump = 1.1, weight = .8, brittle = 2}}
-thecolors[4] = {n=4, tile = tile,c=color4,c2=c, logo=questionlogo, sound = colorpsound,
-  s = {def=.8, speed = 1.2, jump = 1.1, weight = .9, brittle = 1.2}
+  s = {def=.7, speed = 1.2-speeddif, jump = 1.1, weight = 1, brittle = 1}, tile = gtile, logo=glogo, sound = colorgsound}
+thecolors[3] = {n=3, tile = otile,c=color3,c2=c, logo=ao32, sound = colorgsound,
+  s = {def=1, speed = 1-speeddif, jump = 1.1, weight = .8, brittle = 2}}
+thecolors[4] = {n=4, tile = tile,c=color4,c2=c, logo=redap1, sound = colorpsound,
+  s = {def=.8, speed = 1.1-speeddif, jump = 1.1, weight = .9, brittle = 1.2}
   }
 thecolors[5] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 thecolors[6] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}

@@ -25,7 +25,7 @@ blockrelease = {im=lg.newImage("me/attack/blockrelease.png"), xoff = 3, yoff = -
 throw = {im=lg.newImage("me/attack/throw.png"), xoff = 8, yoff = 5}
 airthrow = {im=lg.newImage("me/attack/airthrow.png"), xoff = 9, yoff = 5}
 
-throwft = 40
+throwft = 26
 throwz = .1
 
 
@@ -112,12 +112,11 @@ function grab(xx)
       end
       xx.grabbingx.ft = 10
       if not xx.holda and (xx.a1 or xx.a2 or xx.a3 or xx.a4) then 
-        xx.grabbingx.j =  -xx.jry*20
-        xx.grabbingx.v =  xx.jrx*15
-        if not xx.g then
-          xx.v = -xx.grabbingx.v*.8
-          xx.j = -xx.grabbingx.j*.8
-        end
+        
+        xx.grabbingx.j =  20*math.sin(math.atan(xx.jry/-xx.jrx))
+        xx.grabbingx.v =  20*math.cos(math.atan(xx.jry/-xx.jrx))*xx.lr
+        
+        
         xx.animcounter = 300
         shakez(throwz)
         xx.grabbingx.ft = throwft
@@ -125,9 +124,29 @@ function grab(xx)
         if xx.jrx > 0 then
           xx.grabbingx.flinchway = -1
           xx.lr = 1
+          if xx.grabbingx.x < xx.x then
+            xx.grabbingx.x = xx.grabbingx.x + 15
+            xx.x = xx.x - 15
+            xx.grabbingx.v = -xx.grabbingx.v
+            xx.grabbingx.j = -xx.grabbingx.j
+            
+            end
         else xx.grabbingx.flinchway = 1
+          if xx.grabbingx.x > xx.x then
+            xx.grabbingx.x = xx.grabbingx.x - 15
+            xx.x = xx.x + 15
+            xx.grabbingx.v = -xx.grabbingx.v
+            xx.grabbingx.j = -xx.grabbingx.j
+            end
           xx.lr = -1
         end
+        
+        
+        if not xx.g then
+          xx.v = -xx.grabbingx.v*.8
+          xx.j = -xx.grabbingx.j*.8
+        end
+        
       end
     elseif xx.animcounter <260 then
       repplay(grabreleasesou)
@@ -552,7 +571,7 @@ fallbackbounce = {im=lg.newImage("me/attack/fallbackbounce.png"),xoff = 12, yoff
 fallbackbouncedown = {im=lg.newImage("me/attack/fallbackbouncedown.png"),xoff = 12, yoff = -39, dodgeh = 32, dodgew = 26}
 fallforward = {im=lg.newImage("me/attack/fallforward.png"), yoff = -32}
 fallback1 = {im=lg.newImage("me/attack/fallback1.png")}
-fallforward1 = {im=lg.newImage("me/attack/fallforward1.png"), xoff = -1}
+fallforward1 = {im=lg.newImage("me/attack/fallforward1.png"), xoff = -1, yoff = -2}
 gettingup1 = {im=lg.newImage("me/attack/gettingup1.png"), yoff = -9}
 gettingup2 = {im=lg.newImage("me/attack/gettingup2.png"),yoff = -7}
 gettingup11 = {im=lg.newImage("me/attack/gettingup11.png"),xoff = -4, yoff = -23}
@@ -579,8 +598,8 @@ me.prevhealth = 0
 function camshakeflinch()
   yhdif = you.prevhealth-you.health
   mhdif = me.prevhealth-me.health
-
   if not (me.actionshot or you.actionshot) and not noshake then
+    
     if ((you.shake) and you.x >= me.x)  or shakeboth then 
       camera2.x = camera2.x + math.ceil(math.random()) * (shakedis + yhdif/2)
       camera2.y = camera2.y + math.ceil(math.random()) * (shakedis + yhdif/2)
@@ -611,6 +630,10 @@ function camshakeflinch()
 
     end
   end
+  
+  if me.shake or shakeboth or you.shake then
+    paralaxshake = true
+    end
 
   me.shake = false
   you.shake = false
@@ -672,7 +695,6 @@ newforwarddodge = function(xx)
     then xx.dodgecounter = 0
       xx.dodge = false
       xx.dodgetype = 0
-      xx.pause = false
       xx.dodgedelaycounter = 0
       xx.stop = true
       xx.purpgroundtimer = 0

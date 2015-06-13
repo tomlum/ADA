@@ -53,11 +53,13 @@ function drawcolorstuff(xx)
 end
 
 function shakez(z)
+  shakeboth = true
   rumbleme(me,z/10)
   rumbleme(you,z/10)
   if dangerclose then
     minzoom = dangerzoom + (defaultminzoom-defaultmaxzoom) - dangerzoomdelta * 10*z
     maxzoom = dangerzoom  - dangerzoomdelta * 10*z
+    
   else
     minzoom = defaultminzoom - growrate*z
     maxzoom = defaultmaxzoom - growrate*z
@@ -579,26 +581,107 @@ function camera2:setScale(sx, sy)
 end
 
 
+camwobx = 0
+camwoby = 0
+function camerawobble()
+  if dangerclose then
+  
+  
+  
+end
 
 
+  end
 
 
-
+paralaxshaketimer = 0
+paralaxcamshake = 0
 
 function drawx(xx)
+  
+  
+   local bob = 1/1000*cscale^2
+ local rob = 0
+ if paralaxshake then
+   paralaxshaketimer = 4
+ end
+ if paralaxshaketimer > 0 then
+   paralaxshaketimer = paralaxshaketimer - 1
+paralaxcamshake = shakedis*math.random(-3,3)*math.random()
+end
+  
   if menu ~= "retry" then
   tods()
+  
+local pzoom2 = 1+(1-math.sqrt(math.sqrt(cscale)))
   lg.draw(enviro.sky, xx.x, 0, 0, 500, 1.1)
   --lg.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
-  if themap.name == "library" then 
-    lg.draw(enviro.paralax2, xx.x/1.5 + (screenwidth/4)/1.5 - 400,xx.y/1.2 + winheight / 1.2 - 12 - paralaxoffset-940)
-  end
-  blurdraw(.2/(cscale), function()
-      lg.draw(enviro.paralax, xx.x / 2 + ((screenwidth/4)/2*cscale*2.5) - 200, (xx.y/2) + (winheight/2*cscale) - 12 - paralaxoffset - 800)
+  if themap.name == "library" or themap.name == "floors" then 
+      blurdraw(bob, function()
+ lg.draw(enviro.paralax2, 
+        (xx.x+(screenwidth/2)*cscale+paralaxcamshake)*(1-themaps[mapnum].paralaxscale2*pzoom2)
+        -(250*(1-themaps[mapnum].paralaxscale2*pzoom2))
+        ,
+        (xx.y+(screenheight/2)*cscale+paralaxcamshake)*(1-themaps[mapnum].paralaxscale2*pzoom2)+(feet2bottom-paralaxoffset)*(cscale*(1-themaps[mapnum].paralaxscale2*pzoom2)),
+        0,
+        pzoom2,
+        pzoom2)
+      
     end)
+  
+  end
+  
 
-  tods()
-  lg.draw(enviro.stage, 0, 0)
+
+local pzoom = 1+(1-math.sqrt(cscale))
+ blurdraw(bob, function()
+    
+ lg.draw(enviro.paralax, 
+        (xx.x+(screenwidth/2)*cscale+paralaxcamshake)*(1-themaps[mapnum].paralaxscale*pzoom)
+        -(250*(1-themaps[mapnum].paralaxscale*pzoom)),
+        (xx.y+(screenheight/2)--*pzoom
+          *cscale+paralaxcamshake)*(1-themaps[mapnum].paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themaps[mapnum].paralaxscale*pzoom)),
+        0,
+        pzoom,
+        pzoom)
+      
+    end)
+  
+  
+  
+  
+      --[[
+for i = 0, .9, .1 do
+
+  blurdraw(bob, function()
+      lg.draw(p, 
+        (xx.x+(screenwidth/2)*cscale+rob)*(1-i),
+        (xx.y+(screenheight/2)*cscale+rob)*(1-i)+(feet2bottom-paralaxoffset)*(cscale*(1-i)),
+        0,
+        i,
+        i)
+    end)
+  end
+  ]]--
+  
+   --[[
+  blurdraw(.0002/cscale, function()
+      lg.draw(p, 
+        xx.x*.75,
+        xx.y*.75+feet2bottom*(cscale/.75),
+        0,
+        1/4,
+        1/4)
+    end)
+  ]]--
+  
+  cclear()
+
+
+  tods() 
+      lg.draw(enviro.stage, 0, 0)
+      
+  --lg.draw(enviro.stage, 0, 0) 
   if themap.name == "street" then
     drawstreetprestuff()
   end
@@ -620,10 +703,12 @@ function drawx(xx)
 
 end
 if menu ~= "retry" then
+  
   drawparticles()
 
   drawcolorstuff(me)
   drawcolorstuff(you)
+  lg.setShader()
 
   mondraw()
   end
@@ -643,6 +728,10 @@ end
 
 if menu ~= "retry" then
 
+  lg.setShader()
+  cclear()
+  
+  
   if themap.name == "street" then
     drawstreetstuff()
   elseif themap.name == "library" then

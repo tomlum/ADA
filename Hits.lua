@@ -484,19 +484,7 @@ function hline(meme, theid, P1, P2, special)
 
       end
 
-      function hexplatcheck(y1, x1, x2, ex, why, w, h, v, j)
-
-
-        midv2 = {x = (ex+w/2)+v, y=why+h-j}
-        midv = {x = ex+w/2, y=why+h}
-        local linep1 = {x = x1, y = y1}
-        local linep2 = {x = x2, y = y1}
-        if pint(linep1, linep2, midv, midv2) 
-        then return true
-        else return false
-        end
-
-      end
+      
 
       velforclimb = 20
 
@@ -515,14 +503,35 @@ function hline(meme, theid, P1, P2, special)
         end
         return false
 
-      end
-
-      function lineplatcheck(ex, why,v, j)
+    end
+    
+    function linewallcheck(ex, why,v, j)
         midv2 = {x = (ex)+v, y=why-j, n = 2}
         midv = {x = ex, y=why, n = 2}
 
         if why > 100000 or ex < -10 or ex > 10000  then
           return false
+        end
+
+        for j = #themap.walls, 1, -1 do 
+          wall = themap.walls[j]
+          local linep1 = {x = wall.x, y = wall.y1}
+          local linep2 = {x = wall.x, y = wall.y2}
+          if pint(linep1, linep2, midv, midv2) 
+          then return true
+          end
+        end
+        return false
+
+      end
+
+
+      function lineplatcheck(ex, why,v, j)
+        midv2 = {x = ex+v, y=why-j}
+        midv = {x = ex, y=why}
+
+        if why > 100000 or ex < -10 or ex > 10000  then
+          return true
         end
 
         for j = #themap.plats, 1, -1 do 

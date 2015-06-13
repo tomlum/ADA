@@ -92,10 +92,9 @@ function relativity(xx)
   else
     xx.ramptimer = 0
     xx.rampcanhit = true
-    xx.rampspeed = rampspeed
   end
 
-  if dangerclose then
+  if dangerclose and not actionshot and not love.keyboard.isDown("x") then
     if rampspeed - dangerrampdelta > dangerrampspeed
     then
       rampspeed = rampspeed - dangerrampdelta
@@ -112,7 +111,12 @@ function relativity(xx)
     --if xx.id == 1 then
     --  xx.rampspeed = .5
     --else
+    if dangerclose and not actionshot and not love.keyboard.isDown("x") then
+    xx.rampspeed = rampspeed+(1-rampspeed)/3
+      
+      else
     xx.rampspeed = rampspeed
+    end
     --end
   end
 
@@ -130,6 +134,8 @@ me.jmax = jmax
 
 me.plat = noplat
 you.plat = noplat
+
+
 
 table.insert(themaps[2].plats, {n=1,y = themaps[2].floor, x1 = 0, x2 = 1404+1, floor = true})
 table.insert(themaps[2].plats, {n=2,y = 964, x1 = 1404, x2 = themaps[2].rightwall+1, floor = true})
@@ -166,8 +172,8 @@ table.insert(themaps[1].plats, {n=7, x1 = 4479, x2 = 4688, y = 1462})
 table.insert(themaps[1].plats, {n=8, x1 = 5104, x2 = 6018, y = 1718})
 table.insert(themaps[1].plats, {n=9, x1 = 5286, x2 = 5472, y = 1540})
 table.insert(themaps[1].plats, {n=10, x1 = 5650, x2 = 5836, y = 1540})
-table.insert(themaps[1].walls, {n=11, y1 = -1, x=0, barrier = true})
-table.insert(themaps[1].walls, {n=12, y1 = -1, x=themaps[1].rightwall, barrier = true})
+table.insert(themaps[1].walls, {n=11, y1 = -1, y2 = themaps[1].floor, x=0, barrier = true})
+table.insert(themaps[1].walls, {n=12, y1 = -1, y2 = themaps[1].floor, x=themaps[1].rightwall, barrier = true})
 
 
 table.insert(themaps[100].plats, {n=1, y = 896, x1 = 0, x2 = 2000+1, floor = true})
@@ -201,7 +207,65 @@ table.insert(themaps[3].plats, {n=7,y = 2756-286*2, x1 = 2075, x2 = 2139})
 table.insert(themaps[3].plats, {n=8,y = 2756-286*3, x1 = 419, x2 = 636})
 table.insert(themaps[3].plats, {n=9,y = 2756-286*3, x1 = 2070, x2 = 2139})
 table.insert(themaps[3].plats, {n=10,y = 2756-286*4, x1 = 2072, x2 = 2139})
+table.insert(themaps[3].boxes, {p1 = {x = 750, y = 5585},  size = 8, kind = "paper", density = 2})
+table.insert(themaps[3].boxes, {p1 = {x = 847, y = 5295},  size = 8, kind = "paper", density = 6})
+table.insert(themaps[3].boxes, {p1 = {x = 1530, y = 5294},  size = 8, kind = "paper", density = 4})
+table.insert(themaps[3].boxes, {p1 = {x = 1741, y = 5294},  size = 14, kind = "paper", density = 5})
+table.insert(themaps[3].boxes, {p1 = {x = 1568, y = 5582},  size = 8, kind = "paper", density = 4})
+table.insert(themaps[3].boxes, {p1 = {x = 1814, y = 5012},  size = 8, kind = "paper", density = 4})
+table.insert(themaps[3].boxes, {p1 = {x = 741, y = 5010},  size = 8, kind = "paper", density = 5})
+table.insert(themaps[3].boxes, {p1 = {x = 972, y = 5010},  size = 8, kind = "paper", density = 2})
+table.insert(themaps[3].boxes, {p1 = {x = 616, y = 4435},  size = 8, kind = "paper", density = 7})
+table.insert(themaps[3].boxes, {p1 = {x = 1928, y = 4416},  size = 40, kind = "paper", density = 20})
+table.insert(themaps[3].boxes, {p1 = {x = 1536, y = 3580},  size = 5, kind = "paper", density = 2})
 
+
+function hexplatcheck2(y1, x1, x2, ex, why, w, why2, v)
+
+
+        midv2 = {x = (ex+w/2)+v, y=why2}
+        midv = {x = ex+w/2+.001, y=why}
+        local linep1 = {x = x1+.001, y = y1}
+        local linep2 = {x = x2, y = y1}
+        if pint(linep1, linep2, midv, midv2) 
+        then return true
+        else return false
+        end
+
+      end
+
+
+function updateboxes()
+  if themaps[mapnum].boxes ~= nil and not pause then
+    for i,xx in ipairs(hitt) do 
+      for j,b in ipairs(themaps[mapnum].boxes) do
+        local xline = {p1 = {x = xx.mid, y = xx.y+xx.height/2},
+                       p2 = {x = xx.mid+xx.v, y = xx.y+xx.height/2-xx.j}
+                       }
+        local bline1 = {p1 = {x = b.p1.x - b.size, y = b.p1.y-b.size},
+                        p2 = {x = b.p1.x + b.size, y = b.p1.y+b.size}
+                        }
+        local bline2 = {p1 = {x = b.p1.x - b.size, y = b.p1.y+b.size},
+                        p2 = {x = b.p1.x + b.size, y = b.p1.y-b.size}
+                      }
+                      if lint(xline, bline1) or lint(xline, bline2) then
+                        if b.kind == "paper" and math.sqrt(xx.v^2 + xx.j^2) > paperweight then
+                          makenpaper(b.p1.x+math.random(-b.size,b.size),
+                            b.p1.y+math.random(-b.size,b.size)
+                            ,xx.v,xx.j,b.density)
+                         elseif b.kind == "leaf" then
+                          makenleaves(b.p1.x+math.random(-b.size,b.size),
+                            b.p1.y+math.random(-b.size,b.size)
+                            ,xx.v,xx.j,b.density)
+                        
+                      end
+                      end
+        
+      end
+     end
+  end
+  
+end
 
 function ramp(xx)
   return xx.rampspeed
@@ -245,8 +309,8 @@ table.insert(themaps[3].plats, {y = 3004, x1 = 581, x2 = 1039})
 
 
 table.insert(themaps[3].walls, {y1 = 1900, y2 = themaps[3].floor+1, x=419, glasswall = 5618})
-table.insert(themaps[3].walls, {y1 = 2763, y2 = 5618, x=2139, glasswall = 5778})
-table.insert(themaps[3].walls, {y1 = 1613, y2 = 2184, x=2139})
+table.insert(themaps[3].walls, {y1 = 2763, y2 = 5778, x=2139, glasswall = 5618})
+table.insert(themaps[3].walls, {y1 = 1613, y2 = 2184, x=2139, glasswall = y2})
 table.insert(themaps[3].walls, {y1 = 2830, y2 = themaps[3].floor+1, x=3159})
 
 
@@ -427,7 +491,7 @@ function runrunrun(xx)
 
 
 
-  elseif math.abs(xx.v) > xx.color.s.speed*xx.speedpenalty*speedminit-accel*2 and (xx.left or xx.right) and xx.g  and xx.run and not xx.block and not xx.slide and not xx.dodge then
+  elseif math.abs(xx.v) > xx.color.s.speed*xx.speedpenalty*speedminit-accel*2 and (xx.left or xx.right) and xx.g  and xx.run and not xx.block and not xx.slide and not xx.dodge and xx.type ~= 2 then
     xx.a1 = false
     xx.a2 = false
     xx.a3 = false
@@ -574,7 +638,7 @@ function movex(xx,yy)
       else
         xx.jt = jt
         xx.jmax = jmax*xx.color.s.jump
-        if xx.dubtimer > 0 then
+        if xx.cansuperjump then
           xx.j = jumpj*superjumpratio*xx.color.s.speed
         else
           xx.j = jumpj*xx.color.s.speed
@@ -604,7 +668,7 @@ function movex(xx,yy)
       xx.landingcounter = xx.landingcounter - 1*ramp(xx)
     else xx.landingcounter = 0
     end
-    if z.blockb and (not xx.holda and xx.a1b) and math.abs(z.j) + math.abs(z.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j) and xx.j > 0
+    if z.blockb and xx.a1b and math.abs(z.j) + math.abs(z.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j) and xx.j > 0
     then 
       if climbplatcheck(xx.x, xx.y+xx.height/2, xx.lr, xx.height/2, xx.v, xx.j) then
         xx.ctim = 7
@@ -694,6 +758,8 @@ function movex(xx,yy)
 
     end
   end
+  xx.cansuperjump = false
+
   xx.float = false
 end
 

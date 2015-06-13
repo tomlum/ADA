@@ -3,7 +3,7 @@
 --STEPPING UP ANIMATION IF CLIMBING, SO THAT YOU CAN GET UP EVEN IF JUST AT FEET NARROWLY MISS IT
 
 --341a000000000000005f7000000000000
-
+readytounpause = false
 
 
 doubletime = 14
@@ -11,6 +11,8 @@ me.doubledown = false
 me.dubtimer = 0
 you.doubledown = false
 you.dubtimer = 0
+me.superjumptimer = 0
+you.superjumptimer = 0
 
 me.rumbleint = 0
 you.rumbleint = 0
@@ -18,6 +20,26 @@ me.lrum = 0
 me.rrum = 0
 you.lrum = 0
 you.rrum = 0
+me.joystickn = 0
+you.joystickn = 0
+function setControllers()
+  for i,v in ipairs(love.joystick.getJoysticks()) do
+    if me.joystick == nil then
+      if v:isGamepadDown("guide") then
+        me.joystick = v
+        me.joystickn = i
+      end
+    end
+    
+    if you.joystick == nil and i~=me.joystickn then
+      if v:isGamepadDown("guide") then
+        you.joystick = v
+        you.joystickn = i
+      end
+      end
+  end
+  
+end
 
 function rumbleme(xx,i)
   if i > xx.rumbleint then
@@ -29,6 +51,7 @@ end
 
 
 function rumblemodule(xx)
+  if xx.joystick ~= nil then
   base = (xx.cct/colorchangetime)*colorvib
   if xx.rumbleint >= 1 then
     xx.lrum = 1
@@ -41,7 +64,7 @@ function rumblemodule(xx)
   xx.joystick:setVibration(xx.lrum,xx.rrum)
   xx.rumbleint = hof(base,xx.rumbleint-.05)
   
-  
+  end
 end
 
 
@@ -58,6 +81,8 @@ you.holda = false
 me.dirholda = false
 you.dirholda = false
 function holdmanage(xx)
+  
+   
   if (xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.blockb) or (menu ~= "play" and (xx.rightbump or xx.leftbump)) then
     if not xx.holda then
       xx.holda = true
@@ -125,7 +150,9 @@ end
 
 function doubledown(xx)
 
+  if xx.dubtimer >= 0 then
   xx.dubtimer = rodib(xx.dubtimer,1,0)
+  end
   
   if not xx.down and xx.doubledown then
     xx.dubtimer = 0
@@ -134,9 +161,10 @@ function doubledown(xx)
     xx.doubledown = true
     xx.dubtimer = 10
   elseif not xx.down and xx.dubtimer < 0 then
-    xx.dubtimer = -xx.dubtimer
-  elseif xx.down and xx.dubtimer <= 0 then
-    xx.dubtimer = -doubletime
+    xx.dubtimer = doubletime
+  elseif xx.down and xx.dubtimer <= 0 and xx.dubtimer > -20 then
+    
+    xx.dubtimer = xx.dubtimer - 1
   end
 
 end
@@ -362,8 +390,12 @@ me.gupv = 0
 you.gv = boltspeed
 me.gv = boltspeed
 
-
+pause = false
 function jjstick(xx)
+  
+
+  
+  if xx.joystick ~= nil then
   xx.a4 = false
   xx.a1 = false
   xx.a2 = false
@@ -491,7 +523,7 @@ function jjstick(xx)
 
   xx.leftdeadzone = math.abs(xx.jlx/math.cos(math.atan(-xx.jly/xx.jlx))) < .3
 
-
+xx.start = xx.joystick:isGamepadDown("start")
 
   if not xx.leftdeadzone then
     xx.angle = math.atan(-xx.joystick:getGamepadAxis("lefty")/(math.abs(xx.joystick:getGamepadAxis("leftx"))))
@@ -501,8 +533,26 @@ function jjstick(xx)
 
 
 
+end
+
+if not (me.start or you.start) then
+  if pause then
+  readytounpause = true
+else
+  readytounpause = false
+  end
+end
+
+if pause and readytounpause and (me.start or you.start) then
+  pause = false
+  end
+
+ if (me.start or you.start) and not pause and not readytounpause then
+  pause = true
+  readytounpause = false
+end
 
 
-
+  
 
 end

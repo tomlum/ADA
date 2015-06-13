@@ -12,7 +12,10 @@ greena15 = {im=lg.newImage("me/attack/green/greena15.png"), xoff = 3,yoff = 42}
 
 greena21 = {im=lg.newImage("me/attack/green/greena21.png"), xoff = 16,yoff = -2}
 greena22 = {im=lg.newImage("me/attack/green/greena22.png"), xoff = 30+8, yoff = -3}
+
 greena22s = {im=lg.newImage("me/attack/green/greena22s.png"), xoff = 30+8, yoff = 1}
+greencreatures = {im=lg.newImage("me/attack/green/greencreatures.png"), xoff = 30+8+2, yoff = 1}
+greencreature = {im=lg.newImage("me/attack/green/greencreature.png"), xoff = 30+8+2, yoff = 1}
 
 
 agreena22 = {im=lg.newImage("me/attack/green/agreena22.png"), xoff = 20, xoff = 40, yoff = 4}
@@ -78,17 +81,27 @@ you.greenhit = false
 me.repcounter = 0
 you.repcounter = 0
 
+me.greenflickertimer = 0
+you.greenflickertimer = 0
+me.greenflicker = false
+you.greenflicker = false
 
 
+me.gangle = 0
+you.gangle = 0
 --transform angle
 function tang(ang,xx)
   return (-xx.lr*90) + 90-(ang)*xx.lr
 end
 
 function gandg(xx)
+    xx.greenflickertimer = rollover(xx.greenflickertimer, xx.rampspeed, 16)
 
   if #joysticks>=xx.id then
+    if math.sqrt(xx.jry^2+xx.jrx^2) > .1 then
     xx.gangle = math.deg(math.atan(-xx.jry/math.abs(xx.jrx)))
+    
+    end
     if xx.gangle > 75 then xx.gangle = 90 
     elseif xx.gangle < 15 and xx.gangle > -15 then
       xx.gangle = 0
@@ -147,15 +160,31 @@ function gandg(xx)
     if xx.type == 1 then
       if xx.animcounter < 7 then
         xx.im = greena21
+        if math.random() > .995 then
+          xx.creature = true
+        else
+          xx.creature = false
+          end
 
 
 
 
-      elseif xx.animcounter < 40 then
-        xx.im = greena22
+  elseif xx.animcounter < 40 then
+      if xx.creature then 
+            xx.im = greencreature
+          else
+            xx.im = greena22
+           
+            if xx.greenflickertimer < 8 and math.abs(xx.v) > 4 then
+          xx.greenflicker = true
+        else
+          xx.greenflicker = false
+        end
+           
+        end
         if xx.repcounter<=3 and xx.rampcanhit and xx.v~= 0 then
           table.insert(xx.trail, 
-            {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0, colornum = 2})
+            {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 2, colornum = 2})
 
         end
 
@@ -163,22 +192,26 @@ function gandg(xx)
 
           if xx.rampcanhit then
             if xx.repcounter ==1 then
-              xx.v = xx.v + (xx.lr*15)/3*ramp(xx)
+              xx.v = xx.v + (xx.lr*20)/3*ramp(xx)
               xx.origgreenlr  = xx.lr
             elseif xx.repcounter==2 then
               xx.lr=-xx.origgreenlr  
-              xx.v = xx.v + (xx.lr*17)/3*ramp(xx)
+              xx.v = xx.v + (xx.lr*20)/3*ramp(xx)
             elseif xx.repcounter==3 then
               xx.lr=xx.origgreenlr 
-              xx.v = xx.v + (xx.lr*8)/3*ramp(xx)
+              xx.v = xx.v + (xx.lr*10)/3*ramp(xx)
             end
           end
-
+          
+          if xx.creature then 
+            xx.im = greencreatures
+            else
           xx.im = greena22s
+          end
           repplay(xx.greens)
 
 
-          rumbleme(xx, 1)
+          rumbleme(xx, .1)
 
           hboxcs(xx, xx.id, 
             {x=xx.mid, y = xx.y},
@@ -340,9 +373,14 @@ function gandg(xx)
         elseif xx.animcounter < 20+greena1adj then
           xx.im = greena15
         end
+          if xx.greenflickertimer < 8 and math.abs(xx.v) > 4 then
+          xx.greenflicker = true
+        else
+          xx.greenflicker = false
+        end
         if xx.rampcanhit then
           table.insert(xx.trail, 
-            {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0, colornum = 2})
+            {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t =2, colornum = 2})
         end
       
     elseif xx.animcounter >= 14+greena1adj then
@@ -356,9 +394,14 @@ function gandg(xx)
 
     elseif xx.animcounter < 30 then
       xx.im = agreena22
+        if xx.greenflickertimer < 8 and math.abs(xx.v) > 4 then
+          xx.greenflicker = true
+        else
+          xx.greenflicker = false
+        end
       if xx.rampcanhit then
         table.insert(xx.trail, 
-          {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0, colornum = 2})
+          {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 2, colornum = 2})
       end
 
       if xx.animcounter <= 4 then
@@ -526,7 +569,7 @@ function boltupdate(xx)
             or 
             (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) < k.x-amountstuckinwall and v.x < k.x)
 
-            ) and v.y > k.y1 and v.y < k.y2 then
+            ) and v.y > k.y1 and (k.y2 == nil or v.y < k.y2) then
             v.stuck = true
           end
         else
@@ -617,63 +660,6 @@ function xpint(a,A,b,B)
   else return false
   end
 end
-
-
-
-function retfindIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, seg1, seg2)
-  local a1,b1,a2,b2 = l1p2y-l1p1y, l1p1x-l1p2x, l2p2y-l2p1y, l2p1x-l2p2x
-  local c1,c2 = a1*l1p1x+b1*l1p1y, a2*l2p1x+b2*l2p1y
-  local det,x,y = a1*b2 - a2*b1
-  if det==0 then  return {0, 0} end
-  x,y = (b2*c1-b1*c2)/det, (a1*c2-a2*c1)/det
-  if seg1 or seg2 then
-    local min,max = math.min, math.max
-    if seg1 and not (min(l1p1x,l1p2x) <= x and x <= max(l1p1x,l1p2x) and min(l1p1y,l1p2y) <= y and y <= max(l1p1y,l1p2y)) or
-    seg2 and not (min(l2p1x,l2p2x) <= x and x <= max(l2p1x,l2p2x) and min(l2p1y,l2p2y) <= y and y <= max(l2p1y,l2p2y)) then
-      return {0, 0}
-    end
-  end
-  return {x, y}
-end
-
-
-function findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, seg1, seg2)
-  local a1,b1,a2,b2 = l1p2y-l1p1y, l1p1x-l1p2x, l2p2y-l2p1y, l2p1x-l2p2x
-  local c1,c2 = a1*l1p1x+b1*l1p1y, a2*l2p1x+b2*l2p1y
-  local det,x,y = a1*b2 - a2*b1
-  if det==0 then return false end
-  x,y = (b2*c1-b1*c2)/det, (a1*c2-a2*c1)/det
-  if seg1 or seg2 then
-    local min,max = math.min, math.max
-    if seg1 and not (min(l1p1x,l1p2x) <= x and x <= max(l1p1x,l1p2x) and min(l1p1y,l1p2y) <= y and y <= max(l1p1y,l1p2y)) or
-    seg2 and not (min(l2p1x,l2p2x) <= x and x <= max(l2p1x,l2p2x) and min(l2p1y,l2p2y) <= y and y <= max(l2p1y,l2p2y)) then
-      return false
-    end
-  end
-  return true
-end
-
-function findxIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y)
-
-  if findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, true, true) or findIntersect(l1p2x,l1p2y,l1p1x,l1p1y,l2p1x,l2p1y, l2p2x,l2p2y, true, true) then
-    return true
-  else return false
-  end
-
-end
-
-function pint(p11,p12,p21,p22)
-  return findIntersect(p11.x+.2,p11.y+.2,p12.x,p12.y,p21.x+.2,p21.y+.2,p22.x,p22.y,true,true)
-end
-
-function retpint(p11,p12,p21,p22)
-  local fred = retfindIntersect(p11.x,p11.y,p12.x,p12.y,p21.x,p21.y,p22.x,p22.y,true,true)
-  if fred[1] == nil then
-    return {0,0}
-  else return fred
-  end
-end
-
 
 
 

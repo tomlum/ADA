@@ -12,31 +12,37 @@ themaps[1]= {name = "street",
   lightx = 707+2.5,
   lighty = 142+2.5,
   lightcolor = {r = 40, g = 255, b = 0},
-  rightwall = 7000
+  rightwall = 7000,
+  paralaxscale = 4/7
 }
 themaps[2]= {name = "library", 
-  plats = {}, walls = {},
+  plats = {}, walls = {}, boxes = {},
   floor = 1027,
   lightx = 293.5,
   lighty = 229.5,
   lightcolor = {r = 87, g = 0, b = 158},
-  rightwall = 3829
+  rightwall = 3829,
+  paralaxscale = .65,
+  paralaxscale2 = .523
 }
 
 themaps[3]= {name = "floors", 
-  plats = {}, walls = {},
+  plats = {}, walls = {}, boxes = {},
   floor = 5898,
   lightx = 442+2.5,
   lighty = 311+2.5,
   lightcolor = {r = 255, g = 99, b = 0},
-  rightwall = 5000
+  rightwall = 5000,
+  paralaxscale = .5,
+  paralaxscale2 = .25
 }
 
 
 
 themaps[100]= {name = "fightclub", 
   plats = {}, walls = {},
-  floor = 896
+  floor = 896,
+  paralaxscale = 1
 }
 
 
@@ -47,7 +53,8 @@ themap = themaps[1]
 
 
 letterboxheight = 80
-menuspeed = 10
+menuspeed = 7
+pausescreen = lg.newImage("enviro/paused.png")
 modes = lg.newImage("enviro/mode.png")
 backstreet = lg.newImage("enviro/backstreet.png")
 modeselector = lg.newImage("enviro/modeselector.png")
@@ -57,10 +64,8 @@ ptile = lg.newImage("enviro/ptile.png")
 gtile = lg.newImage("enviro/gtile.png")
 otile = lg.newImage("enviro/otile.png")
 tile = lg.newImage("enviro/tile.png")
-plogo = lg.newImage("enviro/plogo.png")
-glogo = lg.newImage("enviro/glogo.png")
-ologo = lg.newImage("enviro/ologo.png")
-questionlogo = lg.newImage("enviro/questionmark.png")
+glogo = {im = lg.newImage("enviro/greenlogo.png")}
+questionlogo = {im=lg.newImage("enviro/questionmark.png")}
 shoulder = lg.newImage("enviro/shoulder.png")
 ready = lg.newImage("enviro/ready.png")
 
@@ -105,12 +110,16 @@ function lg.srectangle(mode, x, y, width, height)
   lg.rectangle(mode, x*screenwidth/1440, y*screenheight/900, width*screenwidth/1440, height*screenheight/900) 
 end
 
-
-lg.setNewFont(20)
+adafont = love.graphics.newImageFont("adafont.png",
+    " abcdefghijklmnopqrstuvwxyz" ..
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0" ..
+    "123456789.,!?-+/():;%&`'*#=[]\"")
+  lg.setFont(adafont)
+--lg.setNewFont(20)
 
 
 lightsize = 7
-maxwob = 10
+maxwob = 7
 function initmenu()
   if menu == "title" and oldmenu ~= "title" then
     musfadein = 3
@@ -341,7 +350,7 @@ function drawmenus()
       themode = "koth"
     end
     lg.setColor(allfade,allfade,allfade,255)
-    blurdraw(2,function() lg.sdraw(backstreet,wobx-maxwob*2,woby-maxwob*2) end)
+    blurdraw(.001,function() lg.sdraw(backstreet,wobx-maxwob/2,woby-maxwob/2,0,1.1,1.1) end)
     lg.setColor(allfade/2,allfade/2,allfade/1,255)
     lg.sdraw(modes,0,0)
     lg.sdraw(modeselector, selectorx, selectory)
@@ -451,8 +460,12 @@ function drawmenus()
     vct(thecolors[me.selectedcolor+1].c), 
     vct(me.outline)
 
-  ) 
-      lg.sdraw(thecolors[me.selectedcolor+1].logo,420+tilesep,-tilesep) 
+) 
+if me.selectedcolor+1>numofcolors then
+        lg.sdraw(thecolors[me.selectedcolor+1].logo.im,360+tilesep,-tilesep,0,7,7) 
+      else
+      lg.sdraw(thecolors[me.selectedcolor+1].logo.im,520+tilesep,-tilesep, math.rad(15), 5,5) 
+      end
       lg.setShader()
     end
     if tileset then 
@@ -464,12 +477,13 @@ function drawmenus()
     vct(you.outline)
 
   ) 
-      if you.selectedcolor+1>3 then
-        lg.sdraw(thecolors[you.selectedcolor+1].logo,1440-420-300-tilesep,-tilesep,0,1,1) 
+      if you.selectedcolor+1>numofcolors then
+        lg.sdraw(thecolors[you.selectedcolor+1].logo.im,1440-520-220-tilesep,-tilesep,0,7,7) 
       else
-        lg.sdraw(thecolors[you.selectedcolor+1].logo,1440-420-tilesep,-tilesep,0,-1,1) 
-        lg.setShader()
+        lg.sdraw(thecolors[you.selectedcolor+1].logo.im,1440-520-tilesep,-tilesep,-math.rad(15),-5,5) 
+        
       end
+      lg.setShader()
     end
 
 
@@ -631,9 +645,13 @@ if not you.readytoplay then
       lg.sdraw(ready, 100, 70+tilesep,0,5,5)
     else
       if me.right and not me.dirholda then me.selectedcolor = (me.selectedcolor + 1)%(#tiles)
+        repplay(me.mov)
       elseif me.left and not me.dirholda then me.selectedcolor = (me.selectedcolor - 1)%(#tiles)
+        repplay(me.mov)
       elseif me.down and not me.dirholda then me.selectedcolor = (me.selectedcolor + #tiles/2)%(#tiles)
+        repplay(me.mov)
       elseif me.up and not me.dirholda then me.selectedcolor = (me.selectedcolor - #tiles/2)%(#tiles)
+        repplay(me.mov)
       end
 
 
@@ -644,9 +662,13 @@ if not you.readytoplay then
 
     else
       if you.right and not you.dirholda then you.selectedcolor = (you.selectedcolor - 1)%(#tiles2)
+        repplay(you.mov)
       elseif you.left and not you.dirholda then you.selectedcolor = (you.selectedcolor + 1)%(#tiles2)
+        repplay(you.mov)
       elseif you.down and not you.dirholda then you.selectedcolor = (you.selectedcolor + #tiles2/2)%(#tiles2)
+        repplay(you.mov)
       elseif you.up and not you.dirholda then you.selectedcolor = (you.selectedcolor - #tiles2/2)%(#tiles2)
+        repplay(you.mov)
       end
 
     end

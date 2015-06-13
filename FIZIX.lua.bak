@@ -14,6 +14,61 @@ jumpj = 0
 
 floor = 1900 - 2
 
+
+
+function respawn(xx)
+  local newplat = kothplat
+  while(newplat == kothplat) do
+    local rannum = math.random(1,#themaps[mapnum].plats)
+    newplat = themaps[mapnum].plats[rannum]
+    xx.gohere = {}
+    xx.gohere.x = math.random(newplat.x1+15, newplat.x2-15)
+    xx.gohere.y = newplat.y-100
+    
+    xx.gohered = {}
+    xx.gohered.x = (xx.x-xx.gohere.x)/40
+    xx.gohered.y = (xx.y-xx.gohere.y)/40
+    
+  end
+
+
+  
+
+
+end
+
+function respawntravel(xx)
+  if xx.gohere ~= nil then
+    xx.gothroughplats = true
+    xx.float = true
+    xx.im = invis
+    local xready = false
+    local yready = false
+  local xtraveldis = xx.x - xx.gohere.x
+  if math.abs(xtraveldis) > 5 then
+    xx.stop = true
+    xx.x = xx.x-xx.gohered.x
+    xx.v = 0
+  else
+    xready = true
+  end
+
+  local ytraveldis = xx.y - xx.gohere.y
+  if math.abs(ytraveldis) > 5 then
+    xx.stop = true
+    xx.y = xx.y-xx.gohered.y
+    xx.j = 0
+  else
+    yready = true
+  end
+  
+  if xready and yready then
+    xx.gohere = nil
+    end
+  
+  end
+end
+
 function iwanttobreakfree(xx)
   if xx.flinch and xx.holda and not xx.oldholda then
     xx.ft = xx.ft-.5*ramp(xx)
@@ -37,11 +92,15 @@ function relativity(xx)
   else
     xx.ramptimer = 0
     xx.rampcanhit = true
-    xx.rampspeed = 1
   end
-  
-  if dangerclose then
-       rampspeed = actionrampspeed
+
+  if dangerclose and not actionshot and not love.keyboard.isDown("x") then
+    if rampspeed - dangerrampdelta > dangerrampspeed
+    then
+      rampspeed = rampspeed - dangerrampdelta
+    else
+      rampspeed = dangerrampspeed
+    end
   end
 
 
@@ -52,12 +111,19 @@ function relativity(xx)
     --if xx.id == 1 then
     --  xx.rampspeed = .5
     --else
-      xx.rampspeed = rampspeed
+    if dangerclose and not actionshot and not love.keyboard.isDown("x") then
+    xx.rampspeed = rampspeed+(1-rampspeed)/3
+      
+      else
+    xx.rampspeed = rampspeed
+    end
     --end
   end
 
 
 end
+
+
 
 you.tempfloor = floor
 me.tempfloor = floor
@@ -69,8 +135,10 @@ me.jmax = jmax
 me.plat = noplat
 you.plat = noplat
 
-table.insert(themaps[2].plats, {n=1,y = themaps[2].floor, x1 = 0, x2 = 100000, floor = true})
-table.insert(themaps[2].plats, {n=2,y = 964, x1 = 1404, x2 = 100000, floor = true})
+
+
+table.insert(themaps[2].plats, {n=1,y = themaps[2].floor, x1 = 0, x2 = 1404+1, floor = true})
+table.insert(themaps[2].plats, {n=2,y = 964, x1 = 1404, x2 = themaps[2].rightwall+1, floor = true})
 table.insert(themaps[2].plats, {n=3,y = 644, x1 = 1616, x2 = 3196})
 table.insert(themaps[2].plats, {n=4,y = 426, x1 = 3003, x2 = 3118})
 table.insert(themaps[2].plats, {n=5,y = 327, x1 = 2637, x2 = 2637+115})
@@ -94,7 +162,7 @@ table.insert(themaps[2].walls, {n=15,y1 = 964, y2 = 3000, x=1408, barrier = true
 table.insert(themaps[2].walls, {n=16,y1 = -1, y2 = themaps[2].floor, x=0, barrier = true})
 table.insert(themaps[2].walls, {n=17,y1 = -1, y2 = themaps[2].floor, x=themaps[2].rightwall, barrier = true})
 
-table.insert(themaps[1].plats, {n=1, y = themaps[1].floor, x1 = 0, x2 = 100000, floor = true})
+table.insert(themaps[1].plats, {n=1, y = themaps[1].floor, x1 = 0, x2 = themaps[1].rightwall+1, floor = true})
 table.insert(themaps[1].plats, {n=2, y = 1379, x1 = 1120, x2 = 1529})
 table.insert(themaps[1].plats, {n=3, y = 1379, x1 = 1120, x2 = 1529})
 table.insert(themaps[1].plats, {n=4, y = 1627, x1 = 2245, x2 = 2751})
@@ -108,7 +176,7 @@ table.insert(themaps[1].walls, {n=11, y1 = -1, x=0, barrier = true})
 table.insert(themaps[1].walls, {n=12, y1 = -1, x=themaps[1].rightwall, barrier = true})
 
 
-table.insert(themaps[100].plats, {n=1, y = 896, x1 = 0, x2 = 100000, floor = true})
+table.insert(themaps[100].plats, {n=1, y = 896, x1 = 0, x2 = 2000+1, floor = true})
 table.insert(themaps[100].plats, {n=2, y = 465, x1 = 32, x2 = 236})
 table.insert(themaps[100].plats, {n=3, y = 541, x1 = 839, x2 = 1016})
 table.insert(themaps[100].plats, {n=4, y = 719, x1 = 655, x2 = 1560})
@@ -123,23 +191,67 @@ table.insert(themaps[100].walls, {n=2, y1 = 3, y2 = themaps[100].floor+1, x=500,
 
 
 
-table.insert(themaps[3].plats, {y = themaps[3].floor, x1 = 0, x2 = 100000, floor = true})
+table.insert(themaps[3].plats, {n=1, y = themaps[3].floor, x1 = 0, x2 = themaps[3].rightwall+1, floor = true})
 table.insert(themaps[3].walls, {y1 = -1, y2 = themaps[3].floor+1, x=0})
 table.insert(themaps[3].walls, {y1 = -1, y2 = themaps[3].floor+1, x=themaps[3].rightwall})
 
 
-table.insert(themaps[3].plats, {y = 2688, x1 = 2154, x2 = 2726,glass = true})
+table.insert(themaps[3].plats, {n=1,y = 2688, x1 = 2154, x2 = 2726,glass = true})
 
-table.insert(themaps[3].plats, {y = 5616, x1 = 419, x2 = 2139})
-table.insert(themaps[3].plats, {y = 2756, x1 = 419, x2 = 2139})
-table.insert(themaps[3].plats, {y = 2756-286, x1 = 419, x2 = 809})
-table.insert(themaps[3].plats, {y = 2756-286, x1 = 1756, x2 = 2139})
-table.insert(themaps[3].plats, {y = 2756-286*2, x1 = 419, x2 = 645})
-table.insert(themaps[3].plats, {y = 2756-286*2, x1 = 2075, x2 = 2139})
-table.insert(themaps[3].plats, {y = 2756-286*3, x1 = 419, x2 = 636})
-table.insert(themaps[3].plats, {y = 2756-286*3, x1 = 2070, x2 = 2139})
-table.insert(themaps[3].plats, {y = 2756-286*4, x1 = 2072, x2 = 2139})
+table.insert(themaps[3].plats, {n=2,y = 5616, x1 = 419, x2 = 2139})
+table.insert(themaps[3].plats, {n=3,y = 2756, x1 = 419, x2 = 2139})
+table.insert(themaps[3].plats, {n=4,y = 2756-286, x1 = 419, x2 = 809})
+table.insert(themaps[3].plats, {n=5,y = 2756-286, x1 = 1756, x2 = 2139})
+table.insert(themaps[3].plats, {n=6,y = 2756-286*2, x1 = 419, x2 = 645})
+table.insert(themaps[3].plats, {n=7,y = 2756-286*2, x1 = 2075, x2 = 2139})
+table.insert(themaps[3].plats, {n=8,y = 2756-286*3, x1 = 419, x2 = 636})
+table.insert(themaps[3].plats, {n=9,y = 2756-286*3, x1 = 2070, x2 = 2139})
+table.insert(themaps[3].plats, {n=10,y = 2756-286*4, x1 = 2072, x2 = 2139})
+table.insert(themaps[3].boxes, {p1 = {x = 750, y = 5585},  size = 8, kind = "paper", density = 2})
 
+
+function hexplatcheck2(y1, x1, x2, ex, why, w, why2, v)
+
+
+        midv2 = {x = (ex+w/2)+v, y=why2}
+        midv = {x = ex+w/2+.001, y=why}
+        local linep1 = {x = x1+.001, y = y1}
+        local linep2 = {x = x2, y = y1}
+        if pint(linep1, linep2, midv, midv2) 
+        then return true
+        else return false
+        end
+
+      end
+
+
+function updateboxes()
+  if themaps[mapnum].boxes ~= nil and not pause then
+    for i,xx in ipairs(hitt) do 
+      for j,b in ipairs(themaps[mapnum].boxes) do
+        local xline = {p1 = {x = xx.mid, y = xx.y+xx.height/2},
+                       p2 = {x = xx.mid+xx.v, y = xx.y+xx.height/2-xx.j}
+                       }
+        local bline1 = {p1 = {x = b.p1.x - b.size, y = b.p1.y-b.size},
+                        p2 = {x = b.p1.x + b.size, y = b.p1.y+b.size}
+                        }
+        local bline2 = {p1 = {x = b.p1.x - b.size, y = b.p1.y+b.size},
+                        p2 = {x = b.p1.x + b.size, y = b.p1.y-b.size}
+                      }
+                      if lint(xline, bline1) or lint(xline, bline2) then
+                        if b.kind == "paper" and math.sqrt(xx.v^2 + xx.j^2) > paperweight then
+                          makepapers(b.p1.x+math.random(-b.size,b.size),
+                            b.p1.y+math.random(-b.size,b.size)
+                            ,xx.v,xx.j,b.density)
+                        
+                      end
+                      end
+        
+      end
+     end
+  end
+  
+end
 
 function ramp(xx)
   return xx.rampspeed
@@ -183,14 +295,14 @@ table.insert(themaps[3].plats, {y = 3004, x1 = 581, x2 = 1039})
 
 
 table.insert(themaps[3].walls, {y1 = 1900, y2 = themaps[3].floor+1, x=419, glasswall = 5618})
-table.insert(themaps[3].walls, {y1 = 2763, y2 = 5618, x=2139, glasswall = 5778})
-table.insert(themaps[3].walls, {y1 = 1613, y2 = 2184, x=2139})
+table.insert(themaps[3].walls, {y1 = 2763, y2 = 5778, x=2139, glasswall = 5618})
+table.insert(themaps[3].walls, {y1 = 1613, y2 = 2184, x=2139, glasswall = y2})
 table.insert(themaps[3].walls, {y1 = 2830, y2 = themaps[3].floor+1, x=3159})
 
 
 
 
-table.insert(themaps[3].plats, {y = themaps[3].floor, x1 = 0, x2 = 100000, floor = true})
+table.insert(themaps[3].plats, {y = themaps[3].floor, x1 = 0, x2 = themaps[3].rightwall+1, floor = true})
 for i,v in ipairs(themaps[3].plats) do
   themaps[3].plats[i].n = i
 end
@@ -221,7 +333,7 @@ function bump(xx)
       {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+xx.height},
       {x=xx.mid, y = xx.y+5},
       function(z)
-        if not(xx.color.n==2 and xx.type==1) and not (z.color.n==2 and z.type==1) then
+        if not(xx.color.n==2 and xx.type==1) and not (z.color.n==2 and z.type==1) and not z.flinch then
           if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
             if z.flinch then
               z.v = (z.v*1/4) + (xx.v*3/4)
@@ -365,7 +477,7 @@ function runrunrun(xx)
 
 
 
-  elseif math.abs(xx.v) > xx.color.s.speed*xx.speedpenalty*speedminit-accel*2 and (xx.left or xx.right) and xx.g  and xx.run and not xx.block and not xx.slide and not xx.dodge then
+  elseif math.abs(xx.v) > xx.color.s.speed*xx.speedpenalty*speedminit-accel*2 and (xx.left or xx.right) and xx.g  and xx.run and not xx.block and not xx.slide and not xx.dodge and xx.type ~= 2 then
     xx.a1 = false
     xx.a2 = false
     xx.a3 = false
@@ -451,6 +563,7 @@ function speedpenaltycalc(xx,yy)
 end
 
 function movex(xx,yy)
+  respawntravel(xx)
   relativity(xx)
   speedpenaltycalc(xx,yy)
   runrunrun(xx)
@@ -506,16 +619,15 @@ function movex(xx,yy)
     then 
       if xx.running then
         xx.jt = runjt
-        xx.jmax = runjmax
+        xx.jmax = runjmax*xx.color.s.jump
         xx.j = runj
       else
         xx.jt = jt
-        xx.jmax = jmax
-        if xx.dubtimer > 0 then
-          xx.j = jumpj*superjumpratio
+        xx.jmax = jmax*xx.color.s.jump
+        if xx.cansuperjump then
+          xx.j = jumpj*superjumpratio*xx.color.s.speed
         else
-
-          xx.j = jumpj*xx.color.s.jump
+          xx.j = jumpj*xx.color.s.speed
         end
 
       end
@@ -542,7 +654,7 @@ function movex(xx,yy)
       xx.landingcounter = xx.landingcounter - 1*ramp(xx)
     else xx.landingcounter = 0
     end
-    if z.blockb and (not xx.holda and xx.a1b) and math.abs(z.j) + math.abs(z.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j) and xx.j > 0
+    if z.blockb and xx.a1b and math.abs(z.j) + math.abs(z.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j) and xx.j > 0
     then 
       if climbplatcheck(xx.x, xx.y+xx.height/2, xx.lr, xx.height/2, xx.v, xx.j) then
         xx.ctim = 7
@@ -553,18 +665,39 @@ function movex(xx,yy)
       xx.j = climbj
       xx.v = xx.v/2
     elseif z.left and xx.v >= 1 + xx.push*1.5
-    then xx.v = xx.v - adecrate*ramp(xx)
+    then 
+      if xx.flinch then
+        xx.v = xx.v - adecrate/5*ramp(xx)
+      else
+        xx.v = xx.v - adecrate*ramp(xx)
+      end
       xx.slowdown = true
-    xx.im = slowdown
+      xx.im = slowdown
+
     elseif z.right and xx.v <= -1 + xx.push*1.5
-    then xx.v = xx.v + adecrate*ramp(xx)
+    then 
+      if xx.flinch then
+        xx.v = xx.v + adecrate/5*ramp(xx)
+      else
+        xx.v = xx.v + adecrate*ramp(xx)
+      end
       xx.slowdown = true
       xx.im = slowdown  
     elseif z.left and xx.v > - maxairmove + xx.push*1.5
-    then xx.v = xx.v -amovrate*ramp(xx)
+    then 
+      if xx.flinch then
+        xx.v = xx.v - amovrate/5*ramp(xx)
+      else
+        xx.v = xx.v - amovrate*ramp(xx)
+      end
       xx.slowdown = false
     elseif z.right and xx.v < maxairmove + xx.push*1.5
-    then xx.v = xx.v +amovrate*ramp(xx)
+    then 
+      if xx.flinch then
+        xx.v = xx.v + amovrate/5*ramp(xx)
+      else
+        xx.v = xx.v + amovrate*ramp(xx)
+      end
       xx.slowdown = false
 
     elseif xx.push > 0 then
@@ -581,7 +714,7 @@ function movex(xx,yy)
     --landing
     if z.up and xx.j > 0 
     and xx.jmax > 0 
-    and xx.firstjump and not xx.stop and not xx.flinch
+    and xx.firstjump and not xx.flinch
     then xx.jmax = xx.jmax - jumpheight*ramp(xx)
       --the end arc/fall of any jump or the mini jump
     else
@@ -611,6 +744,8 @@ function movex(xx,yy)
 
     end
   end
+  xx.cansuperjump = false
+
   xx.float = false
 end
 

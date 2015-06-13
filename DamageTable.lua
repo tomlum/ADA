@@ -27,9 +27,9 @@ superjumpratio = 1.5
 --THE BIG ONES
 --THE BIG ONES
 --THE BIG ONES
-dangerrampspeed = .75
+dangerrampspeed = .5
 dangerrampdelta = rampnormaldelta*1.5
-dangerbarey = 10
+dangerbarey = 70
 --only for maxzoom
 dangerzoom = .45
 dangerzoomdelta = .001

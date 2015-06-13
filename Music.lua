@@ -270,10 +270,19 @@ xx.redsound3:setVolume(.4)
   xx.selected:setPitch(1)
   mov = love.audio.newSource("sounds/moving.wav", "stream")
   mov:setVolume(SFXV - .7)
-  mov2 = love.audio.newSource("sounds/moving.wav", "stream")
-  mov2:setVolume(SFXV - .7)
-  mov2:setPitch(1.2)
 
+  if i == 1 then
+  xx.mov = love.audio.newSource("sounds/moving.wav", "stream")
+  xx.mov:setVolume(SFXV - .7)
+  xx.mov:setPitch(1.1)
+end
+
+if i == 2 then
+  xx.mov = love.audio.newSource("sounds/moving.wav", "stream")
+  xx.mov:setVolume(SFXV - .7)
+  xx.mov:setPitch(.9)
+  end
+  
 
   xx.slidesound = love.audio.newSource("sounds/slide.wav", "static")
   xx.slidesound:setVolume(SFXV-.82)

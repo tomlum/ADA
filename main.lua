@@ -1,6 +1,10 @@
 require "utilities"
---xx.currentc shifts when doing apk, also find a place to appropriately place 
---xwx.purplanding = false maybe tie to being in the air and currentc
+
+--the reason vein transparency works the way ti does is the trail!!!!
+--green creature emits more sparks, more damage?
+
+--rubble and glass making it mor esparse is based on modulo, but should be on modulo of first digit not the whole number
+
 
 --dull gold color
 --bright blue
@@ -26,7 +30,7 @@ dangerCloseIsAThing = true
 --if not in the air then some kind of unblocking animation
 --apple w is window close
 --SHAEZ TIED TO RUMBLE?!?!?!?
-melcolor = 3
+melcolor = 2
 mercolor = 4
 youlcolor = 2
 yourcolor = 1
@@ -37,16 +41,16 @@ rampnormaldelta = .008
 drawboxes = false
 drawfeet = false
 fightclub = true
-volume=.5
+volume=0
 fullscreen = false
 readout = false
 putmehere = 975
 putyouhere = 1025
-menu = "title"
+menu = "play"
 cameramonitor = false
 if menu == "play" then
   noload = true
-  mapnum = 2
+  mapnum = 3
   placespeople = true 
 end
 mute = false
@@ -229,9 +233,6 @@ musicmute = true
 justone = false
 --colorcontrol, go, size,menu
 
-pauseonhit = false
-pausedonhit = false
-
 
 --when dead, flash white, background cuts to black, characters are stark white
 
@@ -276,7 +277,6 @@ require "blur"
 require "menustuff"
 require "DamageTable"
 require "meandyou"
-require "colorcontrol"
 require "camera"
 require "Hits"
 require "Music"
@@ -284,13 +284,14 @@ require "FIZIX"
 require "Animation"
 require "Joysticks"
 require "ATTACK"
-require "GG"
-require "BB"
-require "pp"
-require "OO"
-require "RR"
+require "at/GG"
+require "at/BB"
+require "at/pp"
+require "at/OO"
+require "at/RR"
 require "ai"
 require "koth"
+require "colorcontrol"
 loader = require "love-loader"
 
 if noload then
@@ -370,12 +371,7 @@ function love.load()
 
 
   joysticks = love.joystick.getJoysticks()
-  if #joysticks > 0 then
-    me.joystick = joysticks[1]
-  end
-  if #joysticks > 1 then
-    you.joystick = joysticks[2]
-  end
+
 
 
   x = 11
@@ -413,7 +409,7 @@ function love.update()
   --colorshift(thecolors[2].c,8)
   --colorshift(me.outline,6)
   --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
-  if love.keyboard.isDown("x")  then speedramp = true end
+  if love.keyboard.isDown("x")  then rampspeed = .2 end
   if speedramp then 
     rampspeed= therampspeed
     if ramptimer >= 1 then 
@@ -480,12 +476,8 @@ function love.update()
 
 
 
-    if #joysticks ==1  then
-      jjstick(me,me.joystick)
-    elseif #joysticks > 1 then
       jjstick(me,me.joystick)
       jjstick(you,you.joystick)
-    end
 
     controlsstuff(me)
     controlsstuff(you)
@@ -574,6 +566,9 @@ function love.update()
       camerafol()
 
       if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
+        
+  updateboxes()
+  updateparticles()
         animate(me)
         animate(you)
 
@@ -866,32 +861,38 @@ function love.update()
       for i,v in ipairs(love.joystick.getJoysticks()) do
         lg.print("hey"..v:getName()..tostring(i), 200, 20+20*i)
       end
+      
+     
       lg.setColor(255,0,0)
 
-    end
+end
+
+if pause then
+  lg.sdraw(pausescreen,0,0,0,10,10)
+  end
+  
+      lg.setColor(255,255,255,255)
+   lg.print("me.start"..tostring(me.start), 300, 380)
+    lg.print("pause"..tostring(pause), 300, 400)
+      
+    lg.print("themap.name "..tostring(themap.name), 300, 420)
+    lg.print("lvfade "..tostring(lvfade), 300, 440)
+    lg.print("rampspeed "..tostring(rampspeed), 300, 460)
+     
+  
     lg.setColor(255,0,255)
 
     --cameramonitorf(100,100)
-    fallmonitor(me, 100,100)
+   
 
-    lg.print("me.rlvl"..tostring(me.rlvl), 700, 300)
-
-    if love.keyboard.isDown("6") and #hittmon < 20 then spawnmon(camera.x+math.random(0,200), camera.y+10) end
-    if love.keyboard.isDown("4") then blursize = blursize + 1
-    elseif love.keyboard.isDown("3") and blursize > 1 then blursize = blursize - 1 end
-    if love.keyboard.isDown("q") then 
-      me.score = me.score + 10
-      end
-    if kothplat ~= nil then
-      lg.print("you.health"..tostring(you.health), 500, 100)
-    end
-    lg.print("me.rightbumpb"..tostring(me.rightbumpb), 500, 120)
-    lg.print("1-(xx.score/kothscoretowin) "..tostring(1-(me.score/kothscoretowin)), 500, 140)
-
-    if #joysticks > 0 then
+setControllers()
       rumblemodule(me)
-    end
-    if #joysticks > 1 then
       rumblemodule(you)
+      if me.animcounter < 2 and me.animcounter > 0 then
+      makenleaves(me.x,me.y,me.v,me.j,1)
+      
     end
+    
+ paralaxshake = false
+     -- movetod(.03)
   end

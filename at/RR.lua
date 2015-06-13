@@ -69,7 +69,7 @@ reddelta = -5
 at.r = {}
 at.r.p = {}
 at.r.p.maxv = 12
-at.r.p.dam = 6
+at.r.p.dam = 4
 at.r.p.kb = 0
 at.r.p.ft = 8
 at.r.p.delta = 4
@@ -86,7 +86,7 @@ at.r.u.z = 3.5
 at.r.u.mv = 4
 
 at.r.ap = {}
-at.r.ap.dam = 6
+at.r.ap.dam = 5
 at.r.ap.kb = 1
 at.r.ap.ft = 8
 at.r.ap.delta = 4
@@ -569,7 +569,7 @@ function randr(xx)
                 xx.im = redau2
                 if xx.animcounter < 10 - reddelta*xx.rlvl then
                   xx.drawslash = true
-                  xx.j = xx.j + 7
+                  if xx.j < 0 then xx.j = xx.j + 15 else xx.j = xx.j + 3 end
 
                   hboxcs(xx, xx.id, 
                     {x=xx.mid+xx.v, y = xx.y-37-xx.j},
@@ -597,8 +597,10 @@ function randr(xx)
 
 
               elseif xx.type == 5 then
-                if xx.animcounter < 50  then
-                  if xx.j > 0 then xx.animcounter = 1 end
+                if xx.animcounter < 70  then
+                  if xx.animcounter < 3 then
+                xx.j = 12 - xx.rlvl
+                    end
                   if xx.a4b and not xx.holda and xx.rlvl > 0 then
                     xx.animcounter = 200
                   end

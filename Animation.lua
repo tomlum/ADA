@@ -35,8 +35,9 @@ morph6 = lg.newImage("me/attack/morph6.png")
 morph7 = lg.newImage("me/attack/morph7.png")
 wallgrab = {im = lg.newImage("me/attack/wallgrab.png")
 }
-partition = lg.newImage("enviro/partition2.png")
-partition:setFilter("nearest")
+partitionp1 = lg.newImage("enviro/partitionp1.png")
+partitionp2 = lg.newImage("enviro/partitionp2.png")
+--partition:setFilter("nearest")
 
 jumprise = {im = lg.newImage("me/jump/jumprise.png"), extrah = 5}
 jumpfalling = {im = lg.newImage("me/jump/jumpfalling.png"), extrah = 5}
@@ -67,13 +68,13 @@ function movetod(delta)
 
 
   if hour < 6 then 
-    tod = {.6,.6,.8}
+    tod = {.5,.5,.8}
 
   elseif hour < 7 then
     if minute < 30 then
       tod = {
-        .6+.4*(minute/30),
-        .6+.4*(minute/30),
+        .5+.5*(minute/30),
+        .5+.5*(minute/30),
         .8}
     else
       tod ={
@@ -88,8 +89,8 @@ function movetod(delta)
   elseif hour < 21 then
     if minute > 30 then
       tod = {
-        1-.4*((minute-30)/30),
-        1-.4*((minute-30)/30),
+        1-.5*((minute-30)/30),
+        1-.5*((minute-30)/30),
         .8}
     else
       tod ={
@@ -99,7 +100,7 @@ function movetod(delta)
 
     end
 
-  else tod = {.6,.6,.8}
+  else tod = {.5,.5,.8}
   end
 
 end
@@ -113,6 +114,16 @@ function tods()
 
 end
 
+inverseshader = lg.newShader(
+  [[
+  vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
+  {
+    vec4 tc = Texel(texture, texture_coords); 
+
+    return vec4(1-tc[0], 1-tc[1], 1-tc[2], tc[3]);
+  }
+  ]] )
+
 todshader = lg.newShader(
   [[
   extern vec4 todd;
@@ -120,7 +131,7 @@ todshader = lg.newShader(
   {
     vec4 texcolor = Texel(texture, texture_coords); 
 
-    return vec4(todd[0]*texcolor[0],todd[1]*texcolor[1],todd[2]*texcolor[2],1);;
+    return vec4(todd[0]*texcolor[0],todd[1]*texcolor[1],todd[2]*texcolor[2],texcolor[3]);
   }
   ]] )
 
@@ -155,9 +166,9 @@ cshader = lg.newShader(
 
     if (texcolor[0] == texcolor[1] &&
       texcolor[1] == texcolor[2] &&
-      texcolor[2] == texcolor[3] && 
+      texcolor[2] == texcolor[0] && 
       texcolor[1] > .5)
-    return vec4(palette[0][0]*texcolor[0],palette[0][1]*texcolor[1],palette[0][2]*texcolor[2],texcolor[3]);
+    return vec4(palette[0][0]*texcolor[0],palette[0][1]*texcolor[1],palette[0][2]*texcolor[2],texcolor[3]*palette[0][3]);
 
     if (texcolor == fscreen)
     return palette[1];  
@@ -211,7 +222,11 @@ function vct(l,a)
 
     return {vctr,vctg,vctb, 1}
   else
+    if a == 0 then
+    return {vctr,vctg,vctb, 0}
+      else
     return {vctr,vctg,vctb, a/255}
+    end
   end
 end
 
@@ -267,7 +282,7 @@ function cinemabars()
   elseif barey > 0 and slowmot == 0 then
     barsmovein = -4
   end
-
+barey = 120*(1-rampspeed)
   lg.setShader()
   lg.setColor(0,0,0)
   lg.srectangle("fill",0,0,1440,barey)
@@ -290,13 +305,54 @@ function csds(xx, flip)
     b=xx.shade.b -
     (xx.shade.b - xx.shade.b/255*(xx.color.c.b))*bleed/2
   }
-
-    local rc = vct(xx.leftc.c)
-    local lc = vct(xx.rightc.c)
+  local shadeea = 255
+  
+  if xx.color.n == 2 and xx.animcounter >= 7 and xx.greenflicker then
+     shadeea = 0
+    end
+  
+ local colora = 150
+ 
+ local cctv = (xx.cct/colorchangetime)
+ local lefcolor = {r = (xx.leftc.c.r + shadee.r/2)*2/3,
+   g = (xx.leftc.c.g + shadee.g/2)*2/3,
+   b = (xx.leftc.c.b + shadee.b/2)*2/3}
+ if xx.leftc.n == xx.currentc then
+   
+   lefcolor = {r = (xx.leftc.c.r + shadee.r)/2+(((xx.leftc.c.r - shadee.r)/2)*cctv),
+   g = (xx.leftc.c.g + shadee.g)/2+(((xx.leftc.c.g - shadee.g)/2)*cctv),
+   b = (xx.leftc.c.b + shadee.b)/2+(((xx.leftc.c.b - shadee.b)/2)*cctv)}
+   
+ end
+ 
+local righcolor = {r = (xx.rightc.c.r + shadee.r/2)*2/3,
+   g = (xx.rightc.c.g + shadee.g/2)*2/3,
+   b = (xx.rightc.c.b + shadee.b/2)*2/3}
+ if xx.rightc.n == xx.currentc then
+   
+    righcolor = {r = (xx.rightc.c.r + shadee.r)/2+(((xx.rightc.c.r - shadee.r)/2)*cctv),
+   g = (xx.rightc.c.g + shadee.g)/2+(((xx.rightc.c.g - shadee.g)/2)*cctv),
+   b = (xx.rightc.c.b + shadee.b)/2+(((xx.rightc.c.b - shadee.b)/2)*cctv)}
+   
+ end
+ 
+ 
+ 
+ 
+    local rc = vct(lefcolor)
+    local lc = vct(righcolor)
   if (xx.lr < 0 and flip~=nil) or xx.lr > 0 then
-    lc = vct(xx.leftc.c)
-    rc = vct(xx.rightc.c)
+    lc = vct(lefcolor)
+    rc = vct(righcolor)
   end
+--[[
+  local rc = vct(xx.leftc.c,colora)
+    local lc = vct(xx.rightc.c,colora)
+  if (xx.lr < 0 and flip~=nil) or xx.lr > 0 then
+    lc = vct(xx.leftc.c,colora)
+    rc = vct(xx.rightc.c,colora)
+  end
+]]--
 
   local outlinee = {
     r=xx.outline.r - 
@@ -319,7 +375,7 @@ function csds(xx, flip)
     ) 
   else
     cshader:send( "palette", 
-      vct(shadee), 
+      vct(shadee, shadeea), 
       vct(xx.color.c),
       vct(thecolors[xx.currentc].c), 
       vct(outlinee),
@@ -450,8 +506,9 @@ whatlevel = function()
         end)
 
       enviro.rightwall = 2000
+      loader.newImage(enviro,'paralax', "enviro/fightclubparalax.png")
       loader.newImage(enviro,'stage', "enviro/fightclub.png")
-      loader.newImage(enviro,"paralax","enviro/READY.png")
+     
       loader.newImage(enviro,"sky","enviro/ready.png")
       me.x = putmehere
       you.x = putyouhere
@@ -521,7 +578,7 @@ whatlevel = function()
         loader.newImage(enviro, 'thelibraryveneer',"enviro/libraryveneer.png")
       end
 
-      me.x = 700
+      me.x = 20--700
       you.x = 2000
       me.y = 300
       you.y = 300
@@ -539,6 +596,7 @@ whatlevel = function()
         enviro.pfloors = lg.newImage( "enviro/floorsplayer.png")
         enviro.floorsveneer2 = lg.newImage("enviro/floorsveneer2.png")
         enviro.floorsveneer1 = lg.newImage("enviro/floorsveneer1.png")
+        enviro.paralax2 = lg.newImage("enviro/floorparalax2.png")
 
       else
         loader.start(function()
@@ -550,11 +608,16 @@ whatlevel = function()
         loader.newImage(enviro,'pfloors', "enviro/floorsplayer.png")
         loader.newImage(enviro, 'floorsveneer2',"enviro/floorsveneer2.png")
         loader.newImage(enviro, 'floorsveneer1',"enviro/floorsveneer1.png")
+        loader.newImage(enviro,'paralax2', "enviro/floorparalax2.png")
       end
-      me.x = 500
-      you.x = 3000
-      me.y = 300
-      you.y = 300
+      
+      me.x = 750 me.y = 5585-30
+      you.x = 750 you.y = 5585-30
+      
+      --me.x = 500
+      --you.x = 3000
+      --me.y = 300
+      --you.y = 300
       enviro.rightwall = 5000
       enviro.ds = 5
       thesong = song2
@@ -585,9 +648,9 @@ you.im = idle1
 
 
 function drawa(xx)
-  if dangerclose then
+  if dangerclose and xx.v ~=0 then
     table.insert(xx.trail, 
-      {color = clone(xx.color), im = clone(xx.im), lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 0, colornum = xx.currentc, legs = clone(xx.curimlegs), legsy = xx.im.legsy,dangertrail = true})
+      {color = clone(xx.color), im = clone(xx.im), lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = .3, colornum = xx.currentc, legs = clone(xx.curimlegs), legsy = xx.im.legsy,dangertrail = true})
 
 
   end
@@ -869,29 +932,49 @@ end
 drawstreetstuff = function()
   lg.draw(enviro.stagefloor, 0, 0, 0, 1, 20)
   lg.draw(enviro.rafters,5608-502, 1536)
-  lg.draw(partition,21, 1,0, -1,3.11)
-  lg.draw(partition,themaps[1].rightwall-20, 0)
+  drawpartition(0, themaps[1].floor, -1)
+  drawpartition(themaps[1].rightwall, themaps[1].floor, 1)
 
 end
+
+function drawpartition(fx, fy, lr)
+  local i = fy
+while i > 0 do
+  lg.draw(partitionp2, fx-3*lr, i, 0, -lr*3, 3, 40, 115)
+  if i == fy then
+  lg.draw(partitionp1, fx-3*-lr, i, 0, -lr, 1, 0, 10)
+end
+i = i - 115*3
+  end
+end
+
+
 drawlibrarystuff = function()
   if rampcanhit and math.random() > .5 then makenwater(602,930,0,2,1)
   end
   lg.draw(enviro.plibrary,0,0)
-  lg.draw(partition,21, 1,0, -1,3.11)
-  lg.draw(partition,themaps[3].rightwall-21, 0, 0, 1, 3.11)
+  drawpartition(0, themaps[2].floor, -1)
+  drawpartition(themaps[2].rightwall, 964, 1)
   libraryveneer()
+  lg.setColor(27,27,27,255)
+  lg.rectangle("fill", -3000, themaps[2].floor, 6000+themaps[2].rightwall, 1000)
+  cclear()
 end
 
 drawfloorsstuff = function()
   lg.draw(enviro.pfloors,0,0)
-  lg.draw(partition,21, 1,0, -1,3.11)
-  lg.draw(partition,themaps[3].rightwall-21, 0, 0, 1, 3.11)
+  drawpartition(0, themaps[3].floor, -1)
+  drawpartition(themaps[3].rightwall, themaps[3].floor, 1)
   floorsveneer()
 end
 
 enviro.rubble = lg.newImage("enviro/rubble.png")
 enviro.glass = lg.newImage("enviro/glass.png")
 enviro.spark = lg.newImage("enviro/spark.png")
+enviro.spark2 = lg.newImage("enviro/spark2.png")
+enviro.spark3 = lg.newImage("enviro/spark3.png")
+enviro.leaf = lg.newImage("enviro/leaf.png")
+leaves = {}
 rubble = {}
 glasseses = {}
 dust = {}
@@ -901,44 +984,34 @@ blackn = 0
 glassn = 0
 glassclarity = 255
 elar = frana
+
+
+function drawparticles()
+  drawleaves()
+  drawsparks()
+  drawdust()
+  drawglass()
+  drawrubble()
+  drawwater()
+  drawpapers()
+
+end
+
+function updateparticles()
+  updateleaves()
+  updatesparks()
+  updatedust()
+  updateglass()
+  updaterubble()
+  updatewater()
+  updatepapers()
+  end
+
 function drawpapers()
 
-  for i = #papers, 1, -1 do
-    local temp = papers[i]
-    --if paper hits the ceiling
-    if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then
-      temp.j = 0
-    end
-    if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then table.remove(papers,i) end
 
-  end
   for i,v in ipairs(papers)do
-  if not me.actionshot and not you.actionshot and not pause then
-    v.y = v.y - v.j
-    v.x = v.x + v.v
-    if v.v > 1 then v.v = v.v - .2
-    elseif v.v < -1 then v.v = v.v + .2
-    end
-    if v.j > -1 then v.j = v.j - .1
-    end
-
-    if math.abs(me.mid-v.x) < 25 and math.abs(me.y+27 - v.y) < 50 and me.v+me.j > 7
-    then v.v = v.v + me.v*.025
-      v.j = v.j + me.j*.01 + .1
-    end
-    if math.abs(you.mid-v.x) < 25 and math.abs(you.y+27 - v.y) < 50 and you.v+you.j > 7
-    then v.v = v.v + you.v*.025
-      v.j = v.j + you.j*.01 + .1
-    end
-
-
-
-    if v.n < papertime then
-      v.n = v.n + 1
-    else v.n = 0
-      v.lr = -v.lr
-    end
-  end
+  
 
 
   if v.n < 10 then lg.draw(paper1,v.x-10*v.lr,v.y-10, v.r, v.lr*1, 1)
@@ -952,7 +1025,121 @@ function drawpapers()
 end
 end
 
-function makepapers(ex,why,vee,jay,en)
+function updatepapers()
+
+  for i = #papers, 1, -1 do
+    local temp = papers[i]
+    --if paper hits the ceiling
+   local lr = 1
+   if temp.v < 0 then lr = -1 end
+    if lineplatcheck(temp.x, temp.y-3,temp.v*1.3, temp.j*1.3) or
+    linewallcheck(temp.x+lr*4, temp.y-3,temp.v*1.3, temp.j*1.3)
+    then table.remove(papers,i) end
+
+  end
+  for i,v in ipairs(papers)do
+  if not me.actionshot and not you.actionshot and not pause then
+    v.y = v.y - v.j*1.3*rampspeed
+    v.x = v.x + v.v*1.3*rampspeed
+    if v.v > 1.5 then v.v = v.v - .4*rampspeed
+    elseif v.v < -1.5 then v.v = v.v + .4*rampspeed
+    end
+    if v.j > -1 then v.j = v.j - .2*rampspeed
+    end
+
+    if math.abs(me.mid-v.x) < 25 and math.abs(me.y+27 - v.y) < 50 and me.v+me.j > 7
+    then v.v = v.v + me.v*.05
+      v.j = v.j + me.j*.005 + .2
+    end
+    if math.abs(you.mid-v.x) < 25 and math.abs(you.y+27 - v.y) < 50 and you.v+you.j > 7
+    then v.v = v.v + you.v*.05
+      v.j = v.j + you.j*.005 + .2
+    end
+    
+
+
+    if v.n < papertime then
+      v.n = v.n + 3
+    else v.n = 0
+      v.lr = -v.lr
+    end
+  end
+
+
+
+end
+end
+
+
+function updateleaves()
+
+  for i = #leaves, 1, -1 do
+    local temp = leaves[i]
+   local lr = 1
+   if temp.v < 0 then lr = -1 end
+    if lineplatcheck(temp.x, temp.y+3,temp.v, temp.j) or
+    linewallcheck(temp.x+lr*4, temp.y+3,temp.v, temp.j)
+    then table.remove(leaves,i) end
+
+  end
+  for i,v in ipairs(leaves)do
+  if not me.actionshot and not you.actionshot and not pause then
+    v.y = v.y - v.j*rampspeed
+    v.x = v.x + v.v*rampspeed
+    
+    if v.v >= 2 then
+      v.swing = true
+    elseif v.v <= -2 then
+      v.swing = false
+    end
+    
+    if v.swing then v.v = v.v - .1*rampspeed
+    else v.v = v.v + .1*rampspeed+math.random()/50
+    end
+    if v.j > -1 then v.j = v.j - .1*rampspeed-math.random()/50
+    end
+
+    if math.abs(me.mid-v.x) < 25 and math.abs(me.y+27 - v.y) < 50 and me.v+me.j > 7
+    then v.v = v.v + me.v*.05
+      v.j = v.j + me.j*.02 + .2
+    end
+    if math.abs(you.mid-v.x) < 25 and math.abs(you.y+27 - v.y) < 50 and you.v+you.j > 7
+    then v.v = v.v + you.v*.05
+      v.j = v.j + you.j*.02 + .2
+    end
+
+    local rotaval = 6-hof(lof(6,v.v), -6)
+    v.r = math.rad(-90) + math.rad(180)*rotaval/12
+
+  end
+
+
+
+end
+end
+function drawleaves()
+
+ 
+  for i,v in ipairs(leaves)do
+
+tsetColor(v.color.r, v.color.g,v.color.b)
+  lg.draw(enviro.leaf,v.x,v.y, v.r-math.rad(45), 1, 1, 5, 0)
+  
+end
+end
+
+function makenleaves(ex,why,vee,jay,n)
+  for i = 1, n do
+    local rb = math.random(0,80)
+    table.insert(leaves,{x = ex, y = why, v=vee*math.random(), j = jay*math.random()+math.random()*4, swing = true,
+        
+        color = {r=rb, g=math.random(100, 255), b=rb}, r = 0
+        })
+  end
+end
+
+
+function makenpaper(ex,why,vee,jay,en)
   for i = en, 1, -1 do
     if math.random() > .5 then 
       elar = 1
@@ -969,83 +1156,123 @@ function makepapers(ex,why,vee,jay,en)
 end
 
 
-function drawglass()
-
-  for i = #glasseses, 1, -1 do
+function updateglass()
+   for i = #glasseses, 1, -1 do
     local temp = glasseses[i]
-    if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then table.remove(glasseses,i) end
+    local lr = 1
+   if temp.v < 0 then lr = -1 end
+    if lineplatcheck(temp.x, temp.y,temp.v*1.2, temp.j*1.2) or linewallcheck(temp.x+lr, temp.y,temp.v*1.2, temp.j*1.2)  or i > 500 then table.remove(glasseses,i) end
+    
 
   end
   for i,v in ipairs(glasseses)do
-  if #glasseses > 500 then table.remove(glasseses,500) end
   if not me.actionshot and not you.actionshot and not pause then
-    v.y = v.y - v.j*2/3*rampspeed
-    v.x = v.x + v.v*2/3*rampspeed
-    v.j = v.j - .3*2/3*rampspeed
+    v.y = v.y - v.j*1.15*rampspeed
+    v.x = v.x + v.v*1.15*rampspeed
+    v.j = v.j - .18*rampspeed
+  end
+
+end
+end
+
+function drawglass()
+
+  for i,v in ipairs(glasseses)do
+  if not me.actionshot and not you.actionshot and not pause then
+   
     glassn = math.random(155,255)
     glassclarity = math.random(55,255)
   end
-  lg.setColor(glassn,255,255,classclarity)
+  tsetColor(glassn,255,255,glassclarity)
   lg.draw(enviro.glass,v.x,v.y,70/(v.v+v.y),math.random()*math.random(-1,1),math.random()*math.random(-1,1), 1, 1)
   lg.setColor(255,255,255)
 
 end
 end
 
-function drawparticles()
-  drawsparks()
-  drawdust()
-  drawglass()
-  drawrubble()
-  drawwater()
-  drawpapers()
 
+
+function tsetColor(r,g,b,a)
+  lg.setColor(r*tod[1], g*tod[2], b*tod[3], a)
 end
+
+function tsetColor(r,g,b)
+  lg.setColor(r*tod[1], g*tod[2], b*tod[3], 255)
+  end
 
 function drawdust()
 
-  for i = #dust, 1, -1 do
+  for i,v in ipairs(dust)do
+  if not me.actionshot and not you.actionshot and not pause then
+    dustn = math.random(100,200)
+  end
+  tsetColor(dustn,dustn,dustn,.3)
+  lg.draw(enviro.rubble,v.x,v.y-2,70/(v.v+v.y),1,1)
+  lg.setColor(255,255,255)
+
+end
+
+
+end
+
+function updatedust()
+  
+    for i = #dust, 1, -1 do
     local temp = dust[i]
-    if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then table.remove(dust,i) end
+    
+    local lr = 1
+   if temp.v < 0 then lr = -1 end
+    
+    if lineplatcheck(temp.x, temp.y,temp.v*3, temp.j*2) or linewallcheck(temp.x+lr, temp.y,temp.v*3, temp.j*2) or i > 500 then table.remove(dust,i) end
 
   end
 
   for i,v in ipairs(dust)do
   if not me.actionshot and not you.actionshot and not pause then
-    v.y = v.y - v.j*rampspeed
-    v.x = v.x + v.v*rampspeed
-    v.j = v.j - .5*rampspeed
-    dustn = math.random(100,200)
+    v.y = v.y - v.j*rampspeed*2
+    v.x = v.x + v.v*rampspeed*3
+    v.j = v.j - .6*rampspeed
   end
-  lg.setColor(dustn,dustn,dustn,150)
-  lg.draw(enviro.rubble,v.x,v.y-2,70/(v.v+v.y),1.5,1.5)
-  lg.setColor(255,255,255)
 
 end
-end
+
+  
+  end
+
+
 rubbletimer = 0
 
-function drawrubble()
+function updaterubble()
   if rubbletimer > 100 then rubbletimer = 0
   else
     rubbletimer = rubbletimer + 1*rampspeed
   end
-
+local lr = 1
   for i = #rubble, 1, -1 do
     local temp = rubble[i]
-    if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then table.remove(rubble,i) end
+    
+   if temp.v < 0 then lr = -1 end
+    if lineplatcheck(temp.x, temp.y,temp.v*2, temp.j*2) or linewallcheck(temp.x+lr, temp.y,temp.v*2, temp.j*2) or i > 400 then table.remove(rubble,i) end
 
   end
 
   for i,v in ipairs(rubble)do
-  if table.getn(rubble) > 500 then table.remove(rubble,500) end
   if not me.actionshot and not you.actionshot and not pause then
-    v.y = v.y - v.j*rampspeed/1.5
-    v.x = v.x + v.v*rampspeed/1.5
-    v.j = v.j - .2*rampspeed/1.5
-    blackn = math.random(80,150)
+    v.y = v.y - v.j*rampspeed*2
+    v.x = v.x + v.v*rampspeed*2
+    v.j = v.j - .2*rampspeed/1.5*2
+      v.rot = v.rot + math.random() *rampspeed 
   end
-  lg.setColor(blackn,blackn,blackn)
+end
+end
+
+function drawrubble()
+
+  for i,v in ipairs(rubble)do
+  if not me.actionshot and not you.actionshot and not pause then
+    blackn = math.random(80,120)
+  end
+  tsetColor(blackn,blackn,blackn)
   lg.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,2,2,1,1)
   lg.setColor(255,255,255)
 end
@@ -1054,13 +1281,23 @@ end
 
 
 waterdrops = {}
-function drawwater()
+function updatewater()
 
   for i = #waterdrops, 1, -1 do
     local temp = waterdrops[i]
     local v = temp
-    if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then 
+    
+local lr = 1
+   if temp.v < 0 then lr = -1 end
+
+    if lineplatcheck(temp.x, temp.y,temp.v*2, temp.j*2) or linewallcheck(temp.x+lr, temp.y,temp.v*2, temp.j*2) then 
+      if lineplatcheck(temp.x, temp.y,temp.v*2, temp.j*2) then
       temp.j = 0
+    end
+    
+    if linewallcheck(temp.x+lr, temp.y,temp.v, temp.j)  then
+      temp.v = -temp.v/2
+      end
       if temp.fade==nil then
         temp.fade = 100
         temp.v = temp.v/2
@@ -1074,14 +1311,14 @@ function drawwater()
           if math.abs(v.v * p.v) == v.v * p.v  then
             v.v=-v.v/2
           else
-            v.v=-v.v/2+p.v
+            v.v=-v.v/2+p.v/3
 
           end
 
           if math.abs(v.j * p.j) == v.j * p.j  then
             v.j=-v.j/2
           else
-            v.j=-v.j/2+p.j
+            v.j=-v.j/2+p.j/3
 
           end
 
@@ -1098,37 +1335,42 @@ function drawwater()
     end
 
     if not me.actionshot and not you.actionshot and not pause then
-      v.y = v.y - v.j*rampspeed
-      v.x = v.x + v.v*rampspeed
-      v.j = v.j - .1*rampspeed
-      blackn = math.random(150,255)
-      if temp.fade ~= nil then
+      v.y = v.y - v.j*rampspeed*2
+      v.x = v.x + v.v*rampspeed*2
+      v.j = v.j - .1*rampspeed*1.3
+      if v.fade ~= nil then
 
         if v.fade < 0 then
           table.remove(waterdrops, i)
         else
-          v.fade = v.fade - 1
+          v.fade = v.fade - 2
         end
       end
     end
-    lg.setColor(50,50,blackn)
+     
+  end
+end
 
-    if temp.fade ~= nil then
+
+function drawwater()
+  for i,v in ipairs(waterdrops) do
+   blackn = math.random(150,255)
+    tsetColor(50,50,blackn)
+
+    if v.fade ~= nil then
       lg.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,1.5*(v.fade/100),1.5*(v.fade/100),((v.fade/100)*1.5)/2,((v.fade/100)*1.5)/2)
     else
       lg.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,1.5,1.5,1,1)
     end
   end
-  lg.setColor(255,255,255)
 end
-
 
 
 
 function makerunrubble(why,ex,vee, lr)
   if rampcanhit then
-    for i = 10, 1, -1 do
-      table.insert(dust,{x = ex, y = why, v=math.random(vee/2, vee) + math.random()*lr, j = math.random(1,5)+math.random()})
+    for i = 7, 1, -1 do
+      table.insert(dust,{x = ex, y = why, v=math.random(vee/2, vee) + math.random()*lr, j = math.random(1,3)+math.random()})
     end
   end
 end
@@ -1157,7 +1399,7 @@ function makenrubble(ty, ex,why,vee,jay, n)
       if vee > 0 then
         table.insert(rubble,{x = ex, y = why-i*2, v=math.random(0, vee) + math.random(), j = jay+1*math.random(5)+math.random(), rot = math.random() + math.random(1,5)})
       else
-        table.insert(rubble,{x = ex, y = why-i*2, v=math.random(0, vee) - math.random(), j = jay+1*math.random(5)+math.random(), rot = math.random() + math.random(1,5)})
+        table.insert(rubble,{x = ex, y = why-i*2, v=math.random(vee, 0) - math.random(), j = jay+1*math.random(5)+math.random(), rot = math.random() + math.random(1,5)})
       end
     end
   elseif ty == "horiz" then
@@ -1166,7 +1408,7 @@ function makenrubble(ty, ex,why,vee,jay, n)
       if vee > 0 then
         table.insert(rubble,{x = ex+i, y = why, v=math.random(0, vee) + math.random(), j = jay+1*math.random(5)+math.random(), rot = math.random() + math.random(1,5)})
       else
-        table.insert(rubble,{x = ex+i, y = why, v=math.random(0, vee) - math.random(), j = jay+1*math.random(5)+math.random(), rot = math.random() + math.random(1,5)})
+        table.insert(rubble,{x = ex+i, y = why, v=math.random(vee, 0) - math.random(), j = jay+1*math.random(5)+math.random(), rot = math.random() + math.random(1,5)})
       end
     end
   end
@@ -1187,79 +1429,6 @@ end
 
 
 
-function makeglass (ex,why,vee,jay)
-  if vee > 0 then
-    table.insert(glasseses,{x = ex, y = why, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+5, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+4, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+6, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+8, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+10, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+15, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+14, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+16, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+18, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+50, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+55, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+54, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+56, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+58, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+30, v=vee + math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+35, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+34, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+36, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+38, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+40, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+45, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+44, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+46, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+48, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+50, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+55, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+54, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+56, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+58, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+60, v=vee + math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+62, v=vee + math.random(5), j = jay-1*math.random(5)})
-  else
-
-    table.insert(glasseses,{x = ex, y = why, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+5, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+4, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+6, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+8, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+10, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+15, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+14, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+16, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+18, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+50, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+55, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+54, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+56, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+58, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+30, v=vee - math.random(5), j = jay+1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+35, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+34, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+36, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+38, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+40, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+45, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+44, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+46, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+48, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+50, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+55, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+54, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+56, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+58, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+60, v=vee - math.random(5), j = jay-1*math.random(5)})
-    table.insert(glasseses,{x = ex, y = why+62, v=vee - math.random(5), j = jay-1*math.random(5)})
-
-  end
-  glassn = math.random(200)
-
-end
 
 function makefloorrubble(ex,why,vee,jay)
   if jay > 0 then miscjay = 1
@@ -1382,7 +1551,8 @@ function libraryveneer()
     then lvfade = lvfade - 5
     elseif lvfade < 255 then lvfade = lvfade + 5
     end
-    lg.setColor(255,255,255,lvfade)
+    --tsetColor(255,255,255,lvfade)
+    lg.setColor(255*tod[1],255*tod[2],255*tod[3],lvfade)
     lg.draw(enviro.thelibraryveneer, 1535, 0)
     lg.setColor(255,255,255)
   end
@@ -1398,10 +1568,9 @@ function floorsveneer()
     then lvfade2 = lvfade2 - 5
     elseif lvfade2 < 255 then lvfade2 = lvfade2 + 5
     end
-    lg.setColor(255,255,255,lvfade)
+    lg.setColor(255*tod[1],255*tod[2],255*tod[3],lvfade)
     lg.draw(enviro.floorsveneer1, 416, 1898)
-    lg.setColor(255,255,255)
-    lg.setColor(255,255,255,lvfade2)
+    lg.setColor(255*tod[1],255*tod[2],255*tod[3],lvfade2)
     lg.draw(enviro.floorsveneer2, 3157, 2829)
     lg.setColor(255,255,255)
   end
@@ -1809,6 +1978,21 @@ death = function(xx, yy)
     elseif xx.idletimer >=33 then
       xx.idletimer = 0
     end
+    
+    if xx.j ~= 0 then
+    xx.superjumptimer = 0
+  elseif xx.dubtimer < -15 then
+    xx.cansuperjump = true
+    xx.superjumptimer = 13
+    xx.im = landing 
+  elseif xx.superjumptimer > 0 then
+    xx.im = landing 
+    xx.cansuperjump = true
+  xx.superjumptimer = rodib(xx.superjumptimer,1,0)
+  
+  end
+  
+  
   end
 
 
@@ -1929,10 +2113,10 @@ death = function(xx, yy)
 
   function makensparks(ex,why,vee, jay, arr,gee,bee, n)
     for i = n, 1, -1 do
-      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360)})
-      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360)})
-      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360)})
-      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360)})
+      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360), shape = math.random(1,3)})
+      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360), shape = math.random(1,3)})
+      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360), shape = math.random(1,3)})
+      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360), shape = math.random(1,3)})
 
     end
 
@@ -1956,29 +2140,46 @@ death = function(xx, yy)
     end
   end
 
-  function drawsparks()
+  function updatesparks()
 
     for i = #sparks, 1, -1 do
       local temp = sparks[i]
-      if lineplatcheck(temp.x, temp.y,temp.v, temp.j) then table.remove(sparks,i) end
+      if lineplatcheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6) or linewallcheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6) then table.remove(sparks,i) end
 
     end
 
     for i,v in ipairs(sparks)do
     if not me.actionshot and not you.actionshot and not pause then
-      v.y = v.y - v.j*rampspeed*.8
-      v.x = v.x + v.v*rampspeed*.8
-      v.j = v.j - .1*rampspeed*.8
-      v.rot = v.rot + math.random() *rampspeed 
+      v.y = v.y - v.j*rampspeed*1.6
+      v.x = v.x + v.v*rampspeed*1.6
+      v.j = v.j - .1*rampspeed*1.6
+      v.rot = v.rot + math.random() *rampspeed
     end
 
 
+
+  end
+end
+
+
+function drawsparks()
+
+    for i,v in ipairs(sparks)do
+   
 
     v.r = lof(v.r+math.random()*sparkfaderate*rampspeed,255)
     v.g = lof(v.g+math.random()*sparkfaderate*rampspeed,255)
     v.b = lof(v.b+math.random()*sparkfaderate*rampspeed,255)
     lg.setColor(v.r,v.g,v.b,math.random(150,255))
+    if v.shape == 1 then
     lg.draw(enviro.spark,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)
+  elseif v.shape == 2 then
+    lg.draw(enviro.spark2,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)
+    
+  elseif v.shape == 3 then
+    lg.draw(enviro.spark3,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)
+  
+  end
     lg.setColor(255,255,255)
 
   end
@@ -2041,11 +2242,11 @@ function xrubble(xx)
           and math.floor(i%2)==0
           then 
             makenglass(wall.x,i,xx.v,xx.j, 1)
-          elseif math.floor(i%5)==0 then
+          elseif math.floor(i%12)==0 then
             makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
           end
-        elseif math.floor(i%5)==0 then
-          makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
+        elseif math.floor(i%12)==0 then
+          makenrubble("vert", wall.x,i,xx.v,xx.j/2, 1)
 
         end
 
