@@ -46,11 +46,13 @@ fullscreen = false
 readout = false
 putmehere = 975
 putyouhere = 1025
-menu = "play"
+menu = "story"
+chapter = 1
+oldchapter = "bob"
 cameramonitor = false
 if menu == "play" then
   noload = true
-  mapnum = 3
+  mapnum = 1
   placespeople = true 
 end
 mute = false
@@ -292,6 +294,8 @@ require "at/RR"
 require "ai"
 require "koth"
 require "colorcontrol"
+require"story/ch1/ch1"
+require"enviro/colorbox"
 loader = require "love-loader"
 
 if noload then
@@ -406,6 +410,12 @@ end
 
 
 function love.update()
+  
+    initmenu()
+    if menu == "story" then
+      updatechapters()
+      
+      end
   --colorshift(thecolors[2].c,8)
   --colorshift(me.outline,6)
   --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
@@ -707,7 +717,7 @@ function love.update()
     me.xoffset = me.xoffset * me.lr
     you.xoffset = you.xoffset * you.lr
 
-    if menu ~= "play" then
+    if menu ~= "play" and menu ~= "story" then
       drawmenus()
 
 
@@ -818,6 +828,15 @@ function love.update()
       end
       drawroulettenumbers()
       cinemabars()
+      
+        
+    elseif menu == "story" then
+      if chapter == 1 then
+        drawchapter1()
+        
+        
+      end
+      lg.print(tostring(chaptime),10,10)
 
     end
 
@@ -864,23 +883,17 @@ function love.update()
       
      
       lg.setColor(255,0,0)
+    
 
 end
+
+
 
 if pause then
   lg.sdraw(pausescreen,0,0,0,10,10)
   end
   
-      lg.setColor(255,255,255,255)
-   lg.print("me.start"..tostring(me.start), 300, 380)
-    lg.print("pause"..tostring(pause), 300, 400)
-      
-    lg.print("themap.name "..tostring(themap.name), 300, 420)
-    lg.print("lvfade "..tostring(lvfade), 300, 440)
-    lg.print("rampspeed "..tostring(rampspeed), 300, 460)
-     
-  
-    lg.setColor(255,0,255)
+
 
     --cameramonitorf(100,100)
    
@@ -889,10 +902,19 @@ setControllers()
       rumblemodule(me)
       rumblemodule(you)
       if me.animcounter < 2 and me.animcounter > 0 then
-      makenleaves(me.x,me.y,me.v,me.j,1)
+      --makenleaves(me.x,me.y,me.v,me.j,1)
       
     end
     
  paralaxshake = false
+ 
+ if not love.keyboard.isDown("3") then
+   boxstop = false
+   end
+ 
      -- movetod(.03)
+     if love.keyboard.isDown("3") and not boxstop then
+       makecolorbox(me.x, me.y+30)
+       boxstop = true
+       end
   end

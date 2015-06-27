@@ -466,7 +466,7 @@ function attackmanage(xx)
     xx.greenktimer = 0
   end
 
-  if xx.j ~= 0 then
+  if xx.j ~= 0 or xx.v ~= 0 then
     xx.purplanding = false
   end
 

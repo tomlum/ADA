@@ -109,6 +109,8 @@ function dopurpakspikes(xx)
 
     end
   elseif xx.purpgroundtimer < 0 then
+    
+            repplay(xx.airpurp2)
     xx.purpgroundtimer = xx.purpgroundtimer + 1*ramp(xx)
   elseif xx.landingcounter >= at.p.ak.exposedtime and xx.landingcounter-1 < at.p.ak.exposedtime then
     xx.numofspikes = 0
@@ -484,7 +486,7 @@ function pandp(xx)
         if xx.animcounter < 20 then
           xx.im = stomp1
 
-        elseif xx.animcounter == 20 then
+        elseif xx.animcounter <= 21 then
           xx.im = stomp2
           
         rumbleme(xx, 1.2)

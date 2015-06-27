@@ -1,3 +1,5 @@
+require "story/ch1/ch1"
+
 oldmenu = "begin"
 notilebouncing = true
 --menu that fades into another???
@@ -13,7 +15,8 @@ themaps[1]= {name = "street",
   lighty = 142+2.5,
   lightcolor = {r = 40, g = 255, b = 0},
   rightwall = 7000,
-  paralaxscale = 4/7
+  paralaxscale = 4/7,
+  paralaxscale2 = .4
 }
 themaps[2]= {name = "library", 
   plats = {}, walls = {}, boxes = {},
@@ -25,7 +28,7 @@ themaps[2]= {name = "library",
   paralaxscale = .65,
   paralaxscale2 = .523
 }
-
+--paralax has 500 vert and horizontal buffer
 themaps[3]= {name = "floors", 
   plats = {}, walls = {}, boxes = {},
   floor = 5898,
@@ -110,12 +113,7 @@ function lg.srectangle(mode, x, y, width, height)
   lg.rectangle(mode, x*screenwidth/1440, y*screenheight/900, width*screenwidth/1440, height*screenheight/900) 
 end
 
-adafont = love.graphics.newImageFont("adafont.png",
-    " abcdefghijklmnopqrstuvwxyz" ..
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0" ..
-    "123456789.,!?-+/():;%&`'*#=[]\"")
-  lg.setFont(adafont)
---lg.setNewFont(20)
+lg.setNewFont(20)
 
 
 lightsize = 7
@@ -219,8 +217,17 @@ elseif menu == "retry" and oldmenu ~= "retry" then
     streetfadehold = 1
     streetfadestart = false
 
+elseif menu == "story" and oldmenu ~= "story" then
+
+  if chapter == 1 and oldchapter ~= 1 then
+    ch1init()
+  end
+  
+
+
   end
   oldmenu = menu
+  oldchapter = chapter
 end
 
 wobx = 0
@@ -228,8 +235,17 @@ woby = 0
 wobj = 0
 wobv = 0
 
+function updatechapters()
+  chaptime = chaptime + 1
+  if chapter == 1 then
+    chap1update(chaptime)
+  end
+  
+  
+end
+
 function drawmenus()
-  initmenu()
+  
 
   if wobx- wobv > maxwob then wobv = wobv + math.random()/3
   elseif wobx- wobv < -maxwob then wobv = wobv - math.random()/3

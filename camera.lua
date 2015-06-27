@@ -616,11 +616,12 @@ end
 local pzoom2 = 1+(1-math.sqrt(math.sqrt(cscale)))
   lg.draw(enviro.sky, xx.x, 0, 0, 500, 1.1)
   --lg.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
-  if themap.name == "library" or themap.name == "floors" then 
+  
+  if not fightclub then
       blurdraw(bob, function()
  lg.draw(enviro.paralax2, 
-        (xx.x+(screenwidth/2)*cscale+paralaxcamshake)*(1-themaps[mapnum].paralaxscale2*pzoom2)
-        -(250*(1-themaps[mapnum].paralaxscale2*pzoom2))
+        (xx.x+(screenwidth/4)*cscale*pzoom2+paralaxcamshake)*(1-themaps[mapnum].paralaxscale2*pzoom2)
+        -(500*(1-themaps[mapnum].paralaxscale2*pzoom2))
         ,
         (xx.y+(screenheight/2)*cscale+paralaxcamshake)*(1-themaps[mapnum].paralaxscale2*pzoom2)+(feet2bottom-paralaxoffset)*(cscale*(1-themaps[mapnum].paralaxscale2*pzoom2)),
         0,
@@ -628,8 +629,9 @@ local pzoom2 = 1+(1-math.sqrt(math.sqrt(cscale)))
         pzoom2)
       
     end)
-  
   end
+  
+  
   
 
 
@@ -637,8 +639,8 @@ local pzoom = 1+(1-math.sqrt(cscale))
  blurdraw(bob, function()
     
  lg.draw(enviro.paralax, 
-        (xx.x+(screenwidth/2)*cscale+paralaxcamshake)*(1-themaps[mapnum].paralaxscale*pzoom)
-        -(250*(1-themaps[mapnum].paralaxscale*pzoom)),
+        (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themaps[mapnum].paralaxscale*pzoom)
+        -(500*(1-themaps[mapnum].paralaxscale*pzoom)),
         (xx.y+(screenheight/2)--*pzoom
           *cscale+paralaxcamshake)*(1-themaps[mapnum].paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themaps[mapnum].paralaxscale*pzoom)),
         0,
@@ -705,6 +707,7 @@ end
 if menu ~= "retry" then
   
   drawparticles()
+  
 
   drawcolorstuff(me)
   drawcolorstuff(you)

@@ -162,6 +162,8 @@ function gandg(xx)
         xx.im = greena21
         if math.random() > .995 then
           xx.creature = true
+          
+            makensparks(xx.mid,xx.y+30,-xx.lr*10, xx.j-3, xx.color.c.r,xx.color.c.g,xx.color.c.b, 7)
         else
           xx.creature = false
           end
@@ -196,10 +198,10 @@ function gandg(xx)
               xx.origgreenlr  = xx.lr
             elseif xx.repcounter==2 then
               xx.lr=-xx.origgreenlr  
-              xx.v = xx.v + (xx.lr*20)/3*ramp(xx)
+              xx.v = xx.v + (xx.lr*27)/3*ramp(xx)
             elseif xx.repcounter==3 then
               xx.lr=xx.origgreenlr 
-              xx.v = xx.v + (xx.lr*10)/3*ramp(xx)
+              xx.v = xx.v + (xx.lr*15)/3*ramp(xx)
             end
           end
           
@@ -298,7 +300,7 @@ function gandg(xx)
             xx.im = greenk2
           end
 
-        if xx.animcounter == 15 then
+        if xx.animcounter <= 15 then
           repplay(xx.greens)
           if not xx.g then
             xx.v = xx.v-(boltspeed/3 * math.cos(math.rad(at.g.k.angle)))*xx.lr

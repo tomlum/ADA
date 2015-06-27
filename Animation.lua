@@ -526,6 +526,7 @@ whatlevel = function()
       if noload then
         enviro.stage=lg.newImage( "enviro/astreet.png")
         enviro.paralax=lg.newImage("enviro/paralax.png")
+        enviro.paralax2=lg.newImage("enviro/paralax2.png")
         enviro.sky=lg.newImage("enviro/sky.png")
         enviro.lightson=lg.newImage("enviro/lightson.png")
         enviro.lightsoff=lg.newImage( "enviro/lightsoff.png")
@@ -538,6 +539,7 @@ whatlevel = function()
             finishedloading = true
           end)
         loader.newImage(enviro,"paralax","enviro/paralax.png")
+        loader.newImage(enviro,"paralax2","enviro/paralax2.png")
         loader.newImage(enviro,"sky","enviro/sky.png")
         loader.newImage(enviro,'lightson',"enviro/lightson.png")
         loader.newImage(enviro,'lightsoff', "enviro/lightsoff.png")
@@ -611,13 +613,11 @@ whatlevel = function()
         loader.newImage(enviro,'paralax2', "enviro/floorparalax2.png")
       end
       
-      me.x = 750 me.y = 5585-30
-      you.x = 750 you.y = 5585-30
-      
-      --me.x = 500
-      --you.x = 3000
-      --me.y = 300
-      --you.y = 300
+    
+      me.x = 500
+      you.x = 3000
+      me.y = 300
+      you.y = 300
       enviro.rightwall = 5000
       enviro.ds = 5
       thesong = song2
@@ -994,6 +994,8 @@ function drawparticles()
   drawrubble()
   drawwater()
   drawpapers()
+  
+     drawcolorboxes()
 
 end
 
@@ -1005,6 +1007,7 @@ function updateparticles()
   updaterubble()
   updatewater()
   updatepapers()
+     updatecolorboxes()
   end
 
 function drawpapers()

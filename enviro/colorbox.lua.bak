@@ -1,0 +1,91 @@
+colorbox = lg.newImage("enviro/colorbox.png")
+colorboxleaf = lg.newImage("enviro/colorboxleaf.png")
+
+colorboxes = {}
+
+function makecolorbox(ex, why)
+  local color = {r = math.random(-255,255), g = math.random(-255,255), b = math.random(-255,255)}
+  table.insert(colorboxes, {flip = 0, flipdir = 1, x = ex, y = why, time = 0, c = color 
+     
+  })
+ table.insert(colorboxes, {flip = -.1, flipdir = 1, x = ex, y = why, time = 0, c = color})
+  table.insert(colorboxes, {flip = -.2, flipdir = 1, x = ex, y = why, time = 0, c = color})
+   table.insert(colorboxes, {flip = -.3, flipdir = 1, x = ex, y = why, time = 0, c = color})
+
+end
+
+function updatecolorboxes()
+ for i,v in ipairs(colorboxes) do
+    v.c.r = colorshift(v.c.r, math.random(.1,5))
+    v.c.g = colorshift(v.c.g, math.random(.1,5))
+    v.c.b = colorshift(v.c.b, math.random(.1,5))
+    
+
+if v.flip+fliprate > 1  then
+      v.flip = -1
+    end
+    v.flip = v.flip + fliprate
+
+
+      
+
+
+
+    end
+
+  end
+
+--boxpartdis
+bpd = -5
+  function colorshift(see, rate)
+    local c = see
+    c = c - rate
+    if c < -255 then c = 255
+    end
+
+    return c
+  end
+  
+  
+  --if something then draw on top so looks like spinning
+function drawcolorboxes()
+  for i = 1, #colorboxes do
+  v = colorboxes[i]
+
+
+  v1 = colorboxes[1]
+ lg.setColor(math.abs(v1.c.r), math.abs(v1.c.g), math.abs(v1.c.b))
+ if v.flip > 0 then
+    lg.draw(colorbox, v.x-4.5, v.y+25, 0, v.flip, 1,-bpd,50)
+  elseif v.flip < 0 then
+    lg.draw(colorbox, v.x-4.5, v.y+25, 0, -v.flip, 1,-bpd,50)
+    end
+
+  end
+  
+
+  for i = #colorboxes, 1, -1 do
+  v1 = colorboxes[1]
+  v = colorboxes[i]
+  iv = colorboxes[#colorboxes-i]
+ lg.setColor(math.abs(v1.c.r), math.abs(v1.c.g), math.abs(v1.c.b))
+  if v.flip > 0 then
+    lg.draw(colorbox, v.x-4.5, v.y+25, 0, -v.flip, 1,-bpd,50)
+  elseif v.flip < 0 then
+    lg.draw(colorbox, v.x-4.5, v.y+25, 0, v.flip, 1,-bpd,50)
+    end
+  
+  end
+      
+
+  end
+
+
+  function colorshift(see, rate)
+    local c = see
+    c = c - rate
+    if c < -255 then c = 255
+    end
+
+    return c
+  end
