@@ -24,13 +24,13 @@ fractals = {
     plats = {}, walls = {},
     floor = 1000-50,
     rightwall = 1000-50,
-    start={x = 50, y = 50},
+    start={x = 300, y = 50},
     facade = fractal1facade,
     rotation = 0,
-    start1={x = 50, y = 50},
-    start2={x = 50, y = 50},
-    start3={x = 50, y = 50},
-    start4={x = 50, y = 50}
+    start1={x = 200, y = 50},
+    start2={x = 200, y = 50},
+    start3={x = 200, y = 50},
+    start4={x = 200, y = 50}
   }
 }
 

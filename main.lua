@@ -930,7 +930,13 @@ function love.update()
     end
     
     lg.setColor(25,25,255)
+    --[[
     for i,plat in ipairs(themap.plats) do
+      lg.print(tostring(plat.y).."||"..tostring(plat.x1).."||"..tostring(plat.x2).."||"..tostring(plat.x).."||"..tostring(plat.y1).."||"..tostring(plat.y2), 600,i*20)
+    end
+    ]]--
+   
+    for i,plat in ipairs(themap.walls) do
       lg.print(tostring(plat.y).."||"..tostring(plat.x1).."||"..tostring(plat.x2).."||"..tostring(plat.x).."||"..tostring(plat.y1).."||"..tostring(plat.y2), 600,i*20)
       end
     

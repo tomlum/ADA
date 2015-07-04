@@ -208,7 +208,7 @@ end
 function hradial(theid, P1, radius, special)
 
   for i,p in ipairs(hitt) do
-   
+
     local dis = math.sqrt((p.y-P1.y)^2 + (p.mid-P1.x)^2)
 
     if theid ~= i and
@@ -474,17 +474,21 @@ function hline(meme, theid, P1, P2, special)
 
 
         midv2 = {x = (ex+w/2)+v, y=why2}
+        midv21 = {x = (ex)+v, y=why2}
+        midv22 = {x = (ex+w)+v, y=why2}
         midv = {x = ex+w/2+.001, y=why}
         local linep1 = {x = x1+.001, y = y1}
         local linep2 = {x = x2, y = y1}
-        if pint(linep1, linep2, midv, midv2) 
+        if pint(linep1, linep2, midv, midv2)  or 
+        pint(linep1, linep2, midv, midv21)  or
+        pint(linep1, linep2, midv, midv22) 
         then return true
         else return false
         end
 
       end
 
-      
+
 
       velforclimb = 20
 
@@ -503,9 +507,9 @@ function hline(meme, theid, P1, P2, special)
         end
         return false
 
-    end
-    
-    function linewallcheck(ex, why,v, j)
+      end
+
+      function linewallcheck(ex, why,v, j)
         midv2 = {x = (ex)+v, y=why-j, n = 2}
         midv = {x = ex, y=why, n = 2}
 
@@ -660,8 +664,7 @@ function hline(meme, theid, P1, P2, special)
 
 
               if p.player~=nil and not p.flinch
-              and ((p.x+p.v*walljumprange < wall.x and p.x >= wall.x) or (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x)) and
-              ((p.v < 0 and p.right) or (p.v > 0 and p.left)) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch and not p.busy and p.animcounter == 0
+              and ((p.x+p.v*walljumprange < wall.x and p.x >= wall.x and (p.v > 0 and p.left)) or (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x and (p.v < 0 and p.right))) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch and not p.busy and p.animcounter == 0
               then
                 if (p.x+p.v*walljumprange < wall.x and p.x >= wall.x) then
                   wallside = 1 
@@ -674,7 +677,7 @@ function hline(meme, theid, P1, P2, special)
                 p.walllr = -p.lr
                 p.wallx = wall.x+wallside
                 p.v = 0
-              elseif (wall.y1==-1 or  wall.barrier~=nil) and p.feet-p.j > wall.y1 and p.y-p.j < wall.y2 and ((p.x+p.v < wall.x and p.mid >= wall.x) or (p.x+p.width+p.v > wall.x and p.x+p.width <= wall.x)) and p.wjt == 0 then
+              elseif (wall.barrier~=nil) and p.feet-p.j > wall.y1 and p.y-p.j < wall.y2 and ((p.x+p.v < wall.x and p.x >= wall.x and p.v < 0) or (p.x+p.width+p.v > wall.x and p.x+p.width <= wall.x and p.v > 0)) and p.wjt == 0 then
                 if (p.x+p.v < wall.x and p.x >= wall.x) then
                   wallside = 1 
                 else
@@ -700,6 +703,13 @@ function hline(meme, theid, P1, P2, special)
 
                   p.v = 0
                 end
+elseif p.x < wall.x and p.x + p.width > wall.x and (p.y < wall.y2 and p.feet > wall.y1) then
+  if p.mid < wall.x or p.v < 0 then
+    p.v = lof(p.v,-2)
+  else
+    p.v = hof(p.v,2)
+  end
+
 
               end
 
@@ -764,13 +774,13 @@ function hline(meme, theid, P1, P2, special)
               if p.im.yoff==nil then
                 p.im.yoff = 0
               end
-              if plat.ceiling and xx.y - xx.j < plat.y and xx.y >= plat.y and plat.x1 < xx.x and plat.x2 > xx.x then
-                
+              if plat.ceiling and xx.y - xx.j < plat.y and xx.y >= plat.y and plat.x1 < xx.mid+xx.width/2 and plat.x2 > xx.mid-xx.width/2  then
+
                 xx.y = plat.y+1
                 xx.jt = 0
                 xx.j = 0
                 break
-              
+
               elseif xx.gohere == nil and (not p.gothroughplats or plat.floor~=nil) and (
                 (hexplatcheck2(plat.y, plat.x1, plat.x2, p.x, p.oldpy, p.width, p.y+p.height-extrah-p.j, p.v) and p.j <= 0)
                 or 
