@@ -14,6 +14,8 @@ feet2bottom = deffeet2bottom
 danger2tb = dangerbarey
 
 tolandr=0
+--updated also later on
+  winheight = (lg.getHeight()-barheight)
 
 
 defaultminzoom = .7
@@ -194,6 +196,8 @@ cammovement = function ()
   -- else camera2.xfollow = true
   --   youcamlwall = false
   -- end
+  
+  
 
   if midypoint >= themap.floor - ((winheight/2) - (feet2bottom))*cscale
   then
@@ -203,6 +207,11 @@ cammovement = function ()
     youcamfloor=false
     mecamfloor = false
   end
+  
+  if themode == "fractal" then 
+    mecamfloor = false
+    youcamfloor = false
+    end
   --removed cause stopping at edges is no
   -- if me.mid + me.v < screenwidth*cscale/4
   -- then 
@@ -227,6 +236,11 @@ onescreen = false
 vertone = false
 ydif = 0
 beigedif = 0
+
+
+
+
+
 camerafol = function ()
 
   xdif = math.abs((you.x) - (me.x))
@@ -270,6 +284,10 @@ camerafol = function ()
 
   mexrig = me.mid - (screenwidth*cscale*.25)+tolandr 
   youxrig = you.mid - (screenwidth*cscale*.75)-tolandr
+
+meyrig = me.y+60 - winheight*cscale + feet2bottom*cscale
+youyrig = you.y+60 - winheight*cscale + feet2bottom*cscale
+
 
   if not mecamfloor and you.y > me.y then 
     youyrig = you.y+60 - winheight*cscale + feet2bottom*cscale
@@ -617,7 +635,7 @@ local pzoom2 = 1+(1-math.sqrt(math.sqrt(cscale)))
   lg.draw(enviro.sky, xx.x, 0, 0, 500, 1.1)
   --lg.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
   
-  if not fightclub then
+  if not fightclub and themap.paralaxscale2 ~= nil then
       blurdraw(bob, function()
  lg.draw(enviro.paralax2, 
         (xx.x+(screenwidth/4)*cscale*pzoom2+paralaxcamshake)*(1-themaps[mapnum].paralaxscale2*pzoom2)
@@ -636,6 +654,7 @@ local pzoom2 = 1+(1-math.sqrt(math.sqrt(cscale)))
 
 
 local pzoom = 1+(1-math.sqrt(cscale))
+if themap.paralaxscale ~= nil then
  blurdraw(bob, function()
     
  lg.draw(enviro.paralax, 
@@ -648,7 +667,7 @@ local pzoom = 1+(1-math.sqrt(cscale))
         pzoom)
       
     end)
-  
+  end
   
   
   
@@ -681,7 +700,11 @@ for i = 0, .9, .1 do
 
 
   tods() 
+  if themap.rotation~=nil then
+      lg.draw(themap.stage, 500, 500, themap.rotation, 1, 1, 500, 500)
+    else
       lg.draw(enviro.stage, 0, 0)
+      end
       
   --lg.draw(enviro.stage, 0, 0) 
   if themap.name == "street" then
@@ -730,7 +753,9 @@ end
 end
 
 if menu ~= "retry" then
-
+  if themap.facade~=nil then
+  lg.draw(themap.facade,0,0)
+  end
   lg.setShader()
   cclear()
   

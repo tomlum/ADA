@@ -35,7 +35,7 @@ mercolor = 4
 youlcolor = 2
 yourcolor = 1
 therampspeed = .2
-    mapnum = 1
+mapnum = 1
 rampspeed= therampspeed
 rampnormaldelta = .008
 drawboxes = false
@@ -43,7 +43,7 @@ drawfeet = false
 fightclub = true
 volume=0
 fullscreen = false
-readout = false
+readout = true
 putmehere = 975
 putyouhere = 1025
 menu = "story"
@@ -296,6 +296,7 @@ require "koth"
 require "colorcontrol"
 require"story/ch1/ch1"
 require"enviro/colorbox"
+require "fractal"
 loader = require "love-loader"
 
 if noload then
@@ -322,7 +323,6 @@ function love.load()
   stagey = 0
   stagenum = 0
   modenum = 0
-  themode = "duel"
 
 
   tileoffset = 77
@@ -387,7 +387,7 @@ function love.load()
   you.actiontimer = 0
 
   if fightclub then 
-    themode = "duel"
+    themode = "fractal"
     menu = "play"
     mapnum = 100
     themap = themaps[mapnum]
@@ -410,12 +410,12 @@ end
 
 
 function love.update()
-  
-    initmenu()
-    if menu == "story" then
-      updatechapters()
-      
-      end
+
+  initmenu()
+  if menu == "story" then
+    updatechapters()
+
+  end
   --colorshift(thecolors[2].c,8)
   --colorshift(me.outline,6)
   --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
@@ -486,8 +486,8 @@ function love.update()
 
 
 
-      jjstick(me,me.joystick)
-      jjstick(you,you.joystick)
+    jjstick(me,me.joystick)
+    jjstick(you,you.joystick)
 
     controlsstuff(me)
     controlsstuff(you)
@@ -576,9 +576,9 @@ function love.update()
       camerafol()
 
       if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
-        
-  updateboxes()
-  updateparticles()
+
+        updateboxes()
+        updateparticles()
         animate(me)
         animate(you)
 
@@ -828,13 +828,13 @@ function love.update()
       end
       drawroulettenumbers()
       cinemabars()
-      
-        
+
+
     elseif menu == "story" then
       if chapter == 1 then
         drawchapter1()
-        
-        
+
+
       end
       lg.print(tostring(chaptime),10,10)
 
@@ -868,6 +868,9 @@ function love.update()
     lg.setColor(255,255,255)
     if readout then
       lg.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+      lg.print("me.x, me.y: "..tostring(me.x).." "..tostring(me.y), 10, 40)
+      lg.print("you.x, you.y: "..tostring(you.x).." "..tostring(you.y), 10, 70)
+
       lg.setColor(255,10,0)
       lg.print("themenu "..tostring(menu), 10, 90)
       lg.print("oldmenu "..tostring(oldmenu), 10, 110)
@@ -880,41 +883,55 @@ function love.update()
       for i,v in ipairs(love.joystick.getJoysticks()) do
         lg.print("hey"..v:getName()..tostring(i), 200, 20+20*i)
       end
-      
-     
+
+
       lg.setColor(255,0,0)
-    
-
-end
 
 
+    end
 
-if pause then
-  lg.sdraw(pausescreen,0,0,0,10,10)
-  end
-  
+
+
+    if pause then
+      lg.sdraw(pausescreen,0,0,0,10,10)
+    end
+
 
 
     --cameramonitorf(100,100)
-   
 
-setControllers()
-      rumblemodule(me)
-      rumblemodule(you)
-      if me.animcounter < 2 and me.animcounter > 0 then
+
+    setControllers()
+    rumblemodule(me)
+    rumblemodule(you)
+    if me.animcounter < 2 and me.animcounter > 0 then
       --makenleaves(me.x,me.y,me.v,me.j,1)
-      
+
+    end
+
+    paralaxshake = false
+
+    if not love.keyboard.isDown("3") and not love.keyboard.isDown("2") then
+      boxstop = false
+    end
+
+    -- movetod(.03)
+    if love.keyboard.isDown("3") and not boxstop then
+      throwinto()
+      makecolorbox(me.x, me.y+30)
+      boxstop = true
+      --fractalrotate()
     end
     
- paralaxshake = false
- 
- if not love.keyboard.isDown("3") then
-   boxstop = false
-   end
- 
-     -- movetod(.03)
-     if love.keyboard.isDown("3") and not boxstop then
-       makecolorbox(me.x, me.y+30)
-       boxstop = true
-       end
+    if love.keyboard.isDown("2") and not boxstop then
+
+      boxstop = true
+      rotatefractal()
+    end
+    
+    lg.setColor(25,25,255)
+    for i,plat in ipairs(themap.plats) do
+      lg.print(tostring(plat.y).."||"..tostring(plat.x1).."||"..tostring(plat.x2).."||"..tostring(plat.x).."||"..tostring(plat.y1).."||"..tostring(plat.y2), 600,i*20)
+      end
+    
   end

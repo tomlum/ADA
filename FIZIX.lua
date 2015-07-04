@@ -128,7 +128,7 @@ end
 you.tempfloor = floor
 me.tempfloor = floor
 
-
+ jmax = initjmax * cscale/minzoom
 you.jmax = jmax
 me.jmax = jmax
 

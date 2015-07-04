@@ -674,7 +674,7 @@ function hline(meme, theid, P1, P2, special)
                 p.walllr = -p.lr
                 p.wallx = wall.x+wallside
                 p.v = 0
-              elseif (wall.y1==-1 or  wall.barrier~=nil) and p.feet > wall.y1 and ((p.x+p.v < wall.x and p.mid >= wall.x) or (p.x+p.width+p.v > wall.x and p.x+p.width <= wall.x)) and p.wjt == 0 then
+              elseif (wall.y1==-1 or  wall.barrier~=nil) and p.feet-p.j > wall.y1 and p.y-p.j < wall.y2 and ((p.x+p.v < wall.x and p.mid >= wall.x) or (p.x+p.width+p.v > wall.x and p.x+p.width <= wall.x)) and p.wjt == 0 then
                 if (p.x+p.v < wall.x and p.x >= wall.x) then
                   wallside = 1 
                 else
@@ -747,8 +747,7 @@ function hline(meme, theid, P1, P2, special)
 
         function hboxp()
           for i,p in ipairs(hitt) do
-            for j = #themap.plats, 1, -1 do 
-              plat = themap.plats[j]
+            for j,plat in ipairs(themap.plats) do 
               xx = p
 
               extrah = 0
@@ -765,7 +764,14 @@ function hline(meme, theid, P1, P2, special)
               if p.im.yoff==nil then
                 p.im.yoff = 0
               end
-              if xx.gohere == nil and (not p.gothroughplats or plat.floor~=nil) and (
+              if plat.ceiling and xx.y - xx.j < plat.y and xx.y >= plat.y and plat.x1 < xx.x and plat.x2 > xx.x then
+                
+                xx.y = plat.y+1
+                xx.jt = 0
+                xx.j = 0
+                break
+              
+              elseif xx.gohere == nil and (not p.gothroughplats or plat.floor~=nil) and (
                 (hexplatcheck2(plat.y, plat.x1, plat.x2, p.x, p.oldpy, p.width, p.y+p.height-extrah-p.j, p.v) and p.j <= 0)
                 or 
                 (p.y == plat.y-p.height-extrah and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))

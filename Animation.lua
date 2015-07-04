@@ -530,7 +530,7 @@ whatlevel = function()
         enviro.sky=lg.newImage("enviro/sky.png")
         enviro.lightson=lg.newImage("enviro/lightson.png")
         enviro.lightsoff=lg.newImage( "enviro/lightsoff.png")
-        enviro.floor=lg.newImage( "enviro/astreet.png")
+        --enviro.floor=lg.newImage( "enviro/astreet.png")
         enviro.rafters=lg.newImage("enviro/rafters.png")
 
       else
@@ -543,7 +543,7 @@ whatlevel = function()
         loader.newImage(enviro,"sky","enviro/sky.png")
         loader.newImage(enviro,'lightson',"enviro/lightson.png")
         loader.newImage(enviro,'lightsoff', "enviro/lightsoff.png")
-        loader.newImage(enviro,'floor', "enviro/astreet.png")
+        --loader.newImage(enviro,'floor', "enviro/astreet.png")
         loader.newImage(enviro,'rafters',"enviro/rafters.png")
       end
       lighttimer = 0
