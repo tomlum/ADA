@@ -703,7 +703,7 @@ function hline(meme, theid, P1, P2, special)
 
                   p.v = 0
                 end
-elseif p.x < wall.x and p.x + p.width > wall.x and (p.y < wall.y2 and p.feet > wall.y1) then
+elseif p.barrier and p.x < wall.x and p.x + p.width > wall.x and (p.y < wall.y2 and p.feet > wall.y1) then
   if p.mid < wall.x or p.v < 0 then
     p.v = lof(p.v,-2)
   else

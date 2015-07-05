@@ -52,27 +52,17 @@ function rotatefractal()
 
    
 
-    if math.deg(map.rotation)%180 < 80 then 
+  
       wall.x1 = 1000-wall.y2
     wall.x2 = 1000-wall.y1
       
-      wall.y = 1000-wall.x
-
-      if wall.radius ~= nil then
-        wall.midy = 1000-wall.x
-        wall.y = wall.midy - wall.radius
-      end
-    else
-       wall.x1 = wall.y1
-    wall.x2 = wall.y2
       wall.y = wall.x
 
       if wall.radius ~= nil then
         wall.midy = wall.x
         wall.y = wall.midy - wall.radius
       end
-
-    end
+    
 
     wall.y1 = nil
     wall.y2 = nil
@@ -92,25 +82,14 @@ function rotatefractal()
 
 
 
-    if  math.deg(map.rotation)%180 < 80 then
- plat.y1 = 1000-plat.x2
-    plat.y2 = 1000-plat.x1
-      plat.x = math.abs(1000-plat.y)
-
-      if plat.midy ~= nil then
-        plat.x = math.abs(1000-plat.midy)
-      end
-
-    else
  plat.y1 = plat.x1
     plat.y2 = plat.x2
-      plat.x = plat.y
+      plat.x = 1000-plat.y
 
       if plat.midy ~= nil then
-        plat.x = plat.midy
+        plat.x = 1000-plat.midy
       end
 
-    end
     plat.y = nil
     plat.x1 = nil
     plat.x2 = nil
