@@ -196,6 +196,9 @@ table.insert(themaps[3].walls, {y1 = -1, y2 = themaps[3].floor+1, x=0})
 table.insert(themaps[3].walls, {y1 = -1, y2 = themaps[3].floor+1, x=themaps[3].rightwall})
 
 
+
+
+
 table.insert(themaps[3].plats, {n=1,y = 2688, x1 = 2154, x2 = 2726,glass = true})
 
 table.insert(themaps[3].plats, {n=2,y = 5616, x1 = 419, x2 = 2139})

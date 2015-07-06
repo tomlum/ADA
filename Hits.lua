@@ -664,7 +664,8 @@ function hline(meme, theid, P1, P2, special)
 
 
               if p.player~=nil and not p.flinch
-              and ((p.x+p.v*walljumprange < wall.x and p.x >= wall.x and (p.v > 0 and p.left)) or (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x and (p.v < 0 and p.right))) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch and not p.busy and p.animcounter == 0
+              and ((p.x+p.v*walljumprange < wall.x and p.x >= wall.x) or (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x)) and
+        ((p.v < 0 and p.right) or (p.v > 0 and p.left)) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch and not p.busy and p.animcounter == 0
               then
                 if (p.x+p.v*walljumprange < wall.x and p.x >= wall.x) then
                   wallside = 1 

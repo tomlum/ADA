@@ -2240,15 +2240,21 @@ function xrubble(xx)
         slowww = true
       end
       for i = xx.y, xx.feet, 1 do
-        if wall.glasswall~=nil then
+        if wall.fractal ~= nil then
+        if math.floor(i%10)==0 then
+          makensparks(wall.x+(math.abs(xx.v)/xx.v), i, xx.v, xx.j, xx.color.c.r,xx.color.c.g,xx.color.c.b,1)
+          
+          end
+        
+        elseif wall.glasswall~=nil then
           if (wall.glasswall > 0 and i < wall.glasswall) or (wall.glasswall < 0 and i > -wall.glasswall)
           and math.floor(i%2)==0
           then 
             makenglass(wall.x,i,xx.v,xx.j, 1)
-          elseif math.floor(i%12)==0 then
+          elseif math.floor(i%20)==0 then
             makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
           end
-        elseif math.floor(i%12)==0 then
+        elseif math.floor(i%20)==0 then
           makenrubble("vert", wall.x,i,xx.v,xx.j/2, 1)
 
         end

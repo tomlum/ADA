@@ -701,7 +701,11 @@ for i = 0, .9, .1 do
 
   tods() 
   if themap.rotation~=nil then
-      lg.draw(themap.stage, 500, 500, themap.rotation, 1, 1, 500, 500)
+    if math.deg(themap.rotation)%180 > 80 then
+      lg.draw(themap.stage, themap.height/2, themap.width/2, themap.rotation, 1, 1, themap.width/2, themap.height/2)
+      else
+      lg.draw(themap.stage, themap.width/2, themap.height/2, themap.rotation, 1, 1, themap.width/2, themap.height/2)
+      end
     else
       lg.draw(enviro.stage, 0, 0)
       end
