@@ -190,13 +190,18 @@ you.cantreturntothis = 0
 
 me.cmbo = false
 you.cmbo = false
+me.hitbox = false
+you.hitbox = false
 function combo(xx)
-
 
   if xx.animcounter > 0 and xx.animcounter <= 2 then
     for i,v in ipairs(hitt) do
       v.hit = false
+      v.hitbox = false
     end
+    
+    
+    
   end
 
   local oldanimc = xx.animcounter

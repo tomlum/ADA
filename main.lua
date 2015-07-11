@@ -31,8 +31,8 @@ dangerCloseIsAThing = true
 --apple w is window close
 --SHAEZ TIED TO RUMBLE?!?!?!?
 melcolor = 2
-mercolor = 4
-youlcolor = 2
+mercolor = 3
+youlcolor = 3
 yourcolor = 1
 therampspeed = .2
 mapnum = 1
@@ -917,17 +917,13 @@ function love.update()
 
     -- movetod(.03)
     if love.keyboard.isDown("3") and not boxstop then
-      throwinto()
+      --throwinto()
       makecolorbox(me.x, me.y+30)
       boxstop = true
       --fractalrotate()
     end
     
-    if love.keyboard.isDown("2") and not boxstop then
-
-      boxstop = true
-      rotatefractal()
-    end
+   
     
     lg.setColor(25,25,255)
    
@@ -941,6 +937,9 @@ function love.update()
     for i,plat in ipairs(themap.walls) do
       lg.print(tostring(plat.y).."||"..tostring(plat.x1).."||"..tostring(plat.x2).."||"..tostring(plat.x).."||"..tostring(plat.y1).."||"..tostring(plat.y2), 300,i*20)
     end
+    
+    lg.print(tostring(me.oplat), 300,300)
+    lg.print(tostring(you.plat), 300,320)
     
     
     --]]--

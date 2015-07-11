@@ -79,9 +79,6 @@ function orangeyouglad(xx)
   if xx.g then 
     xx.o5repcounter = 0 end
 
-    if xx.flinch then 
-      xx.oplat = nil
-    end
 
     if xx.animcounter > 0 then
       xx.stop = true
@@ -136,9 +133,8 @@ function orangeyouglad(xx)
 
 
         elseif xx.animcounter < 40 then
-          if xx.animcounter == 8 and xx.rampcanhit then
+          if isabout(xx.animcounter, 8) and xx.rampcanhit then
 
-            xx.oplat = nil
             ocontactstuff(xx, xx.mid+(xx.lr*72), xx.y+32,xx.v+(19*xx.lr), xx.j-36) 
 
             hboxcs(xx, xx.id, 
@@ -206,9 +202,8 @@ function orangeyouglad(xx)
         elseif xx.animcounter < 50 then
           xx.im = ok3
 
-          if xx.animcounter == 13+5 and xx.rampcanhit then
+          if isabout(xx.animcounter, 13+5) and xx.rampcanhit then
 
-            xx.oplat = nil
             ocontactstuff(xx, xx.mid+(xx.lr*50), xx.y+27,xx.v+(49*xx.lr), xx.j-38) 
             ocontactstuff(xx, xx.mid-(xx.lr*50), xx.y+27,xx.v-(49*xx.lr), xx.j-38)
             --[[
@@ -290,7 +285,6 @@ function orangeyouglad(xx)
               xx.animcounter = 101
               repplay(xx.flapsou)
 
-              xx.oplat = nil
             end
 
             xx.cmbo=true--combo(xx)
@@ -322,9 +316,7 @@ function orangeyouglad(xx)
 
         elseif xx.animcounter < 40-20 then
           xx.im = o33
-          if xx.animcounter <= 8 and xx.rampcanhit then
-
-            xx.oplat = nil
+          if isabout(xx.animcounter,  8) and xx.rampcanhit then
             ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 
           repplay(xx.orangesou2)
 
@@ -370,7 +362,7 @@ function orangeyouglad(xx)
 
         elseif xx.animcounter < 40 then
           xx.im = aop2
-          if xx.animcounter == 6 and xx.rampcanhit then
+          if isabout(xx.animcounter, 6) and xx.rampcanhit then
 
             ocontactstuff(xx, xx.mid+(xx.lr*43), xx.y-24,xx.v+(19*xx.lr), xx.j-57) 
             ocontactstuff(xx, xx.mid+(xx.lr*43), xx.y+24+31,xx.v+(19*xx.lr), xx.j+57) 
@@ -439,9 +431,8 @@ function orangeyouglad(xx)
 
         elseif xx.animcounter < 23 then
 
-          if xx.animcounter == 6 and xx.rampcanhit then
+          if isabout(xx.animcounter,  7) and xx.rampcanhit then
 
-            xx.oplat = nil
             ocontactstuff(xx, xx.mid, xx.y,xx.v+81*xx.lr, xx.j-138)
 
 
@@ -500,13 +491,8 @@ function orangeyouglad(xx)
               xx.firstjump = true
             end
           end
-          xx.oplat = nil
           xx.cmbo=true--combo(xx)
-          if xx.o5repcounter%2==0  then
-            xx.im = ao21
-          else
-            xx.im = ao23
-          end
+         
 
         elseif xx.animcounter < 40 then
           xx.cmbo=true--combo(xx)
@@ -528,7 +514,6 @@ function orangeyouglad(xx)
           xx.im = ao32
           if xx.animcounter <= 8 and xx.rampcanhit then
 
-            xx.oplat = nil
             ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 
 
             hboxcs(xx, xx.id, 
@@ -574,17 +559,16 @@ function orangeyouglad(xx)
 
 
   function ocontactstuff(xx, ex, why, vee, jay)
-
-    if xx.oplat == nil and retlineplatcheck(ex, why,vee, jay) == nil then xx.oplat = nil end
-    if retlineplatcheck(ex, why,vee, jay) ~= nil then 
-      xx.oplat = retlineplatcheck(ex, why,vee, jay)
-      if xx.glass~=nil then 
+xx.oplat = nil
+    xx.oplat = retlineplatcheck(ex, why,vee, jay)
+    if xx.oplat ~= nil then 
+      if xx.oplat.glass~=nil then 
         makenglass(ex+xx.v+vee,xx.oplat.y,1,1, 5)
         makenglass(ex+xx.v+vee,xx.oplat.y,-1,1, 5)
 
       else
-        makenrubble("vert", ex+xx.v+vee,xx.oplat.y,1,1, 5)
-        makenrubble("vert", ex+xx.v+vee,xx.oplat.y,-1,1, 5)
+        makenrubble("vert", ex+xx.v+vee,xx.oplat.y-1,1,1, 5)
+        makenrubble("vert", ex+xx.v+vee,xx.oplat.y-1,-1,1, 5)
       end
     end
 

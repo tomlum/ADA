@@ -4,7 +4,7 @@ colorboxleaf = lg.newImage("enviro/colorboxleaf.png")
 
 colorboxes = {}
 
-
+boxhealth = 1--10
 
 function makecolorbox(ex, why)
   local color = {r = math.random(-255,255), g = math.random(-255,255), b = math.random(-255,255)}
@@ -12,7 +12,7 @@ function makecolorbox(ex, why)
   local color2 = {r = math.random(-255,255), g = math.random(-255,255), b = math.random(-255,255)}
 
   for i = 0, 20 do
-    table.insert(colorboxes, {flip = 0+.01*i, flipdir = 1, x = ex, y = why, time = 0, c = color, c2 = color2
+    table.insert(colorboxes, {flip = 0+.01*i, flipdir = 1, x = ex, y = why, time = 0, c = color, c2 = color2, health = boxhealth
 
       })
   end

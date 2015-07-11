@@ -375,8 +375,18 @@ function hline(meme, theid, P1, P2, special)
     --if stophit and meme.player~=nil then
     --meme.hit = true
     --end
+    
+    for i,box in ipairs(colorboxes) do
+       if (hexcheck(P1.x, P1.y, P2.x, P2.y, box.x, box.y, 40*math.abs(box.flip), 60, 0, 0))
+      then
+        table.remove(colorboxes, i)
+        makensparks(box.x,box.y,sparkspeed, sparkspeed, math.random(255),math.random(255),math.random(255),10)
+      end
+      
+      end
 
   end
+
 
 
   function hboxcs(meme, theid, P1, P2, P3, P4, special)
@@ -468,6 +478,48 @@ function hline(meme, theid, P1, P2, special)
           meme.hit = true
         end
         ]]--
+        
+          for i,box in ipairs(colorboxes) do
+            
+       if not meme.hitbox and (hexcheck(P1.x, P1.y, P2.x, P2.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
+          or hexcheck(P2.x, P2.y, P3.x, P3.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
+          or hexcheck(P3.x, P3.y, P4.x, P4.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
+          or hexcheck(P4.x, P4.y, P1.x, P1.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
+          or boxCheck({x = box.x, y = box.y}, P1, P2, P3, P4)
+        )
+       
+       
+      then
+        local boxdam = 0
+        meme.hitbox = true
+        if meme.id == 1 then
+          boxdam = you.health
+        special(you)
+        boxdam = boxdam - you.health
+        elseif meme.id == 2 then
+          boxdam = me.health
+        special(me)
+        boxdam = boxdam - me.health
+      end
+      
+        makensparks(box.x,box.y,sparkspeed*2, sparkspeed*2, math.random(255),math.random(255),math.random(255),5)
+        
+        box.health = box.health - boxdam
+        
+        if box.health < 0 then
+        local xdis = box.x-meme.mid
+        local ydis = box.y-meme.y
+        colorboxes = {}
+        throwinto()
+        for i = 20, 1, -1 do
+        makensparks(meme.x+15+xdis,meme.y+ydis,sparkspeed*3, sparkspeed*3, math.random(255),math.random(255),math.random(255),20)
+        end
+        end
+      end
+      
+      end
+
+        
       end
 
       function hexplatcheck2(y1, x1, x2, ex, why, w, why2, v)
@@ -559,8 +611,7 @@ function hline(meme, theid, P1, P2, special)
           return nil
         end
 
-        for j = #themap.plats, 1, -1 do 
-          plat = themap.plats[j]
+        for j,plat in ipairs(themap.plats) do 
           local linep1 = {x = plat.x1, y = plat.y}
           local linep2 = {x = plat.x2, y = plat.y}
           if pint(linep1, linep2, midv, midv2) 

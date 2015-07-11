@@ -203,10 +203,29 @@ thefractal = fractals[3]
 --IN THIS ONE, NO THING FOR GROUND THING, LIKE, NO GROUND CAMERA ADJUST
 function throwinto()
 
-  themap = thefractal
-  --rotatefractal()
+  themap = fractals[math.random(1,3)]
+  local map = themap
+  while(math.random()<.5) do
+  rotatefractal()
+  end
   
+local truewidth = map.width
+local trueheight = map.height
 
+  if math.deg(map.rotation)%360 <= 89 then
+    map.start = map.start1
+    map.height = truewidth
+  elseif math.deg(map.rotation)%360 <= 170 then
+    map.start = map.start2
+  elseif math.deg(map.rotation)%360 <= 260 then
+    map.start = map.start3
+    
+    map.height = truewidth
+    
+  elseif math.deg(map.rotation)%360 <=360 then
+    map.start = map.start4
+  end
+  
 
   
 
@@ -279,6 +298,11 @@ function throwinto()
   enviro.rightwall = thefractal.rightwall
   floor = thefractal.floor
   
+    
+  map.width = truewidth
+  map.height = trueheight
   
+  
+ 
   
 end
