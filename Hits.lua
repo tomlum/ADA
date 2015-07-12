@@ -380,7 +380,7 @@ function hline(meme, theid, P1, P2, special)
        if (hexcheck(P1.x, P1.y, P2.x, P2.y, box.x, box.y, 40*math.abs(box.flip), 60, 0, 0))
       then
         table.remove(colorboxes, i)
-        makensparks(box.x,box.y,sparkspeed, sparkspeed, math.random(255),math.random(255),math.random(255),10)
+        makensparks(box.x,box.y,sparkspeed, sparkspeed, math.random(0),math.random(0),math.random(0),10)
       end
       
       end

@@ -4,7 +4,13 @@ colorboxleaf = lg.newImage("enviro/colorboxleaf.png")
 
 colorboxes = {}
 
-boxhealth = 1--10
+boxhealth = 1--0
+
+function spawncolorbox()
+  if plat.nobox == nil  then
+  
+end
+end
 
 function makecolorbox(ex, why)
   local color = {r = math.random(-255,255), g = math.random(-255,255), b = math.random(-255,255)}

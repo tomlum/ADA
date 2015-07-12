@@ -31,7 +31,7 @@ dangerCloseIsAThing = true
 --apple w is window close
 --SHAEZ TIED TO RUMBLE?!?!?!?
 melcolor = 2
-mercolor = 3
+mercolor = 4
 youlcolor = 3
 yourcolor = 1
 therampspeed = .2
@@ -912,8 +912,14 @@ function love.update()
     paralaxshake = false
 
     if not love.keyboard.isDown("3") and not love.keyboard.isDown("2") then
+      
       boxstop = false
     end
+       if love.keyboard.isDown("2") and not boxstop then
+      boxstop = true
+  rotatefractal()
+    end
+    
 
     -- movetod(.03)
     if love.keyboard.isDown("3") and not boxstop then
@@ -929,10 +935,11 @@ function love.update()
    
     ---[[
     for i,plat in ipairs(themap.plats) do
-      lg.print(tostring(plat.y).."||"..tostring(plat.x1).."||"..tostring(plat.x2).."||"..tostring(plat.x).."||"..tostring(plat.y1).."||"..tostring(plat.y2), 600,i*20)
+      lg.print("||ceiling:"..tostring(plat.ceiling).."||floor:"..tostring(plat.floor)..
+        "||y:"..tostring(plat.y).."||x1:"..tostring(plat.x1).."||x2:"..tostring(plat.x2), 300,i*20)
     end
     --]]--
-    ---[[
+    --[[
     
     for i,plat in ipairs(themap.walls) do
       lg.print(tostring(plat.y).."||"..tostring(plat.x1).."||"..tostring(plat.x2).."||"..tostring(plat.x).."||"..tostring(plat.y1).."||"..tostring(plat.y2), 300,i*20)
@@ -941,7 +948,11 @@ function love.update()
     lg.print(tostring(me.oplat), 300,300)
     lg.print(tostring(you.plat), 300,320)
     
+    if love.keyboard.isDown("2") then
+      makensparks(me.x,me.y,sparkspeed, sparkspeed, math.random(255),math.random(255),math.random(255),10)
+      end
     
-    --]]--
+    
+    ]]--
     
   end

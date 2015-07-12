@@ -50,10 +50,10 @@ redak2 = {im=lg.newImage("me/attack/red/redak2.png"),
 redk10 = {im=lg.newImage("me/attack/red/redk10.png"),
   xoff = 3, yoff = 4, extrah = 5}
 redk11 = {im=lg.newImage("me/attack/red/redk11.png"),
-  xoff = 13, yoff = -6, extrah = 5}
+  xoff = 13+17, yoff = -6, extrah = 5}
 
 redak11 = {im=lg.newImage("me/attack/red/redak11.png"),
-  xoff = 12,extrah = 5}
+  xoff = 12+17,extrah = 5}
 
 me.rlvltimer = 0
 you.rlvltimer = 0

@@ -62,16 +62,19 @@ function rotatefractal()
 
 local truewidth = map.width
 local trueheight = map.height
+    local flip = false
 
   if math.deg(map.rotation)%360 <= 89 then
     map.start = map.start1
     map.height = truewidth
+    flip = true
   elseif math.deg(map.rotation)%360 <= 170 then
     map.start = map.start2
   elseif math.deg(map.rotation)%360 <= 260 then
     map.start = map.start3
     
     map.height = truewidth
+    flip = true
     
   elseif math.deg(map.rotation)%360 <=360 then
     map.start = map.start4
@@ -99,10 +102,10 @@ local trueheight = map.height
     wall.x = nil
 
 
-    if wall.barrier then
-      wall.ceiling = true
-      wall.floor = true
-      wall.barrier = nil
+    if wall.barrier and flip then
+      local oldceiling = wall.ceiling
+      wall.ceiling = wall.floor
+      wall.floor = oldceiling
     end
 
   end  
@@ -126,9 +129,12 @@ local trueheight = map.height
 
 
     if plat.floor or plat.ceiling then
-      plat.ceiling = nil
-      plat.floor = nil
       plat.barrier = true
+      if flip then
+      local oldceiling = plat.ceiling
+      plat.ceiling = plat.floor
+      plat.floor = oldceiling
+      end
     end
   end
 
@@ -142,8 +148,8 @@ local trueheight = map.height
 
 end
 
-table.insert(fractals[1].walls, {n=1,y1 = 198, y2 = 950, x=805, barrier = true})
-table.insert(fractals[1].plats, {n=1, midy = 200, x1 = 805, x2 = 950, radius = 1, y = 0, floor = true, ceiling = true})
+table.insert(fractals[1].walls, {n=1,y1 = 198, y2 = 950, x=805, barrier = true, floor = true})
+table.insert(fractals[1].plats, {n=1, midy = 200, x1 = 805, x2 = 950, radius = 1, y = 0, floor = true})
 table.insert(fractals[1].plats, {fractal = true, midy = 564, x1 = 512, x2 = 767, radius = 1, y=0})
 
 
@@ -180,11 +186,11 @@ table.insert(fractals[2].plats, {fractal = true, midy = 724, x1 = 800, x2 = 950,
 
 
 function insertfractalbox(num)
-  table.insert(fractals[num].walls, {n=1,y1 = 50, y2 = fractals[num].floor, x=fractals[num].rightwall, barrier = true})
-  table.insert(fractals[num].walls, {n=2,y1 = 50, y2 = fractals[num].floor, x=50, barrier = true})
+  table.insert(fractals[num].walls, {n=1,y1 = 50, y2 = fractals[num].floor, x=fractals[num].rightwall, barrier = true, floor = true})
+  table.insert(fractals[num].walls, {n=2,y1 = 50, y2 = fractals[num].floor, x=50, barrier = true, ceiling = true})
 
-  table.insert(fractals[num].plats, {n=1, y = fractals[num].floor, x1 = 50, x2 = fractals[num].rightwall, floor = true, ceiling = true})
-  table.insert(fractals[num].plats, {n=2, y = 50, x1 = 50, x2 = fractals[num].rightwall, ceiling = true, floor = true})
+  table.insert(fractals[num].plats, {n=1, y = fractals[num].floor, x1 = 50, x2 = fractals[num].rightwall, floor = true})
+  table.insert(fractals[num].plats, {n=2, y = 50, x1 = 50, x2 = fractals[num].rightwall, ceiling = true})
 
 end
 
@@ -196,19 +202,22 @@ insertfractalbox(3)
 
 
 
-thefractal = fractals[3]
+thefractal = fractals[1]
 
 
 
 --IN THIS ONE, NO THING FOR GROUND THING, LIKE, NO GROUND CAMERA ADJUST
 function throwinto()
-
+   themap = fractals[1]
+   local map = themap
+--[[
   themap = fractals[math.random(1,3)]
   local map = themap
   while(math.random()<.5) do
   rotatefractal()
   end
-  
+  ]]--
+  rotatefractal()
 local truewidth = map.width
 local trueheight = map.height
 

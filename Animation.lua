@@ -50,7 +50,7 @@ paper4 = lg.newImage("enviro/paper4.png")
 
 
 
-sparkfaderate = 7
+sparkfaderate = 5
 
 hour = 0
 minute = 0
@@ -2114,7 +2114,26 @@ death = function(xx, yy)
 
   end
 
-  function makensparks(ex,why,vee, jay, arr,gee,bee, n)
+  function makensparks(ex,why,ve, jy, arr,gee,bee, n)
+    local force = ve+jy/2
+    for i = n*4, 1, -1 do
+      local flip1 = 1
+      local flip2 = 1
+      if math.random()>.5 then
+        flip1 = -1
+        end
+      if math.random()>.5 then
+        flip2 = -1
+        end
+    vee = force*math.asin(math.rad(math.random(1,90)))*flip1
+    jay = force*math.acos(math.rad(math.random(1,90)))*flip2
+      table.insert(sparks,{x = ex, y = why, v=vee, j = jay,r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360), shape = math.random(1,3)})
+
+    end
+end
+
+  function makensparksbox(ex,why,vee, jay, arr,gee,bee, n)
+    
     for i = n, 1, -1 do
       table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360), shape = math.random(1,3)})
       table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360), shape = math.random(1,3)})
@@ -2145,9 +2164,10 @@ death = function(xx, yy)
 
   function updatesparks()
 
-    for i = #sparks, 1, -1 do
-      local temp = sparks[i]
-      if lineplatcheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6) or linewallcheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6) then table.remove(sparks,i) end
+    for i, temp in ipairs(sparks) do
+      if lineplatcheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6) or linewallcheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6)or temp.x < 0 or temp.y < 0 or temp.x > themap.rightwall or temp.y > themap.floor then table.remove(sparks,i)
+        
+        end
 
     end
 
@@ -2183,9 +2203,9 @@ function drawsparks()
     lg.draw(enviro.spark3,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)
   
   end
-    lg.setColor(255,255,255)
 
   end
+    lg.setColor(255,255,255)
 end
 
 
