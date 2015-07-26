@@ -4,7 +4,7 @@ colorboxleaf = lg.newImage("enviro/colorboxleaf.png")
 
 colorboxes = {}
 
-boxhealth = 1--0
+boxhealth = 10
 
 function spawncolorbox()
   if plat.nobox == nil  then

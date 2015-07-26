@@ -2,6 +2,8 @@
 fractal1 = lg.newImage("enviro/fractals/fractal1.png")
 fractal2 = lg.newImage("enviro/fractals/fractal2.png")
 fractal3 = lg.newImage("enviro/fractals/fractal3.png")
+fractal4 = lg.newImage("enviro/fractals/fractal4.png")
+fractal4paralax = lg.newImage("enviro/fractals/fractal4paralax.png")
 fractal1facade = lg.newImage("enviro/fractals/fractal1facade.png")
 
 
@@ -41,17 +43,34 @@ fractals = {
   {name = "fractal3", 
     stage = fractal3,
     plats = {}, walls = {},
-    floor = 500-50,
-    rightwall = 2000-50,
+    rightwall = 500,
+    floor = 2000,
     start={x = 300, y = 50},
     facade = fractal1facade,
     rotation = 0,
-    start1={x = 50, y = 50},
-    start2={x = 50, y = 50},
-    start3={x = 50, y = 50},
-    start4={x = 50, y = 50},
-    height = 500,
-    width = 2000
+    start1={x = 50, y = 1035},
+    start2={x = 466, y = 100},
+    start3={x = 50, y = 716},
+    start4={x = 1034, y = 100},
+    height = 2000,
+    width = 500
+  },
+
+  {name = "fractal4", 
+    stage = fractal4,
+    plats = {}, walls = {},
+    floor = 550,
+    rightwall = 2050,
+    start={x = 100, y = 100},
+  paralaxscale = .5,
+    paralax = fractal4paralax,
+    rotation = 0,
+    start1={x = 1000, y = 100},
+    start2={x = 100, y = 1000},
+    start3={x = 1000, y = 100},
+    start4={x = 100, y = 1000},
+    height = 600,
+    width = 2100
   }
 }
 
@@ -60,9 +79,9 @@ function rotatefractal()
   map.rotation = (map.rotation + math.rad(90))%math.rad(360)
 
 
-local truewidth = map.width
-local trueheight = map.height
-    local flip = false
+  local truewidth = map.width
+  local trueheight = map.height
+  local flip = false
 
   if math.deg(map.rotation)%360 <= 89 then
     map.start = map.start1
@@ -72,20 +91,20 @@ local trueheight = map.height
     map.start = map.start2
   elseif math.deg(map.rotation)%360 <= 260 then
     map.start = map.start3
-    
+
     map.height = truewidth
     flip = true
-    
+
   elseif math.deg(map.rotation)%360 <=360 then
     map.start = map.start4
   end
-  
+
 
   for i,wall in ipairs(map.walls) do
 
 
 
-    
+
     wall.x1 = map.height-wall.y2
     wall.x2 = map.height-wall.y1
 
@@ -131,9 +150,9 @@ local trueheight = map.height
     if plat.floor or plat.ceiling then
       plat.barrier = true
       if flip then
-      local oldceiling = plat.ceiling
-      plat.ceiling = plat.floor
-      plat.floor = oldceiling
+        local oldceiling = plat.ceiling
+        plat.ceiling = plat.floor
+        plat.floor = oldceiling
       end
     end
   end
@@ -141,10 +160,27 @@ local trueheight = map.height
   tempplat = clone(map.plats)
   map.plats = clone(map.walls)
   map.walls = clone(tempplat)
-  
+
   map.width = truewidth
   map.height = trueheight
- 
+
+
+end
+
+function makeplatbox(num, ex, why, width, height, kind)
+
+
+  table.insert(fractals[num].plats, {y = why, x1 =  ex, x2 = ex+width, ceiling = true})
+  table.insert(fractals[num].plats, {y = why+height, x1 =  ex, x2 = ex+width, floor = true})
+
+  if kind == "left" then
+    table.insert(fractals[num].walls, {y1 = why, y2 = why+height, x=ex, barrier = true, floor = true})
+    table.insert(fractals[num].walls, {y1 = why, y2 = why+height, x=ex+width, barrier = true, ceiling = true})
+  elseif kind == "right" then
+    table.insert(fractals[num].walls, {y1 = why, y2 = why+height, x=ex, barrier = true, floor = true})
+    table.insert(fractals[num].walls, {y1 = why, y2 = why+height, x=ex+width, barrier = true, ceiling = true})
+
+  end
 
 end
 
@@ -183,6 +219,21 @@ table.insert(fractals[2].plats, {fractal = true, midy = 565, x1 = 769, x2 = 950,
 table.insert(fractals[2].plats, {fractal = true, midy = 724, x1 = 800, x2 = 950, radius = 2, y = 0})
 
 
+makeplatbox(3, 0, 0, 116, 1034, "left")
+makeplatbox(3, 384, 0, 116, 517, "right")
+makeplatbox(3, 268, 517, 232, 517, "right")
+
+makeplatbox(3, 0, 1034, 50, 250, "left")
+makeplatbox(3, 500-50, 1034, 50, 250, "right")
+
+makeplatbox(3, 0, 1284, 100, 250, "left")
+makeplatbox(3, 500-100, 1284, 100, 250, "right")
+makeplatbox(3, 0, 1284+250, 150, 250, "left")
+makeplatbox(3, 500-150, 1284+250, 150, 250, "right")
+makeplatbox(3, 0, 1284+250+250, 200, 250, "left")
+makeplatbox(3, 500-200, 1284+250+250, 200, 250, "right")
+
+
 
 
 function insertfractalbox(num)
@@ -198,28 +249,29 @@ end
 insertfractalbox(1)
 insertfractalbox(2)
 insertfractalbox(3)
+insertfractalbox(4)
 
 
 
 
-thefractal = fractals[1]
+thefractal = fractals[3]
 
 
 
 --IN THIS ONE, NO THING FOR GROUND THING, LIKE, NO GROUND CAMERA ADJUST
 function throwinto()
-   themap = fractals[1]
-   local map = themap
---[[
+  themap = fractals[4]
+  local map = themap
+  --[[
   themap = fractals[math.random(1,3)]
   local map = themap
   while(math.random()<.5) do
-  rotatefractal()
+    rotatefractal()
   end
   ]]--
   rotatefractal()
-local truewidth = map.width
-local trueheight = map.height
+  local truewidth = map.width
+  local trueheight = map.height
 
   if math.deg(map.rotation)%360 <= 89 then
     map.start = map.start1
@@ -228,15 +280,15 @@ local trueheight = map.height
     map.start = map.start2
   elseif math.deg(map.rotation)%360 <= 260 then
     map.start = map.start3
-    
+
     map.height = truewidth
-    
+
   elseif math.deg(map.rotation)%360 <=360 then
     map.start = map.start4
   end
-  
 
-  
+
+
 
   local start = themap.start
   if onescreen then
@@ -261,9 +313,14 @@ local trueheight = map.height
       me.x = you.x
       you.x = temp
 
-    else
+  else
+    if me.x > you.x then
+      me.x = start.x + math.abs((youxrig-me.x))
+      you.x = start.x + math.abs((mexrig-you.x))
+      else
       me.x = start.x + math.abs((mexrig-me.x))
       you.x = start.x + math.abs((youxrig-you.x))
+      end
 
     end
   end
@@ -306,12 +363,12 @@ local trueheight = map.height
   enviro.stage = thefractal.stage
   enviro.rightwall = thefractal.rightwall
   floor = thefractal.floor
-  
-    
+
+
   map.width = truewidth
   map.height = trueheight
-  
-  
- 
-  
+
+
+
+
 end

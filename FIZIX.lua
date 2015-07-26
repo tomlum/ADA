@@ -670,6 +670,7 @@ function movex(xx,yy)
     then
       xx.landingcounter = xx.landingcounter - 1*ramp(xx)
     else xx.landingcounter = 0
+      
     end
     if z.blockb and xx.a1b and math.abs(z.j) + math.abs(z.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j) and xx.j > 0
     then 

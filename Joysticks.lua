@@ -131,9 +131,11 @@ function combomanage(xx)
       xx.animcounter = xx.animcounter+1*xx.rampspeed
       end
   elseif xx.animcounter == 0 then 
+    if not xx.purplanding then
     xx.hitsomeonewithpurp = false
     xx.combo = 0
     xx.cancombo = false
+    end
     xx.type = 0
     xx.repcounter = 0
   end

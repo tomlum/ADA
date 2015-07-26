@@ -1,5 +1,5 @@
 --ppunch3 inserts some p's around
-ppunch1 = {im = lg.newImage("me/attack/purple/ppunch1.png"), ppunch1im}
+ppunch1 = {im = lg.newImage("me/attack/purple/ppunch1.png"), ppunch1im, xoff = 10, yoff = 10}
 ppunch2 = {im = lg.newImage("me/attack/purple/ppunch2.png"), xoff = 5}
 ppunch3 = {im = lg.newImage("me/attack/purple/ppunch3.png"), xoff = 5, yoff = -5}
 stomp1 = {im=lg.newImage("me/attack/purple/stomp1.png")}
@@ -74,51 +74,51 @@ you.ptopspeed = 0
 spikespace = 10
 
 function dopurpakspikes(xx)
-  if xx.purpgroundtimer < 0 and xx.purpgroundtimer+1 >= 0 then
+  if xx.purpgroundtimer > 0 and xx.purpgroundtimer <= 1.3 then
     xx.purpgroundtimer = 0
-      xx.numofspikes = 2*at.p.ak.n
+    xx.numofspikes = 2*at.p.ak.n
     for sn = 0, at.p.ak.n do
-        local lverts = {}
-        lverts[1]= xx.mid+(xx.lr*20*(sn))
-        lverts[2]= xx.feet
-        lverts[3]= xx.mid+(xx.lr*20*(sn-1))
-        lverts[4]= xx.feet
-        lverts[5]= xx.mid+(xx.lr*20*(sn-1))
-        lverts[6]= xx.feet
-        
-        local lverts2 = {}
-        lverts2[1]= xx.mid+(-xx.lr*20*(sn))
-        lverts2[2]= xx.feet
-        lverts2[3]= xx.mid+(-xx.lr*20*(sn))
-        lverts2[4]= xx.feet
-        lverts2[5]= xx.mid+(-xx.lr*20*(sn))
-        lverts2[6]= xx.feet
-         if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
-            lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
+      local lverts = {}
+      lverts[1]= xx.mid+(xx.lr*20*(sn))
+      lverts[2]= xx.feet
+      lverts[3]= xx.mid+(xx.lr*20*(sn-1))
+      lverts[4]= xx.feet
+      lverts[5]= xx.mid+(xx.lr*20*(sn-1))
+      lverts[6]= xx.feet
+
+      local lverts2 = {}
+      lverts2[1]= xx.mid+(-xx.lr*20*(sn))
+      lverts2[2]= xx.feet
+      lverts2[3]= xx.mid+(-xx.lr*20*(sn))
+      lverts2[4]= xx.feet
+      lverts2[5]= xx.mid+(-xx.lr*20*(sn))
+      lverts2[6]= xx.feet
+      if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
+      lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
         table.insert(xx.spikes,
           {verts = lverts,
             t = 0, lr=-xx.lr}) 
-        end
-         if lverts2[1] > themap.plats[xx.plat.n].x1+spikesize and 
-            lverts2[1] < themap.plats[xx.plat.n].x2-spikesize then
+      end
+      if lverts2[1] > themap.plats[xx.plat.n].x1+spikesize and 
+      lverts2[1] < themap.plats[xx.plat.n].x2-spikesize then
         table.insert(xx.spikes,
           {verts = lverts2,
             t = 0, lr=xx.lr})
-        end
+      end
 
 
     end
   elseif xx.purpgroundtimer < 0 then
-    
-            repplay(xx.airpurp2)
+
+    repplay(xx.airpurp2)
     xx.purpgroundtimer = xx.purpgroundtimer + 1*ramp(xx)
   elseif xx.landingcounter >= at.p.ak.exposedtime and xx.landingcounter-1 < at.p.ak.exposedtime then
     xx.numofspikes = 0
-    
+
   end
-  
-  
-  end
+
+
+end
 
 
 function spikedraw(xx)
@@ -154,10 +154,10 @@ end
 
 
 function spikeupdate(xx)
-  
-   
 
-  
+
+
+
   for i = #xx.spikes, 1, -1 do
     local cur = xx.spikes[i] 
     local vv = cur.verts
@@ -274,7 +274,7 @@ at.p.ak = {}
 at.p.ak.penalty = 50
 at.p.ak.n = 4
 at.p.ak.time = 30
- at.p.ak.exposedtime = 37
+at.p.ak.exposedtime = 37
 
 
 
@@ -300,9 +300,12 @@ function pandp(xx)
   if xx.hitsomeonewithpurp and xx.numofspikes>0 then 
     xx.cmbo=true--combo(xx)
     xx.cancombo = true
+    if xx.purplanding then
+    xx.landingcounter = 0
+    end
   end
-  
- 
+
+
 
   if xx.animcounter > 7 then
     xx.stop = true
@@ -372,7 +375,7 @@ function pandp(xx)
                 z.flinch = true
                 z.ft = z.ft + at.p.p2.ft
                 z.j=at.p.p2.kj + xx.j
-              shakez(at.p.p2.z)
+                shakez(at.p.p2.z)
 
 
               end)
@@ -400,299 +403,299 @@ function pandp(xx)
             repplay(xx.purp2)
           end
           xx.im = pp1back4
-          
+
           if xx.animcounter <= at.p.p2.t+5 then 
             hall(xx.id, function(z) if z.plat.n == xx.plat.n
-              and math.abs(z.x) - math.abs(xx.x) < quakerange then
-                z.j = 10
-                z.flinch = true
-                z.ft = z.ft+at.p.p.ft*2/3
-              end end)
-            hboxcs(xx, xx.id, 
-              {x=xx.mid, y = xx.y+22},
-              {x=xx.mid+xx.v+(xx.lr*-55), y = xx.y+66},
-              {x=xx.mid+xx.v+(xx.lr*-44), y = xx.y+65},
-              {x=xx.mid+(xx.lr*-12), y = me.y+37},
-              function(z)
-                xx.cancombo = true
-                z.health = z.health - at.p.p2.dam
-                z.v = z.v-xx.lr*at.p.p2.kb + xx.v
-                z.flinch = true
-                z.ft = z.ft + at.p.p2.ft
-                shakez(at.p.p2.z)
+                and math.abs(z.x) - math.abs(xx.x) < quakerange then
+                  z.j = 10
+                  z.flinch = true
+                  z.ft = z.ft+at.p.p.ft*2/3
+                end end)
+              hboxcs(xx, xx.id, 
+                {x=xx.mid, y = xx.y+22},
+                {x=xx.mid+xx.v+(xx.lr*-55), y = xx.y+66},
+                {x=xx.mid+xx.v+(xx.lr*-44), y = xx.y+65},
+                {x=xx.mid+(xx.lr*-12), y = me.y+37},
+                function(z)
+                  xx.cancombo = true
+                  z.health = z.health - at.p.p2.dam
+                  z.v = z.v-xx.lr*at.p.p2.kb + xx.v
+                  z.flinch = true
+                  z.ft = z.ft + at.p.p2.ft
+                  shakez(at.p.p2.z)
 
 
-              end)
-            xx.im = pp1back3
-          end
-
-        else
-          xx.animcounter = 0
-        end
-      else
-
-        if xx.animcounter < 20 then
-          xx.im = ppunch1
-
-        elseif xx.animcounter < 21 then
-
-          xx.im = ppunch2
-          makenrubble(xx.mid+xx.lr*20, xx.y+50,3*xx.lr,3,10)
-          repplay(xx.purp2)
-          if #joysticks>=xx.id then
-            xx.joystick:setVibration(1,1)
-          end
-          hall(xx.id, function(z) if z.plat.n == xx.plat.n
-              and math.abs(z.x) - math.abs(xx.x) < quakerange then
-                z.j = 10
-                z.flinch = true
-                z.ft = z.ft+at.p.p.ft*2/3
-              end end)
-
-            hboxcs(xx, xx.id, 
-              {x=xx.mid, y = xx.y+35},
-              {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+26},
-              {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+49},
-              {x=xx.mid, y = xx.y+6},
-              function(z)
-                xx.cancombo = true
-                z.health = z.health - at.p.p.dam
-                z.v = xx.lr*at.p.p.kb + xx.v
-                z.flinch = true
-                z.ft = z.ft + at.p.p.ft/3
-                z.j=0
-              shakez(at.p.p.z)
-
-
-              end)
-
-            if xx.repcounter == 1 then
-              xx.v = xx.v + (xx.lr*5)
-            end
-
-          elseif xx.animcounter < 55 then
-            xx.im = ppunch3
-            if xx.animcounter >= pa2busytime then 
-              xx.cmbo=true--combo(xx)
-            end
-
-          elseif xx.animcounter >= 55 then
-            xx.animcounter = 0
-          end
-        end
-
-      elseif xx.type == 2 then
-
-        if xx.animcounter < 20 then
-          xx.im = stomp1
-
-        elseif xx.animcounter <= 21 then
-          xx.im = stomp2
-          
-        rumbleme(xx, 1.2)
-          xx.numofspikes = xx.numofspikes+1
-          local lverts = {}
-          local lverts2 = {}
-          local sn = xx.numofspikes
-          if (xx.numofspikes <= 2 ) then
-            lverts[1]= xx.mid+(xx.lr*25*(sn-1))
-            lverts[2]= xx.feet
-            lverts[3]= xx.mid+(xx.lr*25*(sn-1))
-            lverts[4]= xx.feet
-            lverts[5]= xx.mid+(xx.lr*25*(sn-1))
-            lverts[6]= xx.feet
-
-            lverts2[1]= xx.mid+(xx.lr*25*(sn))
-            lverts2[2]= xx.feet
-            lverts2[3]= xx.mid+(xx.lr*25*(sn))
-            lverts2[4]= xx.feet
-            lverts2[5]= xx.mid+(xx.lr*25*(sn))
-            lverts2[6]= xx.feet
-
-            if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
-            lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
-              table.insert(xx.spikes, 
-                {verts = lverts,
-                  t = 0, lr=xx.lr})
-              repplay(xx.purpsound)
-              end
-             if lverts2[1] > themap.plats[xx.plat.n].x1+spikesize and 
-            lverts2[1] < themap.plats[xx.plat.n].x2-spikesize then
-              table.insert(xx.spikes, 
-                {verts = lverts2,
-                  t = 0, lr=xx.lr})
+                end)
+              xx.im = pp1back3
             end
 
           else
-            lverts[1]= xx.mid+(xx.lr*40*(sn-1))
-            lverts[2]= xx.feet
-            lverts[3]= xx.mid+(xx.lr*40*(sn-1))
-            lverts[4]= xx.feet
-            lverts[5]= xx.mid+(xx.lr*40*(sn-1))
-            lverts[6]= xx.feet
-
-
-            --  lverts2[1]= xx.mid+(xx.lr*25*(sn))
-            --  lverts2[2]= xx.feet
-            --  lverts2[3]= xx.mid+(xx.lr*25*(sn))
-            --  lverts2[4]= xx.feet
-            --  lverts2[5]= xx.mid+(xx.lr*25*(sn))
-            --  lverts2[6]= xx.feet
-
-            -- table.insert(xx.spikes, 
-            --  {verts = lverts2,
-            --    t = 0, lr=-1})
-
-            if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
-            lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
-
-              repplay(xx.purpsound)
-              if math.random() > .5 then
-                table.insert(xx.spikes,
-                  {verts = lverts,
-                    t = 0, lr=-1})
-              else
-                table.insert(xx.spikes,
-                  {verts = lverts,
-                    t = 0, lr=1})
-              end
-            end
+            xx.animcounter = 0
           end
-          if #joysticks>=xx.id then
-            xx.joystick:setVibration(1,1)
-          end
-
-
-        elseif xx.animcounter < 60 then
-          xx.im = stomp2
-
-          if  xx.a4 and not xx.holda and xx.numofspikes< at.p.k.max then 
-            xx.animcounter = 17
-          end
-        elseif xx.animcounter < 70 then
-          xx.im = stomp2
-          xx.numofspikes = 0
-
         else
-          xx.im = stomp2
-          xx.animcounter = 0
-        end
 
-      elseif xx.type ==3 then
-        if xx.animcounter < 20 then
-          xx.im = pa11
+          if xx.animcounter < 20 then
+            xx.im = ppunch1
 
-        elseif xx.animcounter < 21 then
-          xx.im = pa12
-        elseif xx.animcounter < 40 then
-          xx.im = pa13
-          if xx.animcounter == 21 then
+          elseif xx.animcounter < 21 then
 
-            makenrubble(xx.mid, xx.feet-5, 5,4,7)
-            makenrubble(xx.mid, xx.feet-5, -5,4,7)
-
-            repplay(xx.purpsound)
+            xx.im = ppunch2
+            makenrubble(xx.mid+xx.lr*20, xx.y+50,3*xx.lr,3,10)
             repplay(xx.purp2)
-            hall(xx.id, function(z) if z.plat.n == xx.plat.n then
-                  z.j = at.p.u.kj 
-                  xx.cancombo = true
+            if #joysticks>=xx.id then
+              xx.joystick:setVibration(1,1)
+            end
+            hall(xx.id, function(z) if z.plat.n == xx.plat.n
+                and math.abs(z.x) - math.abs(xx.x) < quakerange then
+                  z.j = 10
                   z.flinch = true
-                  z.ft = z.ft+at.p.u.ft
-                  z.health = z.health - at.p.u.dam
+                  z.ft = z.ft+at.p.p.ft*2/3
                 end end)
 
-            elseif xx.animcounter > 23 then
-              xx.cmbo=true--combo(xx)
-            end
-          else 
-            xx.animcounter = 0
-          end
-
-
-        elseif xx.type ==4 then
-          if xx.animcounter < 15 then
-            xx.im = apa21
-          elseif xx.animcounter < 17 then
-            xx.im = apa22
-          elseif xx.animcounter < 50 then
-            xx.im = apa23
-            if xx.animcounter == 17 then
-              
-            repplay(xx.airpurp1)
               hboxcs(xx, xx.id, 
-                {x=xx.mid, y = xx.y+15},
-                {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+29-xx.j},
-                {x=xx.mid+xx.v+(xx.lr*18), y = xx.y+57-xx.j},
-                {x=xx.mid-5*xx.lr, y = me.y+70},
+                {x=xx.mid, y = xx.y+35},
+                {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+26},
+                {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+49},
+                {x=xx.mid, y = xx.y+6},
                 function(z)
-            repplay(xx.purpsound)
                   xx.cancombo = true
                   z.health = z.health - at.p.p.dam
-                  z.v = xx.lr*at.p.p.kb
+                  z.v = xx.lr*at.p.p.kb + xx.v
                   z.flinch = true
-                  z.ft = z.ft + at.p.p.ft
-                  z.j = z.j + xx.j + at.p.ap.kj
-                  if z.plat.floor == nil then
-                    z.g = false
-                  end
-              shakez(at.p.ap.z)
+                  z.ft = z.ft + at.p.p.ft/3
+                  z.j=0
+                  shakez(at.p.p.z)
+
+
                 end)
+
+              if xx.repcounter == 1 then
+                xx.v = xx.v + (xx.lr*5)
+              end
+
+            elseif xx.animcounter < 55 then
+              xx.im = ppunch3
+              if xx.animcounter >= pa2busytime then 
+                xx.cmbo=true--combo(xx)
+              end
+
+            elseif xx.animcounter >= 55 then
+              xx.animcounter = 0
             end
           end
 
+        elseif xx.type == 2 then
 
-        elseif xx.type == 5 then
-          if xx.animcounter < 3 then
-            xx.animcounter = 1
-            xx.im=apk1
-            xx.j = xx.j - 2
-            xx.landingcounter = at.p.ak.penalty + at.p.ak.time
-            xx.purplanding = true 
+          if xx.animcounter < 20 then
+            xx.im = stomp1
+
+          elseif xx.animcounter <= 21 then
+            xx.im = stomp2
+
+            rumbleme(xx, 1.2)
+            xx.numofspikes = xx.numofspikes+1
+            local lverts = {}
+            local lverts2 = {}
+            local sn = xx.numofspikes
+            if (xx.numofspikes <= 2 ) then
+              lverts[1]= xx.mid+(xx.lr*25*(sn-1))
+              lverts[2]= xx.feet
+              lverts[3]= xx.mid+(xx.lr*25*(sn-1))
+              lverts[4]= xx.feet
+              lverts[5]= xx.mid+(xx.lr*25*(sn-1))
+              lverts[6]= xx.feet
+
+              lverts2[1]= xx.mid+(xx.lr*25*(sn))
+              lverts2[2]= xx.feet
+              lverts2[3]= xx.mid+(xx.lr*25*(sn))
+              lverts2[4]= xx.feet
+              lverts2[5]= xx.mid+(xx.lr*25*(sn))
+              lverts2[6]= xx.feet
+
+              if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
+              lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
+                table.insert(xx.spikes, 
+                  {verts = lverts,
+                    t = 0, lr=xx.lr})
+                repplay(xx.purpsound)
+              end
+              if lverts2[1] > themap.plats[xx.plat.n].x1+spikesize and 
+              lverts2[1] < themap.plats[xx.plat.n].x2-spikesize then
+                table.insert(xx.spikes, 
+                  {verts = lverts2,
+                    t = 0, lr=xx.lr})
+              end
+
+            else
+              lverts[1]= xx.mid+(xx.lr*40*(sn-1))
+              lverts[2]= xx.feet
+              lverts[3]= xx.mid+(xx.lr*40*(sn-1))
+              lverts[4]= xx.feet
+              lverts[5]= xx.mid+(xx.lr*40*(sn-1))
+              lverts[6]= xx.feet
 
 
+              --  lverts2[1]= xx.mid+(xx.lr*25*(sn))
+              --  lverts2[2]= xx.feet
+              --  lverts2[3]= xx.mid+(xx.lr*25*(sn))
+              --  lverts2[4]= xx.feet
+              --  lverts2[5]= xx.mid+(xx.lr*25*(sn))
+              --  lverts2[6]= xx.feet
 
-          elseif xx.animcounter <= 40 then
-            xx.im=apk2
+              -- table.insert(xx.spikes, 
+              --  {verts = lverts2,
+              --    t = 0, lr=-1})
+
+              if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
+              lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
+
+                repplay(xx.purpsound)
+                if math.random() > .5 then
+                  table.insert(xx.spikes,
+                    {verts = lverts,
+                      t = 0, lr=-1})
+                else
+                  table.insert(xx.spikes,
+                    {verts = lverts,
+                      t = 0, lr=1})
+                end
+              end
+            end
+            if #joysticks>=xx.id then
+              xx.joystick:setVibration(1,1)
+            end
 
 
-          elseif xx.animcounter >= 40 then
+          elseif xx.animcounter < 60 then
+            xx.im = stomp2
+
+            if  xx.a4 and not xx.holda and xx.numofspikes< at.p.k.max then 
+              xx.animcounter = 17
+            end
+          elseif xx.animcounter < 70 then
+            xx.im = stomp2
+            xx.numofspikes = 0
+
+          else
+            xx.im = stomp2
             xx.animcounter = 0
           end
 
-        elseif xx.type ==6 then
-          if xx.animcounter < 15 then
-            xx.im = apa11
-          elseif xx.animcounter < 17 then
-            xx.im = apa12
-            if xx.animcounter == 15 then
-              xx.j = xx.j + at.p.au.kj 
-              xx.v = xx.v - at.p.au.kb*xx.lr 
-            repplay(xx.airpurp2)
-              hboxcs(xx, xx.id, 
-                {x=xx.mid+(xx.lr * -17), y = xx.y-31},
-                {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38-xx.j},
-                {x=xx.mid+xx.v+(xx.lr*50), y = xx.y+28-xx.j},
-                {x=xx.mid+(xx.lr*-31), y = me.y+13},
+        elseif xx.type ==3 then
+          if xx.animcounter < 20 then
+            xx.im = pa11
 
-                function(z)
-            repplay(xx.purpsound)
-                  xx.cancombo = true
-                  z.health = z.health - at.p.au.dam
-                  z.v = z.v -xx.lr*at.p.au.kb/3 + xx.v
-                  z.flinch = true
-                  z.ft = z.ft + at.p.au.ft
-                  z.j=at.p.au.kj + xx.j
-              shakez(at.p.au.z)
+          elseif xx.animcounter < 21 then
+            xx.im = pa12
+          elseif xx.animcounter < 40 then
+            xx.im = pa13
+            if xx.animcounter == 21 then
 
+              makenrubble(xx.mid, xx.feet-5, 5,4,7)
+              makenrubble(xx.mid, xx.feet-5, -5,4,7)
 
-                end)
+              repplay(xx.purpsound)
+              repplay(xx.purp2)
+              hall(xx.id, function(z) if z.plat.n == xx.plat.n then
+                    z.j = at.p.u.kj 
+                    xx.cancombo = true
+                    z.flinch = true
+                    z.ft = z.ft+at.p.u.ft
+                    z.health = z.health - at.p.u.dam
+                  end end)
+
+              elseif xx.animcounter > 23 then
+                xx.cmbo=true--combo(xx)
+              end
+            else 
+              xx.animcounter = 0
             end
-          elseif xx.animcounter < 50 then
-            xx.im = apa13
-            
 
+
+          elseif xx.type ==4 then
+            if xx.animcounter < 15 then
+              xx.im = apa21
+            elseif xx.animcounter < 17 then
+              xx.im = apa22
+            elseif xx.animcounter < 50 then
+              xx.im = apa23
+              if xx.animcounter == 17 then
+
+                repplay(xx.airpurp1)
+                hboxcs(xx, xx.id, 
+                  {x=xx.mid, y = xx.y+15},
+                  {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+29-xx.j},
+                  {x=xx.mid+xx.v+(xx.lr*18), y = xx.y+57-xx.j},
+                  {x=xx.mid-5*xx.lr, y = me.y+70},
+                  function(z)
+                    repplay(xx.purpsound)
+                    xx.cancombo = true
+                    z.health = z.health - at.p.p.dam
+                    z.v = xx.lr*at.p.p.kb
+                    z.flinch = true
+                    z.ft = z.ft + at.p.p.ft
+                    z.j = z.j + xx.j + at.p.ap.kj
+                    if z.plat.floor == nil then
+                      z.g = false
+                    end
+                    shakez(at.p.ap.z)
+                  end)
+              end
+            end
+
+
+          elseif xx.type == 5 then
+              xx.purplanding = true 
+            if xx.animcounter < 3 then
+              xx.animcounter = 1
+              xx.im=apk1
+              xx.j = xx.j - 2
+              xx.landingcounter = at.p.ak.penalty + at.p.ak.time
+
+
+
+            elseif xx.animcounter <= 40 then
+              xx.im=apk2
+
+
+            elseif xx.animcounter >= 40 then
+              xx.animcounter = 0
+            end
+
+          elseif xx.type ==6 then
+            if xx.animcounter < 15 then
+              xx.im = apa11
+            elseif xx.animcounter < 17 then
+              xx.im = apa12
+              if xx.animcounter == 15 then
+                xx.j = xx.j + at.p.au.kj 
+                xx.v = xx.v - at.p.au.kb*xx.lr 
+                repplay(xx.airpurp2)
+                hboxcs(xx, xx.id, 
+                  {x=xx.mid+(xx.lr * -17), y = xx.y-31},
+                  {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38-xx.j},
+                  {x=xx.mid+xx.v+(xx.lr*50), y = xx.y+28-xx.j},
+                  {x=xx.mid+(xx.lr*-31), y = me.y+13},
+
+                  function(z)
+                    repplay(xx.purpsound)
+                    xx.cancombo = true
+                    z.health = z.health - at.p.au.dam
+                    z.v = z.v -xx.lr*at.p.au.kb/3 + xx.v
+                    z.flinch = true
+                    z.ft = z.ft + at.p.au.ft
+                    z.j=at.p.au.kj + xx.j
+                    shakez(at.p.au.z)
+
+
+                  end)
+              end
+            elseif xx.animcounter < 50 then
+              xx.im = apa13
+
+
+            end
           end
         end
-      end
 
-    end
+      end

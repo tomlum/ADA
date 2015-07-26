@@ -2,6 +2,8 @@
 amountstuckinwall = boltspeed - 1
 amountstuckinfloor = 45
 
+creaturerate = .95
+
 
 bolt = lg.newImage("me/attack/green/bolt.png")
 
@@ -10,16 +12,16 @@ greena13 = {im=lg.newImage("me/attack/green/greena13.png"), xoff = 3,yoff = 19}
 greena14 = {im=lg.newImage("me/attack/green/greena14.png"), xoff = 3,yoff = 33}
 greena15 = {im=lg.newImage("me/attack/green/greena15.png"), xoff = 3,yoff = 42}
 
-greena21 = {im=lg.newImage("me/attack/green/greena21.png"), xoff = 16,yoff = -2}
-greena22 = {im=lg.newImage("me/attack/green/greena22.png"), xoff = 30+8, yoff = -3}
+greena21 = {im=lg.newImage("me/attack/green/greena21.png"), xoff = 20,yoff = -6}
+greena22 = {im=lg.newImage("me/attack/green/greena22.png"), xoff = 30+3, yoff = -4}
 
 greena22s = {im=lg.newImage("me/attack/green/greena22s.png"), xoff = 30+8, yoff = 1}
-greencreatures = {im=lg.newImage("me/attack/green/greencreatures.png"), xoff = 30+8+2, yoff = 1}
-greencreature = {im=lg.newImage("me/attack/green/greencreature.png"), xoff = 30+8+2, yoff = 1}
+greencreatures = {im=lg.newImage("me/attack/green/greencreatures.png"), xoff = 30+8+8, yoff = 8}
+greencreature = {im=lg.newImage("me/attack/green/greencreature.png"), xoff = 30+8+8, yoff = 8}
 
 
 agreena22 = {im=lg.newImage("me/attack/green/agreena22.png"), xoff = 20, xoff = 40, yoff = 4}
-agreena22s = {im=lg.newImage("me/attack/green/agreena22s.png"), xoff = 40, yoff = 7}
+agreena22s = {im=lg.newImage("me/attack/green/agreena22s.png"), xoff = 45, yoff = 2}
 
 agreena1 = {im=lg.newImage("me/attack/green/agreena1.png"), xoff = 20, yoff = 0}
 agreena1s = {im=lg.newImage("me/attack/green/agreena1s.png"), xoff = 20, yoff = 44}
@@ -160,7 +162,7 @@ function gandg(xx)
     if xx.type == 1 then
       if xx.animcounter < 7 then
         xx.im = greena21
-        if math.random() > .995 then
+        if math.random() > creaturerate then
           xx.creature = true
           
             makensparks(xx.mid,xx.y+30,-xx.lr*10, xx.j-3, xx.color.c.r,xx.color.c.g,xx.color.c.b, 7)
@@ -172,7 +174,7 @@ function gandg(xx)
 
 
   elseif xx.animcounter < 40 then
-      if xx.creature then 
+      if xx.creature and math.abs(xx.v)>6 then 
             xx.im = greencreature
           else
             xx.im = greena22

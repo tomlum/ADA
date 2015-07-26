@@ -35,7 +35,7 @@ counterat45 = {im=lg.newImage("me/attack/red/counterat45.png"), xoff = 1, yoff =
 
 redu1 = {im=lg.newImage("me/attack/red/redu1.png"), xoff = 12,yoff = -3}
 redu12 = {im=lg.newImage("me/attack/red/redu12.png"), xoff = 12,yoff = -10}
-redu2 = {im=lg.newImage("me/attack/red/redu2.png"), yoff = 16}
+redu2 = {im=lg.newImage("me/attack/red/redu2.png"), yoff = 24}
 
 redau1 = {im=lg.newImage("me/attack/red/redau1.png"), xoff = 4,yoff = 15}
 redau2 = {im=lg.newImage("me/attack/red/redau2.png"), xoff = 27
@@ -83,7 +83,8 @@ at.r.u.j = 15
 at.r.u.ft = 26
 at.r.u.delta = 4
 at.r.u.z = 3.5
-at.r.u.mv = 4
+at.r.u.mv = 2
+at.r.u.mj = 10
 
 at.r.ap = {}
 at.r.ap.dam = 5
@@ -112,6 +113,7 @@ at.r.ak.j = 5
 at.r.ak.ft = 6
 at.r.ak.delta = 5
 at.r.ak.z = 5
+at.r.ak.penalty = 22
 
 --burnout
 at.r.bo={}
@@ -134,7 +136,7 @@ function randr(xx)
       xx.rlvl = 0
       xx.health = xx.health - at.r.bo.dam
       xx.ft = at.r.bo.ft
-      makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,20)
+      makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,50)
       repplay(xx.flinch1)
         repplay(xx.flinch2)
         repplay(xx.redshattersou)
@@ -480,8 +482,11 @@ function randr(xx)
             xx.im = redu12
           elseif xx.animcounter < 30 - reddelta*xx.rlvl*2 then
             xx.im = redu2
+            if xx.animcounter < 30 - reddelta*xx.rlvl*2 then
             if xx.animcounter < 22 - reddelta*xx.rlvl*2 then
               xx.v = xx.v+xx.lr*(at.r.u.mv+xx.rlvl/2)
+              xx.j = at.r.u.mj+(xx.rlvl*3)
+              end
 
               hboxcs(xx, xx.id, 
                 {x=xx.mid, y = xx.y},
@@ -491,7 +496,7 @@ function randr(xx)
                 function(z)
                   xx.cancombo = true
                   z.v = z.v/3+xx.lr*at.r.u.kb+xx.v/2
-                  z.j = z.j/3+at.r.u.j+(xx.rlvl+1)*2+xx.j
+                  z.j = z.j/3+at.r.u.j+(xx.rlvl+1)+xx.j
                   if not (z.block and z.lr == -xx.lr) then
                     z.health = z.health - (at.r.u.dam+at.r.u.delta*xx.rlvl)
                     z.flinch = true
@@ -606,6 +611,7 @@ function randr(xx)
                   end
                   xx.im = redak1 
                   if xx.j < -2 then
+          xx.landingcounter = at.r.ak.penalty+(xx.rlvl+1)
                   xx.j = xx.j - (xx.rlvl+1)/3
                   hboxcs(xx, xx.id, 
                     {x=xx.mid, y = xx.y},
@@ -613,6 +619,7 @@ function randr(xx)
                     {x=xx.mid+(xx.lr*42)+xx.v, y = xx.y+56-xx.j},
                     {x=xx.mid-(xx.lr*21), y = xx.y+73},
                     function(z)
+                      xx.landingcounter = 0
                       xx.animcounter = 100
                       xx.j = -xx.j/1.5
                       xx.cancombo = true

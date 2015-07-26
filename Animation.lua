@@ -307,7 +307,7 @@ function csds(xx, flip)
   }
   local shadeea = 255
   
-  if xx.color.n == 2 and xx.animcounter >= 7 and xx.greenflicker then
+  if xx.color.n == 2 and xx.animcounter >= 7 and xx.greenflicker and math.sqrt(xx.v^2+xx.j^2) > 6 and xx.type ~= 2 then
      shadeea = 0
     end
   
@@ -391,7 +391,7 @@ end
 
 
 
-traillength = 5
+traillength = 7
 trailfadeness = 10
 
 me.trail={}
@@ -665,7 +665,7 @@ function drawa(xx)
     else
     csds(xx,true)
       lg.draw(garmfront,xx.mid -2*xx.lr,
-        xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,4,4)
+        xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,4,7)
 
 
     end
@@ -731,7 +731,7 @@ function drawa(xx)
     if xx.lr > 0 then
     csds(xx)
       lg.draw(garmfront,xx.mid -2*xx.lr,
-        xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,4,4)
+        xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,4,7)
 
 
     else
@@ -774,7 +774,7 @@ function actionshotstuff(xx)
     musfadein = -10
     xx.numofspikes = 0
     xx.uppercuthit = false
-    xx.hitsomeonewithpurp = false
+    --xx.hitsomeonewithpurp = false
 
     if xx.color.n == xx.cchangeto.n and (xx.color.n~=xx.cantreturntothis) and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) and xx.combo<xx.maxcombo then
       if xx.color.n == 2 and xx.a4b then
@@ -2165,7 +2165,10 @@ end
   function updatesparks()
 
     for i, temp in ipairs(sparks) do
-      if lineplatcheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6) or linewallcheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6)or temp.x < 0 or temp.y < 0 or temp.x > themap.rightwall or temp.y > themap.floor then table.remove(sparks,i)
+      if lineplatcheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6) or
+      linewallcheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6)or temp.x < 0 or temp.y < 0
+      or temp.x > themap.rightwall or
+      temp.y > themap.floor then table.remove(sparks,i)
         
         end
 

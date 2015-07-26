@@ -3,36 +3,40 @@
 
 op1 = {im=lg.newImage("me/attack/orange/op1.png"), xoff = 2}
 op2 = {im=lg.newImage("me/attack/orange/op2n.png"), xoff = 9,yoff = 10}
-op3 = {im=lg.newImage("me/attack/orange/op3n.png"), xoff = 9,yoff = 12}
+op3 = {im=lg.newImage("me/attack/orange/op3n.png"), xoff = 9+11,yoff = 12+7}
 op4 = {im=lg.newImage("me/attack/orange/op4n.png"), xoff = 9,yoff = 12}
-op5 = {im=lg.newImage("me/attack/orange/op5n.png"), xoff = 2,yoff = 12}
+op5 = {im=lg.newImage("me/attack/orange/op5n.png"), xoff = 9+11,yoff = 12+7}
 
 
 ao21 = {im=lg.newImage("me/attack/orange/ao21.png"), xoff = 9, yoff = 17, extrah = 5}
-ao22 = {im=lg.newImage("me/attack/orange/ao22.png"), xoff = 9-5, extrah = 5}
+ao22 = {im=lg.newImage("me/attack/orange/ao22.png"), xoff = 9-5+13, extrah = 5, yoff = 22}
 
 
 ao23 = {im=lg.newImage("me/attack/orange/ao23.png"), xoff = 5,yoff = 17, extrah = 5}
-ao24 = {im=lg.newImage("me/attack/orange/ao24.png"), xoff = 9-5, extrah = 5}
+ao24 = {im=lg.newImage("me/attack/orange/ao24.png"), xoff = 9-5+13, extrah = 5+14, yoff = 23}
 
 
 ok2 = {im=lg.newImage("me/attack/orange/ok2.png"), xoff = 9,yoff = 15}
-ok3 = {im=lg.newImage("me/attack/orange/ok3.png"), xoff = 84,yoff = -7}
+ok3 = {im=lg.newImage("me/attack/orange/ok3.png"), xoff = 84,yoff = 3}
 ok4 = {im=lg.newImage("me/attack/orange/ok4.png"), xoff = 45,yoff = 0, extrah = 5}
 
 
 o32 = {im=lg.newImage("me/attack/orange/o32.png"), 
   xoff = 9,yoff = -5}
 
-o33 = {im=lg.newImage("me/attack/orange/o33.png")}
+o33 = {im=lg.newImage("me/attack/orange/o33.png"), xoff = 4}
 
 ao31 = {im=lg.newImage("me/attack/orange/ao31.png"), xoff = 9, yoff = 0}
-ao32 = {im=lg.newImage("me/attack/orange/ao32.png"), yoff =2}
+ao32 = {im=lg.newImage("me/attack/orange/ao32.png"), yoff =2, xoff = 4}
 
 
 
 aop1 = {im=lg.newImage("me/attack/orange/aop1.png"), xoff = 5,yoff = 17, extrah = 5}
-aop2 = {im=lg.newImage("me/attack/orange/aop2.png"),yoff = 32, extrah = 5}
+aop2 = {im=lg.newImage("me/attack/orange/aop2.png"),yoff = 32, extrah = 5, xoff = 10}
+
+orun = {im=lg.newImage("me/attack/orange/orun.png")}
+aorun1 = {im=lg.newImage("me/attack/orange/aorun1.png"), xoff = 3, yoff = 0}
+aorun2 = {im=lg.newImage("me/attack/orange/aorun2.png"), xoff = 3, yoff = 0}
 
 
 at.o = {}
@@ -90,8 +94,10 @@ function orangeyouglad(xx)
     if xx.animcounter == 0 then
 
       if xx.g then 
-
-        if (xx.a1) then
+        if math.abs(xx.v)>3 and (xx.a2b or xx.a3b) then
+          xx.type = 7
+          xx.animcounter = 1
+        elseif (xx.a1) then
           xx.type = 3
           xx.animcounter = 1
         elseif (xx.a2 or xx.a3) then
@@ -110,7 +116,7 @@ function orangeyouglad(xx)
         elseif (xx.a2 or xx.a3) then
           xx.type = 4
           xx.animcounter = 1
-        elseif xx.a4 and xx.o5repcounter < at.o.ak.max  then
+        elseif xx.a4 and xx.j < 1 and xx.o5repcounter < at.o.ak.max  then
           xx.type = 5
           xx.animcounter = 1
           xx.combo = xx.combo + 1
@@ -275,9 +281,9 @@ function orangeyouglad(xx)
 
                 end)
             end
-            
-          repplay(xx.orangesou4)
-          
+
+            repplay(xx.orangesou4)
+
 
           end
           if xx.animcounter >= 15 then 
@@ -302,6 +308,9 @@ function orangeyouglad(xx)
           xx.jmax = at.o.k.mj*xx.color.s.jump
           xx.j = at.o.k.mj/2
           xx.firstjump = true
+        elseif xx.animcounter < 130 then
+          xx.im = ok4
+          xx.cmbo=true
         elseif xx.animcounter < 1000 then
           xx.animcounter = 0
         end
@@ -318,7 +327,7 @@ function orangeyouglad(xx)
           xx.im = o33
           if isabout(xx.animcounter,  8) and xx.rampcanhit then
             ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 
-          repplay(xx.orangesou2)
+            repplay(xx.orangesou2)
 
             hboxcs(xx, xx.id, 
               {x=xx.mid+(xx.lr*53), y = xx.y+24},
@@ -403,7 +412,7 @@ function orangeyouglad(xx)
                 shakez(at.o.ap.z)
 
               end)
-          repplay(xx.orangesou2)
+            repplay(xx.orangesou2)
           end
 
 
@@ -453,8 +462,8 @@ function orangeyouglad(xx)
                 end
                 shakez(at.o.ak.z)
 
-            end)
-          repplay(xx.orangesou2)
+              end)
+            repplay(xx.orangesou2)
           end
 
 
@@ -462,8 +471,8 @@ function orangeyouglad(xx)
             xx.float = true
             xx.j = 0
             xx.v = 0
-            
-  rumbleme(xx,1/10)
+
+            rumbleme(xx,1/10)
           end
 
           if xx.o5repcounter%2==0  then
@@ -475,6 +484,12 @@ function orangeyouglad(xx)
 
 
         elseif xx.animcounter < 27 then
+          if xx.o5repcounter%2==0 then
+            xx.im = ao21
+          else
+            xx.im = ao23
+          end
+
 
           if xx.oplat ~= nil then
             if xx.oplat[3] ~= nil then
@@ -492,9 +507,15 @@ function orangeyouglad(xx)
             end
           end
           xx.cmbo=true--combo(xx)
-         
+
 
         elseif xx.animcounter < 40 then
+          if xx.o5repcounter%2==0 then
+            xx.im = ao21
+          else
+            xx.im = ao23
+          end
+
           xx.cmbo=true--combo(xx)
 
         elseif xx.animcounter < 1000 then
@@ -503,10 +524,7 @@ function orangeyouglad(xx)
 
 
       elseif xx.type == 6 then
-        if xx.animcounter < 3 then
-          xx.im = aop1
-
-        elseif xx.animcounter<7 then
+        if xx.animcounter<7 then
           xx.im = ao31
 
 
@@ -534,7 +552,7 @@ function orangeyouglad(xx)
                 shakez(at.o.p.z)
 
               end)
-          repplay(xx.orangesou2)
+            repplay(xx.orangesou2)
           end
 
 
@@ -549,44 +567,90 @@ function orangeyouglad(xx)
 
         elseif xx.animcounter < 44 then
           xx.cmbo=true--combo(xx)
-          xx.im = aop1
         elseif xx.animcounter < 1000 then
           xx.animcounter = 0
         end
+
+      elseif xx.type == 7 then
+        if xx.animcounter < 3 then
+        elseif xx.animcounter < 7 then
+          if isabout(xx.animcounter,  3) then
+            hboxcs(xx, xx.id, 
+              {x=xx.mid+(xx.lr*90), y = xx.y+31},
+              {x=xx.mid+xx.v+(xx.lr*153), y = xx.y-xx.j+67},
+              {x=xx.mid+xx.v+(xx.lr*153), y = xx.y+65-xx.j+67},
+              {x=xx.mid+(xx.lr*88), y = xx.y+36},
+              function(z)
+
+                xx.cancombo = true
+                z.v = z.v+at.o.u.v*xx.lr
+                z.j = z.j+at.o.u.j
+                if not (z.block and z.lr == -xx.lr) then
+                  z.health = z.health - at.o.p.dam
+                  z.flinch = true
+                  z.ft = z.ft+at.o.u.ft
+                end
+                shakez(at.o.p.z)
+                end
+              )
+            end
+
+            xx.im = orun
+            ocontactstuff(xx, xx.mid+(xx.lr*90), xx.y+31,xx.v+(63*xx.lr), xx.j-36) 
+            repplay(xx.orangesou4)
+
+          elseif xx.animcounter<=12+10 then
+            xx.im = landing
+            if xx.oplat~=nil then
+              xx.jmax = at.o.k.mj*xx.color.s.jump/3
+              xx.firstjump = true
+              xx.j = 11
+              if xx.animcounter <=11 then
+                xx.im = aorun1
+              else
+                xx.im = aorun2
+              end
+            end
+          elseif xx.animcounter < 1000 then
+            xx.animcounter = 0
+
+
+          end
+
+        end
       end
+    end
+
+
+    function ocontactstuff(xx, ex, why, vee, jay)
+      xx.oplat = nil
+      xx.oplat = retlineplatcheck(ex, why,vee, jay)
+      if xx.oplat ~= nil then 
+        if xx.oplat.glass~=nil then 
+          makenglass(ex+xx.v+vee,xx.oplat.y,1,1, 5)
+          makenglass(ex+xx.v+vee,xx.oplat.y,-1,1, 5)
+
+        else
+          makenrubble("vert", ex+xx.v+vee,xx.oplat.y-1,1,1, 5)
+          makenrubble("vert", ex+xx.v+vee,xx.oplat.y-1,-1,1, 5)
+        end
+      end
+
+
+      local check = retowallcheck(ex, why,vee, jay)
+      xx.owall = check[1]
+      xx.ohit = check[2]
+      if xx.ohit ~= 0 then
+        if check[3]~= nil then
+          makenglass(xx.owall,xx.ohit,vee/math.abs(vee),0, 4)
+        else
+          makenrubble("horiz", xx.owall,xx.ohit,vee/math.abs(vee),0, 4)
+
+        end
+        if xx.oplat == nil and check[3]==nil then
+          xx.oplat = {y=-1}
+        end
+      end
+
     end
   end
-
-
-  function ocontactstuff(xx, ex, why, vee, jay)
-xx.oplat = nil
-    xx.oplat = retlineplatcheck(ex, why,vee, jay)
-    if xx.oplat ~= nil then 
-      if xx.oplat.glass~=nil then 
-        makenglass(ex+xx.v+vee,xx.oplat.y,1,1, 5)
-        makenglass(ex+xx.v+vee,xx.oplat.y,-1,1, 5)
-
-      else
-        makenrubble("vert", ex+xx.v+vee,xx.oplat.y-1,1,1, 5)
-        makenrubble("vert", ex+xx.v+vee,xx.oplat.y-1,-1,1, 5)
-      end
-    end
-
-
-    local check = retowallcheck(ex, why,vee, jay)
-    xx.owall = check[1]
-    xx.ohit = check[2]
-    if xx.ohit ~= 0 then
-      if check[3]~= nil then
-        makenglass(xx.owall,xx.ohit,vee/math.abs(vee),0, 4)
-      else
-        makenrubble("horiz", xx.owall,xx.ohit,vee/math.abs(vee),0, 4)
-
-      end
-      if xx.oplat == nil and check[3]==nil then
-        xx.oplat = {y=-1}
-      end
-    end
-
-  end
-end

@@ -45,7 +45,8 @@ themaps[3]= {name = "floors",
 themaps[100]= {name = "fightclub", 
   plats = {}, walls = {},
   floor = 896,
-  paralaxscale = 1
+  paralaxscale = 1,
+  rightwall = 2000
 }
 
 

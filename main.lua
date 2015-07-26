@@ -30,8 +30,8 @@ dangerCloseIsAThing = true
 --if not in the air then some kind of unblocking animation
 --apple w is window close
 --SHAEZ TIED TO RUMBLE?!?!?!?
-melcolor = 2
-mercolor = 4
+melcolor = 1
+mercolor = 2
 youlcolor = 3
 yourcolor = 1
 therampspeed = .2
@@ -43,7 +43,7 @@ drawfeet = false
 fightclub = true
 volume=0
 fullscreen = false
-readout = true
+readout = false
 putmehere = 975
 putyouhere = 1025
 menu = "story"
@@ -915,29 +915,22 @@ function love.update()
       
       boxstop = false
     end
-       if love.keyboard.isDown("2") and not boxstop then
+       if love.keyboard.isDown("5") and not boxstop then
       boxstop = true
-  rotatefractal()
+      throwinto()
+  --rotatefractal()
     end
     
 
     -- movetod(.03)
-    if love.keyboard.isDown("3") and not boxstop then
+    if love.keyboard.isDown("4") and not boxstop then
       --throwinto()
       makecolorbox(me.x, me.y+30)
       boxstop = true
       --fractalrotate()
     end
     
-   
-    
-    lg.setColor(25,25,255)
-   
-    ---[[
-    for i,plat in ipairs(themap.plats) do
-      lg.print("||ceiling:"..tostring(plat.ceiling).."||floor:"..tostring(plat.floor)..
-        "||y:"..tostring(plat.y).."||x1:"..tostring(plat.x1).."||x2:"..tostring(plat.x2), 300,i*20)
-    end
+  
     --]]--
     --[[
     
@@ -954,5 +947,12 @@ function love.update()
     
     
     ]]--
+    
+    lg.print(tostring(me.purpgroundtimer).." me.purpgroundtimer", 300,300)
+    
+    lg.print(tostring(me.purplanding).." me.purplanding", 300,320)
+    lg.print(tostring(me.animcounter).." me.animcounter", 300,340)
+    lg.print(tostring(me.type).." me.type", 300,360)
+    lg.print("me.landingcounter: "..tostring(me.landingcounter), 300,380)
     
   end

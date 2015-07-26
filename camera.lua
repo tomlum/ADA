@@ -15,7 +15,7 @@ danger2tb = dangerbarey
 
 tolandr=0
 --updated also later on
-  winheight = (lg.getHeight()-barheight)
+winheight = (lg.getHeight()-barheight)
 
 
 defaultminzoom = .7
@@ -61,7 +61,7 @@ function shakez(z)
   if dangerclose then
     minzoom = dangerzoom + (defaultminzoom-defaultmaxzoom) - dangerzoomdelta * 10*z
     maxzoom = dangerzoom  - dangerzoomdelta * 10*z
-    
+
   else
     minzoom = defaultminzoom - growrate*z
     maxzoom = defaultmaxzoom - growrate*z
@@ -196,8 +196,8 @@ cammovement = function ()
   -- else camera2.xfollow = true
   --   youcamlwall = false
   -- end
-  
-  
+
+
 
   if midypoint >= themap.floor - ((winheight/2) - (feet2bottom))*cscale
   then
@@ -207,11 +207,11 @@ cammovement = function ()
     youcamfloor=false
     mecamfloor = false
   end
-  
+
   if themode == "fractal" then 
     mecamfloor = false
     youcamfloor = false
-    end
+  end
   --removed cause stopping at edges is no
   -- if me.mid + me.v < screenwidth*cscale/4
   -- then 
@@ -285,8 +285,8 @@ camerafol = function ()
   mexrig = me.mid - (screenwidth*cscale*.25)+tolandr 
   youxrig = you.mid - (screenwidth*cscale*.75)-tolandr
 
-meyrig = me.y+60 - winheight*cscale + feet2bottom*cscale
-youyrig = you.y+60 - winheight*cscale + feet2bottom*cscale
+  meyrig = me.y+60 - winheight*cscale + feet2bottom*cscale
+  youyrig = you.y+60 - winheight*cscale + feet2bottom*cscale
 
 
   if not mecamfloor and you.y > me.y then 
@@ -603,118 +603,218 @@ camwobx = 0
 camwoby = 0
 function camerawobble()
   if dangerclose then
-  
-  
-  
-end
+
 
 
   end
+
+
+end
 
 
 paralaxshaketimer = 0
 paralaxcamshake = 0
 
 function drawx(xx)
-  
-  
-   local bob = 1/1000*cscale^2
- local rob = 0
- if paralaxshake then
-   paralaxshaketimer = 4
- end
- if paralaxshaketimer > 0 then
-   paralaxshaketimer = paralaxshaketimer - 1
-paralaxcamshake = shakedis*math.random(-3,3)*math.random()
-end
-  
+
+
+  local bob = 1/1000*cscale^2
+  local rob = 0
+  if paralaxshake then
+    paralaxshaketimer = 4
+  end
+  if paralaxshaketimer > 0 then
+    paralaxshaketimer = paralaxshaketimer - 1
+    paralaxcamshake = shakedis*math.random(-3,3)*math.random()
+  end
+
   if menu ~= "retry" then
-  tods()
-  
-local pzoom2 = 1+(1-math.sqrt(math.sqrt(cscale)))
-  lg.draw(enviro.sky, xx.x, 0, 0, 500, 1.1)
-  --lg.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
-  
-  if not fightclub and themap.paralaxscale2 ~= nil then
+    tods()
+
+    local pzoom2 = 1+(1-math.sqrt(math.sqrt(cscale)))
+    lg.draw(enviro.sky, xx.x, 0, 0, 500, 1.1)
+    --lg.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
+
+    if not fightclub and themap.paralaxscale2 ~= nil then
       blurdraw(bob, function()
- lg.draw(enviro.paralax2, 
-        (xx.x+(screenwidth/4)*cscale*pzoom2+paralaxcamshake)*(1-themaps[mapnum].paralaxscale2*pzoom2)
-        -(500*(1-themaps[mapnum].paralaxscale2*pzoom2))
-        ,
-        (xx.y+(screenheight/2)*cscale+paralaxcamshake)*(1-themaps[mapnum].paralaxscale2*pzoom2)+(feet2bottom-paralaxoffset)*(cscale*(1-themaps[mapnum].paralaxscale2*pzoom2)),
-        0,
-        pzoom2,
-        pzoom2)
-      
-    end)
-  end
-  
-  
-  
+          lg.draw(enviro.paralax2, 
+            (xx.x+(screenwidth/4)*cscale*pzoom2+paralaxcamshake)*(1-themaps[mapnum].paralaxscale2*pzoom2)
+            -(500*(1-themaps[mapnum].paralaxscale2*pzoom2))
+            ,
+            (xx.y+(screenheight/2)*cscale+paralaxcamshake)*(1-themaps[mapnum].paralaxscale2*pzoom2)+(feet2bottom-paralaxoffset)*(cscale*(1-themaps[mapnum].paralaxscale2*pzoom2)),
+            0,
+            pzoom2,
+            pzoom2)
+
+        end)
+    end
 
 
-local pzoom = 1+(1-math.sqrt(cscale))
-if themap.paralaxscale ~= nil then
- blurdraw(bob, function()
-    
- lg.draw(enviro.paralax, 
-        (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themaps[mapnum].paralaxscale*pzoom)
-        -(500*(1-themaps[mapnum].paralaxscale*pzoom)),
-        (xx.y+(screenheight/2)--*pzoom
-          *cscale+paralaxcamshake)*(1-themaps[mapnum].paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themaps[mapnum].paralaxscale*pzoom)),
-        0,
-        pzoom,
-        pzoom)
-      
-    end)
-  end
-  
-  
-  
-      --[[
-for i = 0, .9, .1 do
-
-  blurdraw(bob, function()
-      lg.draw(p, 
-        (xx.x+(screenwidth/2)*cscale+rob)*(1-i),
-        (xx.y+(screenheight/2)*cscale+rob)*(1-i)+(feet2bottom-paralaxoffset)*(cscale*(1-i)),
-        0,
-        i,
-        i)
-    end)
-  end
-  ]]--
-  
-   --[[
-  blurdraw(.0002/cscale, function()
-      lg.draw(p, 
-        xx.x*.75,
-        xx.y*.75+feet2bottom*(cscale/.75),
-        0,
-        1/4,
-        1/4)
-    end)
-  ]]--
-  
-  cclear()
 
 
-  tods() 
-  if themap.rotation~=nil then
-    if math.deg(themap.rotation)%180 > 80 then
-      lg.draw(themap.stage, themap.height/2, themap.width/2, themap.rotation, 1, 1, themap.width/2, themap.height/2)
+
+    local pzoom = 1+(1-math.sqrt(cscale))
+    if themap.paralaxscale ~= nil then
+      if themap.rotation ~= nil then
+        
+        local ps = themap.paralaxscale
+        local ips = 1/ps
+        
+      if math.deg(themap.rotation)%180 > 80 then
+        
+         lg.draw(themap.paralax, 
+              (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themap.paralaxscale*pzoom)
+              
+              +
+              (themap.height/2)*ps
+              +(200*(1-themap.paralaxscale*pzoom))
+              ,
+              (xx.y+(screenheight/2)--*pzoom
+                *cscale+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themap.paralaxscale*pzoom))
+              
+              
+              +(themap.width/2)*ps
+              +(400*(1-themap.paralaxscale*pzoom))
+              ,
+              themap.rotation,
+              pzoom,
+              pzoom,
+              (themap.width/2)*ps,
+              (themap.height/2)*ps
+              )
+       
       else
-      lg.draw(themap.stage, themap.width/2, themap.height/2, themap.rotation, 1, 1, themap.width/2, themap.height/2)
+         
+         lg.draw(themap.paralax, 
+              (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themap.paralaxscale*pzoom)
+              
+              +
+              (themap.width/2)*ps
+              +(420*(1-themap.paralaxscale*pzoom))
+              ,
+              (xx.y+(screenheight/2)--*pzoom
+                *cscale+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themap.paralaxscale*pzoom))
+              
+              
+              +(themap.height/2)*ps
+              +(100*(1-themap.paralaxscale*pzoom))
+              ,
+              themap.rotation,
+              pzoom,
+              pzoom,
+              (themap.width/2)*ps,
+              (themap.height/2)*ps
+              )
+      end
+--[[
+        if math.deg(themap.rotation)%360 < 80 then     
+          lg.draw(themap.paralax, 
+            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themap.paralaxscale*pzoom),
+            (xx.y+(screenheight/2)--*pzoom
+              *cscale+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themap.paralaxscale*pzoom)),
+            themap.rotation,
+            pzoom,
+            pzoom)
+
+        elseif math.deg(themap.rotation)%360 < 170 then
+
+          lg.draw(themap.paralax, 
+            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+themap.height,
+            (xx.y+(screenheight/2)--*pzoom
+              *cscale+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themap.paralaxscale*pzoom))
+            
+            ,
+            themap.rotation,
+            pzoom,
+            pzoom)
+
+
+        elseif math.deg(themap.rotation)%360 < 260 then     
+          lg.draw(themap.paralax, 
+            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+themap.width,
+            (xx.y+(screenheight/2)--*pzoom
+              *cscale+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themap.paralaxscale*pzoom))+themap.height,
+            themap.rotation,
+            pzoom,
+            pzoom)
+          
+          elseif math.deg(themap.rotation)%360 < 360 then     
+           lg.draw(themap.paralax, 
+            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themap.paralaxscale*pzoom),
+            (xx.y+(screenheight/2)--*pzoom
+              *cscale+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themap.paralaxscale*pzoom))+themap.width,
+            themap.rotation,
+            pzoom,
+            pzoom)
+
+      end
+      ]]--
+      
+      
+
+      else
+
+        blurdraw(bob, function()
+
+            lg.draw(enviro.paralax, 
+              (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themaps[mapnum].paralaxscale*pzoom)
+              -(500*(1-themaps[mapnum].paralaxscale*pzoom)),
+              (xx.y+(screenheight/2)--*pzoom
+                *cscale+paralaxcamshake)*(1-themaps[mapnum].paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themaps[mapnum].paralaxscale*pzoom)),
+              0,
+              pzoom,
+              pzoom)
+
+          end)
+      end
+    end
+
+
+
+    --[[
+    for i = 0, .9, .1 do
+
+      blurdraw(bob, function()
+          lg.draw(p, 
+            (xx.x+(screenwidth/2)*cscale+rob)*(1-i),
+            (xx.y+(screenheight/2)*cscale+rob)*(1-i)+(feet2bottom-paralaxoffset)*(cscale*(1-i)),
+            0,
+            i,
+            i)
+        end)
+    end
+    ]]--
+
+    --[[
+    blurdraw(.0002/cscale, function()
+        lg.draw(p, 
+          xx.x*.75,
+          xx.y*.75+feet2bottom*(cscale/.75),
+          0,
+          1/4,
+          1/4)
+      end)
+    ]]--
+
+    cclear()
+
+
+    tods() 
+    if themap.rotation~=nil then
+      if math.deg(themap.rotation)%180 > 80 then
+        lg.draw(themap.stage, themap.height/2, themap.width/2, themap.rotation, 1, 1, themap.width/2, themap.height/2)
+      else
+        lg.draw(themap.stage, themap.width/2, themap.height/2, themap.rotation, 1, 1, themap.width/2, themap.height/2)
       end
     else
       lg.draw(enviro.stage, 0, 0)
-      end
-      
-  --lg.draw(enviro.stage, 0, 0) 
-  if themap.name == "street" then
-    drawstreetprestuff()
-  end
-  lg.setShader()
+    end
+
+    --lg.draw(enviro.stage, 0, 0) 
+    if themap.name == "street" then
+      drawstreetprestuff()
+    end
+    lg.setShader()
   end
 
   if me.flinch then 
@@ -730,48 +830,48 @@ for i = 0, .9, .1 do
 
     drawa(me)
 
-end
-if menu ~= "retry" then
-  
-  drawparticles()
-  
-
-  drawcolorstuff(me)
-  drawcolorstuff(you)
-  lg.setShader()
-
-  mondraw()
   end
-if themode == "koth" then
-drawhighlight()
-if menu == "retry" then
-  if me.score >= kothscoretowin then 
-kotharrowdraw(me)
-else
-kotharrowdraw(you)
-end
-  else
-kotharrowdraw(me)
-kotharrowdraw(you)
-end
-end
+  if menu ~= "retry" then
 
-if menu ~= "retry" then
-  if themap.facade~=nil then
-  lg.draw(themap.facade,0,0)
+    drawparticles()
+
+
+    drawcolorstuff(me)
+    drawcolorstuff(you)
+    lg.setShader()
+
+    mondraw()
   end
-  lg.setShader()
-  cclear()
-  
-  
-  if themap.name == "street" then
-    drawstreetstuff()
-  elseif themap.name == "library" then
-    drawlibrarystuff()
-  elseif themap.name == "floors" then
-    drawfloorsstuff()
+  if themode == "koth" then
+    drawhighlight()
+    if menu == "retry" then
+      if me.score >= kothscoretowin then 
+        kotharrowdraw(me)
+      else
+        kotharrowdraw(you)
+      end
+    else
+      kotharrowdraw(me)
+      kotharrowdraw(you)
+    end
   end
-  if fightclub then drawallhex() end
-end
+
+  if menu ~= "retry" then
+    if themap.facade~=nil then
+      lg.draw(themap.facade,0,0)
+    end
+    lg.setShader()
+    cclear()
+
+
+    if themap.name == "street" then
+      drawstreetstuff()
+    elseif themap.name == "library" then
+      drawlibrarystuff()
+    elseif themap.name == "floors" then
+      drawfloorsstuff()
+    end
+    if fightclub then drawallhex() end
+  end
 
 end

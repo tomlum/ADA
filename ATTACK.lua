@@ -36,13 +36,13 @@ throwz = .1
 function radialthrow(xx, yy, vel)
   local angle = math.atan((yy.y-xx.y)/(yy.x-xx.x))
   if xx.x < yy.x then
-  yy.v = yy.v + vel*math.cos(angle)
-  yy.j = yy.j - vel*math.sin(angle)
-    
-    
-    else
-  yy.v = yy.v - vel*math.cos(angle)
-  yy.j = yy.j + vel*math.sin(angle)
+    yy.v = yy.v + vel*math.cos(angle)
+    yy.j = yy.j - vel*math.sin(angle)
+
+
+  else
+    yy.v = yy.v - vel*math.cos(angle)
+    yy.j = yy.j + vel*math.sin(angle)
   end
 end
 
@@ -112,11 +112,11 @@ function grab(xx)
       end
       xx.grabbingx.ft = 10
       if not xx.holda and (xx.a1 or xx.a2 or xx.a3 or xx.a4) then 
-        
+
         xx.grabbingx.j =  20*math.sin(math.atan(xx.jry/-xx.jrx))
         xx.grabbingx.v =  20*math.cos(math.atan(xx.jry/-xx.jrx))*xx.lr
-        
-        
+
+
         xx.animcounter = 300
         shakez(throwz)
         xx.grabbingx.ft = throwft
@@ -129,24 +129,24 @@ function grab(xx)
             xx.x = xx.x - 15
             xx.grabbingx.v = -xx.grabbingx.v
             xx.grabbingx.j = -xx.grabbingx.j
-            
-            end
+
+          end
         else xx.grabbingx.flinchway = 1
           if xx.grabbingx.x > xx.x then
             xx.grabbingx.x = xx.grabbingx.x - 15
             xx.x = xx.x + 15
             xx.grabbingx.v = -xx.grabbingx.v
             xx.grabbingx.j = -xx.grabbingx.j
-            end
+          end
           xx.lr = -1
         end
-        
-        
+
+
         if not xx.g then
           xx.v = -xx.grabbingx.v*.8
           xx.j = -xx.grabbingx.j*.8
         end
-        
+
       end
     elseif xx.animcounter <260 then
       repplay(grabreleasesou)
@@ -199,9 +199,9 @@ function combo(xx)
       v.hit = false
       v.hitbox = false
     end
-    
-    
-    
+
+
+
   end
 
   local oldanimc = xx.animcounter
@@ -219,7 +219,7 @@ function combo(xx)
     if xx.a1 or xx.a2 or xx.a3 or xx.a4 then
       if xx.currentc~=xx.color.n and xx.combo<xx.maxcombo then
         xx.repcounter = 0
-        end
+      end
       for i,v in ipairs(hitt) do
         v.hit = false
       end
@@ -326,7 +326,7 @@ function combo(xx)
 
       end
     else
-      
+
       if xx.a2 or xx.a3 then
         if xx.color.n==4 then
           xx.type = 4
@@ -349,8 +349,8 @@ function combo(xx)
           xx.animcounter = 1
           xx.repcounter = xx.repcounter + 1
         end
-        
-        
+
+
       elseif xx.a1 then  
         if xx.color.n==4 then
           xx.type = 6
@@ -427,9 +427,9 @@ end
 
 function nottoomanyuppercuts(xx)
 
-  if xx.type == 3 and xx.cancombo then xx.uppercuthit = true end
+  if (xx.type == 3 or xx.type == 6) and xx.cancombo then xx.uppercuthit = true end
 
-  if not xx.g then xx.uppercuttimer = 0 end
+  --if not xx.g then xx.uppercuttimer = 0 end
 
   if xx.uppercuttimer > 0 then
     if xx.color.n ~= xx.cchangeto.n and xx.uppercuthit and xx.uppercuttimer > 30
@@ -447,7 +447,8 @@ function nottoomanyuppercuts(xx)
 
 
 
-  if xx.type==3 then xx.uppercuttimer = uppercutpause end
+  if xx.type==3 then xx.uppercuttimer = uppercutpause 
+  elseif xx.type==6 then xx.uppercuttimer = uppercutpause/2 end
 
 end
 
@@ -471,7 +472,7 @@ function attackmanage(xx)
     xx.greenktimer = 0
   end
 
-  if xx.j ~= 0 or xx.v ~= 0 then
+  if not xx.landing then
     xx.purplanding = false
   end
 
@@ -483,7 +484,7 @@ function attackmanage(xx)
   end
 
 
-  if xx.type < 4 and not xx.g and ((xx.type~=2 and xx.color.n~=2) or (xx.type~=2 and xx.color.n~=3)) then 
+  if xx.type < 4 and not xx.g and not ((xx.type==3 and xx.color.n==4) or (xx.type==2 and xx.color.n==2) or (xx.type==2 and xx.color.n==3)) then 
     xx.animcounter = 0
   elseif xx.type >= 4 and xx.type < 7 and xx.g then 
     xx.animcounter = 0
@@ -604,7 +605,7 @@ function camshakeflinch()
   yhdif = you.prevhealth-you.health
   mhdif = me.prevhealth-me.health
   if not (me.actionshot or you.actionshot) and not noshake then
-    
+
     if ((you.shake) and you.x >= me.x)  or shakeboth then 
       camera2.x = camera2.x + math.ceil(math.random()) * (shakedis + yhdif/2)
       camera2.y = camera2.y + math.ceil(math.random()) * (shakedis + yhdif/2)
@@ -635,10 +636,10 @@ function camshakeflinch()
 
     end
   end
-  
+
   if me.shake or shakeboth or you.shake then
     paralaxshake = true
-    end
+  end
 
   me.shake = false
   you.shake = false
@@ -973,8 +974,8 @@ newforwarddodge = function(xx)
         --if xx.g then xx.gflinchleft = xx.ft end
         repplay(xx.flinch1)
         repplay(xx.flinch2)
-      --else 
-       -- repplay(xx.minch)
+        --else 
+        -- repplay(xx.minch)
       end
     end
 
@@ -1039,11 +1040,11 @@ newforwarddodge = function(xx)
 
       if xx.falltimer > 0  then 
         if xx.falltimer - 1*ramp(xx) > 0 then
-        xx.falltimer = xx.falltimer - 1*ramp(xx)
-      else
-        xx.falltimer = 0
+          xx.falltimer = xx.falltimer - 1*ramp(xx)
+        else
+          xx.falltimer = 0
         end
-    else 
+      else 
         xx.hittheground = true
       end
 
