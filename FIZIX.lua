@@ -223,20 +223,6 @@ table.insert(themaps[3].boxes, {p1 = {x = 1928, y = 4416},  size = 40, kind = "p
 table.insert(themaps[3].boxes, {p1 = {x = 1536, y = 3580},  size = 5, kind = "paper", density = 2})
 
 
-function hexplatcheck2(y1, x1, x2, ex, why, w, why2, v)
-
-
-        midv2 = {x = (ex+w/2)+v, y=why2}
-        midv = {x = ex+w/2+.001, y=why}
-        local linep1 = {x = x1+.001, y = y1}
-        local linep2 = {x = x2, y = y1}
-        if pint(linep1, linep2, midv, midv2) 
-        then return true
-        else return false
-        end
-
-      end
-
 
 function updateboxes()
   if themaps[mapnum].boxes ~= nil and not pause then

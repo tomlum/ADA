@@ -1,4 +1,5 @@
 require "story/ch1/ch1"
+pressanybutton = lg.newImage("enviro/pressanybutton.png")
 
 oldmenu = "begin"
 notilebouncing = true
@@ -319,8 +320,16 @@ function drawmenus()
     lg.draw(facade, 0, 0-stagey*(screenheight/350), 0, screenwidth/1440, screenheight/900)
 
     drawwaves()
+     for i = 0, #thecolors-1 do 
+      local color = thecolors[i]
+      if color.s~=nil then
+      lg.setColor(color.c.r,color.c.g,color.c.b, allfade)
+    lg.sdraw(enviro.ada, 0, i*90, 0, .5, .5)
+    end
+  end
+  
     lg.setColor(255,255,255,allfade)
-    lg.draw(enviro.ada, 0, 0, 0,screenwidth/1440,screenheight/900)
+        lg.draw(pressanybutton, screenwidth/2, screenheight/2, 0, screenwidth/1440,screenheight/900, 48, 18)
     lg.setColor(0,0,0)
     lg.srectangle("fill", 0, 900-stagey*4, 1440, 900)
 
@@ -952,33 +961,4 @@ function panstuff()
 
 end
 
-
-function drawcity()
-
-  if sfade + 5 <= 255 then
-    sfade = sfade + 5
-  end
-
-  if menu=="premodes" then
-    adastartfade = true end
-
-    if sfade == 255 and adafade <255 and (menu == "title") then adafade = adafade + 2.5  end
-
-    if menu == "premodes" and adafade - 3 < 0 then adafade = 0 adastartfade = false
-    elseif adastartfade then adafade = adafade - 3
-    end
-
-    lg.setColor(sfade,sfade,sfade,255)
-    lg.draw(enviro.sunback, 0, 0, 0, screenwidth/1440, screenheight/900)
-    lg.draw(enviro.v3, 0, 0-stagey*(screenheight/400), 0, screenwidth/1440, screenheight/900)
-    lg.draw(enviro.v2, 0, 0-stagey*(screenheight/375), 0, screenwidth/1440, screenheight/900)
-    lg.draw(facade, 0, 0-stagey*(screenheight/350), 0, screenwidth/1440, screenheight/900)
-
-    drawwaves()
-    lg.setColor(255,255,255,adafade)
-    lg.draw(enviro.ada, 0, 0, 0,screenwidth/1440,screenheight/900)
-    lg.setColor(0,0,0)
-    lg.rectangle("fill", 0, screenheight*1.2-stagey*4, screenwidth, screenheight)
-
-  end
 

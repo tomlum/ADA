@@ -1,8 +1,5 @@
 require "utilities"
 
---can climb if at corner
-
-
 --the reason vein transparency works the way ti does is the trail!!!!
 --green creature emits more sparks, more damage?
 
@@ -43,7 +40,7 @@ rampspeed= therampspeed
 rampnormaldelta = .008
 drawboxes = false
 drawfeet = false
-fightclub = true
+fightclub = false
 volume=0
 fullscreen = false
 readout = false
@@ -951,6 +948,11 @@ function love.update()
     
     ]]--
     
-    lg.print("me.plat: "..tostring(me.plat), 300,300)
-    lg.print("me.j: "..tostring(me.j), 300,330)
+    lg.print(tostring(me.purpgroundtimer).." me.purpgroundtimer", 300,300)
+    
+    lg.print(tostring(me.purplanding).." me.purplanding", 300,320)
+    lg.print(tostring(me.animcounter).." me.animcounter", 300,340)
+    lg.print(tostring(me.type).." me.type", 300,360)
+    lg.print("me.landingcounter: "..tostring(me.landingcounter), 300,380)
+    changebackgrouncolor(3)
   end

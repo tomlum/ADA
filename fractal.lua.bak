@@ -263,15 +263,9 @@ table.insert(fractals[4].plats, {fractal = true, midy = 670, x1 = 170, x2 = 470,
 table.insert(fractals[4].plats, {fractal = true, midy = 803, x1 = 170, x2 = 470, radius = 1, y = 136})
 
 table.insert(fractals[4].walls, {y1 = 403, y2 = 950, x=171, radius = 2})
-table.insert(fractals[4].walls, {y1 = 650, y2 = 950, x=469, radius = 1})
+table.insert(fractals[4].walls, {y1 = 650, y2 = 950, x=469, radius = 2})
 
-table.insert(fractals[4].walls, {y1 = 50, y2 = 180, x=514, radius = 1})
-
-table.insert(fractals[4].walls, {y1 = 403, y2 = 538, x=469, radius = 1})
-table.insert(fractals[4].plats, {fractal = true, midy = 803, x1 = 513, x2 = 645, radius = 1, y = 179})
-
-makeplatbox(4, 733, 50, 23, 154, "left")
-makeplatbox(4, 756, 181, 198, 23, "left")
+table.insert(fractals[4].walls, {y1 = 403, y2 = 538, x=469, radius = 2})
 
 function insertfractalbox(num)
   table.insert(fractals[num].walls, {n=1,y1 = 50, y2 = fractals[num].floor, x=fractals[num].rightwall, barrier = true, floor = true})
@@ -298,7 +292,7 @@ thefractal = fractals[5]
 
 --IN THIS ONE, NO THING FOR GROUND THING, LIKE, NO GROUND CAMERA ADJUST
 function throwinto()
-  themap = fractals[3]
+  themap = fractals[4]
   local map = themap
   --[[
   themap = fractals[math.random(1,3)]
@@ -410,7 +404,7 @@ function throwinto()
 
 end
 
-function changebackgroundcolor(rate)
+function changebackgrouncolor(rate)
     backgroundcolor.r = colorchange(backgroundcolor.r,rate)
   backgroundcolor.g = colorchange(backgroundcolor.g,rate)
   backgroundcolor.b = colorchange(backgroundcolor.b,rate)

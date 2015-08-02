@@ -375,15 +375,15 @@ function hline(meme, theid, P1, P2, special)
     --if stophit and meme.player~=nil then
     --meme.hit = true
     --end
-    
+
     for i,box in ipairs(colorboxes) do
-       if (hexcheck(P1.x, P1.y, P2.x, P2.y, box.x, box.y, 40*math.abs(box.flip), 60, 0, 0))
+      if (hexcheck(P1.x, P1.y, P2.x, P2.y, box.x, box.y, 40*math.abs(box.flip), 60, 0, 0))
       then
         table.remove(colorboxes, i)
         makensparks(box.x,box.y,sparkspeed, sparkspeed, math.random(0),math.random(0),math.random(0),10)
       end
-      
-      end
+
+    end
 
   end
 
@@ -478,48 +478,48 @@ function hline(meme, theid, P1, P2, special)
           meme.hit = true
         end
         ]]--
-        
-          for i,box in ipairs(colorboxes) do
-            
-       if not meme.hitbox and (hexcheck(P1.x, P1.y, P2.x, P2.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
-          or hexcheck(P2.x, P2.y, P3.x, P3.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
-          or hexcheck(P3.x, P3.y, P4.x, P4.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
-          or hexcheck(P4.x, P4.y, P1.x, P1.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
-          or boxCheck({x = box.x, y = box.y}, P1, P2, P3, P4)
-        )
-       
-       
-      then
-        local boxdam = 0
-        meme.hitbox = true
-        if meme.id == 1 then
-          boxdam = you.health
-        special(you)
-        boxdam = boxdam - you.health
-        elseif meme.id == 2 then
-          boxdam = me.health
-        special(me)
-        boxdam = boxdam - me.health
-      end
-      
-        makensparks(box.x,box.y,sparkspeed*2, sparkspeed*2, math.random(255),math.random(255),math.random(255),5)
-        
-        box.health = box.health - boxdam
-        
-        if box.health < 0 then
-        local xdis = box.x-meme.mid
-        local ydis = box.y-meme.y
-        colorboxes = {}
-        throwinto()
-        for i = 20, 1, -1 do
-        makensparks(meme.x+15+xdis,meme.y+ydis,sparkspeed*3, sparkspeed*3, math.random(255),math.random(255),math.random(255),20)
-        end
-        end
-      end
-      
-      end
 
-        
+        for i,box in ipairs(colorboxes) do
+
+          if not meme.hitbox and (hexcheck(P1.x, P1.y, P2.x, P2.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
+            or hexcheck(P2.x, P2.y, P3.x, P3.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
+            or hexcheck(P3.x, P3.y, P4.x, P4.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
+            or hexcheck(P4.x, P4.y, P1.x, P1.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
+            or boxCheck({x = box.x, y = box.y}, P1, P2, P3, P4)
+          )
+
+
+          then
+            local boxdam = 0
+            meme.hitbox = true
+            if meme.id == 1 then
+              boxdam = you.health
+              special(you)
+              boxdam = boxdam - you.health
+            elseif meme.id == 2 then
+              boxdam = me.health
+              special(me)
+              boxdam = boxdam - me.health
+            end
+
+            makensparks(box.x,box.y,sparkspeed*2, sparkspeed*2, math.random(255),math.random(255),math.random(255),5)
+
+            box.health = box.health - boxdam
+
+            if box.health < 0 then
+              local xdis = box.x-meme.mid
+              local ydis = box.y-meme.y
+              colorboxes = {}
+              throwinto()
+              for i = 20, 1, -1 do
+                makensparks(meme.x+15+xdis,meme.y+ydis,sparkspeed*3, sparkspeed*3, math.random(255),math.random(255),math.random(255),20)
+              end
+            end
+          end
+
+        end
+
+
       end
 
       function hexplatcheck2(y1, x1, x2, ex, why, w, why2, v)
@@ -715,8 +715,8 @@ function hline(meme, theid, P1, P2, special)
 
 
               if p.player~=nil and not p.flinch
-              and ((p.x+p.v*walljumprange < wall.x and p.x >= wall.x) or (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x)) and
-        ((p.v < 0 and p.right) or (p.v > 0 and p.left)) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch and not p.busy and p.animcounter == 0
+              and ((p.x+p.v*walljumprange < wall.x and p.x >= wall.x) or (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x)) and p.feet-p.j > wall.y1 and p.y-p.j < wall.y2 and 
+              ((p.v < 0 and p.right) or (p.v > 0 and p.left)) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch and not p.busy and p.animcounter == 0
               then
                 if (p.x+p.v*walljumprange < wall.x and p.x >= wall.x) then
                   wallside = 1 
@@ -755,12 +755,12 @@ function hline(meme, theid, P1, P2, special)
 
                   p.v = 0
                 end
-elseif p.barrier and p.x < wall.x and p.x + p.width > wall.x and (p.y < wall.y2 and p.feet > wall.y1) then
-  if p.mid < wall.x or p.v < 0 then
-    p.v = lof(p.v,-2)
-  else
-    p.v = hof(p.v,2)
-  end
+              elseif p.barrier and p.x < wall.x and p.x + p.width > wall.x and (p.y < wall.y2 and p.feet > wall.y1) then
+                if p.mid < wall.x or p.v < 0 then
+                  p.v = lof(p.v,-2)
+                else
+                  p.v = hof(p.v,2)
+                end
 
 
               end
@@ -838,7 +838,29 @@ elseif p.barrier and p.x < wall.x and p.x + p.width > wall.x and (p.y < wall.y2 
                 or 
                 (p.y == plat.y-p.height-extrah and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
               then
-                if p.j ~= 0 and p.player~=nil then
+
+
+                local goforit = true 
+                if p.j ~= 0  then
+                  if p.x < plat.x2 and p.x+p.width > plat.x2 then
+                    if p.mid > plat.x2 then
+                      p.x = plat.x2+1
+                      goforit = false
+                      p.v = 0
+                    else
+                      p.x = plat.x2-p.width*3/4
+                      end
+                  elseif p.x < plat.x1 and p.x+p.width > plat.x1 then
+                      if p.mid < plat.x1 then
+                      p.x = plat.x1-p.width*3/4
+                    else
+                      p.x = plat.x1-1
+                      goforit = false
+                      end
+                  end
+                end
+
+                if p.j ~= 0 and p.player~=nil and goforit then
                   if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
                     xx.landingcounter = xx.landingcounter + landingwait
                     xx.landing = true 
@@ -850,6 +872,10 @@ elseif p.barrier and p.x < wall.x and p.x + p.width > wall.x and (p.y < wall.y2 
                   end
                   repplay(xx.land)
                   xx.slowdown = false
+
+
+
+
                 end
 
                 p.y = plat.y-p.height
@@ -857,6 +883,11 @@ elseif p.barrier and p.x < wall.x and p.x + p.width > wall.x and (p.y < wall.y2 
                 p.g = true
                 p.j = 0
                 p.plat = plat;
+                if p.x < plat.x2 and p.mid > plat.x2 and p.v > 0 then
+                  p.v = hof(p.v,2)
+                elseif p.mid < plat.x1 and p.x+p.width> plat.x1 and p.v < 0 then
+                  p.v = lof(p.v,-2)
+                end
 
 
 
@@ -919,6 +950,12 @@ elseif p.barrier and p.x < wall.x and p.x + p.width > wall.x and (p.y < wall.y2 
                 p.g = true
                 p.j = 0
                 p.plat = plat;
+
+                if p.x < plat.x2 and p.mid > plat.x2 then
+                  p.v = hof(p.v,2)
+                elseif p.mid < plat.x1 and p.x+p.width> plat.x1 then
+                  p.v = lof(p.v,-2)
+                end
 
 
 

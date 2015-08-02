@@ -103,6 +103,11 @@ local vv = math.random(-5,5)
 return hof(lof(v+vv, 255), 0)
 end
 
+function colorchange2(v,vvv)
+  local vv = vvv*math.random(-1,1)
+return hof(lof(v+vv, 255), 0)
+end
+
 function coinflip(per)
   if per==nil then
     if math.random()>.5 then return true

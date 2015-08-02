@@ -614,7 +614,6 @@ end
 
 paralaxshaketimer = 0
 paralaxcamshake = 0
-
 function drawx(xx)
 
 
@@ -660,52 +659,37 @@ function drawx(xx)
         local ps = themap.paralaxscale
         local ips = 1/ps
         
-      if math.deg(themap.rotation)%180 > 80 then
         
-         lg.draw(themap.paralax, 
-              (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themap.paralaxscale*pzoom)
+        local xoffset = 0
+        local yoffset = 0
+        if math.deg(themap.rotation)%360 < 10 then
+      elseif math.deg(themap.rotation)%360 < 100 then
+        yoffset = (themap.height+100)*themap.paralaxscale
+      elseif math.deg(themap.rotation)%360 < 190 then
+        xoffset = (themap.width+100)*themap.paralaxscale
+        yoffset = (themap.height+100)*themap.paralaxscale
+    elseif math.deg(themap.rotation)%360 < 280 then
+        xoffset = (themap.width+100)*themap.paralaxscale  
+        end
+       blurdraw(bob, function()
+
+            lg.draw(themap.paralax, 
+              (xx.x+(screenwidth/2)*cscale*pzoom+paralaxcamshake)*(1-themap.paralaxscale*pzoom)
               
-              +
-              (themap.height/2)*ps
-              +(200*(1-themap.paralaxscale*pzoom))
+              -(50*(1-themap.paralaxscale*pzoom))
               ,
               (xx.y+(screenheight/2)--*pzoom
                 *cscale+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themap.paralaxscale*pzoom))
               
-              
-              +(themap.width/2)*ps
-              +(400*(1-themap.paralaxscale*pzoom))
+              -(50*(1-themap.paralaxscale*pzoom))
               ,
               themap.rotation,
               pzoom,
               pzoom,
-              (themap.width/2)*ps,
-              (themap.height/2)*ps
-              )
-       
-      else
-         
-         lg.draw(themap.paralax, 
-              (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themap.paralaxscale*pzoom)
-              
-              +
-              (themap.width/2)*ps
-              +(420*(1-themap.paralaxscale*pzoom))
-              ,
-              (xx.y+(screenheight/2)--*pzoom
-                *cscale+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themap.paralaxscale*pzoom))
-              
-              
-              +(themap.height/2)*ps
-              +(100*(1-themap.paralaxscale*pzoom))
-              ,
-              themap.rotation,
-              pzoom,
-              pzoom,
-              (themap.width/2)*ps,
-              (themap.height/2)*ps
-              )
-      end
+              xoffset,
+              yoffset)
+
+          end)
 --[[
         if math.deg(themap.rotation)%360 < 80 then     
           lg.draw(themap.paralax, 
