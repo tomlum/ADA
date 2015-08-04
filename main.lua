@@ -1,5 +1,6 @@
 require "utilities"
 
+--RECONSOLIDATE DEATH FUNCTIONS
 --can climb if at corner
 
 
@@ -738,6 +739,8 @@ function love.update()
       (themode == "spectrum" and (you.lives <= 0 or me.lives <= 0)) 
       or 
       (themode == "koth" and (you.score >= kothscoretowin or me.score >= kothscoretowin))
+      or 
+      (themode == "fractal" and (you.lives <= 0 or me.lives <= 0))
       then 
         menu = "retry"
 
@@ -933,24 +936,22 @@ function love.update()
       --fractalrotate()
     end
     
+    if love.keyboard.isDown("5") and not boxstop then
+      rotatefractal()
+      --makecolorbox(me.x, me.y+30)
+      boxstop = true
+      --fractalrotate()
+    end
   
-    --]]--
-    --[[
+    --
     
+    --[[
     for i,plat in ipairs(themap.walls) do
       lg.print(tostring(plat.y).."||"..tostring(plat.x1).."||"..tostring(plat.x2).."||"..tostring(plat.x).."||"..tostring(plat.y1).."||"..tostring(plat.y2), 300,i*20)
     end
-    
-    lg.print(tostring(me.oplat), 300,300)
-    lg.print(tostring(you.plat), 300,320)
-    
-    if love.keyboard.isDown("2") then
-      makensparks(me.x,me.y,sparkspeed, sparkspeed, math.random(255),math.random(255),math.random(255),10)
-      end
-    
-    
     ]]--
-    
-    lg.print("me.plat: "..tostring(me.plat), 300,300)
-    lg.print("me.j: "..tostring(me.j), 300,330)
+    lg.print("me.gohere.x: "..tostring(bobx), 400,360)
+    lg.print("me.gohere.y: "..tostring(boby), 400,380)
+    changebackgroundcolor(4)
+  
   end

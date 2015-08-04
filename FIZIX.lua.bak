@@ -14,41 +14,13 @@ jumpj = 0
 
 floor = 1900 - 2
 
-bobx = 0
-boby = 0
-function fractalrespawn(xx)
-
-local newplat
-  
-  local firsttime = true
-  
-  while(firsttime or newplat.ceiling or newplat.fractalbox~=nil) do
-    firsttime = false
-    local rannum = math.random(1,#themap.plats)
-    newplat = themap.plats[rannum]
-    xx.gohere = {}
-    xx.gohere.x = math.random(newplat.x1+15, newplat.x2-15)
-    xx.gohere.y = newplat.y-100
-    bobx = xx.gohere.x
-    boby = xx.gohere.y
-    
-    xx.gohered = {}
-    xx.gohered.x = (xx.x-xx.gohere.x)/40
-    xx.gohered.y = (xx.y-xx.gohere.y)/40
-    
-  end
 
 
-  
-
-
-end
-
-function kothrespawn(xx)
+function respawn(xx)
   local newplat = kothplat
   while(newplat == kothplat) do
     local rannum = math.random(1,#themaps[mapnum].plats)
-    local newplat = themaps[mapnum].plats[rannum]
+    newplat = themaps[mapnum].plats[rannum]
     xx.gohere = {}
     xx.gohere.x = math.random(newplat.x1+15, newplat.x2-15)
     xx.gohere.y = newplat.y-100
@@ -86,7 +58,6 @@ function respawntravel(xx)
     xx.stop = true
     xx.y = xx.y-xx.gohered.y
     xx.j = 0
-    xx.v = 0
   else
     yready = true
   end

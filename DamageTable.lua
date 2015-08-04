@@ -8,6 +8,9 @@ vforwallflinch = 10
 
 walljumprange = 3.5
 
+--FRACTAL
+fractalmaxhealth = 1
+fractallives = 2
 
 --
 --basically min j

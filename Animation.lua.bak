@@ -483,9 +483,9 @@ whatlevel = function()
 
 
     if themode == "fractal" then 
-      you.lives = fractallives
-      me.lives = fractallives
-      maxhealth = fractalmaxhealth
+      you.lives = 5
+      me.lives = 5
+      maxhealth = 50
     elseif themode == "duel" then 
       maxhealth = 150
     elseif themode == "koth" then 
@@ -1810,14 +1810,9 @@ function tempdeath(xx)
     end
 end
   
-  if (themode == "koth" or themode == "fractal") and xx.health <= 0 then
-    if xx.deathclock == 0 then
-      
-xx.lives = xx.lives - 1
-if xx.lives > 0 then
-    throwinto()
-    end
-    end
+  if themode == "koth" and xx.health <= 0 then
+    
+    
     if xx.deathclock < 150 then
       xx.deathclock = xx.deathclock + 1
 
@@ -1839,13 +1834,7 @@ if xx.lives > 0 then
     elseif xx.deathclock > 98+ 30 then xx.im = fade7
       
     elseif xx.deathclock > 95+ 30 then xx.im = fade6
-      if themode == "fractal" then
-        if xx.lives > 0 then
-        fractalrespawn(xx)
-        end
-        elseif themode == "koth" then
-      kothrespawn(xx)
-      end
+      respawn(xx)
     elseif xx.deathclock > 92+ 30 then xx.im = fade5
     elseif xx.deathclock > 89+ 30 then xx.im = fade4
     elseif xx.deathclock > 86+ 30 then xx.im = fade3
@@ -1865,7 +1854,6 @@ death = function(xx, yy)
   elseif themode == "duel" or (themode == "spectrum" and (me.lives == 0 or you.lives == 0)) then
     if xx.health<0 then 
       xx.dead = true
-      
       if xx.deathclock < 143 then
         if xx.deathclock == 142 then
 
@@ -1891,7 +1879,7 @@ death = function(xx, yy)
     end
 
 
-  elseif themode == "spectrum" then
+  elseif themode == "fractal" then
     if xx.health<0 then 
       if not xx.dead then xx.lives = xx.lives - 1
         deathsound2:play() end

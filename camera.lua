@@ -663,13 +663,18 @@ function drawx(xx)
         local xoffset = 0
         local yoffset = 0
         if math.deg(themap.rotation)%360 < 10 then
+        xoffset = (100)*themap.paralaxscale
+        
+        yoffset = (100)*themap.paralaxscale
       elseif math.deg(themap.rotation)%360 < 100 then
         yoffset = (themap.height+100)*themap.paralaxscale
+        xoffset = (100)*themap.paralaxscale
       elseif math.deg(themap.rotation)%360 < 190 then
         xoffset = (themap.width+100)*themap.paralaxscale
         yoffset = (themap.height+100)*themap.paralaxscale
     elseif math.deg(themap.rotation)%360 < 280 then
         xoffset = (themap.width+100)*themap.paralaxscale  
+        yoffset = (100)*themap.paralaxscale
         end
        blurdraw(bob, function()
 

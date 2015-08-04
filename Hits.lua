@@ -6,7 +6,7 @@
 
 
 
-
+slipoffedges = true
 
 me.hit = false
 you.hit = false
@@ -529,7 +529,7 @@ function hline(meme, theid, P1, P2, special)
         midv21 = {x = (ex)+v, y=why2}
         midv22 = {x = (ex+w)+v, y=why2}
         midv = {x = ex+w/2+.001, y=why}
-        local linep1 = {x = x1+.001, y = y1}
+        local linep1 = {x = x1, y = y1}
         local linep2 = {x = x2, y = y1}
         if pint(linep1, linep2, midv, midv2)  or 
         pint(linep1, linep2, midv, midv21)  or
@@ -715,7 +715,7 @@ function hline(meme, theid, P1, P2, special)
 
 
               if p.player~=nil and not p.flinch
-              and ((p.x+p.v*walljumprange < wall.x and p.x >= wall.x) or (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x)) and p.feet-p.j > wall.y1 and p.y-p.j < wall.y2 and 
+              and ((p.x+p.v*walljumprange < wall.x and p.x >= wall.x) or (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x)) and p.feet-p.j >= wall.y1 and p.y-p.j <= wall.y2 and 
               ((p.v < 0 and p.right) or (p.v > 0 and p.left)) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch and not p.busy and p.animcounter == 0
               then
                 if (p.x+p.v*walljumprange < wall.x and p.x >= wall.x) then
@@ -836,11 +836,13 @@ function hline(meme, theid, P1, P2, special)
               elseif xx.gohere == nil and (not p.gothroughplats or plat.floor~=nil) and (
                 (hexplatcheck2(plat.y, plat.x1, plat.x2, p.x, p.oldpy, p.width, p.y+p.height-extrah-p.j, p.v) and p.j <= 0)
                 or 
-                (p.y == plat.y-p.height-extrah and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
+                (p.y == plat.y-p.height-extrah and p.x+p.width+p.v >= plat.x1 and p.x+p.v <= plat.x2 and p.j==0))
               then
 
 
+
                 local goforit = true 
+                --[[
                 if p.j ~= 0  then
                   if p.x < plat.x2 and p.x+p.width > plat.x2 then
                     if p.mid > plat.x2 then
@@ -849,18 +851,30 @@ function hline(meme, theid, P1, P2, special)
                       p.v = 0
                     else
                       p.x = plat.x2-p.width*3/4
-                      end
+                    end
                   elseif p.x < plat.x1 and p.x+p.width > plat.x1 then
-                      if p.mid < plat.x1 then
+                    if p.mid < plat.x1 then
                       p.x = plat.x1-p.width*3/4
                     else
                       p.x = plat.x1-1
                       goforit = false
-                      end
+                    end
                   end
                 end
-
+                ]]--
+                
+                
+                
                 if p.j ~= 0 and p.player~=nil and goforit then
+
+
+
+                  if p.im.extrah ~= nil then
+                    p.oldpy = p.y+p.height-p.im.extrah
+                  else
+                    p.oldpy = p.y+p.height
+                  end
+
                   if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
                     xx.landingcounter = xx.landingcounter + landingwait
                     xx.landing = true 
@@ -883,10 +897,12 @@ function hline(meme, theid, P1, P2, special)
                 p.g = true
                 p.j = 0
                 p.plat = plat;
-                if p.x < plat.x2 and p.mid > plat.x2 and p.v > 0 then
+                if slipoffedges then
+                if p.x < plat.x2 and p.mid > plat.x2 then
                   p.v = hof(p.v,2)
-                elseif p.mid < plat.x1 and p.x+p.width> plat.x1 and p.v < 0 then
+                elseif p.mid < plat.x1 and p.x+p.width> plat.x1 then
                   p.v = lof(p.v,-2)
+                end
                 end
 
 

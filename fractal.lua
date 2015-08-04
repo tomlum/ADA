@@ -45,8 +45,8 @@ fractals = {
   {name = "fractal3", 
     stage = fractal3,
     plats = {}, walls = {},
-    rightwall = 500,
-    floor = 2000,
+    rightwall = 500-50,
+    floor = 2000-50,
     start={x = 300, y = 50},
     facade = fractal1facade,
     rotation = 0,
@@ -67,28 +67,28 @@ fractals = {
   paralaxscale = .5,
     paralax = fractal4paralax,
     rotation = 0,
-    start1={x = 1000, y = 100},
-    start2={x = 100, y = 1000},
-    start3={x = 1000, y = 100},
-    start4={x = 100, y = 1000},
+    start1={x = -100, y = 100},
+    start2={x = 100, y = 100},
+    start3={x = -100, y = 100},
+    start4={x = 100, y = 100},
     height = 1000,
     width = 2100
   },
   {name = "fractal5", 
     stage = fractal5,
     plats = {}, walls = {},
-    floor = 4000-50,
-    rightwall = 4000-50,
+    floor = 2500-50,
+    rightwall = 2500-50,
     start={x = 100, y = 100},
   paralaxscale = .75,
     paralax = fractal5paralax,
     rotation = 0,
     start1={x = 1000, y = 100},
-    start2={x = 100, y = 1000},
+    start2={x = -1000, y = 100},
     start3={x = 1000, y = 100},
-    start4={x = 100, y = 1000},
-    height = 4000,
-    width = 4000
+    start4={x = -1000, y = 100},
+    height = 2500,
+    width = 2500
   }
 }
 
@@ -188,17 +188,12 @@ end
 function makeplatbox(num, ex, why, width, height, kind)
 
 
-  table.insert(fractals[num].plats, {y = why, x1 =  ex, x2 = ex+width, ceiling = true})
-  table.insert(fractals[num].plats, {y = why+height, x1 =  ex, x2 = ex+width, floor = true})
+  table.insert(fractals[num].plats, {y = why, x1 =  ex, x2 = ex+width, floor = true})
+  table.insert(fractals[num].plats, {y = why+height, x1 =  ex, x2 = ex+width, ceiling = true})
 
-  if kind == "left" then
-    table.insert(fractals[num].walls, {y1 = why, y2 = why+height, x=ex, barrier = true, floor = true})
-    table.insert(fractals[num].walls, {y1 = why, y2 = why+height, x=ex+width, barrier = true, ceiling = true})
-  elseif kind == "right" then
     table.insert(fractals[num].walls, {y1 = why, y2 = why+height, x=ex, barrier = true, floor = true})
     table.insert(fractals[num].walls, {y1 = why, y2 = why+height, x=ex+width, barrier = true, ceiling = true})
 
-  end
 
 end
 
@@ -262,23 +257,48 @@ table.insert(fractals[4].plats, {fractal = true, midy = 537, x1 = 170, x2 = 470,
 table.insert(fractals[4].plats, {fractal = true, midy = 670, x1 = 170, x2 = 470, radius = 1, y = 136})
 table.insert(fractals[4].plats, {fractal = true, midy = 803, x1 = 170, x2 = 470, radius = 1, y = 136})
 
-table.insert(fractals[4].walls, {y1 = 403, y2 = 950, x=171, radius = 2})
+table.insert(fractals[4].walls, {y1 = 403, y2 = 950, x=171, radius = 1})
 table.insert(fractals[4].walls, {y1 = 650, y2 = 950, x=469, radius = 1})
 
 table.insert(fractals[4].walls, {y1 = 50, y2 = 180, x=514, radius = 1})
 
 table.insert(fractals[4].walls, {y1 = 403, y2 = 538, x=469, radius = 1})
-table.insert(fractals[4].plats, {fractal = true, midy = 803, x1 = 513, x2 = 645, radius = 1, y = 179})
+table.insert(fractals[4].plats, {fractal = true, midy = 179, x1 = 513, x2 = 645, radius = 1, y = 179})
+
+table.insert(fractals[4].plats, {fractal = true, midy = 706, x1 = 565, x2 = 923, radius = 1, y = 0})
+table.insert(fractals[4].walls, {y1 = 566, y2 = 814, x=705, radius = 1})
+table.insert(fractals[4].walls, {y1 = 705, y2 = 814, x=922, radius = 1})
+
+table.insert(fractals[4].walls, {y1 = 564, y2 = 950, x=990, radius = 1})
+table.insert(fractals[4].walls, {y1 = 564, y2 = 950, x=1360, radius = 1})
+
+table.insert(fractals[4].walls, {y1 = 50, y2 = 316, x=990, radius = 1})
+table.insert(fractals[4].walls, {y1 = 50, y2 = 316, x=1360, radius = 1})
+
+
+table.insert(fractals[4].walls, {y1 = 50, y2 = 164, x=1564, radius = 2})
+table.insert(fractals[4].walls, {y1 = 564, y2 = 851, x=1564, radius = 2})
+table.insert(fractals[4].walls, {y1 = 564, y2 = 851, x=1801, radius = 2})
+
+table.insert(fractals[4].walls, {y1 = 50, y2 = 109, x=1801, radius = 2})
+
+table.insert(fractals[4].plats, {fractal = true, midy = 850, x1 = 1562, x2 = 2050, radius = 2, y = 0})
 
 makeplatbox(4, 733, 50, 23, 154, "left")
 makeplatbox(4, 756, 181, 198, 23, "left")
+makeplatbox(4, 989, 657, 374, 24, "left")
+makeplatbox(4, 989, 292, 374, 24, "left")
+makeplatbox(4, 805, 367, 23, 48, "left")
+makeplatbox(4, 805, 367, 23, 48, "left")
+makeplatbox(4, 828, 392, 198, 23, "left")
+
 
 function insertfractalbox(num)
-  table.insert(fractals[num].walls, {n=1,y1 = 50, y2 = fractals[num].floor, x=fractals[num].rightwall, barrier = true, floor = true})
-  table.insert(fractals[num].walls, {n=2,y1 = 50, y2 = fractals[num].floor, x=50, barrier = true, ceiling = true})
+  table.insert(fractals[num].walls, {n=1,y1 = 50, y2 = fractals[num].floor, x=fractals[num].rightwall, barrier = true, floor = true, fractalbox = true})
+  table.insert(fractals[num].walls, {n=2,y1 = 50, y2 = fractals[num].floor, x=50, barrier = true, ceiling = true, fractalbox = true})
 
-  table.insert(fractals[num].plats, {n=1, y = fractals[num].floor, x1 = 50, x2 = fractals[num].rightwall, floor = true})
-  table.insert(fractals[num].plats, {n=2, y = 50, x1 = 50, x2 = fractals[num].rightwall, ceiling = true})
+  table.insert(fractals[num].plats, {n=1, y = fractals[num].floor, x1 = 50, x2 = fractals[num].rightwall, floor = true, fractalbox = true})
+  table.insert(fractals[num].plats, {n=2, y = 50, x1 = 50, x2 = fractals[num].rightwall, ceiling = true, fractalbox = true})
 
 end
 
@@ -292,13 +312,13 @@ insertfractalbox(5)
 
 
 
-thefractal = fractals[5]
+thefractal = fractals[3]
 
 
 
 --IN THIS ONE, NO THING FOR GROUND THING, LIKE, NO GROUND CAMERA ADJUST
 function throwinto()
-  themap = fractals[3]
+  themap = fractals[4]
   local map = themap
   --[[
   themap = fractals[math.random(1,3)]
@@ -308,6 +328,8 @@ function throwinto()
   end
   ]]--
   rotatefractal()
+  local i = math.random(0,5)
+  
   local truewidth = map.width
   local trueheight = map.height
 
