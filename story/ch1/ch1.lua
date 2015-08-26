@@ -16,7 +16,6 @@ end
 function chap1update(ct)
   local starttime = 100
   if ct < -starttime+300 then
-
   elseif ct < -starttime+300*2 then
     titlefade1 = hof(0, (titlefade1-6))
   elseif ct < -starttime+300*3 then
@@ -56,8 +55,4 @@ function drawchapter1()
   lg.srectangle("fill", 46, -spacing+200+spacing*4, 10000,spacing)
   lg.setColor(0,0,0,titlefade6)
   cclear()
-
-
-
 end
-

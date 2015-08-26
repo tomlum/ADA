@@ -234,7 +234,7 @@ at.p = {}
 at.p.p = {}
 at.p.p.dam = 12
 at.p.p.ft = 25
-at.p.p.kb = 2
+at.p.p.kb = 3
 at.p.p.max = 4
 at.p.p.z = 4
 

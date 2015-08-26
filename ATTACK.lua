@@ -549,7 +549,6 @@ function postattackmanage(xx)
     xx.ft = xx.oldft + (xx.ft-xx.oldft)*(1)*xx.color.s.brittle
   end
   xx.oldft = xx.ft
-  tempdeath(xx)
 end
 
 

@@ -2,6 +2,12 @@ require "xkcdcolor"
 require "monitors"
 lg = love.graphics
 
+function drawbackgroundbox(x,y,w,h)
+    lg.setBackgroundColor(backgroundcolor.r,backgroundcolor.g,backgroundcolor.b)
+  lg.rectangle("fill", x, y, w, h)
+  
+end
+
 function isabout(n, v)
   return math.abs(n-v) < .1 
     

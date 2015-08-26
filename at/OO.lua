@@ -26,8 +26,8 @@ o32 = {im=lg.newImage("me/attack/orange/o32.png"),
 
 o33 = {im=lg.newImage("me/attack/orange/o33.png"), xoff = 4}
 
-ao31 = {im=lg.newImage("me/attack/orange/ao31.png"), xoff = 9, yoff = 0}
-ao32 = {im=lg.newImage("me/attack/orange/ao32.png"), yoff =2, xoff = 4}
+ao31 = {im=lg.newImage("me/attack/orange/ao31.png"), xoff = 15, yoff = 9}
+ao32 = {im=lg.newImage("me/attack/orange/ao32.png"), yoff = 52, xoff = 12}
 
 
 
@@ -535,14 +535,32 @@ function orangeyouglad(xx)
             ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 
 
             hboxcs(xx, xx.id, 
-              {x=xx.mid+(xx.lr*53), y = xx.y+24},
-              {x=xx.mid+xx.v+(xx.lr*63), y = xx.y-xx.j},
-              {x=xx.mid+xx.v+(xx.lr*46), y = xx.y+65-xx.j},
-              {x=xx.mid+(xx.lr*36), y = xx.y+65},
+              {x=xx.mid-(xx.lr*17), y = xx.y-23},
+              {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-xx.j-52},
+              {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-xx.j-52},
+              {x=xx.mid-(xx.lr*13), y = xx.y-21},
               function(z)
 
                 xx.cancombo = true
                 z.v = z.v+at.o.u.v*xx.lr
+                z.j = z.j+at.o.u.j
+                if not (z.block and z.lr == -xx.lr) then
+                  z.health = z.health - at.o.p.dam
+                  z.flinch = true
+                  z.ft = z.ft+at.o.u.ft
+                end
+                shakez(at.o.p.z)
+
+            end)
+                      hboxcs(xx, xx.id, 
+              {x=xx.mid+(xx.lr*12), y = xx.y-21},
+              {x=xx.mid+xx.v-(xx.lr*9), y = xx.y-xx.j-52},
+              {x=xx.mid+xx.v-(xx.lr*9), y = xx.y-xx.j-52},
+              {x=xx.mid+(xx.lr*8), y = xx.y-21},
+              function(z)
+
+                xx.cancombo = true
+                z.v = z.v-at.o.u.v*xx.lr
                 z.j = z.j+at.o.u.j
                 if not (z.block and z.lr == -xx.lr) then
                   z.health = z.health - at.o.p.dam

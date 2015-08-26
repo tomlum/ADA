@@ -72,7 +72,11 @@ end
 function camreturntozoom()
 
   if onescreen and vertone then
+    if lasso then 
+    tolandr = cscale*lg.getWidth()/4-2*lassowidth
+      else
     tolandr = lg.getWidth()/14
+    end
 
 
   else
@@ -123,6 +127,8 @@ function camreturntozoom()
 end
 
 cammovement = function ()
+  
+
 
   if dangerclose and var2tb then
 
@@ -170,7 +176,7 @@ cammovement = function ()
   jmax = initjmax * cscale/minzoom
   --basically min j
 
-  ydif = math.abs((you.y) - (me.y))
+  ydif = math.abs((you.y-you.j) - (me.y-me.j))
 
   if ydif/cscale <= beigedif then
     vertone = true
@@ -234,6 +240,8 @@ end
 midpoint = 0
 onescreen = false
 vertone = false
+oldonescreen = false
+oldvertone = false
 ydif = 0
 beigedif = 0
 
@@ -242,8 +250,9 @@ beigedif = 0
 
 
 camerafol = function ()
+  
 
-  xdif = math.abs((you.x) - (me.x))
+  xdif = math.abs((you.x+you.v) - (me.x+me.v))
   absdis = math.sqrt(((you.y-me.y)^2)+((you.x-me.x)^2))
 
 
@@ -792,9 +801,19 @@ function drawx(xx)
     if themap.rotation~=nil then
       if math.deg(themap.rotation)%180 > 80 then
         lg.draw(themap.stage, themap.height/2, themap.width/2, themap.rotation, 1, 1, themap.width/2, themap.height/2)
+        drawbackgroundbox(0,0,-500,themap.width)
+        drawbackgroundbox(themap.height,0,500,themap.width)
+        drawbackgroundbox(-500,0,themap.height+1000,-500)
+        drawbackgroundbox(-500,themap.width,themap.height+1000,500)
       else
         lg.draw(themap.stage, themap.width/2, themap.height/2, themap.rotation, 1, 1, themap.width/2, themap.height/2)
+        drawbackgroundbox(0,0,-500,themap.height)
+        drawbackgroundbox(themap.width,0,500,themap.height)
+        drawbackgroundbox(-500,0,themap.width+1000,-500)
+        drawbackgroundbox(-500,themap.height,themap.width+1000,500)
       end
+      
+      
     else
       lg.draw(enviro.stage, 0, 0)
     end

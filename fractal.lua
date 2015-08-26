@@ -2,6 +2,7 @@
 fractal1 = lg.newImage("enviro/fractals/fractal1.png")
 fractal2 = lg.newImage("enviro/fractals/fractal2.png")
 fractal3 = lg.newImage("enviro/fractals/fractal3.png")
+fractal3paralax = lg.newImage("enviro/fractals/fractal3paralax.png")
 fractal4 = lg.newImage("enviro/fractals/fractal4.png")
 fractal4paralax = lg.newImage("enviro/fractals/fractal4paralax.png")
 fractal5 = lg.newImage("enviro/fractals/fractal5.png")
@@ -48,6 +49,8 @@ fractals = {
     rightwall = 500-50,
     floor = 2000-50,
     start={x = 300, y = 50},
+  paralaxscale = .5,
+    paralax = fractal3paralax,
     facade = fractal1facade,
     rotation = 0,
     start1={x = 50, y = 1035},
@@ -185,7 +188,7 @@ function rotatefractal()
 
 end
 
-function makeplatbox(num, ex, why, width, height, kind)
+function makeplatbox(num, ex, why, width, height)
 
 
   table.insert(fractals[num].plats, {y = why, x1 =  ex, x2 = ex+width, floor = true})
@@ -232,23 +235,23 @@ table.insert(fractals[2].plats, {fractal = true, midy = 565, x1 = 769, x2 = 950,
 table.insert(fractals[2].plats, {fractal = true, midy = 724, x1 = 800, x2 = 950, radius = 2, y = 0})
 
 
-makeplatbox(3, 0, 0, 116, 1034, "left")
-makeplatbox(3, 384, 0, 116, 517, "right")
-makeplatbox(3, 268, 517, 232, 517, "right")
+makeplatbox(3, 0, 0, 116, 1034)
+makeplatbox(3, 384, 0, 116, 517)
+makeplatbox(3, 268, 517, 232, 517)
 
-makeplatbox(3, 0, 1034, 50, 250, "left")
-makeplatbox(3, 500-50, 1034, 50, 250, "right")
+makeplatbox(3, 0, 1034, 50, 250)
+makeplatbox(3, 500-50, 1034, 50, 250)
 
-makeplatbox(3, 0, 1284, 100, 250, "left")
-makeplatbox(3, 500-100, 1284, 100, 250, "right")
-makeplatbox(3, 0, 1284+250, 150, 250, "left")
-makeplatbox(3, 500-150, 1284+250, 150, 250, "right")
-makeplatbox(3, 0, 1284+250+250, 200, 250, "left")
-makeplatbox(3, 500-200, 1284+250+250, 200, 250, "right")
+makeplatbox(3, 0, 1284, 100, 250)
+makeplatbox(3, 500-100, 1284, 100, 250)
+makeplatbox(3, 0, 1284+250, 150, 250)
+makeplatbox(3, 500-150, 1284+250, 150, 250)
+makeplatbox(3, 0, 1284+250+250, 200, 250)
+makeplatbox(3, 500-200, 1284+250+250, 200, 250)
 
 
 
-makeplatbox(3, 500-200, 1284+250+250, 200, 250, "right")
+makeplatbox(3, 500-200, 1284+250+250, 200, 250)
 
 table.insert(fractals[4].plats, {fractal = true, midy = 404, x1 = 170, x2 = 470, radius = 1, y = 136})
 table.insert(fractals[4].plats, {fractal = true, midy = 537, x1 = 170, x2 = 470, radius = 1, y = 136})
@@ -266,7 +269,7 @@ table.insert(fractals[4].walls, {y1 = 403, y2 = 538, x=469, radius = 1})
 table.insert(fractals[4].plats, {fractal = true, midy = 179, x1 = 513, x2 = 645, radius = 1, y = 179})
 
 table.insert(fractals[4].plats, {fractal = true, midy = 706, x1 = 565, x2 = 923, radius = 1, y = 0})
-table.insert(fractals[4].walls, {y1 = 566, y2 = 814, x=705, radius = 1})
+table.insert(fractals[4].walls, {y1 = 705, y2 = 814, x=566, radius = 1})
 table.insert(fractals[4].walls, {y1 = 705, y2 = 814, x=922, radius = 1})
 
 table.insert(fractals[4].walls, {y1 = 564, y2 = 950, x=990, radius = 1})
@@ -284,13 +287,30 @@ table.insert(fractals[4].walls, {y1 = 50, y2 = 109, x=1801, radius = 2})
 
 table.insert(fractals[4].plats, {fractal = true, midy = 850, x1 = 1562, x2 = 2050, radius = 2, y = 0})
 
-makeplatbox(4, 733, 50, 23, 154, "left")
-makeplatbox(4, 756, 181, 198, 23, "left")
-makeplatbox(4, 989, 657, 374, 24, "left")
-makeplatbox(4, 989, 292, 374, 24, "left")
-makeplatbox(4, 805, 367, 23, 48, "left")
-makeplatbox(4, 805, 367, 23, 48, "left")
-makeplatbox(4, 828, 392, 198, 23, "left")
+makeplatbox(4, 733, 50, 23, 154)
+makeplatbox(4, 756, 181, 198, 23)
+makeplatbox(4, 989, 657, 374, 24)
+makeplatbox(4, 989, 292, 374, 24)
+makeplatbox(4, 805, 367, 23, 48)
+makeplatbox(4, 805, 367, 23, 48)
+makeplatbox(4, 828, 392, 198, 23)
+
+
+makeplatbox(5, 1756, 50, 674, 37)
+makeplatbox(5, 50, 50, 316, 110)
+
+makeplatbox(5, 2432, 459, 18, 551)
+
+makeplatbox(5, 255, 70, 255, 77)
+
+makeplatbox(5, 50, 2300, 162, 37)
+makeplatbox(5, 212, 2337, 189, 36)
+makeplatbox(5, 401, 2373, 329, 28)
+makeplatbox(5, 730, 2401, 228, 25)
+makeplatbox(5, 958, 2426, 227, 24)
+makeplatbox(5, 2207, 2300, 243, 150)
+
+
 
 
 function insertfractalbox(num)
@@ -318,7 +338,7 @@ thefractal = fractals[3]
 
 --IN THIS ONE, NO THING FOR GROUND THING, LIKE, NO GROUND CAMERA ADJUST
 function throwinto()
-  themap = fractals[4]
+  themap = fractals[3]
   local map = themap
   --[[
   themap = fractals[math.random(1,3)]

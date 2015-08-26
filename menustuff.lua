@@ -10,44 +10,44 @@ maxmodenum = 2
 
 themaps = {}
 themaps[1]= {name = "street", 
-  plats = {}, walls = {},
-  floor = 1896,
-  lightx = 707+2.5,
-  lighty = 142+2.5,
-  lightcolor = {r = 40, g = 255, b = 0},
-  rightwall = 7000,
-  paralaxscale = 4/7,
-  paralaxscale2 = .4
+plats = {}, walls = {},
+floor = 1896,
+lightx = 707+2.5,
+lighty = 142+2.5,
+lightcolor = {r = 40, g = 255, b = 0},
+rightwall = 7000,
+paralaxscale = 4/7,
+paralaxscale2 = .4
 }
 themaps[2]= {name = "library", 
-  plats = {}, walls = {}, boxes = {},
-  floor = 1027,
-  lightx = 293.5,
-  lighty = 229.5,
-  lightcolor = {r = 87, g = 0, b = 158},
-  rightwall = 3829,
-  paralaxscale = .65,
-  paralaxscale2 = .523
+plats = {}, walls = {}, boxes = {},
+floor = 1027,
+lightx = 293.5,
+lighty = 229.5,
+lightcolor = {r = 87, g = 0, b = 158},
+rightwall = 3829,
+paralaxscale = .65,
+paralaxscale2 = .523
 }
 --paralax has 500 vert and horizontal buffer
 themaps[3]= {name = "floors", 
-  plats = {}, walls = {}, boxes = {},
-  floor = 5898,
-  lightx = 442+2.5,
-  lighty = 311+2.5,
-  lightcolor = {r = 255, g = 99, b = 0},
-  rightwall = 5000,
-  paralaxscale = .5,
-  paralaxscale2 = .25
+plats = {}, walls = {}, boxes = {},
+floor = 5898,
+lightx = 442+2.5,
+lighty = 311+2.5,
+lightcolor = {r = 255, g = 99, b = 0},
+rightwall = 5000,
+paralaxscale = .5,
+paralaxscale2 = .25
 }
 
 
 
 themaps[100]= {name = "fightclub", 
-  plats = {}, walls = {},
-  floor = 896,
-  paralaxscale = 1,
-  rightwall = 2000
+plats = {}, walls = {},
+floor = 896,
+paralaxscale = 1,
+rightwall = 2000
 }
 
 
@@ -204,8 +204,8 @@ function initmenu()
     streetfadehold = 1
     streetfadestart = false
 
-elseif menu == "retry" and oldmenu ~= "retry" then
-  
+  elseif menu == "retry" and oldmenu ~= "retry" then
+
     me.readytoplay = false
     you.readytoplay = false
     fadein = 0
@@ -219,17 +219,13 @@ elseif menu == "retry" and oldmenu ~= "retry" then
     streetfadehold = 1
     streetfadestart = false
 
-elseif menu == "story" and oldmenu ~= "story" then
+  elseif menu == "story" and oldmenu ~= "story" then
 
-  if chapter == 1 and oldchapter ~= 1 then
-    ch1init()
-  end
-  
+    chapterinit()
+
 
 
   end
-  oldmenu = menu
-  oldchapter = chapter
 end
 
 wobx = 0
@@ -242,12 +238,12 @@ function updatechapters()
   if chapter == 1 then
     chap1update(chaptime)
   end
-  
-  
+
+
 end
 
 function drawmenus()
-  
+
 
   if wobx- wobv > maxwob then wobv = wobv + math.random()/3
   elseif wobx- wobv < -maxwob then wobv = wobv - math.random()/3
@@ -320,16 +316,16 @@ function drawmenus()
     lg.draw(facade, 0, 0-stagey*(screenheight/350), 0, screenwidth/1440, screenheight/900)
 
     drawwaves()
-     for i = 0, #thecolors-1 do 
+    for i = 0, #thecolors-1 do 
       local color = thecolors[i]
       if color.s~=nil then
-      lg.setColor(color.c.r,color.c.g,color.c.b, allfade)
-    lg.sdraw(enviro.ada, 0, i*90, 0, .5, .5)
+        lg.setColor(color.c.r,color.c.g,color.c.b, allfade)
+        lg.sdraw(enviro.ada, 0, i*90, 0, .5, .5)
+      end
     end
-  end
-  
+    
     lg.setColor(255,255,255,allfade)
-        lg.draw(pressanybutton, screenwidth/2, screenheight/2, 0, screenwidth/1440,screenheight/900, 48, 18)
+    lg.draw(pressanybutton, screenwidth/2, screenheight/2, 0, screenwidth/1440,screenheight/900, 48, 18)
     lg.setColor(0,0,0)
     lg.srectangle("fill", 0, 900-stagey*4, 1440, 900)
 
@@ -338,7 +334,7 @@ function drawmenus()
 
     if cancels() then menu = "title" end
 
-   
+
 
 
     if menu == "premap" then
@@ -480,34 +476,34 @@ function drawmenus()
 
     if tileset then 
       lg.setShader(cshader)
-  cshader:send( "palette", 
-    {me.shade.r, me.shade.g, me.shade.b, 1}, 
-    vct(thecolors[me.selectedcolor+1].c),
-    vct(thecolors[me.selectedcolor+1].c), 
-    vct(me.outline)
+      cshader:send( "palette", 
+        {me.shade.r, me.shade.g, me.shade.b, 1}, 
+        vct(thecolors[me.selectedcolor+1].c),
+        vct(thecolors[me.selectedcolor+1].c), 
+        vct(me.outline)
 
-) 
-if me.selectedcolor+1>numofcolors then
+        ) 
+      if me.selectedcolor+1>numofcolors then
         lg.sdraw(thecolors[me.selectedcolor+1].logo.im,360+tilesep,-tilesep,0,7,7) 
       else
-      lg.sdraw(thecolors[me.selectedcolor+1].logo.im,520+tilesep,-tilesep, math.rad(15), 5,5) 
+        lg.sdraw(thecolors[me.selectedcolor+1].logo.im,520+tilesep,-tilesep, math.rad(15), 5,5) 
       end
       lg.setShader()
     end
     if tileset then 
       lg.setShader(cshader)
-  cshader:send( "palette", 
-    {you.shade.r, you.shade.g, you.shade.b, 1}, 
-    vct(thecolors[you.selectedcolor+1].c),
-    vct(thecolors[you.selectedcolor+1].c), 
-    vct(you.outline)
+      cshader:send( "palette", 
+        {you.shade.r, you.shade.g, you.shade.b, 1}, 
+        vct(thecolors[you.selectedcolor+1].c),
+        vct(thecolors[you.selectedcolor+1].c), 
+        vct(you.outline)
 
-  ) 
+        ) 
       if you.selectedcolor+1>numofcolors then
         lg.sdraw(thecolors[you.selectedcolor+1].logo.im,1440-520-220-tilesep,-tilesep,0,7,7) 
       else
         lg.sdraw(thecolors[you.selectedcolor+1].logo.im,1440-520-tilesep,-tilesep,-math.rad(15),-5,5) 
-        
+
       end
       lg.setShader()
     end
@@ -520,117 +516,117 @@ if me.selectedcolor+1>numofcolors then
         if v.y - v.j > 25 then 
           if v.j < -10 and not notilebouncing then
             v.j = -v.j/3
-          else v.y = 25 v.j = 0
+            else v.y = 25 v.j = 0
+            end
           end
-        end
 
-        if v.y ~= 25 then v.j = v.j - .4 end
+          if v.y ~= 25 then v.j = v.j - .4 end
 
-
-      else
-        if v.y - v.j <450-25 then 
-          if v.j > 10 and not notilebouncing then
-            v.j = -v.j/3
-
-          else v.y = 450-25 v.j = 0
-          end
-        end
-
-        if v.y ~= 450-25 then v.j = v.j + .4 end
-
-
-
-      end
-      v.y = v.y - v.j
-
-
-
-      if i == me.selectedcolor+1 and tileset then
-
-
-        if not me.readytoplay then
-
-          function me.drawontop() lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b) 
-            lg.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-450*(tilezoom), 0, v.lr*(1+tilezoom), (1+tilezoom))
-          end
 
         else
-          function me.drawontop() 
+          if v.y - v.j <450-25 then 
+            if v.j > 10 and not notilebouncing then
+              v.j = -v.j/3
+
+              else v.y = 450-25 v.j = 0
+              end
+            end
+
+            if v.y ~= 450-25 then v.j = v.j + .4 end
+
+
+
+          end
+          v.y = v.y - v.j
+
+
+
+          if i == me.selectedcolor+1 and tileset then
+
+
+            if not me.readytoplay then
+
+              function me.drawontop() lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b) 
+                lg.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-450*(tilezoom), 0, v.lr*(1+tilezoom), (1+tilezoom))
+              end
+
+            else
+              function me.drawontop() 
+                lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
+                lg.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))-tilesep/i, v.y, 0, v.lr, 1)
+              end
+            end
+
+          else
             lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
             lg.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))-tilesep/i, v.y, 0, v.lr, 1)
           end
+
         end
-
-      else
-        lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-        lg.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))-tilesep/i, v.y, 0, v.lr, 1)
-      end
-
-    end
-    me.drawontop()
+        me.drawontop()
 
 
-    for i,v in ipairs(tiles2) do
-      if v.ud == "top" then
-        if v.y - v.j > 25 then 
-          if v.j < -10 and not notilebouncing then
-            v.j = -v.j/3
+        for i,v in ipairs(tiles2) do
+          if v.ud == "top" then
+            if v.y - v.j > 25 then 
+              if v.j < -10 and not notilebouncing then
+                v.j = -v.j/3
 
-          else v.y = 25 v.j = 0
-          end
-        end
+                else v.y = 25 v.j = 0
+                end
+              end
 
-        if v.y ~= 25 then v.j = v.j - .4 end
+              if v.y ~= 25 then v.j = v.j - .4 end
 
 
-      else
-        if v.y - v.j <450-25 then 
+            else
+              if v.y - v.j <450-25 then 
 
-          collidesar[i]:setVolume(SFXV - .82-(.1/(math.abs(v.j))))
-          repplay(collidesar[i])
-          if v.j > 10 and not notilebouncing then
-            v.j = -v.j/3
+                collidesar[i]:setVolume(SFXV - .82-(.1/(math.abs(v.j))))
+                repplay(collidesar[i])
+                if v.j > 10 and not notilebouncing then
+                  v.j = -v.j/3
 
-          else v.y = 450-25 v.j = 0
-          end
-        end
+                  else v.y = 450-25 v.j = 0
+                  end
+                end
 
-        if v.y ~= 450-25 then v.j = v.j + .4 end
+                if v.y ~= 450-25 then v.j = v.j + .4 end
 
 
 
-      end
-      v.y = v.y - v.j
+              end
+              v.y = v.y - v.j
 
-      if i == you.selectedcolor+1 and tileset  then
-
-
-
-        if not you.readytoplay then
-          function you.drawontop() 
-            lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-            lg.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-(450*(tilezoom)), 0, -v.lr*(1+tilezoom), (1+tilezoom))
-          end
-        else
-          function you.drawontop() 
-            lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-            lg.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))+tilesep/i, v.y, 0, -v.lr, 1)
-          end
-        end
-      else
-        lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-        lg.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))+tilesep/i, v.y, 0, -v.lr, 1)
-      end
+              if i == you.selectedcolor+1 and tileset  then
 
 
 
-    end
-    you.drawontop()
+                if not you.readytoplay then
+                  function you.drawontop() 
+                    lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
+                    lg.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-(450*(tilezoom)), 0, -v.lr*(1+tilezoom), (1+tilezoom))
+                  end
+                else
+                  function you.drawontop() 
+                    lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
+                    lg.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))+tilesep/i, v.y, 0, -v.lr, 1)
+                  end
+                end
+              else
+                lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
+                lg.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))+tilesep/i, v.y, 0, -v.lr, 1)
+              end
 
-    if not me.readytoplay then
-    if me.rightbump and not me.holda then 
-      me.rightc = thecolors[me.selectedcolor+1]
-      repplay(me.selected)
+
+
+            end
+            you.drawontop()
+
+            if not me.readytoplay then
+              if me.rightbump and not me.holda then 
+                me.rightc = thecolors[me.selectedcolor+1]
+                repplay(me.selected)
       --repplay(thecolors[me.selectedcolor+1].sound)
     elseif me.leftbump and not me.holda then 
       me.leftc = thecolors[me.selectedcolor+1]
@@ -638,7 +634,7 @@ if me.selectedcolor+1>numofcolors then
       --repplay(thecolors[me.selectedcolor+1].sound)
     end
   end
-if not you.readytoplay then
+  if not you.readytoplay then
     if you.rightbump and not you.holda then 
       you.rightc = thecolors[you.selectedcolor+1]
       repplay(you.selected)
@@ -648,184 +644,183 @@ if not you.readytoplay then
       repplay(you.selected)
       --repplay(thecolors[you.selectedcolor+1].sound)
     end
+  end
+
+  if me.block and not me.holda and not me.readytoplay then 
+    menu = "map"
+    tileset = false
+  end
+  if you.block and not you.holda and not you.readytoplay then 
+    menu = "map" 
+    tileset = false
+  end
+
+  if me.start and not me.readytoplay then me.readytoplay = true repplay(me.selected) end
+  if me.block and not you.readytoplay then me.readytoplay = false end
+  if you.start and not you.readytoplay then you.readytoplay = true repplay(you.selected)  end
+  if you.block and not me.readytoplay then you.readytoplay = false end
+
+
+
+  lg.setColor(255, 255, 255)
+  if me.readytoplay then
+    lg.sdraw(ready, 100, 70+tilesep,0,5,5)
+  else
+    if me.right and not me.dirholda then me.selectedcolor = (me.selectedcolor + 1)%(#tiles)
+      repplay(me.mov)
+    elseif me.left and not me.dirholda then me.selectedcolor = (me.selectedcolor - 1)%(#tiles)
+      repplay(me.mov)
+    elseif me.down and not me.dirholda then me.selectedcolor = (me.selectedcolor + #tiles/2)%(#tiles)
+      repplay(me.mov)
+    elseif me.up and not me.dirholda then me.selectedcolor = (me.selectedcolor - #tiles/2)%(#tiles)
+      repplay(me.mov)
     end
 
-    if me.block and not me.holda and not me.readytoplay then 
-      menu = "map"
-      tileset = false
-    end
-    if you.block and not you.holda and not you.readytoplay then 
-      menu = "map" 
-      tileset = false
-    end
 
-    if me.start and not me.readytoplay then me.readytoplay = true repplay(me.selected) end
-    if me.block and not you.readytoplay then me.readytoplay = false end
-    if you.start and not you.readytoplay then you.readytoplay = true repplay(you.selected)  end
-    if you.block and not me.readytoplay then you.readytoplay = false end
+  end
 
+  if you.readytoplay then
+    lg.sdraw(ready, 1440-100-(64*5), 70+tilesep,0,5,5)
 
-
-    lg.setColor(255, 255, 255)
-    if me.readytoplay then
-      lg.sdraw(ready, 100, 70+tilesep,0,5,5)
-    else
-      if me.right and not me.dirholda then me.selectedcolor = (me.selectedcolor + 1)%(#tiles)
-        repplay(me.mov)
-      elseif me.left and not me.dirholda then me.selectedcolor = (me.selectedcolor - 1)%(#tiles)
-        repplay(me.mov)
-      elseif me.down and not me.dirholda then me.selectedcolor = (me.selectedcolor + #tiles/2)%(#tiles)
-        repplay(me.mov)
-      elseif me.up and not me.dirholda then me.selectedcolor = (me.selectedcolor - #tiles/2)%(#tiles)
-        repplay(me.mov)
-      end
-
-
+  else
+    if you.right and not you.dirholda then you.selectedcolor = (you.selectedcolor - 1)%(#tiles2)
+      repplay(you.mov)
+    elseif you.left and not you.dirholda then you.selectedcolor = (you.selectedcolor + 1)%(#tiles2)
+      repplay(you.mov)
+    elseif you.down and not you.dirholda then you.selectedcolor = (you.selectedcolor + #tiles2/2)%(#tiles2)
+      repplay(you.mov)
+    elseif you.up and not you.dirholda then you.selectedcolor = (you.selectedcolor - #tiles2/2)%(#tiles2)
+      repplay(you.mov)
     end
 
-    if you.readytoplay then
-      lg.sdraw(ready, 1440-100-(64*5), 70+tilesep,0,5,5)
+  end
 
-    else
-      if you.right and not you.dirholda then you.selectedcolor = (you.selectedcolor - 1)%(#tiles2)
-        repplay(you.mov)
-      elseif you.left and not you.dirholda then you.selectedcolor = (you.selectedcolor + 1)%(#tiles2)
-        repplay(you.mov)
-      elseif you.down and not you.dirholda then you.selectedcolor = (you.selectedcolor + #tiles2/2)%(#tiles2)
-        repplay(you.mov)
-      elseif you.up and not you.dirholda then you.selectedcolor = (you.selectedcolor - #tiles2/2)%(#tiles2)
-        repplay(you.mov)
-      end
-
+  if you.readytoplay and me.readytoplay then
+    if tilesep == 0 then
+      tilesep = 1
+      placespeople = true
+      thesong:stop()
+      repplay(readysound)
+      musfade = 0
+      musfadein = 0
+    elseif tilesep < 4000 then
+      tilesep = tilesep +  tilesep*.09
     end
-
-    if you.readytoplay and me.readytoplay then
-      if tilesep == 0 then
-        tilesep = 1
-        placespeople = true
-        thesong:stop()
-        repplay(readysound)
-        musfade = 0
-        musfadein = 0
-      elseif tilesep < 4000 then
-        tilesep = tilesep +  tilesep*.09
-      end
-      if finishedloading then
-        separatespines = true
-      end
+    if finishedloading then
+      separatespines = true
     end
-    if 
+  end
+  if 
     math.abs(soscillator)>400 then 
-      menu = "pan"
+    menu = "pan"
+  end
+
+
+
+elseif menu == "pan" then
+
+
+  if dollyx == 0 then
+    if not mute then
+      thesong:rewind()
+      repplay(thesong)
     end
-
-
-
-  elseif menu == "pan" then
-
-    if dollyx == 0 then
-      if not mute then
-        thesong:rewind()
-        repplay(thesong)
-      end
-    elseif streetfadehold <= 0 then 
-      menu = "play"
-      gotimer = 0
-    elseif streetfadestart then streetfadehold = streetfadehold - 1
-    elseif dollyx + screenwidth > themap.rightwall-1440*1.5
+  elseif streetfadehold <= 0 then 
+    menu = "play"
+    gotimer = 0
+  elseif streetfadestart then streetfadehold = streetfadehold - 1
+  elseif dollyx + screenwidth > themap.rightwall-1440*1.5
     or c1accept() or c2accept()
     then 
-      fadein = -5
+    fadein = -5
+  end
+
+  if allfade == 0 and not streetfadestart then
+    streetfadestart = true
+    streetfadehold = math.random(50,100)
+    dollyx = 0
+
+  end
+
+  lg.setColor(allfade,allfade,allfade)
+  lg.sdraw(enviro.sky, 0, 0, 0, 150, 1)
+  lg.sdraw(enviro.paralax, -dollyx/2,  -enviro.paralax:getHeight()+900-letterboxheight-30)
+  lg.sdraw(enviro.stage, -dollyx, -themap.floor+900 -letterboxheight-30)
+  lg.setColor(0,0,0)
+  lg.srectangle("fill", 0, 0, 1440, hof(letterboxheight, 450-3^(dollyx/50)))
+
+  lg.srectangle("fill", 0, 900, 1440, -hof(letterboxheight, 450-3^(dollyx/50)))
+  dollyx = dollyx + dollyv
+
+
+elseif menu == "retry" then
+
+  if allfade +fadein*2<= 0 and nextstop ~= "?" then
+    allfade = 0
+    menu = nextstop
+    if menu == "pan" then
+      placespeople = true
     end
+  end
 
-    if allfade == 0 and not streetfadestart then
-      streetfadestart = true
-      streetfadehold = math.random(50,100)
-      dollyx = 0
+  lg.setColor(225,225,225)
 
-    end
-
+  if fadein < 0 then
     lg.setColor(allfade,allfade,allfade)
-    lg.sdraw(enviro.sky, 0, 0, 0, 150, 1)
-    lg.sdraw(enviro.paralax, -dollyx/2,  -enviro.paralax:getHeight()+900-letterboxheight-30)
-    lg.sdraw(enviro.stage, -dollyx, -themap.floor+900 -letterboxheight-30)
-    lg.setColor(0,0,0)
-    lg.srectangle("fill", 0, 0, 1440, hof(letterboxheight, 450-3^(dollyx/50)))
-
-    lg.srectangle("fill", 0, 900, 1440, -hof(letterboxheight, 450-3^(dollyx/50)))
-    dollyx = dollyx + dollyv
+  else
+    lg.setColor(255,255,255)
+  end
+  lg.srectangle("fill", 0, 0, 1440, 900)
 
 
-  elseif menu == "retry" then
-
-    if allfade +fadein*2<= 0 and nextstop ~= "?" then
-      allfade = 0
-      menu = nextstop
-      if menu == "pan" then
-        placespeople = true
-      end
-    end
-
-    lg.setColor(225,225,225)
-
-    if fadein < 0 then
-      lg.setColor(allfade,allfade,allfade)
-    else
-      lg.setColor(255,255,255)
-    end
-    lg.srectangle("fill", 0, 0, 1440, 900)
+  lg.setScissor(0, 0, screenwidth/2, winheight)
+  camera:set()
+  drawx(camera)
+  camera:unset()
+  lg.setScissor()
 
 
-lg.setScissor(0, 0, screenwidth/2, winheight)
+
+  lg.setScissor(screenwidth/2, 0, screenwidth/2, winheight)
+  camera2:set()
+
+  drawx(camera2)
+
+  camera2:unset()
+  lg.setScissor()
+
+  if onescreen and not vertone then
+    if me.x < you.x then 
+
+      lg.setScissor(screenwidth/2, topy,screenwidth, winheight/2+1)
       camera:set()
       drawx(camera)
       camera:unset()
       lg.setScissor()
 
-
-
-      lg.setScissor(screenwidth/2, 0, screenwidth/2, winheight)
+      lg.setScissor(screenwidth/2-twidth, bottomy,screenwidth, winheight/2+1)
       camera2:set()
-
       drawx(camera2)
+      camera2:unset()
+      lg.setScissor()
+    elseif me.x >= you.x then
 
+      lg.setScissor(screenwidth/2-twidth, topy,screenwidth, enviro.screenheight/2+1)
+      camera2:set()
+      drawx(camera2)
       camera2:unset()
       lg.setScissor()
 
-      if onescreen and not vertone then
-        if me.x < you.x then 
-
-          lg.setScissor(screenwidth/2, topy,screenwidth, winheight/2+1)
-          camera:set()
-          drawx(camera)
-          camera:unset()
-          lg.setScissor()
-
-          lg.setScissor(screenwidth/2-twidth, bottomy,screenwidth, winheight/2+1)
-          camera2:set()
-          drawx(camera2)
-          camera2:unset()
-          lg.setScissor()
-        elseif me.x >= you.x then
-
-          lg.setScissor(screenwidth/2-twidth, topy,screenwidth, enviro.screenheight/2+1)
-          camera2:set()
-          drawx(camera2)
-          camera2:unset()
-          lg.setScissor()
-
-          lg.setScissor(screenwidth/2, bottomy,screenwidth, enviro.screenheight/2+1)
-          camera:set()
-          drawx(camera)
-          camera:unset()
-          lg.setScissor()
-        end
-      end
+      lg.setScissor(screenwidth/2, bottomy,screenwidth, enviro.screenheight/2+1)
+      camera:set()
+      drawx(camera)
+      camera:unset()
+      lg.setScissor()
+    end
+  end
 
 
 
-    death(me, you)
-    death(you, me)
     --retry()
 
     lg.setColor(0,0,0,allfade)
@@ -918,47 +913,47 @@ function choosestuff()
   end
 
   if not lset and lcx  + screenwidth/30 < 0 then lcx = lcx + screenwidth/30
-  else lset = true
-    lcx = 0
-  end 
+    else lset = true
+      lcx = 0
+    end 
 
-  if not rset and rcx - screenwidth/30 > screenwidth/2 then rcx = rcx - screenwidth/30
-  else rset = true
-    rcx = screenwidth/2
-  end
+    if not rset and rcx - screenwidth/30 > screenwidth/2 then rcx = rcx - screenwidth/30
+      else rset = true
+        rcx = screenwidth/2
+      end
 
-  if rn > 1000020 and ln > 1000020 and math.abs(soscillator)>400 
-  then menu = "prepan"
-    yoffset = 0
-    finishedloading = false
-    separatespines = false
-  end
+      if rn > 1000020 and ln > 1000020 and math.abs(soscillator)>400 
+        then menu = "prepan"
+        yoffset = 0
+        finishedloading = false
+        separatespines = false
+      end
 
-end
-
-
-function panstuff()
-  menu = "pan"
-  rset = false
-  lset = false
-
-
-  if enviro.dolly == 0 then
-    if not mute then
-      thesong:rewind()
-      repplay(thesong)
     end
-  elseif streetfadehold <= 0 then menu = "preplay"
-  elseif streetfade <= 0 then streetfadehold = streetfadehold - 1
-  elseif streetfadestart then streetfade = streetfade - 5
-  elseif enviro.dolly + screenwidth > enviro.rightwall/2
-  or c1accept() or c2accept()
-  then 
-    streetfadestart = true	
-  end
 
-  enviro.dolly = enviro.dolly + enviro.ds
 
-end
+    function panstuff()
+      menu = "pan"
+      rset = false
+      lset = false
+
+
+      if enviro.dolly == 0 then
+        if not mute then
+          thesong:rewind()
+          repplay(thesong)
+        end
+      elseif streetfadehold <= 0 then menu = "preplay"
+      elseif streetfade <= 0 then streetfadehold = streetfadehold - 1
+      elseif streetfadestart then streetfade = streetfade - 5
+      elseif enviro.dolly + screenwidth > enviro.rightwall/2
+        or c1accept() or c2accept()
+        then 
+        streetfadestart = true	
+      end
+
+      enviro.dolly = enviro.dolly + enviro.ds
+
+    end
 
 

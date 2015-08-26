@@ -1,0 +1,642 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"h",
+				"h1	Tag"
+			],
+			[
+				"numb",
+				"numberOfLasers"
+			],
+			[
+				"t",
+				"t"
+			],
+			[
+				"a21",
+				"a21r"
+			],
+			[
+				"mes",
+				"mesywait"
+			],
+			[
+				"me",
+				"mesywait"
+			],
+			[
+				"contro",
+				"controller2"
+			],
+			[
+				"cont",
+				"controller1"
+			],
+			[
+				"y",
+				"ypshhold"
+			],
+			[
+				"con",
+				"controller1"
+			],
+			[
+				"jump",
+				"jumpd"
+			],
+			[
+				"m",
+				"m"
+			],
+			[
+				"right",
+				"rightwall"
+			],
+			[
+				"yyy",
+				"yyy"
+			],
+			[
+				"contr",
+				"controller2"
+			],
+			[
+				"set",
+				"setPitch"
+			],
+			[
+				"slide",
+				"slide2"
+			],
+			[
+				"wa",
+				"wa"
+			],
+			[
+				"youcam",
+				"youcamlwall"
+			],
+			[
+				"mecam",
+				"mecamlwall"
+			],
+			[
+				"if",
+				"if"
+			],
+			[
+				"mec",
+				"mecamlwall"
+			],
+			[
+				"sc",
+				"screenheight"
+			],
+			[
+				"screen",
+				"screenwidth"
+			],
+			[
+				"feet",
+				"feet2bottom"
+			],
+			[
+				"x",
+				"x"
+			],
+			[
+				"spik",
+				"spikes"
+			],
+			[
+				"bcs",
+				"bcs"
+			],
+			[
+				"left",
+				"leftx"
+			],
+			[
+				"a",
+				"a"
+			],
+			[
+				"gree",
+				"greenpurpthrow"
+			],
+			[
+				"pw",
+				"pw"
+			],
+			[
+				"charge",
+				"chargespikedur"
+			],
+			[
+				"bolt",
+				"boltrelease"
+			],
+			[
+				"you",
+				"youboltchargecounter"
+			],
+			[
+				"meblue",
+				"meblue1"
+			],
+			[
+				"bluefa",
+				"bluefallend"
+			],
+			[
+				"yo",
+				"youcamfloor"
+			],
+			[
+				"youca",
+				"youcamfloor"
+			],
+			[
+				"te",
+				"tempyfol"
+			],
+			[
+				"camera",
+				"camera2"
+			],
+			[
+				"action",
+				"actionshot"
+			],
+			[
+				"blue2",
+				"blue2end"
+			],
+			[
+				"combo",
+				"combocounterme"
+			],
+			[
+				"f",
+				"f"
+			],
+			[
+				"spike",
+				"spikechargetimer"
+			],
+			[
+				"mebolt",
+				"meboltchargecounter"
+			],
+			[
+				"ch",
+				"chargespike"
+			],
+			[
+				"dodge",
+				"dodgetype"
+			],
+			[
+				"del",
+				"delayycounter"
+			],
+			[
+				"delay",
+				"delaymecounter"
+			],
+			[
+				"airbolt",
+				"airbolt"
+			],
+			[
+				"attack",
+				"attacknumber"
+			],
+			[
+				"fist",
+				"fistcharged"
+			],
+			[
+				"attac",
+				"attacknumber"
+			],
+			[
+				"light",
+				"lights"
+			],
+			[
+				"walk",
+				"walktimery"
+			],
+			[
+				"wal",
+				"walktimery"
+			],
+			[
+				"v",
+				"v"
+			],
+			[
+				"g",
+				"g"
+			],
+			[
+				"n",
+				"n"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "main.lua",
+			"settings":
+			{
+				"buffer_size": 25940,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "ada.sublime-project",
+			"settings":
+			{
+				"buffer_size": 108,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/Lua Love/LuaLove.sublime-build",
+	"command_palette":
+	{
+		"height": 67.0,
+		"selected_items":
+		[
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"latex",
+				"LaTeXTools: Reconfigure and migrate settings"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 306.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/Hi/Desktop/Game/ADA/conf.lua",
+		"/Users/Hi/Desktop/Game/ADA/blur.lua",
+		"/Users/Hi/Desktop/Game/misc/Testing Range/TRMusic.lua",
+		"/Users/Hi/Downloads/1500_archers_on_a_288_network_.php",
+		"/Users/Hi/Desktop/Game/ADA/main.lua",
+		"/Users/Hi/Desktop/Assign9/assignment-9.tex",
+		"/Users/Hi/Desktop/Game/ADA/colorbox.lua",
+		"/Users/Hi/Downloads/assignment-10.tex",
+		"/Users/Hi/vcplusplus.github.io/css/vcplusplus.css",
+		"/Users/Hi/vcplusplus.github.io/about.html",
+		"/Users/Hi/vcplusplus.github.io/hover.js",
+		"/Users/Hi/vcplusplus.github.io/js/bootstrap.js",
+		"/Users/Hi/Desktop/PythonGuide.rtf",
+		"/Users/Hi/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/Hi/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/Hi/Downloads/assign-7.tex",
+		"/Users/Hi/Desktop/Game/ADA/Animation.lua",
+		"/Users/Hi/Desktop/main.py",
+		"/Users/Hi/Desktop/untitled folder/assign5.tex",
+		"/Users/Hi/Desktop/untitled folder/Gaussian/main.lua",
+		"/Users/Hi/Desktop/Game/ADA/shine/gaussianblur.lua",
+		"/Users/Hi/Desktop/untitled folder/main.lua",
+		"/Users/Hi/Desktop/untitled folder 3/main.lua",
+		"/Users/Hi/Desktop/101/untitled.ss"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"file",
+			"yellow",
+			"cameramonitor",
+			"stock",
+			"absol",
+			"hovereff",
+			"grace",
+			"label",
+			"css",
+			"script",
+			"<script",
+			"document",
+			".jpg",
+			"stock.j",
+			"rodib",
+			"start",
+			"hi",
+			"pagebre",
+			".print",
+			"flinch1",
+			"blend",
+			"setblend",
+			"blendmode",
+			"build",
+			"build\n\nbuild",
+			"build",
+			"extern",
+			"direction",
+			"download",
+			"false",
+			"imgur",
+			"fal",
+			"imgur",
+			"false",
+			"fal",
+			"imgur",
+			"0",
+			"following",
+			"build_shader",
+			"build_",
+			"build",
+			"send",
+			"direction",
+			"extern",
+			"extern\n",
+			"extern",
+			"radius",
+			"send",
+			"newshader",
+			"new shader",
+			"extern",
+			"radius",
+			"extern",
+			"send",
+			"radius",
+			"blur1",
+			"actionshot",
+			"direction",
+			"shine",
+			"shine[v]",
+			"shine[",
+			"effects",
+			"radius",
+			"draw",
+			"radius",
+			"...",
+			"draw",
+			"drawq",
+			"gv",
+			"meangle",
+			"joystick:",
+			"flip1",
+			"me.",
+			"me.push",
+			"speedlimit",
+			"getwidth",
+			"screenwidth",
+			"xx.g",
+			"me.g =",
+			"me.y =",
+			"groundspike",
+			"me.bp",
+			"me.purp",
+			"purp",
+			"setpich",
+			"pitch",
+			"purp2",
+			"bp1",
+			"bp2",
+			"ss ",
+			"have turn",
+			"println",
+			"youblu",
+			"youbp",
+			"younext",
+			"you.next",
+			"camshakeflinch",
+			"ft = ",
+			"me.ft",
+			"me.ft =",
+			"me.ft",
+			"testHasOdds",
+			"ranpathb",
+			"rbinvar",
+			"testRB",
+			"balance",
+			"testcountmethods",
+			"elementcount",
+			"key",
+			"eltCount",
+			"keyCount",
+			"key",
+			"elt",
+			"testiter",
+			"hasOdds",
+			"testhas",
+			"Leaf",
+			"Leaf{",
+			"Leaf(",
+			"iterator",
+			"ranpath",
+			"rbinvar",
+			"selfbala",
+			"rb",
+			"balance",
+			"redhu",
+			"testcount",
+			"testno"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"$ $",
+			"xx.angle",
+			"jj:",
+			"jj",
+			"xx.flip",
+			"xx.",
+			"elt",
+			"CDD",
+			"4405) and x < 4889",
+			"backgroundy",
+			"backgroundx",
+			"at",
+			"ball.x",
+			"ball.y"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": true,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "main.lua",
+					"settings":
+					{
+						"buffer_size": 25940,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								94,
+								94
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "ada.sublime-project",
+					"settings":
+					{
+						"buffer_size": 108,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								40,
+								40
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 150.0
+	},
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/Users/Hi/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings"
+			],
+			[
+				"ru",
+				"/Users/Hi/Desktop/Game/main.lua"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 151.0,
+	"status_bar_visible": true
+}
