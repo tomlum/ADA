@@ -97,12 +97,13 @@ function tang(ang,xx)
 end
 
 function gandg(xx)
-    xx.greenflickertimer = rollover(xx.greenflickertimer, xx.rampspeed, 16)
+  xx.greenflickertimer = rollover(xx.greenflickertimer, xx.rampspeed, 16)
+  xx.greenflicker = false
 
   if #joysticks>=xx.id then
     if math.sqrt(xx.jry^2+xx.jrx^2) > .1 then
-    xx.gangle = math.deg(math.atan(-xx.jry/math.abs(xx.jrx)))
-    
+      xx.gangle = math.deg(math.atan(-xx.jry/math.abs(xx.jrx)))
+
     end
     if xx.gangle > 75 then xx.gangle = 90 
     elseif xx.gangle < 15 and xx.gangle > -15 then
@@ -165,26 +166,24 @@ function gandg(xx)
         if math.random() > creaturerate then
           xx.creature = true
           
-            makensparks(xx.mid,xx.y+30,-xx.lr*10, xx.j-3, xx.color.c.r,xx.color.c.g,xx.color.c.b, 7)
+          makensparks(xx.mid,xx.y+30,-xx.lr*10, xx.j-3, xx.color.c.r,xx.color.c.g,xx.color.c.b, 7)
         else
           xx.creature = false
+        end
+
+
+
+
+      elseif xx.animcounter < 40 then
+        if xx.creature and math.abs(xx.v)>6 then 
+          xx.im = greencreature
+        else
+          xx.im = greena22
+
+          if xx.greenflickertimer < 8 and math.abs(xx.v) > 4 then
+            xx.greenflicker = true
           end
 
-
-
-
-  elseif xx.animcounter < 40 then
-      if xx.creature and math.abs(xx.v)>6 then 
-            xx.im = greencreature
-          else
-            xx.im = greena22
-           
-            if xx.greenflickertimer < 8 and math.abs(xx.v) > 4 then
-          xx.greenflicker = true
-        else
-          xx.greenflicker = false
-        end
-           
         end
         if xx.repcounter<=3 and xx.rampcanhit and xx.v~= 0 then
           table.insert(xx.trail, 
@@ -209,8 +208,8 @@ function gandg(xx)
           
           if xx.creature then 
             xx.im = greencreatures
-            else
-          xx.im = greena22s
+          else
+            xx.im = greena22s
           end
           repplay(xx.greens)
 
@@ -240,89 +239,91 @@ function gandg(xx)
                 z.ft = z.ft+at.g.p.ft
               end
               shakez(at.g.p.z)
-            end)
+              end)
         end
 
+        if xx.animcounter > 16 then
           xx.cmbo=true
+        end
           --combo(xx)
 
-      elseif xx.animcounter >= 40 then
-        xx.animcounter = 0
-        xx.repcounter = 0
-      end
+        elseif xx.animcounter >= 40 then
+          xx.animcounter = 0
+          xx.repcounter = 0
+        end
 
 
 
 
-    elseif xx.type == 2 then
+      elseif xx.type == 2 then
 
-      if xx.animcounter < 4 then
-        xx.im = greenk03
-      elseif xx.animcounter < 7 then
-        xx.im = greenk01
-      elseif xx.animcounter < 12 then
-        xx.im = greenk02
+        if xx.animcounter < 4 then
+          xx.im = greenk03
+        elseif xx.animcounter < 7 then
+          xx.im = greenk01
+        elseif xx.animcounter < 12 then
+          xx.im = greenk02
 
-      elseif xx.animcounter < 14 then
-        xx.stop = false
-        xx.greenkcondition = true
-        if xx.joystick~= nil then
-          if xx.joystick:getGamepadAxis("rightx") > 0 then
-            xx.lr = 1
+        elseif xx.animcounter < 14 then
+          xx.stop = false
+          xx.greenkcondition = true
+          if xx.joystick~= nil then
+            if xx.joystick:getGamepadAxis("rightx") > 0 then
+              xx.lr = 1
+            else
+              xx.lr = -1
+            end
+          end
+          if xx.g then
+            xx.im = greenk1
           else
-            xx.lr = -1
+            xx.im = agk1
           end
-        end
-        if xx.g then
-          xx.im = greenk1
-        else
-          xx.im = agk1
-        end
-        xx.animcounter = 12
-        if not xx.holda then
-          if (xx.a1b or xx.a2b or xx.a3b or xx.a4b)and #joysticks>=xx.id then
-            at.g.k.angle = xx.gangle
-            xx.animcounter = 14
+          xx.animcounter = 12
+          if not xx.holda then
+            if (xx.a1b or xx.a2b or xx.a3b or xx.a4b)and #joysticks>=xx.id then
+              at.g.k.angle = xx.gangle
+              xx.animcounter = 14
 
-          elseif xx.a1b then
-            at.g.k.angle = 90
-            xx.animcounter = 14
-          elseif xx.a2b or xx.a3b then
-            at.g.k.angle = 0
-            xx.animcounter = 14
-          elseif xx.a4b then
-            at.g.k.angle = -90
-            xx.animcounter = 14
-          elseif xx.color.n ~= 2 then
-            xx.animcounter = 0
+            elseif xx.a1b then
+              at.g.k.angle = 90
+              xx.animcounter = 14
+            elseif xx.a2b or xx.a3b then
+              at.g.k.angle = 0
+              xx.animcounter = 14
+            elseif xx.a4b then
+              at.g.k.angle = -90
+              xx.animcounter = 14
+            elseif xx.color.n ~= 2 then
+              xx.animcounter = 0
+            end
           end
-        end
-      elseif xx.animcounter < 50 then
+        elseif xx.animcounter < 50 then
           if xx.v ~= 0 or xx.animcounter <25 then
             xx.im = greenk2
           end
 
-        if xx.animcounter <= 15 then
-          repplay(xx.greens)
-          if not xx.g then
-            xx.v = xx.v-(boltspeed/3 * math.cos(math.rad(at.g.k.angle)))*xx.lr
-            xx.j = xx.j-(boltspeed/2 * math.sin(math.rad(at.g.k.angle)))
+          if xx.animcounter <= 15 then
+            repplay(xx.greens)
+            if not xx.g then
+              xx.v = xx.v-(boltspeed/3 * math.cos(math.rad(at.g.k.angle)))*xx.lr
+              xx.j = xx.j-(boltspeed/2 * math.sin(math.rad(at.g.k.angle)))
 
-          else
-            xx.v = xx.v-(boltspeed/3 * math.cos(math.rad(at.g.k.angle)))*xx.lr
+            else
+              xx.v = xx.v-(boltspeed/3 * math.cos(math.rad(at.g.k.angle)))*xx.lr
 
-          end
-          if xx.rampcanhit then
+            end
+            if xx.rampcanhit then
 
-            rumbleme(xx, .7)
+              rumbleme(xx, .7)
 
-            table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx), speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
-            table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)+2.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
-            table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)-2.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
-            xx.greenhit = false
-          end
-        elseif xx.animcounter >= 15 and xx.greenhit then 
-          xx.cancombo = true
+              table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx), speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
+              table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)+2.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
+              table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)-2.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
+              xx.greenhit = false
+            end
+          elseif xx.animcounter >= 15 and xx.greenhit then 
+            xx.cancombo = true
           xx.cmbo=true--combo(xx)
         end
       else
@@ -337,7 +338,7 @@ function gandg(xx)
       elseif xx.animcounter < 20+greena1adj then
         if xx.animcounter < 8+greena1adj then
           xx.v = xx.v + (xx.lr*5)
-          end
+        end
         
         hboxcs(xx, xx.id, 
           {x=xx.mid+(xx.lr*18), y = xx.y+16},
@@ -354,131 +355,133 @@ function gandg(xx)
             z.flinch = true
             z.ft = z.ft+at.g.u.ft
             makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
-          end)
+            end)
         
         if xx.animcounter < 7-2+greena1adj then
-        xx.im = greena21
-        repplay(xx.greens)
+          xx.im = greena21
+          repplay(xx.greens)
         elseif xx.animcounter < 7+greena1adj then
           xx.im = greena12
         elseif xx.animcounter < 11-2+greena1adj then
-        xx.im = greena21
-        repplay(xx.greens)
+          xx.im = greena21
+          repplay(xx.greens)
         elseif xx.animcounter < 11+greena1adj then
           xx.im = greena13
         elseif xx.animcounter < 15-2+greena1adj then
-        xx.im = greena21
-        repplay(xx.greens)
+          xx.im = greena21
+          repplay(xx.greens)
         elseif xx.animcounter < 15+greena1adj then
           xx.im = greena14
         elseif xx.animcounter < 20-2+greena1adj then
-        xx.im = greena21
-        repplay(xx.greens)
+          xx.im = greena21
+          repplay(xx.greens)
         elseif xx.animcounter < 20+greena1adj then
           xx.im = greena15
         end
-          if xx.greenflickertimer < 8 and math.abs(xx.v) > 4 then
+        if xx.greenflickertimer < 8 and math.abs(xx.v) > 4 and xx.animcounter < 20+greena1adj then
           xx.greenflicker = true
-        else
-          xx.greenflicker = false
         end
         if xx.rampcanhit then
           table.insert(xx.trail, 
             {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t =2, colornum = 2})
         end
-      
-    elseif xx.animcounter >= 14+greena1adj then
-      xx.animcounter = 0
-      xx.repcounter = 0
-    end
 
-  elseif xx.type == 4 then
-    if xx.animcounter < 3 then
-      xx.im = agreena22
+      elseif xx.animcounter >= 14+greena1adj then
+        xx.animcounter = 0
+        xx.repcounter = 0
+      end
 
-    elseif xx.animcounter < 30 then
-      xx.im = agreena22
-        if xx.greenflickertimer < 8 and math.abs(xx.v) > 4 then
+    elseif xx.type == 4 then
+      if xx.animcounter < 3 then
+        xx.im = agreena22
+
+      elseif xx.animcounter < 30 then
+        xx.im = agreena22
+        if xx.greenflickertimer < 8 and math.abs(xx.v) > 4  then
           xx.greenflicker = true
-        else
-          xx.greenflicker = false
         end
-      if xx.rampcanhit then
-        table.insert(xx.trail, 
-          {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 2, colornum = 2})
+        if xx.rampcanhit then
+          table.insert(xx.trail, 
+            {color = xx.color, im = xx.im, lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = 2, colornum = 2})
+        end
+
+        if xx.animcounter <= 4 then
+          xx.v = xx.v+4*xx.lr*xx.rampspeed
+
+          xx.im = agreena22s
+          repplay(xx.greens)
+
+          hboxcs(xx, xx.id, 
+            {x=xx.mid, y = xx.y},
+            {x=xx.mid+xx.v+(xx.lr*88), y = xx.y-xx.j},
+            {x=xx.mid+xx.v+(xx.lr*88), y = xx.y+60-xx.j},
+            {x=xx.mid, y = me.y+60},
+            function(z)
+
+              makeslashsparks(xx.y+30,xx.v+xx.x+xx.lr*(15),-xx.lr*slashsparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
+
+              xx.cancombo = true
+              if xx.repcounter == at.g.p.max then
+                z.v = xx.lr*at.g.p.kb*3
+              else
+                z.v = xx.lr*at.g.p.kb
+              end
+
+              if not (z.block and z.lr == -xx.lr) then
+                z.health = z.health - at.g.p.dam
+
+                z.flinch = true
+                z.ft = z.ft+at.g.p.ft
+              end
+              end)
+        end
+
+      elseif xx.animcounter >= 40 then
+        xx.animcounter = 0
       end
 
-      if xx.animcounter <= 4 then
-        xx.v = xx.v+4*xx.lr*xx.rampspeed
+    elseif xx.type ==6 then
 
-        xx.im = agreena22s
-        repplay(xx.greens)
 
-        hboxcs(xx, xx.id, 
-          {x=xx.mid, y = xx.y},
-          {x=xx.mid+xx.v+(xx.lr*88), y = xx.y-xx.j},
-          {x=xx.mid+xx.v+(xx.lr*88), y = xx.y+60-xx.j},
-          {x=xx.mid, y = me.y+60},
-          function(z)
+        if xx.greenflickertimer < 8 and absv(xx.v, xx.j) > 3 and xx.animcounter < 20+greena1adj then
+          xx.greenflicker = true
+        end
 
-            makeslashsparks(xx.y+30,xx.v+xx.x+xx.lr*(15),-xx.lr*slashsparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
+      if xx.animcounter < 3 then
+      elseif xx.animcounter < 40 then
+        xx.im = agreena1
 
-            xx.cancombo = true
-            if xx.repcounter == at.g.p.max then
-              z.v = xx.lr*at.g.p.kb*3
-            else
-              z.v = xx.lr*at.g.p.kb
-            end
+        if xx.animcounter >=3 and xx.animcounter < 6 then 
+          xx.im = agreena1s
+        end
+        if isabout(xx.animcounter, 5) then
+          repplay(xx.greens)
+          xx.j = at.g.au.mj
+          hboxcs(xx, xx.id, 
+            {x=xx.mid-(xx.lr*-33), y = xx.y+8},
+            {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-40-xx.j},
+            {x=xx.mid+xx.v+(xx.lr*33), y = xx.y-40-xx.j},
+            {x=xx.mid, y = xx.y+30},
 
-            if not (z.block and z.lr == -xx.lr) then
-              z.health = z.health - at.g.p.dam
-
+            function(z)
+              xx.cancombo = true
+              z.health = z.health - at.g.u.dam
+              z.v = at.g.u.kb*xx.lr
+              z.j = at.g.u.j
               z.flinch = true
-              z.ft = z.ft+at.g.p.ft
-            end
-          end)
+              z.ft = z.ft+at.g.u.ft
+              makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
+              end)
+        end
+      elseif xx.animcounter >= 50 then
+        xx.animcounter = 0
+        xx.repcounter = 0
       end
 
-    elseif xx.animcounter >= 40 then
-      xx.animcounter = 0
+
+
     end
-
-  elseif xx.type ==6 then
-    if xx.animcounter < 3 then
-    elseif xx.animcounter < 40 then
-      xx.im = agreena1
-
-      if xx.animcounter >=3 and xx.animcounter < 6 then 
-        xx.im = agreena1s
-      end
-      if xx.animcounter == 5 then
-        repplay(xx.greens)
-        xx.j = at.g.au.mj
-        hboxcs(xx, xx.id, 
-          {x=xx.mid-(xx.lr*-33), y = xx.y+8},
-          {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-40-xx.j},
-          {x=xx.mid+xx.v+(xx.lr*33), y = xx.y-40-xx.j},
-          {x=xx.mid, y = xx.y+30},
-
-          function(z)
-            xx.cancombo = true
-            z.health = z.health - at.g.u.dam
-            z.v = at.g.u.kb*xx.lr
-            z.j = at.g.u.j
-            z.flinch = true
-            z.ft = z.ft+at.g.u.ft
-            makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
-          end)
-      end
-    elseif xx.animcounter >= 50 then
-      xx.animcounter = 0
-      xx.repcounter = 0
-    end
-
-
-
   end
-end
 
 end
 
@@ -549,7 +552,7 @@ function boltupdate(xx)
 
 
     if v.t >= greendissolvetime then
-      table.remove(xx.bolts, i)
+    table.remove(xx.bolts, i)
     end--[[
     local xnex =  v.x+(v.speed * math.cos(math.rad(v.angle)))*
     local ynex = v.y+(v.speed * math.sin(math.rad(v.angle)))*
@@ -574,49 +577,49 @@ function boltupdate(xx)
             (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) < k.x-amountstuckinwall and v.x < k.x)
 
             ) and v.y > k.y1 and (k.y2 == nil or v.y < k.y2) then
-            v.stuck = true
-          end
-        else
-          if (v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed > k.x+amountstuckinwall) 
+          v.stuck = true
+        end
+      else
+        if (v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed > k.x+amountstuckinwall) 
           or 
           (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed < k.x-amountstuckinwall) then
-            v.stuck = true
-          end
+          v.stuck = true
         end
       end
     end
+  end
 
 
 
-    if v.y <= themap.floor+amountstuckinfloor and not v.stuck then
-      table.insert(xx.bolttrail, {angle = v.angle, speed = v.speed, x = v.x, y = v.y, t = 0})
-      if boltsflyrelative then
-        v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx)
-        v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*ramp(xx)
+  if v.y <= themap.floor+amountstuckinfloor and not v.stuck then
+    table.insert(xx.bolttrail, {angle = v.angle, speed = v.speed, x = v.x, y = v.y, t = 0})
+    if boltsflyrelative then
+      v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx)
+      v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*ramp(xx)
 
-      else
-        v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed
-        v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*rampspeed
-      end
+    else
+      v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed
+      v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*rampspeed
+    end
     else v.stuck = true
     end
     if not v.stuck then 
-      
+
       hradial(xx.id, {x = v.x, y = v.y}, 200, function()
-          repplay(xx.whiff)
-          end
-        
-        
-        )
+        repplay(xx.whiff)
+      end
+
+
+      )
       
       hline(xx, xx.id, 
         {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y},
         function(p)
           if math.abs(p.v) < at.g.k.kb then
-          p.v = p.v + (v.speed/2 * math.cos(math.rad(v.angle)))
+            p.v = p.v + (v.speed/2 * math.cos(math.rad(v.angle)))
           end
           if math.abs(p.j) < at.g.k.kb then
-          p.j = p.j - (v.speed/2 * math.sin(math.rad(v.angle)))
+            p.j = p.j - (v.speed/2 * math.sin(math.rad(v.angle)))
           end
           p.flinch = true
           if (v.speed * math.cos(math.rad(v.angle))) > 0 then p.flinchway = -1 
@@ -628,7 +631,7 @@ function boltupdate(xx)
           makeslashsparks(v.y,v.x, (v.speed * math.cos(math.rad(v.angle)))/8,(v.speed * math.sin(math.rad(v.angle)))+5, xx.color.c.r,xx.color.c.g,xx.color.c.b)
           table.remove(xx.bolts, i)
           xx.greenhit = true
-        end)
+          end)
     end
   end
 end
@@ -640,30 +643,30 @@ function xpint(a,A,b,B)
 
   if A.x == a.x then
     if (b.x < a.x and B.x > a.x) or
-    (B.x < a.x and b.x > a.x) then return true
-    else return false 
-    end
-  elseif B.x == b.x then
-    if (a.x < b.x and A.x > b.x) or
-    (A.x < b.x and a.x > b.x) then return true
-    else return false 
-    end
-  end
+      (B.x < a.x and b.x > a.x) then return true
+      else return false 
+      end
+    elseif B.x == b.x then
+      if (a.x < b.x and A.x > b.x) or
+        (A.x < b.x and a.x > b.x) then return true
+        else return false 
+        end
+      end
 
-  if math.abs(s1 - s2) < .01 then return false
-  end
+      if math.abs(s1 - s2) < .01 then return false
+      end
 
-  thepy = ((-s1*s2*a.x)-(s1*s2*b.x)+(s1*b.y)-(s2*a.y))/(s1 - s2)
-  thepx = ((thepy-a.y)/s1) + a.x 
+      thepy = ((-s1*s2*a.x)-(s1*s2*b.x)+(s1*b.y)-(s2*a.y))/(s1 - s2)
+      thepx = ((thepy-a.y)/s1) + a.x 
 
-  if thepx < math.max(math.max(a.x, A.x), math.max(b.x, B.x))
-  and thepx > math.min(math.min(a.x, A.x), math.min(b.x, B.x))
-  and thepy < math.max(math.max(a.y, A.y), math.max(b.y, B.y))
-  and thepy > math.min(math.min(a.y, A.y), math.min(b.y, B.y))
-  then return true
-  else return false
-  end
-end
+      if thepx < math.max(math.max(a.x, A.x), math.max(b.x, B.x))
+        and thepx > math.min(math.min(a.x, A.x), math.min(b.x, B.x))
+        and thepy < math.max(math.max(a.y, A.y), math.max(b.y, B.y))
+        and thepy > math.min(math.min(a.y, A.y), math.min(b.y, B.y))
+        then return true
+        else return false
+        end
+      end
 
 
 

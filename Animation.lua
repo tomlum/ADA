@@ -2002,7 +2002,7 @@ end
         end
     vee = force*math.asin(math.rad(math.random(1,90)))*flip1
     jay = force*math.acos(math.rad(math.random(1,90)))*flip2
-      table.insert(sparks,{x = ex, y = why, v=vee, j = jay,r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360), shape = math.random(1,3)})
+    table.insert(sparks,{x = ex, y = why, v=vee, j = jay,r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360), shape = math.random(1,3)})
 
     end
 end

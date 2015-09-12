@@ -11,7 +11,11 @@ end
 function isabout(n, v)
   return math.abs(n-v) < .1 
     
-  end
+end
+
+function absv(v, y)
+  return math.sqrt((0-v)^2 + (0-y)^2)
+end
 
 function dis(p1, p2)
   return math.sqrt((p1.y-p2.y)^2 + (p1.x-p2.x)^2)

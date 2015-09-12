@@ -223,9 +223,9 @@ function initmenu()
 
     chapterinit()
 
-
-
   end
+  
+  oldmenu = menu
 end
 
 wobx = 0
@@ -236,7 +236,7 @@ wobv = 0
 function updatechapters()
   chaptime = chaptime + 1
   if chapter == 1 then
-    chap1update(chaptime)
+    ch1update(chaptime)
   end
 
 

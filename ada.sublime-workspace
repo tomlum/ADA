@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"func",
+				"function	function"
+			],
+			[
 				"h",
 				"h1	Tag"
 			],
@@ -252,38 +256,63 @@
 	"buffers":
 	[
 		{
-			"file": "main.lua",
+			"file": "colorcontrol.lua",
 			"settings":
 			{
-				"buffer_size": 25940,
+				"buffer_size": 5988,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "ada.sublime-project",
+			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 108,
+				"buffer_size": 26262,
 				"line_ending": "Unix"
 			}
 		}
 	],
 	"build_system": "Packages/Lua Love/LuaLove.sublime-build",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
 	"command_palette":
 	{
 		"height": 67.0,
+		"last_filter": "install",
 		"selected_items":
 		[
 			[
-				"insta",
+				"install",
 				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
 			],
 			[
 				"instal",
 				"Package Control: Install Package"
 			],
 			[
-				"install",
+				"rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"insta",
 				"Package Control: Install Package"
 			],
 			[
@@ -295,7 +324,11 @@
 	},
 	"console":
 	{
-		"height": 306.0
+		"height": 159.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
 	},
 	"distraction_free":
 	{
@@ -306,13 +339,44 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/Users/Hi/Desktop/Game/ADA",
+		"/Users/Hi/Desktop/Game/ADA/at",
+		"/Users/Hi/Desktop/Game/ADA/story",
+		"/Users/Hi/Desktop/Game/ADA/story/ch1"
+	],
 	"file_history":
 	[
+		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/test.sublime-build",
+		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/Love.sublime-build",
+		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/Hi/Desktop/main.lua",
+		"/Users/Hi/Desktop/Game/ADA/camera.lua",
+		"/Users/Hi/Desktop/Game/ADA/main.lua",
+		"/Users/Hi/Desktop/Game/ADA/Animation.lua",
+		"/Users/Hi/Desktop/Game/ADA/utilities.lua",
+		"/Users/Hi/Desktop/Game/ADA/Joysticks.lua",
+		"/Users/Hi/Desktop/Game/ADA/DamageTable.lua",
+		"/Users/Hi/Desktop/Game/ADA/ATTACK.lua",
+		"/Users/Hi/Desktop/Game/ADA/at/GG.lua",
+		"/Users/Hi/Desktop/Game/ADA/story/ch1/ch1.lua",
+		"/Users/Hi/Desktop/Game/ADA/chaptermanage.lua",
+		"/Users/Hi/Desktop/Game/ADA/menustuff.lua",
+		"/Users/Hi/Desktop/Game/ADA/Lasso.lua",
+		"/Users/Hi/Desktop/Game/ADA/death.lua",
+		"/Users/Hi/Desktop/Game/ADA/meandyou.lua",
+		"/Users/Hi/Desktop/Game/ADA/colorcontrol.lua",
+		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/Hi/Desktop/Game/ADA/chaptermanage",
+		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/Lua/Indent.tmPreferences",
+		"/Users/Hi/Desktop/Game/ADA/ada.sublime-project",
+		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/love.sublime-build",
+		"/Users/Hi/Desktop/Game/ADA/fractal.lua",
 		"/Users/Hi/Desktop/Game/ADA/conf.lua",
 		"/Users/Hi/Desktop/Game/ADA/blur.lua",
 		"/Users/Hi/Desktop/Game/misc/Testing Range/TRMusic.lua",
 		"/Users/Hi/Downloads/1500_archers_on_a_288_network_.php",
-		"/Users/Hi/Desktop/Game/ADA/main.lua",
 		"/Users/Hi/Desktop/Assign9/assignment-9.tex",
 		"/Users/Hi/Desktop/Game/ADA/colorbox.lua",
 		"/Users/Hi/Downloads/assignment-10.tex",
@@ -324,7 +388,6 @@
 		"/Users/Hi/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/Users/Hi/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
 		"/Users/Hi/Downloads/assign-7.tex",
-		"/Users/Hi/Desktop/Game/ADA/Animation.lua",
 		"/Users/Hi/Desktop/main.py",
 		"/Users/Hi/Desktop/untitled folder/assign5.tex",
 		"/Users/Hi/Desktop/untitled folder/Gaussian/main.lua",
@@ -339,7 +402,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 			""
@@ -350,6 +413,47 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"defrunpace",
+			"thecolors",
+			"end",
+			"rumblemodule",
+			"shake",
+			"vibrate",
+			"flinchingx",
+			"makensparks",
+			"cancombo",
+			"drawsparks",
+			"makensparks",
+			"drawsparks",
+			"makensparks",
+			"drawsparks",
+			"makensparks",
+			"drawsparks",
+			"makenspark",
+			"maken",
+			"makensparks",
+			"fullscre",
+			"drawpart",
+			"drawparticles",
+			"drawparticles()",
+			"drawparticles",
+			"drawsparks",
+			"sparks",
+			"fullscreen",
+			"fullsc",
+			".lives",
+			"ct",
+			"fightclub",
+			"drawch1",
+			"cinematic1draw",
+			"drawchapter1",
+			"chap1update",
+			"oldmenu = menu",
+			"oldmenu",
+			"story",
+			"chapterinit",
+			"chap",
+			"chapter",
 			"file",
 			"yellow",
 			"cameramonitor",
@@ -436,48 +540,7 @@
 			"purp",
 			"setpich",
 			"pitch",
-			"purp2",
-			"bp1",
-			"bp2",
-			"ss ",
-			"have turn",
-			"println",
-			"youblu",
-			"youbp",
-			"younext",
-			"you.next",
-			"camshakeflinch",
-			"ft = ",
-			"me.ft",
-			"me.ft =",
-			"me.ft",
-			"testHasOdds",
-			"ranpathb",
-			"rbinvar",
-			"testRB",
-			"balance",
-			"testcountmethods",
-			"elementcount",
-			"key",
-			"eltCount",
-			"keyCount",
-			"key",
-			"elt",
-			"testiter",
-			"hasOdds",
-			"testhas",
-			"Leaf",
-			"Leaf{",
-			"Leaf(",
-			"iterator",
-			"ranpath",
-			"rbinvar",
-			"selfbala",
-			"rb",
-			"balance",
-			"redhu",
-			"testcount",
-			"testno"
+			"purp2"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -485,6 +548,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"drawch1",
+			"ch1update",
 			"$ $",
 			"xx.angle",
 			"jj:",
@@ -503,7 +568,7 @@
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": true,
+		"whole_word": false,
 		"wrap": false
 	},
 	"groups":
@@ -514,18 +579,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "main.lua",
+					"file": "colorcontrol.lua",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 25940,
+						"buffer_size": 5988,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								94,
-								94
+								389,
+								389
 							]
 						],
 						"settings":
@@ -538,32 +604,38 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "ada.sublime-project",
+					"file": "main.lua",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 108,
+						"buffer_size": 26262,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								40,
-								40
+								92,
+								92
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -602,16 +674,23 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 150.0
+		"height": 245.0
 	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/User/test.sublime-build",
+	"project": "ada.sublime-project",
 	"replace":
 	{
-		"height": 64.0
+		"height": 42.0
 	},
 	"save_all_on_build": true,
 	"select_file":
 	{
 		"height": 0.0,
+		"last_filter": "",
 		"selected_items":
 		[
 			[
@@ -628,15 +707,36 @@
 	"select_project":
 	{
 		"height": 0.0,
+		"last_filter": "",
 		"selected_items":
 		[
 		],
 		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"ColorChange"
+			]
+		],
+		"width": 392.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
 	},
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
 	"side_bar_width": 151.0,
-	"status_bar_visible": true
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
 }

@@ -926,7 +926,7 @@ newforwarddodge = function(xx)
     if xx.health < xx.oldhealth then
       xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(ramp(xx))/xx.color.s.def
       local dif = xx.oldhealth - xx.health
-      makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,math.floor(dif/ramp(xx) * 2/3))
+      makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,math.floor(dif/ramp(xx) * 2/3)*15)
     end
     xx.oldhealth = xx.health
 

@@ -4,7 +4,7 @@ brotherstitle = lg.newImage("story/ch1/brothers.png")
 cinematicbusy = false
 
 function ch1init()
-  chaptime = 0
+  chaptime = 1600
   titlefade1 = 255
   titlefade2 = 255
   titlefade3 = 255
@@ -13,7 +13,7 @@ function ch1init()
   titleflicker = 200
 end
 
-function chap1update(ct)
+function ch1update(ct)
   local starttime = 100
   if ct < -starttime+300 then
   elseif ct < -starttime+300*2 then
@@ -26,18 +26,18 @@ function chap1update(ct)
     titlefade4 = hof(0, (titlefade4-6))
   elseif ct < -starttime+300*6 then
     titlefade5 = hof(0, (titlefade5-6))
-
   end
 end
 
-
-
-
-function cinematic1draw(ct)
+function act1draw(ct)
 
 end
 
-function drawchapter1()
+function act1update(ct)
+
+end
+
+function drawch1()
   titleflicker = hof(lof(titleflicker + math.random(-5,5), 255), 150)
   lg.setColor(titleflicker,titleflicker,titleflicker)
   lg.sdraw(brotherstitle,0, 0)

@@ -1,11 +1,16 @@
 require "utilities"
 require "lasso"
-lassoisathing = false
+
+--FIX VIBRATE
+--UP PURPLE VIBRATES
+
+--COUNTER SOUND EFFECT
 
 --RECONSOLIDATE DEATH FUNCTIONS
 --can climb if at corner
 
---the reason vein transparency works the way ti does is the trail!!!!
+--the reason vein transparency works the way it does is the trail!!!!
+--To do real transparency you have to blend it into the skin color not make it transparent
 --green creature emits more sparks, more damage?
 
 --rubble and glass making it mor esparse is based on modulo, but should be on modulo of first digit not the whole number
@@ -30,7 +35,7 @@ lassoisathing = false
 --chrome/metallic so as to suit monochromaticity
 --motion blur
 
-dangerCloseIsAThing = true
+fightclub = true
 --todo
 --if not in the air then some kind of unblocking animation
 --apple w is window close
@@ -38,22 +43,25 @@ dangerCloseIsAThing = true
 melcolor = 1
 mercolor = 2
 youlcolor = 3
-yourcolor = 1
+yourcolor = 4
 therampspeed = .2
 mapnum = 1
 rampspeed= therampspeed
 rampnormaldelta = .008
 drawboxes = false
 drawfeet = false
-fightclub = true
 volume=0
 fullscreen = false
 readout = false
 putmehere = 975
 putyouhere = 1025
-menu = "title"
+menu = "play"
 chapter = 1
 oldchapter = "bob"
+
+lassoisathing = false
+dangerCloseIsAThing = true
+
 cameramonitor = false
 if menu == "play" then
   noload = true
@@ -303,6 +311,7 @@ require "story/ch1/ch1"
 require "enviro/colorbox"
 require "fractal"
 require "death"
+require "chaptermanage"
 loader = require "love-loader"
 
 if noload then
@@ -510,33 +519,34 @@ function love.update()
           musfadein = 0
           musfade = 255
         end
-        elseif musfadein < 0 then
-          musfade = musfade + musfadein
-          if musfade +musfadein <= 0 then
-            musfadein = 0
-            musfade = 0
-          end
+      elseif musfadein < 0 then
+        musfade = musfade + musfadein
+        if musfade +musfadein <= 0 then
+          musfadein = 0
+          musfade = 0
+        end
+      end
+
+      if thesong~= nil then
+        if musfade == 0 then
+          thesong:pause()
+        else
+          thesong:play()
+          thesong:setPitch(musfade/255)
+        end
+      end
+
+      if slowt == SlowRate and not pause and not me.actionshot 
+        then
+
+        if me.dodge or me.block
+          then me.a1, me.a2, me.a3, me.a4, me.up = false,false,false,false,false
         end
 
-        if thesong~= nil then
-          if musfade == 0 then
-            thesong:pause()
-          else
-            thesong:play()
-            thesong:setPitch(musfade/255)
-          end
+        if you.dodge or you.block
+          then you.a1, you.a2, you.a3, you.a4, you.up = false,false,false,false,false
         end
 
-        if slowt == SlowRate and not pause and not me.actionshot 
-          then
-
-          if me.dodge or me.block
-            then me.a1, me.a2, me.a3, me.a4, me.up = false,false,false,false,false
-          end
-
-          if you.dodge or you.block
-            then you.a1, you.a2, you.a3, you.a4, you.up = false,false,false,false,false
-          end
 
 
 
@@ -547,9 +557,8 @@ function love.update()
 
 
 
-
-          movex(me,you)
-          movex(you,me)
+        movex(me,you)
+        movex(you,me)
         --used to be here platformcheckx()
 
 
@@ -647,17 +656,17 @@ function love.update()
         if math.abs(me.v) > math.abs(you.v) then
           bump(me)
           bump(you)
-          elseif math.abs(me.v) < math.abs(you.v) then
+        elseif math.abs(me.v) < math.abs(you.v) then
 
+          bump(you)
+          bump(me)
+        else
+          if math.random()>.5
+            then bump(me)
             bump(you)
-            bump(me)
-          else
-            if math.random()>.5
-              then bump(me)
-              bump(you)
-              else bump(you)
-                bump(me)
-              end
+            else bump(you)
+              bump(me)
+            end
 
           --SEARCH IS THIS NECESSARY?
           --[[
@@ -730,139 +739,139 @@ function love.update()
       drawmenus()
 
 
-      elseif menu == "play" 
+    elseif menu == "play" 
 
-        then
+      then
 
-        if themode == "koth" then
-          randomizeplat()
+      if themode == "koth" then
+        randomizeplat()
+      end
+
+
+      if DEATH
+        then 
+        menu = "retry"
+
+
+      else
+
+        cclear()
+        lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, screenwidth/1440,1)
+        lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, -screenwidth/1440, 1)
+
+      end
+      lg.setScissor(0, 0, screenwidth/2, winheight)
+      camera:set()
+      drawx(camera)
+      camera:unset()
+      lg.setScissor()
+
+
+
+      lg.setScissor(screenwidth/2, 0, screenwidth/2, winheight)
+      camera2:set()
+
+      drawx(camera2)
+
+      camera2:unset()
+      lg.setScissor()
+
+      if onescreen and not vertone then
+        if me.x < you.x then 
+
+          lg.setScissor(screenwidth/2, topy,twidth+1, winheight/2+1)
+          camera:set()
+          drawx(camera)
+          camera:unset()
+          lg.setScissor()
+
+          lg.setScissor(screenwidth/2-twidth, bottomy,twidth+1, winheight/2+1)
+          camera2:set()
+          drawx(camera2)
+          camera2:unset()
+          lg.setScissor()
+        elseif me.x >= you.x then
+
+          lg.setScissor(screenwidth/2-twidth, topy,twidth+1, enviro.screenheight/2+1)
+          camera2:set()
+          drawx(camera2)
+          camera2:unset()
+          lg.setScissor()
+
+          lg.setScissor(screenwidth/2, bottomy,twidth+1, enviro.screenheight/2+1)
+          camera:set()
+          drawx(camera)
+          camera:unset()
+          lg.setScissor()
         end
+      end
 
+      cclear()
 
-        if DEATH
-          then 
-          menu = "retry"
-
-
-        else
-
-          cclear()
-          lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, screenwidth/1440,1)
-          lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, -screenwidth/1440, 1)
-
-        end
-        lg.setScissor(0, 0, screenwidth/2, winheight)
-        camera:set()
-        drawx(camera)
-        camera:unset()
-        lg.setScissor()
-
-
-
-        lg.setScissor(screenwidth/2, 0, screenwidth/2, winheight)
-        camera2:set()
-
-        drawx(camera2)
-
-        camera2:unset()
-        lg.setScissor()
+      if cameramonitor then
+        bo(0, 0, screenwidth/2, winheight, "light purple")
+        bo(screenwidth/2, 0, screenwidth/2, winheight, "red")
 
         if onescreen and not vertone then
           if me.x < you.x then 
-
-            lg.setScissor(screenwidth/2, topy,twidth+1, winheight/2+1)
-            camera:set()
-            drawx(camera)
-            camera:unset()
-            lg.setScissor()
-
-            lg.setScissor(screenwidth/2-twidth, bottomy,twidth+1, winheight/2+1)
-            camera2:set()
-            drawx(camera2)
-            camera2:unset()
-            lg.setScissor()
-            elseif me.x >= you.x then
-
-              lg.setScissor(screenwidth/2-twidth, topy,twidth+1, enviro.screenheight/2+1)
-              camera2:set()
-              drawx(camera2)
-              camera2:unset()
-              lg.setScissor()
-
-              lg.setScissor(screenwidth/2, bottomy,twidth+1, enviro.screenheight/2+1)
-              camera:set()
-              drawx(camera)
-              camera:unset()
-              lg.setScissor()
-            end
+            bo(screenwidth/2, topy,twidth, winheight/2, "teal")
+            bo(screenwidth/2-twidth+1, bottomy,twidth, winheight/2,"yellow")
+          elseif me.x >= you.x then
+            bo(screenwidth/2-twidth+1, topy,twidth, enviro.screenheight/2, "teal")
+            bo(screenwidth/2, bottomy,twidth, enviro.screenheight/2, "yellow")
           end
 
-          cclear()
-
-          if cameramonitor then
-            bo(0, 0, screenwidth/2, winheight, "light purple")
-            bo(screenwidth/2, 0, screenwidth/2, winheight, "red")
-
-            if onescreen and not vertone then
-              if me.x < you.x then 
-                bo(screenwidth/2, topy,twidth, winheight/2, "teal")
-                bo(screenwidth/2-twidth+1, bottomy,twidth, winheight/2,"yellow")
-                elseif me.x >= you.x then
-                  bo(screenwidth/2-twidth+1, topy,twidth, enviro.screenheight/2, "teal")
-                  bo(screenwidth/2, bottomy,twidth, enviro.screenheight/2, "yellow")
-                end
-
-              end
-            end
+        end
+      end
 
 
-            if oldonescreen and onescreen then
-              lg.setColor(10, 10, 10)
+      if oldonescreen and onescreen then
+        lg.setColor(10, 10, 10)
 
 
 
 
-              lg.draw(enviro.wall, wallx, 0, 0, width, enviro.screenheight)
+        lg.draw(enviro.wall, wallx, 0, 0, width, enviro.screenheight)
 
-            end
-            if oldvertone and vertone then
-              lg.setColor(53, 53, 53)
+      end
+      if oldvertone and vertone then
+        lg.setColor(53, 53, 53)
 
-              lg.rectangle("fill",(lg.getWidth()/2)-twidth,(enviro.screenheight/2)-bwidth/2,twidth*2,bwidth)
-              lg.setColor(255, 255, 255, 255)
-            end
-            if not fightclub then
-              go()
-            end
-            drawroulettenumbers()
-            cinemabars()
-
-
-            elseif menu == "story" then
-              if chapter == 1 then
-                drawchapter1()
+        lg.rectangle("fill",(lg.getWidth()/2)-twidth,(enviro.screenheight/2)-bwidth/2,twidth*2,bwidth)
+        lg.setColor(255, 255, 255, 255)
+      end
+      if not fightclub then
+        go()
+      end
+      drawroulettenumbers()
+      cinemabars()
 
 
-              end
-              lg.print(tostring(chaptime),10,10)
+    elseif menu == "story" then
+      if chapter == 1 then
+        drawch1()
 
-            end
+
+      end
+      lg.print(tostring(chaptime),10,10)
+
+    end
 
 
-            if fightclub then
+    if fightclub then
 
-              lg.setColor(20,20,20)
-              lg.print(tostring(me.combo),10,20)
-              lg.print(tostring(me.color.n)..
-                "       animcounter: "..tostring(me.animcounter).."current"..tostring(me.currentc)
-                ..
-                "       type: "..tostring(me.type),10,30)
-              lg.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
-              lg.print("j "..tostring(you.j), 10, 70)
-              if #hitt == 3 then
-                lg.print(tostring(hitt[3].mode), 10, 90)
-              end
-            end
+      lg.setColor(20,20,20)
+      lg.print(tostring(me.combo),10,20)
+      lg.print(tostring(me.color.n)..
+        "       animcounter: "..tostring(me.animcounter).."current"..tostring(me.currentc)
+        ..
+        "       type: "..tostring(me.type),10,30)
+      lg.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
+      lg.print("j "..tostring(you.j), 10, 70)
+      if #hitt == 3 then
+        lg.print(tostring(hitt[3].mode), 10, 90)
+      end
+    end
 
 
 
@@ -953,14 +962,23 @@ function love.update()
       lg.print(tostring(plat.y).."||"..tostring(plat.x1).."||"..tostring(plat.x2).."||"..tostring(plat.x).."||"..tostring(plat.y1).."||"..tostring(plat.y2), 300,i*20)
     end
     ]]--
-    lg.print("me.health: "..tostring(me.health), 400,360)
-    lg.print("you.health: "..tostring(you.health), 400,380)
-    lg.print("lassocracks: "..tostring(lassocracks), 400,400)
-    lg.print("ready2break: "..tostring(readytobreak), 400,420)
-    lg.print("tolandr: "..tostring(tolandr), 400,440)
-    changebackgroundcolor(4)
+    if fightclub then
+      lg.print("me.health: "..tostring(me.health), 400,360)
+      lg.print("you.health: "..tostring(you.health), 400,380)
+      lg.print("lassocracks: "..tostring(lassocracks), 400,400)
+      lg.print("ready2break: "..tostring(readytobreak), 400,420)
+      lg.print("tolandr: "..tostring(tolandr), 400,440)
+      changebackgroundcolor(4)
+    end
     golasso()
-    test()
+
+    for i,plat in ipairs(themap.plats) do
+        lg.print(tostring(plat.n), 100, i*30)
+      if plat.ceiling ~= nil then
+        lg.print(tostring(plat.ceiling), 130, i*30)
+      end
+    end
+
     
 
   end

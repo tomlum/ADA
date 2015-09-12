@@ -22,9 +22,9 @@ local newplat
   
   local firsttime = true
   
-  while(firsttime or newplat.ceiling or newplat.fractalbox~=nil) do
+  while(firsttime) do
     firsttime = false
-    local rannum = math.random(1,#themap.plats)
+    local rannum = math.random(1, #themap.plats)
     newplat = themap.plats[rannum]
     xx.gohere = {}
     xx.gohere.x = math.random(newplat.x1+15, newplat.x2-15)

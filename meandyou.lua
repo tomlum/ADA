@@ -13,6 +13,8 @@ at = {}
 me = {}
 you = {}
 
+me.lives = 0
+you.lives = 0
 
 me.score = 0
 you.score = 0

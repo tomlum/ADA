@@ -24,7 +24,7 @@ pink = {r=255,g=0,b=255}
 color1 = xcolor("deep turquoise")
 color2 = xcolor("neon green")
 color3 =  xcolor("orange pink")
-color4 = xcolor("blood red")
+color4 = xcolor("dark seafoam")
 
 --color1 = xcolor("dark mauve")
 --color2 = xcolor("dark gold")
@@ -66,7 +66,7 @@ thecolors[0] = {n=0,c={r = 255, g = 255, b = 255}, c2=c,
   s = {def=1, speed = 1-speeddif, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
 
 thecolors[1] = {n=1,c=color1,c2=c,
-  s = {def=1.2, speed = .8-speeddif, jump = .7, weight = 1.3, brittle = 1}, tile = ptile, logo=apa11, sound = colorpsound}
+  s = {def=1.2, speed = .8-speeddif, jump = .8, weight = 1.3, brittle = 1}, tile = ptile, logo=apa11, sound = colorpsound}
 thecolors[2] = {n=2,c=color2,c2=c,
   s = {def=.7, speed = 1.2-speeddif, jump = 1.1, weight = 1, brittle = 1}, tile = gtile, logo=glogo, sound = colorgsound}
 thecolors[3] = {n=3, tile = otile,c=color3,c2=c, logo=ao32, sound = colorgsound,
@@ -234,6 +234,3 @@ function ColorChanging(xx)
     end
   
 end
-
-
-
