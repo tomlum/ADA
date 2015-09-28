@@ -58,86 +58,86 @@ function boxCheck(X,A, B, C, D)
     pints = pints + 1
   end
   if pints == 1 then return true
-  else return false
+    else return false
+    end
+
   end
 
-end
+  function inhexcheck(EX, A, B, C, D, E, F)
+    local pints = 0
+    local Y = {x = 0, y = 0}
+    if(pint(EX, Y, A, B)) then 
+      pints = pints + 1
+    end
+    if(pint(EX, Y, B, C)) then 
+      pints = pints + 1
+    end
+    if(pint(EX, Y, C, D)) then 
+      pints = pints + 1
+    end
+    if(pint(EX, Y, D, E)) then 
+      pints = pints + 1
+    end
+    if(pint(EX, Y, E, F)) then 
+      pints = pints + 1
+    end
+    if(pint(EX, Y, F, A)) then 
+      pints = pints + 1
+    end
+    if pints == 1 then return true
+      else return false
+      end
 
-function inhexcheck(EX, A, B, C, D, E, F)
-  local pints = 0
-  local Y = {x = 0, y = 0}
-  if(pint(EX, Y, A, B)) then 
-    pints = pints + 1
-  end
-  if(pint(EX, Y, B, C)) then 
-    pints = pints + 1
-  end
-  if(pint(EX, Y, C, D)) then 
-    pints = pints + 1
-  end
-  if(pint(EX, Y, D, E)) then 
-    pints = pints + 1
-  end
-  if(pint(EX, Y, E, F)) then 
-    pints = pints + 1
-  end
-  if(pint(EX, Y, F, A)) then 
-    pints = pints + 1
-  end
-  if pints == 1 then return true
-  else return false
-  end
+    end
 
-end
-
-function hexdistan(x,y)
-  if distanc(t["c"],x) > distanc(t["c"],y) then return 
-    x
-  else return y
-  end
-end
+    function hexdistan(x,y)
+      if distanc(t["c"],x) > distanc(t["c"],y) then return 
+        x
+        else return y
+        end
+      end
 
 
 
 
 
-function hexcheck(lx1, ly1, lx2, ly2, ex, why, w, h, v, j)
-  t = {["c"] = {x = ex, y = why+h/2},
-    [0] = {x = ex-w/2, y=why, n = 0},
-    [1] = {x = ex+w/2, y=why, n = 1},
-    [2] = {x = ex+w/2, y=why+h, n = 2},
-    [3] = {x = ex-w/2, y=why+h, n = 3}}
-  d = {
-    [0] = {x = ex+v-w/2, y=why-j, n = 0},
-    [1] = {x = ex+v+w/2, y=why-j, n = 1},
-    [2] = {x = ex+v+w/2, y=why+h-j, n = 2},
-    [3] = {x = ex+v-w/2, y=why+h-j, n = 3}}
+      function hexcheck(lx1, ly1, lx2, ly2, ex, why, w, h, v, j)
+        t = {["c"] = {x = ex, y = why+h/2},
+        [0] = {x = ex-w/2, y=why, n = 0},
+        [1] = {x = ex+w/2, y=why, n = 1},
+        [2] = {x = ex+w/2, y=why+h, n = 2},
+        [3] = {x = ex-w/2, y=why+h, n = 3}}
+        d = {
+        [0] = {x = ex+v-w/2, y=why-j, n = 0},
+        [1] = {x = ex+v+w/2, y=why-j, n = 1},
+        [2] = {x = ex+v+w/2, y=why+h-j, n = 2},
+        [3] = {x = ex+v-w/2, y=why+h-j, n = 3}}
 
-  l = {[1] = {x = lx1, y = ly1},[2] = {x = lx2, y = ly2}}
-
-
-  disn = hexdistan(hexdistan(d[0], d[1]), hexdistan(d[2], d[3])).n
-  adjn1 = (disn+1)%4
-  adjn2 = (disn-1)%4
-  oppn = (disn-2)%4
-  local linep1 = {x = lx1, y = ly1}
-  local linep2 = {x = lx2, y = ly2}
-  if 
-  pint(l[1], l[2], d[disn], d[adjn1]) or
-  pint(l[1], l[2], d[disn], d[adjn2]) or
-  pint(l[1], l[2], t[adjn1], d[adjn1]) or
-  pint(l[1], l[2], t[adjn2], d[adjn2]) or
-  pint(l[1], l[2], t[oppn], t[adjn1]) or
-  pint(l[1], l[2], t[oppn], t[adjn2])
-  or 
-  inhexcheck(linep2, d[disn], d[adjn1], t[adjn1], t[oppn], t[adjn2], d[adjn2])
-  then return true
-  else return false
-  end
+        l = {[1] = {x = lx1, y = ly1},[2] = {x = lx2, y = ly2}}
 
 
+        disn = hexdistan(hexdistan(d[0], d[1]), hexdistan(d[2], d[3])).n
+        adjn1 = (disn+1)%4
+        adjn2 = (disn-1)%4
+        oppn = (disn-2)%4
+        local linep1 = {x = lx1, y = ly1}
+        local linep2 = {x = lx2, y = ly2}
+        if 
+          pint(l[1], l[2], d[disn], d[adjn1]) or
+          pint(l[1], l[2], d[disn], d[adjn2]) or
+          pint(l[1], l[2], t[adjn1], d[adjn1]) or
+          pint(l[1], l[2], t[adjn2], d[adjn2]) or
+          pint(l[1], l[2], t[oppn], t[adjn1]) or
+          pint(l[1], l[2], t[oppn], t[adjn2])
+          or 
+          inhexcheck(linep2, d[disn], d[adjn1], t[adjn1], t[oppn], t[adjn2], d[adjn2])
+          then return true
+          else return false
+          end
 
-end
+
+
+        end
 
 
 
@@ -146,9 +146,9 @@ end
 
 
 
-function drawallhex()
-  if drawboxes then
-    for i,v in ipairs(hitt) do
+        function drawPlayerllhex()
+          if drawboxes then
+            for i,v in ipairs(hitt) do
       --dodgeoffsetx
       dsh = 0
       dsw = 0
@@ -173,15 +173,15 @@ end
 
 function drawhexcheck(ex, why, w, h, v, j)
   t = {["c"] = {x = ex, y = why+h/2},
-    [0] = {x = ex-w/2, y=why, n = 0},
-    [1] = {x = ex+w/2, y=why, n = 1},
-    [2] = {x = ex+w/2, y=why+h, n = 2},
-    [3] = {x = ex-w/2, y=why+h, n = 3}}
+  [0] = {x = ex-w/2, y=why, n = 0},
+  [1] = {x = ex+w/2, y=why, n = 1},
+  [2] = {x = ex+w/2, y=why+h, n = 2},
+  [3] = {x = ex-w/2, y=why+h, n = 3}}
   d = {
-    [0] = {x = ex+v-w/2, y=why-j, n = 0},
-    [1] = {x = ex+v+w/2, y=why-j, n = 1},
-    [2] = {x = ex+v+w/2, y=why+h-j, n = 2},
-    [3] = {x = ex+v-w/2, y=why+h-j, n = 3}}
+  [0] = {x = ex+v-w/2, y=why-j, n = 0},
+  [1] = {x = ex+v+w/2, y=why-j, n = 1},
+  [2] = {x = ex+v+w/2, y=why+h-j, n = 2},
+  [3] = {x = ex+v-w/2, y=why+h-j, n = 3}}
 
 
   disn = hexdistan(hexdistan(d[0], d[1]), hexdistan(d[2], d[3])).n
@@ -212,8 +212,8 @@ function hradial(theid, P1, radius, special)
     local dis = math.sqrt((p.y-P1.y)^2 + (p.mid-P1.x)^2)
 
     if theid ~= i and
-    dis<radius
-    then
+      dis<radius
+      then
       special(p)
     end
   end
@@ -223,8 +223,8 @@ function hradial(theid, P1, radius, special)
     local dis = math.sqrt((p.y-P1.y)^2 + (p.mid-P1.x)^2)
 
     if theid ~= i and
-    dis<radius
-    then
+      dis<radius
+      then
       special(p)
     end
   end
@@ -254,13 +254,13 @@ function hboxcss(theid, P1, P2, P3, P4, special)
     end
 
     if theid ~= i and
-    (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j) 
-      or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
-      or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
-      or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
-      or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
-    )
-    then
+      (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j) 
+        or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
+        or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
+        or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
+        or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
+        )
+      then
       --flash = true
       special(p)
     end
@@ -282,13 +282,13 @@ function hboxcss(theid, P1, P2, P3, P4, special)
     end
 
     if theid ~= i and
-    (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j) 
-      or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
-      or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
-      or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
-      or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
-    )
-    then
+      (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j) 
+        or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
+        or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
+        or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer, p.width+dsw-hexbuffer/2, -extrah + p.height-dsh-hexbuffer/2, p.v, p.j)
+        or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
+        )
+      then
       --flash = true
       special(p)
     end
@@ -321,7 +321,7 @@ function hline(meme, theid, P1, P2, special)
       end
 
       if (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j))
-      then
+        then
         --flash = true
         special(p)
         if p.block then p.letgoofblock = true end
@@ -349,11 +349,11 @@ function hline(meme, theid, P1, P2, special)
     end
 
     if 
-    (theid==0 or (theid ~= i)) 
-    and
-    (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-    )
-    then
+      (theid==0 or (theid ~= i)) 
+      and
+      (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+        )
+      then
       p.hit = true
       if p.counter then 
         p.counteractivate = true
@@ -378,7 +378,7 @@ function hline(meme, theid, P1, P2, special)
 
     for i,box in ipairs(colorboxes) do
       if (hexcheck(P1.x, P1.y, P2.x, P2.y, box.x, box.y, 40*math.abs(box.flip), 60, 0, 0))
-      then
+        then
         table.remove(colorboxes, i)
         makensparks(box.x,box.y,sparkspeed, sparkspeed, math.random(0),math.random(0),math.random(0),10)
       end
@@ -410,13 +410,13 @@ function hline(meme, theid, P1, P2, special)
         end
 
         if not p.hit and
-        (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-          or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-          or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-          or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-          or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
-        )
-        then
+          (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+            or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+            or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+            or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+            or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
+            )
+          then
           --flash = true
           special(p)
           if p.block then
@@ -450,13 +450,13 @@ function hline(meme, theid, P1, P2, special)
         end
 
         if not p.hit and (theid==0 or (theid ~= i))  and
-        (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-          or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-          or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-          or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
-          or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
-        )
-        then
+          (hexcheck(P1.x, P1.y, P2.x, P2.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+            or hexcheck(P2.x, P2.y, P3.x, P3.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+            or hexcheck(P3.x, P3.y, P4.x, P4.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+            or hexcheck(P4.x, P4.y, P1.x, P1.y, p.mid+p.lr*(dsw/2), p.y+(dsh)+hexbuffer/2,p.width+dsw-hexbuffer, p.height-dsh-hexbuffer-extrah, p.v, p.j)
+            or boxCheck({x = p.x, y = p.y}, P1, P2, P3, P4)
+            )
+          then
           p.hit = true
 
           if p.counter then 
@@ -486,16 +486,16 @@ function hline(meme, theid, P1, P2, special)
             or hexcheck(P3.x, P3.y, P4.x, P4.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
             or hexcheck(P4.x, P4.y, P1.x, P1.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
             or boxCheck({x = box.x, y = box.y}, P1, P2, P3, P4)
-          )
+            )
 
 
           then
-            local boxdam = 0
-            meme.hitbox = true
-            if meme.id == 1 then
-              boxdam = you.health
-              special(you)
-              boxdam = boxdam - you.health
+          local boxdam = 0
+          meme.hitbox = true
+          if meme.id == 1 then
+            boxdam = you.health
+            special(you)
+            boxdam = boxdam - you.health
             elseif meme.id == 2 then
               boxdam = me.health
               special(me)
@@ -532,114 +532,115 @@ function hline(meme, theid, P1, P2, special)
         local linep1 = {x = x1, y = y1}
         local linep2 = {x = x2, y = y1}
         if pint(linep1, linep2, midv, midv2)  or 
-        pint(linep1, linep2, midv, midv21)  or
-        pint(linep1, linep2, midv, midv22) 
-        then return true
-        else return false
-        end
-
-      end
-
-
-
-      velforclimb = 20
-
-      function climbplatcheck(ex, why, lr, h, v, j)
-        midv2 = {x = (ex)+15*lr, y=why-j}
-        midv = {x = (ex)+15*lr, y=why+h-j}
-
-
-        for j = #themap.plats, 1, -1 do 
-          plat = themap.plats[j]
-          local linep1 = {x = plat.x1, y = plat.y}
-          local linep2 = {x = plat.x2, y = plat.y}
-          if (plat.floor==nil) and pint(linep1, linep2, midv, midv2) 
+          pint(linep1, linep2, midv, midv21)  or
+          pint(linep1, linep2, midv, midv22) 
           then return true
+          else return false
           end
+
         end
-        return false
 
-      end
 
-      function linewallcheck(ex, why,v, j)
-        midv2 = {x = (ex)+v, y=why-j, n = 2}
-        midv = {x = ex, y=why, n = 2}
 
-        if why > 100000 or ex < -10 or ex > 10000  then
+        velforclimb = 20
+
+        function climbplatcheck(ex, why, lr, h, v, j)
+          midv2 = {x = (ex)+15*lr, y=why-j}
+          midv = {x = (ex)+15*lr, y=why+h-j}
+
+
+          for j = #themap.plats, 1, -1 do 
+            plat = themap.plats[j]
+            local linep1 = {x = plat.x1, y = plat.y}
+            local linep2 = {x = plat.x2, y = plat.y}
+            if (plat.floor==nil) and pint(linep1, linep2, midv, midv2) 
+              then return true
+            end
+          end
           return false
+
         end
 
-        for j = #themap.walls, 1, -1 do 
-          wall = themap.walls[j]
-          local linep1 = {x = wall.x, y = wall.y1}
-          local linep2 = {x = wall.x, y = wall.y2}
-          if pint(linep1, linep2, midv, midv2) 
-          then return true
+        function linewallcheck(ex, why,v, j)
+          midv2 = {x = (ex)+v, y=why-j, n = 2}
+          midv = {x = ex, y=why, n = 2}
+
+          if why > 100000 or ex < -10 or ex > 10000  then
+            return false
           end
-        end
-        return false
 
-      end
-
-
-      function lineplatcheck(ex, why,v, j)
-        midv2 = {x = ex+v, y=why-j}
-        midv = {x = ex, y=why}
-
-        if why > 100000 or ex < -10 or ex > 10000  then
-          return true
-        end
-
-        for j = #themap.plats, 1, -1 do 
-          plat = themap.plats[j]
-          local linep1 = {x = plat.x1, y = plat.y}
-          local linep2 = {x = plat.x2, y = plat.y}
-          if pint(linep1, linep2, midv, midv2) 
-          then return true
+          for j = #themap.walls, 1, -1 do 
+            wall = themap.walls[j]
+            local linep1 = {x = wall.x, y = wall.y1}
+            local linep2 = {x = wall.x, y = wall.y2}
+            if pint(linep1, linep2, midv, midv2) 
+              then return true
+            end
           end
+          return false
+
         end
-        return false
-
-      end
 
 
-      function retlineplatcheck(ex, why,v, j)
-        midv2 = {x = (ex)+v, y=why-j, n = 2}
-        midv = {x = ex, y=why, n = 2}
+        function lineplatcheck(ex, why,v, j)
+          midv2 = {x = ex+v, y=why-j}
+          midv = {x = ex, y=why}
 
-        if why > 100000 or ex < -10 or ex > 10000  then
+          if why > 100000 or ex < -10 or ex > 10000  then
+            return true
+          end
+
+          for j = #themap.plats, 1, -1 do 
+            plat = themap.plats[j]
+            local linep1 = {x = plat.x1, y = plat.y}
+            local linep2 = {x = plat.x2, y = plat.y}
+            if pint(linep1, linep2, midv, midv2) 
+              then return true
+            end
+          end
+          return false
+
+        end
+
+
+        function retlineplatcheck(ex, why,v, j)
+          midv2 = {x = (ex)+v, y=why-j, n = 2}
+          midv = {x = ex, y=why, n = 2}
+
+          if why > 100000 or ex < -10 or ex > 10000  then
+            return nil
+          end
+
+          for j,plat in ipairs(themap.plats) do 
+            local linep1 = {x = plat.x1, y = plat.y}
+            local linep2 = {x = plat.x2, y = plat.y}
+            if pint(linep1, linep2, midv, midv2) 
+              then return plat
+            end
+          end
           return nil
+
         end
 
-        for j,plat in ipairs(themap.plats) do 
-          local linep1 = {x = plat.x1, y = plat.y}
-          local linep2 = {x = plat.x2, y = plat.y}
-          if pint(linep1, linep2, midv, midv2) 
-          then return plat
+        me.im = idle1
+        you.im = idle2
+
+
+        function hall(theid, func)
+          for i,p in ipairs(hitt) do
+            if theid ~= i then
+              func(p)
+            end
           end
-        end
-        return nil
 
-      end
-
-      me.im = idle1
-      you.im = idle2
-
-
-      function hall(theid, func)
-        for i,p in ipairs(hitt) do
-          if theid ~= i then
-            func(p)
+          for i,p in ipairs(hittmon) do
+            if theid ~= i then
+              func(p)
+            end
           end
+
         end
 
-        for i,p in ipairs(hittmon) do
-          if theid ~= i then
-            func(p)
-          end
-        end
-
-      end
 
 
 
@@ -647,28 +648,27 @@ function hline(meme, theid, P1, P2, special)
 
 
 
+        function hboxwall()
+          for i,p in ipairs(hitt) do
 
-      function hboxwall()
-        for i,p in ipairs(hitt) do
+            dsh = 0
+            dsw = 0
+            extrah = 0
+            if p.im.dodgeh ~= nil then
+              dsh = p.im.dodgeh
+            end
+            if p.im.dodgew ~= nil then
+              dsw = p.im.dodgew
+            end
+            if p.im.extrah ~= nil then
+              extrah = -p.im.extrah
+            end
 
-          dsh = 0
-          dsw = 0
-          extrah = 0
-          if p.im.dodgeh ~= nil then
-            dsh = p.im.dodgeh
-          end
-          if p.im.dodgew ~= nil then
-            dsw = p.im.dodgew
-          end
-          if p.im.extrah ~= nil then
-            extrah = -p.im.extrah
-          end
+            if p.player~=nil then
+              if ( p.flinch or p.a1 or p.a2 or p.a3 or p.a4) then p.wjt = 0 end
 
-          if p.player~=nil then
-            if ( p.flinch or p.a1 or p.a2 or p.a3 or p.a4) then p.wjt = 0 end
-
-            if p.wjt > 0 then 
-              p.wjt = p.wjt + 1*ramp(p)
+              if p.wjt > 0 then 
+                p.wjt = p.wjt + 1*ramp(p)
               --[[
               if p.wjt > 8 then 
                 p.wjt = 0
@@ -715,53 +715,91 @@ function hline(meme, theid, P1, P2, special)
 
 
               if p.player~=nil and not p.flinch
-              and ((p.x+p.v*walljumprange < wall.x and p.x >= wall.x) or (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x)) and p.feet-p.j >= wall.y1 and p.y-p.j <= wall.y2 and 
-              ((p.v < 0 and p.right) or (p.v > 0 and p.left)) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch and not p.busy and p.animcounter == 0
-              then
-                if (p.x+p.v*walljumprange < wall.x and p.x >= wall.x) then
-                  wallside = 1 
-                elseif (p.x+p.width+p.v*walljumprange > wall.x and p.x+p.width <= wall.x) then
-                  wallside = -1 -p.width
-                end
-
-                p.wjt = 1 
-                p.initwy = p.y - p.j
-                p.walllr = -p.lr
-                p.wallx = wall.x+wallside
-                p.v = 0
-              elseif (wall.barrier~=nil) and p.feet-p.j > wall.y1 and p.y-p.j < wall.y2 and ((p.x+p.v < wall.x and p.x >= wall.x and p.v < 0) or (p.x+p.width+p.v > wall.x and p.x+p.width <= wall.x and p.v > 0)) and p.wjt == 0 then
-                if (p.x+p.v < wall.x and p.x >= wall.x) then
-                  wallside = 1 
-                else
-                  wallside = -1 
-                end
-
-
-                if p.flinch and math.abs(p.v) > vforwallflinch then 
-
-                  p.health = p.health - math.abs(p.v/3)
-                  p.v = -p.v/2
-                  if p.g then
-                    p.j = math.abs(p.v)
-                  else
-                    p.j = p.j - math.abs(p.v/3)
+                and ((p.x+p.v*wallJumpRange < wall.x and p.x >= wall.x) or (p.x+p.width+p.v*wallJumpRange > wall.x and p.x+p.width <= wall.x)) and p.feet-p.j >= wall.y1 and p.y-p.j <= wall.y2 and 
+                ((p.v < 0 and p.right) or (p.v > 0 and p.left)) and p.wjt == 0 and math.abs(p.j) > 0 and not p.flinch and not p.busy and p.animcounter == 0
+                then
+                if (p.x+p.v*wallJumpRange < wall.x and p.x >= wall.x) then
+                  p.wallside = .01 
+                  elseif (p.x+p.width+p.v*wallJumpRange > wall.x and p.x+p.width <= wall.x) then
+                    p.wallside = -.01 -p.width
                   end
-                  makenrubble("vert", p.mid, p.feet,p.v, p.j/2,20)
-                  repplay(p.wallhit)
-                  p.g = false
-                  p.y = p.y - 10
 
-                else
-
+                  p.wjt = 1 
+                  p.initwy = p.y - p.j
+                  p.walllr = -p.lr
+                  p.wallx = wall.x+p.wallside
                   p.v = 0
+                  elseif (wall.barrier~=nil) and p.feet-p.j > wall.y1 and p.y-p.j < wall.y2 and ((p.x+p.v < wall.x and p.x >= wall.x and p.v < 0) or (p.x+p.width+p.v > wall.x and p.x+p.width <= wall.x and p.v > 0)) and p.wjt == 0 then
+                    if (p.x+p.v < wall.x and p.x >= wall.x) then
+                      p.wallside = .01 
+                    else
+                      p.wallside = -.01
+                    end
+
+
+                    if p.flinch and math.abs(p.v) > vForWallFlinch then 
+
+                      p.health = p.health - math.abs(p.v/3)
+                      p.v = -p.v/2
+                      if p.g then
+                        p.j = math.abs(p.v)
+                      else
+                        p.j = p.j - math.abs(p.v/3)
+                      end
+                      makenrubble("vert", p.mid, p.feet,p.v, p.j/2,20)
+                      repplay(p.wallhit)
+                      p.g = false
+                      p.y = p.y - 10
+
+                    else
+
+                      p.v = 0
+                    end
+                    elseif p.barrier and p.x < wall.x and p.x + p.width > wall.x and (p.y < wall.y2 and p.feet > wall.y1) then
+                      if p.mid < wall.x or p.v < 0 then
+                        p.v = lof(p.v,-2)
+                      else
+                        p.v = hof(p.v,2)
+                      end
+
+
+                    end
+
+
+
+
+
+
+
+
+                    xrubble(p)
+
+
+
+                  end
+
+
                 end
-              elseif p.barrier and p.x < wall.x and p.x + p.width > wall.x and (p.y < wall.y2 and p.feet > wall.y1) then
-                if p.mid < wall.x or p.v < 0 then
-                  p.v = lof(p.v,-2)
-                else
-                  p.v = hof(p.v,2)
+
+
+              end
+
+
+              function retowallcheck(ex, why,vee, jay)
+                for j = #themap.walls, 1, -1 do
+                  local wallace = themap.walls[j]
+                  local res = retpint({x = wallace.x, y = wallace.y1}, {x = wallace.x, y = wallace.y2}, {x = ex, y = why}, {x = ex+vee, y = why-jay})
+                  if res[2] > 0 then
+                    if wallace.glasswall~=nil then 
+                      if (wallace.glasswall > 0 and res[2] < wallace.glasswall) or (wallace.glasswall < 0 and res[2] > -wallace.glasswall) then
+                        res[3] = true
+                      end
+                    end
+                    return res
+                  end
+
                 end
-
+                return {0, 0}
 
               end
 
@@ -769,79 +807,41 @@ function hline(meme, theid, P1, P2, special)
 
 
 
+              function hboxp()
+                for i,p in ipairs(hitt) do
+                  for j,plat in ipairs(themap.plats) do 
+                    xx = p
+
+                    extrah = 0
+                    dodgeh = 0
+                    if p.im.extrah ~= nil then
+                      extrah = -p.im.extrah
+                    end
+                    if p.im.dodgeh ~= nil then
+                      dodgeh= p.im.dodgeh
+                    end
 
 
 
-              xrubble(p)
+                    if p.im.yoff==nil then
+                      p.im.yoff = 0
+                    end
+                    if plat.ceiling and xx.y - xx.j < plat.y and xx.y >= plat.y and plat.x1 < xx.mid+xx.width/2 and plat.x2 > xx.mid-xx.width/2  then
+
+                      xx.y = plat.y+1
+                      xx.jt = 0
+                      xx.j = 0
+                      break
+
+                      elseif xx.gohere == nil and (not p.gothroughplats or plat.floor~=nil) and (
+                        (hexplatcheck2(plat.y, plat.x1, plat.x2, p.x, p.oldpy, p.width, p.y+p.height-extrah-p.j, p.v) and p.j <= 0)
+                        or 
+                        (p.y == plat.y-p.height-extrah and p.x+p.width+p.v >= plat.x1 and p.x+p.v <= plat.x2 and p.j==0))
+                      then
 
 
 
-            end
-
-
-          end
-
-
-        end
-
-
-        function retowallcheck(ex, why,vee, jay)
-          for j = #themap.walls, 1, -1 do
-            local wallace = themap.walls[j]
-            local res = retpint({x = wallace.x, y = wallace.y1}, {x = wallace.x, y = wallace.y2}, {x = ex, y = why}, {x = ex+vee, y = why-jay})
-            if res[2] > 0 then
-              if wallace.glasswall~=nil then 
-                if (wallace.glasswall > 0 and res[2] < wallace.glasswall) or (wallace.glasswall < 0 and res[2] > -wallace.glasswall) then
-                  res[3] = true
-                end
-              end
-              return res
-            end
-
-          end
-          return {0, 0}
-
-        end
-
-
-
-
-
-        function hboxp()
-          for i,p in ipairs(hitt) do
-            for j,plat in ipairs(themap.plats) do 
-              xx = p
-
-              extrah = 0
-              dodgeh = 0
-              if p.im.extrah ~= nil then
-                extrah = -p.im.extrah
-              end
-              if p.im.dodgeh ~= nil then
-                dodgeh= p.im.dodgeh
-              end
-
-
-
-              if p.im.yoff==nil then
-                p.im.yoff = 0
-              end
-              if plat.ceiling and xx.y - xx.j < plat.y and xx.y >= plat.y and plat.x1 < xx.mid+xx.width/2 and plat.x2 > xx.mid-xx.width/2  then
-
-                xx.y = plat.y+1
-                xx.jt = 0
-                xx.j = 0
-                break
-
-              elseif xx.gohere == nil and (not p.gothroughplats or plat.floor~=nil) and (
-                (hexplatcheck2(plat.y, plat.x1, plat.x2, p.x, p.oldpy, p.width, p.y+p.height-extrah-p.j, p.v) and p.j <= 0)
-                or 
-                (p.y == plat.y-p.height-extrah and p.x+p.width+p.v >= plat.x1 and p.x+p.v <= plat.x2 and p.j==0))
-              then
-
-
-
-                local goforit = true 
+                      local goforit = true 
                 --[[
                 if p.j ~= 0  then
                   if p.x < plat.x2 and p.x+p.width > plat.x2 then
@@ -875,14 +875,14 @@ function hline(meme, theid, P1, P2, special)
                     p.oldpy = p.y+p.height
                   end
 
-                  if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
-                    xx.landingcounter = xx.landingcounter + landingwait
+                  if xx.j < -jForLanding or math.abs(xx.v) > speedlimit then 
+                    xx.landingcounter = xx.landingcounter + landingWait
                     xx.landing = true 
-                    xx.v = xx.v * landingfric
+                    xx.v = xx.v * landingFric
                   else
-                    xx.landingcounter = xx.landingcounter + shortlandwait
+                    xx.landingcounter = xx.landingcounter + shortLandWait
                     xx.landing = true 
-                    xx.v = xx.v * landingfric
+                    xx.v = xx.v * landingFric
                   end
                   repplay(xx.land)
                   xx.slowdown = false
@@ -898,64 +898,64 @@ function hline(meme, theid, P1, P2, special)
                 p.j = 0
                 p.plat = plat;
                 if slipoffedges then
-                if p.x < plat.x2 and p.mid > plat.x2 then
-                  p.v = hof(p.v,2)
-                elseif p.mid < plat.x1 and p.x+p.width> plat.x1 then
-                  p.v = lof(p.v,-2)
+                  if p.x < plat.x2 and p.mid > plat.x2 then
+                    p.v = hof(p.v,2)
+                    elseif p.mid < plat.x1 and p.x+p.width> plat.x1 then
+                      p.v = lof(p.v,-2)
+                    end
+                  end
+
+
+
+                  break
+                else
+                  p.g = false
+                  p.plat = noplat
                 end
-                end
 
-
-
-                break
-              else
-                p.g = false
-                p.plat = noplat
               end
-
-            end
-            if p.im.extrah ~= nil then
-              p.oldpy = p.y+p.height-p.im.extrah
-            else
-              p.oldpy = p.y+p.height
-            end
-          end
-
-
-          for i,p in ipairs(hittmon) do
-            for j = #themap.plats, 1, -1 do 
-              plat = themap.plats[j]
-              xx = p
-
-              extrah = 0
-              dodgeh = 0
               if p.im.extrah ~= nil then
-                extrah = -p.im.extrah
+                p.oldpy = p.y+p.height-p.im.extrah
+              else
+                p.oldpy = p.y+p.height
               end
-              if p.im.dodgeh ~= nil then
-                dodgeh= p.im.dodgeh
-              end
+            end
+
+
+            for i,p in ipairs(hittmon) do
+              for j = #themap.plats, 1, -1 do 
+                plat = themap.plats[j]
+                xx = p
+
+                extrah = 0
+                dodgeh = 0
+                if p.im.extrah ~= nil then
+                  extrah = -p.im.extrah
+                end
+                if p.im.dodgeh ~= nil then
+                  dodgeh= p.im.dodgeh
+                end
 
 
 
-              if p.im.yoff==nil then
-                p.im.yoff = 0
-              end
-              if (not p.gothroughplats or plat.floor~=nil) and (
-                (hexplatcheck2(plat.y, plat.x1, plat.x2, p.x, p.oldpy, p.width, p.y+p.height-extrah-p.j, p.v) and p.j <= 0)
-                or 
-                (p.y == plat.y-p.height-extrah and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
-              then
+                if p.im.yoff==nil then
+                  p.im.yoff = 0
+                end
+                if (not p.gothroughplats or plat.floor~=nil) and (
+                  (hexplatcheck2(plat.y, plat.x1, plat.x2, p.x, p.oldpy, p.width, p.y+p.height-extrah-p.j, p.v) and p.j <= 0)
+                  or 
+                  (p.y == plat.y-p.height-extrah and p.x+p.width/2+p.v >= plat.x1 and p.x+p.width/2+p.v <= plat.x2 and p.j==0))
+                then
 
                 if p.j ~= 0 and p.player~=nil then
-                  if xx.j < -jforlanding or math.abs(xx.v) > speedlimit then 
-                    xx.landingcounter = xx.landingcounter + landingwait
+                  if xx.j < -jForLanding or math.abs(xx.v) > speedlimit then 
+                    xx.landingcounter = xx.landingcounter + landingWait
                     xx.landing = true 
-                    xx.v = xx.v * landingfric
+                    xx.v = xx.v * landingFric
                   else
-                    xx.landingcounter = xx.landingcounter + shortlandwait
+                    xx.landingcounter = xx.landingcounter + shortLandWait
                     xx.landing = true 
-                    xx.v = xx.v * landingfric
+                    xx.v = xx.v * landingFric
                   end
                   repplay(xx.land)
                   xx.slowdown = false
@@ -969,30 +969,30 @@ function hline(meme, theid, P1, P2, special)
 
                 if p.x < plat.x2 and p.mid > plat.x2 then
                   p.v = hof(p.v,2)
-                elseif p.mid < plat.x1 and p.x+p.width> plat.x1 then
-                  p.v = lof(p.v,-2)
+                  elseif p.mid < plat.x1 and p.x+p.width> plat.x1 then
+                    p.v = lof(p.v,-2)
+                  end
+
+
+
+                  break
+                else
+                  p.g = false
+                  p.plat = noplat
                 end
 
-
-
-                break
-              else
-                p.g = false
-                p.plat = noplat
               end
+              if p.im.extrah ~= nil then
+                p.oldpy = p.y+p.height-p.im.extrah
+              else
+                p.oldpy = p.y+p.height-1
+              end
+            end
 
-            end
-            if p.im.extrah ~= nil then
-              p.oldpy = p.y+p.height-p.im.extrah
-            else
-              p.oldpy = p.y+p.height-1
-            end
+
+
+
+
           end
-
-
-
-
-
-        end
 
 

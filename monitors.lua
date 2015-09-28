@@ -36,7 +36,7 @@ function dangermonitorf(x,y)
  lg.print("dangerclose"..tostring(dangerclose), x, y)
       lg.print("rampspeed"..tostring(rampspeed), x, y+20)
       lg.print("cscale"..tostring(cscale), x, y+40)
-      lg.print("dangerzoom"..tostring(dangerzoom), x, y+60)
+      lg.print("dangerZoom"..tostring(dangerZoom), x, y+60)
       lg.print("minzoom"..tostring(minzoom), x, y+80)
       lg.print("maxzoom"..tostring(maxzoom), x, y+100)
      end

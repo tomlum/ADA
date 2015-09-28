@@ -59,8 +59,8 @@ function shakez(z)
   rumbleme(me,z/10)
   rumbleme(you,z/10)
   if dangerclose then
-    minzoom = dangerzoom + (defaultminzoom-defaultmaxzoom) - dangerzoomdelta * 10*z
-    maxzoom = dangerzoom  - dangerzoomdelta * 10*z
+    minzoom = dangerZoom + (defaultminzoom-defaultmaxzoom) - dangerZoomDelta * 10*z
+    maxzoom = dangerZoom  - dangerZoomDelta * 10*z
 
   else
     minzoom = defaultminzoom - growrate*z
@@ -107,20 +107,20 @@ function camreturntozoom()
       end
     end
   else
-    if maxzoom < dangerzoom then
-      if minzoom + dangerzoomdelta > dangerzoom + (defaultminzoom-defaultmaxzoom) then
-        minzoom = dangerzoom + (defaultminzoom-defaultmaxzoom)
-        maxzoom = dangerzoom
-      else minzoom = minzoom + dangerzoomdelta
-        maxzoom = maxzoom + dangerzoomdelta
+    if maxzoom < dangerZoom then
+      if minzoom + dangerZoomDelta > dangerZoom + (defaultminzoom-defaultmaxzoom) then
+        minzoom = dangerZoom + (defaultminzoom-defaultmaxzoom)
+        maxzoom = dangerZoom
+      else minzoom = minzoom + dangerZoomDelta
+        maxzoom = maxzoom + dangerZoomDelta
       end
 
-    elseif maxzoom > dangerzoom then
-      if minzoom - dangerzoomdelta < dangerzoom then
-        minzoom = dangerzoom + (defaultminzoom-defaultmaxzoom)
-        maxzoom = dangerzoom
-      else minzoom = minzoom - dangerzoomdelta
-        maxzoom = maxzoom - dangerzoomdelta
+    elseif maxzoom > dangerZoom then
+      if minzoom - dangerZoomDelta < dangerZoom then
+        minzoom = dangerZoom + (defaultminzoom-defaultmaxzoom)
+        maxzoom = dangerZoom
+      else minzoom = minzoom - dangerZoomDelta
+        maxzoom = maxzoom - dangerZoomDelta
       end
     end
   end
@@ -827,16 +827,16 @@ function drawx(xx)
 
   if me.flinch then 
 
-    drawa(me)
+    drawPlayer(me)
 
-    drawa(you)
+    drawPlayer(you)
 
   else
 
 
-    drawa(you)
+    drawPlayer(you)
 
-    drawa(me)
+    drawPlayer(me)
 
   end
   if menu ~= "retry" then
@@ -879,7 +879,7 @@ function drawx(xx)
     elseif themap.name == "floors" then
       drawfloorsstuff()
     end
-    if fightclub then drawallhex() end
+    if fightclub then drawPlayerllhex() end
   end
 
 end

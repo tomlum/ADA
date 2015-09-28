@@ -2,6 +2,11 @@ require "xkcdcolor"
 require "monitors"
 lg = love.graphics
 
+--decimal random
+function decran(low,up)
+return math.random(low+1,up-1)+math.random()*math.random(-1,1)
+end
+
 function drawbackgroundbox(x,y,w,h)
     lg.setBackgroundColor(backgroundcolor.r,backgroundcolor.g,backgroundcolor.b)
   lg.rectangle("fill", x, y, w, h)

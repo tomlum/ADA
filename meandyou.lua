@@ -160,9 +160,6 @@ function loadmeandyou2()
   you.deathclock = 0
   me.deathclock = 0
 
-  you.lefty = true
-  me.righty = true
-
   gotimer = 0
 
   enviro.dolly = 0
@@ -185,8 +182,6 @@ function loadmeandyou2()
   me.mid = me.x / 2 + me.xleft / 2
   me.y = 1500 - 3 - 60
   me.feet = me.y + 60
-  --the face/crest image
-  me.lefty = false
   me.slowdown = false
   --horizontal velocity
   me.v = 0
@@ -242,7 +237,6 @@ function loadmeandyou2()
   you.y = 1500 - 3 - 60
   you.feet = you.y + 60
   --the face/crest image
-  you.lefty = true
   you.slowdown = false
   --horizontal velocity
   you.v = 0
@@ -311,7 +305,7 @@ end
 function loadmeandyou()
   me.push = 0
   you.push = 0
-  collide = true
+
   waitforitplay = -1
   playfadeout = 0
   spines = {}
@@ -340,9 +334,6 @@ function loadmeandyou()
 
   you.deathclock = 0
   me.deathclock = 0
-
-  you.lefty = true
-  me.righty = true
 
   gotimer = 0
 
@@ -627,7 +618,6 @@ if not fightclub then
   enviro.leftwall = 0
   enviro.rightwall = 3700  --6600-20
 end
-enviro.wall = lg.newImage("enviro/wall.png")
 enviro.light = lg.newImage("enviro/lightson.png")
 enviro.healthbar = lg.newImage("enviro/healthbar.png")
 enviro.stagefloor = lg.newImage("enviro/floor.png")

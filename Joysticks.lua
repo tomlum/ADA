@@ -22,6 +22,7 @@ you.lrum = 0
 you.rrum = 0
 me.joystickn = 0
 you.joystickn = 0
+
 function setControllers()
   for i,v in ipairs(love.joystick.getJoysticks()) do
     if me.joystick == nil then
@@ -48,7 +49,6 @@ function rumbleme(xx,i)
     xx.rumbleint = xx.rumbleint + i/2
   end
 end
-
 
 function rumblemodule(xx)
   if xx.joystick ~= nil then
@@ -81,8 +81,8 @@ you.holda = false
 me.dirholda = false
 you.dirholda = false
 function holdmanage(xx)
-  
- 
+
+
   if (xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.blockb) or (menu ~= "play" and (xx.rightbump or xx.leftbump)) then
     if not xx.holda then
       xx.holda = true
@@ -130,59 +130,59 @@ function holdmanage(xx)
     else
       xx.animcounter = xx.animcounter+1*xx.rampspeed
     end
-  elseif xx.animcounter == 0 then 
-    if not xx.purplanding then
-      xx.hitsomeonewithpurp = false
-      xx.combo = 0
-      xx.cancombo = false
+    elseif xx.animcounter == 0 then 
+      if not xx.purplanding then
+        xx.hitsomeonewithpurp = false
+        xx.combo = 0
+        xx.cancombo = false
+      end
+      xx.type = 0
+      xx.repcounter = 0
     end
-    xx.type = 0
-    xx.repcounter = 0
+
+
+
+  end
+  function cancelas(xx) 
+    xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false
   end
 
 
 
-end
-function cancelas(xx) 
-  xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false
-end
+
+  function doubledown(xx)
+
+    if xx.dubtimer >= 0 then
+      xx.dubtimer = rodib(xx.dubtimer,1,0)
+    end
+
+    if not xx.down and xx.doubledown then
+      xx.dubtimer = 0
+      xx.doubledown = false
+      elseif xx.down and xx.dubtimer > 0 then
+        xx.doubledown = true
+        xx.dubtimer = 10
+        elseif not xx.down and xx.dubtimer < 0 then
+          xx.dubtimer = doubletime
+          elseif xx.down and xx.dubtimer <= 0 and xx.dubtimer > -20 then
+
+            xx.dubtimer = xx.dubtimer - 1
+          end
+
+        end
 
 
+        function downs() 
+          if 
+            ((me.down and not me.dirholda) or (you.down and not you.dirholda)) then return true else return false
+          end
+        end
 
-
-function doubledown(xx)
-
-  if xx.dubtimer >= 0 then
-    xx.dubtimer = rodib(xx.dubtimer,1,0)
-  end
-  
-  if not xx.down and xx.doubledown then
-    xx.dubtimer = 0
-    xx.doubledown = false
-  elseif xx.down and xx.dubtimer > 0 then
-    xx.doubledown = true
-    xx.dubtimer = 10
-  elseif not xx.down and xx.dubtimer < 0 then
-    xx.dubtimer = doubletime
-  elseif xx.down and xx.dubtimer <= 0 and xx.dubtimer > -20 then
-    
-    xx.dubtimer = xx.dubtimer - 1
-  end
-
-end
-
-
-function downs() 
-  if 
-    ((me.down and not me.dirholda) or (you.down and not you.dirholda)) then return true else return false
-  end
-end
-
-function ups() 
-  if 
-    ((me.up and not me.dirholda) or (you.up and not you.dirholda)) then return true else return false
-  end
-end
+        function ups() 
+          if 
+            ((me.up and not me.dirholda) or (you.up and not you.dirholda)) then return true else return false
+          end
+        end
 
 --things that you need regardless of the input type
 
@@ -202,75 +202,75 @@ function controlsstuff(xx)
   if xx.down then xx.right = false xx.left = false end
   if (xx.cct > 0 and not (xx.rightbumpb or xx.leftbumpb)) or (xx.rightbumpb and xx.leftbumpb) then
     xx.atcc = false
-  elseif xx.cct <=0 then
-    xx.atcc = true
+    elseif xx.cct <=0 then
+      xx.atcc = true
+    end
+    if xx.atcc then
+      xx.rightbump = xx.rightbumpb
+      xx.leftbump = xx.leftbumpb
+    else
+      xx.rightbump = false
+      xx.leftbump = false
+    end
+    if xx.blockb then 
+      xx.a1 = false
+      xx.a2 = false
+      xx.a3 = false
+      xx.a4 = false
+    end
+
   end
-  if xx.atcc then
-    xx.rightbump = xx.rightbumpb
-    xx.leftbump = xx.leftbumpb
-  else
-    xx.rightbump = false
-    xx.leftbump = false
+
+  function keyboardcontrols()
+
+
+
+    me.start = love.keyboard.isDown("q")
+    me.up = love.keyboard.isDown("w")
+    me.down = love.keyboard.isDown("s")
+    me.leftb = love.keyboard.isDown("a")
+    me.rightb = love.keyboard.isDown("d")
+    me.a1b = love.keyboard.isDown("t")
+    me.a2b = love.keyboard.isDown("f")
+    me.a3b = love.keyboard.isDown("h")
+    me.a4b = love.keyboard.isDown("g")
+    me.blockb = love.keyboard.isDown("e")
+    me.run = love.keyboard.isDown("r")
+    me.rightbumpb = love.keyboard.isDown("2")
+    me.leftbumpb = love.keyboard.isDown("1")
+
+
+
+    you.up = love.keyboard.isDown("i")
+    you.down = love.keyboard.isDown("k")
+    you.leftb = love.keyboard.isDown("j")
+    you.rightb = love.keyboard.isDown("l")
+    you.a1b = love.keyboard.isDown("up")
+    you.a4b = love.keyboard.isDown("down")
+    you.a2b = love.keyboard.isDown("left")
+    you.a3b = love.keyboard.isDown("right")
+    you.blockb = love.keyboard.isDown("o")
+    you.start = love.keyboard.isDown("u")
+    you.run = love.keyboard.isDown("p")
+    you.rightbumpb = love.keyboard.isDown("0")
+    you.leftbumpb = love.keyboard.isDown("9")
+
+    me.a1 = you.a1
+
   end
-  if xx.blockb then 
-    xx.a1 = false
-    xx.a2 = false
-    xx.a3 = false
-    xx.a4 = false
-  end
-
-end
-
-function keyboardcontrols()
-  
-
-
-  me.start = love.keyboard.isDown("q")
-  me.up = love.keyboard.isDown("w")
-  me.down = love.keyboard.isDown("s")
-  me.leftb = love.keyboard.isDown("a")
-  me.rightb = love.keyboard.isDown("d")
-  me.a1b = love.keyboard.isDown("t")
-  me.a2b = love.keyboard.isDown("f")
-  me.a3b = love.keyboard.isDown("h")
-  me.a4b = love.keyboard.isDown("g")
-  me.blockb = love.keyboard.isDown("e")
-  me.run = love.keyboard.isDown("r")
-  me.rightbumpb = love.keyboard.isDown("2")
-  me.leftbumpb = love.keyboard.isDown("1")
 
 
 
-  you.up = love.keyboard.isDown("i")
-  you.down = love.keyboard.isDown("k")
-  you.leftb = love.keyboard.isDown("j")
-  you.rightb = love.keyboard.isDown("l")
-  you.a1b = love.keyboard.isDown("up")
-  you.a4b = love.keyboard.isDown("down")
-  you.a2b = love.keyboard.isDown("left")
-  you.a3b = love.keyboard.isDown("right")
-  you.blockb = love.keyboard.isDown("o")
-  you.start = love.keyboard.isDown("u")
-  you.run = love.keyboard.isDown("p")
-  you.rightbumpb = love.keyboard.isDown("0")
-  you.leftbumpb = love.keyboard.isDown("9")
+  me.leftdeadzone = false
+  you.leftdeadzone = false
 
-  me.a1 = you.a1
-
-end
-
-
-
-me.leftdeadzone = false
-you.leftdeadzone = false
-
-love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "start", "button", 10)
-love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "leftx", "axis", 1)
-love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "lefty", "axis", 2)
-love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "rightx", "axis", 6)
-love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "righty", "axis", 3)
-love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "leftstick", "button", 5)
-love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "rightstick", "button", 6)
+  love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "start", "button", 10)
+  love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "leftx", "axis", 1)
+  love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "lefty", "axis", 2)
+  love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "rightx", "axis", 6)
+  love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "righty", "axis", 3)
+  love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "leftstick", "button", 5)
+  love.joystick.setGamepadMapping("341a00000000000005f7000000000000", "rightstick", "button", 6)
 
 --8 z
 
@@ -344,171 +344,171 @@ function c1accept()
             me.a4 = false
             me.block = false
             me.start = false
-          elseif (me.a1 or me.a2 or me.a3 or me.a4 or me.block or me.start) then
-            ns1 = true
-            else ns1 = false
-            end
-
-            if ns2 and (you.a1 or you.a2 or you.a3 or you.a4 or you.block or you.start) then
-              you.a1 = false
-              you.a2 = false
-              you.a3 = false
-              you.a4 = false
-              you.block = false
-              you.start = false
-            elseif (you.a1 or you.a2 or you.a3 or you.a4 or you.block or you.start) then
-              ns2 = true
-              else ns2 = false
+            elseif (me.a1 or me.a2 or me.a3 or me.a4 or me.block or me.start) then
+              ns1 = true
+              else ns1 = false
               end
 
-              if ns22 and (you.left or you.right or you.up or you.down) then
-                you.up = false
-                you.down = false
-                you.left = false
-                you.right = false
-              elseif (you.left or you.right or you.up or you.down) then
-                ns22 = true
-                else ns22 = false
-                end
-
-                if ns12 and (me.left or me.right or me.up or me.down) then
-                  me.up = false
-                  me.down = false
-                  me.left = false
-                  me.right = false
-                elseif (me.left or me.right or me.up or me.down) then
-                  ns12 = true
-                  else ns12 = false
+              if ns2 and (you.a1 or you.a2 or you.a3 or you.a4 or you.block or you.start) then
+                you.a1 = false
+                you.a2 = false
+                you.a3 = false
+                you.a4 = false
+                you.block = false
+                you.start = false
+                elseif (you.a1 or you.a2 or you.a3 or you.a4 or you.block or you.start) then
+                  ns2 = true
+                  else ns2 = false
                   end
 
+                  if ns22 and (you.left or you.right or you.up or you.down) then
+                    you.up = false
+                    you.down = false
+                    you.left = false
+                    you.right = false
+                    elseif (you.left or you.right or you.up or you.down) then
+                      ns22 = true
+                      else ns22 = false
+                      end
 
-
-                end
-              end
-
-
-              you.gupv = 0
-              me.gupv = 0
-              you.gv = boltspeed
-              me.gv = boltspeed
-
-              pause = false
-              function jjstick(xx)
-                
-
-                
-                if xx.joystick ~= nil then
-                  xx.a4 = false
-                  xx.a1 = false
-                  xx.a2 = false
-                  xx.a3 = false
-                  
-
-                  xx.gupv = 0
-                  xx.gv = boltspeed
-
-                  xx.jry = xx.joystick:getGamepadAxis("righty")
-                  xx.jrx = xx.joystick:getGamepadAxis("rightx")
-
-
-                  xx.length = math.abs(xx.jrx/math.cos(math.atan(-xx.jry/xx.jrx)))
-
-                  if xx.length > .8 then
-
-
-                    if (xx.jry/xx.jrx >= 1
-                      or xx.jry/xx.jrx <= -1)
-                    and xx.jry < 0
-                    then
-                    xx.a1b = true
-                  end
-
-                  if xx.jry/xx.jrx >= -1
-                    and xx.jry/xx.jrx <= 1
-                    and xx.jrx < 0
-                    then
-                    xx.a2b = true
-                  end
-
-                  if xx.jry/xx.jrx >= -1
-                    and xx.jry/xx.jrx <= 1
-                    and xx.jrx > 0
-                    then
-                    xx.a3b = true
-                  end
-
-                  if (xx.jry/xx.jrx >= 1
-                    or xx.jry/xx.jrx <= -1)
-                  and xx.jry > 0
-                  then
-                  xx.a4b = true
-                end
-              end
+                      if ns12 and (me.left or me.right or me.up or me.down) then
+                        me.up = false
+                        me.down = false
+                        me.left = false
+                        me.right = false
+                        elseif (me.left or me.right or me.up or me.down) then
+                          ns12 = true
+                          else ns12 = false
+                          end
 
 
 
+                        end
+                      end
 
 
-              if xx.joystick:isGamepadDown("dpleft") then
-                xx.leftb = true
-              elseif xx.joystick:isGamepadDown("dpright") then
-                xx.rightb = true
-              end
+                      you.gupv = 0
+                      me.gupv = 0
+                      you.gv = boltspeed
+                      me.gv = boltspeed
 
-              if xx.joystick:isGamepadDown("dpup") then
-                xx.upb = true
-              elseif xx.joystick:isGamepadDown("dpdown") then
-                xx.downb = true
-              end
-
-              if xx.joystick:isGamepadDown("a") then
-                xx.up = true
-              end
-
-
-              if xx.joystick:isGamepadDown("leftstick") then
-                xx.run = true
-              end 
-              
-              if xx.joystick:isGamepadDown("rightstick") then
-                xx.blockb = true
-              end 
-              if xx.joystick:isGamepadDown("start") then
-                xx.start = true
-              end 
+                      pause = false
+                      function jjstick(xx)
 
 
 
-              if xx.joystick:getGamepadAxis("leftx") < -.4 then
-                xx.leftb = true
-              elseif 
-                xx.joystick:getGamepadAxis("leftx")  > .4 then
-                xx.rightb = true
-              end 
+                        if xx.joystick ~= nil then
+                          xx.a4 = false
+                          xx.a1 = false
+                          xx.a2 = false
+                          xx.a3 = false
 
-              if xx.run then
 
-                if 
-                  xx.joystick:getGamepadAxis("lefty") > 2 then
-                  xx.down = true
-                elseif xx.joystick:getGamepadAxis("lefty") < - 2 then
-                  xx.up = true
-                end 
-                
-                
+                          xx.gupv = 0
+                          xx.gv = boltspeed
 
-              else
+                          xx.jry = xx.joystick:getGamepadAxis("righty")
+                          xx.jrx = xx.joystick:getGamepadAxis("rightx")
 
-                if 
-                  xx.joystick:getGamepadAxis("lefty") > .5 then
-                  xx.down = true
-                elseif xx.joystick:getGamepadAxis("lefty") < - .5 then
-                  xx.up = true
-                end 
 
-              end
+                          xx.length = math.abs(xx.jrx/math.cos(math.atan(-xx.jry/xx.jrx)))
 
-              
+                          if xx.length > .8 then
+
+
+                            if (xx.jry/xx.jrx >= 1
+                              or xx.jry/xx.jrx <= -1)
+                            and xx.jry < 0
+                            then
+                            xx.a1b = true
+                          end
+
+                          if xx.jry/xx.jrx >= -1
+                            and xx.jry/xx.jrx <= 1
+                            and xx.jrx < 0
+                            then
+                            xx.a2b = true
+                          end
+
+                          if xx.jry/xx.jrx >= -1
+                            and xx.jry/xx.jrx <= 1
+                            and xx.jrx > 0
+                            then
+                            xx.a3b = true
+                          end
+
+                          if (xx.jry/xx.jrx >= 1
+                            or xx.jry/xx.jrx <= -1)
+                          and xx.jry > 0
+                          then
+                          xx.a4b = true
+                        end
+                      end
+
+
+
+
+
+                      if xx.joystick:isGamepadDown("dpleft") then
+                        xx.leftb = true
+                        elseif xx.joystick:isGamepadDown("dpright") then
+                          xx.rightb = true
+                        end
+
+                        if xx.joystick:isGamepadDown("dpup") then
+                          xx.upb = true
+                          elseif xx.joystick:isGamepadDown("dpdown") then
+                            xx.downb = true
+                          end
+
+                          if xx.joystick:isGamepadDown("a") then
+                            xx.up = true
+                          end
+
+
+                          if xx.joystick:isGamepadDown("leftstick") then
+                            xx.run = true
+                          end 
+
+                          if xx.joystick:isGamepadDown("rightstick") then
+                            xx.blockb = true
+                          end 
+                          if xx.joystick:isGamepadDown("start") then
+                            xx.start = true
+                          end 
+
+
+
+                          if xx.joystick:getGamepadAxis("leftx") < -.4 then
+                            xx.leftb = true
+                          elseif 
+                            xx.joystick:getGamepadAxis("leftx")  > .4 then
+                            xx.rightb = true
+                          end 
+
+                          if xx.run then
+
+                            if 
+                              xx.joystick:getGamepadAxis("lefty") > 2 then
+                              xx.down = true
+                              elseif xx.joystick:getGamepadAxis("lefty") < - 2 then
+                                xx.up = true
+                              end 
+
+
+
+                            else
+
+                              if 
+                                xx.joystick:getGamepadAxis("lefty") > .5 then
+                                xx.down = true
+                                elseif xx.joystick:getGamepadAxis("lefty") < - .5 then
+                                  xx.up = true
+                                end 
+
+                              end
+
+
 
   -- if 
   --      xx.joystick:getGamepadAxis("righty") > .4 then
@@ -536,25 +536,24 @@ function c1accept()
 
 
   end
+  if  hemode == "play" then 
+    if not (me.start or you.start) then
+      if pause then
+        readytounpause = true
+      else
+        readytounpause = false
+      end
+    end
 
-  if not (me.start or you.start) then
-    if pause then
-      readytounpause = true
-    else
+    if pause and readytounpause and (me.start or you.start) then
+      pause = false
+    end
+
+    if (me.start or you.start) and not pause and not readytounpause then
+      pause = true
       readytounpause = false
     end
   end
-
-  if pause and readytounpause and (me.start or you.start) then
-    pause = false
-  end
-
-  if (me.start or you.start) and not pause and not readytounpause then
-    pause = true
-    readytounpause = false
-  end
-
-
   
 
 end

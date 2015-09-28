@@ -124,9 +124,9 @@ function relativity(xx)
   end
 
   if dangerclose and not actionshot and not love.keyboard.isDown("x") then
-    if rampspeed - dangerrampdelta > dangerrampspeed
+    if rampspeed - dangerRampDelta > dangerrampspeed
     then
-      rampspeed = rampspeed - dangerrampdelta
+      rampspeed = rampspeed - dangerRampDelta
     else
       rampspeed = dangerrampspeed
     end
@@ -601,7 +601,7 @@ function movex(xx,yy)
   runrunrun(xx)
   transferofenergy(xx)
   z = xx
-  if xx.landingcounter > landingwait then
+  if xx.landingcounter > landingWait then
     xx.stop=true
     xx.holda = true
   end
@@ -623,14 +623,14 @@ function movex(xx,yy)
   xdif = math.abs((you.x) - (me.x))
 
   if xdif >= 2100
-  then speedlimit = minmaxdif+speedminit
-    runspeed = initrunspeed+minmaxdif
+  then speedlimit = minMaxSpeedDif+speedminit
+    runspeed = initrunspeed+minMaxSpeedDif
   elseif xdif < 700 then
     speedlimit = speedminit
     runspeed = initrunspeed
   else
-    speedlimit = (minmaxdif * ((xdif-700)/1400)) + speedminit
-    runspeed = (minmaxdif * ((xdif-700)/1400)) + initrunspeed
+    speedlimit = (minMaxSpeedDif * ((xdif-700)/1400)) + speedminit
+    runspeed = (minMaxSpeedDif * ((xdif-700)/1400)) + initrunspeed
   end 
 
 
@@ -654,10 +654,10 @@ function movex(xx,yy)
         xx.jmax = runjmax*xx.color.s.jump
         xx.j = runj
       else
-        xx.jt = jt
+        xx.jt = regJT
         xx.jmax = jmax*xx.color.s.jump
         if xx.cansuperjump then
-          xx.j = jumpj*superjumpratio*xx.color.s.speed
+          xx.j = jumpj*superJumpRatio*xx.color.s.speed
         else
           xx.j = jumpj*xx.color.s.speed
         end
@@ -667,11 +667,11 @@ function movex(xx,yy)
       xx.firstjump = true
       xx.g = false
       repplay(xx.jumpd)
-    elseif z.right and xx.v >= xx.push and not xx.stop and not xx.flinch and xx.landingcounter < frameswhilelandcantmove
+    elseif z.right and xx.v >= xx.push and not xx.stop and not xx.flinch and xx.landingcounter < landPauseTime
     and not z.left 
     then 
       vroomright(xx)
-    elseif z.left and xx.v <= xx.push and xx.stop == false and not xx.flinch and xx.landingcounter < frameswhilelandcantmove
+    elseif z.left and xx.v <= xx.push and xx.stop == false and not xx.flinch and xx.landingcounter < landPauseTime
     and not z.right 
     then 
       vroomleft(xx)

@@ -1,43 +1,47 @@
-boltsflyrelative = true
-combopause = false
+boltsFlyRelative = true
+comboPause = false
+
+sparkIntensity = 2
 
 
-waveframerate = 8 --(2 is fast, higher is lower)
+waveFrameRate = 8 --(2 is fast, higher is lower)
 
-vforwallflinch = 10
+vForWallFlinch = 10
 
-walljumprange = 3.5
+wallJumpRange = 3.5
 
 --FRACTAL
-fractalmaxhealth = 30
-fractallives = 4
+fractalMaxHealth = 30
+fractalLives = 4
 
---
---basically min j
-jt = 0
 
-jforlanding = 20
-landingfric = .3
-landingwait = 13
-shortlandwait = 10
-frameswhilelandcantmove = 8
+--Landing
+jForLanding = 20	--j necessary for a landing
+landingFric = .3	--friction incurred from landing
+landingWait = 13	--amount of pause from landing
+shortLandWait = 10	--amount of pause from a short landing
+landPauseTime = 8	--# of frames during landing when you can't move
+
+--Jumping
+regJT = 0	--default jumptime
+superJumpRatio = 1.5
 
 
 --set to 0 for whiplash like turning(?)
 whiplash = 1 
 
-superjumpratio = 1.5
 --THE BIG ONES
 --THE BIG ONES
 --THE BIG ONES
 dangerrampspeed = .5
-dangerrampdelta = rampnormaldelta*1.5
+rampnormaldelta = .008
+dangerRampDelta = rampnormaldelta*1.5
 dangerbarey = 70
 --only for maxzoom
-dangerzoom = .45
-dangerzoomdelta = .001
-defspeedminit = 6
-minmaxdif = 4
+dangerZoom = .45
+dangerZoomDelta = .001
+defSpeedMInit = 6
+minMaxSpeedDif = 4
 accel = .5
 --higher means more fric
 --friction
@@ -65,7 +69,7 @@ maxgravity = 28
 
 
 
-speedminit = defspeedminit
+speedminit = defSpeedMInit
 speedlimit = speedminit
 
 

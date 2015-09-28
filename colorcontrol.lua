@@ -179,7 +179,7 @@ function ColorChanging(xx)
     if xx.oldcctn ~= xx.cchangeto.n and xx.oldcctn ~= 0 then
       xx.atcc = false
     end
-    if xx.cct < colorchangetime and (not combopause or (xx.animcounter == 0 or xx.actionshot))  then
+    if xx.cct < colorchangetime and (not comboPause or (xx.animcounter == 0 or xx.actionshot))  then
       xx.cct = xx.cct + 1
       --[[
       if xx.cct > 0 then

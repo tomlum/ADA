@@ -209,13 +209,13 @@ function combo(xx)
   if xx.color.n ~= xx.cchangeto.n and xx.cancombo
   then
     if func~= nil then func() end
-    if combopause then
+    if comboPause then
       xx.actionshot = true
     end
     xx.cancombo = false
   end
 
-  if not xx.holda and (not combopause or xx.currentc == xx.color.n) and xx.combo<xx.maxcombo and xx.cmbo then
+  if not xx.holda and (not comboPause or xx.currentc == xx.color.n) and xx.combo<xx.maxcombo and xx.cmbo then
     if xx.a1 or xx.a2 or xx.a3 or xx.a4 then
       if xx.currentc~=xx.color.n and xx.combo<xx.maxcombo then
         xx.repcounter = 0
@@ -407,7 +407,7 @@ function combo(xx)
 
     end
   end
-  if not xx.combopause 
+  if not xx.comboPause 
   and xx.animcounter < oldanimc 
   and xx.animcounter > 0 
   and 
@@ -434,7 +434,7 @@ function nottoomanyuppercuts(xx)
   if xx.uppercuttimer > 0 then
     if xx.color.n ~= xx.cchangeto.n and xx.uppercuthit and xx.uppercuttimer > 30
     then
-      if combopause then
+      if comboPause then
         xx.actionshot = true
       end
       xx.cancombo = false

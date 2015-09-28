@@ -256,18 +256,42 @@
 	"buffers":
 	[
 		{
-			"file": "colorcontrol.lua",
+			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 5988,
+				"buffer_size": 26207,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "main.lua",
+			"file": "utilities.lua",
 			"settings":
 			{
-				"buffer_size": 26262,
+				"buffer_size": 4753,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "menustuff.lua",
+			"settings":
+			{
+				"buffer_size": 23846,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "fractal.lua",
+			"settings":
+			{
+				"buffer_size": 12689,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "FIZIX.lua",
+			"settings":
+			{
+				"buffer_size": 20487,
 				"line_ending": "Unix"
 			}
 		}
@@ -279,24 +303,20 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 67.0,
-		"last_filter": "install",
+		"height": 127.0,
+		"last_filter": "remove",
 		"selected_items":
 		[
-			[
-				"install",
-				"Package Control: Install Package"
-			],
 			[
 				"remove",
 				"Package Control: Remove Package"
 			],
 			[
-				"instal",
+				"install",
 				"Package Control: Install Package"
 			],
 			[
-				"rem",
+				"remo",
 				"Package Control: Remove Package"
 			],
 			[
@@ -304,7 +324,11 @@
 				"Package Control: Install Package"
 			],
 			[
-				"remo",
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"rem",
 				"Package Control: Remove Package"
 			],
 			[
@@ -342,37 +366,40 @@
 	"expanded_folders":
 	[
 		"/Users/Hi/Desktop/Game/ADA",
-		"/Users/Hi/Desktop/Game/ADA/at",
-		"/Users/Hi/Desktop/Game/ADA/story",
-		"/Users/Hi/Desktop/Game/ADA/story/ch1"
+		"/Users/Hi/Desktop/Game/ADA/at"
 	],
 	"file_history":
 	[
-		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/test.sublime-build",
+		"/Users/Hi/Desktop/Game/ADA/Joysticks.lua",
+		"/Users/Hi/Desktop/Test/main.lua",
+		"/Users/Hi/Desktop/Game/ADA/xkcdcolor.lua",
+		"/Users/Hi/Desktop/Game/ADA/colorcontrol.lua",
+		"/Users/Hi/Desktop/Game/ADA/main.lua",
+		"/Users/Hi/Desktop/Game/ADA/fractal.lua",
+		"/Users/Hi/Desktop/Game/ADA/Hits.lua",
+		"/Users/Hi/Desktop/Game/ADA/Animation.lua",
+		"/Users/Hi/Desktop/Game/ADA/at/GG.lua",
+		"/Users/Hi/Desktop/Game/ADA/utilities.lua",
+		"/Users/Hi/Desktop/Game/ADA/at/pp.lua",
+		"/Users/Hi/Desktop/Game/ADA/FIZIX.lua",
 		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/Love.sublime-build",
+		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/test.sublime-build",
 		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
 		"/Users/Hi/Desktop/main.lua",
 		"/Users/Hi/Desktop/Game/ADA/camera.lua",
-		"/Users/Hi/Desktop/Game/ADA/main.lua",
-		"/Users/Hi/Desktop/Game/ADA/Animation.lua",
-		"/Users/Hi/Desktop/Game/ADA/utilities.lua",
-		"/Users/Hi/Desktop/Game/ADA/Joysticks.lua",
 		"/Users/Hi/Desktop/Game/ADA/DamageTable.lua",
 		"/Users/Hi/Desktop/Game/ADA/ATTACK.lua",
-		"/Users/Hi/Desktop/Game/ADA/at/GG.lua",
 		"/Users/Hi/Desktop/Game/ADA/story/ch1/ch1.lua",
 		"/Users/Hi/Desktop/Game/ADA/chaptermanage.lua",
 		"/Users/Hi/Desktop/Game/ADA/menustuff.lua",
 		"/Users/Hi/Desktop/Game/ADA/Lasso.lua",
 		"/Users/Hi/Desktop/Game/ADA/death.lua",
 		"/Users/Hi/Desktop/Game/ADA/meandyou.lua",
-		"/Users/Hi/Desktop/Game/ADA/colorcontrol.lua",
 		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/Hi/Desktop/Game/ADA/chaptermanage",
 		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/Lua/Indent.tmPreferences",
 		"/Users/Hi/Desktop/Game/ADA/ada.sublime-project",
 		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/love.sublime-build",
-		"/Users/Hi/Desktop/Game/ADA/fractal.lua",
 		"/Users/Hi/Desktop/Game/ADA/conf.lua",
 		"/Users/Hi/Desktop/Game/ADA/blur.lua",
 		"/Users/Hi/Desktop/Game/misc/Testing Range/TRMusic.lua",
@@ -405,6 +432,7 @@
 		"height": 93.0,
 		"where_history":
 		[
+			"/Users/Hi/Desktop/Game/ADA",
 			""
 		]
 	},
@@ -413,6 +441,56 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"themode",
+			"pause = true",
+			"pause",
+			"paused",
+			"fullscreen",
+			"^(.*)$",
+			"--- @module rgb\n",
+			"^(.*)$",
+			"shine",
+			"^(.*)$",
+			"fullscreen =",
+			"fullscreen -",
+			"insertfractalbox",
+			"makeplatbox",
+			".ceiling",
+			"ceiling",
+			"makeplatbox",
+			"fractalbox",
+			"insertfractalbox",
+			",y",
+			"insertfractal",
+			"#themap",
+			"-1",
+			"] =",
+			", {",
+			"table.insert(",
+			"makeplatbox",
+			"{",
+			"themap",
+			"throwinto",
+			"throwint",
+			"thro",
+			"throwinto",
+			"closeto",
+			"xx.j =",
+			"xx.j",
+			"timer =",
+			"timer=",
+			"flickertimer",
+			"==5",
+			"== 5",
+			"greenflicker = true",
+			"\n        else\n          xx.greenflicker = false",
+			"greenflicker = false",
+			"\n          else\n            xx.greenflicker = false",
+			"greenflicker = false",
+			"greenflicker",
+			"green",
+			"greenflicker",
+			"green",
 			"defrunpace",
 			"thecolors",
 			"end",
@@ -490,62 +568,12 @@
 			"false",
 			"fal",
 			"imgur",
-			"0",
-			"following",
-			"build_shader",
-			"build_",
-			"build",
-			"send",
-			"direction",
-			"extern",
-			"extern\n",
-			"extern",
-			"radius",
-			"send",
-			"newshader",
-			"new shader",
-			"extern",
-			"radius",
-			"extern",
-			"send",
-			"radius",
-			"blur1",
-			"actionshot",
-			"direction",
-			"shine",
-			"shine[v]",
-			"shine[",
-			"effects",
-			"radius",
-			"draw",
-			"radius",
-			"...",
-			"draw",
-			"drawq",
-			"gv",
-			"meangle",
-			"joystick:",
-			"flip1",
-			"me.",
-			"me.push",
-			"speedlimit",
-			"getwidth",
-			"screenwidth",
-			"xx.g",
-			"me.g =",
-			"me.y =",
-			"groundspike",
-			"me.bp",
-			"me.purp",
-			"purp",
-			"setpich",
-			"pitch",
-			"purp2"
+			"0"
 		],
 		"highlight": false,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": false,
+		"regex": true,
 		"replace_history":
 		[
 			"drawch1",
@@ -569,29 +597,59 @@
 		"show_context": true,
 		"use_buffer2": true,
 		"whole_word": false,
-		"wrap": false
+		"wrap": true
 	},
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "colorcontrol.lua",
+					"file": "main.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5988,
+						"buffer_size": 26207,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								389,
-								389
+								369,
+								369
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "utilities.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4753,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								198,
+								198
 							]
 						],
 						"settings":
@@ -608,34 +666,93 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "main.lua",
+					"buffer": 2,
+					"file": "menustuff.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 26262,
+						"buffer_size": 23846,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								92,
-								92
+								13855,
+								13855
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Lua/Lua.tmLanguage",
 							"tab_size": 2,
-							"translate_tabs_to_spaces": true,
-							"word_wrap": true
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "fractal.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12689,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2786,
+								2786
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2356.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "FIZIX.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 20487,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								388,
+								388
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 162.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -674,13 +791,13 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 245.0
+		"height": 219.0
 	},
 	"output.find_results":
 	{
 		"height": 0.0
 	},
-	"pinned_build_system": "Packages/User/test.sublime-build",
+	"pinned_build_system": "Packages/User/Love.sublime-build",
 	"project": "ada.sublime-project",
 	"replace":
 	{
@@ -706,12 +823,16 @@
 	},
 	"select_project":
 	{
-		"height": 0.0,
+		"height": 500.0,
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"",
+				"~/Desktop/Test/test.sublime-project"
+			]
 		],
-		"width": 0.0
+		"width": 380.0
 	},
 	"select_symbol":
 	{

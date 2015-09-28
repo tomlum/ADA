@@ -142,7 +142,7 @@ function initmenu()
     fadein = 9
   elseif menu == "color" and oldmenu ~= "color" then
     soscillator = 0
-    finishedloading = false
+    finishedLoading = false
     if themode == nil or themode == "none" then themode = "duel" end
     me.drawontop = function() end
     you.drawontop = function() end
@@ -706,7 +706,7 @@ function drawmenus()
     elseif tilesep < 4000 then
       tilesep = tilesep +  tilesep*.09
     end
-    if finishedloading then
+    if finishedLoading then
       separatespines = true
     end
   end
@@ -895,8 +895,6 @@ function choosestuff()
   elseif not cfup then cflicker = cflicker - 15
   end
 
-  icflicker = cflicker
-
   if menu == "postchoose" then
     rset = true
     lset = true
@@ -925,7 +923,7 @@ function choosestuff()
       if rn > 1000020 and ln > 1000020 and math.abs(soscillator)>400 
         then menu = "prepan"
         yoffset = 0
-        finishedloading = false
+        finishedLoading = false
         separatespines = false
       end
 
