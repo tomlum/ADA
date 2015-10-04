@@ -256,34 +256,10 @@
 	"buffers":
 	[
 		{
-			"file": "main.lua",
+			"file": "DamageTable.lua",
 			"settings":
 			{
-				"buffer_size": 26207,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "utilities.lua",
-			"settings":
-			{
-				"buffer_size": 4753,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "menustuff.lua",
-			"settings":
-			{
-				"buffer_size": 23846,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "fractal.lua",
-			"settings":
-			{
-				"buffer_size": 12689,
+				"buffer_size": 2797,
 				"line_ending": "Unix"
 			}
 		},
@@ -291,7 +267,47 @@
 			"file": "FIZIX.lua",
 			"settings":
 			{
-				"buffer_size": 20487,
+				"buffer_size": 20495,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Hits.lua",
+			"settings":
+			{
+				"buffer_size": 27563,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Animation.lua",
+			"settings":
+			{
+				"buffer_size": 66376,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "ATTACK.lua",
+			"settings":
+			{
+				"buffer_size": 26117,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "colorcontrol.lua",
+			"settings":
+			{
+				"buffer_size": 5996,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "at/GG.lua",
+			"settings":
+			{
+				"buffer_size": 22712,
 				"line_ending": "Unix"
 			}
 		}
@@ -303,10 +319,18 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 127.0,
-		"last_filter": "remove",
+		"height": 392.0,
+		"last_filter": "open",
 		"selected_items":
 		[
+			[
+				"open",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
 			[
 				"remove",
 				"Package Control: Remove Package"
@@ -321,10 +345,6 @@
 			],
 			[
 				"ins",
-				"Package Control: Install Package"
-			],
-			[
-				"instal",
 				"Package Control: Install Package"
 			],
 			[
@@ -370,34 +390,40 @@
 	],
 	"file_history":
 	[
+		"/Users/Hi/Desktop/Game/ADA/Initializers.lua",
 		"/Users/Hi/Desktop/Game/ADA/Joysticks.lua",
+		"/Users/Hi/Desktop/Game/ADA/FIZIX.lua",
+		"/Users/Hi/Desktop/Game/ADA/DamageTable.lua",
+		"/Users/Hi/Desktop/Game/ADA/at/GG.lua",
+		"/Users/Hi/Desktop/Game/ADA/at/BB.lua",
+		"/Users/Hi/Desktop/Game/ADA/Animation.lua",
+		"/Users/Hi/Desktop/Game/ADA/Music.lua",
+		"/Users/Hi/Desktop/Game/ADA/main.lua",
+		"/Users/Hi/Desktop/Game/ADA/monitors.lua",
+		"/Users/Hi/Desktop/Game/ADA/koth.lua",
+		"/Users/Hi/Desktop/Game/ADA/camera.lua",
+		"/Users/Hi/Desktop/Game/ADA/menustuff.lua",
+		"/Users/Hi/Desktop/Game/ADA/Hits.lua",
+		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/Lua/Indent.tmPreferences",
+		"/Users/Hi/Desktop/Game/ADA/colorcontrol.lua",
+		"/Users/Hi/Desktop/Game/ADA/Notes",
+		"/Users/Hi/Desktop/Game/ADA/meandyou.lua",
+		"/Users/Hi/Desktop/Game/ADA/ATTACK.lua",
+		"/Users/Hi/Desktop/Game/ADA/utilities.lua",
+		"/Users/Hi/Desktop/Game/ADA/fractal.lua",
 		"/Users/Hi/Desktop/Test/main.lua",
 		"/Users/Hi/Desktop/Game/ADA/xkcdcolor.lua",
-		"/Users/Hi/Desktop/Game/ADA/colorcontrol.lua",
-		"/Users/Hi/Desktop/Game/ADA/main.lua",
-		"/Users/Hi/Desktop/Game/ADA/fractal.lua",
-		"/Users/Hi/Desktop/Game/ADA/Hits.lua",
-		"/Users/Hi/Desktop/Game/ADA/Animation.lua",
-		"/Users/Hi/Desktop/Game/ADA/at/GG.lua",
-		"/Users/Hi/Desktop/Game/ADA/utilities.lua",
 		"/Users/Hi/Desktop/Game/ADA/at/pp.lua",
-		"/Users/Hi/Desktop/Game/ADA/FIZIX.lua",
 		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/Love.sublime-build",
 		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/test.sublime-build",
 		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
 		"/Users/Hi/Desktop/main.lua",
-		"/Users/Hi/Desktop/Game/ADA/camera.lua",
-		"/Users/Hi/Desktop/Game/ADA/DamageTable.lua",
-		"/Users/Hi/Desktop/Game/ADA/ATTACK.lua",
 		"/Users/Hi/Desktop/Game/ADA/story/ch1/ch1.lua",
 		"/Users/Hi/Desktop/Game/ADA/chaptermanage.lua",
-		"/Users/Hi/Desktop/Game/ADA/menustuff.lua",
 		"/Users/Hi/Desktop/Game/ADA/Lasso.lua",
 		"/Users/Hi/Desktop/Game/ADA/death.lua",
-		"/Users/Hi/Desktop/Game/ADA/meandyou.lua",
 		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/Hi/Desktop/Game/ADA/chaptermanage",
-		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/Lua/Indent.tmPreferences",
 		"/Users/Hi/Desktop/Game/ADA/ada.sublime-project",
 		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/love.sublime-build",
 		"/Users/Hi/Desktop/Game/ADA/conf.lua",
@@ -441,6 +467,110 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"landPauseTime",
+			"shortLandWait",
+			"landingWait",
+			"landingFric",
+			"jForLanding",
+			"fractalLives",
+			"fractalMaxHealth",
+			"wallJumpRange",
+			"vForWallFlinch",
+			"waveFrameRate",
+			"sparkIntensity",
+			"combopause",
+			"boltsflyrelative",
+			"comboPause",
+			"boltsFlyRelative",
+			"rampSpeed",
+			"SlowRate",
+			"drawfeet",
+			"drawboxes",
+			"mapnum",
+			"rampspeed",
+			"collide",
+			"loadNow",
+			"noload",
+			"justone",
+			"musicmute",
+			"debug",
+			"xx.im.im",
+			"xx.im",
+			"drawa",
+			"xx.im",
+			".im",
+			"drawx",
+			"shader",
+			"superjumpratio",
+			"frameswhilelandcantmove",
+			"shortlandwait",
+			"landingwait",
+			"landingfric",
+			"jforlanding",
+			"jt",
+			"fractallives",
+			"fractalmaxhealth",
+			"walljumprange",
+			"vforwallflinch",
+			"waveframerate",
+			"sparkintensity",
+			"combopause",
+			"boltsflyrelative",
+			"minmaxdif",
+			"defspeedminit",
+			"dangerzoomdelta",
+			"dangerzoom",
+			"dangerrampdelta",
+			"rampdelta",
+			"rampnormaldelta",
+			"elseif",
+			"finishedloading",
+			"righty",
+			"lefty",
+			"me.lefty",
+			"me.",
+			"enviro.wall",
+			"wall.png",
+			"oldonescreen",
+			"enviro.wall",
+			"wallx",
+			"onescreen = true",
+			"beige",
+			"xdis",
+			"bar",
+			"beige",
+			"bar",
+			"drawbar",
+			"f",
+			"bob",
+			"icflicker",
+			"cflicker",
+			"mbindent",
+			"loader",
+			"blashader",
+			"--",
+			"bloop = 10",
+			"wallside",
+			"putme",
+			"pwidth",
+			".right",
+			"walljump",
+			"makensparks",
+			"spark",
+			"makenslash",
+			"makeslash",
+			"slashsparks",
+			"removeme",
+			"makenslash",
+			"makeslas",
+			"maken",
+			"b",
+			"makeslashsparks",
+			"decran",
+			"makenslashsparks",
+			".remove",
+			"makensparks",
+			"fightclub",
 			"themode",
 			"pause = true",
 			"pause",
@@ -464,111 +594,7 @@
 			"insertfractal",
 			"#themap",
 			"-1",
-			"] =",
-			", {",
-			"table.insert(",
-			"makeplatbox",
-			"{",
-			"themap",
-			"throwinto",
-			"throwint",
-			"thro",
-			"throwinto",
-			"closeto",
-			"xx.j =",
-			"xx.j",
-			"timer =",
-			"timer=",
-			"flickertimer",
-			"==5",
-			"== 5",
-			"greenflicker = true",
-			"\n        else\n          xx.greenflicker = false",
-			"greenflicker = false",
-			"\n          else\n            xx.greenflicker = false",
-			"greenflicker = false",
-			"greenflicker",
-			"green",
-			"greenflicker",
-			"green",
-			"defrunpace",
-			"thecolors",
-			"end",
-			"rumblemodule",
-			"shake",
-			"vibrate",
-			"flinchingx",
-			"makensparks",
-			"cancombo",
-			"drawsparks",
-			"makensparks",
-			"drawsparks",
-			"makensparks",
-			"drawsparks",
-			"makensparks",
-			"drawsparks",
-			"makenspark",
-			"maken",
-			"makensparks",
-			"fullscre",
-			"drawpart",
-			"drawparticles",
-			"drawparticles()",
-			"drawparticles",
-			"drawsparks",
-			"sparks",
-			"fullscreen",
-			"fullsc",
-			".lives",
-			"ct",
-			"fightclub",
-			"drawch1",
-			"cinematic1draw",
-			"drawchapter1",
-			"chap1update",
-			"oldmenu = menu",
-			"oldmenu",
-			"story",
-			"chapterinit",
-			"chap",
-			"chapter",
-			"file",
-			"yellow",
-			"cameramonitor",
-			"stock",
-			"absol",
-			"hovereff",
-			"grace",
-			"label",
-			"css",
-			"script",
-			"<script",
-			"document",
-			".jpg",
-			"stock.j",
-			"rodib",
-			"start",
-			"hi",
-			"pagebre",
-			".print",
-			"flinch1",
-			"blend",
-			"setblend",
-			"blendmode",
-			"build",
-			"build\n\nbuild",
-			"build",
-			"extern",
-			"direction",
-			"download",
-			"false",
-			"imgur",
-			"fal",
-			"imgur",
-			"false",
-			"fal",
-			"imgur",
-			"0"
+			"] ="
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -576,6 +602,50 @@
 		"regex": true,
 		"replace_history":
 		[
+			"land_pause_time",
+			"short_land_wait",
+			"landing_wait",
+			"landing_fric",
+			"j_for_landing",
+			"fractal_lives",
+			"fractal_max_health",
+			"wall_jump_range",
+			"v_for_wall_flinch",
+			"wave_frame_rate",
+			"spark_intensity",
+			"combo_pause",
+			"bolts_fly_relative",
+			"combopause",
+			"boltsflyrelative",
+			"rampspeed",
+			"slowrate",
+			"drawFeet",
+			"drawBoxes",
+			"mapNum",
+			"rampSpeed",
+			"loadImagesNow",
+			"loadNow",
+			"drawPlayer",
+			"superJumpRatio",
+			"landPauseTime",
+			"shortLandWait",
+			"landingWait",
+			"landingFric",
+			"jForLanding",
+			"fractalLives",
+			"fractalMaxHealth",
+			"wallJumpRange",
+			"vForWallFlinch",
+			"waveFrameRate",
+			"sparkIntensity",
+			"comboPause",
+			"boltsFlyRelative",
+			"minMaxSpeedDif",
+			"defSpeedMInit",
+			"dangerZoomDelta",
+			"dangerZoom",
+			"dangerRampDelta",
+			"finishedLoading",
 			"drawch1",
 			"ch1update",
 			"$ $",
@@ -602,61 +672,29 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "main.lua",
+					"file": "DamageTable.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 26207,
+						"buffer_size": 2797,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								369,
-								369
+								144,
+								144
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "utilities.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4753,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								198,
-								198
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Lua/Lua.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -666,20 +704,80 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "menustuff.lua",
+					"buffer": 1,
+					"file": "FIZIX.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 23846,
+						"buffer_size": 20495,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								13855,
-								13855
+								106,
+								106
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Hits.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 27563,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2659,
+								2659
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 32.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Animation.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 66376,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
 							]
 						],
 						"settings":
@@ -696,20 +794,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "fractal.lua",
+					"buffer": 4,
+					"file": "ATTACK.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12689,
+						"buffer_size": 26117,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2786,
-								2786
+								0,
+								0
 							]
 						],
 						"settings":
@@ -719,27 +817,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2356.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "FIZIX.lua",
+					"buffer": 5,
+					"file": "colorcontrol.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 20487,
+						"buffer_size": 5996,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								388,
-								388
+								0,
+								0
 							]
 						],
 						"settings":
@@ -749,10 +847,40 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 162.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "at/GG.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 22712,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
 					"type": "text"
 				}
 			]
@@ -791,7 +919,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 219.0
+		"height": 135.0
 	},
 	"output.find_results":
 	{
@@ -855,7 +983,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 151.0,
+	"side_bar_width": 208.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

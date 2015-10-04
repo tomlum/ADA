@@ -16,7 +16,23 @@ function colorcombomonitor(xx, x, y)
   lg.print("me.repcounter"..tostring(xx.repcounter), x, y+80)
 end
 
-function cameramonitorf(x,y)
+function cameraoutline()
+        bo(0, 0, screenwidth/2, winheight, "light purple")
+        bo(screenwidth/2, 0, screenwidth/2, winheight, "red")
+
+        if onescreen and not vertone then
+          if me.x < you.x then 
+            bo(screenwidth/2, topy,twidth, winheight/2, "teal")
+            bo(screenwidth/2-twidth+1, bottomy,twidth, winheight/2,"yellow")
+          elseif me.x >= you.x then
+            bo(screenwidth/2-twidth+1, topy,twidth, enviro.screenheight/2, "teal")
+            bo(screenwidth/2, bottomy,twidth, enviro.screenheight/2, "yellow")
+          end
+
+        end
+end
+
+function cameramonitor(x,y)
 
   lg.print("cscale"..tostring(cscale),x,y)
   lg.print("beigedif*cscale"..tostring(beigedif*cscale),x,y+20)
@@ -32,7 +48,7 @@ function cameramonitorf(x,y)
   lg.print("feet2bottom"..tostring(feet2bottom),x,y+220)
 end
 
-function dangermonitorf(x,y)
+function dangermonitor(x,y)
  lg.print("dangerclose"..tostring(dangerclose), x, y)
       lg.print("rampspeed"..tostring(rampspeed), x, y+20)
       lg.print("cscale"..tostring(cscale), x, y+40)

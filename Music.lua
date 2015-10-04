@@ -68,7 +68,7 @@ function repplay(x)
 
 
   randomizepitch = function ()
-    for i,xx in ipairs(hitt) do
+    for i,xx in ipairs(players) do
     xx.blues:setPitch(.7 + (math.random() * .3) )
  
     xx.airpurp2:setPitch(.5 + (math.random() * .3) )
@@ -122,7 +122,7 @@ function repplay(x)
 end
   end
 
-for i,xx in ipairs(hitt) do
+for i,xx in ipairs(players) do
   
   
   xx.redpushsou = love.audio.newSource("sounds/redpush.wav", "stream")
@@ -349,13 +349,9 @@ if i == 2 then
   xx.wallhit = love.audio.newSource("sounds/Purple.wav", "static")
   xx.wallhit:setVolume(SFXV-.47-adj)
 
- 
-  function distan(x,y,a,b)
-    return math.sqrt(math.pow(x - a,2) + math.pow(y - b,2))
-  end
-
-  function distanc(x,y)
-    return math.sqrt(math.pow(x.x - y.x,2) + math.pow(x.y - y.y,2))
+  --distance between two points
+  function p_distance(p1,p2)
+    return math.sqrt(math.pow(p1.x - p2.x,2) + math.pow(p1.y - p2.y,2))
   end
 
   me.pdisadj = 0

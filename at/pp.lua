@@ -15,7 +15,7 @@ apa23 = {im=lg.newImage("me/attack/purple/apa23.png"), xoff = 3, yoff = -4, extr
 
 apa11 = {im=lg.newImage("me/attack/purple/apa11.png"), xoff = 5, yoff = -3, extrah = 5}
 apa12 = {im=lg.newImage("me/attack/purple/apa12.png"), xoff = 13, yoff = 38, extrah = 5}
-apa13 = {im=lg.newImage("me/attack/purple/apa13.png"), xoff = 35, yoff = 10, extrah = 5}
+apa13 = {im=lg.newImage("me/attack/purple/apa13.png"), xoff = 26, yoff = 8, extrah = 5}
 
 pp1back = {im=lg.newImage("me/attack/purple/pp1back.png"), xoff = -2, yoff = 2}
 pp1back2 = {im=lg.newImage("me/attack/purple/pp1back2.png"), xoff = 10, yoff = 38}
@@ -37,7 +37,7 @@ function spikegrow(cur, n, xx)
     local growmount = vv[5]+(math.random()*(spikesize))*cur.lr
 
     if growmount > themap.plats[xx.plat.n].x1 and 
-    growmount < themap.plats[xx.plat.n].x2 then
+      growmount < themap.plats[xx.plat.n].x2 then
       vv[5] = growmount
     end
   elseif n == 2 then
@@ -45,7 +45,7 @@ function spikegrow(cur, n, xx)
     vv[4] = vv[4]-(math.random(10, 20)+math.random()*(cur.t/5))
     local growmount = vv[5]+(math.random(4, 10)+math.random()*(cur.t/5))*cur.lr
     if growmount > themap.plats[xx.plat.n].x1 and 
-    growmount < themap.plats[xx.plat.n].x2 then
+      growmount < themap.plats[xx.plat.n].x2 then
       vv[5] = growmount
     end
   end
@@ -94,16 +94,16 @@ function dopurpakspikes(xx)
       lverts2[5]= xx.mid+(-xx.lr*20*(sn))
       lverts2[6]= xx.feet
       if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
-      lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
+        lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
         table.insert(xx.spikes,
           {verts = lverts,
-            t = 0, lr=-xx.lr}) 
+          t = 0, lr=-xx.lr}) 
       end
       if lverts2[1] > themap.plats[xx.plat.n].x1+spikesize and 
-      lverts2[1] < themap.plats[xx.plat.n].x2-spikesize then
+        lverts2[1] < themap.plats[xx.plat.n].x2-spikesize then
         table.insert(xx.spikes,
           {verts = lverts2,
-            t = 0, lr=xx.lr})
+          t = 0, lr=xx.lr})
       end
 
 
@@ -123,7 +123,7 @@ end
 
 function spikedraw(xx)
   for i = #xx.spikes, 1, -1 do
-    vcs(thecolors[1].c)
+    setColor(thecolors[1].c)
     local cur = xx.spikes[i] 
     if cur.t >= -3 then
 
@@ -155,9 +155,6 @@ end
 
 function spikeupdate(xx)
 
-
-
-
   for i = #xx.spikes, 1, -1 do
     local cur = xx.spikes[i] 
     local vv = cur.verts
@@ -186,7 +183,7 @@ function spikeupdate(xx)
           z.ft = z.ft + p4ft
           z.health = z.health - at.p.k.dam
 
-        end)
+          end)
     elseif cur.t >=6 then
       hboxcs(xx,0, 
         {x=vv[1], y = vv[2]},
@@ -198,7 +195,7 @@ function spikeupdate(xx)
           if z.flinch and math.abs(z.v)>5 then
             z.flinchway = -z.flinchway
           end
-        end)
+          end)
       hboxcs(xx,0, 
         {x=vv[3], y = vv[4]},
         {x=vv[3], y = vv[4]},
@@ -212,7 +209,7 @@ function spikeupdate(xx)
           z.ft = z.ft + p4ft
           z.health = z.health - at.p.k.dam/3
 
-        end)
+          end)
     end
 
 
@@ -301,7 +298,7 @@ function pandp(xx)
     xx.cmbo=true--combo(xx)
     xx.cancombo = true
     if xx.purplanding then
-    xx.landingcounter = 0
+      xx.landingcounter = 0
     end
   end
 
@@ -311,7 +308,7 @@ function pandp(xx)
     xx.stop = true
   end
 
-  if xx.type ==1 and xx.animcounter < pa2busytime and xx.animcounter > 0  then
+  if xx.type == 1 and xx.animcounter < pa2busytime and xx.animcounter > 0  then
     xx.anibusy = true
   elseif xx.type == 2 and xx.animcounter < pa4busytime and xx.animcounter > 0  then
     xx.anibusy = true
@@ -378,7 +375,7 @@ function pandp(xx)
                 shakez(at.p.p2.z)
 
 
-              end)
+                end)
           end
         elseif xx.animcounter < at.p.p2.t+4 then
           xx.im = pp1back2
@@ -397,7 +394,7 @@ function pandp(xx)
               shakez(at.p.p2.z)
 
 
-            end)
+              end)
         elseif xx.animcounter < at.p.p2.t+39 then
           if xx.animcounter == at.p.p2.t+5 then 
             repplay(xx.purp2)
@@ -406,76 +403,76 @@ function pandp(xx)
 
           if xx.animcounter <= at.p.p2.t+5 then 
             hall(xx.id, function(z) if z.plat.n == xx.plat.n
-                and math.abs(z.x) - math.abs(xx.x) < quakerange then
-                  z.j = 10
-                  z.flinch = true
-                  z.ft = z.ft+at.p.p.ft*2/3
-                end end)
-              hboxcs(xx, xx.id, 
-                {x=xx.mid, y = xx.y+22},
-                {x=xx.mid+xx.v+(xx.lr*-55), y = xx.y+66},
-                {x=xx.mid+xx.v+(xx.lr*-44), y = xx.y+65},
-                {x=xx.mid+(xx.lr*-12), y = me.y+37},
-                function(z)
-                  xx.cancombo = true
-                  z.health = z.health - at.p.p2.dam
-                  z.v = z.v-xx.lr*at.p.p2.kb + xx.v
-                  z.flinch = true
-                  z.ft = z.ft + at.p.p2.ft
-                  shakez(at.p.p2.z)
+              and math.abs(z.x) - math.abs(xx.x) < quakerange then
+              z.j = 10
+              z.flinch = true
+              z.ft = z.ft+at.p.p.ft*2/3
+              end end)
+            hboxcs(xx, xx.id, 
+              {x=xx.mid, y = xx.y+22},
+              {x=xx.mid+xx.v+(xx.lr*-55), y = xx.y+66},
+              {x=xx.mid+xx.v+(xx.lr*-44), y = xx.y+65},
+              {x=xx.mid+(xx.lr*-12), y = me.y+37},
+              function(z)
+                xx.cancombo = true
+                z.health = z.health - at.p.p2.dam
+                z.v = z.v-xx.lr*at.p.p2.kb + xx.v
+                z.flinch = true
+                z.ft = z.ft + at.p.p2.ft
+                shakez(at.p.p2.z)
 
 
                 end)
-              xx.im = pp1back3
-            end
-
-          else
-            xx.animcounter = 0
+            xx.im = pp1back3
           end
+
         else
+          xx.animcounter = 0
+        end
+      else
 
-          if xx.animcounter < 20 then
-            xx.im = ppunch1
+        if xx.animcounter < 20 then
+          xx.im = ppunch1
 
-          elseif xx.animcounter < 21 then
+        elseif xx.animcounter < 21 then
 
-            xx.im = ppunch2
-            makenrubble(xx.mid+xx.lr*20, xx.y+50,3*xx.lr,3,10)
-            repplay(xx.purp2)
-            if #joysticks>=xx.id then
-              xx.joystick:setVibration(1,1)
-            end
-            hall(xx.id, function(z) if z.plat.n == xx.plat.n
-                and math.abs(z.x) - math.abs(xx.x) < quakerange then
-                  z.j = 10
-                  z.flinch = true
-                  z.ft = z.ft+at.p.p.ft*2/3
-                end end)
+          xx.im = ppunch2
+          makenrubble(xx.mid+xx.lr*20, xx.y+50,3*xx.lr,3,10)
+          repplay(xx.purp2)
+          if #joysticks>=xx.id then
+            xx.joystick:setVibration(1,1)
+          end
+          hall(xx.id, function(z) if z.plat.n == xx.plat.n
+            and math.abs(z.x) - math.abs(xx.x) < quakerange then
+            z.j = 10
+            z.flinch = true
+            z.ft = z.ft+at.p.p.ft*2/3
+            end end)
 
-              hboxcs(xx, xx.id, 
-                {x=xx.mid, y = xx.y+35},
-                {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+26},
-                {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+49},
-                {x=xx.mid, y = xx.y+6},
-                function(z)
-                  xx.cancombo = true
-                  z.health = z.health - at.p.p.dam
-                  z.v = xx.lr*at.p.p.kb + xx.v
-                  z.flinch = true
-                  z.ft = z.ft + at.p.p.ft/3
-                  z.j=0
-                  shakez(at.p.p.z)
+          hboxcs(xx, xx.id, 
+            {x=xx.mid, y = xx.y+35},
+            {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+26},
+            {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+49},
+            {x=xx.mid, y = xx.y+6},
+            function(z)
+              xx.cancombo = true
+              z.health = z.health - at.p.p.dam
+              z.v = xx.lr*at.p.p.kb + xx.v
+              z.flinch = true
+              z.ft = z.ft + at.p.p.ft/3
+              z.j=0
+              shakez(at.p.p.z)
 
 
-                end)
+              end)
 
-              if xx.repcounter == 1 then
-                xx.v = xx.v + (xx.lr*5)
-              end
+          if xx.repcounter == 1 then
+            xx.v = xx.v + (xx.lr*5)
+          end
 
-            elseif xx.animcounter < 55 then
-              xx.im = ppunch3
-              if xx.animcounter >= pa2busytime then 
+        elseif xx.animcounter < 55 then
+          xx.im = ppunch3
+          if xx.animcounter >= pa2busytime then 
                 xx.cmbo=true--combo(xx)
               end
 
@@ -513,17 +510,17 @@ function pandp(xx)
               lverts2[6]= xx.feet
 
               if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
-              lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
+                lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
                 table.insert(xx.spikes, 
                   {verts = lverts,
-                    t = 0, lr=xx.lr})
+                  t = 0, lr=xx.lr})
                 repplay(xx.purpsound)
               end
               if lverts2[1] > themap.plats[xx.plat.n].x1+spikesize and 
-              lverts2[1] < themap.plats[xx.plat.n].x2-spikesize then
+                lverts2[1] < themap.plats[xx.plat.n].x2-spikesize then
                 table.insert(xx.spikes, 
                   {verts = lverts2,
-                    t = 0, lr=xx.lr})
+                  t = 0, lr=xx.lr})
               end
 
             else
@@ -546,65 +543,65 @@ function pandp(xx)
               --  {verts = lverts2,
               --    t = 0, lr=-1})
 
-              if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
-              lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
+if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
+  lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
 
-                repplay(xx.purpsound)
-                if math.random() > .5 then
-                  table.insert(xx.spikes,
-                    {verts = lverts,
-                      t = 0, lr=-1})
-                else
-                  table.insert(xx.spikes,
-                    {verts = lverts,
-                      t = 0, lr=1})
-                end
-              end
-            end
-            if #joysticks>=xx.id then
-              xx.joystick:setVibration(1,1)
-            end
+  repplay(xx.purpsound)
+  if math.random() > .5 then
+    table.insert(xx.spikes,
+      {verts = lverts,
+      t = 0, lr=-1})
+  else
+    table.insert(xx.spikes,
+      {verts = lverts,
+      t = 0, lr=1})
+  end
+end
+end
+if #joysticks>=xx.id then
+  xx.joystick:setVibration(1,1)
+end
 
 
-          elseif xx.animcounter < 60 then
-            xx.im = stomp2
+elseif xx.animcounter < 60 then
+  xx.im = stomp2
 
-            if  xx.a4 and not xx.holda and xx.numofspikes< at.p.k.max then 
-              xx.animcounter = 17
-            end
-          elseif xx.animcounter < 70 then
-            xx.im = stomp2
-            xx.numofspikes = 0
+  if  xx.a4 and not xx.holda and xx.numofspikes< at.p.k.max then 
+    xx.animcounter = 17
+  end
+elseif xx.animcounter < 70 then
+  xx.im = stomp2
+  xx.numofspikes = 0
 
-          else
-            xx.im = stomp2
-            xx.animcounter = 0
-          end
+else
+  xx.im = stomp2
+  xx.animcounter = 0
+end
 
-        elseif xx.type ==3 then
-          if xx.animcounter < 20 then
-            xx.im = pa11
+elseif xx.type ==3 then
+  if xx.animcounter < 20 then
+    xx.im = pa11
 
-          elseif xx.animcounter < 21 then
-            xx.im = pa12
-          elseif xx.animcounter < 40 then
-            xx.im = pa13
-            if xx.animcounter == 21 then
+  elseif xx.animcounter < 21 then
+    xx.im = pa12
+  elseif xx.animcounter < 40 then
+    xx.im = pa13
+    if xx.animcounter <= 22 then
 
-              makenrubble(xx.mid, xx.feet-5, 5,4,7)
-              makenrubble(xx.mid, xx.feet-5, -5,4,7)
+      makenrubble(xx.mid, xx.feet-5, 5,4,7)
+      makenrubble(xx.mid, xx.feet-5, -5,4,7)
 
-              repplay(xx.purpsound)
-              repplay(xx.purp2)
-              hall(xx.id, function(z) if z.plat.n == xx.plat.n then
-                    z.j = at.p.u.kj 
-                    xx.cancombo = true
-                    z.flinch = true
-                    z.ft = z.ft+at.p.u.ft
-                    z.health = z.health - at.p.u.dam
-                  end end)
+      repplay(xx.purpsound)
+      repplay(xx.purp2)
+      hall(xx.id, function(z) if z.plat.n == xx.plat.n then
+        z.j = at.p.u.kj 
+        xx.cancombo = true
+        z.flinch = true
+        z.ft = z.ft+at.p.u.ft
+        z.health = z.health - at.p.u.dam
+        end end)
 
-              elseif xx.animcounter > 23 then
+    elseif xx.animcounter > 23 then
                 xx.cmbo=true--combo(xx)
               end
             else 
@@ -619,7 +616,7 @@ function pandp(xx)
               xx.im = apa22
             elseif xx.animcounter < 50 then
               xx.im = apa23
-              if xx.animcounter == 17 then
+              if xx.animcounter <= 18 then
 
                 repplay(xx.airpurp1)
                 hboxcs(xx, xx.id, 
@@ -639,13 +636,13 @@ function pandp(xx)
                       z.g = false
                     end
                     shakez(at.p.ap.z)
-                  end)
+                    end)
               end
             end
 
 
           elseif xx.type == 5 then
-              xx.purplanding = true 
+            xx.purplanding = true 
             if xx.animcounter < 3 then
               xx.animcounter = 1
               xx.im=apk1
@@ -662,12 +659,12 @@ function pandp(xx)
               xx.animcounter = 0
             end
 
-          elseif xx.type ==6 then
+          elseif xx.type == 6 then
             if xx.animcounter < 15 then
               xx.im = apa11
             elseif xx.animcounter < 17 then
               xx.im = apa12
-              if xx.animcounter == 15 then
+              if xx.animcounter <= 16 then
                 xx.j = xx.j + at.p.au.kj 
                 xx.v = xx.v - at.p.au.kb*xx.lr 
                 repplay(xx.airpurp2)
@@ -688,7 +685,7 @@ function pandp(xx)
                     shakez(at.p.au.z)
 
 
-                  end)
+                    end)
               end
             elseif xx.animcounter < 50 then
               xx.im = apa13

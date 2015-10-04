@@ -1,3 +1,24 @@
+-----Naming Conventions-----
+--me = player 1, you = player 2
+--xx = parameter for either player
+--v = horizontal velocity
+--j = vertical velocity
+--can i remove me.x entirely?
+--can't kick combo out of purple kick
+
+--hide initial sparks
+--if actionshot during another actionshot, increase actionshot time
+--fix orange no 
+--air purple spikes aren't going away
+--pause is broken
+--DIRECTION OF PURPLE AFFECTS HITTING V AND J
+--xx.type be more meaningful than 1 - 6
+--apa13 xoff is incorrect
+--implement action_done on all attacks
+--can hboxcs use colon and self?
+--does xx.hit work?
+--fix rumble
+--make jump more natural?
 
 require "initializers"
 
@@ -8,14 +29,14 @@ mercolor = 2
 youlcolor = 3
 yourcolor = 4
 therampspeed = .2
-mapnum = 1
+mapNum = 1
 rampspeed= therampspeed
-drawboxes = false
-drawfeet = false
+drawBoxes = false
+drawFeet = false
 volume=0
 fullscreen = false
 readout = false
-putmehere = 200
+putmehere = 1000
 putyouhere = 1025
 menu = "title"
 chapter = 1
@@ -23,10 +44,9 @@ oldchapter = "bob"
 lassoisathing = false
 dangerCloseIsAThing = true
 
-cameramonitor = false
 if menu == "play" then
   loadImagesNow = true
-  mapnum = 2
+  mapNum = 2
   placespeople = true 
 end
 mute = false
@@ -35,16 +55,11 @@ test123 = false
 
 initLove()
 
-if fullscreen then 
-  love.window.setMode(1280, 800, {resizable=true, fullscreen = true, vsync=true})
-else
-  love.window.setMode(1280/1.5, 800/1.5, {resizable=true, fullscreen = false, vsync=true})
-end
 
 initDependencies()
 
 if loadImagesNow then
-  themap = themaps[mapnum]
+  themap = themaps[mapNum]
 end
 
 function love.load()
@@ -52,7 +67,6 @@ function love.load()
   initPlayer(you)
   initWorld()
 
-  finishedLoading = false
 
   stagey = 0
   stagenum = 0
@@ -111,8 +125,8 @@ function love.load()
   if fightclub then 
     themode = "fractal"
     menu = "play"
-    mapnum = 100
-    themap = themaps[mapnum]
+    mapNum = 100
+    themap = themaps[mapNum]
     placespeople = true
     while(not finishedLoading) do
       whatlevel()
@@ -189,11 +203,11 @@ function love.update()
     if 
       love.keyboard.isDown("z")
       then slowt = slowt + 1
-      if slowt > SlowRate then slowt = 0
+      if slowt > slowrate then slowt = 0
       end
     else 
-      SlowRate = 10
-      slowt = SlowRate
+      slowrate = 10
+      slowt = slowrate
     end
 
 
@@ -238,7 +252,7 @@ function love.update()
         end
       end
 
-      if slowt == SlowRate and not pause and not me.actionshot 
+      if slowt == slowrate and not (pause or hitpause) and not me.actionshot 
         then
 
         if me.dodge or me.block
@@ -264,6 +278,9 @@ function love.update()
         me.next = me.feet - me.j*.9*me.rampspeed
 
 
+        me.oldj = me.j
+        you.oldj = you.j
+
         me.oldv = me.v
         you.oldv = you.v
 
@@ -276,7 +293,7 @@ function love.update()
       --if here then slideycling to person
       camerafol()
 
-      if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
+      if slowt == slowrate and not me.actionshot and not you.actionshot and not (pause or hitpause) then
 
         updateboxes()
         updateparticles()
@@ -316,7 +333,7 @@ function love.update()
       actionshotstuff(you)
 
 
-      if slowt == SlowRate and not me.actionshot and not you.actionshot and not pause then
+      if slowt == slowrate and not me.actionshot and not you.actionshot and not (pause or hitpause) then
 
         whoupdatesfirst = math.random()
         if whoupdatesfirst>.5 then
@@ -485,39 +502,7 @@ function love.update()
         end
       end
 
-      cclear()
-
-      if cameramonitor then
-        bo(0, 0, screenwidth/2, winheight, "light purple")
-        bo(screenwidth/2, 0, screenwidth/2, winheight, "red")
-
-        if onescreen and not vertone then
-          if me.x < you.x then 
-            bo(screenwidth/2, topy,twidth, winheight/2, "teal")
-            bo(screenwidth/2-twidth+1, bottomy,twidth, winheight/2,"yellow")
-          elseif me.x >= you.x then
-            bo(screenwidth/2-twidth+1, topy,twidth, enviro.screenheight/2, "teal")
-            bo(screenwidth/2, bottomy,twidth, enviro.screenheight/2, "yellow")
-          end
-
-        end
-      end
-
-
-      if not(oldonescreen and onescreen) then
-        lg.setColor(53, 53, 53)
-        lg.rectangle("fill", wallx, 0, 14*width, enviro.screenheight)
-      end
-      if not(oldvertone and vertone) then
-        lg.setColor(53, 53, 53)
-        lg.rectangle("fill",(lg.getWidth()/2)-twidth,(enviro.screenheight/2)-bwidth/2,twidth*2,bwidth)
-        lg.setColor(255, 255, 255, 255)
-      end
-      if not fightclub then
-        go()
-      end
-      drawroulettenumbers()
-      cinemabars()
+drawoverlays()
 
 
     elseif menu == "story" then
@@ -541,8 +526,8 @@ function love.update()
         "       type: "..tostring(me.type),10,30)
       lg.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
       lg.print("j "..tostring(you.j), 10, 70)
-      if #hitt == 3 then
-        lg.print(tostring(hitt[3].mode), 10, 90)
+      if #players == 3 then
+        lg.print(tostring(players[3].mode), 10, 90)
       end
     end
 
@@ -582,13 +567,7 @@ function love.update()
 
 
 
-    if pause then
-      lg.sdraw(pausescreen,0,0,0,10,10)
-    end
 
-
-
-    --cameramonitorf(100,100)
 
 
     setControllers()
@@ -601,7 +580,7 @@ function love.update()
 
     paralaxshake = false
 
-    if not love.keyboard.isDown("3") and not love.keyboard.isDown("4") then
+    if not love.keyboard.isDown("3") and not love.keyboard.isDown("4") and not love.keyboard.isDown("2") then
 
       boxstop = false
     end
@@ -636,16 +615,26 @@ function love.update()
     end
     ]]--
     if fightclub then
-      lg.print("me.health: "..tostring(me.health), 400,360)
-      lg.print("you.health: "..tostring(you.health), 400,380)
-      lg.print("lassocracks: "..tostring(lassocracks), 400,400)
-      lg.print("ready2break: "..tostring(readytobreak), 400,420)
-      lg.print("oldonescreen and onescreen: "..tostring(oldonescreen and onescreen), 400,440)
+      
+      lg.print("pause: "..tostring(pause), 400,360)
+      lg.print("me.start: "..tostring(me.start), 400,380)
+      lg.print("me.v: "..tostring(me.v), 400,400)
+      lg.print("me.j: "..tostring(me.j), 400,420)
+      lg.print("stophit: "..tostring(stophit), 400,440)
       changebackgroundcolor(4)
+      
     end
     golasso()
 
-
-    
-
+    if love.keyboard.isDown("2") and not boxstop  then
+      boxstop = true
+      blossom(me,you, 3, 6, .2)
+    end
+    for i,v in ipairs(blooms) do
+      for j,k in ipairs(v.points) do
+        lg.print(tostring(k.v), 30*i, j*30)
+      end
+    end
+    lg.print("FOR JOSH", 100, 100)
+    pauseonhit()
   end

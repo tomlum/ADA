@@ -21,10 +21,11 @@ seafoam = {r=0,g=255,b=255}
 turq = {r=145,g=222,b=161}
 pink = {r=255,g=0,b=255}
 
-color1 = xcolor("deep turquoise")
-color2 = xcolor("neon green")
-color3 =  xcolor("orange pink")
-color4 = xcolor("dark seafoam")
+color1 = xcolor("rich purple")
+color2 = xcolor("flat blue")
+--orange pink
+color3 =  xcolor("blood orange")
+color4 = xcolor("indian red")
 
 --color1 = xcolor("dark mauve")
 --color2 = xcolor("dark gold")
@@ -87,7 +88,7 @@ thecolors[-1] = {n=-1,c={r = 0, g = 0, b = 0},
 
 
 
-if fightclub or noload then
+if fightclub or loadImagesNow then
   me.rightc = thecolors[mercolor]
   you.rightc = thecolors[yourcolor]
   me.leftc = thecolors[melcolor]
@@ -179,7 +180,7 @@ function ColorChanging(xx)
     if xx.oldcctn ~= xx.cchangeto.n and xx.oldcctn ~= 0 then
       xx.atcc = false
     end
-    if xx.cct < colorchangetime and (not comboPause or (xx.animcounter == 0 or xx.actionshot))  then
+    if xx.cct < colorchangetime and (not combo_pause or (xx.animcounter == 0 or xx.actionshot))  then
       xx.cct = xx.cct + 1
       --[[
       if xx.cct > 0 then

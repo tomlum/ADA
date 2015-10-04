@@ -255,7 +255,7 @@ end
 function nearestplayer(x, y)
   local dis = 10000000
   local theid = 0
-  for i,v in ipairs(hitt) do
+  for i,v in ipairs(players) do
     if v.player ~= nil then
       if math.sqrt((v.x-x)^2 + (v.y+v.height/2-y)^2) < dis then 
         theid = i
@@ -264,7 +264,7 @@ function nearestplayer(x, y)
     end
 
   end
-  return hitt[theid]
+  return players[theid]
 
 end
 
@@ -344,7 +344,6 @@ function monbite(xx)
   elseif xx.animt <4*2 then xx.im = ea3
   elseif xx.animt <4*3 then xx.im = ea4
   elseif xx.animt <4*4 then xx.im = ea5
-              --xx.hit = false
 elseif xx.animt <4*5+10+10 then 
   xx.im = ea6
   if xx.animt < 4*4+1 and rampcanhit then

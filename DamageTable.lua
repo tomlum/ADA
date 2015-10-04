@@ -1,26 +1,29 @@
-boltsFlyRelative = true
-comboPause = false
+hitpauseamount = 12
 
-sparkIntensity = 2
+vforrunningattack = 5
+
+bolts_fly_relative = true
+combo_pause = false
+
+spark_intensity = 2
 
 
-waveFrameRate = 8 --(2 is fast, higher is lower)
+wave_frame_rate = 8 --(2 is fast, higher is lower)
 
-vForWallFlinch = 10
+v_for_wall_flinch = 10
 
-wallJumpRange = 3.5
+wall_jump_range = 3.5
 
 --FRACTAL
-fractalMaxHealth = 30
-fractalLives = 4
-
+fractal_max_health = 3000
+fractal_lives = 4
 
 --Landing
-jForLanding = 20	--j necessary for a landing
-landingFric = .3	--friction incurred from landing
-landingWait = 13	--amount of pause from landing
-shortLandWait = 10	--amount of pause from a short landing
-landPauseTime = 8	--# of frames during landing when you can't move
+j_for_landing = 20	--j necessary for a landing
+landing_fric = .3	--friction incurred from landing
+landing_wait = 13	--amount of pause from landing
+short_land_wait = 10	--amount of pause from a short landing
+land_pause_time = 8	--# of frames during landing when you can't move
 
 --Jumping
 regJT = 0	--default jumptime
@@ -38,7 +41,7 @@ rampnormaldelta = .008
 dangerRampDelta = rampnormaldelta*1.5
 dangerbarey = 70
 --only for maxzoom
-dangerZoom = .45
+dangerZoom = .4
 dangerZoomDelta = .001
 defSpeedMInit = 6
 minMaxSpeedDif = 4
@@ -110,9 +113,6 @@ fallflinchtime = 55
 
 psft = 75
 psdam = 5
-
-tornadodur = 1000
-windpush = 5
 
 windft = 4
 

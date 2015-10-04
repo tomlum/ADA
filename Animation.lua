@@ -283,12 +283,6 @@ function cinemabars()
     barsmovein = -4
   end
   barey = 120*(1-rampspeed)
-  lg.setShader()
-  lg.setColor(0,0,0)
-  lg.srectangle("fill",0,0,1440,barey)
-  lg.srectangle("fill",0,900,1440,-barey)
-  lg.setColor(255,255,255)
-
 
 
 end
@@ -483,9 +477,9 @@ if placespeople then
 
 
   if themode == "fractal" then 
-    you.lives = fractalLives
-    me.lives = fractalLives
-    maxhealth = fractalMaxHealth
+    you.lives = fractal_lives
+    me.lives = fractal_lives
+    maxhealth = fractal_max_health
   elseif themode == "duel" then 
     maxhealth = 150
   elseif themode == "koth" then 
@@ -520,10 +514,10 @@ if placespeople then
 
 
 
-  elseif mapnum == 1 then
+  elseif mapNum == 1 then
     me.y = themaps[1].floor - 200
     you.y = themaps[1].floor - 200
-    if noload then
+    if loadImagesNow then
       enviro.stage=lg.newImage( "enviro/astreet.png")
       enviro.paralax=lg.newImage("enviro/paralax.png")
       enviro.paralax2=lg.newImage("enviro/paralax2.png")
@@ -555,9 +549,9 @@ if placespeople then
 
 
 
-    elseif mapnum == 2 then
+    elseif mapNum == 2 then
 
-      if noload then 
+      if loadImagesNow then 
 
         enviro.paralax = lg.newImage("enviro/libraryparalax.png")
         enviro.paralax2 = lg.newImage("enviro/libraryparalax2.png")
@@ -589,8 +583,8 @@ if placespeople then
 
       thesong = song2
 
-    elseif mapnum == 3 then
-      if noload then 
+    elseif mapNum == 3 then
+      if loadImagesNow then 
 
         enviro.paralax = lg.newImage("enviro/floorsparalax.png")
         enviro.stage = lg.newImage( "enviro/floors.png")
@@ -624,8 +618,8 @@ if placespeople then
 
     end
 
-    for i,v in ipairs(hitt) do
-      hitt[i].oldpy = hitt[i].y 
+    for i,v in ipairs(players) do
+      players[i].oldpy = players[i].y 
     end
 
   end
@@ -751,7 +745,7 @@ function drawPlayer(xx)
   drawcolorstuff(xx)
   bolttraildraw(xx)
 
-  if drawfeet then
+  if drawFeet then
     local pextra = 0
     if xx.im.extrah ~= nil then
       pextra = xx.im.extrah
@@ -982,11 +976,13 @@ blackn = 0
 glassn = 0
 glassclarity = 255
 elar = frana
-
+function drawbackparticles()
+  blooms:draw()
+  drawsparks()
+end
 
 function drawparticles()
   drawleaves()
-  drawsparks()
   drawdust()
   drawglass()
   drawrubble()
@@ -1006,6 +1002,7 @@ function updateparticles()
   updatewater()
   updatepapers()
   updatecolorboxes()
+  blooms:update()
 end
 
 function drawpapers()
@@ -1304,7 +1301,7 @@ function updatepapers()
                 temp.v = temp.v/2
               end
             end
-            for j,k in ipairs(hitt) do 
+            for j,k in ipairs(players) do 
               hline(v, 10000,
                 {x=v.x, y=v.y},
                 {x=v.x+v.v, y=v.y-v.j},
@@ -1746,7 +1743,7 @@ end
 
         for i,v in ipairs(waves) do
           v.x = (screenwidth/24) * v.n
-          if oddeven%waveFrameRate == 1 then
+          if oddeven%wave_frame_rate == 1 then
             if v.n >= 1 then v.v = waves[i+1].v
               v.y = v.y - v.v
             else 
@@ -1989,7 +1986,7 @@ end
 
   function makensparks(ex,why,ve, jy, arr,gee,bee, n)
     local force = ve+jy/2
-    for i = n*sparkIntensity, 1, -1 do
+    for i = n*spark_intensity, 1, -1 do
       local flip1 = 1
       local flip2 = 1
       if math.random()>.5 then
@@ -2022,15 +2019,15 @@ end
     for i = 0, n do
       if vee > 0 then
         if jay < 0 then
-          table.insert(sparks,{x = ex, y = why, v=decran(0,vee), j = decran(jay,0),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
+          table.insert(sparks,{x = ex, y = why, v=floRan(0,vee), j = floRan(jay,0),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
         else
-          table.insert(sparks,{x = ex, y = why, v=decran(0,vee), j = decran(0,jay),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
+          table.insert(sparks,{x = ex, y = why, v=floRan(0,vee), j = floRan(0,jay),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
         end
       else
         if jay < 0 then
-          table.insert(sparks,{x = ex, y = why, v=decran(vee,0), j = decran(jay,0),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
+          table.insert(sparks,{x = ex, y = why, v=floRan(vee,0), j = floRan(jay,0),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
         else
-          table.insert(sparks,{x = ex, y = why, v=decran(vee,0), j = decran(0,jay),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
+          table.insert(sparks,{x = ex, y = why, v=floRan(vee,0), j = floRan(0,jay),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
         end
       end
     end

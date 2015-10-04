@@ -85,8 +85,8 @@ oldplat = kothplat
   ranplattimer = ranplattimer + 1 
   
     while(kothplat == nil or kothplat.floor) or (kothplat==oldplat) do
-      local rannum = math.random(1,#themaps[mapnum].plats)
-      kothplat = themaps[mapnum].plats[rannum]
+      local rannum = math.random(1,#themaps[mapNum].plats)
+      kothplat = themaps[mapNum].plats[rannum]
     end
 
 end

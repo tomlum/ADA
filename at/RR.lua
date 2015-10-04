@@ -182,7 +182,7 @@ function randr(xx)
         xx.combo = xx.combo + 1
         xx.repcounter = 1
         xx.type = 2
-        xx.hit = false
+        --xx.hit = false
       elseif (xx.a1) and not xx.holda then
         xx.animcounter = 1
         xx.combo = xx.combo + 1
@@ -321,7 +321,7 @@ function randr(xx)
 
       elseif xx.animcounter < 105 then
         xx.im = redcounter2
-        for i,v in ipairs(hitt) do
+        for i,v in ipairs(players) do
           if v.id ~= xx.id then
             v.hit = false
           end
@@ -411,11 +411,11 @@ function randr(xx)
         elseif xx.rlvl == 1 then
           xx.im = counterat2
 
-          hboxcs(xx, xx.id, 
-            {x=xx.mid+(xx.lr*46.1), y = xx.y+21},
-            {x=xx.mid+xx.v+(xx.lr*65), y = xx.y+23-xx.j},
-            {x=xx.mid+xx.v+(xx.lr*65), y = xx.y+23-xx.j},
-            {x=xx.mid+(xx.lr*46.1), y = xx.y+41},
+          hboxOffset(xx, xx.id, 
+            {x=xx.mid+(xx.lr*23), y = xx.y+18},
+            {x=xx.mid+xx.v+(xx.lr*80), y = xx.y+9-xx.j},
+            {x=xx.mid+xx.v+(xx.lr*80), y = xx.y+37-xx.j},
+            {x=xx.mid+(xx.lr*23), y = xx.y+27},
             function(z)
               xx.cancombo = true
               z.v = z.v/3+xx.lr*at.r.k.kb+xx.v
@@ -426,23 +426,6 @@ function randr(xx)
               end
               shakez(at.r.k.z)end)
             repplay(xx.redsound3)
-
-
-            hboxcs(xx, xx.id, 
-              {x=xx.mid+(xx.lr*11), y = xx.y+22},
-              {x=xx.mid+xx.v+(xx.lr*45), y = xx.y+9-xx.j},
-              {x=xx.mid+xx.v+(xx.lr*45), y = xx.y+42-xx.j},
-              {x=xx.mid+(xx.lr*10), y = xx.y+31},
-              function(z)
-                xx.cancombo = true
-                z.v = z.v/3+xx.lr*at.r.k.kb+xx.v
-                if not (z.block and z.lr == -xx.lr) then
-                  z.health = z.health - (at.r.k.dam+at.r.p.delta*xx.rlvl)
-                  z.flinch = true
-                  z.ft = z.ft+at.r.k.ft+at.r.k.delta*xx.rlvl
-                end
-                shakez(at.r.k.z)
-              end)
 
           elseif xx.rlvl == 2 then
             xx.im = counterat3

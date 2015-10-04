@@ -47,8 +47,8 @@ end
 function kothrespawn(xx)
   local newplat = kothplat
   while(newplat == kothplat) do
-    local rannum = math.random(1,#themaps[mapnum].plats)
-    local newplat = themaps[mapnum].plats[rannum]
+    local rannum = math.random(1,#themaps[mapNum].plats)
+    local newplat = themaps[mapNum].plats[rannum]
     xx.gohere = {}
     xx.gohere.x = math.random(newplat.x1+15, newplat.x2-15)
     xx.gohere.y = newplat.y-100
@@ -254,9 +254,9 @@ table.insert(themaps[3].boxes, {p1 = {x = 1536, y = 3580},  size = 5, kind = "pa
 
 
 function updateboxes()
-  if themaps[mapnum].boxes ~= nil and not pause then
-    for i,xx in ipairs(hitt) do 
-      for j,b in ipairs(themaps[mapnum].boxes) do
+  if themaps[mapNum].boxes ~= nil and not pause then
+    for i,xx in ipairs(players) do 
+      for j,b in ipairs(themaps[mapNum].boxes) do
         local xline = {p1 = {x = xx.mid, y = xx.y+xx.height/2},
                        p2 = {x = xx.mid+xx.v, y = xx.y+xx.height/2-xx.j}
                        }
@@ -498,7 +498,7 @@ function runrunrun(xx)
 
   end
 
-  if xx.run and xx.running and (xx.right or xx.left) and xx.run and not xx.block and not xx.slide and not xx.dodge then         
+  if xx.runb and xx.running and (xx.right or xx.left) and xx.runb and not xx.block and not xx.slide and not xx.dodge then         
     if xx.right and xx.v > 0 then
       xx.v = xx.color.s.speed*runspeed*xx.speedpenalty
     elseif xx.left and xx.v < 0 then
@@ -509,7 +509,7 @@ function runrunrun(xx)
 
 
 
-  elseif math.abs(xx.v) > xx.color.s.speed*xx.speedpenalty*speedminit-accel*2 and (xx.left or xx.right) and xx.g  and xx.run and not xx.block and not xx.slide and not xx.dodge and xx.type ~= 2 then
+  elseif math.abs(xx.v) > xx.color.s.speed*xx.speedpenalty*speedminit-accel*2 and (xx.left or xx.right) and xx.g  and xx.runb and not xx.block and not xx.slide and not xx.dodge and xx.type ~= 2 then
     xx.a1 = false
     xx.a2 = false
     xx.a3 = false
@@ -601,7 +601,7 @@ function movex(xx,yy)
   runrunrun(xx)
   transferofenergy(xx)
   z = xx
-  if xx.landingcounter > landingWait then
+  if xx.landingcounter > landing_wait then
     xx.stop=true
     xx.holda = true
   end
@@ -667,11 +667,11 @@ function movex(xx,yy)
       xx.firstjump = true
       xx.g = false
       repplay(xx.jumpd)
-    elseif z.right and xx.v >= xx.push and not xx.stop and not xx.flinch and xx.landingcounter < landPauseTime
+    elseif z.right and xx.v >= xx.push and not xx.stop and not xx.flinch and xx.landingcounter < land_pause_time
     and not z.left 
     then 
       vroomright(xx)
-    elseif z.left and xx.v <= xx.push and xx.stop == false and not xx.flinch and xx.landingcounter < landPauseTime
+    elseif z.left and xx.v <= xx.push and xx.stop == false and not xx.flinch and xx.landingcounter < land_pause_time
     and not z.right 
     then 
       vroomleft(xx)

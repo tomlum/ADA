@@ -3,7 +3,7 @@ require "monitors"
 lg = love.graphics
 
 --decimal random
-function decran(low,up)
+function floRan(low,up)
 return math.random(low+1,up-1)+math.random()*math.random(-1,1)
 end
 
@@ -14,7 +14,7 @@ function drawbackgroundbox(x,y,w,h)
 end
 
 function isabout(n, v)
-  return math.abs(n-v) < .1 
+  return math.abs(n-v) < .1
     
 end
 
@@ -108,7 +108,11 @@ function clone (t) -- deep-copy a table
     return target
 end
 
-function vcs(c)
+function setColorA(c, a)
+  lg.setColor(c.r,c.g,c.b, a)
+end
+
+function setColor(c)
   
   lg.setColor(c.r,c.g,c.b)
   end

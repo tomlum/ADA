@@ -2,16 +2,24 @@ require "utilities"
 require "lasso"
 
 function initPlayer(xx)
-  xx.oldv = 0
+	xx.oldv = 0
 end
 
 function initWorld()
-
 end
 
 function initLove()
-lg.setDefaultFilter("linear","nearest",1)
-math.randomseed(os.clock())
+
+
+	if fullscreen then 
+		love.window.setMode(1280, 800, {resizable=true, fullscreen = true, vsync=true})
+	else
+		love.window.setMode(1280/1.5, 800/1.5, {resizable=true, fullscreen = false, vsync=true})
+	end
+
+	lg.setDefaultFilter("linear","nearest",1)
+	math.randomseed(os.clock())
+	finishedLoading = false
 
 end
 
@@ -41,4 +49,5 @@ require "fractal"
 require "death"
 require "chaptermanage"
 loader = require "love-loader"
+require "blossom"
 end

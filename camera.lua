@@ -126,9 +126,10 @@ function camreturntozoom()
   end
 end
 
-cammovement = function ()
+function cammovement()
   
 
+  cinemabars()
 
   if dangerclose and var2tb then
 
@@ -646,10 +647,10 @@ function drawx(xx)
     if not fightclub and themap.paralaxscale2 ~= nil then
       blurdraw(bob, function()
           lg.draw(enviro.paralax2, 
-            (xx.x+(screenwidth/4)*cscale*pzoom2+paralaxcamshake)*(1-themaps[mapnum].paralaxscale2*pzoom2)
-            -(500*(1-themaps[mapnum].paralaxscale2*pzoom2))
+            (xx.x+(screenwidth/4)*cscale*pzoom2+paralaxcamshake)*(1-themaps[mapNum].paralaxscale2*pzoom2)
+            -(500*(1-themaps[mapNum].paralaxscale2*pzoom2))
             ,
-            (xx.y+(screenheight/2)*cscale+paralaxcamshake)*(1-themaps[mapnum].paralaxscale2*pzoom2)+(feet2bottom-paralaxoffset)*(cscale*(1-themaps[mapnum].paralaxscale2*pzoom2)),
+            (xx.y+(screenheight/2)*cscale+paralaxcamshake)*(1-themaps[mapNum].paralaxscale2*pzoom2)+(feet2bottom-paralaxoffset)*(cscale*(1-themaps[mapNum].paralaxscale2*pzoom2)),
             0,
             pzoom2,
             pzoom2)
@@ -755,10 +756,10 @@ function drawx(xx)
         blurdraw(bob, function()
 
             lg.draw(enviro.paralax, 
-              (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themaps[mapnum].paralaxscale*pzoom)
-              -(500*(1-themaps[mapnum].paralaxscale*pzoom)),
+              (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themaps[mapNum].paralaxscale*pzoom)
+              -(500*(1-themaps[mapNum].paralaxscale*pzoom)),
               (xx.y+(screenheight/2)--*pzoom
-                *cscale+paralaxcamshake)*(1-themaps[mapnum].paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themaps[mapnum].paralaxscale*pzoom)),
+                *cscale+paralaxcamshake)*(1-themaps[mapNum].paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themaps[mapNum].paralaxscale*pzoom)),
               0,
               pzoom,
               pzoom)
@@ -824,6 +825,8 @@ function drawx(xx)
     end
     lg.setShader()
   end
+  
+  drawbackparticles()
 
   if me.flinch then 
 

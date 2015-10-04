@@ -94,7 +94,7 @@ function orangeyouglad(xx)
     if xx.animcounter == 0 then
 
       if xx.g then 
-        if math.abs(xx.v)>3 and (xx.a2b or xx.a3b) then
+        if math.abs(xx.v)>vforrunningattack and (xx.a2b or xx.a3b) then
           xx.type = 7
           xx.animcounter = 1
         elseif (xx.a1) then

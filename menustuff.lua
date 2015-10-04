@@ -103,6 +103,36 @@ table.insert(tiles2, {y=0,ud="bottom",lr=-1,j=inittilej, column = 2})
 table.insert(tiles2, {y=0,ud="bottom",lr=1,j=inittilej, column = 3})
 table.insert(tiles2, {y=0,ud="bottom",lr=-1,j=inittilej, column = 4})
 
+
+function drawoverlays()
+  cclear()
+
+  if not(oldonescreen and onescreen) then
+    lg.setColor(53, 53, 53)
+    lg.rectangle("fill", wallx, 0, 14*width, enviro.screenheight)
+  end
+  if not(oldvertone and vertone) then
+    lg.setColor(53, 53, 53)
+    lg.rectangle("fill",(lg.getWidth()/2)-twidth,(enviro.screenheight/2)-bwidth/2,twidth*2,bwidth)
+    lg.setColor(255, 255, 255, 255)
+  end
+
+  if not fightclub then
+    go()
+  end
+  drawroulettenumbers()
+  if pause and not hitpause then
+    lg.sdraw(pausescreen,0,0,0,10,10)
+  end
+
+   lg.setShader()
+  lg.setColor(0,0,0)
+  lg.srectangle("fill",0,0,1440,barey)
+  lg.srectangle("fill",0,900,1440,-barey)
+  lg.setColor(255,255,255)
+
+end
+
 function lg.sdraw(im, x, y, rot, sx, sy) 
   if rot == nil then 
     lg.draw(im,x*(screenwidth/1440),y*(screenheight/900), 0, (screenwidth/1440), (screenheight/900))
@@ -383,11 +413,11 @@ function drawmenus()
 
     if cancels() then menu = "modes" end
 
-    if downs() and mapnum < 3 then mapnum = mapnum + 1 repplay(mov)
-    elseif ups() and mapnum > 1 then mapnum = mapnum - 1 repplay(mov)
+    if downs() and mapNum < 3 then mapNum = mapNum + 1 repplay(mov)
+    elseif ups() and mapNum > 1 then mapNum = mapNum - 1 repplay(mov)
     end
 
-    themap = themaps[mapnum]
+    themap = themaps[mapNum]
 
     if (c1accept() and not me.holda) or (not you.holda and c2accept())and menu == "map" then
       fadein = -5
@@ -402,11 +432,11 @@ function drawmenus()
 
     lg.setColor(allfade,allfade,allfade,255)
     lg.draw(map,0,0, 0, screenwidth/1440, screenheight/900)
-    lg.setColor(themaps[mapnum].lightcolor.r,themaps[mapnum].lightcolor.g,themaps[mapnum].lightcolor.b,math.random(150,255)*(allfade/255))
-    lg.circle("fill",(themaps[mapnum].lightx)*(screenwidth/1440),(themaps[mapnum].lighty)*(screenheight/900),lightsize*(screenwidth/1440))
+    lg.setColor(themaps[mapNum].lightcolor.r,themaps[mapNum].lightcolor.g,themaps[mapNum].lightcolor.b,math.random(150,255)*(allfade/255))
+    lg.circle("fill",(themaps[mapNum].lightx)*(screenwidth/1440),(themaps[mapNum].lighty)*(screenheight/900),lightsize*(screenwidth/1440))
     local wordspacing = 20
     for i = 0, screenheight/wordspacing do
-      lg.print(string.upper(themaps[mapnum].name), 1000*(screenwidth/1440), i*wordspacing)
+      lg.print(string.upper(themaps[mapNum].name), 1000*(screenwidth/1440), i*wordspacing)
     end
 
 
