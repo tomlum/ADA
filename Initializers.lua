@@ -3,14 +3,19 @@ require "lasso"
 
 function initPlayer(xx)
 	xx.oldv = 0
+	xx.hit = false
+	xx.old_feet = xx.y
+
+
+	xx.rampspeed = 1
+	xx.ramptimer = 0
+	xx.rampcanhit = 0
 end
 
 function initWorld()
 end
 
 function initLove()
-
-
 	if fullscreen then 
 		love.window.setMode(1280, 800, {resizable=true, fullscreen = true, vsync=true})
 	else
@@ -20,32 +25,31 @@ function initLove()
 	lg.setDefaultFilter("linear","nearest",1)
 	math.randomseed(os.clock())
 	finishedLoading = false
-
 end
 
 function initDependencies()
 require "blur"
 require "menustuff"
-require "DamageTable"
+require "damageTable"
 require "meandyou"
 require "camera"
-require "Hits"
-require "Music"
-require "FIZIX"
-require "Animation"
-require "Joysticks"
-require "ATTACK"
-require "at/GG"
-require "at/BB"
-require "at/pp"
-require "at/OO"
-require "at/RR"
+require "hits"
+require "music"
+require "fizix"
+require "animation"
+require "joysticks"
+require "attack"
+require "attacks/green"
+require "attacks/blue"
+require "attacks/purple"
+require "attacks/orange"
+require "attacks/red"
 require "ai"
-require "koth"
+require "gameModes/koth"
+require "gameModes/fractal"
 require "colorcontrol"
 require "story/ch1/ch1"
 require "enviro/colorbox"
-require "fractal"
 require "death"
 require "chaptermanage"
 loader = require "love-loader"

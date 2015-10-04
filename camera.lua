@@ -882,7 +882,7 @@ function drawx(xx)
     elseif themap.name == "floors" then
       drawfloorsstuff()
     end
-    if fightclub then drawPlayerllhex() end
+    if drawboxes then drawHexBoxes() end
   end
 
 end

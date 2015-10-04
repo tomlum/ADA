@@ -12,7 +12,7 @@ function blossom(xx,yy, leaves, sides, scale)
 		local pointss = {}
 		pointss[1] = {fixed = true, x = xx.mid-7, y = xx.y+floRan(bloom_from_center_dis-(scale*bloom_from_center_dis),bloom_from_center_dis)}
 		pointss[2] = {fixed = true, x = xx.mid+7, y = xx.feet
-		-- -xx.im.extrah
+		-- -xx.im.extra_height
 		-floRan(bloom_from_center_dis-(scale*bloom_from_center_dis),bloom_from_center_dis)}
 		for k=3, sides do
 			if xx.g and xx.j < 0 then

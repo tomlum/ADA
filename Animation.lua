@@ -39,8 +39,8 @@ partitionp1 = lg.newImage("enviro/partitionp1.png")
 partitionp2 = lg.newImage("enviro/partitionp2.png")
 --partition:setFilter("nearest")
 
-jumprise = {im = lg.newImage("me/jump/jumprise.png"), extrah = 5}
-jumpfalling = {im = lg.newImage("me/jump/jumpfalling.png"), extrah = 5}
+jumprise = {im = lg.newImage("me/jump/jumprise.png"), extra_height = 5}
+jumpfalling = {im = lg.newImage("me/jump/jumpfalling.png"), extra_height = 5}
 landing = {im = lg.newImage("me/jump/landing.png"), yoff = -12}
 slowdown = {im = lg.newImage("me/jump/slowdown.png")}
 paper1 = lg.newImage("enviro/paper1.png")
@@ -301,7 +301,7 @@ function csds(xx, flip)
   }
   local shadeea = 255
 
-  if xx.color.n == 2 and xx.animcounter >= 7 and xx.greenflicker and math.sqrt(xx.v^2+xx.j^2) > 6 and xx.type ~= 2 then
+  if xx.color.n == 2 and xx.animcounter >= 7 and xx.greenflicker and math.sqrt(xx.v^2+xx.j^2) > 6 and xx.attack_num ~= 2 then
    shadeea = 0
  end
 
@@ -619,7 +619,7 @@ if placespeople then
     end
 
     for i,v in ipairs(players) do
-      players[i].oldpy = players[i].y 
+      players[i].old_feet = players[i].y 
     end
 
   end
@@ -747,11 +747,11 @@ function drawPlayer(xx)
 
   if drawFeet then
     local pextra = 0
-    if xx.im.extrah ~= nil then
-      pextra = xx.im.extrah
+    if xx.im.extra_height ~= nil then
+      pextra = xx.im.extra_height
     end
     lg.setColor(255,0,0)
-    lg.rectangle("fill", xx.x, xx.oldpy, xx.width,1)
+    lg.rectangle("fill", xx.x, xx.old_feet, xx.width,1)
     lg.setColor(0,0,255)
     lg.rectangle("fill", xx.x, xx.y+me.height-xx.j-pextra, xx.width,1)
   end
@@ -773,7 +773,7 @@ function actionshotstuff(xx)
     if xx.color.n == xx.cchangeto.n and (xx.color.n~=xx.cantreturntothis) and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) and xx.combo<xx.maxcombo then
       if xx.color.n == 2 and xx.a4b then
         xx.animcounter = 8
-        xx.type = 2
+        xx.attack_num = 2
         xx.im = greenk1
       else
         xx.repcounter = 0
@@ -805,16 +805,13 @@ function actionshotstuff(xx)
       collides:play()
       --bcs:play()
 
-
-
-
     end
 
   elseif xx.actionshot == true and xx.actiontimer == 0 
     then xx.actiontimer = actionshotdur
   elseif xx.actiontimer > 0 
     then xx.actiontimer = xx.actiontimer - 1
-      thesong:setPitch(rampspeed)
+    thesong:setPitch(rampspeed)
     else xx.actiontimer = 0
     end
 
@@ -822,64 +819,7 @@ function actionshotstuff(xx)
   end
 
 
-
-
-  function settriangles()
-    mytriangles = {}
-    yourtriangles = {}
-    while table.getn(mytriangles) < 18
-      do 
-      table.insert(mytriangles, {(math.ceil(math.random(0,12))), (math.ceil(math.random(0,10))), (math.ceil(math.random(0,7)))})
-      table.insert(yourtriangles, {(math.ceil(math.random(0,12))), (math.ceil(math.random(0,10))), (math.ceil(math.random(0,7)))})
-    end
-  end
-  function drawtriangles()
-    for i,v in ipairs(mytriangles) do
-      for p,q in ipairs(mytriangles[i])
-        do 
-        if p == 1 then lg.setColor(a21r, a21g, a21b)
-        elseif p == 2 then lg.setColor(a31r, a31g, a31b)
-        elseif p == 3 then lg.setColor(a41r, a41g, a41b)
-        end
-        if q == 1 then
-          lg.draw(triangle, ((520 + (p * 50)-ln)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,0, screenwidth/1440, screenheight/900)
-        elseif q == 2 then 
-
-          lg.draw(triangle, ((570 + (p * 50)-ln)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,1.57079633, screenwidth/1440, screenheight/900)
-        elseif q == 3 then 
-
-          lg.draw(triangle, ((570 + (p * 50)-ln)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*2, screenwidth/1440, screenheight/900)
-        elseif q == 4 then 
-
-          lg.draw(triangle, ((520 + (p * 50)-ln)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*3, screenwidth/1440, screenheight/900)
-        end
-      end
-    end
-    for i,v in ipairs(yourtriangles) do
-      for p,q in ipairs(yourtriangles[i])
-        do 
-        if p == 1 then lg.setColor(a22r, a22g, a22b)
-        elseif p == 2 then lg.setColor(a32r, a32g, a32b)
-        elseif p == 3 then lg.setColor(a42r, a42g, a42b)
-        end
-        if q == 1 then
-          lg.draw(triangle, ((1440 - 520 - 50 - (p * 50)+rn)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,0, screenwidth/1440, screenheight/900)
-        elseif q == 2 then 
-
-          lg.draw(triangle, ((1440 - 470 - 50 - (p * 50)+rn)/1440)*screenwidth, ((-50 + (i * 50))/900)*screenheight,1.57079633, screenwidth/1440, screenheight/900)
-        elseif q == 3 then 
-
-          lg.draw(triangle, ((1440 - 470 - 50 - (p * 50)+rn)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*2, screenwidth/1440, screenheight/900)
-        elseif q == 4 then 
-
-          lg.draw(triangle, ((1440 - 520 - 50 - (p * 50)+rn)/1440)*screenwidth, ((i * 50)/900)*screenheight,1.57079633*3, screenwidth/1440, screenheight/900)
-        end
-      end
-    end
-    lg.setColor(255,255,255)
-  end
-
-  lights = function ()
+  function lights()
   if lighttimer >= 70
     then
     lighttimer = - math.random(100,300)
@@ -919,14 +859,12 @@ you.wallx = 0
 function drawstreetprestuff()
   lg.draw(enviro.light, 4448, 1525)
   lights()
-
 end
-drawstreetstuff = function()
+function drawstreetstuff()
 lg.draw(enviro.stagefloor, 0, 0, 0, 1, 20)
 lg.draw(enviro.rafters,5608-502, 1536)
 drawpartition(0, themaps[1].floor, -1)
 drawpartition(themaps[1].rightwall, themaps[1].floor, 1)
-
 end
 
 function drawpartition(fx, fy, lr)
@@ -1855,12 +1793,12 @@ end
 if xx.j ~= 0 then
   xx.superjumptimer = 0
 elseif xx.dubtimer < -15 then
-  xx.cansuperjump = true
+  xx.can_super_jump = true
   xx.superjumptimer = 13
   xx.im = landing 
 elseif xx.superjumptimer > 0 then
   xx.im = landing 
-  xx.cansuperjump = true
+  xx.can_super_jump = true
   xx.superjumptimer = rodib(xx.superjumptimer,1,0)
 
 end
@@ -1915,10 +1853,10 @@ end
 end
 
 landxcheck = function (xx)
-if xx.landingcounter <= 0	
+if xx.landing_counter <= 0	
   then xx.landing = false
 else
-  xx.landingcounter = xx.landingcounter - 1*ramp(xx)
+  xx.landing_counter = xx.landing_counter - 1*ramp(xx)
 end
 end
 you.slidetimer = 0

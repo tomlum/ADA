@@ -8,17 +8,17 @@ op4 = {im=lg.newImage("me/attack/orange/op4n.png"), xoff = 9,yoff = 12}
 op5 = {im=lg.newImage("me/attack/orange/op5n.png"), xoff = 9+11,yoff = 12+7}
 
 
-ao21 = {im=lg.newImage("me/attack/orange/ao21.png"), xoff = 9, yoff = 17, extrah = 5}
-ao22 = {im=lg.newImage("me/attack/orange/ao22.png"), xoff = 9-5+13, extrah = 5, yoff = 22}
+ao21 = {im=lg.newImage("me/attack/orange/ao21.png"), xoff = 9, yoff = 17, extra_height = 5}
+ao22 = {im=lg.newImage("me/attack/orange/ao22.png"), xoff = 9-5+13, extra_height = 5, yoff = 22}
 
 
-ao23 = {im=lg.newImage("me/attack/orange/ao23.png"), xoff = 5,yoff = 17, extrah = 5}
-ao24 = {im=lg.newImage("me/attack/orange/ao24.png"), xoff = 9-5+13, extrah = 5+14, yoff = 23}
+ao23 = {im=lg.newImage("me/attack/orange/ao23.png"), xoff = 5,yoff = 17, extra_height = 5}
+ao24 = {im=lg.newImage("me/attack/orange/ao24.png"), xoff = 9-5+13, extra_height = 5+14, yoff = 23}
 
 
 ok2 = {im=lg.newImage("me/attack/orange/ok2.png"), xoff = 9,yoff = 15}
 ok3 = {im=lg.newImage("me/attack/orange/ok3.png"), xoff = 84,yoff = 3}
-ok4 = {im=lg.newImage("me/attack/orange/ok4.png"), xoff = 45,yoff = 0, extrah = 5}
+ok4 = {im=lg.newImage("me/attack/orange/ok4.png"), xoff = 45,yoff = 0, extra_height = 5}
 
 
 o32 = {im=lg.newImage("me/attack/orange/o32.png"), 
@@ -31,8 +31,8 @@ ao32 = {im=lg.newImage("me/attack/orange/ao32.png"), yoff = 52, xoff = 12}
 
 
 
-aop1 = {im=lg.newImage("me/attack/orange/aop1.png"), xoff = 5,yoff = 17, extrah = 5}
-aop2 = {im=lg.newImage("me/attack/orange/aop2.png"),yoff = 32, extrah = 5, xoff = 10}
+aop1 = {im=lg.newImage("me/attack/orange/aop1.png"), xoff = 5,yoff = 17, extra_height = 5}
+aop2 = {im=lg.newImage("me/attack/orange/aop2.png"),yoff = 32, extra_height = 5, xoff = 10}
 
 orun = {im=lg.newImage("me/attack/orange/orun.png")}
 aorun1 = {im=lg.newImage("me/attack/orange/aorun1.png"), xoff = 3, yoff = 0}
@@ -95,29 +95,29 @@ function orangeyouglad(xx)
 
       if xx.g then 
         if math.abs(xx.v)>vforrunningattack and (xx.a2b or xx.a3b) then
-          xx.type = 7
+          xx.attack_num = 7
           xx.animcounter = 1
         elseif (xx.a1) then
-          xx.type = 3
+          xx.attack_num = 3
           xx.animcounter = 1
         elseif (xx.a2 or xx.a3) then
-          xx.type = 1
+          xx.attack_num = 1
           xx.animcounter = 1
         elseif xx.a4 then
-          xx.type = 2
+          xx.attack_num = 2
           xx.animcounter = 1
           xx.combo = xx.combo + 1
         end
       else
 
         if (xx.a1) then
-          xx.type = 6
+          xx.attack_num = 6
           xx.animcounter = 1
         elseif (xx.a2 or xx.a3) then
-          xx.type = 4
+          xx.attack_num = 4
           xx.animcounter = 1
         elseif xx.a4 and xx.j < 1 and xx.o5repcounter < at.o.ak.max  then
-          xx.type = 5
+          xx.attack_num = 5
           xx.animcounter = 1
           xx.combo = xx.combo + 1
           xx.o5repcounter =  xx.o5repcounter +1
@@ -128,7 +128,7 @@ function orangeyouglad(xx)
 
     else
 
-      if xx.type == 1 then
+      if xx.attack_num == 1 then
         if xx.animcounter<=7 then
           if xx.repcounter%2==0 then
             xx.im = op2
@@ -139,11 +139,11 @@ function orangeyouglad(xx)
 
 
         elseif xx.animcounter < 40 then
-          if isabout(xx.animcounter, 8) and xx.rampcanhit then
+          if isabout(xx.animcounter, 8) then
 
             ocontactstuff(xx, xx.mid+(xx.lr*72), xx.y+32,xx.v+(19*xx.lr), xx.j-36) 
 
-            hboxcs(xx, xx.id, 
+            hexHit(xx, xx.id, 
               {x=xx.mid+(xx.lr*59), y = xx.y+24},
               {x=xx.mid+xx.v+(xx.lr*64), y = xx.y+24-xx.j},
               {x=xx.mid+xx.v+(xx.lr*91), y = xx.y+60-xx.j},
@@ -197,7 +197,7 @@ function orangeyouglad(xx)
           xx.animcounter = 0
         end
 
-      elseif xx.type == 2 then
+      elseif xx.attack_num == 2 then
         if xx.animcounter < 3 then
           xx.im = op1
 
@@ -208,7 +208,7 @@ function orangeyouglad(xx)
         elseif xx.animcounter < 50 then
           xx.im = ok3
 
-          if isabout(xx.animcounter, 13+5) and xx.rampcanhit then
+          if isabout(xx.animcounter, 13+5) then
 
             ocontactstuff(xx, xx.mid+(xx.lr*50), xx.y+27,xx.v+(49*xx.lr), xx.j-38) 
             ocontactstuff(xx, xx.mid-(xx.lr*50), xx.y+27,xx.v-(49*xx.lr), xx.j-38)
@@ -226,7 +226,7 @@ function orangeyouglad(xx)
 
             end
 
-            local check = retowallcheck(xx.mid, xx.y,xx.v+99*xx.lr, xx.j-65)
+            local check = retOWallCheck(xx.mid, xx.y,xx.v+99*xx.lr, xx.j-65)
             xx.owall = check[1]
             xx.ohit = check[2]
             if xx.ohit ~= 0 then
@@ -245,7 +245,7 @@ function orangeyouglad(xx)
 
 
 
-            check = retowallcheck(xx.mid, xx.y,xx.v-99*xx.lr, xx.j-65)
+            check = retOWallCheck(xx.mid, xx.y,xx.v-99*xx.lr, xx.j-65)
             xx.owall = check[1]
             xx.ohit = check[2]
             if xx.ohit ~= 0 then
@@ -262,7 +262,7 @@ function orangeyouglad(xx)
 
 
             for i = -1, 1 do
-              hboxcs(xx, xx.id, 
+              hexHit(xx, xx.id, 
                 {x=xx.mid+(xx.lr*50)*i, y = xx.y+27},
                 {x=xx.mid+xx.v+(xx.lr*59)*i, y = xx.y+27-xx.j},
                 {x=xx.mid+xx.v+(xx.lr*99)*i, y = xx.y+60-xx.j},
@@ -315,7 +315,7 @@ function orangeyouglad(xx)
           xx.animcounter = 0
         end
 
-      elseif xx.type == 3 then
+      elseif xx.attack_num == 3 then
         if xx.animcounter < 3 then
           xx.im = op1
 
@@ -325,11 +325,11 @@ function orangeyouglad(xx)
 
         elseif xx.animcounter < 40-20 then
           xx.im = o33
-          if isabout(xx.animcounter,  8) and xx.rampcanhit then
+          if isabout(xx.animcounter,  8) then
             ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 
             repplay(xx.orangesou2)
 
-            hboxcs(xx, xx.id, 
+            hexHit(xx, xx.id, 
               {x=xx.mid+(xx.lr*53), y = xx.y+24},
               {x=xx.mid+xx.v+(xx.lr*63), y = xx.y-xx.j},
               {x=xx.mid+xx.v+(xx.lr*46), y = xx.y+65-xx.j},
@@ -365,18 +365,18 @@ function orangeyouglad(xx)
         elseif xx.animcounter < 1000 then
           xx.animcounter = 0
         end
-      elseif xx.type == 4 then
+      elseif xx.attack_num == 4 then
         if xx.animcounter < 6 then
           xx.im = aop1
 
         elseif xx.animcounter < 40 then
           xx.im = aop2
-          if isabout(xx.animcounter, 6) and xx.rampcanhit then
+          if isabout(xx.animcounter, 6) then
 
             ocontactstuff(xx, xx.mid+(xx.lr*43), xx.y-24,xx.v+(19*xx.lr), xx.j-57) 
             ocontactstuff(xx, xx.mid+(xx.lr*43), xx.y+24+31,xx.v+(19*xx.lr), xx.j+57) 
 
-            hboxcs(xx, xx.id, 
+            hexHit(xx, xx.id, 
               {x=xx.mid+(xx.lr*43), y = xx.y-24},
               {x=xx.mid+xx.v+(xx.lr*46), y = xx.y-32-xx.j},
               {x=xx.mid+xx.v+(xx.lr*62), y = xx.y+33-xx.j},
@@ -394,7 +394,7 @@ function orangeyouglad(xx)
                 shakez(at.o.ap.z)
 
               end)
-            hboxcs(xx, xx.id, 
+            hexHit(xx, xx.id, 
               {x=xx.mid+(xx.lr*43), y = xx.y+24+31},
               {x=xx.mid+xx.v+(xx.lr*46), y = xx.y+32+31-xx.j},
               {x=xx.mid+xx.v+(xx.lr*62), y = xx.y-33+31-xx.j},
@@ -429,7 +429,7 @@ function orangeyouglad(xx)
         end
 
 
-      else if xx.type == 5 then
+      else if xx.attack_num == 5 then
         if xx.animcounter < 6 then
           if xx.o5repcounter%2==0 then
             xx.im = ao21
@@ -440,12 +440,12 @@ function orangeyouglad(xx)
 
         elseif xx.animcounter < 23 then
 
-          if isabout(xx.animcounter,  7) and xx.rampcanhit then
+          if isabout(xx.animcounter,  7) then
 
             ocontactstuff(xx, xx.mid, xx.y,xx.v+81*xx.lr, xx.j-138)
 
 
-            hboxcs(xx, xx.id, 
+            hexHit(xx, xx.id, 
               {x=xx.mid+(xx.lr*49), y = xx.y+70},
               {x=xx.mid+xx.v+(xx.lr*56), y = xx.y+70-xx.j},
               {x=xx.mid+xx.v+(xx.lr*83), y = xx.y+130-xx.j},
@@ -523,18 +523,19 @@ function orangeyouglad(xx)
         end
 
 
-      elseif xx.type == 6 then
+      elseif xx.attack_num == 6 then
+        
         if xx.animcounter<7 then
           xx.im = ao31
 
 
         elseif xx.animcounter < 40 then
           xx.im = ao32
-          if xx.animcounter <= 8 and xx.rampcanhit then
+          if xx.animcounter <= 8 then
 
             ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 
 
-            hboxcs(xx, xx.id, 
+            hexHit(xx, xx.id, 
               {x=xx.mid-(xx.lr*17), y = xx.y-23},
               {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-xx.j-52},
               {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-xx.j-52},
@@ -552,7 +553,7 @@ function orangeyouglad(xx)
                 shakez(at.o.p.z)
 
             end)
-                      hboxcs(xx, xx.id, 
+                      hexHit(xx, xx.id, 
               {x=xx.mid+(xx.lr*12), y = xx.y-21},
               {x=xx.mid+xx.v-(xx.lr*9), y = xx.y-xx.j-52},
               {x=xx.mid+xx.v-(xx.lr*9), y = xx.y-xx.j-52},
@@ -589,11 +590,11 @@ function orangeyouglad(xx)
           xx.animcounter = 0
         end
 
-      elseif xx.type == 7 then
+      elseif xx.attack_num == 7 then
         if xx.animcounter < 3 then
         elseif xx.animcounter < 7 then
           if isabout(xx.animcounter,  3) then
-            hboxcs(xx, xx.id, 
+            hexHit(xx, xx.id, 
               {x=xx.mid+(xx.lr*90), y = xx.y+31},
               {x=xx.mid+xx.v+(xx.lr*153), y = xx.y-xx.j+67},
               {x=xx.mid+xx.v+(xx.lr*153), y = xx.y+65-xx.j+67},
@@ -655,7 +656,7 @@ function orangeyouglad(xx)
       end
 
 
-      local check = retowallcheck(ex, why,vee, jay)
+      local check = retOWallCheck(ex, why,vee, jay)
       xx.owall = check[1]
       xx.ohit = check[2]
       if xx.ohit ~= 0 then

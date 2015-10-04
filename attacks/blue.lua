@@ -77,10 +77,10 @@ you.readya = true
 me.animcounter = 0
 you.animcounter = 0
 you.bbcounter = 0
-me.type = 1
+me.attack_num = 1
 me.repcounter = 0
 me.bbpready = false
-you.type = 1
+you.attack_num = 1
 you.repcounter = 0
 you.bbpready = false
 
@@ -96,13 +96,13 @@ kick2 = {im = lg.newImage("me/attack/bb/kick2.png"), xoff = -1, yoff = -1}
 kick3 = {im = lg.newImage("me/attack/bb/kick3.png"), yoff = -3}
 uppercut = {im=lg.newImage("me/attack/bb/uppercut.png"), xoff = 1}
 jumpuppercut = {im=lg.newImage("me/attack/bb/jumpuppercut.png")}
-dropkick1 = {im=lg.newImage("me/attack/bb/dropkick1.png"), xoff = 5,yoff = -7,extrah=10}
-dropkick2 = {im=lg.newImage("me/attack/bb/dropkick2.png"), xoff = 8,yoff = -7,extrah=-15}
-divekick = {im=lg.newImage("me/attack/bb/divekick.png"), xoff = 1,yoff = -7,extrah=15}
+dropkick1 = {im=lg.newImage("me/attack/bb/dropkick1.png"), xoff = 5,yoff = -7,extra_height=10}
+dropkick2 = {im=lg.newImage("me/attack/bb/dropkick2.png"), xoff = 8,yoff = -7,extra_height=-15}
+divekick = {im=lg.newImage("me/attack/bb/divekick.png"), xoff = 1,yoff = -7,extra_height=15}
 
-brun1 = {im=lg.newImage("me/attack/bb/brun1.png"), xoff = 12,yoff = 1,extrah=-6}
-brun2 = {im=lg.newImage("me/attack/bb/brun2.png"), xoff = 13,extrah=-6}
-brun3 = {im=lg.newImage("me/attack/bb/brun3.png"), xoff = 13,extrah=-6}
+brun1 = {im=lg.newImage("me/attack/bb/brun1.png"), xoff = 12,yoff = 1,extra_height=-6}
+brun2 = {im=lg.newImage("me/attack/bb/brun2.png"), xoff = 13,extra_height=-6}
+brun3 = {im=lg.newImage("me/attack/bb/brun3.png"), xoff = 13,extra_height=-6}
 
 
 airgrab1 = {im=lg.newImage("me/attack/airgrab1.png"),xoff=0}
@@ -126,31 +126,31 @@ function breadandbutter(xx)
 
     if xx.g then 
       if xx.running and (xx.a2b or xx.a3b) then
-        xx.type = 7
+        xx.attack_num = 7
         xx.animcounter = 1
       elseif (xx.a2 or xx.a3) and xx.color.n == 0 and not xx.holda then
-        xx.type = 1
+        xx.attack_num = 1
         xx.animcounter = 1
         xx.combo = xx.combo + 1
         xx.repcounter = 1
       elseif xx.a4 and not xx.holda then
-        xx.type = 2
+        xx.attack_num = 2
         xx.animcounter = 1
         xx.combo = xx.combo + 1
       elseif xx.a1 and not xx.holda then
-        xx.type = 3
+        xx.attack_num = 3
         xx.animcounter = 1
         xx.combo = xx.combo + 1
       end
     else
       if (xx.a2 or xx.a3) and not xx.holda then
-        xx.type = 4
+        xx.attack_num = 4
         xx.animcounter = 1
       elseif xx.a4 and not xx.holda then
-        xx.type = 5
+        xx.attack_num = 5
         xx.animcounter = 1
       elseif xx.a1 and not xx.holda then
-        xx.type = 6
+        xx.attack_num = 6
         xx.animcounter = 1
       end
 
@@ -159,7 +159,7 @@ function breadandbutter(xx)
 
   else
 
-    if xx.type == 1 then
+    if xx.attack_num == 1 then
       if xx.animcounter < 6 then
         if xx.repcounter%2==0 then
           xx.im = punch1
@@ -175,7 +175,7 @@ function breadandbutter(xx)
         end
         repplay(xx.blues)
         if xx.animcounter >0 then
-          hboxcs(xx, xx.id, 
+          hexHit(xx, xx.id, 
             {x=xx.mid, y = xx.y+24},
             {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
             {x=xx.mid, y = xx.y+30},
@@ -212,12 +212,12 @@ function breadandbutter(xx)
 
 
 
-    elseif xx.type == 2 then
+    elseif xx.attack_num == 2 then
       if xx.animcounter < 12 then
         xx.im = kick1
       elseif xx.animcounter < 18 then
         xx.im = kick2
-          hboxcs(xx, xx.id, 
+          hexHit(xx, xx.id, 
             {x=xx.mid, y = xx.y+31},
             {x=xx.mid+xx.v+(xx.lr*28), y = xx.y+31-xx.j},
             {x=xx.mid+xx.v+(xx.lr*28), y = xx.y+39-xx.j},
@@ -244,13 +244,13 @@ function breadandbutter(xx)
       elseif xx.animcounter >= 43 then
         xx.animcounter = 0
       end
-    elseif xx.type ==3 then
+    elseif xx.attack_num ==3 then
       if xx.animcounter < 9 then
         xx.im = punch6
       elseif xx.animcounter < 16 then
         xx.im = uppercut
         if xx.animcounter <=12 then
-          hboxcs(xx, xx.id, 
+          hexHit(xx, xx.id, 
             {x=xx.mid, y = xx.y+20},
             {x=xx.mid+xx.v+(xx.lr*11), y = xx.y+4-xx.j},
             {x=xx.mid+xx.v+(xx.lr*17), y = xx.y+4-xx.j},
@@ -270,14 +270,14 @@ function breadandbutter(xx)
         xx.animcounter = 0
       end
 
-    elseif xx.type == 4 then
+    elseif xx.attack_num == 4 then
       if xx.animcounter < 4 then
         xx.im = dropkick1
 
       elseif xx.animcounter<=20 then
         xx.im = dropkick2
         if xx.animcounter <10 then
-          hboxcs(xx, xx.id, 
+          hexHit(xx, xx.id, 
             {x=xx.mid, y = xx.y+18},
             {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+18-xx.j},
             {x=xx.mid+xx.v+(xx.lr*25), y = xx.y+26-xx.j},
@@ -314,7 +314,7 @@ function breadandbutter(xx)
       end
 
 
-    elseif xx.type == 5 then
+    elseif xx.attack_num == 5 then
       if xx.animcounter < 8 then
         xx.im=dropkick1
 
@@ -322,9 +322,9 @@ function breadandbutter(xx)
         xx.im = divekick
         if xx.animcounter == 10 and xx.rampcanhit then
           xx.j = xx.j - 7
-          xx.landingcounter = at.bb.ak.penalty
+          xx.landing_counter = at.bb.ak.penalty
         end
-        hboxcs(xx, xx.id, 
+        hexHit(xx, xx.id, 
           {x=xx.mid+8, y = xx.y+40},
           {x=xx.mid+xx.v+(xx.lr*14), y = xx.y+64-xx.j},
           {x=xx.mid+xx.v+(xx.lr*6), y = xx.y+64-xx.j},
@@ -353,12 +353,12 @@ function breadandbutter(xx)
         xx.animcounter = 0
       end
 
-    elseif xx.type ==6 then
+    elseif xx.attack_num ==6 then
       if xx.animcounter < 5 then
       elseif xx.animcounter < 16 then
         xx.im = jumpuppercut
         if xx.animcounter <= 12 then
-          hboxcs(xx, xx.id, 
+          hexHit(xx, xx.id, 
             {x=xx.mid, y = xx.y+30},
             {x=xx.mid+xx.v+(xx.lr*11), y = xx.y+8-xx.j},
             {x=xx.mid+xx.v+(xx.lr*17), y = xx.y+8-xx.j},
@@ -378,14 +378,14 @@ function breadandbutter(xx)
         xx.animcounter = 0
       end
 
-  elseif xx.type == 7 then
+  elseif xx.attack_num == 7 then
       if xx.animcounter == 2 then
         xx.j = at.bb.run.j
         xx.im = brun1
       elseif xx.animcounter < 7 then
         xx.im = brun1
       elseif xx.animcounter < 9 then
-           hboxcs(xx, xx.id, 
+           hexHit(xx, xx.id, 
             {x=xx.mid, y = xx.y+19},
             {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+23-xx.j},
             {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+29-xx.j},

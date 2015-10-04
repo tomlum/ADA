@@ -62,9 +62,21 @@ function kotharrowdraw(xx)
     lg.draw(krown, xx.mid, xx.y-10, 0, 1, 1, 6, 8) 
     lg.setShader()
   end
-  
- 
-  
+end
+
+function kothrespawn(xx)
+  local newplat = kothplat
+  while(newplat == kothplat) do
+    local rannum = math.random(1,#themaps[mapNum].plats)
+    local newplat = themaps[mapNum].plats[rannum]
+    xx.go_here = {}
+    xx.go_here.x = math.random(newplat.x1+15, newplat.x2-15)
+    xx.go_here.y = newplat.y-100
+    
+    xx.go_here_d = {}
+    xx.go_here_d.x = (xx.x-xx.go_here.x)/40
+    xx.go_here_d.y = (xx.y-xx.go_here.y)/40
+  end
 end
 
 function drawhighlight()

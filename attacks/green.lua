@@ -129,15 +129,15 @@ function gandg(xx)
         xx.animcounter = 1
         xx.combo = xx.combo + 1
         xx.repcounter = 1
-        xx.type = 1
+        xx.attack_num = 1
         rumbleme(xx, .01)
       elseif xx.a4 and not xx.holda and xx.greenktimer == 0 then
-        xx.type = 2
+        xx.attack_num = 2
         xx.animcounter = 1
         xx.combo = xx.combo + 1
         rumbleme(xx, .01)
       elseif xx.a1 and not xx.holda then
-        xx.type = 3
+        xx.attack_num = 3
         xx.animcounter = 1
         xx.combo = xx.combo + 1
         rumbleme(xx, .01)
@@ -147,12 +147,12 @@ function gandg(xx)
 
       if (xx.a2 or xx.a3) and not xx.holda then
         xx.animcounter = 1
-        xx.type = 4
+        xx.attack_num = 4
       elseif xx.a1 and not xx.holda then
         xx.animcounter = 1
-        xx.type = 6
+        xx.attack_num = 6
       elseif xx.a4 and not xx.holda then
-        xx.type = 2
+        xx.attack_num = 2
         xx.animcounter = 1
         xx.combo = xx.combo + 1
 
@@ -160,7 +160,7 @@ function gandg(xx)
     end
   else
 
-    if xx.type == 1 then
+    if xx.attack_num == 1 then
       if xx.animcounter < 7 then
         xx.im = greena21
         if math.random() > creaturerate then
@@ -216,7 +216,7 @@ function gandg(xx)
 
           rumbleme(xx, .1)
 
-          hboxcs(xx, xx.id, 
+          hexHit(xx, xx.id, 
             {x=xx.mid, y = xx.y},
             {x=xx.mid+xx.v+(xx.lr*67), y = xx.y-xx.j},
             {x=xx.mid+xx.v+(xx.lr*67), y = xx.y+40-xx.j},
@@ -255,7 +255,7 @@ function gandg(xx)
 
 
 
-      elseif xx.type == 2 then
+      elseif xx.attack_num == 2 then
 
         if xx.animcounter < 4 then
           xx.im = greenk03
@@ -332,7 +332,7 @@ function gandg(xx)
         xx.repcounter = 0
       end
 
-    elseif xx.type == 3 then
+    elseif xx.attack_num == 3 then
       if xx.animcounter < 5+greena1adj then
         xx.im = greena21
       elseif xx.animcounter < 20+greena1adj then
@@ -340,7 +340,7 @@ function gandg(xx)
           xx.v = xx.v + (xx.lr*5)
         end
 
-        hboxcs(xx, xx.id, 
+        hexHit(xx, xx.id, 
           {x=xx.mid+(xx.lr*18), y = xx.y+16},
           {x=xx.mid+xx.v+(xx.lr*54), y = xx.y-6-xx.j},
           {x=xx.mid+xx.v+(xx.lr*19), y = xx.y-42-xx.j},
@@ -391,7 +391,7 @@ function gandg(xx)
         xx.repcounter = 0
       end
 
-    elseif xx.type == 4 then
+    elseif xx.attack_num == 4 then
       if xx.animcounter < 3 then
         xx.im = agreena22
 
@@ -411,7 +411,7 @@ function gandg(xx)
           xx.im = agreena22s
           repplay(xx.greens)
 
-          hboxcs(xx, xx.id, 
+          hexHit(xx, xx.id, 
             {x=xx.mid, y = xx.y},
             {x=xx.mid+xx.v+(xx.lr*88), y = xx.y-xx.j},
             {x=xx.mid+xx.v+(xx.lr*88), y = xx.y+60-xx.j},
@@ -440,7 +440,7 @@ function gandg(xx)
         xx.animcounter = 0
       end
 
-    elseif xx.type ==6 then
+    elseif xx.attack_num ==6 then
 
 
       if xx.greenflickertimer < 8 and absv(xx.v, xx.j) > 3 and xx.animcounter < 20+greena1adj then
@@ -457,7 +457,7 @@ function gandg(xx)
         if isabout(xx.animcounter, 5) then
           repplay(xx.greens)
           xx.j = at.g.au.mj
-          hboxcs(xx, xx.id, 
+          hexHit(xx, xx.id, 
             {x=xx.mid-(xx.lr*-33), y = xx.y+8},
             {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-40-xx.j},
             {x=xx.mid+xx.v+(xx.lr*33), y = xx.y-40-xx.j},
@@ -616,7 +616,7 @@ function boltupdate(xx)
     end
     if not v.stuck then 
 
-      hradial(xx.id, {x = v.x, y = v.y}, 200, function()
+      hexRadial(xx.id, {x = v.x, y = v.y}, 200, function()
         repplay(xx.whiff)
       end
 

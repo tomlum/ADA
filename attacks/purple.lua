@@ -9,19 +9,19 @@ pa11 = {im=lg.newImage("me/attack/purple/pa11.png"), xoff = -2, yoff = 20}
 pa12 = {im=lg.newImage("me/attack/purple/pa12.png"), xoff = 2, yoff = -2}
 pa13 = {im=lg.newImage("me/attack/purple/pa13.png"), xoff = 4, yoff = -6}
 
-apa21 = {im=lg.newImage("me/attack/purple/apa21.png"), xoff = 2,yoff = -1, extrah = 5}
-apa22 = {im=lg.newImage("me/attack/purple/apa22.png"), xoff = 0, yoff = -1, extrah = 5}
-apa23 = {im=lg.newImage("me/attack/purple/apa23.png"), xoff = 3, yoff = -4, extrah = 5}
+apa21 = {im=lg.newImage("me/attack/purple/apa21.png"), xoff = 2,yoff = -1, extra_height = 5}
+apa22 = {im=lg.newImage("me/attack/purple/apa22.png"), xoff = 0, yoff = -1, extra_height = 5}
+apa23 = {im=lg.newImage("me/attack/purple/apa23.png"), xoff = 3, yoff = -4, extra_height = 5}
 
-apa11 = {im=lg.newImage("me/attack/purple/apa11.png"), xoff = 5, yoff = -3, extrah = 5}
-apa12 = {im=lg.newImage("me/attack/purple/apa12.png"), xoff = 13, yoff = 38, extrah = 5}
-apa13 = {im=lg.newImage("me/attack/purple/apa13.png"), xoff = 26, yoff = 8, extrah = 5}
+apa11 = {im=lg.newImage("me/attack/purple/apa11.png"), xoff = 5, yoff = -3, extra_height = 5}
+apa12 = {im=lg.newImage("me/attack/purple/apa12.png"), xoff = 13, yoff = 38, extra_height = 5}
+apa13 = {im=lg.newImage("me/attack/purple/apa13.png"), xoff = 26, yoff = 8, extra_height = 5}
 
 pp1back = {im=lg.newImage("me/attack/purple/pp1back.png"), xoff = -2, yoff = 2}
 pp1back2 = {im=lg.newImage("me/attack/purple/pp1back2.png"), xoff = 10, yoff = 38}
 pp1back3 = {im=lg.newImage("me/attack/purple/pp1back3.png"), xoff = 37, yoff = -4}
 pp1back4 = {im=lg.newImage("me/attack/purple/pp1back4.png"), xoff = 37, yoff = -8}
-apk1 = {im=lg.newImage("me/attack/purple/apk1.png"),extrah = 5}
+apk1 = {im=lg.newImage("me/attack/purple/apk1.png"),extra_height = 5}
 apk2 = {im=lg.newImage("me/attack/purple/apk2.png"), xoff = 0, yoff = -15}
 
 
@@ -112,7 +112,7 @@ function dopurpakspikes(xx)
 
     repplay(xx.airpurp2)
     xx.purpgroundtimer = xx.purpgroundtimer + 1*ramp(xx)
-  elseif xx.landingcounter >= at.p.ak.exposedtime and xx.landingcounter-1 < at.p.ak.exposedtime then
+  elseif xx.landing_counter >= at.p.ak.exposedtime and xx.landing_counter-1 < at.p.ak.exposedtime then
     xx.numofspikes = 0
 
   end
@@ -167,7 +167,7 @@ function spikeupdate(xx)
     elseif cur.t > 0 and cur.t<5  then
       spikegrow(cur,1, xx)
     elseif cur.t <=7 and cur.t >=5 then
-      hboxcs(xx, xx.id, 
+      hexHit(xx, xx.id, 
         {x=vv[1], y = vv[2]},
         {x=vv[3], y = vv[4]},
         {x=vv[5], y = vv[6]},
@@ -185,7 +185,7 @@ function spikeupdate(xx)
 
           end)
     elseif cur.t >=6 then
-      hboxcs(xx,0, 
+      hexHit(xx,0, 
         {x=vv[1], y = vv[2]},
         {x=vv[3], y = vv[4]},
         {x=vv[5], y = vv[6]},
@@ -196,7 +196,7 @@ function spikeupdate(xx)
             z.flinchway = -z.flinchway
           end
           end)
-      hboxcs(xx,0, 
+      hexHit(xx,0, 
         {x=vv[3], y = vv[4]},
         {x=vv[3], y = vv[4]},
         {x=vv[3], y = vv[4]},
@@ -298,7 +298,7 @@ function pandp(xx)
     xx.cmbo=true--combo(xx)
     xx.cancombo = true
     if xx.purplanding then
-      xx.landingcounter = 0
+      xx.landing_counter = 0
     end
   end
 
@@ -308,9 +308,9 @@ function pandp(xx)
     xx.stop = true
   end
 
-  if xx.type == 1 and xx.animcounter < pa2busytime and xx.animcounter > 0  then
+  if xx.attack_num == 1 and xx.animcounter < pa2busytime and xx.animcounter > 0  then
     xx.anibusy = true
-  elseif xx.type == 2 and xx.animcounter < pa4busytime and xx.animcounter > 0  then
+  elseif xx.attack_num == 2 and xx.animcounter < pa4busytime and xx.animcounter > 0  then
     xx.anibusy = true
   end
 
@@ -318,18 +318,18 @@ function pandp(xx)
     if xx.g then
 
       if (xx.a2 or xx.a3) then
-        xx.type = 1
+        xx.attack_num = 1
         xx.animcounter = 1
         xx.repcounter = 1
         xx.repcounter = 1
         xx.combo = xx.combo + 1
       elseif xx.a4 then
-        xx.type = 2
+        xx.attack_num = 2
         xx.animcounter = 1
         xx.repcounter = 1
         xx.combo = xx.combo + 1
       elseif xx.a1 then
-        xx.type = 3
+        xx.attack_num = 3
         xx.animcounter = 1
         xx.repcounter = 1
         xx.combo = xx.combo + 1
@@ -337,13 +337,13 @@ function pandp(xx)
 
     else
       if (xx.a2 or xx.a3) then
-        xx.type = 4
+        xx.attack_num = 4
         xx.animcounter = 1
       elseif xx.a4 then
-        xx.type = 5
+        xx.attack_num = 5
         xx.animcounter = 1
       elseif xx.a1 then
-        xx.type = 6
+        xx.attack_num = 6
         xx.animcounter = 1
       end
     end
@@ -351,7 +351,7 @@ function pandp(xx)
 
   else
 
-    if xx.type == 1 then
+    if xx.attack_num == 1 then
 
       if xx.repcounter > 3 then
         if xx.animcounter <  at.p.p2.t then
@@ -360,7 +360,7 @@ function pandp(xx)
         elseif xx.animcounter <  at.p.p2.t+2 then
           xx.im = pp1back
           if xx.animcounter >=at.p.p2.t and xx.animcounter < at.p.p2.t+1 then
-            hboxcs(xx, xx.id, 
+            hexHit(xx, xx.id, 
               {x=xx.mid, y = xx.y+6},
               {x=xx.mid+xx.v+(xx.lr*46), y = xx.y+35},
               {x=xx.mid+xx.v+(xx.lr*60), y = xx.y+40},
@@ -379,7 +379,7 @@ function pandp(xx)
           end
         elseif xx.animcounter < at.p.p2.t+4 then
           xx.im = pp1back2
-          hboxcs(xx, xx.id, 
+          hexHit(xx, xx.id, 
             {x=xx.mid+(xx.lr * -17), y = xx.y-31},
             {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38},
             {x=xx.mid+xx.v+(xx.lr*50), y = xx.y+28},
@@ -408,7 +408,7 @@ function pandp(xx)
               z.flinch = true
               z.ft = z.ft+at.p.p.ft*2/3
               end end)
-            hboxcs(xx, xx.id, 
+            hexHit(xx, xx.id, 
               {x=xx.mid, y = xx.y+22},
               {x=xx.mid+xx.v+(xx.lr*-55), y = xx.y+66},
               {x=xx.mid+xx.v+(xx.lr*-44), y = xx.y+65},
@@ -449,7 +449,7 @@ function pandp(xx)
             z.ft = z.ft+at.p.p.ft*2/3
             end end)
 
-          hboxcs(xx, xx.id, 
+          hexHit(xx, xx.id, 
             {x=xx.mid, y = xx.y+35},
             {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+26},
             {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+49},
@@ -481,7 +481,7 @@ function pandp(xx)
             end
           end
 
-        elseif xx.type == 2 then
+        elseif xx.attack_num == 2 then
 
           if xx.animcounter < 20 then
             xx.im = stomp1
@@ -578,7 +578,7 @@ else
   xx.animcounter = 0
 end
 
-elseif xx.type ==3 then
+elseif xx.attack_num ==3 then
   if xx.animcounter < 20 then
     xx.im = pa11
 
@@ -609,7 +609,7 @@ elseif xx.type ==3 then
             end
 
 
-          elseif xx.type ==4 then
+          elseif xx.attack_num ==4 then
             if xx.animcounter < 15 then
               xx.im = apa21
             elseif xx.animcounter < 17 then
@@ -619,7 +619,7 @@ elseif xx.type ==3 then
               if xx.animcounter <= 18 then
 
                 repplay(xx.airpurp1)
-                hboxcs(xx, xx.id, 
+                hexHit(xx, xx.id, 
                   {x=xx.mid, y = xx.y+15},
                   {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+29-xx.j},
                   {x=xx.mid+xx.v+(xx.lr*18), y = xx.y+57-xx.j},
@@ -641,13 +641,13 @@ elseif xx.type ==3 then
             end
 
 
-          elseif xx.type == 5 then
+          elseif xx.attack_num == 5 then
             xx.purplanding = true 
             if xx.animcounter < 3 then
               xx.animcounter = 1
               xx.im=apk1
               xx.j = xx.j - 2
-              xx.landingcounter = at.p.ak.penalty + at.p.ak.time
+              xx.landing_counter = at.p.ak.penalty + at.p.ak.time
 
 
 
@@ -659,7 +659,7 @@ elseif xx.type ==3 then
               xx.animcounter = 0
             end
 
-          elseif xx.type == 6 then
+          elseif xx.attack_num == 6 then
             if xx.animcounter < 15 then
               xx.im = apa11
             elseif xx.animcounter < 17 then
@@ -668,7 +668,7 @@ elseif xx.type ==3 then
                 xx.j = xx.j + at.p.au.kj 
                 xx.v = xx.v - at.p.au.kb*xx.lr 
                 repplay(xx.airpurp2)
-                hboxcs(xx, xx.id, 
+                hexHit(xx, xx.id, 
                   {x=xx.mid+(xx.lr * -17), y = xx.y-31},
                   {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38-xx.j},
                   {x=xx.mid+xx.v+(xx.lr*50), y = xx.y+28-xx.j},

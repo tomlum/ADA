@@ -48,7 +48,7 @@ me.firstjump = true
 me.feet = me.y + 60
 me.lr = 1
 me.landing = false
-me.landingcounter = 0
+me.landing_counter = 0
 me.onplat = false
 --on the ground?
 --attacking
@@ -105,7 +105,7 @@ you.firstjump = true
 you.feet = you.y + 60
 you.lr = -1
 you.landing = false
-you.landingcounter = 0
+you.landing_counter = 0
 you.onplat = false
 --attacking
 you.flinch = false
@@ -195,7 +195,7 @@ function loadmeandyou2()
   me.feet = me.y + 60
   me.lr = 1
   me.landing = false
-  me.landingcounter = 0
+  me.landing_counter = 0
   me.onplat = false
   --on the ground?
   --attacking
@@ -250,7 +250,7 @@ function loadmeandyou2()
   you.feet = you.y + 60
   you.lr = -1
   you.landing = false
-  you.landingcounter = 0
+  you.landing_counter = 0
   you.onplat = false
   --attacking
   you.flinch = false
@@ -435,7 +435,7 @@ function loadmeandyou()
   me.feet = me.y + 60
   me.lr = 1
   me.landing = false
-  me.landingcounter = 0
+  me.landing_counter = 0
   me.onplat = false
   --on the ground?
   --attacking
@@ -492,7 +492,7 @@ function loadmeandyou()
   you.feet = you.y + 60
   you.lr = -1
   you.landing = false
-  you.landingcounter = 0
+  you.landing_counter = 0
   you.onplat = false
   --attacking
   you.flinch = false

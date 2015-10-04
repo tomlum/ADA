@@ -12,10 +12,10 @@
 --air purple spikes aren't going away
 --pause is broken
 --DIRECTION OF PURPLE AFFECTS HITTING V AND J
---xx.type be more meaningful than 1 - 6
+--xx.attack_num be more meaningful than 1 - 6
 --apa13 xoff is incorrect
 --implement action_done on all attacks
---can hboxcs use colon and self?
+--can hexHit use colon and self?
 --does xx.hit work?
 --fix rumble
 --make jump more natural?
@@ -523,7 +523,7 @@ drawoverlays()
       lg.print(tostring(me.color.n)..
         "       animcounter: "..tostring(me.animcounter).."current"..tostring(me.currentc)
         ..
-        "       type: "..tostring(me.type),10,30)
+        "       type: "..tostring(me.attack_num),10,30)
       lg.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
       lg.print("j "..tostring(you.j), 10, 70)
       if #players == 3 then
@@ -554,7 +554,7 @@ drawoverlays()
       lg.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
       lg.print("slowt "..tostring(slowt), 10, 230)
       lg.print("#joysticks"..tostring(#love.joystick.getJoysticks()), 10, 250)
-      lg.print("#hittmon"..tostring(#hittmon), 10, 280)
+      lg.print("#monsters"..tostring(#monsters), 10, 280)
       for i,v in ipairs(love.joystick.getJoysticks()) do
         lg.print("hey"..v:getName()..tostring(i), 200, 20+20*i)
       end
@@ -618,8 +618,8 @@ drawoverlays()
       
       lg.print("pause: "..tostring(pause), 400,360)
       lg.print("me.start: "..tostring(me.start), 400,380)
-      lg.print("me.v: "..tostring(me.v), 400,400)
-      lg.print("me.j: "..tostring(me.j), 400,420)
+      lg.print("me.feet: "..tostring(me.feet), 400,400)
+      lg.print("me.old_feet: "..tostring(me.old_feet), 400,420)
       lg.print("stophit: "..tostring(stophit), 400,440)
       changebackgroundcolor(4)
       

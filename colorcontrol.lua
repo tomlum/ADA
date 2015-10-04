@@ -150,7 +150,7 @@ function ColorChange(xx)
 
 
   if xx.animcounter > 1 then
-    xx.oldtype = xx.type
+    xx.oldtype = xx.attack_num
   end
 
 end

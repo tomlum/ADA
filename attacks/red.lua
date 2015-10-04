@@ -10,13 +10,13 @@ redblock = {im=lg.newImage("me/attack/red/redblock.png"), yoff = -4}
 redcounter = {im=lg.newImage("me/attack/red/redcounter.png"), xoff = 9, yoff = -3}
 redaslash = lg.newImage("me/attack/red/redaslash.png")
 redap1 = {im=lg.newImage("me/attack/red/redap1.png"),
-  xoff = 15,slash = redaslash,extrah = 5}
+  xoff = 15,slash = redaslash,extra_height = 5}
 redap2 = {im=lg.newImage("me/attack/red/redap2.png"),
-  xoff = 15,slash = redaslash,extrah = 5}
+  xoff = 15,slash = redaslash,extra_height = 5}
 redap3 = {im=lg.newImage("me/attack/red/redap3.png"),
-  xoff = 8, yoff = 4,slash = redaslash,extrah = 5}
+  xoff = 8, yoff = 4,slash = redaslash,extra_height = 5}
 redap4 = {im=lg.newImage("me/attack/red/redap4.png"),
-  xoff = 3, yoff = 4,slash = redaslash,extrah = 5}
+  xoff = 3, yoff = 4,slash = redaslash,extra_height = 5}
 
 redcounter2 = {im=lg.newImage("me/attack/red/redcounter2.png"), xoff = 25, yoff = -4}
 counterat1 = {im=lg.newImage("me/attack/red/counterat1.png"), xoff = 1, yoff = -4}
@@ -43,17 +43,17 @@ redau2 = {im=lg.newImage("me/attack/red/redau2.png"), xoff = 27
 
 
 redak1 = {im=lg.newImage("me/attack/red/redak1.png"),
-  yoff = 13,extrah = 5}
+  yoff = 13,extra_height = 5}
 redak2 = {im=lg.newImage("me/attack/red/redak2.png"),
-  xoff = 6,extrah = 5}
+  xoff = 6,extra_height = 5}
 
 redk10 = {im=lg.newImage("me/attack/red/redk10.png"),
-  xoff = 3, yoff = 4, extrah = 5}
+  xoff = 3, yoff = 4, extra_height = 5}
 redk11 = {im=lg.newImage("me/attack/red/redk11.png"),
-  xoff = 13+17, yoff = -6, extrah = 5}
+  xoff = 13+17, yoff = -6, extra_height = 5}
 
 redak11 = {im=lg.newImage("me/attack/red/redak11.png"),
-  xoff = 12+17,extrah = 5}
+  xoff = 12+17,extra_height = 5}
 
 me.rlvltimer = 0
 you.rlvltimer = 0
@@ -176,18 +176,18 @@ function randr(xx)
         xx.animcounter = 1
         xx.combo = xx.combo + 1
         xx.repcounter = 1
-        xx.type = 1
+        xx.attack_num = 1
       elseif (xx.a4) and not xx.holda then
         xx.animcounter = 1
         xx.combo = xx.combo + 1
         xx.repcounter = 1
-        xx.type = 2
+        xx.attack_num = 2
         --xx.hit = false
       elseif (xx.a1) and not xx.holda then
         xx.animcounter = 1
         xx.combo = xx.combo + 1
         xx.repcounter = 1
-        xx.type = 3
+        xx.attack_num = 3
 
       end
     else
@@ -195,23 +195,23 @@ function randr(xx)
         xx.animcounter = 1
         xx.combo = xx.combo + 1
         xx.repcounter = 1
-        xx.type = 4
+        xx.attack_num = 4
       elseif (xx.a1) and not xx.holda then
         xx.animcounter = 1
         xx.combo = xx.combo + 1
         xx.repcounter = 1
-        xx.type = 6
+        xx.attack_num = 6
       elseif (xx.a4) and not xx.holda  then
         xx.animcounter = 1
         xx.combo = xx.combo + 1
         xx.repcounter = 1
-        xx.type = 5
+        xx.attack_num = 5
       end
     end
   else
     xx.stop = true
 
-    if xx.type == 1 then
+    if xx.attack_num == 1 then
       if xx.repcounter%2 == 1 then
 
         if xx.animcounter < 28-redadj - reddelta*xx.rlvl+xx.repcounter*2 then
@@ -229,7 +229,7 @@ function randr(xx)
           xx.im = redp3
           if xx.animcounter <=29+3-redadj - reddelta*xx.rlvl+xx.repcounter*2 then
             repplay(xx.redsound)
-            hboxcs(xx, xx.id, 
+            hexHit(xx, xx.id, 
               {x=xx.mid+(xx.lr*9), y = xx.y+29},
               {x=xx.mid+xx.v+(xx.lr*51), y = xx.y+24-xx.j},
               {x=xx.mid+xx.v+(xx.lr*47), y = xx.y+29-xx.j},
@@ -269,7 +269,7 @@ function randr(xx)
 
           if xx.animcounter <=29-7+4-redadj - reddelta*xx.rlvl+xx.repcounter*2 then
             repplay(xx.redsound)
-            hboxcs(xx, xx.id, 
+            hexHit(xx, xx.id, 
               {x=xx.mid+(xx.lr*15), y = xx.y+13+15},
               {x=xx.mid+xx.v+(xx.lr*20), y = xx.y+13+11-xx.j},
               {x=xx.mid+xx.v+(xx.lr*17), y = xx.y+13+50-xx.j},
@@ -300,7 +300,7 @@ function randr(xx)
       end
 
 
-    elseif xx.type == 2 then
+    elseif xx.attack_num == 2 then
       if xx.animcounter < 30 then 
         if xx.a4b and not xx.holda and xx.rlvl > 0 then
           xx.animcounter = 200
@@ -333,7 +333,7 @@ function randr(xx)
 
         elseif xx.animcounter < 230 - reddelta*xx.rlvl then
           if xx.animcounter < 208 - reddelta*xx.rlvl then
-            hradial(xx.id, {x=xx.mid, y = xx.y+30}, 70+90*xx.rlvl, 
+            hexRadial(xx.id, {x=xx.mid, y = xx.y+30}, 70+90*xx.rlvl, 
               function(p)
                 xx.cancombo = true
                 radialthrow(xx, p, (xx.rlvl*1.5+5)*((70+90*xx.rlvl)-math.sqrt((p.y-xx.y)^2 + (p.mid-xx.x)^2))/(72+10*xx.rlvl))
@@ -358,7 +358,7 @@ function randr(xx)
           xx.im = counterat42
         elseif xx.animcounter < 115 then
           if xx.animcounter < 121 then
-            hboxcs(xx, xx.id, 
+            hexHit(xx, xx.id, 
               {x=xx.mid+(xx.lr*5), y = xx.y+12},
               {x=xx.mid+xx.v+(xx.lr*112), y = xx.y+28-xx.j},
               {x=xx.mid+xx.v+(xx.lr*99), y = xx.y+44-xx.j},
@@ -391,7 +391,7 @@ function randr(xx)
         if xx.rlvl == 0 then
           xx.im = counterat1
 
-          hboxcs(xx, xx.id, 
+          hexHit(xx, xx.id, 
             {x=xx.mid+(xx.lr*1), y = xx.y+20},
             {x=xx.mid+xx.v+(xx.lr*59), y = xx.y+23-xx.j},
             {x=xx.mid+xx.v+(xx.lr*59), y = xx.y+24-xx.j},
@@ -430,7 +430,7 @@ function randr(xx)
           elseif xx.rlvl == 2 then
             xx.im = counterat3
 
-            hboxcs(xx, xx.id, 
+            hexHit(xx, xx.id, 
               {x=xx.mid+(xx.lr*10), y = xx.y+24},
               {x=xx.mid+xx.v+(xx.lr*84), y = xx.y+15-xx.j},
               {x=xx.mid+xx.v+(xx.lr*84), y = xx.y+29-xx.j},
@@ -457,7 +457,7 @@ function randr(xx)
 
           end
 
-        elseif xx.type == 3 then
+        elseif xx.attack_num == 3 then
           if xx.animcounter < 15 - reddelta*xx.rlvl then
             xx.im = redu1 
             xx.block = true
@@ -471,7 +471,7 @@ function randr(xx)
               xx.j = at.r.u.mj+(xx.rlvl*3)
               end
 
-              hboxcs(xx, xx.id, 
+              hexHit(xx, xx.id, 
                 {x=xx.mid, y = xx.y},
                 {x=xx.mid+xx.v+(xx.lr*20), y = xx.y-16-xx.j},
                 {x=xx.mid+xx.v+(xx.lr*20), y = xx.y-4-xx.j},
@@ -497,7 +497,7 @@ function randr(xx)
 
             end
 
-          elseif xx.type == 4 then
+          elseif xx.attack_num == 4 then
             if xx.animcounter < 3 - reddelta*xx.rlvl+xx.repcounter*4 then
 
            
@@ -528,7 +528,7 @@ function randr(xx)
               if xx.animcounter < 5 - reddelta*xx.rlvl+xx.repcounter*4 then
                 xx.drawslash = true
 
-                hboxcs(xx, xx.id, 
+                hexHit(xx, xx.id, 
                   {x=xx.mid, y = xx.y},
                   {x=xx.mid+xx.v+(xx.lr*52), y = xx.y+36-xx.j},
                   {x=xx.mid+xx.v+(xx.lr*52), y = xx.y+36-xx.j},
@@ -550,7 +550,7 @@ function randr(xx)
 
               end
 
-            elseif xx.type == 6 then
+            elseif xx.attack_num == 6 then
               if xx.animcounter < 8 - reddelta*xx.rlvl then
                 xx.im = redau1 
               elseif xx.animcounter < 40 - reddelta*xx.rlvl then
@@ -559,7 +559,7 @@ function randr(xx)
                   xx.drawslash = true
                   if xx.j < 0 then xx.j = xx.j + 15 else xx.j = xx.j + 3 end
 
-                  hboxcs(xx, xx.id, 
+                  hexHit(xx, xx.id, 
                     {x=xx.mid+xx.v, y = xx.y-37-xx.j},
                     {x=xx.mid+(xx.lr*36), y = xx.y},
                     {x=xx.mid-(xx.lr*36), y = xx.y},
@@ -584,7 +584,7 @@ function randr(xx)
                 end
 
 
-              elseif xx.type == 5 then
+              elseif xx.attack_num == 5 then
                 if xx.animcounter < 70  then
                   if xx.animcounter < 3 then
                 xx.j = 12 - xx.rlvl
@@ -594,15 +594,15 @@ function randr(xx)
                   end
                   xx.im = redak1 
                   if xx.j < -2 then
-          xx.landingcounter = at.r.ak.penalty+(xx.rlvl+1)
+          xx.landing_counter = at.r.ak.penalty+(xx.rlvl+1)
                   xx.j = xx.j - (xx.rlvl+1)/3
-                  hboxcs(xx, xx.id, 
+                  hexHit(xx, xx.id, 
                     {x=xx.mid, y = xx.y},
                     {x=xx.mid+(xx.lr*46)+xx.v, y = xx.y+7-xx.j},
                     {x=xx.mid+(xx.lr*42)+xx.v, y = xx.y+56-xx.j},
                     {x=xx.mid-(xx.lr*21), y = xx.y+73},
                     function(z)
-                      xx.landingcounter = 0
+                      xx.landing_counter = 0
                       xx.animcounter = 100
                       xx.j = -xx.j/1.5
                       xx.cancombo = true
@@ -633,7 +633,7 @@ end
                     xx.animcounter = 0
                   elseif xx.animcounter < 230 - reddelta*xx.rlvl then
                     if xx.animcounter < 202 - reddelta*xx.rlvl then
-                      hradial(xx.id, {x=xx.mid, y = xx.y+30}, 70+90*xx.rlvl, 
+                      hexRadial(xx.id, {x=xx.mid, y = xx.y+30}, 70+90*xx.rlvl, 
                         function(p)
                           xx.cancombo = true
                           radialthrow(xx, p, (xx.rlvl*2+7)*((70+90*xx.rlvl)-math.sqrt((p.y-xx.y)^2 + (p.mid-xx.x)^2))/(72+10*xx.rlvl))

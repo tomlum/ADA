@@ -2,7 +2,7 @@
 --default hpx 3 hpy 8
 
 
-hittmon = {}
+monsters = {}
 
 ehead1 = lg.newImage("enemy/eh1.png")
 
@@ -42,16 +42,16 @@ at.e.b.z = .04
 
 function spawnmon(ex, why)
   local eyedee = 0
-  for i,v in ipairs(hittmon) do
+  for i,v in ipairs(monsters) do
 
     eyedee = hof(eyedee, i+1)
   end
     eyedee = hof(eyedee, 1)
   
-  local temp = {x = ex, y = why, v = 0, j = 0, oldpy = why,
+  local temp = {x = ex, y = why, v = 0, j = 0, old_feet = why,
     flinch = false, ft = 0, block = false, weight = 1, width = 40, height = 50, id = eyedee, im = ei1, mid = ex+35/2, lr = 1, wallrubbletimer = 0, health = 1+0*monbasehealth, gothroughplats = false,headrot = 0, headrot2 = 0, headvel = 0, push = 0, mode = "idle", animt = 0, oldemode = "bleh", drawwidth = 24, flinchway = 1, cantfly = false, c = {r = 25, g=25, b= 25}, hit = false}
-  --hittmon[eyedee] = temp
-  table.insert(hittmon, temp)
+  --monsters[eyedee] = temp
+  table.insert(monsters, temp)
 end
 
 function disintegrate(xx,i)
@@ -64,13 +64,13 @@ function disintegrate(xx,i)
     makenslashsparks(xx.mid,i,xx.v*(math.abs(xx.y+xx.height-i))/5, xx.j, xx.c.r,xx.c.g,xx.c.b,2)
     end
     end
-    table.remove(hittmon,i)
+    table.remove(monsters,i)
   end
   
 end
 
 function monplatupdate()
- for i,xx in ipairs(hittmon) do
+ for i,xx in ipairs(monsters) do
 
     if rampcanhit and xx.g then
       xx.v = rodib(xx.v,fricrate*ramp(xx),xx.push)
@@ -82,11 +82,11 @@ function monplatupdate()
 
 
     xx.push = rodib(xx.push,1,0)
-       extrah = 0
-        if xx.im.extrah ~= nil then
-          extrah = -xx.im.extrah
+       extra_height = 0
+        if xx.im.extra_height ~= nil then
+          extra_height = -xx.im.extra_height
         end
-  xx.feet = xx.y+xx.height-extrah
+  xx.feet = xx.y+xx.height-extra_height
 
 
 
@@ -95,7 +95,7 @@ end
 
 function postmonupdate()
   
-  for i,xx in ipairs(hittmon) do
+  for i,xx in ipairs(monsters) do
  
     disintegrate(xx,i)
     
@@ -104,7 +104,7 @@ function postmonupdate()
 end
 
 function monupdate()
-  for i,xx in ipairs(hittmon) do
+  for i,xx in ipairs(monsters) do
 
     xx.im = ei1
 
@@ -214,7 +214,7 @@ end
 
 function mondraw()
 
-  for i,xx in ipairs(hittmon) do
+  for i,xx in ipairs(monsters) do
 
     if xx.im.yoff == nil then
       xx.im.yoff = 0
@@ -256,7 +256,7 @@ function nearestplayer(x, y)
   local dis = 10000000
   local theid = 0
   for i,v in ipairs(players) do
-    if v.player ~= nil then
+    if v.is_player ~= nil then
       if math.sqrt((v.x-x)^2 + (v.y+v.height/2-y)^2) < dis then 
         theid = i
         dis = math.sqrt((v.x-x)^2 + (v.y+v.height/2-y)^2)
@@ -348,7 +348,7 @@ elseif xx.animt <4*5+10+10 then
   xx.im = ea6
   if xx.animt < 4*4+1 and rampcanhit then
 
-     hboxcs(xx, xx.id, 
+     hexHit(xx, xx.id, 
             {x=xx.mid, y = xx.y+15},
             {x=xx.mid+63*math.cos(xx.headrot)*xx.lr, y = xx.y+15+63*math.sin(xx.headrot)*xx.lr},
              {x=xx.mid, y = xx.y+15},

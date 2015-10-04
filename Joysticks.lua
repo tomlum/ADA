@@ -136,7 +136,7 @@ function holdmanage(xx)
       xx.combo = 0
       xx.cancombo = false
     end
-    xx.type = 0
+    xx.attack_num = 0
     xx.repcounter = 0
   end
 
