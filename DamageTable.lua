@@ -15,7 +15,7 @@ v_for_wall_flinch = 10
 wall_jump_range = 3.5
 
 --FRACTAL
-fractal_max_health = 30
+fractal_max_health = 300
 fractal_lives = 4
 
 --Landing

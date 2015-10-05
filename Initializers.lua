@@ -2,6 +2,8 @@ require "utilities"
 require "lasso"
 
 function initPlayer(xx)
+	xx.is_player = true
+
 	xx.oldv = 0
 	xx.hit = false
 	xx.old_feet = xx.y
@@ -10,6 +12,12 @@ function initPlayer(xx)
 	xx.rampspeed = 1
 	xx.ramptimer = 0
 	xx.rampcanhit = 0
+
+	--Count of a repeated move (e.g. basic punch combo)
+	xx.repcounter = 0
+
+	--Purple Initializers
+	xx.spikes = {}
 end
 
 function initWorld()

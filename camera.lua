@@ -627,7 +627,7 @@ paralaxcamshake = 0
 function drawx(xx)
 
 
-  local bob = 1/1000*cscale^2
+  local blur_scale1 = 1/1000*cscale^2
   local rob = 0
   if paralaxshake then
     paralaxshaketimer = 4
@@ -645,7 +645,7 @@ function drawx(xx)
     --lg.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
 
     if not fightclub and themap.paralaxscale2 ~= nil then
-      blurdraw(bob, function()
+      blurdraw(blur_scale1, function()
           lg.draw(enviro.paralax2, 
             (xx.x+(screenwidth/4)*cscale*pzoom2+paralaxcamshake)*(1-themaps[mapNum].paralaxscale2*pzoom2)
             -(500*(1-themaps[mapNum].paralaxscale2*pzoom2))
@@ -686,7 +686,7 @@ function drawx(xx)
         xoffset = (themap.width+100)*themap.paralaxscale  
         yoffset = (100)*themap.paralaxscale
         end
-       blurdraw(bob, function()
+       blurdraw(blur_scale1, function()
 
             lg.draw(themap.paralax, 
               (xx.x+(screenwidth/2)*cscale*pzoom+paralaxcamshake)*(1-themap.paralaxscale*pzoom)
@@ -753,7 +753,7 @@ function drawx(xx)
 
       else
 
-        blurdraw(bob, function()
+        blurdraw(blur_scale1, function()
 
             lg.draw(enviro.paralax, 
               (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themaps[mapNum].paralaxscale*pzoom)
@@ -773,7 +773,7 @@ function drawx(xx)
     --[[
     for i = 0, .9, .1 do
 
-      blurdraw(bob, function()
+      blurdraw(blur_scale1, function()
           lg.draw(p, 
             (xx.x+(screenwidth/2)*cscale+rob)*(1-i),
             (xx.y+(screenheight/2)*cscale+rob)*(1-i)+(feet2bottom-paralaxoffset)*(cscale*(1-i)),

@@ -13,19 +13,13 @@ slipoffedges = true
 wallhangtime = 20
 walljumpd = 12
 
-
-
-
 hexbuffer = 10
-
 
 players = {}
 me.height = 60
 you.height = 60
 me.width = 30
 you.width = 30
-me.is_player = true
-you.is_player = true
 
 table.insert(players, 
   me)
@@ -120,7 +114,7 @@ function hexHit(xx, theid, P1, P2, P3, P4, special, effectattack)
         --detect hits on the color boxes
         for i,box in ipairs(colorboxes) do
 
-          if not xx.hitbox and (hexCheck(P1.x, P1.y, P2.x, P2.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
+          if not xx.hit_a_box and (hexCheck(P1.x, P1.y, P2.x, P2.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
             or hexCheck(P2.x, P2.y, P3.x, P3.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
             or hexCheck(P3.x, P3.y, P4.x, P4.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
             or hexCheck(P4.x, P4.y, P1.x, P1.y, box.x, box.y-30, 40*math.abs(box.flip), 50, 1, 1)
@@ -129,7 +123,7 @@ function hexHit(xx, theid, P1, P2, P3, P4, special, effectattack)
           then
 
           local boxdam = 0
-          xx.hitbox = true
+          xx.hit_a_box = true
           if xx.id == 1 then
             boxdam = you.health
             special(you)

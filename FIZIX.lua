@@ -538,25 +538,31 @@ function speedpenaltycalc(xx,yy)
   end
 end
 
-function movex(xx,yy)
-  respawntravel(xx)
-  relativity(xx)
-  speedpenaltycalc(xx,yy)
-  runrunrun(xx)
-  transferofenergy(xx)
-  z = xx
-  if xx.landing_counter > landing_wait then
-    xx.stop=true
-    xx.holda = true
-  end
+--[[Resets
+  xx.can_super_jump = false
+  xx.float = false
+  xx.stop = false
+  ]]
+  function movex(xx,yy)
 
-  if (xx.g and xx.doubledown) or (not xx.g and xx.down) then 
-    xx.gothroughplats = true
-  else
-    xx.gothroughplats = false
-  end
+    respawntravel(xx)
+    relativity(xx)
+    speedpenaltycalc(xx,yy)
+    runrunrun(xx)
+    transferofenergy(xx)
+    z = xx
+    if xx.landing_counter > landing_wait then
+      xx.stop=true
+      xx.holda = true
+    end
 
-  xx.forcethroughplats = false
+    if (xx.g and xx.doubledown) or (not xx.g and xx.down) then 
+      xx.gothroughplats = true
+    else
+      xx.gothroughplats = false
+    end
+
+    xx.forcethroughplats = false
 
   ------?????--------
   if xx.flinch then
@@ -721,6 +727,8 @@ function movex(xx,yy)
 
     end
   end
+  
+    orientlr(xx)
   xx.can_super_jump = false
   xx.float = false
   xx.stop = false

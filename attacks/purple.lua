@@ -32,8 +32,8 @@ spikesize = 12
 function spikegrow(cur, n, xx)
   local vv = cur.verts
   if n == 1 then
-    vv[3] = vv[3]+(math.random(3, 9)+math.random()*(spikesize))*cur.lr
-    vv[4] = vv[4]-(math.random(10, 20)+math.random()*(spikesize))
+    vv[3] = vv[3]+(floRan(3, 20))*cur.lr
+    vv[4] = vv[4]-(floRan(10, 30))
     local growmount = vv[5]+(math.random()*(spikesize))*cur.lr
 
     if growmount > themap.plats[xx.plat.n].x1 and 
@@ -41,8 +41,8 @@ function spikegrow(cur, n, xx)
       vv[5] = growmount
     end
   elseif n == 2 then
-    vv[3] = vv[3]+(math.random(2, 5)+math.random()*(cur.t/5))*cur.lr
-    vv[4] = vv[4]-(math.random(10, 20)+math.random()*(cur.t/5))
+    vv[3] = vv[3]+(floRan(2, 5))*cur.lr
+    vv[4] = vv[4]-(floRan(10, 20))
     local growmount = vv[5]+(math.random(4, 10)+math.random()*(cur.t/5))*cur.lr
     if growmount > themap.plats[xx.plat.n].x1 and 
       growmount < themap.plats[xx.plat.n].x2 then
@@ -52,22 +52,76 @@ function spikegrow(cur, n, xx)
 
 end
 
-quakerange = 200
 
-spikes = {}
-you.spikes = {}
-me.spikes = {}
-spiketimer = 0
-me.spikechargetimer = 0
 spikecooldown = 15
-
-p4ft = 15
 
 mespikeprime = false
 mespikeairprime = false
 me.ptopspeed = 0
 you.ptopspeed = 0
 
+at.p = {}
+
+me.hitsomeonewithpurp = false
+you.hitsomeonewithpurp = false 
+
+me.purpgroundtimer = 0
+you.purpgroundtimer = 0
+
+at.p.p = {}
+at.p.p.dam = 12
+at.p.p.ft = 25
+at.p.p.kb = 3
+at.p.p.max = 4
+at.p.p.z = 4
+
+at.p.ap = {}
+at.p.ap.kj = -15
+at.p.ap.z = 4
+
+at.p.au = {}
+at.p.au.dam = 12
+at.p.au.ft = 25
+at.p.au.kb = 10
+at.p.au.kj = 15
+at.p.au.z = 4
+
+at.p.p2 = {}
+at.p.p2.dam = 12
+at.p.p2.ft = 65
+at.p.p2.kb = 15
+at.p.p2.kj = 15 
+at.p.p2.t = 10
+at.p.p2.z = 5
+
+
+at.p.u = {}
+at.p.u.dam = 3
+at.p.u.ft = 30
+at.p.u.kb = 0
+at.p.u.kj = 24
+at.p.u.z = 4
+at.p.u.range = 200
+
+at.p.k = {}
+at.p.k.max = 6
+at.p.k.kb = 6
+at.p.k.dam = 5
+at.p.k.duration = 0
+at.p.k.ft = 0
+
+at.p.ak = {}
+at.p.ak.penalty = 50
+at.p.ak.n = 4
+at.p.ak.time = 30
+at.p.ak.exposedtime = 37
+
+
+me.numofspikes = 0
+you.numofspikes = 0
+
+pa2busytime = 30
+pa4busytime = 10
 
 
 
@@ -93,12 +147,14 @@ function dopurpakspikes(xx)
       lverts2[4]= xx.feet
       lverts2[5]= xx.mid+(-xx.lr*20*(sn))
       lverts2[6]= xx.feet
+
       if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
         lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
         table.insert(xx.spikes,
           {verts = lverts,
           t = 0, lr=-xx.lr}) 
       end
+
       if lverts2[1] > themap.plats[xx.plat.n].x1+spikesize and 
         lverts2[1] < themap.plats[xx.plat.n].x2-spikesize then
         table.insert(xx.spikes,
@@ -145,46 +201,46 @@ function spikedraw(xx)
       lg.setColor(thecolors[1].c.r/franratio,thecolors[1].c.g/franratio,thecolors[1].c.b/franratio)
       lg.polygon("line", xx.spikes[i].verts)
 
-    elseif cur.t<-3 then 
-      table.remove(xx.spikes,i)
     end
   end
   lg.setColor(255,255,255)
 end
 
-
+bob123 = {}
 function spikeupdate(xx)
 
   for i = #xx.spikes, 1, -1 do
     local cur = xx.spikes[i] 
     local vv = cur.verts
-    if cur.t < 0 then
+
+    if cur.t<-3 then 
+      table.remove(xx.spikes,i)
+    elseif cur.t < 0 then
       local vv = xx.spikes[i].verts
-      vv[3] = vv[3]-(7*cur.lr)
-      vv[4] = vv[4]+(15)
-      vv[5] = vv[5]-(6*cur.lr)
+      vv[3] = vv[3]+math.abs(vv[1]-vv[3])/4
+      vv[4] = vv[4]+(vv[2]-vv[4])/4
+      vv[5] = vv[5]+math.abs(vv[1]-vv[5])/4
       lg.polygon("fill", vv)
-    elseif cur.t > 0 and cur.t<5  then
-      spikegrow(cur,1, xx)
-    elseif cur.t <=7 and cur.t >=5 then
-      hexHit(xx, xx.id, 
-        {x=vv[1], y = vv[2]},
-        {x=vv[3], y = vv[4]},
-        {x=vv[5], y = vv[6]},
-        {x=vv[1], y = vv[2]},
-        function(z)
-          xx.cancombo = true
-          xx.hitsomeonewithpurp = true
-
-          z.v = z.v + math.abs((vv[3]-vv[1])/70)*cur.lr
-          z.j = z.j + -(vv[4]-vv[2])/35
-          z.y = z.y-30
-          z.flinch = true
-          z.ft = z.ft + p4ft
-          z.health = z.health - at.p.k.dam
-
-          end)
-    elseif cur.t >=6 then
+    elseif cur.t > 0 and cur.t < 5  then
+      spikegrow(cur,1,xx)
+      if cur.t > 3 then
+        hexHit(xx, xx.id, 
+          {x=vv[1], y = vv[2]},
+          {x=vv[3], y = vv[4]},
+          {x=vv[5], y = vv[6]},
+          {x=vv[1]+1, y = vv[2]+1},
+          function(z)
+            xx.cancombo = true
+            xx.hitsomeonewithpurp = true
+            z.v = z.v + math.abs((vv[3]-vv[1])/(20))*cur.lr
+            z.j = z.j + (vv[2]-vv[4])/6
+            z.flinch = true
+            z.ft = z.ft + at.p.k.ft
+            z.health = z.health - at.p.k.dam
+            bob123 = vv
+            end)
+      end
+    elseif cur.t >=5 then
       hexHit(xx,0, 
         {x=vv[1], y = vv[2]},
         {x=vv[3], y = vv[4]},
@@ -198,24 +254,24 @@ function spikeupdate(xx)
           end)
       hexHit(xx,0, 
         {x=vv[3], y = vv[4]},
-        {x=vv[3], y = vv[4]},
-        {x=vv[3], y = vv[4]},
+        {x=vv[3]-(vv[3]-vv[1])/5, y = vv[4]-(vv[2]-vv[4])/5},
+        {x=vv[3]-(vv[3]-vv[1])/5, y = vv[4]-(vv[2]-vv[4])/5},
         {x=vv[3], y = vv[4]},
         function(z)
           xx.hitsomeonewithpurp = true
           z.v = -z.v + (cur.lr*2)
-          z.j = z.j + 7
+          z.j = z.j + 12
           z.flinch = true
-          z.ft = z.ft + p4ft
+          z.ft = z.ft + at.p.k.ft
           z.health = z.health - at.p.k.dam/3
-
           end)
     end
 
 
     if xx.numofspikes > 0 then cur.t = cur.t + 1
     elseif cur.t<0 or xx.numofspikes == 0 then 
-      if cur.t > 0 then cur.t = 0 else
+      if cur.t > 0 then cur.t = 0 
+      else
         cur.t = cur.t - 1
       end
     end
@@ -225,72 +281,6 @@ function spikeupdate(xx)
   end
 end
 
-at.p = {}
-
-
-at.p.p = {}
-at.p.p.dam = 12
-at.p.p.ft = 25
-at.p.p.kb = 3
-at.p.p.max = 4
-at.p.p.z = 4
-
-at.p.ap = {}
-at.p.ap.kj = -15
-at.p.ap.z = 4
-
-at.p.au = {}
-at.p.au.dam = 12
-at.p.au.ft = 25
-at.p.au.kb = 10
-at.p.au.kj = 15
-at.p.au.z = 4
-
-at.p.p2 = {}
-at.p.p2.dam = 12
-at.p.p2.ft = 65
-at.p.p2.kb = 15
-at.p.p2.kj = 15 
-at.p.p2.t = 10
-at.p.p2.z = 5
-
-
-at.p.u = {}
-at.p.u.dam = 3
-at.p.u.ft = 30
-at.p.u.kb = 0
-at.p.u.kj = 24
-at.p.u.z = 4
-
-at.p.k = {}
-at.p.k.max = 6
-at.p.k.kb = 6
-at.p.k.dam = 5
-
-at.p.ak = {}
-at.p.ak.penalty = 50
-at.p.ak.n = 4
-at.p.ak.time = 30
-at.p.ak.exposedtime = 37
-
-
-
-
-me.repcounter = 0
-you.repcounter = 0
-
-me.numofspikes = 0
-you.numofspikes = 0
-
-pa2busytime = 30
-pa4busytime = 10
-
-
-me.hitsomeonewithpurp = false
-you.hitsomeonewithpurp = false 
-
-me.purpgroundtimer = 0
-you.purpgroundtimer = 0
 
 function pandp(xx)
 
@@ -403,7 +393,7 @@ function pandp(xx)
 
           if xx.animcounter <= at.p.p2.t+5 then 
             hall(xx.id, function(z) if z.plat.n == xx.plat.n
-              and math.abs(z.x) - math.abs(xx.x) < quakerange then
+              and math.abs(z.x) - math.abs(xx.x) < at.p.u.range then
               z.j = 10
               z.flinch = true
               z.ft = z.ft+at.p.p.ft*2/3
@@ -443,7 +433,7 @@ function pandp(xx)
             xx.joystick:setVibration(1,1)
           end
           hall(xx.id, function(z) if z.plat.n == xx.plat.n
-            and math.abs(z.x) - math.abs(xx.x) < quakerange then
+            and math.abs(z.x) - math.abs(xx.x) < at.p.u.range then
             z.j = 10
             z.flinch = true
             z.ft = z.ft+at.p.p.ft*2/3
@@ -569,7 +559,7 @@ elseif xx.animcounter < 60 then
   if  xx.a4 and not xx.holda and xx.numofspikes< at.p.k.max then 
     xx.animcounter = 17
   end
-elseif xx.animcounter < 70 then
+elseif xx.animcounter < 70+at.p.k.duration then
   xx.im = stomp2
   xx.numofspikes = 0
 
@@ -646,7 +636,7 @@ elseif xx.attack_num ==3 then
             if xx.animcounter < 3 then
               xx.animcounter = 1
               xx.im=apk1
-              xx.j = xx.j - 2
+              xx.j = xx.j - 1
               xx.landing_counter = at.p.ak.penalty + at.p.ak.time
 
 

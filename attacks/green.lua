@@ -354,7 +354,7 @@ function gandg(xx)
             z.j = at.g.u.j
             z.flinch = true
             z.ft = z.ft+at.g.u.ft
-            makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
+
             end)
 
         if xx.animcounter < 7-2+greena1adj then
@@ -470,7 +470,6 @@ function gandg(xx)
               z.j = at.g.u.j
               z.flinch = true
               z.ft = z.ft+at.g.u.ft
-              makesparks(xx.y+30,xx.v+xx.x+xx.lr*(15),sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b)
               end)
         end
       elseif xx.animcounter >= 50 then

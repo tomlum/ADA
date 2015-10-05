@@ -1906,21 +1906,9 @@ elseif not xx.g
 
 end
 
-  --SPARKS COLOR BASED ON ATTACK COLOR?!?!?!?!?!?
 
   sparks = {}
 
-  function makesparks(ex,why,vee, jay, arr,gee,bee)
-
-    for i = 10, 1, -1 do
-      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay),r=arr,g=gee,b=bee, rot = math.random(0,360)})
-      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay),r=arr,g=gee,b=bee, rot = math.random(0,360)})
-      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0),r=arr,g=gee,b=bee, rot = math.random(0,360)})
-      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2),r=arr,g=gee,b=bee, rot = math.random(0,360)})
-
-    end
-
-  end
 
   function makensparks(ex,why,ve, jy, arr,gee,bee, n)
     local force = ve+jy/2

@@ -323,14 +323,14 @@ function grab(xx)
 
 	me.cmbo = false
 	you.cmbo = false
-	me.hitbox = false
-	you.hitbox = false
+	me.hit_a_box = false
+	you.hit_a_box = false
 	function combo(xx)
 
 		if xx.animcounter > 0 and xx.animcounter <= 2 then
 			for i,v in ipairs(players) do
 				v.hit = false
-				v.hitbox = false
+				v.hit_a_box = false
 			end
 
 

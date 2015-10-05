@@ -8,9 +8,6 @@
 
 
 
-me.repcounter = 0
-you.repcounter = 0
-
 
 
 at.bb = {}

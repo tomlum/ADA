@@ -6,10 +6,12 @@
 --can i remove me.x entirely?
 --can't kick combo out of purple kick
 
+
+--if not hitsomeonewithpurp then dont hit them, allows for repeated spike hits
 --hide initial sparks
 --if actionshot during another actionshot, increase actionshot time
 --fix orange no 
---air purple spikes aren't going away
+--air purple spikes aren't going away, related to dangerclose
 --pause is broken
 --DIRECTION OF PURPLE AFFECTS HITTING V AND J
 --xx.attack_num be more meaningful than 1 - 6
@@ -302,8 +304,6 @@ function love.update()
 
 
 
-        orientlr(me)
-        orientlr(you)
 
         --if here then non slideycling to person
         --camerafol()
@@ -619,22 +619,19 @@ drawoverlays()
       lg.print("pause: "..tostring(pause), 400,360)
       lg.print("me.start: "..tostring(me.start), 400,380)
       lg.print("me.feet: "..tostring(me.feet), 400,400)
-      lg.print("me.old_feet: "..tostring(me.old_feet), 400,420)
+      lg.print("me.stop: "..tostring(me.stop), 400,420)
       lg.print("stophit: "..tostring(stophit), 400,440)
       changebackgroundcolor(4)
       
     end
     golasso()
 
-    if love.keyboard.isDown("2") and not boxstop  then
-      boxstop = true
-      blossom(me,you, 3, 6, .2)
+    for i,v in ipairs(bob123) do
+        lg.print(tostring(v), 30, 30*i)
     end
-    for i,v in ipairs(blooms) do
-      for j,k in ipairs(v.points) do
-        lg.print(tostring(k.v), 30*i, j*30)
-      end
-    end
-    lg.print("FOR JOSH", 100, 100)
+    if #bob123 >= 6 then
+    lg.polygon("fill", bob123)
+  end
+
     pauseonhit()
   end
