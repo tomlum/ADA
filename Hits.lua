@@ -11,7 +11,7 @@ slipoffedges = true
 
 --for dis from height to feet in fall anim
 wallhangtime = 20
-walljumpd = 12
+walljumpdis = 12
 
 hexbuffer = 10
 
@@ -492,7 +492,7 @@ function hline(xx, theid, P1, P2, special)
 
     end
 
-    function linewallcheck(ex, why,v, j)
+    function lineWallCheck(ex, why,v, j)
       midv2 = {x = (ex)+v, y=why-j, n = 2}
       midv = {x = ex, y=why, n = 2}
 
@@ -513,7 +513,7 @@ function hline(xx, theid, P1, P2, special)
     end
 
 
-    function lineplatcheck(ex, why,v, j)
+    function linePlatCheck(ex, why,v, j)
       midv2 = {x = ex+v, y=why-j}
       midv = {x = ex, y=why}
 
@@ -553,10 +553,7 @@ function hline(xx, theid, P1, P2, special)
 
     end
 
-    me.im = idle1
-    you.im = idle2
-
-
+    --For affecting everyone
     function hall(theid, func)
       for i,xx in ipairs(players) do
         if theid ~= i then
@@ -578,12 +575,12 @@ function hline(xx, theid, P1, P2, special)
 
 
 
-
+    --Wall detection
     function hboxwall()
       for i,xx in ipairs(players) do
 
-        dodge_h = 0
-        dodge_w = 0
+        local dodge_h = 0
+        local dodge_w = 0
         local extra_height = 0
         if xx.im.dodge_height ~= nil then
           dodge_h = xx.im.dodge_height
@@ -595,45 +592,36 @@ function hline(xx, theid, P1, P2, special)
           extra_height = -xx.im.extra_height
         end
 
-        if xx.is_player~=nil then
-          if ( xx.flinch or xx.a1 or xx.a2 or xx.a3 or xx.a4) then xx.wjt = 0 end
 
-          if xx.wjt > 0 then 
-            xx.wjt = xx.wjt + 1*ramp(xx)
-              --[[
-              if xx.wjt > 8 then 
-                xx.wjt = 0
-                if xx.v >= 0 then xx.lr = 1
-                else xx.lr = -1
-                end
-              else
-                ]]--
-                if xx.wjt > wallhangtime then 
-                  xx.wjt = 0 
+        --wall jump/hold mechanics
+        if xx.is_player~=nil then
+          if not xx.runb or xx.flinch or xx.a1 or xx.a2 or xx.a3 or xx.a4 or xx.g then 
+            xx.wall_hang = false 
+          end
+
+          if xx.wall_hang then 
                   xx.lr = xx.walllr
+                if (xx.lr > 0 and xx.right) or (xx.lr < 0 and xx.left) then 
+                  xx.wall_hang = false
                   if #joysticks>=xx.id then
                     xx.jt = walljumpjt
-                    xx.j = -xx.jly*walljumpd
-                    xx.v = xx.jlx*walljumpd
-
+                    xx.j = -xx.jly*walljumpdis
+                    xx.v = xx.jlx*walljumpdis
                   else
                     if xx.up then
                       xx.jt = xx.jt + walljumpjt2
-                      xx.j = walljumpvv2
-                      xx.v = walljumpv2 *-xx.walllr
+                      xx.j = walljumpj2
+                      xx.v = walljumpv2 *xx.lr
                     else
                       xx.jt = xx.jt + walljumpjt
-                      xx.j = walljumpvv
-                      xx.v = walljumpv *-xx.walllr
+                      xx.j = walljumpj
+                      xx.v = walljumpv *xx.lr
                     end
                   end
-                else 
-                  xx.x = xx.wallx
+                elseif xx.wall_hang then 
                   xx.v = 0
-                  xx.j = 0
+                  xx.j = hof(-2.5,xx.j)
                   xx.im = wallgrab
-                  xx.y = xx.initwy
-                  xx.lr = xx.walllr
 
 
                 end
@@ -644,72 +632,59 @@ function hline(xx, theid, P1, P2, special)
             for j = #themap.walls, 1, -1 do 
               local wall = themap.walls[j]
 
-
+              --Wall jump check
               if xx.is_player~=nil and not xx.flinch
-                and ((xx.x+xx.v*wall_jump_range < wall.x and xx.x >= wall.x) or (xx.x+xx.width+xx.v*wall_jump_range > wall.x and xx.x+xx.width <= wall.x)) and xx.feet-xx.j >= wall.y1 and xx.y-xx.j <= wall.y2 and 
-                ((xx.v < 0 and xx.right) or (xx.v > 0 and xx.left)) and xx.wjt == 0 and math.abs(xx.j) > 0 and not xx.flinch and not xx.busy and xx.animcounter == 0
+                and ((xx.x+xx.v < wall.x and xx.x >= wall.x) or (xx.x+xx.width+xx.v > wall.x and xx.x+xx.width <= wall.x)) and xx.feet-xx.j >= wall.y1 and xx.y-xx.j <= wall.y2 and 
+                xx.runb and not xx.g and not xx.wall_hang and math.abs(xx.j) > 0 and not xx.flinch and not xx.busy and xx.animcounter == 0
                 then
-                if (xx.x+xx.v*wall_jump_range < wall.x and xx.x >= wall.x) then
+                if (xx.x+xx.v < wall.x and xx.x >= wall.x) then
                   xx.wallside = .01 
-                elseif (xx.x+xx.width+xx.v*wall_jump_range > wall.x and xx.x+xx.width <= wall.x) then
+                elseif (xx.x+xx.width+xx.v > wall.x and xx.x+xx.width <= wall.x) then
                   xx.wallside = -.01 -xx.width
                 end
 
-                xx.wjt = 1 
+                xx.wall_hang = true
                 xx.initwy = xx.y - xx.j
                 xx.walllr = -xx.lr
                 xx.wallx = wall.x+xx.wallside
                 xx.v = 0
-              elseif (wall.barrier~=nil) and xx.feet-xx.j > wall.y1 and xx.y-xx.j < wall.y2 and ((xx.x+xx.v < wall.x and xx.x >= wall.x and xx.v < 0) or (xx.x+xx.width+xx.v > wall.x and xx.x+xx.width <= wall.x and xx.v > 0)) and xx.wjt == 0 then
-                if (xx.x+xx.v < wall.x and xx.x >= wall.x) then
-                  xx.wallside = .01 
-                else
-                  xx.wallside = -.01
-                end
 
-
-                if xx.flinch and math.abs(xx.v) > v_for_wall_flinch then 
-
-                  xx.health = xx.health - math.abs(xx.v/3)
-                  xx.v = -xx.v/2
-                  if xx.g then
-                    xx.j = math.abs(xx.v)
-                  else
-                    xx.j = xx.j - math.abs(xx.v/3)
-                  end
-                  makenrubble("vert", xx.mid, xx.feet,xx.v, xx.j/2,20)
-                  repplay(xx.wallhit)
-                  xx.g = false
-                  xx.y = xx.y - 10
-
-                else
-
-                  xx.v = 0
-                end
-              elseif wall.barrier and xx.x < wall.x and xx.x + xx.width > wall.x and (xx.y < wall.y2 and xx.feet > wall.y1) then
-                if xx.mid < wall.x or xx.v < 0 then
-                  xx.v = lof(xx.v,-2)
-                else
-                  xx.v = hof(xx.v,2)
-                end
-
-
+              --Barrier check/rebound off of barrier
+            elseif (wall.barrier~=nil) and xx.feet-xx.j > wall.y1 and xx.y-xx.j < wall.y2 and ((xx.x+xx.v < wall.x and xx.x >= wall.x and xx.v < 0) or (xx.x+xx.width+xx.v > wall.x and xx.x+xx.width <= wall.x and xx.v > 0)) and not xx.wall_hang then
+              if (xx.x+xx.v < wall.x and xx.x >= wall.x) then
+                xx.wallside = .01 
+              else
+                xx.wallside = -.01
               end
 
 
+              if xx.flinch and math.abs(xx.v) > v_for_wall_flinch then 
 
+                xx.health = xx.health - math.abs(xx.v/3)
+                xx.v = -xx.v/2
+                if xx.g then
+                  xx.j = math.abs(xx.v)
+                else
+                  xx.j = xx.j - math.abs(xx.v/3)
+                end
+                makenrubble("vert", xx.mid, xx.feet,xx.v, xx.j/2,20)
+                repplay(xx.wallhit)
+                xx.g = false
+                xx.y = xx.y - 10
 
+              else
 
-
-
-
-              xrubble(xx)
-
-
+                xx.v = 0
+              end
 
             end
 
 
+          end
+
+            --Generate rubble/glass from wall
+            wallRubbleCheck(xx)
+            orientlr(xx)
           end
 
 
@@ -795,7 +770,7 @@ function hline(xx, theid, P1, P2, special)
                 
                 if xx.j ~= 0 and xx.is_player~=nil  then
 
-                    xx.old_feet = xx.feet
+                  xx.old_feet = xx.feet
 
                   if xx.j < -j_for_landing or math.abs(xx.v) > speedlimit then 
                     xx.landing_counter = xx.landing_counter + landing_wait
@@ -809,15 +784,13 @@ function hline(xx, theid, P1, P2, special)
                   repplay(xx.land)
                   xx.slowdown = false
 
-
-
-
                 end
 
                 xx.y = plat.y-xx.height
 
                 xx.g = true
                 xx.j = 0
+
                 xx.plat = plat;
                 if slipoffedges then
                   if xx.x < plat.x2 and xx.mid > plat.x2 then

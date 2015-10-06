@@ -635,7 +635,7 @@ ya4fade= 100
 basefade = 80
 
 
-actionshotdur = 70
+--actionshotdur = 70
 
 me.im = idle1
 you.im = idle1
@@ -761,13 +761,13 @@ function drawPlayer(xx)
 
 end
 
-
+--[[
 function actionshotstuff(xx)
 
   if xx.actionshot then
     musfadein = -10
-    xx.numofspikes = 0
-    xx.uppercuthit = false
+    --xx.numofspikes = 0
+    --xx.uppercuthit = false
     --xx.hitsomeonewithpurp = false
 
     if xx.color.n == xx.cchangeto.n and (xx.color.n~=xx.cantreturntothis) and (xx.a1b or xx.a2b or xx.a3b or xx.a4b) and xx.combo<xx.maxcombo then
@@ -791,8 +791,8 @@ function actionshotstuff(xx)
 
   end
 
-  ColorChange(xx)
-  ColorChanging(xx)
+  colorChange(xx)
+  changePlayerColor(xx)
 
   if xx.actiontimer == 1 
     then xx.actionshot = false 
@@ -807,7 +807,7 @@ function actionshotstuff(xx)
 
     end
 
-  elseif xx.actionshot == true and xx.actiontimer == 0 
+  elseif xx.actionshot and xx.actiontimer == 0 
     then xx.actiontimer = actionshotdur
   elseif xx.actiontimer > 0 
     then xx.actiontimer = xx.actiontimer - 1
@@ -817,34 +817,32 @@ function actionshotstuff(xx)
 
 
   end
-
+  ]]
 
   function lights()
-  if lighttimer >= 70
-    then
-    lighttimer = - math.random(100,300)
-  elseif lighttimer >= 50
-    then enviro.light = enviro.lightsoff
-    lighttimer = lighttimer + 1
-  elseif lighttimer >= 36 
-    then enviro.light = enviro.lightson
-    lighttimer = lighttimer + 1
-  elseif lighttimer >= 31 
-    then enviro.light = enviro.lightsoff
-    lighttimer = lighttimer + 1
-    else enviro.light = enviro.lightson
+    if lighttimer >= 70
+      then
+      lighttimer = - math.random(100,300)
+    elseif lighttimer >= 50
+      then enviro.light = enviro.lightsoff
       lighttimer = lighttimer + 1
+    elseif lighttimer >= 36 
+      then enviro.light = enviro.lightson
+      lighttimer = lighttimer + 1
+    elseif lighttimer >= 31 
+      then enviro.light = enviro.lightsoff
+      lighttimer = lighttimer + 1
+      else enviro.light = enviro.lightson
+        lighttimer = lighttimer + 1
 
 
 
 
 
+      end
     end
-  end
-  me.wjt = 0
-  me.initwy = 0
-  you.wjt = 0
-  you.initwy = 0
+    me.initwy = 0
+    you.initwy = 0
 --the x coord for either wall to walljump off of
 wallwalljump = 45
 --wallcheckhelper
@@ -861,10 +859,10 @@ function drawstreetprestuff()
   lights()
 end
 function drawstreetstuff()
-lg.draw(enviro.stagefloor, 0, 0, 0, 1, 20)
-lg.draw(enviro.rafters,5608-502, 1536)
-drawpartition(0, themaps[1].floor, -1)
-drawpartition(themaps[1].rightwall, themaps[1].floor, 1)
+  lg.draw(enviro.stagefloor, 0, 0, 0, 1, 20)
+  lg.draw(enviro.rafters,5608-502, 1536)
+  drawpartition(0, themaps[1].floor, -1)
+  drawpartition(themaps[1].rightwall, themaps[1].floor, 1)
 end
 
 function drawpartition(fx, fy, lr)
@@ -968,13 +966,13 @@ function updatepapers()
     --if paper hits the ceiling
     local lr = 1
     if temp.v < 0 then lr = -1 end
-    if lineplatcheck(temp.x, temp.y-3,temp.v*1.3, temp.j*1.3) or
-      linewallcheck(temp.x+lr*4, temp.y-3,temp.v*1.3, temp.j*1.3)
+    if linePlatCheck(temp.x, temp.y-3,temp.v*1.3, temp.j*1.3) or
+      lineWallCheck(temp.x+lr*4, temp.y-3,temp.v*1.3, temp.j*1.3)
       then table.remove(papers,i) end
 
     end
     for i,v in ipairs(papers)do
-      if not me.actionshot and not you.actionshot and not pause then
+      if not pause then
         v.y = v.y - v.j*1.3*rampspeed
         v.x = v.x + v.v*1.3*rampspeed
         if v.v > 1.5 then v.v = v.v - .4*rampspeed
@@ -1013,13 +1011,13 @@ function updatepapers()
         local temp = leaves[i]
         local lr = 1
         if temp.v < 0 then lr = -1 end
-        if lineplatcheck(temp.x, temp.y+3,temp.v, temp.j) or
-          linewallcheck(temp.x+lr*4, temp.y+3,temp.v, temp.j)
+        if linePlatCheck(temp.x, temp.y+3,temp.v, temp.j) or
+          lineWallCheck(temp.x+lr*4, temp.y+3,temp.v, temp.j)
           then table.remove(leaves,i) end
 
         end
         for i,v in ipairs(leaves)do
-          if not me.actionshot and not you.actionshot and not pause then
+          if not pause then
             v.y = v.y - v.j*rampspeed
             v.x = v.x + v.v*rampspeed
 
@@ -1097,12 +1095,12 @@ function updatepapers()
             local temp = glasseses[i]
             local lr = 1
             if temp.v < 0 then lr = -1 end
-            if lineplatcheck(temp.x, temp.y,temp.v*1.2, temp.j*1.2) or linewallcheck(temp.x+lr, temp.y,temp.v*1.2, temp.j*1.2)  or i > 500 then table.remove(glasseses,i) end
+            if linePlatCheck(temp.x, temp.y,temp.v*1.2, temp.j*1.2) or lineWallCheck(temp.x+lr, temp.y,temp.v*1.2, temp.j*1.2)  or i > 500 then table.remove(glasseses,i) end
 
 
           end
           for i,v in ipairs(glasseses)do
-            if not me.actionshot and not you.actionshot and not pause then
+            if not pause then
               v.y = v.y - v.j*1.15*rampspeed
               v.x = v.x + v.v*1.15*rampspeed
               v.j = v.j - .18*rampspeed
@@ -1114,7 +1112,7 @@ function updatepapers()
         function drawglass()
 
           for i,v in ipairs(glasseses)do
-            if not me.actionshot and not you.actionshot and not pause then
+            if not pause then
 
               glassn = math.random(155,255)
               glassclarity = math.random(55,255)
@@ -1139,7 +1137,7 @@ function updatepapers()
         function drawdust()
 
           for i,v in ipairs(dust)do
-            if not me.actionshot and not you.actionshot and not pause then
+            if not pause then
               dustn = math.random(100,200)
             end
             tsetColor(dustn,dustn,dustn,.3)
@@ -1159,12 +1157,12 @@ function updatepapers()
             local lr = 1
             if temp.v < 0 then lr = -1 end
 
-            if lineplatcheck(temp.x, temp.y,temp.v*3, temp.j*2) or linewallcheck(temp.x+lr, temp.y,temp.v*3, temp.j*2) or i > 500 then table.remove(dust,i) end
+            if linePlatCheck(temp.x, temp.y,temp.v*3, temp.j*2) or lineWallCheck(temp.x+lr, temp.y,temp.v*3, temp.j*2) or i > 500 then table.remove(dust,i) end
 
           end
 
           for i,v in ipairs(dust)do
-            if not me.actionshot and not you.actionshot and not pause then
+            if not pause then
               v.y = v.y - v.j*rampspeed*2
               v.x = v.x + v.v*rampspeed*3
               v.j = v.j - .6*rampspeed
@@ -1188,12 +1186,12 @@ function updatepapers()
             local temp = rubble[i]
 
             if temp.v < 0 then lr = -1 end
-            if lineplatcheck(temp.x, temp.y,temp.v*2, temp.j*2) or linewallcheck(temp.x+lr, temp.y,temp.v*2, temp.j*2) or i > 400 then table.remove(rubble,i) end
+            if linePlatCheck(temp.x, temp.y,temp.v*2, temp.j*2) or lineWallCheck(temp.x+lr, temp.y,temp.v*2, temp.j*2) or i > 400 then table.remove(rubble,i) end
 
           end
 
           for i,v in ipairs(rubble)do
-            if not me.actionshot and not you.actionshot and not pause then
+            if not pause then
               v.y = v.y - v.j*rampspeed*2
               v.x = v.x + v.v*rampspeed*2
               v.j = v.j - .2*rampspeed/1.5*2
@@ -1205,7 +1203,7 @@ function updatepapers()
         function drawrubble()
 
           for i,v in ipairs(rubble)do
-            if not me.actionshot and not you.actionshot and not pause then
+            if not pause then
               blackn = math.random(80,120)
             end
             tsetColor(blackn,blackn,blackn)
@@ -1226,12 +1224,12 @@ function updatepapers()
             local lr = 1
             if temp.v < 0 then lr = -1 end
 
-            if lineplatcheck(temp.x, temp.y,temp.v*2, temp.j*2) or linewallcheck(temp.x+lr, temp.y,temp.v*2, temp.j*2) then 
-              if lineplatcheck(temp.x, temp.y,temp.v*2, temp.j*2) then
+            if linePlatCheck(temp.x, temp.y,temp.v*2, temp.j*2) or lineWallCheck(temp.x+lr, temp.y,temp.v*2, temp.j*2) then 
+              if linePlatCheck(temp.x, temp.y,temp.v*2, temp.j*2) then
                 temp.j = 0
               end
 
-              if linewallcheck(temp.x+lr, temp.y,temp.v, temp.j)  then
+              if lineWallCheck(temp.x+lr, temp.y,temp.v, temp.j)  then
                 temp.v = -temp.v/2
               end
               if temp.fade==nil then
@@ -1270,7 +1268,7 @@ function updatepapers()
 
             end
 
-            if not me.actionshot and not you.actionshot and not pause then
+            if not pause then
               v.y = v.y - v.j*rampspeed*2
               v.x = v.x + v.v*rampspeed*2
               v.j = v.j - .1*rampspeed*1.3
@@ -1742,114 +1740,116 @@ end
   you.walktimer = 0
 
 
-  orientlr = function(xx)
+  function orientlr(xx)
 
-  me.xleft = me.x + 30
-  me.mid = me.x + 15
-  you.xleft = you.x + 30
-  you.mid = you.x + 15
+    if xx.wall_hang then
+      xx.x = xx.wallx
+    end
 
-  if not xx.slowdown and not xx.slide and not xx.stop and not xx.pause and not xx.flinch
-    and (xx.dodgetype~=2 and xx.dodgetype >-1) and xx.wjt ==0 and not xx.purplanding
-    and not xx.greenkcondition
-    then
-    if xx.right then xx.lr = 1
-    elseif xx.left then xx.lr = -1
+    xx.xleft = xx.x + 30
+    xx.mid = xx.x + 15
+
+    if not xx.slowdown and not xx.slide and not xx.stop and not xx.pause and not xx.flinch
+      and (xx.dodgetype~=2 and xx.dodgetype >-1) and not xx.wall_hang and not xx.purplanding
+      and not xx.greenkcondition
+      then
+      if xx.right then xx.lr = 1
+      elseif xx.left then xx.lr = -1
+      end
+    end
+    if xx.lr > 0 then
+
+      xx.xanimate = xx.x
+    else 
+      xx.xanimate = xx.xleft
+    end
+
+
+
+  end
+
+
+  function idleanimatex (xx)
+    if xx.idletimer < 17 then 
+      xx.idletimer = xx.idletimer + 1*ramp(xx)
+      if xx.health<maxhealth/2 then
+        xx.im = idle3
+      else
+        xx.im = idle1
+      end
+    elseif xx.idletimer >= 17 and xx.idletimer < 33 then
+      xx.idletimer = xx.idletimer + 1
+      if xx.health<maxhealth/2 then
+
+        xx.im = idle4
+      else
+
+        xx.im = idle2
+      end
+    elseif xx.idletimer >=33 then
+      xx.idletimer = 0
+    end
+
+    if xx.j ~= 0 then
+      xx.superjumptimer = 0
+    elseif xx.dubtimer < -15 then
+      xx.can_super_jump = true
+      xx.superjumptimer = 13
+      xx.im = landing 
+    elseif xx.superjumptimer > 0 then
+      xx.im = landing 
+      xx.can_super_jump = true
+      xx.superjumptimer = rodib(xx.superjumptimer,1,0)
+
+    end
+
+
+  end
+
+
+  walkxx = function (xx)
+
+  if xx.v*xx.lr > 0 then
+    xx.walktimer = xx.walktimer + 1*ramp(xx)
+  else
+    xx.walktimer = xx.walktimer - 1*ramp(xx)
+  end
+
+
+
+  if xx.running and not xx.dodge then 
+
+    if xx.walktimer >= xx.runpace+2 then xx.im = run4 
+      xx.walktimer = 0
+      repplay(xx.runsound)
+      makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
+    elseif xx.walktimer >= xx.runpace + 1 then xx.im = run4 
+      makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
+    elseif xx.walktimer >= xx.runpace/2 + 2 then xx.im = run3 
+    elseif xx.walktimer >= xx.runpace/2 then xx.im = run2 
+      makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
+      repplay(xx.runsound)
+    elseif xx.walktimer >= 0 then xx.im = run1 
+    end  
+  else
+
+    if xx.walktimer < 7 then 
+      xx.im = walk1
+      if xx.walktimer < 0 then 
+        xx.walktimer = 34
+      end
+    elseif xx.walktimer >= 7 and xx.walktimer < 14 then
+      xx.im = walk2
+    elseif xx.walktimer >= 14 and xx.walktimer < 21 then
+      xx.im = walk3
+    elseif xx.walktimer >= 21 and xx.walktimer < 28 then
+      xx.im = walk4
+    elseif xx.walktimer >= 28 and xx.walktimer < 35 then
+      xx.im = walk5
+    else
+      xx.walktimer = 0
     end
   end
-  if xx.lr > 0 then
-
-    xx.xanimate = xx.x
-  else 
-    xx.xanimate = xx.xleft
-  end
-
-
-
-end
-
-
-idleanimatex = function(xx)
-if xx.idletimer < 17 then 
-  xx.idletimer = xx.idletimer + 1*ramp(xx)
-  if xx.health<maxhealth/2 then
-    xx.im = idle3
-  else
-    xx.im = idle1
-  end
-elseif xx.idletimer >= 17 and xx.idletimer < 33 then
-  xx.idletimer = xx.idletimer + 1
-  if xx.health<maxhealth/2 then
-
-    xx.im = idle4
-  else
-
-    xx.im = idle2
-  end
-elseif xx.idletimer >=33 then
-  xx.idletimer = 0
-end
-
-if xx.j ~= 0 then
-  xx.superjumptimer = 0
-elseif xx.dubtimer < -15 then
-  xx.can_super_jump = true
-  xx.superjumptimer = 13
-  xx.im = landing 
-elseif xx.superjumptimer > 0 then
-  xx.im = landing 
-  xx.can_super_jump = true
-  xx.superjumptimer = rodib(xx.superjumptimer,1,0)
-
-end
-
-
-end
-
-
-walkxx = function (xx)
-
-if xx.v*xx.lr > 0 then
-  xx.walktimer = xx.walktimer + 1*ramp(xx)
-else
-  xx.walktimer = xx.walktimer - 1*ramp(xx)
-end
-
-
-
-if xx.running and not xx.dodge then 
-
-  if xx.walktimer >= xx.runpace+2 then xx.im = run4 
-    xx.walktimer = 0
-    repplay(xx.runsound)
-    makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
-  elseif xx.walktimer >= xx.runpace + 1 then xx.im = run4 
-    makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
-  elseif xx.walktimer >= xx.runpace/2 + 2 then xx.im = run3 
-  elseif xx.walktimer >= xx.runpace/2 then xx.im = run2 
-    makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
-    repplay(xx.runsound)
-  elseif xx.walktimer >= 0 then xx.im = run1 
-  end  
-else
-
-  if xx.walktimer < 7 then 
-    xx.im = walk1
-    if xx.walktimer < 0 then 
-      xx.walktimer = 34
-    end
-  elseif xx.walktimer >= 7 and xx.walktimer < 14 then
-    xx.im = walk2
-  elseif xx.walktimer >= 14 and xx.walktimer < 21 then
-    xx.im = walk3
-  elseif xx.walktimer >= 21 and xx.walktimer < 28 then
-    xx.im = walk4
-  elseif xx.walktimer >= 28 and xx.walktimer < 35 then
-    xx.im = walk5
-  else
-    xx.walktimer = 0
-  end
-end
 end
 
 landxcheck = function (xx)
@@ -1872,39 +1872,39 @@ end
 end
 
 
-animate = function (xx)
-landxcheck(xx)
-slidexcheck(xx)
-if xx.slide 
-  then xx.im = slide
-  makeslidedust(xx.y+50,xx.mid + 15 * xx.lr,xx.v)
+function animate(xx)
+  landxcheck(xx)
+  slidexcheck(xx)
+  if xx.slide 
+    then xx.im = slide
+    makeslidedust(xx.y+50,xx.mid + 15 * xx.lr,xx.v)
 
 
-elseif xx.landing
-  then 
-  if xx.purplanding then
-    xx.im = apk2
+  elseif xx.landing
+    then 
+    if xx.purplanding then
+      xx.im = apk2
 
-  else
-    xx.im = landing
-  end
-elseif xx.g and aboutso(xx.v, xx.push) and not xx.slide 
-  then idleanimatex(xx)
-  xx.walktimer = 0
-elseif not xx.g
-  then
-  if xx.wjt == 0 then
-    if xx.j > 0 then 
-      xx.im = jumprise
-      else xx.im = jumpfalling
-      end
+    else
+      xx.im = landing
     end
-  else
-    walkxx(xx)
+  elseif xx.g and aboutso(xx.v, xx.push) and not xx.slide 
+    then idleanimatex(xx)
+    xx.walktimer = 0
+  elseif not xx.g
+    then
+    if not xx.wall_hang then
+      if xx.j > 0 then 
+        xx.im = jumprise
+        else xx.im = jumpfalling
+        end
+      end
+    else
+      walkxx(xx)
+    end
+
+
   end
-
-
-end
 
 
   sparks = {}
@@ -1923,7 +1923,7 @@ end
       end
       vee = force*math.asin(math.rad(math.random(1,90)))*flip1
       jay = force*math.acos(math.rad(math.random(1,90)))*flip2
-      table.insert(sparks,{x = ex, y = why, v=vee, j = jay,r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360), shape = math.random(1,3)})
+      table.insert(sparks,{x = ex, y = why, v=vee, j = jay,r=colorChange(arr),g=colorChange(gee),b=colorChange(bee), rot = math.random(0,360), shape = math.random(1,3)})
 
     end
   end
@@ -1931,10 +1931,10 @@ end
   function makensparksbox(ex,why,vee, jay, arr,gee,bee, n)
 
     for i = n, 1, -1 do
-      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360), shape = math.random(1,3)})
-      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360), shape = math.random(1,3)})
-      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360), shape = math.random(1,3)})
-      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2)+math.random(),r=colorchange(arr),g=colorchange(gee),b=colorchange(bee), rot = math.random(0,360), shape = math.random(1,3)})
+      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay)+math.random(),r=colorChange(arr),g=colorChange(gee),b=colorChange(bee), rot = math.random(0,360), shape = math.random(1,3)})
+      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay)+math.random(),r=colorChange(arr),g=colorChange(gee),b=colorChange(bee), rot = math.random(0,360), shape = math.random(1,3)})
+      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0)+math.random(),r=colorChange(arr),g=colorChange(gee),b=colorChange(bee), rot = math.random(0,360), shape = math.random(1,3)})
+      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2)+math.random(),r=colorChange(arr),g=colorChange(gee),b=colorChange(bee), rot = math.random(0,360), shape = math.random(1,3)})
 
     end
 
@@ -1962,8 +1962,8 @@ end
   function updatesparks()
 
     for i, temp in ipairs(sparks) do
-      if lineplatcheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6) or
-        linewallcheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6)or temp.x < 0 or temp.y < 0
+      if linePlatCheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6) or
+        lineWallCheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6)or temp.x < 0 or temp.y < 0
         or temp.x > themap.rightwall or
         temp.y > themap.floor then table.remove(sparks,i)
 
@@ -1972,7 +1972,7 @@ end
     end
 
     for i,v in ipairs(sparks)do
-      if not me.actionshot and not you.actionshot and not pause then
+      if not pause then
         v.y = v.y - v.j*rampspeed*1.6
         v.x = v.x + v.v*rampspeed*1.6
         v.j = v.j - .1*rampspeed*1.6
@@ -2044,7 +2044,7 @@ end
 
 
 
-function xrubble(xx)
+function wallRubbleCheck(xx)
   for i = #themap.walls, 1, -1 do 
     local wall = themap.walls[i]
     if (

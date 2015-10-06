@@ -550,13 +550,12 @@ end
     speedpenaltycalc(xx,yy)
     runrunrun(xx)
     transferofenergy(xx)
-    z = xx
     if xx.landing_counter > landing_wait then
       xx.stop=true
       xx.holda = true
     end
 
-    if (xx.g and xx.doubledown) or (not xx.g and xx.down) then 
+    if ((xx.g and xx.doubledown) or (not xx.g and xx.down)) and not xx.stop then 
       xx.gothroughplats = true
     else
       xx.gothroughplats = false
@@ -617,12 +616,12 @@ end
       xx.firstjump = true
       xx.g = false
       repplay(xx.jumpd)
-    elseif z.right and xx.v >= xx.push and not xx.stop and not xx.flinch and xx.landing_counter < land_pause_time
-      and not z.left 
+    elseif xx.right and xx.v >= xx.push and not xx.stop and not xx.flinch and xx.landing_counter < land_pause_time
+      and not xx.left 
       then 
       vroomright(xx)
-    elseif z.left and xx.v <= xx.push and xx.stop == false and not xx.flinch and xx.landing_counter < land_pause_time
-      and not z.right 
+    elseif xx.left and xx.v <= xx.push and xx.stop == false and not xx.flinch and xx.landing_counter < land_pause_time
+      and not xx.right 
       then 
       vroomleft(xx)
 
@@ -637,7 +636,7 @@ end
       else xx.landing_counter = 0
 
       end
-      if z.blockb and xx.a1b and math.abs(z.j) + math.abs(z.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j) and xx.j > 0
+      if xx.blockb and xx.a1b and math.abs(xx.j) + math.abs(xx.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j) and xx.j > 0
         then 
         if climbplatcheck(xx.x, xx.y+xx.height/2, xx.lr, xx.height/2, xx.v, xx.j) then
           xx.ctim = 7
@@ -647,7 +646,7 @@ end
           xx.onplat = true
           xx.j = climbj
           xx.v = xx.v/2
-        elseif z.left and xx.v >= 1 + xx.push*1.5
+        elseif xx.left and xx.v >= 1 + xx.push*1.5
           then 
           if xx.flinch then
             xx.v = xx.v - adecrate/5*ramp(xx)
@@ -655,9 +654,8 @@ end
             xx.v = xx.v - adecrate*ramp(xx)
           end
           xx.slowdown = true
-          xx.im = slowdown
 
-        elseif z.right and xx.v <= -1 + xx.push*1.5
+        elseif xx.right and xx.v <= -1 + xx.push*1.5
           then 
           if xx.flinch then
             xx.v = xx.v + adecrate/5*ramp(xx)
@@ -665,8 +663,7 @@ end
             xx.v = xx.v + adecrate*ramp(xx)
           end
           xx.slowdown = true
-          xx.im = slowdown  
-        elseif z.left and xx.v > - maxairmove + xx.push*1.5
+        elseif xx.left and xx.v > - maxairmove + xx.push*1.5
           then 
           if xx.flinch then
             xx.v = xx.v - amovrate/5*ramp(xx)
@@ -674,7 +671,7 @@ end
             xx.v = xx.v - amovrate*ramp(xx)
           end
           xx.slowdown = false
-        elseif z.right and xx.v < maxairmove + xx.push*1.5
+        elseif xx.right and xx.v < maxairmove + xx.push*1.5
           then 
           if xx.flinch then
             xx.v = xx.v + amovrate/5*ramp(xx)
@@ -695,7 +692,7 @@ end
         end
 
     --landing
-    if z.up and xx.j > 0 
+    if xx.up and xx.j > 0 
       and xx.jmax > 0 
       and xx.firstjump and not xx.flinch
       then xx.jmax = xx.jmax - jumpheight*ramp(xx)
@@ -727,7 +724,8 @@ end
 
     end
   end
-  
+
+
     orientlr(xx)
   xx.can_super_jump = false
   xx.float = false

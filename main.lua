@@ -6,14 +6,13 @@
 --can i remove me.x entirely?
 --can't kick combo out of purple kick
 
-
---if not hitsomeonewithpurp then dont hit them, allows for repeated spike hits
---hide initial sparks
+--wallhang is buggy, jumpy frame
+--slowdown is weird/notworking 
+--do new wall slide vs jump
+--hide initial sparks, RNADOMIZE AN X AND Y TRANSLATION OF WHERE THEY SPAWN
 --if actionshot during another actionshot, increase actionshot time
 --fix orange no 
---air purple spikes aren't going away, related to dangerclose
 --pause is broken
---DIRECTION OF PURPLE AFFECTS HITTING V AND J
 --xx.attack_num be more meaningful than 1 - 6
 --apa13 xoff is incorrect
 --implement action_done on all attacks
@@ -38,7 +37,7 @@ drawFeet = false
 volume=0
 fullscreen = false
 readout = false
-putmehere = 1000
+putmehere = 100
 putyouhere = 1025
 menu = "title"
 chapter = 1
@@ -267,10 +266,10 @@ function love.update()
 
         movex(me,you)
         movex(you,me)
-        --used to be here platformcheckx()
-
+        hboxwall()
         platformcheckx()
         monplatupdate()
+        
 
         you.y = you.y - you.j*.9*you.rampspeed
         me.y = me.y - me.j*.9*me.rampspeed
@@ -299,9 +298,6 @@ function love.update()
 
         updateboxes()
         updateparticles()
-        animate(me)
-        animate(you)
-
 
 
 
@@ -309,9 +305,6 @@ function love.update()
         --camerafol()
 
 
-
-        blocknbusy(me)
-        blocknbusy(you)
 
         me.jstop = false
         you.jstop = false
@@ -321,16 +314,10 @@ function love.update()
 
 
 
-        combomanage(me)
-        combomanage(you)
-
-        updatemytrail(me)
-        updatemytrail(you)
-
 
       end
-      actionshotstuff(me)
-      actionshotstuff(you)
+
+
 
 
       if slowt == slowrate and not me.actionshot and not you.actionshot and not (pause or hitpause) then
@@ -398,8 +385,6 @@ function love.update()
         holdmanage(you)
 
 
-        orientlr(me)
-        orientlr(you)
 
         cammovement()
         --if here then no slow mo twitter
@@ -502,7 +487,7 @@ function love.update()
         end
       end
 
-drawoverlays()
+      drawoverlays()
 
 
     elseif menu == "story" then
@@ -606,7 +591,6 @@ drawoverlays()
       --fractalrotate()
     end
 
-
     --
 
     --[[
@@ -615,23 +599,18 @@ drawoverlays()
     end
     ]]--
     if fightclub then
-      
+
       lg.print("pause: "..tostring(pause), 400,360)
-      lg.print("me.start: "..tostring(me.start), 400,380)
-      lg.print("me.feet: "..tostring(me.feet), 400,400)
-      lg.print("me.stop: "..tostring(me.stop), 400,420)
-      lg.print("stophit: "..tostring(stophit), 400,440)
+      lg.print("me.walllr: "..tostring(me.walllr), 400,380)
+      lg.print("me.lr: "..tostring(me.lr), 400,400)
+      lg.print("me.wallx: "..tostring(me.wallx), 400,420)
+      lg.print("me.x: "..tostring(me.x), 400,440)
+      lg.print("me.xanimate: "..tostring(me.xanimate), 400,460)
       changebackgroundcolor(4)
       
     end
     golasso()
 
-    for i,v in ipairs(bob123) do
-        lg.print(tostring(v), 30, 30*i)
-    end
-    if #bob123 >= 6 then
-    lg.polygon("fill", bob123)
-  end
-
+    camerawobble()
     pauseonhit()
   end

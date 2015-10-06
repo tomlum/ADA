@@ -13,6 +13,8 @@ function initPlayer(xx)
 	xx.ramptimer = 0
 	xx.rampcanhit = 0
 
+	xx.wall_hang = false
+
 	--Count of a repeated move (e.g. basic punch combo)
 	xx.repcounter = 0
 

@@ -139,22 +139,6 @@ end
 me.cchangeto = {n = 0, {r = 255, g = 255, b = 255}}
 you.cchangeto = {n = 0, {r = 255, g = 255, b = 255}}
 
-function ColorChange(xx)
-
-  if xx.rightbump then 
-    xx.cchangeto = xx.rightc
-  elseif xx.leftbump then
-    xx.cchangeto = xx.leftc 
-  else xx.cchangeto = thecolors[0]
-  end
-
-
-  if xx.animcounter > 1 then
-    xx.oldtype = xx.attack_num
-  end
-
-end
-
 
 
 me.colorchangetimer = 0
@@ -172,7 +156,26 @@ me.cct = 0
 you.cct = 0
 
 
-function ColorChanging(xx)
+function changePlayerColor(xx)
+
+  if xx.rightbump then 
+    xx.cchangeto = xx.rightc
+  elseif xx.leftbump then
+    xx.cchangeto = xx.leftc 
+  else xx.cchangeto = thecolors[0]
+  end
+
+
+  if xx.animcounter > 1 then
+    xx.oldtype = xx.attack_num
+  end
+
+
+
+
+
+
+
   if not xx.actionshot and xx.color.n~=-1 then 
     xx.cantreturntothis = xx.color.n
   end

@@ -465,6 +465,10 @@ camerafol = function ()
   end 
 
   topbottomcam()
+  camera.x = camera.x + camwobx
+  camera2.x = camera2.x + camwobx
+  camera.y = camera.y + camwoby
+  camera2.y = camera2.y + camwoby
 
 end
 
@@ -608,17 +612,44 @@ function camera2:setScale(sx, sy)
   self.scaleY = sy or self.scaleY
 end
 
-
+--lower = more wobble
+cam_wobble_degree = 100
+camwob_max = 10
 camwobx = 0
 camwoby = 0
+camwobv = 0
+camwobj = 0
+camwobvflip = -1
+camwobjflip = -1
+
 function camerawobble()
   if dangerclose then
 
+      camwobv = camwobv+camwobvflip*floRan(.1, .2)
+      if camwobv > camwob_max-floRan(0, camwob_max/5)  then
+        camwobvflip = -1
+        camwobv = -camwobv/2
+      elseif camwobv < -camwob_max + floRan(0, camwob_max/5) then
+        camwobvflip = 1
+        camwobv = -camwobv/2
+      end
 
 
+      camwobj = camwobj+camwobjflip*floRan(.1, .2)
+      if camwobj > camwob_max-floRan(0, camwob_max/5) then 
+        camwobjflip = -1
+        camwobj = -camwobj/2
+      elseif camwobj < -camwob_max + floRan(0, camwob_max/5) then
+        camwobjflip = 1
+        camwobj = -camwobj/2
+      end
+
+    camwobx = bof(-camwob_max, camwobx+camwobv/cam_wobble_degree, camwob_max)
+    camwoby = bof(-camwob_max, camwoby+camwobj/cam_wobble_degree, camwob_max)
+  else
+    camwobx = 0
+    camwoby = 0
   end
-
-
 end
 
 
@@ -845,10 +876,6 @@ function drawx(xx)
   if menu ~= "retry" then
 
     drawparticles()
-
-
-    drawcolorstuff(me)
-    drawcolorstuff(you)
     lg.setShader()
 
     mondraw()
@@ -885,4 +912,64 @@ function drawx(xx)
     if drawboxes then drawHexBoxes() end
   end
 
+end
+
+
+hitpausecounter = 0
+bloom_bar_min = 10
+bloom_bar_max = 50
+
+function pauseonhit()
+  if hitpausecounter > hitpauseamount/2 and hitpause then
+    hitpausecounter = 0
+    hitpause = false
+  elseif hitpause then
+    if hitpausecounter == 0 then
+      hitpausecounter = -hitpauseamount/2+.01
+      topblossombar = 
+      {
+        0, 0,
+        lg.getWidth(), 0,
+        lg.getWidth(), floRan(bloom_bar_min,bloom_bar_max),
+        0, floRan(bloom_bar_min,bloom_bar_max)
+      }
+
+      bottomblossombar = 
+      {
+        0, lg.getHeight(),
+        lg.getWidth(), lg.getHeight(),
+        lg.getWidth(), lg.getHeight()-floRan(bloom_bar_min,bloom_bar_max),
+        0, lg.getHeight()-floRan(bloom_bar_min,bloom_bar_max)
+      }
+
+
+      leftblossombar = 
+      {
+        0, 0,
+        floRan(bloom_bar_min,bloom_bar_max), 0,
+        floRan(bloom_bar_min,bloom_bar_max), lg.getHeight(),
+        0, lg.getHeight()
+      }
+
+      rightblossombar = 
+      {
+        lg.getWidth(), 0,
+        lg.getWidth()-floRan(bloom_bar_min,bloom_bar_max), 0,
+        lg.getWidth()-floRan(bloom_bar_min,bloom_bar_max), lg.getHeight(),
+        lg.getWidth(), lg.getHeight()
+      }
+    end
+    for i,xx in ipairs(players) do
+      if not xx.flinch then
+        setColorA(xx.color.c, 155*math.abs((math.abs(hitpausecounter)-(hitpauseamount/2)))/(hitpauseamount/2))
+      end
+    end
+    lg.polygon("fill", topblossombar)
+    lg.polygon("fill", bottomblossombar)
+    lg.polygon("fill", leftblossombar)
+    lg.polygon("fill", rightblossombar)
+    blooms:update()
+
+    hitpausecounter = hitpausecounter+1
+  end
 end

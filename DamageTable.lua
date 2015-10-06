@@ -12,8 +12,6 @@ wave_frame_rate = 8 --(2 is fast, higher is lower)
 
 v_for_wall_flinch = 10
 
-wall_jump_range = 3.5
-
 --FRACTAL
 fractal_max_health = 300
 fractal_lives = 4
@@ -85,14 +83,13 @@ thebug = 0
 
 towardaway = true
 
-walljumpdis = 20
 minvforwalljump = 2
 walljumpjt = 14
-walljumpvv = 12
+walljumpj = 12
 walljumpv = 12
 --for if holding up
 walljumpjt2 = 15
-walljumpvv2 = 14
+walljumpj2 = 14
 walljumpv2 = 8
 
 whiffradius = 150

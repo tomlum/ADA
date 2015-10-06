@@ -19,7 +19,7 @@ function blossom(xx,yy, leaves, sides, scale)
 				pointss[k] = {
 					x = pointss[1].x,
 					y = (pointss[1].y + pointss[2].y)/2,
-					v = (xx.v/3)+(xx.v/math.abs(xx.v+floRan(-1,1)))*floRan(0,10)*
+					v = (xx.v/3)+(1.3*xx.v/math.abs(xx.v+floRan(-2.5,2.5)))*floRan(0,10)*
 					((math.abs((k-2)-((sides-2)/2)))
 						/((sides-2)/2))+floRan(-5,5), 
 					j = floRan(-5,5)
@@ -29,7 +29,7 @@ function blossom(xx,yy, leaves, sides, scale)
 				pointss[k] = {
 					x = pointss[1].x,
 					y = (pointss[1].y + pointss[2].y)/2,
-					v = (xx.v/3)+(xx.v/math.abs(xx.v+floRan(-1,1)))*floRan(0,10)*
+					v = (xx.v/3)+(1.3*xx.v/math.abs(xx.v+floRan(-2.5,2.5)))*floRan(0,10)*
 					((math.abs((k-2)-((sides-2)/2)))
 						/((sides-2)/2))+floRan(-5,5), 
 					j = (xx.j)*2+floRan(0,7)*(((k-2)-((sides-2)/2))

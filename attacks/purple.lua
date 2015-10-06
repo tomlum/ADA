@@ -25,33 +25,7 @@ apk1 = {im=lg.newImage("me/attack/purple/apk1.png"),extra_height = 5}
 apk2 = {im=lg.newImage("me/attack/purple/apk2.png"), xoff = 0, yoff = -15}
 
 
-me.purpland = false
-you.purpland = false
-
 spikesize = 12
-function spikegrow(cur, n, xx)
-  local vv = cur.verts
-  if n == 1 then
-    vv[3] = vv[3]+(floRan(3, 20))*cur.lr
-    vv[4] = vv[4]-(floRan(10, 30))
-    local growmount = vv[5]+(math.random()*(spikesize))*cur.lr
-
-    if growmount > themap.plats[xx.plat.n].x1 and 
-      growmount < themap.plats[xx.plat.n].x2 then
-      vv[5] = growmount
-    end
-  elseif n == 2 then
-    vv[3] = vv[3]+(floRan(2, 5))*cur.lr
-    vv[4] = vv[4]-(floRan(10, 20))
-    local growmount = vv[5]+(math.random(4, 10)+math.random()*(cur.t/5))*cur.lr
-    if growmount > themap.plats[xx.plat.n].x1 and 
-      growmount < themap.plats[xx.plat.n].x2 then
-      vv[5] = growmount
-    end
-  end
-
-end
-
 
 spikecooldown = 15
 
@@ -126,6 +100,29 @@ pa4busytime = 10
 
 
 spikespace = 10
+
+function spikegrow(cur, n, xx)
+  local vv = cur.verts
+  if n == 1 then
+    vv[3] = vv[3]+(floRan(3, 20))*cur.lr
+    vv[4] = vv[4]-(floRan(10, 30))
+    local growmount = vv[5]+(math.random()*(spikesize))*cur.lr
+
+    if growmount > themap.plats[xx.plat.n].x1 and 
+      growmount < themap.plats[xx.plat.n].x2 then
+      vv[5] = growmount
+    end
+  elseif n == 2 then
+    vv[3] = vv[3]+(floRan(2, 5))*cur.lr
+    vv[4] = vv[4]-(floRan(10, 20))
+    local growmount = vv[5]+(math.random(4, 10)+math.random()*(cur.t/5))*cur.lr
+    if growmount > themap.plats[xx.plat.n].x1 and 
+      growmount < themap.plats[xx.plat.n].x2 then
+      vv[5] = growmount
+    end
+  end
+
+end
 
 function dopurpakspikes(xx)
   if xx.purpgroundtimer > 0 and xx.purpgroundtimer <= 1.3 then
@@ -217,9 +214,9 @@ function spikeupdate(xx)
       table.remove(xx.spikes,i)
     elseif cur.t < 0 then
       local vv = xx.spikes[i].verts
-      vv[3] = vv[3]+math.abs(vv[1]-vv[3])/4
+      vv[3] = vv[3]+cur.lr*math.abs(vv[1]-vv[3])/4
       vv[4] = vv[4]+(vv[2]-vv[4])/4
-      vv[5] = vv[5]+math.abs(vv[1]-vv[5])/4
+      vv[5] = vv[5]+cur.lr*math.abs(vv[1]-vv[5])/4
       lg.polygon("fill", vv)
     elseif cur.t > 0 and cur.t < 5  then
       spikegrow(cur,1,xx)
@@ -289,6 +286,7 @@ function pandp(xx)
     xx.cancombo = true
     if xx.purplanding then
       xx.landing_counter = 0
+      xx.numofspikes = 0
     end
   end
 
@@ -386,7 +384,7 @@ function pandp(xx)
 
               end)
         elseif xx.animcounter < at.p.p2.t+39 then
-          if xx.animcounter == at.p.p2.t+5 then 
+          if isabout(xx.animcounter, at.p.p2.t+5) then 
             repplay(xx.purp2)
           end
           xx.im = pp1back4
@@ -548,6 +546,7 @@ if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and
   end
 end
 end
+
 if #joysticks>=xx.id then
   xx.joystick:setVibration(1,1)
 end
@@ -568,7 +567,7 @@ else
   xx.animcounter = 0
 end
 
-elseif xx.attack_num ==3 then
+elseif xx.attack_num == 3 then
   if xx.animcounter < 20 then
     xx.im = pa11
 
@@ -599,7 +598,7 @@ elseif xx.attack_num ==3 then
             end
 
 
-          elseif xx.attack_num ==4 then
+          elseif xx.attack_num == 4 then
             if xx.animcounter < 15 then
               xx.im = apa21
             elseif xx.animcounter < 17 then

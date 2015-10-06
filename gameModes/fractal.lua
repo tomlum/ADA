@@ -453,9 +453,9 @@ function throwinto()
 end
 
 function changebackgroundcolor(rate)
-  backgroundcolor.r = colorchange(backgroundcolor.r,rate)
-  backgroundcolor.g = colorchange(backgroundcolor.g,rate)
-  backgroundcolor.b = colorchange(backgroundcolor.b,rate)
+  backgroundcolor.r = colorChange(backgroundcolor.r,rate)
+  backgroundcolor.g = colorChange(backgroundcolor.g,rate)
+  backgroundcolor.b = colorChange(backgroundcolor.b,rate)
   lg.setBackgroundColor(backgroundcolor.r,backgroundcolor.g,backgroundcolor.b)
 
 
