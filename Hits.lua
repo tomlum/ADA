@@ -21,6 +21,8 @@ you.height = 60
 me.width = 30
 you.width = 30
 
+max_wall_fall = 2.5
+
 table.insert(players, 
   me)
 
@@ -595,14 +597,14 @@ function hline(xx, theid, P1, P2, special)
 
         --wall jump/hold mechanics
         if xx.is_player~=nil then
-          if not xx.runb or xx.flinch or xx.a1 or xx.a2 or xx.a3 or xx.a4 or xx.g then 
-            xx.wall_hang = false 
+          if not (xx.runb or xx.blockb) or xx.flinch or xx.a1 or xx.a2 or xx.a3 or xx.a4 or xx.g then 
+            xx.wall_grab = false 
           end
 
-          if xx.wall_hang then 
+          if xx.wall_grab then 
                   xx.lr = xx.walllr
                 if (xx.lr > 0 and xx.right) or (xx.lr < 0 and xx.left) then 
-                  xx.wall_hang = false
+                  xx.wall_grab = false
                   if #joysticks>=xx.id then
                     xx.jt = walljumpjt
                     xx.j = -xx.jly*walljumpdis
@@ -618,10 +620,11 @@ function hline(xx, theid, P1, P2, special)
                       xx.v = walljumpv *xx.lr
                     end
                   end
-                elseif xx.wall_hang then 
+                elseif xx.wall_grab then 
                   xx.v = 0
-                  xx.j = hof(-2.5,xx.j)
+                  xx.j = hof(-max_wall_fall,xx.j)
                   xx.im = wallgrab
+                makendust(xx.wallx+xx.lr, xx.feet, xx.lr*1, -xx.j,2,1)
 
 
                 end
@@ -635,7 +638,7 @@ function hline(xx, theid, P1, P2, special)
               --Wall jump check
               if xx.is_player~=nil and not xx.flinch
                 and ((xx.x+xx.v < wall.x and xx.x >= wall.x) or (xx.x+xx.width+xx.v > wall.x and xx.x+xx.width <= wall.x)) and xx.feet-xx.j >= wall.y1 and xx.y-xx.j <= wall.y2 and 
-                xx.runb and not xx.g and not xx.wall_hang and math.abs(xx.j) > 0 and not xx.flinch and not xx.busy and xx.animcounter == 0
+                (xx.runb or xx.blockb) and not xx.g and not xx.wall_grab and math.abs(xx.j) > 0 and not xx.flinch and not xx.busy and xx.animcounter == 0
                 then
                 if (xx.x+xx.v < wall.x and xx.x >= wall.x) then
                   xx.wallside = .01 
@@ -643,14 +646,14 @@ function hline(xx, theid, P1, P2, special)
                   xx.wallside = -.01 -xx.width
                 end
 
-                xx.wall_hang = true
+                xx.wall_grab = true
                 xx.initwy = xx.y - xx.j
                 xx.walllr = -xx.lr
                 xx.wallx = wall.x+xx.wallside
                 xx.v = 0
 
               --Barrier check/rebound off of barrier
-            elseif (wall.barrier~=nil) and xx.feet-xx.j > wall.y1 and xx.y-xx.j < wall.y2 and ((xx.x+xx.v < wall.x and xx.x >= wall.x and xx.v < 0) or (xx.x+xx.width+xx.v > wall.x and xx.x+xx.width <= wall.x and xx.v > 0)) and not xx.wall_hang then
+            elseif (wall.barrier~=nil) and xx.feet-xx.j > wall.y1 and xx.y-xx.j < wall.y2 and ((xx.x+xx.v < wall.x and xx.x >= wall.x and xx.v < 0) or (xx.x+xx.width+xx.v > wall.x and xx.x+xx.width <= wall.x and xx.v > 0)) and not xx.wall_grab then
               if (xx.x+xx.v < wall.x and xx.x >= wall.x) then
                 xx.wallside = .01 
               else

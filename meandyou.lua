@@ -535,8 +535,6 @@ numofcolors = 4
 
 waitforitplay = -1
 
-screenwidth = lg.getWidth()
-screenheight = lg.getHeight()
 barheight = 50
 paralaxoffset = 40
 enviro = {}

@@ -3,11 +3,39 @@
 --land from height and make rocks fly up?
 --wind ability allows you to move more freely in the air, allows you to drop faster and change direction
 
-
 jumpj = 0
 
 floor = 1900 - 2
 
+slowtime = 60
+speedramp = false
+slow_mo_t = 0
+
+function gavinAndDan()
+  if slow_mo_t > 0 then
+    slow_mo_t = slow_mo_t - 1
+    speedramp = true
+    musfadein = -3
+  elseif slowww then 
+    slowww = false 
+    slow_mo_t = slowtime
+  else 
+    speedramp = false
+    slow_mo_t = 0
+    if musfade == 0 then
+      musfadein = 10
+      musfade = 255
+      repplay(collides)
+      --deathsound:play()
+      --bcs:play()
+    end
+
+
+  end
+
+
+
+end
 
 function respawntravel(xx)
   if xx.go_here ~= nil then
@@ -550,6 +578,9 @@ end
     speedpenaltycalc(xx,yy)
     runrunrun(xx)
     transferofenergy(xx)
+
+    if xx.stop then xx.firstjump = false end
+
     if xx.landing_counter > landing_wait then
       xx.stop=true
       xx.holda = true
@@ -726,7 +757,7 @@ end
   end
 
 
-    orientlr(xx)
+
   xx.can_super_jump = false
   xx.float = false
   xx.stop = false

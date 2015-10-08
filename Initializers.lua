@@ -13,7 +13,7 @@ function initPlayer(xx)
 	xx.ramptimer = 0
 	xx.rampcanhit = 0
 
-	xx.wall_hang = false
+	xx.wall_grab = false
 
 	--Count of a repeated move (e.g. basic punch combo)
 	xx.repcounter = 0
@@ -23,6 +23,11 @@ function initPlayer(xx)
 end
 
 function initWorld()
+end
+
+function initMenu()
+	stagey = 0
+	modenum = 0
 end
 
 function initLove()
@@ -64,4 +69,5 @@ require "death"
 require "chaptermanage"
 loader = require "love-loader"
 require "blossom"
+require "story/ch1/ch1"
 end

@@ -88,16 +88,13 @@ at.p.ak = {}
 at.p.ak.penalty = 50
 at.p.ak.n = 4
 at.p.ak.time = 30
-at.p.ak.exposedtime = 37
-
+at.p.ak.exposedtime = 30
 
 me.numofspikes = 0
 you.numofspikes = 0
 
 pa2busytime = 30
 pa4busytime = 10
-
-
 
 spikespace = 10
 
@@ -125,6 +122,9 @@ function spikegrow(cur, n, xx)
 end
 
 function dopurpakspikes(xx)
+  if xx.purplanding then
+    xx.no_spikes = false
+  end
   if xx.purpgroundtimer > 0 and xx.purpgroundtimer <= 1.3 then
     xx.purpgroundtimer = 0
     xx.numofspikes = 2*at.p.ak.n
@@ -162,12 +162,11 @@ function dopurpakspikes(xx)
 
     end
   elseif xx.purpgroundtimer < 0 then
-
     repplay(xx.airpurp2)
     xx.purpgroundtimer = xx.purpgroundtimer + 1*ramp(xx)
-  elseif xx.landing_counter >= at.p.ak.exposedtime and xx.landing_counter-1 < at.p.ak.exposedtime then
-    xx.numofspikes = 0
-
+  elseif xx.landing_counter < at.p.ak.exposedtime then
+    xx.no_spikes = true
+    
   end
 
 
@@ -265,17 +264,21 @@ function spikeupdate(xx)
     end
 
 
-    if xx.numofspikes > 0 then cur.t = cur.t + 1
-    elseif cur.t<0 or xx.numofspikes == 0 then 
+    if not xx.no_spikes and xx.numofspikes > 0 then cur.t = cur.t + 1
+    else
       if cur.t > 0 then cur.t = 0 
       else
         cur.t = cur.t - 1
       end
     end
     if cur.t == 2 then 
-      makenrubble(cur.verts[3], cur.verts[2], 2*cur.lr,5,7)
+      makenrubble("vert", cur.verts[3], cur.verts[2], 2*cur.lr,2,7)
     end
   end
+  if xx.no_spikes then
+    xx.numofspikes = 0
+  end
+  xx.no_spikes = true
 end
 
 
@@ -286,7 +289,6 @@ function pandp(xx)
     xx.cancombo = true
     if xx.purplanding then
       xx.landing_counter = 0
-      xx.numofspikes = 0
     end
   end
 
@@ -425,7 +427,7 @@ function pandp(xx)
         elseif xx.animcounter < 21 then
 
           xx.im = ppunch2
-          makenrubble(xx.mid+xx.lr*20, xx.y+50,3*xx.lr,3,10)
+          makenrubble("vert", xx.mid+xx.lr*20, xx.y+50,3*xx.lr,3,10)
           repplay(xx.purp2)
           if #joysticks>=xx.id then
             xx.joystick:setVibration(1,1)
@@ -470,6 +472,7 @@ function pandp(xx)
           end
 
         elseif xx.attack_num == 2 then
+          xx.no_spikes = false
 
           if xx.animcounter < 20 then
             xx.im = stomp1
@@ -554,13 +557,14 @@ end
 
 elseif xx.animcounter < 60 then
   xx.im = stomp2
-
+  xx.cmbo=true
   if  xx.a4 and not xx.holda and xx.numofspikes< at.p.k.max then 
     xx.animcounter = 17
   end
+elseif xx.animcounter < 70 then
+  xx.no_spikes = true
 elseif xx.animcounter < 70+at.p.k.duration then
   xx.im = stomp2
-  xx.numofspikes = 0
 
 else
   xx.im = stomp2
@@ -577,8 +581,8 @@ elseif xx.attack_num == 3 then
     xx.im = pa13
     if xx.animcounter <= 22 then
 
-      makenrubble(xx.mid, xx.feet-5, 5,4,7)
-      makenrubble(xx.mid, xx.feet-5, -5,4,7)
+      makenrubble("vert", xx.mid, xx.feet-5, 5,2,7)
+      makenrubble("vert", xx.mid, xx.feet-5, -5,2,7)
 
       repplay(xx.purpsound)
       repplay(xx.purp2)
@@ -642,6 +646,8 @@ elseif xx.attack_num == 3 then
 
             elseif xx.animcounter <= 40 then
               xx.im=apk2
+              if xx.animcounter > 30 then
+              end
 
 
             elseif xx.animcounter >= 40 then
@@ -653,7 +659,7 @@ elseif xx.attack_num == 3 then
               xx.im = apa11
             elseif xx.animcounter < 17 then
               xx.im = apa12
-              if xx.animcounter <= 16 then
+              if xx.animcounter < 16 then
                 xx.j = xx.j + at.p.au.kj 
                 xx.v = xx.v - at.p.au.kb*xx.lr 
                 repplay(xx.airpurp2)

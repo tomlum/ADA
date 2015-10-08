@@ -1,8 +1,20 @@
-require "story/ch1/ch1"
+--menu values--
+
+--title
+--modes
+--map
+--color
+--pan
+--play
+--retry
+
+screenwidth = lg.getWidth()
+screenheight = lg.getHeight()
+
+
 pressanybutton = lg.newImage("enviro/pressanybutton.png")
 
 oldmenu = "begin"
-notilebouncing = true
 --menu that fades into another???
 noplat = {n=0;}
 
@@ -125,7 +137,7 @@ function drawoverlays()
     lg.sdraw(pausescreen,0,0,0,10,10)
   end
 
-   lg.setShader()
+  lg.setShader()
   lg.setColor(0,0,0)
   lg.srectangle("fill",0,0,1440,barey)
   lg.srectangle("fill",0,900,1440,-barey)
@@ -146,7 +158,6 @@ function lg.srectangle(mode, x, y, width, height)
 end
 
 lg.setNewFont(20)
-
 
 lightsize = 7
 maxwob = 7
@@ -181,6 +192,10 @@ function initmenu()
     allready = false
     tilefadein = 1
     tilefade = 0
+    me.left_color_flash = 0
+    me.right_color_flash = 0
+    you.left_color_flash = 0
+    you.right_color_flash = 0
     tilefadehold = 0
     musfade = 255
     musfadein = 0
@@ -271,6 +286,12 @@ function updatechapters()
 
 
 end
+
+
+tilescale = 1.3
+tile_y_closeness = 78*(screenheight/900)
+
+tile_dis_from_center = screenwidth/12.2
 
 function drawmenus()
 
@@ -443,8 +464,6 @@ function drawmenus()
 
   elseif menu == "color" or menu == "prepan" then
 
-
-
     tileset = true
     for i,v in ipairs(tiles) do
       if v.j ~= 0 then
@@ -457,39 +476,98 @@ function drawmenus()
       tilefade = tilefadef(tilefadein,tilefade,5)
       tilefadein = tilefadeinf(tilefadein,tilefade,5)
 
+      if me.rightc.n ~= 0 then
+        lg.setColor(255,255,255,hof(0, 220-me.right_color_flash))
+        lg.rectangle("fill", 0, 0, screenwidth/2, screenheight)
+      end
+
+      if me.leftc.n ~= 0 then
+        lg.setColor(255,255,255,hof(0, 220-me.left_color_flash))
+        lg.rectangle("fill", 0, 0, screenwidth/2, screenheight)
+      end
 
       if me.leftc.n == 0 then 
-        lg.setColor((tilefade),(tilefade),(tilefade))
+        lg.setColor(0,0,0,0)
       else
-        lg.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
+        if me.left_color_flash < 255 then
+          me.left_color_flash = me.left_color_flash*1.1+1
+          if me.left_color_flash >= 255 then
+            me.left_color_flash = 255
+          end
+        end
+        lg.setColor(
+          hof(me.leftc.c.r, 255-me.left_color_flash),
+          hof(me.leftc.c.g, 255-me.left_color_flash),
+          hof(me.leftc.c.b, 255-me.left_color_flash))
       end
-      lg.sdraw(shoulder, colorfromwallspace-80,tilesep)
+      lg.polygon("fill", screenwidth*3/10+tilesep/30, screenheight+tilesep, screenwidth*1/10+tilesep, 0, 0+tilesep, 0)
 
 
 
       if me.rightc.n == 0 then 
-        lg.setColor((tilefade),(tilefade),(tilefade))
+        lg.setColor(0,0,0,0)
       else
-        lg.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
-      end
-      lg.sdraw(shoulder, 720-colorfromwallspace-140,-tilesep,0,-1,1)
+        if me.right_color_flash < 255 then
+          me.right_color_flash = me.right_color_flash*1.1+1
+          if me.right_color_flash >= 255 then
+            me.right_color_flash = 255
+          end
+        end
+        lg.setColor(
+          hof(me.rightc.c.r, 255-me.right_color_flash),
+          hof(me.rightc.c.g, 255-me.right_color_flash),
+          hof(me.rightc.c.b, 255-me.right_color_flash))
+      end      
+      lg.polygon("fill", screenwidth*1/10-tilesep/30, screenheight, screenwidth*4/10-tilesep, 0, screenwidth*3/10-tilesep, 0)
 
+
+
+      if you.rightc.n ~= 0 then
+        lg.setColor(255,255,255,hof(0, 220-you.right_color_flash))
+        lg.rectangle("fill", screenwidth/2, 0, screenwidth/2, screenheight)
+      end
+
+      if you.leftc.n ~= 0 then
+        lg.setColor(255,255,255,hof(0, 220-you.left_color_flash))
+        lg.rectangle("fill", screenwidth/2, 0, screenwidth/2, screenheight)
+      end
 
       if you.leftc.n == 0 then 
-        lg.setColor((tilefade),(tilefade),(tilefade))
+        --lg.setColor((tilefade),(tilefade),(tilefade))
+        lg.setColor(0, 0, 0, 0)
       else
-        lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
+        if you.left_color_flash < 255 then
+          you.left_color_flash = you.left_color_flash*1.1+1
+          if you.left_color_flash >= 255 then
+            you.left_color_flash = 255
+          end
+        end
+        lg.setColor(
+          hof(you.leftc.c.r, 255-you.left_color_flash),
+          hof(you.leftc.c.g, 255-you.left_color_flash),
+          hof(you.leftc.c.b, 255-you.left_color_flash))
       end
-      lg.sdraw(shoulder, 720 +colorfromwallspace+140,-tilesep)
-
+      lg.polygon("fill", screenwidth*9/10+tilesep/30, screenheight, screenwidth*6/10+tilesep, 0, screenwidth*7/10+tilesep, 0)
+      --lg.sdraw(shoulder, 720 +colorfromwallspace+140,-tilesep)
 
 
       if you.rightc.n == 0 then 
-        lg.setColor((tilefade),(tilefade),(tilefade))
+        --lg.setColor((tilefade),(tilefade),(tilefade))
+        lg.setColor(0,0,0,0)
       else
-        lg.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
+        if you.right_color_flash < 255 then
+          you.right_color_flash = you.right_color_flash*1.1+1
+          if you.right_color_flash >= 255 then
+            you.right_color_flash = 255
+          end
+        end
+        lg.setColor(
+          hof(you.rightc.c.r, 255-you.right_color_flash),
+          hof(you.rightc.c.g, 255-you.right_color_flash),
+          hof(you.rightc.c.b, 255-you.right_color_flash))
       end
-      lg.sdraw(shoulder, 1440-colorfromwallspace+80,tilesep,0,-1,1)
+      lg.polygon("fill", screenwidth*7/10-tilesep/30, screenheight+tilesep, screenwidth*9/10-tilesep, 0, screenwidth-tilesep, 0)
+      --lg.sdraw(shoulder, 1440-colorfromwallspace+80,tilesep,0,-1,1)
 
 
 
@@ -543,26 +621,26 @@ function drawmenus()
     lg.setColor(allfade,allfade,allfade,255)
     for i,v in ipairs(tiles) do
       if v.ud == "top" then
-        if v.y - v.j > 25 then 
+        if v.y - v.j > (25+tile_y_closeness) then 
           if v.j < -10 and not notilebouncing then
             v.j = -v.j/3
-            else v.y = 25 v.j = 0
+            else v.y = (25+tile_y_closeness) v.j = 0
             end
           end
 
-          if v.y ~= 25 then v.j = v.j - .4 end
+          if v.y ~= (25+tile_y_closeness) then v.j = v.j - .4 end
 
 
         else
-          if v.y - v.j <450-25 then 
+          if v.y - v.j <450-(25+tile_y_closeness) then 
             if v.j > 10 and not notilebouncing then
               v.j = -v.j/3
 
-              else v.y = 450-25 v.j = 0
+              else v.y = 450-(25+tile_y_closeness) v.j = 0
               end
             end
 
-            if v.y ~= 450-25 then v.j = v.j + .4 end
+            if v.y ~= 450-(25+tile_y_closeness) then v.j = v.j + .4 end
 
 
 
@@ -576,20 +654,21 @@ function drawmenus()
 
             if not me.readytoplay then
 
+
               function me.drawontop() lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b) 
-                lg.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-450*(tilezoom), 0, v.lr*(1+tilezoom), (1+tilezoom))
+                lg.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100/tilescale+tilespacing)-(50/tilescale*v.lr)-(100*(tilezoom)))+tile_dis_from_center, v.y-450*(tilezoom), 0, v.lr*(1+tilezoom)/tilescale, (1+tilezoom)/tilescale)
               end
 
             else
               function me.drawontop() 
                 lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-                lg.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))-tilesep/i, v.y, 0, v.lr, 1)
+                lg.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100/tilescale+tilespacing)-(50/tilescale*v.lr))-tilesep/i+tile_dis_from_center, v.y, 0, v.lr/tilescale, 1/tilescale)
               end
             end
 
           else
             lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-            lg.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))-tilesep/i, v.y, 0, v.lr, 1)
+            lg.sdraw(thecolors[i].tile, colorfromwallspace+(((i-1)%(#tiles/2))*(100/tilescale+tilespacing)-(50/tilescale*v.lr))-tilesep/i+tile_dis_from_center, v.y, 0, v.lr/tilescale, 1/tilescale)
           end
 
         end
@@ -598,30 +677,30 @@ function drawmenus()
 
         for i,v in ipairs(tiles2) do
           if v.ud == "top" then
-            if v.y - v.j > 25 then 
+            if v.y - v.j > (25+tile_y_closeness) then 
               if v.j < -10 and not notilebouncing then
                 v.j = -v.j/3
 
-                else v.y = 25 v.j = 0
+                else v.y = (25+tile_y_closeness) v.j = 0
                 end
               end
 
-              if v.y ~= 25 then v.j = v.j - .4 end
+              if v.y ~= (25+tile_y_closeness) then v.j = v.j - .4 end
 
 
             else
-              if v.y - v.j <450-25 then 
+              if v.y - v.j <450-(25+tile_y_closeness) then 
 
                 collidesar[i]:setVolume(SFXV - .82-(.1/(math.abs(v.j))))
                 repplay(collidesar[i])
                 if v.j > 10 and not notilebouncing then
                   v.j = -v.j/3
 
-                  else v.y = 450-25 v.j = 0
+                  else v.y = 450-(25+tile_y_closeness) v.j = 0
                   end
                 end
 
-                if v.y ~= 450-25 then v.j = v.j + .4 end
+                if v.y ~= 450-(25+tile_y_closeness) then v.j = v.j + .4 end
 
 
 
@@ -635,17 +714,17 @@ function drawmenus()
                 if not you.readytoplay then
                   function you.drawontop() 
                     lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-                    lg.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr)-(100*(tilezoom))), v.y-(450*(tilezoom)), 0, -v.lr*(1+tilezoom), (1+tilezoom))
+                    lg.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100/tilescale+tilespacing)-(50/tilescale*v.lr)-(100*(tilezoom)))-tile_dis_from_center, v.y-(450*(tilezoom)), 0, -v.lr*(1+tilezoom)/tilescale, (1+tilezoom)/tilescale)
                   end
                 else
                   function you.drawontop() 
                     lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-                    lg.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))+tilesep/i, v.y, 0, -v.lr, 1)
+                    lg.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100/tilescale+tilespacing)-(50/tilescale*v.lr))+tilesep/i-tile_dis_from_center, v.y, 0, -v.lr/tilescale, 1/tilescale)
                   end
                 end
               else
                 lg.setColor(thecolors[i].c.r,thecolors[i].c.g,thecolors[i].c.b)
-                lg.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100+tilespacing)-(50*v.lr))+tilesep/i, v.y, 0, -v.lr, 1)
+                lg.sdraw(thecolors[i].tile, 1440-colorfromwallspace-(((i-1)%(#tiles/2))*(100/tilescale+tilespacing)-(50/tilescale*v.lr))+tilesep/i-tile_dis_from_center, v.y, 0, -v.lr/tilescale, 1/tilescale)
               end
 
 
@@ -657,19 +736,26 @@ function drawmenus()
               if me.rightbump and not me.holda then 
                 me.rightc = thecolors[me.selectedcolor+1]
                 repplay(me.selected)
+
+                me.right_color_flash = 0 
       --repplay(thecolors[me.selectedcolor+1].sound)
     elseif me.leftbump and not me.holda then 
       me.leftc = thecolors[me.selectedcolor+1]
       repplay(me.selected)
+      me.left_color_flash = 0 
       --repplay(thecolors[me.selectedcolor+1].sound)
     end
   end
   if not you.readytoplay then
     if you.rightbump and not you.holda then 
+
+      you.right_color_flash = 0 
       you.rightc = thecolors[you.selectedcolor+1]
       repplay(you.selected)
       --repplay(thecolors[you.selectedcolor+1].sound)
     elseif you.leftbump and not you.holda then 
+
+      you.left_color_flash = 0 
       you.leftc = thecolors[you.selectedcolor+1]
       repplay(you.selected)
       --repplay(thecolors[you.selectedcolor+1].sound)
@@ -727,6 +813,10 @@ function drawmenus()
 
   if you.readytoplay and me.readytoplay then
     if tilesep == 0 then
+      you.right_color_flash = 0 
+      you.left_color_flash = 0 
+      me.right_color_flash = 0 
+      me.left_color_flash = 0 
       tilesep = 1
       placespeople = true
       thesong:stop()

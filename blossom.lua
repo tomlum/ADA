@@ -10,8 +10,8 @@ bloom_duration = 10
 function blossom(xx,yy, leaves, sides, scale)
 	for i = 0, leaves do
 		local pointss = {}
-		pointss[1] = {fixed = true, x = xx.mid-7, y = xx.y+floRan(bloom_from_center_dis-(scale*bloom_from_center_dis),bloom_from_center_dis)}
-		pointss[2] = {fixed = true, x = xx.mid+7, y = xx.feet
+		pointss[1] = {fixed = true, x = xx.mid-7+floRan(-2,2), y = xx.y+floRan(bloom_from_center_dis-(scale*bloom_from_center_dis),bloom_from_center_dis)}
+		pointss[2] = {fixed = true, x = xx.mid+7+floRan(-2,2), y = xx.feet
 		-- -xx.im.extra_height
 		-floRan(bloom_from_center_dis-(scale*bloom_from_center_dis),bloom_from_center_dis)}
 		for k=3, sides do
@@ -100,4 +100,63 @@ function blooms:draw(self)
 		pPolygon(v.points, v.colors, 200-200*(v.t/bloom_duration))
 	end
 
+end
+
+hitpausecounter = 0
+bloom_bar_min = screenwidth*1/30
+bloom_bar_max = screenwidth*2/30
+
+function pauseonhit()
+  if hitpausecounter > hitpauseamount/2 and hitpause then
+    hitpausecounter = 0
+    hitpause = false
+  elseif hitpause then
+    if hitpausecounter == 0 then
+      hitpausecounter = -hitpauseamount/2+.01
+      topblossombar = 
+      {
+        0, 0,
+        lg.getWidth(), 0,
+        lg.getWidth(), floRan(bloom_bar_min,bloom_bar_max),
+        0, floRan(bloom_bar_min,bloom_bar_max)
+      }
+
+      bottomblossombar = 
+      {
+        0, lg.getHeight(),
+        lg.getWidth(), lg.getHeight(),
+        lg.getWidth(), lg.getHeight()-floRan(bloom_bar_min,bloom_bar_max),
+        0, lg.getHeight()-floRan(bloom_bar_min,bloom_bar_max)
+      }
+
+
+      leftblossombar = 
+      {
+        0, 0,
+        floRan(bloom_bar_min,bloom_bar_max), 0,
+        floRan(bloom_bar_min,bloom_bar_max), lg.getHeight(),
+        0, lg.getHeight()
+      }
+
+      rightblossombar = 
+      {
+        lg.getWidth(), 0,
+        lg.getWidth()-floRan(bloom_bar_min,bloom_bar_max), 0,
+        lg.getWidth()-floRan(bloom_bar_min,bloom_bar_max), lg.getHeight(),
+        lg.getWidth(), lg.getHeight()
+      }
+    end
+    for i,xx in ipairs(players) do
+      if not xx.flinch then
+        setColorA(xx.color.c, 155*math.abs((math.abs(hitpausecounter)-(hitpauseamount/2)))/(hitpauseamount/2))
+      end
+    end
+    lg.polygon("fill", topblossombar)
+    lg.polygon("fill", bottomblossombar)
+    lg.polygon("fill", leftblossombar)
+    lg.polygon("fill", rightblossombar)
+    blooms:update()
+
+    hitpausecounter = hitpausecounter+1
+  end
 end

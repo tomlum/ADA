@@ -199,7 +199,6 @@ function controlsstuff(xx)
   xx.block = xx.blockb
   xx.right = xx.rightb
   xx.left = xx.leftb
-  if xx.down then xx.right = false xx.left = false end
   if (xx.cct > 0 and not (xx.rightbumpb or xx.leftbumpb)) or (xx.rightbumpb and xx.leftbumpb) then
     xx.atcc = false
   elseif xx.cct <=0 then

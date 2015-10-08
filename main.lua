@@ -1,15 +1,14 @@
 -----Naming Conventions-----
---me = player 1, you = player 2
+--me = player 1
+--you = player 2
 --xx = parameter for either player
 --v = horizontal velocity
 --j = vertical velocity
---can i remove me.x entirely?
 --can't kick combo out of purple kick
 
---wallhang is buggy, jumpy frame
+
+--block in air doesn't stop you
 --slowdown is weird/notworking 
---do new wall slide vs jump
---hide initial sparks, RNADOMIZE AN X AND Y TRANSLATION OF WHERE THEY SPAWN
 --if actionshot during another actionshot, increase actionshot time
 --fix orange no 
 --pause is broken
@@ -25,6 +24,7 @@ require "initializers"
 
 --Debug/Test Utilities
 fightclub = true
+notilebouncing = true
 melcolor = 1
 mercolor = 2
 youlcolor = 3
@@ -37,9 +37,9 @@ drawFeet = false
 volume=0
 fullscreen = false
 readout = false
-putmehere = 100
+putmehere = 1000
 putyouhere = 1025
-menu = "title"
+menu = "color"
 chapter = 1
 oldchapter = "bob"
 lassoisathing = false
@@ -51,8 +51,8 @@ if menu == "play" then
   placespeople = true 
 end
 mute = false
+
 love.audio.setVolume(volume)
-test123 = false
 
 initLove()
 
@@ -67,14 +67,6 @@ function love.load()
   initPlayer(me)
   initPlayer(you)
   initWorld()
-
-
-  stagey = 0
-  stagenum = 0
-  modenum = 0
-
-  tileoffset = 77
-  tileyoffset = 100
 
   mefaceselector = 0
   youfaceselector = 0
@@ -157,7 +149,7 @@ function love.update()
   --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
   if love.keyboard.isDown("x")  then rampspeed = .2 end
   if speedramp then 
-    rampspeed= therampspeed
+    rampspeed = therampspeed
     if ramptimer >= 1 then 
       ramptimer = 0
       rampcanhit = true
@@ -228,7 +220,7 @@ function love.update()
     if menu == "preplay" or menu == "play" then 
       menu = "play"
       DEATH = false
-      gavinanddan()
+      gavinAndDan()
 
       if musfadein > 0 then 
         musfade = musfade + musfadein
@@ -384,7 +376,8 @@ function love.update()
         holdmanage(me)
         holdmanage(you)
 
-
+ orientlr(me)
+ orientlr(you)
 
         cammovement()
         --if here then no slow mo twitter
@@ -598,14 +591,17 @@ function love.update()
       lg.print(tostring(plat.y).."||"..tostring(plat.x1).."||"..tostring(plat.x2).."||"..tostring(plat.x).."||"..tostring(plat.y1).."||"..tostring(plat.y2), 300,i*20)
     end
     ]]--
+        if love.keyboard.isDown("2")then
+      me.no_spikes = true
+    end
     if fightclub then
 
       lg.print("pause: "..tostring(pause), 400,360)
       lg.print("me.walllr: "..tostring(me.walllr), 400,380)
       lg.print("me.lr: "..tostring(me.lr), 400,400)
       lg.print("me.wallx: "..tostring(me.wallx), 400,420)
-      lg.print("me.x: "..tostring(me.x), 400,440)
-      lg.print("me.xanimate: "..tostring(me.xanimate), 400,460)
+      lg.print("me.landingcounter: "..tostring(me.landing_counter), 400,440)
+      lg.print("me.rampspeed: "..tostring(me.rampspeed), 400,460)
       changebackgroundcolor(4)
       
     end
