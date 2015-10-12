@@ -25,9 +25,19 @@ end
 function initWorld()
 end
 
-function initMenu()
+function initMenus()
 	stagey = 0
 	modenum = 0
+	pause = false
+
+	mefaceselector = 0
+	youfaceselector = 0
+	juststartedpost = true
+	ln = 0
+	rn = 0
+	
+	retryfade = 0
+	fadeupretry = 0
 end
 
 function initLove()

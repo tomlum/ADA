@@ -1,25 +1,13 @@
+--[[
+attack_num
+1 = punch
+2 = special (also called kick)
+3 = uppercut
 
---also if hit floor and greatenough time then falls down
-
---charge blue isn't a big punch, but like a big sword slice where like, big slash
---add groudn flying up fro blue swipes?
-
---speed + purple = surf on the me.spikes
---JUST THE PERSON KNOCKS THEM THROUGH THE FLOOR for air attack
---TEST MAKE SURE YOU CAN'T USE ATTACKS AT THE SAME TIME, ESPECIALLY IN AIR
---for combo attacks, make sure the solo attacks say "me.a1 and not me.a2-3"
---or something, that might not fix it
---maybe if in close range the green attack pushes you back
---maybe rotate me.bolts so they look better, use trig
-
-
--- objects = {}
--- table.insert(objects, {mid = 0, midy = 0, })
-
--- function updateobjects()
--- objects[1]
--- end
-
+4 = air punch
+5 = air special
+6 = air uppercut
+]]
 blockrelease = {im=lg.newImage("me/attack/blockrelease.png"), xoff = 3, yoff = -4}
 
 throw = {im=lg.newImage("me/attack/throw.png"), xoff = 8, yoff = 5}
@@ -88,6 +76,8 @@ function attackmanage(xx)
 
   combo(xx)
 
+  
+
   if xx.currentc == 0 then
   	breadandbutter(xx)
   elseif xx.currentc == 1 then
@@ -108,6 +98,14 @@ function attackmanage(xx)
 
   --xx.oldj = xx.j
   iwanttobreakfree(xx)
+
+  if xx.animcounter > 0 and xx.animcounter <=1 then
+  	if xx.left then
+  		xx.lr = -1
+  	elseif xx.right then 
+  		xx.lr = 1
+  	end
+  end
   
 end
 
@@ -338,7 +336,7 @@ function grab(xx)
 						xx.animcounter = 1
 						if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
 						xx.repcounter = xx.repcounter + 1
-					elseif xx.color.n==4  then
+					elseif xx.color.n==4 then
 						xx.attack_num = 1
 						xx.animcounter = 1
 						if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
@@ -348,149 +346,150 @@ function grab(xx)
 
 					end
 
-				elseif xx.a4 --and (xx.oldtype ~= 2 or xx.actionshot) 
-					then
+				elseif xx.a4-- or xx.actionshot) 
+	then
 
-					if func~= nil then func() end
-					if xx.color.n==0  then
-						xx.combo = xx.combo + 1
-						xx.animcounter = 1
-						xx.attack_num = 2
-					elseif xx.color.n==1 and not xx.hitsomeonewithpurp then
-						xx.attack_num = 2
-						xx.animcounter = 17
-						xx.repcounter = xx.repcounter + 1
-						xx.combo = xx.combo + 1
-					elseif xx.color.n==2 then
-						xx.attack_num = 2
-						xx.animcounter = 1
-						xx.combo = xx.combo + 1
-					elseif xx.color.n==3 then
-						xx.attack_num = 2
-						xx.animcounter = 7
-						xx.combo = xx.combo + 1
-					elseif xx.color.n==4 then
-						xx.attack_num = 2
-						xx.animcounter = 1
-						xx.combo = xx.combo + 1
+	if func~= nil then func() end
+	if xx.color.n==0  then
+		xx.combo = xx.combo + 1
+		xx.animcounter = 1
+		xx.attack_num = 2
+	elseif xx.color.n==1 and not xx.hitsomeonewithpurp then
+		xx.attack_num = 2
+		xx.animcounter = 17
+		xx.repcounter = xx.repcounter + 1
+		xx.combo = xx.combo + 1
+	elseif xx.color.n==2 then
+		xx.attack_num = 2
+		xx.animcounter = 1
+		xx.combo = xx.combo + 1
+	elseif xx.color.n==3 then
+		xx.attack_num = 2
+		xx.animcounter = 7
+		xx.combo = xx.combo + 1
+	elseif xx.color.n==4 then
+		xx.attack_num = 2
+		xx.animcounter = 1
+		xx.combo = xx.combo + 1
 
-					end
-				elseif xx.a1 then
+	end
+elseif xx.a1 then
 
-					if func~= nil then func() end
-					if xx.color.n==0 then
-						xx.attack_num = 3
-						xx.animcounter = 1
-						xx.combo = xx.combo + 1
-					elseif xx.color.n==1 then
-						xx.attack_num = 3
-						xx.animcounter = 1
-						xx.combo = xx.combo + 1
-					elseif xx.color.n==2 then
-						xx.attack_num = 3
-						xx.animcounter = 1
-						xx.combo = xx.combo + 1
-					elseif xx.color.n==3 then
-						xx.attack_num = 3
-						xx.animcounter = 1
-						xx.combo = xx.combo + 1
-					elseif xx.color.n==4 then
-						xx.attack_num = 3
-						xx.animcounter = 1
-						xx.combo = xx.combo + 1
-					end
-
-
-
-				end
-			else
-
-				if xx.a2 or xx.a3 then
-					if xx.color.n==4 then
-						xx.attack_num = 4
-						xx.animcounter = 1
-						xx.repcounter = xx.repcounter + 1
-					elseif xx.color.n==1 then
-						xx.attack_num = 4
-						xx.animcounter = 1
-						xx.repcounter = xx.repcounter + 1
-					elseif xx.color.n==2 then
-						xx.attack_num = 4
-						xx.animcounter = 1
-						xx.repcounter = xx.repcounter + 1
-					elseif xx.color.n==3 then
-						xx.attack_num = 4
-						xx.animcounter = 1
-						xx.repcounter = xx.repcounter + 1
-					elseif xx.color.n==0 then
-						xx.attack_num = 4
-						xx.animcounter = 1
-						xx.repcounter = xx.repcounter + 1
-					end
+	if func~= nil then func() end
+	if xx.color.n==0 then
+		xx.attack_num = 3
+		xx.animcounter = 1
+		xx.combo = xx.combo + 1
+	elseif xx.color.n==1 then
+		xx.attack_num = 3
+		xx.animcounter = 1
+		xx.combo = xx.combo + 1
+	elseif xx.color.n==2 then
+		xx.attack_num = 3
+		xx.animcounter = 1
+		xx.combo = xx.combo + 1
+	elseif xx.color.n==3 then
+		xx.attack_num = 3
+		xx.animcounter = 1
+		xx.combo = xx.combo + 1
+	elseif xx.color.n==4 then
+		xx.attack_num = 3
+		xx.animcounter = 1
+		xx.combo = xx.combo + 1
+		xx.counteractivate = false
+	end
 
 
-				elseif xx.a1 then  
-					if xx.color.n==4 then
-						xx.attack_num = 6
-						xx.animcounter = 1
-						xx.repcounter = xx.repcounter + 1
-					elseif xx.color.n==1 then
-						xx.attack_num = 6
-						xx.animcounter = 1
-						xx.repcounter = xx.repcounter + 1
-					elseif xx.color.n==2 then
-						xx.attack_num = 6
-						xx.animcounter = 1
-						xx.repcounter = xx.repcounter + 1
-					elseif xx.color.n==3 then
-						xx.attack_num = 6
-						xx.animcounter = 1
-						xx.repcounter = xx.repcounter + 1
-					elseif xx.color.n==0 then
-						xx.attack_num = 6
-						xx.animcounter = 1
-						xx.repcounter = xx.repcounter + 1
-					end
 
-				elseif xx.a4 then
-					if xx.color.n==3 and xx.o5repcounter < at.o.ak.max then
-						xx.animcounter = 1
-						xx.attack_num = 5
-						xx.combo = xx.combo + 1
-						xx.o5repcounter = xx.o5repcounter + 1
-						if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
-						xx.j = 2
-					elseif xx.color.n==2 then
-						xx.attack_num = 5
-						xx.animcounter = 1
-						xx.repcounter = xx.repcounter + 1
-					elseif xx.color.n==4 then
-						xx.attack_num = 5
-						xx.animcounter = 1
-						xx.repcounter = xx.repcounter + 1
-					elseif xx.color.n==1 then
-						xx.attack_num = 5
-						xx.animcounter = 1
-						xx.repcounter = xx.repcounter + 1
-					elseif xx.color.n==0 then
-						xx.attack_num = 5
-						xx.animcounter = 1
-						xx.repcounter = xx.repcounter + 1
+end
+else
 
-					end
-
-
-				end
-
-
-			end
+	if xx.a2 or xx.a3 then
+		if xx.color.n==4 then
+			xx.attack_num = 4
+			xx.animcounter = 1
+			xx.repcounter = xx.repcounter + 1
+		elseif xx.color.n==1 then
+			xx.attack_num = 4
+			xx.animcounter = 1
+			xx.repcounter = xx.repcounter + 1
+		elseif xx.color.n==2 then
+			xx.attack_num = 4
+			xx.animcounter = 1
+			xx.repcounter = xx.repcounter + 1
+		elseif xx.color.n==3 then
+			xx.attack_num = 4
+			xx.animcounter = 1
+			xx.repcounter = xx.repcounter + 1
+		elseif xx.color.n==0 then
+			xx.attack_num = 4
+			xx.animcounter = 1
+			xx.repcounter = xx.repcounter + 1
 		end
-		if not xx.combo_pause 
-			and xx.animcounter < oldanimc 
-			and xx.animcounter > 0 
-			and 
-			xx.currentc ~= xx.color.n then
-			xx.currentc = xx.color.n
+
+
+	elseif xx.a1 then  
+		if xx.color.n==4 then
+			xx.attack_num = 6
+			xx.animcounter = 1
+			xx.repcounter = xx.repcounter + 1
+		elseif xx.color.n==1 then
+			xx.attack_num = 6
+			xx.animcounter = 1
+			xx.repcounter = xx.repcounter + 1
+		elseif xx.color.n==2 then
+			xx.attack_num = 6
+			xx.animcounter = 1
+			xx.repcounter = xx.repcounter + 1
+		elseif xx.color.n==3 then
+			xx.attack_num = 6
+			xx.animcounter = 1
+			xx.repcounter = xx.repcounter + 1
+		elseif xx.color.n==0 then
+			xx.attack_num = 6
+			xx.animcounter = 1
+			xx.repcounter = xx.repcounter + 1
+		end
+
+	elseif xx.a4 then
+		if xx.color.n==3 and xx.o5repcounter < at.o.ak.max then
+			xx.animcounter = 1
+			xx.attack_num = 5
+			xx.combo = xx.combo + 1
+			xx.o5repcounter = xx.o5repcounter + 1
+			if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+			xx.j = 2
+		elseif xx.color.n==2 then
+			xx.attack_num = 5
+			xx.animcounter = 1
+			xx.repcounter = xx.repcounter + 1
+		elseif xx.color.n==4 then
+			xx.attack_num = 5
+			xx.animcounter = 1
+			xx.repcounter = xx.repcounter + 1
+		elseif xx.color.n==1 then
+			xx.attack_num = 5
+			xx.animcounter = 1
+			xx.repcounter = xx.repcounter + 1
+		elseif xx.color.n==0 then
+			xx.attack_num = 5
+			xx.animcounter = 1
+			xx.repcounter = xx.repcounter + 1
+
+		end
+
+
+	end
+
+
+end
+end
+if not xx.combo_pause 
+	and xx.animcounter < oldanimc 
+	and xx.animcounter > 0 
+	and 
+	xx.currentc ~= xx.color.n then
+	xx.currentc = xx.color.n
     --xx.repcounter = 0
 end
 xx.cmbo = false
@@ -526,21 +525,22 @@ function nottoomanyuppercuts(xx)
 
 
   	if xx.attack_num==3 then xx.uppercuttimer = uppercutpause 
-  		elseif xx.attack_num==6 then xx.uppercuttimer = uppercutpause/2 end
-
+  	elseif xx.attack_num==6 then xx.uppercuttimer = uppercutpause/2 
   	end
 
-
-  	me.currentc = 0
-  	you.currentc = 0
-  	me.oldj = 0
-  	you.oldj = 0
-
-  	me.oldft = 0
-  	you.oldft = 0
+  end
 
 
-  	function postattackmanage(xx)
+  me.currentc = 0
+  you.currentc = 0
+  me.oldj = 0
+  you.oldj = 0
+
+  me.oldft = 0
+  you.oldft = 0
+
+
+  function postattackmanage(xx)
   --[[
   if(math.abs(xx.v) ~= math.abs(xx.oldv)) then
     xx.v = xx.oldv + ((xx.v-xx.oldv)/xx.color.s.weight)*rampspeed/2
@@ -553,6 +553,9 @@ function nottoomanyuppercuts(xx)
     xx.ft = xx.oldft + (xx.ft-xx.oldft)*(1)*xx.color.s.brittle
   end
   ]]
+
+  xx.oldattacknum = xx.attack_num
+  xx.oldcolor = xx.color.n
   xx.oldft = xx.ft
 end
 
@@ -839,7 +842,7 @@ function newforwarddodge(xx)
 			end
 
 
-			if xx.blockb and xx.dodgedelaycounter <= 0 and not xx.a1 and not xx.a2 and not xx.a3 and not xx.a4 and xx.g and not xx.dodge and not xx.landing and not xx.releaseblock
+			if xx.g and xx.blockb and xx.dodgedelaycounter <= 0 and not xx.a1 and not xx.a2 and not xx.a3 and not xx.a4 and xx.g and not xx.dodge and not xx.landing and not xx.releaseblock
 				then 
 				if xx.currentc == 4 then
 					xx.im = redblock

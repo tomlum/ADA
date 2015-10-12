@@ -192,17 +192,18 @@ function gandg(xx)
         end
 
         if xx.animcounter <= 9 then
+          if xx.animcounter < 20 then
 
-          if xx.rampcanhit then
-            if xx.repcounter ==1 then
-              xx.v = xx.v + (xx.lr*20)/3*ramp(xx)
-              xx.origgreenlr  = xx.lr
+            if xx.rampcanhit then
+              if xx.repcounter ==1 then
+                xx.v = xx.v + (xx.lr*20)/3*ramp(xx)
+              --xx.origgreenlr  = xx.lr
             elseif xx.repcounter==2 then
-              xx.lr=-xx.origgreenlr  
-              xx.v = xx.v + (xx.lr*30)/3*ramp(xx)
+              --xx.lr=-xx.origgreenlr  
+              xx.v = xx.v*xx.lr + (xx.lr*12)/3*ramp(xx)
             elseif xx.repcounter==3 then
-              xx.lr=xx.origgreenlr 
-              xx.v = xx.v + (xx.lr*15)/3*ramp(xx)
+              --xx.lr=xx.origgreenlr 
+              xx.v = xx.v*xx.lr + (xx.lr*7)/3*ramp(xx)
             end
           end
 
@@ -246,84 +247,85 @@ function gandg(xx)
           xx.cmbo=true
         end
           --combo(xx)
-
-        elseif xx.animcounter >= 40 then
-          xx.animcounter = 0
-          xx.repcounter = 0
         end
 
+      elseif xx.animcounter >= 50 then
+        xx.animcounter = 0
+        xx.repcounter = 0
+      end
 
 
 
-      elseif xx.attack_num == 2 then
 
-        if xx.animcounter < 4 then
-          xx.im = greenk03
-        elseif xx.animcounter < 7 then
-          xx.im = greenk01
-        elseif xx.animcounter < 12 then
-          xx.im = greenk02
+    elseif xx.attack_num == 2 then
 
-        elseif xx.animcounter < 14 then
-          xx.stop = false
-          xx.greenkcondition = true
-          if xx.joystick~= nil then
-            if xx.joystick:getGamepadAxis("rightx") > 0 then
-              xx.lr = 1
-            else
-              xx.lr = -1
-            end
-          end
-          if xx.g then
-            xx.im = greenk1
+      if xx.animcounter < 4 then
+        xx.im = greenk03
+      elseif xx.animcounter < 7 then
+        xx.im = greenk01
+      elseif xx.animcounter < 12 then
+        xx.im = greenk02
+
+      elseif xx.animcounter < 14 then
+        xx.stop = false
+        xx.greenkcondition = true
+        if xx.joystick~= nil then
+          if xx.joystick:getGamepadAxis("rightx") > 0 then
+            xx.lr = 1
           else
-            xx.im = agk1
+            xx.lr = -1
           end
-          xx.animcounter = 12
-          if not xx.holda then
-            if (xx.a1b or xx.a2b or xx.a3b or xx.a4b)and #joysticks>=xx.id then
-              at.g.k.angle = xx.gangle
-              xx.animcounter = 14
+        end
+        if xx.g then
+          xx.im = greenk1
+        else
+          xx.im = agk1
+        end
+        xx.animcounter = 12
+        if not xx.holda then
+          if (xx.a1b or xx.a2b or xx.a3b or xx.a4b)and #joysticks>=xx.id then
+            at.g.k.angle = xx.gangle
+            xx.animcounter = 14
 
-            elseif xx.a1b then
-              at.g.k.angle = 90
-              xx.animcounter = 14
-            elseif xx.a2b or xx.a3b then
-              at.g.k.angle = 0
-              xx.animcounter = 14
-            elseif xx.a4b then
-              at.g.k.angle = -90
-              xx.animcounter = 14
-            elseif xx.color.n ~= 2 then
-              xx.animcounter = 0
-            end
+          elseif xx.a1b then
+            at.g.k.angle = 90
+            xx.animcounter = 14
+          elseif xx.a2b or xx.a3b then
+            at.g.k.angle = 0
+            xx.animcounter = 14
+          elseif xx.a4b then
+            at.g.k.angle = -90
+            xx.animcounter = 14
+          elseif xx.color.n ~= 2 then
+            xx.animcounter = 0
           end
-        elseif xx.animcounter < 50 then
-          if xx.v ~= 0 or xx.animcounter <25 then
-            xx.im = greenk2
+        end
+      elseif xx.animcounter < 50 then
+        if xx.v ~= 0 or xx.animcounter <25 then
+          xx.im = greenk2
+        end
+
+        if xx.animcounter <= 15 then
+          repplay(xx.greens)
+          if not xx.g then
+            xx.v = xx.v-(boltspeed/3 * math.cos(math.rad(at.g.k.angle)))*xx.lr
+            xx.j = xx.j-(boltspeed/2 * math.sin(math.rad(at.g.k.angle)))
+
+          else
+            xx.v = xx.v-(boltspeed/3 * math.cos(math.rad(at.g.k.angle)))*xx.lr
+
           end
+          if xx.rampcanhit then
 
-          if xx.animcounter <= 15 then
-            repplay(xx.greens)
-            if not xx.g then
-              xx.v = xx.v-(boltspeed/3 * math.cos(math.rad(at.g.k.angle)))*xx.lr
-              xx.j = xx.j-(boltspeed/2 * math.sin(math.rad(at.g.k.angle)))
+            rumbleme(xx, .7)
 
-            else
-              xx.v = xx.v-(boltspeed/3 * math.cos(math.rad(at.g.k.angle)))*xx.lr
-
-            end
-            if xx.rampcanhit then
-
-              rumbleme(xx, .7)
-
-              table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx), speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
-              table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)+2.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
-              table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)-2.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
-              xx.greenhit = false
-            end
-          elseif xx.animcounter >= 15 and xx.greenhit then 
-            xx.cancombo = true
+            table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx), speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
+            table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)+2.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
+            table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)-2.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
+            xx.greenhit = false
+          end
+        elseif xx.animcounter >= 15 and xx.greenhit then 
+          xx.cancombo = true
           xx.cmbo=true--combo(xx)
         end
       else

@@ -56,8 +56,8 @@ end
 
 function shakez(z)
   shakeboth = true
-  rumbleme(me,z/10)
-  rumbleme(you,z/10)
+  rumbleme(me,z/5)
+  rumbleme(you,z/5)
   if dangerclose then
     minzoom = dangerZoom + (defaultminzoom-defaultmaxzoom) - dangerZoomDelta * 10*z
     maxzoom = dangerZoom  - dangerZoomDelta * 10*z

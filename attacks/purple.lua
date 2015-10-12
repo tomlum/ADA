@@ -247,7 +247,7 @@ function spikeupdate(xx)
           if z.flinch and math.abs(z.v)>5 then
             z.flinchway = -z.flinchway
           end
-          end)
+          end, true)
       hexHit(xx,0, 
         {x=vv[3], y = vv[4]},
         {x=vv[3]-(vv[3]-vv[1])/5, y = vv[4]-(vv[2]-vv[4])/5},

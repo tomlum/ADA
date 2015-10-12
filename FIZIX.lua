@@ -372,22 +372,22 @@ function transferofenergy(xx)
 
 end
 
-fric = function (xx) 
+function fric(xx) 
 
-xx.v = rodib(xx.v,fricrate*ramp(xx),xx.push)
+  xx.v = rodib(xx.v,fricrate*ramp(xx),xx.push)
 
-if not xx.landing
-  then
-  if xx.v > 0+xx.push and not xx.dodge 
+  if not xx.landing
     then
-    xx.slide = true
-    xx.slidetimer = 0
-  elseif xx.v < 0+xx.push and not xx.dodge 
-    then
-    xx.slide = true
-    xx.slidetimer = 0
+    if xx.v > 0+xx.push and not xx.dodge 
+      then
+      xx.slide = true
+      xx.slidetimer = 0
+    elseif xx.v < 0+xx.push and not xx.dodge 
+      then
+      xx.slide = true
+      xx.slidetimer = 0
+    end
   end
-end
 end
 
 
@@ -572,6 +572,11 @@ end
   xx.stop = false
   ]]
   function movex(xx,yy)
+
+    
+    if xx.dodge or (xx.block and xx.g)
+      then xx.a1, xx.a2, xx.a3, xx.a4, xx.up = false,false,false,false,false
+    end
 
     respawntravel(xx)
     relativity(xx)

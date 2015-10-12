@@ -166,9 +166,6 @@ function changePlayerColor(xx)
   end
 
 
-  if xx.animcounter > 1 then
-    xx.oldtype = xx.attack_num
-  end
 
 
 

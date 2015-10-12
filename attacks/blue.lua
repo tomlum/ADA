@@ -303,10 +303,10 @@ function breadandbutter(xx)
       elseif xx.animcounter < 25 then
         xx.im=dropkick1
           xx.cmbo = true
-      elseif xx.animcounter < 40 then
+      elseif xx.animcounter < 45 then
           xx.cmbo = true
 
-      elseif xx.animcounter >= 40 then
+      elseif xx.animcounter >= 45 then
         xx.animcounter = 0
       end
 

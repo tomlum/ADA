@@ -6,40 +6,36 @@
 --j = vertical velocity
 --can't kick combo out of purple kick
 
-
---block in air doesn't stop you
+--change push to prevent pulling
+--can rapid kick
 --slowdown is weird/notworking 
---if actionshot during another actionshot, increase actionshot time
---fix orange no 
 --pause is broken
 --xx.attack_num be more meaningful than 1 - 6
 --apa13 xoff is incorrect
 --implement action_done on all attacks
 --can hexHit use colon and self?
---does xx.hit work?
 --fix rumble
---make jump more natural?
 
 require "initializers"
 
 --Debug/Test Utilities
-fightclub = true
+fightclub = false
+menu = "title"
 notilebouncing = true
 melcolor = 1
-mercolor = 2
+mercolor = 4
 youlcolor = 3
-yourcolor = 4
+yourcolor = 2
 therampspeed = .2
 mapNum = 1
 rampspeed= therampspeed
 drawBoxes = false
-drawFeet = false
+drawFeet = true
 volume=0
 fullscreen = false
 readout = false
 putmehere = 1000
 putyouhere = 1025
-menu = "color"
 chapter = 1
 oldchapter = "bob"
 lassoisathing = false
@@ -67,21 +63,11 @@ function love.load()
   initPlayer(me)
   initPlayer(you)
   initWorld()
+  initMenus()
 
-  mefaceselector = 0
-  youfaceselector = 0
-  juststartedpost = true
-  ln = 0
-  rn = 0
 
-  retryfade = 0
-  fadeupretry = 0
 
-  cflicker = 0
-  cfhold = 0
-  cfup = true
 
-  sfade = 5
   startsfade = false
 
   lcx = -screenwidth 
@@ -140,7 +126,7 @@ end
 
 function love.update()
 
-  initmenu()
+  refreshMenu()
   if menu == "story" then
     updatechapters()
   end
@@ -248,13 +234,7 @@ function love.update()
       if slowt == slowrate and not (pause or hitpause) and not me.actionshot 
         then
 
-        if me.dodge or me.block
-          then me.a1, me.a2, me.a3, me.a4, me.up = false,false,false,false,false
-        end
 
-        if you.dodge or you.block
-          then you.a1, you.a2, you.a3, you.a4, you.up = false,false,false,false,false
-        end
 
         movex(me,you)
         movex(you,me)
@@ -282,7 +262,7 @@ function love.update()
 
       end
 
-      cammovement()
+      --cammovement()
       --if here then slideycling to person
       camerafol()
 
@@ -376,8 +356,8 @@ function love.update()
         holdmanage(me)
         holdmanage(you)
 
- orientlr(me)
- orientlr(you)
+        orientlr(me)
+        orientlr(you)
 
         cammovement()
         --if here then no slow mo twitter
@@ -569,7 +549,7 @@ function love.update()
     end
 
 
-    -- movetod(.03)
+    -- moveTOD(.03)
     if love.keyboard.isDown("4") and not boxstop then
       throwinto()
       --makecolorbox(me.x, me.y+30)
@@ -591,7 +571,7 @@ function love.update()
       lg.print(tostring(plat.y).."||"..tostring(plat.x1).."||"..tostring(plat.x2).."||"..tostring(plat.x).."||"..tostring(plat.y1).."||"..tostring(plat.y2), 300,i*20)
     end
     ]]--
-        if love.keyboard.isDown("2")then
+    if love.keyboard.isDown("2")then
       me.no_spikes = true
     end
     if fightclub then
@@ -599,12 +579,15 @@ function love.update()
       lg.print("pause: "..tostring(pause), 400,360)
       lg.print("me.walllr: "..tostring(me.walllr), 400,380)
       lg.print("me.lr: "..tostring(me.lr), 400,400)
-      lg.print("me.wallx: "..tostring(me.wallx), 400,420)
-      lg.print("me.landingcounter: "..tostring(me.landing_counter), 400,440)
-      lg.print("me.rampspeed: "..tostring(me.rampspeed), 400,460)
+      lg.print("me.oldattacknum: "..tostring(me.oldattacknum), 400,420)
+      lg.print("me.oldcolor: "..tostring(me.oldcolor), 400,440)
+      lg.print("me.counteractivate : "..tostring(me.counteractivate), 400,460)
       changebackgroundcolor(4)
       
     end
+
+    pausing()
+
     golasso()
 
     camerawobble()

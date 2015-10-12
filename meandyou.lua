@@ -69,7 +69,7 @@ me.dodge = false
 me.dodgetype = 0
 me.jstop = false
 me.walking = false
-me.pause = false
+
 me.a = none
 me.att = none
 
@@ -128,7 +128,7 @@ you.dodge = false
 you.dodgetype = 0
 you.jstop = false
 you.walking = false
-you.pause = false
+
 
 me.busyblue = false
 me.busypurple = false
@@ -216,8 +216,8 @@ function loadmeandyou2()
   me.dodgetype = 0
   me.jstop = false
   me.walking = false
-  me.pause = false
-  me.a = none
+
+
   me.att = none
   me.push = 0
 
@@ -274,7 +274,7 @@ function loadmeandyou2()
   you.dodgetype = 0
   you.jstop = false
   you.walking = false
-  you.pause = false
+
 
   me.busyblue = false
   me.busypurple = false
@@ -355,14 +355,6 @@ function loadmeandyou()
   rn = 0
 
 
-
-  retryfade = 0
-  fadeupretry = 0
-
-  cflicker = 0
-  cfhold = 0
-  cfup = true
-
   mbb,mgg,mpp,ybb,ygg,ypp,myy,yyy = 0,0,0,0,0,0,0,0
   mb,mg,mp,yb,yg,yp,my, yy = false,false,false,false,false,false,false,false
   r1,r2,g1,g2,b1,b2 = 0,0,0,0,0,0
@@ -383,7 +375,6 @@ function loadmeandyou()
 
 
 
-  sfade = 5
   startsfade = false
 
   lcx = -screenwidth 
@@ -456,7 +447,7 @@ function loadmeandyou()
   me.dodgetype = 0
   me.jstop = false
   me.walking = false
-  me.pause = false
+
   me.a = none
   me.att = none
 
@@ -515,7 +506,7 @@ function loadmeandyou()
   you.dodgetype = 0
   you.jstop = false
   you.walking = false
-  you.pause = false
+
 
   me.busyblue = false
   me.busypurple = false

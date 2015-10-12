@@ -391,7 +391,6 @@ function c1accept()
               you.gv = boltspeed
               me.gv = boltspeed
 
-              pause = false
               function jjstick(xx)
 
 
@@ -530,29 +529,9 @@ function c1accept()
     xx.angle = math.atan(-xx.joystick:getGamepadAxis("lefty")/(math.abs(xx.joystick:getGamepadAxis("leftx"))))
     else xx.angle = 0
     end
-
-
-
-
   end
-  if  hemode == "play" then 
-    if not (me.start or you.start) then
-      if pause then
-        readytounpause = true
-      else
-        readytounpause = false
-      end
-    end
 
-    if pause and readytounpause and (me.start or you.start) then
-      pause = false
-    end
-
-    if (me.start or you.start) and not pause and not readytounpause then
-      pause = true
-      readytounpause = false
-    end
-  end
+  
   
 
 end

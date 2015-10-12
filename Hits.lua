@@ -409,7 +409,6 @@ function hline(xx, theid, P1, P2, special)
       else
         special(xx)
         if xx.block then 
-
           if xx.counter and xx.lr * xx.lr < 0 then 
             xx.counteractivate = true
           end
@@ -429,7 +428,7 @@ function hline(xx, theid, P1, P2, special)
 
   end
 
-
+--hbox preaccomodating for the offset of an image
   function hboxOffset(xx, theid, P1, P2, P3, P4, special)
     local nP1 = clone(P1)
     local nP2 = clone(P2)
@@ -442,10 +441,10 @@ function hline(xx, theid, P1, P2, special)
       nP4.y = P4.y+xx.im.yoff
     end
     if xx.im.xoff ~= nil then
-      nP1.x = P1.x+xx.im.xoff
-      nP2.x = P2.x+xx.im.xoff
-      nP3.x = P3.x+xx.im.xoff
-      nP4.x = P4.x+xx.im.xoff
+      nP1.x = P1.x+xx.im.xoff+xx.lr*15
+      nP2.x = P2.x+xx.im.xoff+xx.lr*15
+      nP3.x = P3.x+xx.im.xoff+xx.lr*15
+      nP4.x = P4.x+xx.im.xoff+xx.lr*15
     end
     hexHit(xx, theid, nP1, nP2, nP3, nP4, special)
 
@@ -458,9 +457,9 @@ function hline(xx, theid, P1, P2, special)
   function hexplatcheck2(y1, x1, x2, ex, why, w, why2, v)
 
 
-    midv2 = {x = (ex+w/2)+v, y=why2}
     midv21 = {x = (ex)+v, y=why2}
     midv22 = {x = (ex+w)+v, y=why2}
+    midv2 = {x = (ex+w/2)+v, y=why2}
     midv = {x = ex+w/2+.001, y=why}
     local linep1 = {x = x1, y = y1}
     local linep2 = {x = x2, y = y1}
@@ -602,38 +601,38 @@ function hline(xx, theid, P1, P2, special)
           end
 
           if xx.wall_grab then 
-                  xx.lr = xx.walllr
-                if (xx.lr > 0 and xx.right) or (xx.lr < 0 and xx.left) then 
-                  xx.wall_grab = false
-                  if #joysticks>=xx.id then
-                    xx.jt = walljumpjt
-                    xx.j = -xx.jly*walljumpdis
-                    xx.v = xx.jlx*walljumpdis
-                  else
-                    if xx.up then
-                      xx.jt = xx.jt + walljumpjt2
-                      xx.j = walljumpj2
-                      xx.v = walljumpv2 *xx.lr
-                    else
-                      xx.jt = xx.jt + walljumpjt
-                      xx.j = walljumpj
-                      xx.v = walljumpv *xx.lr
-                    end
-                  end
-                elseif xx.wall_grab then 
-                  xx.v = 0
-                  xx.j = hof(-max_wall_fall,xx.j)
-                  xx.im = wallgrab
-                makendust(xx.wallx+xx.lr, xx.feet, xx.lr*1, -xx.j,2,1)
-
-
+            xx.lr = xx.walllr
+            if (xx.lr > 0 and xx.right) or (xx.lr < 0 and xx.left) then 
+              xx.wall_grab = false
+              if #joysticks>=xx.id then
+                xx.jt = walljumpjt
+                xx.j = -xx.jly*walljumpdis
+                xx.v = xx.jlx*walljumpdis
+              else
+                if xx.up then
+                  xx.jt = xx.jt + walljumpjt2
+                  xx.j = walljumpj2
+                  xx.v = walljumpv2 *xx.lr
+                else
+                  xx.jt = xx.jt + walljumpjt
+                  xx.j = walljumpj
+                  xx.v = walljumpv *xx.lr
                 end
               end
+            elseif xx.wall_grab then 
+              xx.v = 0
+              xx.j = hof(-max_wall_fall,xx.j)
+              xx.im = wallgrab
+              makendust(xx.wallx+xx.lr, xx.feet, xx.lr*1, -xx.j,2,1)
+
+
             end
+          end
+        end
 
 
-            for j = #themap.walls, 1, -1 do 
-              local wall = themap.walls[j]
+        for j = #themap.walls, 1, -1 do 
+          local wall = themap.walls[j]
 
               --Wall jump check
               if xx.is_player~=nil and not xx.flinch
@@ -715,7 +714,7 @@ function hline(xx, theid, P1, P2, special)
 
 
 
-
+--The platform detection function
         function hexPlat()
           for i,xx in ipairs(players) do
             for j,plat in ipairs(themap.plats) do 
@@ -723,7 +722,7 @@ function hline(xx, theid, P1, P2, special)
               local extra_height = 0
               local dodge_height = 0
               if xx.im.extra_height ~= nil then
-                extra_height = -xx.im.extra_height
+                extra_height = xx.im.extra_height
               end
               if xx.im.dodge_height ~= nil then
                 dodge_height= xx.im.dodge_height
@@ -742,9 +741,9 @@ function hline(xx, theid, P1, P2, special)
                 break
 
               elseif xx.go_here == nil and (not xx.gothroughplats or plat.floor~=nil) and (
-                (hexplatcheck2(plat.y, plat.x1, plat.x2, xx.x, xx.old_feet, xx.width, xx.y+xx.height-extra_height-xx.j, xx.v) and xx.j <= 0)
+                (hexplatcheck2(plat.y, plat.x1, plat.x2, xx.x, xx.old_feet, xx.width, xx.y+xx.height+extra_height-xx.j, xx.v) and xx.j <= 0)
                 or 
-                (xx.y == plat.y-xx.height-extra_height and xx.x+xx.width+xx.v >= plat.x1 and xx.x+xx.v <= plat.x2 and xx.j==0))
+                (xx.y == plat.y-xx.height and xx.x+xx.width+xx.v >= plat.x1 and xx.x+xx.v <= plat.x2 and xx.j==0))
               then
 
                 --[[
@@ -773,7 +772,7 @@ function hline(xx, theid, P1, P2, special)
                 
                 if xx.j ~= 0 and xx.is_player~=nil  then
 
-                  xx.old_feet = xx.feet
+                  --xx.old_feet = xx.feet
 
                   if xx.j < -j_for_landing or math.abs(xx.v) > speedlimit then 
                     xx.landing_counter = xx.landing_counter + landing_wait
@@ -788,8 +787,7 @@ function hline(xx, theid, P1, P2, special)
                   xx.slowdown = false
 
                 end
-
-                xx.y = plat.y-xx.height
+                xx.y = plat.y-xx.height--+extra_height
 
                 xx.g = true
                 xx.j = 0
@@ -813,7 +811,7 @@ function hline(xx, theid, P1, P2, special)
 
             end
             if xx.im.extra_height ~= nil then
-              xx.old_feet = xx.y+xx.height-xx.im.extra_height
+              xx.old_feet = xx.y+xx.height+xx.im.extra_height
             else
               xx.old_feet = xx.y+xx.height
             end
@@ -882,7 +880,7 @@ function hline(xx, theid, P1, P2, special)
           if xx.im.extra_height ~= nil then
             xx.old_feet = xx.y+xx.height-xx.im.extra_height
           else
-            xx.old_feet = xx.y+xx.height-1
+            xx.old_feet = xx.y+xx.height
           end
         end
 

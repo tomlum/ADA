@@ -66,8 +66,6 @@ rightwall = 2000
 themap = themaps[1]
 
 
----[[
-
 
 letterboxheight = 80
 menuspeed = 7
@@ -116,6 +114,27 @@ table.insert(tiles2, {y=0,ud="bottom",lr=1,j=inittilej, column = 3})
 table.insert(tiles2, {y=0,ud="bottom",lr=-1,j=inittilej, column = 4})
 
 
+function pausing()
+if menu == "play" then 
+    if not (me.start or you.start) then
+      if pause then
+        readytounpause = true
+      else
+        readytounpause = false
+      end
+    end
+
+    if pause and readytounpause and (me.start or you.start) then
+      pause = false
+    end
+
+    if (me.start or you.start) and not pause and not readytounpause then
+      pause = true
+      readytounpause = false
+    end
+  end
+end
+
 function drawoverlays()
   cclear()
 
@@ -161,7 +180,8 @@ lg.setNewFont(20)
 
 lightsize = 7
 maxwob = 7
-function initmenu()
+
+function refreshMenu()
   if menu == "title" and oldmenu ~= "title" then
     musfadein = 3
     musfade = 0
@@ -969,85 +989,6 @@ elseif menu == "retry" then
 end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function choosestuff()
-
-  openingsong:stop()
-
-
-
-
-
-  if cflicker == 255 then cfhold = cfhold + 1
-  elseif cflicker <= 0 then cfup = true
-  end
-
-  if cfhold > 60 then cfhold = 0 cfup = false
-  end
-
-
-  if cfup and cfhold == 0 then cflicker = cflicker + 15
-  elseif not cfup then cflicker = cflicker - 15
-  end
-
-  if menu == "postchoose" then
-    rset = true
-    lset = true
-    if juststartedpost then juststartedpost = false
-      placespeople = true
-
-
-      rn = 1
-      ln = 1
-    elseif not juststartedpost then 
-      rn = rn + (rn*.08)
-      ln = ln + (ln*.08)
-    end
-  end
-
-  if not lset and lcx  + screenwidth/30 < 0 then lcx = lcx + screenwidth/30
-    else lset = true
-      lcx = 0
-    end 
-
-    if not rset and rcx - screenwidth/30 > screenwidth/2 then rcx = rcx - screenwidth/30
-      else rset = true
-        rcx = screenwidth/2
-      end
-
-      if rn > 1000020 and ln > 1000020 and math.abs(soscillator)>400 
-        then menu = "prepan"
-        yoffset = 0
-        finishedLoading = false
-        separatespines = false
-      end
-
-    end
 
 
     function panstuff()
