@@ -481,8 +481,8 @@ function hline(xx, theid, P1, P2, special)
       midv = {x = (ex)+15*lr, y=why+h-j}
 
 
-      for j = #themap.plats, 1, -1 do 
-        plat = themap.plats[j]
+      for j = #theMap.plats, 1, -1 do 
+        plat = theMap.plats[j]
         local linep1 = {x = plat.x1, y = plat.y}
         local linep2 = {x = plat.x2, y = plat.y}
         if (plat.floor==nil) and pint(linep1, linep2, midv, midv2) 
@@ -501,8 +501,8 @@ function hline(xx, theid, P1, P2, special)
         return false
       end
 
-      for j = #themap.walls, 1, -1 do 
-        wall = themap.walls[j]
+      for j = #theMap.walls, 1, -1 do 
+        wall = theMap.walls[j]
         local linep1 = {x = wall.x, y = wall.y1}
         local linep2 = {x = wall.x, y = wall.y2}
         if pint(linep1, linep2, midv, midv2) 
@@ -522,8 +522,8 @@ function hline(xx, theid, P1, P2, special)
         return true
       end
 
-      for j = #themap.plats, 1, -1 do 
-        plat = themap.plats[j]
+      for j = #theMap.plats, 1, -1 do 
+        plat = theMap.plats[j]
         local linep1 = {x = plat.x1, y = plat.y}
         local linep2 = {x = plat.x2, y = plat.y}
         if pint(linep1, linep2, midv, midv2) 
@@ -543,7 +543,7 @@ function hline(xx, theid, P1, P2, special)
         return nil
       end
 
-      for j,plat in ipairs(themap.plats) do 
+      for j,plat in ipairs(theMap.plats) do 
         local linep1 = {x = plat.x1, y = plat.y}
         local linep2 = {x = plat.x2, y = plat.y}
         if pint(linep1, linep2, midv, midv2) 
@@ -631,8 +631,8 @@ function hline(xx, theid, P1, P2, special)
         end
 
 
-        for j = #themap.walls, 1, -1 do 
-          local wall = themap.walls[j]
+        for j = #theMap.walls, 1, -1 do 
+          local wall = theMap.walls[j]
 
               --Wall jump check
               if xx.is_player~=nil and not xx.flinch
@@ -646,7 +646,6 @@ function hline(xx, theid, P1, P2, special)
                 end
 
                 xx.wall_grab = true
-                xx.initwy = xx.y - xx.j
                 xx.walllr = -xx.lr
                 xx.wallx = wall.x+xx.wallside
                 xx.v = 0
@@ -694,8 +693,8 @@ function hline(xx, theid, P1, P2, special)
 
 
         function retOWallCheck(ex, why,vee, jay)
-          for j = #themap.walls, 1, -1 do
-            local wallace = themap.walls[j]
+          for j = #theMap.walls, 1, -1 do
+            local wallace = theMap.walls[j]
             local res = retpint({x = wallace.x, y = wallace.y1}, {x = wallace.x, y = wallace.y2}, {x = ex, y = why}, {x = ex+vee, y = why-jay})
             if res[2] > 0 then
               if wallace.glasswall~=nil then 
@@ -717,7 +716,7 @@ function hline(xx, theid, P1, P2, special)
 --The platform detection function
         function hexPlat()
           for i,xx in ipairs(players) do
-            for j,plat in ipairs(themap.plats) do 
+            for j,plat in ipairs(theMap.plats) do 
 
               local extra_height = 0
               local dodge_height = 0
@@ -819,8 +818,8 @@ function hline(xx, theid, P1, P2, special)
 
 
           for i,xx in ipairs(monsters) do
-            for j = #themap.plats, 1, -1 do 
-              plat = themap.plats[j]
+            for j = #theMap.plats, 1, -1 do 
+              plat = theMap.plats[j]
 
               local extra_height = 0
               local dodge_height = 0

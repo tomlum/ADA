@@ -67,8 +67,8 @@ end
 function kothrespawn(xx)
   local newplat = kothplat
   while(newplat == kothplat) do
-    local rannum = math.random(1,#themaps[mapNum].plats)
-    local newplat = themaps[mapNum].plats[rannum]
+    local rannum = math.random(1,#theMaps[mapNum].plats)
+    local newplat = theMaps[mapNum].plats[rannum]
     xx.go_here = {}
     xx.go_here.x = math.random(newplat.x1+15, newplat.x2-15)
     xx.go_here.y = newplat.y-100
@@ -97,8 +97,8 @@ oldplat = kothplat
   ranplattimer = ranplattimer + 1 
   
     while(kothplat == nil or kothplat.floor) or (kothplat==oldplat) do
-      local rannum = math.random(1,#themaps[mapNum].plats)
-      kothplat = themaps[mapNum].plats[rannum]
+      local rannum = math.random(1,#theMaps[mapNum].plats)
+      kothplat = theMaps[mapNum].plats[rannum]
     end
 
 end

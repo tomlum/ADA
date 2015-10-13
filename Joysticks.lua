@@ -537,7 +537,6 @@ end
 function updateControllers()
 
   keyboardcontrols()
-  joystickUpdate()
   jjstick(me)
   jjstick(you)
   controlsstuff(me)

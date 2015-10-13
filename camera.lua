@@ -31,7 +31,7 @@ growrate = .02
 shrinkrate = .001
 
 
-function updateScreenStats()
+function updateScreenInfo()
     screenwidth = lg.getWidth()
     screenheight = lg.getHeight()
     enviro.screenheight = screenheight - barheight
@@ -214,7 +214,7 @@ function cammovement()
 
 
 
-  if midypoint >= themap.floor - ((winheight/2) - (feet2bottom))*cscale
+  if midypoint >= theMap.floor - ((winheight/2) - (feet2bottom))*cscale
   then
     youcamfloor = true
     mecamfloor = true
@@ -312,7 +312,7 @@ camerafol = function ()
 
   elseif youcamfloor 
   then
-    youyrig = themap.floor - winheight*cscale + feet2bottom*cscale
+    youyrig = theMap.floor - winheight*cscale + feet2bottom*cscale
   elseif not vertone and you.y < me.y then
     youyrig = you.y - head2ceiling*cscale
   end
@@ -323,7 +323,7 @@ camerafol = function ()
 
   elseif mecamfloor 
   then
-    meyrig = themap.floor - winheight*cscale + feet2bottom*cscale
+    meyrig = theMap.floor - winheight*cscale + feet2bottom*cscale
   elseif not vertone and me.y < you.y then
     meyrig = me.y - head2ceiling*cscale
   end
@@ -683,13 +683,13 @@ function drawx(xx)
     lg.draw(enviro.sky, xx.x, 0, 0, 500, 1.1)
     --lg.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
 
-    if not fightclub and themap.paralaxscale2 ~= nil then
+    if not fightclub and theMap.paralaxscale2 ~= nil then
       blurdraw(blur_scale1, function()
           lg.draw(enviro.paralax2, 
-            (xx.x+(screenwidth/4)*cscale*pzoom2+paralaxcamshake)*(1-themaps[mapNum].paralaxscale2*pzoom2)
-            -(500*(1-themaps[mapNum].paralaxscale2*pzoom2))
+            (xx.x+(screenwidth/4)*cscale*pzoom2+paralaxcamshake)*(1-theMaps[mapNum].paralaxscale2*pzoom2)
+            -(500*(1-theMaps[mapNum].paralaxscale2*pzoom2))
             ,
-            (xx.y+(screenheight/2)*cscale+paralaxcamshake)*(1-themaps[mapNum].paralaxscale2*pzoom2)+(feet2bottom-paralaxoffset)*(cscale*(1-themaps[mapNum].paralaxscale2*pzoom2)),
+            (xx.y+(screenheight/2)*cscale+paralaxcamshake)*(1-theMaps[mapNum].paralaxscale2*pzoom2)+(feet2bottom-paralaxoffset)*(cscale*(1-theMaps[mapNum].paralaxscale2*pzoom2)),
             0,
             pzoom2,
             pzoom2)
@@ -702,42 +702,42 @@ function drawx(xx)
 
 
     local pzoom = 1+(1-math.sqrt(cscale))
-    if themap.paralaxscale ~= nil then
-      if themap.rotation ~= nil then
+    if theMap.paralaxscale ~= nil then
+      if theMap.rotation ~= nil then
         
-        local ps = themap.paralaxscale
+        local ps = theMap.paralaxscale
         local ips = 1/ps
         
         
         local xoffset = 0
         local yoffset = 0
-        if math.deg(themap.rotation)%360 < 10 then
-        xoffset = (100)*themap.paralaxscale
+        if math.deg(theMap.rotation)%360 < 10 then
+        xoffset = (100)*theMap.paralaxscale
         
-        yoffset = (100)*themap.paralaxscale
-      elseif math.deg(themap.rotation)%360 < 100 then
-        yoffset = (themap.height+100)*themap.paralaxscale
-        xoffset = (100)*themap.paralaxscale
-      elseif math.deg(themap.rotation)%360 < 190 then
-        xoffset = (themap.width+100)*themap.paralaxscale
-        yoffset = (themap.height+100)*themap.paralaxscale
-    elseif math.deg(themap.rotation)%360 < 280 then
-        xoffset = (themap.width+100)*themap.paralaxscale  
-        yoffset = (100)*themap.paralaxscale
+        yoffset = (100)*theMap.paralaxscale
+      elseif math.deg(theMap.rotation)%360 < 100 then
+        yoffset = (theMap.height+100)*theMap.paralaxscale
+        xoffset = (100)*theMap.paralaxscale
+      elseif math.deg(theMap.rotation)%360 < 190 then
+        xoffset = (theMap.width+100)*theMap.paralaxscale
+        yoffset = (theMap.height+100)*theMap.paralaxscale
+    elseif math.deg(theMap.rotation)%360 < 280 then
+        xoffset = (theMap.width+100)*theMap.paralaxscale  
+        yoffset = (100)*theMap.paralaxscale
         end
        blurdraw(blur_scale1, function()
 
-            lg.draw(themap.paralax, 
-              (xx.x+(screenwidth/2)*cscale*pzoom+paralaxcamshake)*(1-themap.paralaxscale*pzoom)
+            lg.draw(theMap.paralax, 
+              (xx.x+(screenwidth/2)*cscale*pzoom+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)
               
-              -(50*(1-themap.paralaxscale*pzoom))
+              -(50*(1-theMap.paralaxscale*pzoom))
               ,
               (xx.y+(screenheight/2)--*pzoom
-                *cscale+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themap.paralaxscale*pzoom))
+                *cscale+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-theMap.paralaxscale*pzoom))
               
-              -(50*(1-themap.paralaxscale*pzoom))
+              -(50*(1-theMap.paralaxscale*pzoom))
               ,
-              themap.rotation,
+              theMap.rotation,
               pzoom,
               pzoom,
               xoffset,
@@ -745,43 +745,43 @@ function drawx(xx)
 
           end)
 --[[
-        if math.deg(themap.rotation)%360 < 80 then     
-          lg.draw(themap.paralax, 
-            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themap.paralaxscale*pzoom),
+        if math.deg(theMap.rotation)%360 < 80 then     
+          lg.draw(theMap.paralax, 
+            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-theMap.paralaxscale*pzoom),
             (xx.y+(screenheight/2)--*pzoom
-              *cscale+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themap.paralaxscale*pzoom)),
-            themap.rotation,
+              *cscale+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-theMap.paralaxscale*pzoom)),
+            theMap.rotation,
             pzoom,
             pzoom)
 
-        elseif math.deg(themap.rotation)%360 < 170 then
+        elseif math.deg(theMap.rotation)%360 < 170 then
 
-          lg.draw(themap.paralax, 
-            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+themap.height,
+          lg.draw(theMap.paralax, 
+            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)+theMap.height,
             (xx.y+(screenheight/2)--*pzoom
-              *cscale+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themap.paralaxscale*pzoom))
+              *cscale+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-theMap.paralaxscale*pzoom))
             
             ,
-            themap.rotation,
+            theMap.rotation,
             pzoom,
             pzoom)
 
 
-        elseif math.deg(themap.rotation)%360 < 260 then     
-          lg.draw(themap.paralax, 
-            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+themap.width,
+        elseif math.deg(theMap.rotation)%360 < 260 then     
+          lg.draw(theMap.paralax, 
+            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)+theMap.width,
             (xx.y+(screenheight/2)--*pzoom
-              *cscale+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themap.paralaxscale*pzoom))+themap.height,
-            themap.rotation,
+              *cscale+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-theMap.paralaxscale*pzoom))+theMap.height,
+            theMap.rotation,
             pzoom,
             pzoom)
           
-          elseif math.deg(themap.rotation)%360 < 360 then     
-           lg.draw(themap.paralax, 
-            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themap.paralaxscale*pzoom),
+          elseif math.deg(theMap.rotation)%360 < 360 then     
+           lg.draw(theMap.paralax, 
+            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-theMap.paralaxscale*pzoom),
             (xx.y+(screenheight/2)--*pzoom
-              *cscale+paralaxcamshake)*(1-themap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themap.paralaxscale*pzoom))+themap.width,
-            themap.rotation,
+              *cscale+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-theMap.paralaxscale*pzoom))+theMap.width,
+            theMap.rotation,
             pzoom,
             pzoom)
 
@@ -795,10 +795,10 @@ function drawx(xx)
         blurdraw(blur_scale1, function()
 
             lg.draw(enviro.paralax, 
-              (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-themaps[mapNum].paralaxscale*pzoom)
-              -(500*(1-themaps[mapNum].paralaxscale*pzoom)),
+              (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-theMaps[mapNum].paralaxscale*pzoom)
+              -(500*(1-theMaps[mapNum].paralaxscale*pzoom)),
               (xx.y+(screenheight/2)--*pzoom
-                *cscale+paralaxcamshake)*(1-themaps[mapNum].paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-themaps[mapNum].paralaxscale*pzoom)),
+                *cscale+paralaxcamshake)*(1-theMaps[mapNum].paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-theMaps[mapNum].paralaxscale*pzoom)),
               0,
               pzoom,
               pzoom)
@@ -838,19 +838,19 @@ function drawx(xx)
 
 
     tods() 
-    if themap.rotation~=nil then
-      if math.deg(themap.rotation)%180 > 80 then
-        lg.draw(themap.stage, themap.height/2, themap.width/2, themap.rotation, 1, 1, themap.width/2, themap.height/2)
-        drawbackgroundbox(0,0,-500,themap.width)
-        drawbackgroundbox(themap.height,0,500,themap.width)
-        drawbackgroundbox(-500,0,themap.height+1000,-500)
-        drawbackgroundbox(-500,themap.width,themap.height+1000,500)
+    if theMap.rotation~=nil then
+      if math.deg(theMap.rotation)%180 > 80 then
+        lg.draw(theMap.stage, theMap.height/2, theMap.width/2, theMap.rotation, 1, 1, theMap.width/2, theMap.height/2)
+        drawbackgroundbox(0,0,-500,theMap.width)
+        drawbackgroundbox(theMap.height,0,500,theMap.width)
+        drawbackgroundbox(-500,0,theMap.height+1000,-500)
+        drawbackgroundbox(-500,theMap.width,theMap.height+1000,500)
       else
-        lg.draw(themap.stage, themap.width/2, themap.height/2, themap.rotation, 1, 1, themap.width/2, themap.height/2)
-        drawbackgroundbox(0,0,-500,themap.height)
-        drawbackgroundbox(themap.width,0,500,themap.height)
-        drawbackgroundbox(-500,0,themap.width+1000,-500)
-        drawbackgroundbox(-500,themap.height,themap.width+1000,500)
+        lg.draw(theMap.stage, theMap.width/2, theMap.height/2, theMap.rotation, 1, 1, theMap.width/2, theMap.height/2)
+        drawbackgroundbox(0,0,-500,theMap.height)
+        drawbackgroundbox(theMap.width,0,500,theMap.height)
+        drawbackgroundbox(-500,0,theMap.width+1000,-500)
+        drawbackgroundbox(-500,theMap.height,theMap.width+1000,500)
       end
       
       
@@ -903,8 +903,8 @@ function drawx(xx)
   end
 
   if menu ~= "retry" then
-    if themap.facade~=nil then
-      lg.draw(themap.facade,0,0)
+    if theMap.facade~=nil then
+      lg.draw(theMap.facade,0,0)
     end
     lg.setShader()
     cclear()

@@ -412,7 +412,7 @@ function drawmenus()
     elseif ups() and mapNum > 1 then mapNum = mapNum - 1 repplay(mov)
     end
 
-    themap = themaps[mapNum]
+    theMap = theMaps[mapNum]
 
     if (c1accept() and not me.holda) or (not you.holda and c2accept())and menu == "map" then
       fadein = -5
@@ -427,11 +427,11 @@ function drawmenus()
 
     lg.setColor(allfade,allfade,allfade,255)
     lg.draw(map,0,0, 0, screenwidth/1440, screenheight/900)
-    lg.setColor(themaps[mapNum].lightcolor.r,themaps[mapNum].lightcolor.g,themaps[mapNum].lightcolor.b,math.random(150,255)*(allfade/255))
-    lg.circle("fill",(themaps[mapNum].lightx)*(screenwidth/1440),(themaps[mapNum].lighty)*(screenheight/900),lightsize*(screenwidth/1440))
+    lg.setColor(theMaps[mapNum].lightcolor.r,theMaps[mapNum].lightcolor.g,theMaps[mapNum].lightcolor.b,math.random(150,255)*(allfade/255))
+    lg.circle("fill",(theMaps[mapNum].lightx)*(screenwidth/1440),(theMaps[mapNum].lighty)*(screenheight/900),lightsize*(screenwidth/1440))
     local wordspacing = 20
     for i = 0, screenheight/wordspacing do
-      lg.print(string.upper(themaps[mapNum].name), 1000*(screenwidth/1440), i*wordspacing)
+      lg.print(string.upper(theMaps[mapNum].name), 1000*(screenwidth/1440), i*wordspacing)
     end
 
 
@@ -823,7 +823,7 @@ elseif menu == "pan" then
     menu = "play"
     gotimer = 0
   elseif streetfadestart then streetfadehold = streetfadehold - 1
-  elseif dollyx + screenwidth > themap.rightwall-1440*1.5
+  elseif dollyx + screenwidth > theMap.rightwall-1440*1.5
     or c1accept() or c2accept()
     then 
     fadein = -5
@@ -839,7 +839,7 @@ elseif menu == "pan" then
   lg.setColor(allfade,allfade,allfade)
   lg.sdraw(enviro.sky, 0, 0, 0, 150, 1)
   lg.sdraw(enviro.paralax, -dollyx/2,  -enviro.paralax:getHeight()+900-letterboxheight-30)
-  lg.sdraw(enviro.stage, -dollyx, -themap.floor+900 -letterboxheight-30)
+  lg.sdraw(enviro.stage, -dollyx, -theMap.floor+900 -letterboxheight-30)
   lg.setColor(0,0,0)
   lg.srectangle("fill", 0, 0, 1440, hof(letterboxheight, 450-3^(dollyx/50)))
 

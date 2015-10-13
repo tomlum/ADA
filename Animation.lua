@@ -448,14 +448,10 @@ function drawmytrail(xx)
 
 end
 
-me.j = 0
 
 function loadStage()
 
   placespeople = false
-
-  you.initwy = 0
-  me.initwy = 0
   finishedLoading = false
   playfade = 0
   me.deathclock = 0
@@ -494,8 +490,8 @@ function loadStage()
   me.oldhealth = me.health
   you.oldhealth = you.health
 
-  themap = themaps[mapNum]
-  floor = themaps[mapNum].floor
+  theMap = theMaps[mapNum]
+  floor = theMaps[mapNum].floor
 
 
   if mapNum == 100 then
@@ -507,21 +503,20 @@ function loadStage()
     enviro.rightwall = 2000
     loader.newImage(enviro,'paralax', "enviro/fightclubparalax.png")
     loader.newImage(enviro,'stage', "enviro/fightclub.png")
-
     loader.newImage(enviro,"sky","enviro/ready.png")
     me.x = putmehere
     you.x = putyouhere
     me.im = idle1
     you.im = idle1
-    me.y = themaps[100].floor - 60
-    you.y = themaps[100].floor - 60
-    floor = themaps[100].floor
+    me.y = theMaps[100].floor - 60
+    you.y = theMaps[100].floor - 60
+    floor = theMaps[100].floor
 
 
 
   elseif mapNum == 1 then
-    me.y = themaps[1].floor - 200
-    you.y = themaps[1].floor - 200
+    me.y = theMaps[1].floor - 200
+    you.y = theMaps[1].floor - 200
     if loadImagesNow then
       enviro.stage=lg.newImage( "enviro/astreet.png")
       enviro.paralax=lg.newImage("enviro/paralax.png")
@@ -533,10 +528,11 @@ function loadStage()
         enviro.rafters=lg.newImage("enviro/rafters.png")
 
       else
-        loader.newImage(enviro,'stage', "enviro/astreet.png")
         loader.start(function()
           finishedLoading = true
           end)
+        loader.newImage(enviro,'stage', "enviro/astreet.png")
+
         loader.newImage(enviro,"paralax","enviro/paralax.png")
         loader.newImage(enviro,"paralax2","enviro/paralax2.png")
         loader.newImage(enviro,"sky","enviro/sky.png")
@@ -844,59 +840,52 @@ function actionshotstuff(xx)
 
       end
     end
-    me.initwy = 0
-    you.initwy = 0
---the x coord for either wall to walljump off of
-wallwalljump = 45
---wallcheckhelper
 
---when you do it from the right side it doesnt turn around, maybe check the lr
+    me.walllr = 0
+    me.wallx = 0
+    you.walllr = 0
+    you.wallx = 0
 
-me.walllr = 0
-me.wallx = 0
-you.walllr = 0
-you.wallx = 0
-
-function drawstreetprestuff()
-  lg.draw(enviro.light, 4448, 1525)
-  drawStreetLights()
-end
-function drawstreetstuff()
-  lg.draw(enviro.stagefloor, 0, 0, 0, 1, 20)
-  lg.draw(enviro.rafters,5608-502, 1536)
-  drawpartition(0, themaps[1].floor, -1)
-  drawpartition(themaps[1].rightwall, themaps[1].floor, 1)
-end
-
-function drawpartition(fx, fy, lr)
-  local i = fy
-  while i > 0 do
-    lg.draw(partitionp2, fx-3*lr, i, 0, -lr*3, 3, 40, 115)
-    if i == fy then
-      lg.draw(partitionp1, fx-3*-lr, i, 0, -lr, 1, 0, 10)
+    function drawstreetprestuff()
+      lg.draw(enviro.light, 4448, 1525)
+      drawStreetLights()
     end
-    i = i - 115*3
+    function drawstreetstuff()
+      lg.draw(enviro.stagefloor, 0, 0, 0, 1, 20)
+      lg.draw(enviro.rafters,5608-502, 1536)
+      drawpartition(0, theMaps[1].floor, -1)
+      drawpartition(theMaps[1].rightwall, theMaps[1].floor, 1)
+    end
+
+    function drawpartition(fx, fy, lr)
+      local i = fy
+      while i > 0 do
+        lg.draw(partitionp2, fx-3*lr, i, 0, -lr*3, 3, 40, 115)
+        if i == fy then
+          lg.draw(partitionp1, fx-3*-lr, i, 0, -lr, 1, 0, 10)
+        end
+        i = i - 115*3
+      end
+    end
+
+
+    drawlibrarystuff = function()
+    if rampcanhit and math.random() > .5 then makenwater(602,930,0,2,1)
+    end
+    lg.draw(enviro.plibrary,0,0)
+    drawpartition(0, theMaps[2].floor, -1)
+    drawpartition(theMaps[2].rightwall, 964, 1)
+    libraryveneer()
+    lg.setColor(27,27,27,255)
+    lg.rectangle("fill", -3000, theMaps[2].floor, 6000+theMaps[2].rightwall, 1000)
+    cclear()
   end
-end
 
-
-drawlibrarystuff = function()
-if rampcanhit and math.random() > .5 then makenwater(602,930,0,2,1)
-end
-lg.draw(enviro.plibrary,0,0)
-drawpartition(0, themaps[2].floor, -1)
-drawpartition(themaps[2].rightwall, 964, 1)
-libraryveneer()
-lg.setColor(27,27,27,255)
-lg.rectangle("fill", -3000, themaps[2].floor, 6000+themaps[2].rightwall, 1000)
-cclear()
-end
-
-drawfloorsstuff = function()
-lg.draw(enviro.pfloors,0,0)
-drawpartition(0, themaps[3].floor, -1)
-drawpartition(themaps[3].rightwall, themaps[3].floor, 1)
-floorsveneer()
+  drawfloorsstuff = function()
+  lg.draw(enviro.pfloors,0,0)
+  drawpartition(0, theMaps[3].floor, -1)
+  drawpartition(theMaps[3].rightwall, theMaps[3].floor, 1)
+  floorsveneer()
 end
 
 enviro.rubble = lg.newImage("enviro/rubble.png")
@@ -1517,7 +1506,7 @@ function updatepapers()
         end
       end
       function libraryveneer()
-        if themap.name == "library" then
+        if theMap.name == "library" then
           if lvfade > 0  and ((me.mid > 1605 and me.mid < 3202 and me.feet > 0) or (you.mid > 1605 and you.mid < 3202 and you.feet > 0))
             then lvfade = lvfade - 5
           elseif lvfade < 255 then lvfade = lvfade + 5
@@ -1530,7 +1519,7 @@ function updatepapers()
 end
 
 function floorsveneer()
-  if themap.name == "floors" then
+  if theMap.name == "floors" then
     if lvfade > 0  and ((me.mid > 416 and me.mid < 2142 and me.feet > 1899) or (you.mid > 416 and you.mid < 2142 and you.feet > 1899))
       then lvfade = lvfade - 5
     elseif lvfade < 255 then lvfade = lvfade + 5
@@ -2008,8 +1997,8 @@ function animate(xx)
     for i, temp in ipairs(sparks) do
       if linePlatCheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6) or
         lineWallCheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6)or temp.x < 0 or temp.y < 0
-        or temp.x > themap.rightwall or
-        temp.y > themap.floor then table.remove(sparks,i)
+        or temp.x > theMap.rightwall or
+        temp.y > theMap.floor then table.remove(sparks,i)
 
       end
 
@@ -2058,8 +2047,8 @@ function animate(xx)
 
 
   function wallRubbleCheck(xx)
-    for i = #themap.walls, 1, -1 do 
-      local wall = themap.walls[i]
+    for i = #theMap.walls, 1, -1 do 
+      local wall = theMap.walls[i]
       if (
         (xx.mid + xx.v > wall.x and xx.mid <= wall.x) or
         (xx.mid + xx.v < wall.x and xx.mid >= wall.x)

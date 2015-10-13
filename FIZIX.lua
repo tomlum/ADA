@@ -11,6 +11,40 @@ slowtime = 60
 speedramp = false
 slow_mo_t = 0
 
+
+function speedRamp()
+
+  if love.keyboard.isDown("x")  then rampspeed = .2 end
+  if 
+    love.keyboard.isDown("z")
+    then slowt = slowt + 1
+    if slowt > slowrate then slowt = 0
+    end
+  else 
+    slowrate = 10
+    slowt = slowrate
+  end
+  
+  if speedramp then 
+    rampspeed = therampspeed
+    if ramptimer >= 1 then 
+      ramptimer = 0
+      rampcanhit = true
+    else 
+      ramptimer = ramptimer + therampspeed
+      rampcanhit = false
+    end
+  else
+    ramptimer = 0
+    rampcanhit = true
+    if rampspeed + rampnormaldelta < 1 then
+      rampspeed = rampspeed + rampnormaldelta
+    else
+      rampspeed = 1
+    end
+  end
+end
+
 function gavinAndDan()
   if slow_mo_t > 0 then
     slow_mo_t = slow_mo_t - 1
@@ -140,9 +174,9 @@ you.plat = noplat
 
 
 function updateboxes()
-  if themaps[mapNum].boxes ~= nil and not pause then
+  if theMaps[mapNum].boxes ~= nil and not pause then
     for i,xx in ipairs(players) do 
-      for j,b in ipairs(themaps[mapNum].boxes) do
+      for j,b in ipairs(theMaps[mapNum].boxes) do
         local xline = {p1 = {x = xx.mid, y = xx.y+xx.height/2},
         p2 = {x = xx.mid+xx.v, y = xx.y+xx.height/2-xx.j}
       }
@@ -439,7 +473,7 @@ end
   ]]
   function movex(xx,yy)
 
-    
+
     if xx.dodge or (xx.block and xx.g)
       then xx.a1, xx.a2, xx.a3, xx.a4, xx.up = false,false,false,false,false
     end
@@ -632,9 +666,19 @@ end
   xx.can_super_jump = false
   xx.float = false
   xx.stop = false
+
+
+
 end
 
 
+
+function applyMovements()
+  for i,xx in ipairs(players) do
+    xx.y = xx.y - xx.j*.9*xx.rampspeed
+    xx.x = xx.x + xx.v*xx.rampspeed
+  end
+end
 
 
 

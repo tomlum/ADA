@@ -17,8 +17,8 @@ function fractalrespawn(xx)
   
   while(firsttime) do
     firsttime = false
-    local rannum = math.random(1, #themap.plats)
-    newplat = themap.plats[rannum]
+    local rannum = math.random(1, #theMap.plats)
+    newplat = theMap.plats[rannum]
     xx.go_here = {}
     xx.go_here.x = math.random(newplat.x1+15, newplat.x2-15)
     xx.go_here.y = newplat.y-100
@@ -127,7 +127,7 @@ fractals = {
 }
 
 function rotatefractal()
-  map = themap
+  map = theMap
   map.rotation = (map.rotation + math.rad(90))%math.rad(360)
 
 
@@ -338,11 +338,11 @@ thefractal = fractals[3]
 
 --IN THIS ONE, NO THING FOR GROUND THING, LIKE, NO GROUND CAMERA ADJUST
 function throwinto()
-  themap = fractals[math.random(1,5)]
-  local map = themap
+  theMap = fractals[math.random(1,5)]
+  local map = theMap
   --[[
-  themap = fractals[math.random(1,3)]
-  local map = themap
+  theMap = fractals[math.random(1,3)]
+  local map = theMap
   while(math.random()<.5) do
     rotatefractal()
   end
@@ -370,12 +370,12 @@ function throwinto()
 
 
 
-  local start = themap.start
+  local start = theMap.start
   if onescreen then
     if start.x < 0 then
 
-      me.x = themap.width+start.x + (mexrig-me.x)
-      you.x = themap.width+start.x + (mexrig-you.x)
+      me.x = theMap.width+start.x + (mexrig-me.x)
+      you.x = theMap.width+start.x + (mexrig-you.x)
       local temp = me.x
       me.x = you.x
       you.x = temp
@@ -387,8 +387,8 @@ function throwinto()
   else
 
     if start.x < 0 then
-      me.x = themap.width+start.x + (mexrig-me.x)
-      you.x = themap.width+start.x + (youxrig-you.x)
+      me.x = theMap.width+start.x + (mexrig-me.x)
+      you.x = theMap.width+start.x + (youxrig-you.x)
       local temp = me.x
       me.x = you.x
       you.x = temp
@@ -407,8 +407,8 @@ function throwinto()
 
   if vertone then
     if start.y < 0 then
-      me.y = themap.height+start.y + (meyrig-me.y)
-      you.y = themap.height+start.y + (meyrig - you.y)
+      me.y = theMap.height+start.y + (meyrig-me.y)
+      you.y = theMap.height+start.y + (meyrig - you.y)
       local temp = me.y
       me.y = you.y
       you.y = temp
@@ -419,8 +419,8 @@ function throwinto()
     end
   else
     if start.y < 0 then
-      me.y = themap.height+start.y + (meyrig-me.y)
-      you.y = themap.height+start.y + (youyrig - you.y)
+      me.y = theMap.height+start.y + (meyrig-me.y)
+      you.y = theMap.height+start.y + (youyrig - you.y)
       local temp = me.y
       me.y = you.y
       you.y = temp

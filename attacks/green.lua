@@ -581,7 +581,7 @@ function boltupdate(xx)
 
     end
     ]]--
-    for j,k in ipairs(themap.walls) do 
+    for j,k in ipairs(theMap.walls) do 
       if k.barrier then
         if bolts_fly_relative then
           if ((v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) > k.x+amountstuckinwall and v.x > k.x) 
@@ -603,7 +603,7 @@ function boltupdate(xx)
 
 
 
-  if v.y <= themap.floor+amountstuckinfloor and not v.stuck then
+  if v.y <= theMap.floor+amountstuckinfloor and not v.stuck then
     table.insert(xx.bolttrail, {angle = v.angle, speed = v.speed, x = v.x, y = v.y, t = 0})
     if bolts_fly_relative then
       v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx)

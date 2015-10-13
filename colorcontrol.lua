@@ -98,7 +98,6 @@ else
   you.rightc = thecolors[0]
   me.leftc = thecolors[0]
   you.leftc = thecolors[0]
-
 end
 
 

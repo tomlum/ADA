@@ -20,26 +20,25 @@ function initPlayer(xx)
 
 	--Purple Initializers
 	xx.spikes = {}
+
 end
 
 function initFightClub()
-
-
-	if menu == "play" then
-		loadImagesNow = true
-		placespeople = true 
-	end
-
 	if fightclub then 
+		if menu == "play" then
+			loadImagesNow = true
+			placespeople = true 
+		end
+
 		themode = "fractal"
 		menu = "play"
 		if not loadImagesNow then
 			mapNum = 100
 		end
-		themap = themaps[mapNum]
+		theMap = theMaps[mapNum]
 		placespeople = true
-		while(not finishedLoading) do
 			loadStage()
+		while(not finishedLoading) do
 			loader.update() 
 		end
 	end

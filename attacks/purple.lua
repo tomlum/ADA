@@ -105,16 +105,16 @@ function spikegrow(cur, n, xx)
     vv[4] = vv[4]-(floRan(10, 30))
     local growmount = vv[5]+(math.random()*(spikesize))*cur.lr
 
-    if growmount > themap.plats[xx.plat.n].x1 and 
-      growmount < themap.plats[xx.plat.n].x2 then
+    if growmount > theMap.plats[xx.plat.n].x1 and 
+      growmount < theMap.plats[xx.plat.n].x2 then
       vv[5] = growmount
     end
   elseif n == 2 then
     vv[3] = vv[3]+(floRan(2, 5))*cur.lr
     vv[4] = vv[4]-(floRan(10, 20))
     local growmount = vv[5]+(math.random(4, 10)+math.random()*(cur.t/5))*cur.lr
-    if growmount > themap.plats[xx.plat.n].x1 and 
-      growmount < themap.plats[xx.plat.n].x2 then
+    if growmount > theMap.plats[xx.plat.n].x1 and 
+      growmount < theMap.plats[xx.plat.n].x2 then
       vv[5] = growmount
     end
   end
@@ -145,15 +145,15 @@ function dopurpakspikes(xx)
       lverts2[5]= xx.mid+(-xx.lr*20*(sn))
       lverts2[6]= xx.feet
 
-      if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
-        lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
+      if lverts[1] > theMap.plats[xx.plat.n].x1+spikesize and 
+        lverts[1] < theMap.plats[xx.plat.n].x2-spikesize then
         table.insert(xx.spikes,
           {verts = lverts,
           t = 0, lr=-xx.lr}) 
       end
 
-      if lverts2[1] > themap.plats[xx.plat.n].x1+spikesize and 
-        lverts2[1] < themap.plats[xx.plat.n].x2-spikesize then
+      if lverts2[1] > theMap.plats[xx.plat.n].x1+spikesize and 
+        lverts2[1] < theMap.plats[xx.plat.n].x2-spikesize then
         table.insert(xx.spikes,
           {verts = lverts2,
           t = 0, lr=xx.lr})
@@ -500,15 +500,15 @@ function pandp(xx)
               lverts2[5]= xx.mid+(xx.lr*25*(sn))
               lverts2[6]= xx.feet
 
-              if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
-                lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
+              if lverts[1] > theMap.plats[xx.plat.n].x1+spikesize and 
+                lverts[1] < theMap.plats[xx.plat.n].x2-spikesize then
                 table.insert(xx.spikes, 
                   {verts = lverts,
                   t = 0, lr=xx.lr})
                 repplay(xx.purpsound)
               end
-              if lverts2[1] > themap.plats[xx.plat.n].x1+spikesize and 
-                lverts2[1] < themap.plats[xx.plat.n].x2-spikesize then
+              if lverts2[1] > theMap.plats[xx.plat.n].x1+spikesize and 
+                lverts2[1] < theMap.plats[xx.plat.n].x2-spikesize then
                 table.insert(xx.spikes, 
                   {verts = lverts2,
                   t = 0, lr=xx.lr})
@@ -534,8 +534,8 @@ function pandp(xx)
               --  {verts = lverts2,
               --    t = 0, lr=-1})
 
-if lverts[1] > themap.plats[xx.plat.n].x1+spikesize and 
-  lverts[1] < themap.plats[xx.plat.n].x2-spikesize then
+if lverts[1] > theMap.plats[xx.plat.n].x1+spikesize and 
+  lverts[1] < theMap.plats[xx.plat.n].x2-spikesize then
 
   repplay(xx.purpsound)
   if math.random() > .5 then

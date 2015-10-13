@@ -1,7 +1,7 @@
 -----Naming Conventions-----
 --me = player 1
 --you = player 2
---xx = parameter for either player
+--xx = generic parameter for either player
 --v = horizontal velocity
 --j = vertical velocity
 --can't kick combo out of purple kick
@@ -20,7 +20,7 @@
 require "initializers"
 
 --Debug/Test Utilities
-fightclub = false
+fightclub = true
 menu = "color"
 notilebouncing = true
 melcolor = 1
@@ -48,13 +48,9 @@ mute = false
 love.audio.setVolume(volume)
 
 initLove()
-
-
 initDependencies()
 
-if loadImagesNow then
-  themap = themaps[mapNum]
-end
+theMap = theMaps[mapNum]
 
 function love.load()
   initPlayer(me)
@@ -68,31 +64,14 @@ end
 function love.update()
 
   refreshMenus()
+
   if menu == "story" then
     updatechapters()
   end
   --colorshift(thecolors[2].c,8)
   --colorshift(me.outline,6)
-  if love.keyboard.isDown("x")  then rampspeed = .2 end
-  
-  if speedramp then 
-    rampspeed = therampspeed
-    if ramptimer >= 1 then 
-      ramptimer = 0
-      rampcanhit = true
-    else 
-      ramptimer = ramptimer + therampspeed
-      rampcanhit = false
-    end
-  else
-    ramptimer = 0
-    rampcanhit = true
-    if rampspeed + rampnormaldelta < 1 then
-      rampspeed = rampspeed + rampnormaldelta
-    else
-      rampspeed = 1
-    end
-  end
+
+  speedRamp()
 
   if not finishedLoading then loader.update() end
 
@@ -100,70 +79,27 @@ function love.update()
     loadStage()
   end
 
-  updateScreenStats()
-
-  randomizePitch()
-
-
-  if 
-    love.keyboard.isDown("z")
-    then slowt = slowt + 1
-    if slowt > slowrate then slowt = 0
-    end
-  else 
-    slowrate = 10
-    slowt = slowrate
-  end
-
-
-
+  updateScreenInfo()
   updateControllers()
 
   if menu == "preplay" or menu == "play" then 
     menu = "play"
+
+    updateSounds()
     gavinAndDan()
-
-    if musfadein > 0 then 
-      musfade = musfade + musfadein
-      if musfade + musfadein >= 255 then
-        musfadein = 0
-        musfade = 255
-      end
-    elseif musfadein < 0 then
-      musfade = musfade + musfadein
-      if musfade +musfadein <= 0 then
-        musfadein = 0
-        musfade = 0
-      end
-    end
-
-    if thesong~= nil then
-      if musfade == 0 then
-        thesong:pause()
-      else
-        thesong:play()
-        thesong:setPitch(musfade/255)
-      end
-    end
 
     if slowt == slowrate and not (pause or hitpause) and not me.actionshot 
       then
-
-
 
       movex(me,you)
       movex(you,me)
       hboxwall()
       platformcheckx()
       monplatupdate()
+      applyMovements()
 
 
-      you.y = you.y - you.j*.9*you.rampspeed
-      me.y = me.y - me.j*.9*me.rampspeed
-      you.x = you.x + you.v*you.rampspeed
-      me.x = me.x + me.v*me.rampspeed
-      you.next = you.feet - you.j*.9*you.rampspeed
-      me.next = me.feet - me.j*.9*me.rampspeed
+
 
 
       me.oldj = me.j
@@ -301,9 +237,6 @@ function love.update()
 
   function love.draw()
 
-    me.xoffset = me.xoffset * me.lr
-    you.xoffset = you.xoffset * you.lr
-
     if menu ~= "play" and menu ~= "story" then
       drawmenus()
 
@@ -382,7 +315,6 @@ function love.update()
 
 
     if fightclub then
-
       lg.setColor(20,20,20)
       lg.print(tostring(me.combo),10,20)
       lg.print(tostring(me.color.n)..
@@ -391,9 +323,6 @@ function love.update()
         "       type: "..tostring(me.attack_num),10,30)
       lg.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
       lg.print("j "..tostring(you.j), 10, 70)
-      if #players == 3 then
-        lg.print(tostring(players[3].mode), 10, 90)
-      end
     end
 
 
@@ -474,7 +403,7 @@ function love.update()
     --
 
     --[[
-    for i,plat in ipairs(themap.walls) do
+    for i,plat in ipairs(theMap.walls) do
       lg.print(tostring(plat.y).."||"..tostring(plat.x1).."||"..tostring(plat.x2).."||"..tostring(plat.x).."||"..tostring(plat.y1).."||"..tostring(plat.y2), 300,i*20)
     end
     ]]--

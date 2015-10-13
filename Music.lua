@@ -37,6 +37,34 @@ SFXV = 1
 
 ss = {}
 
+function updateSounds()
+
+  randomizePitch()
+
+  if musfadein > 0 then 
+    musfade = musfade + musfadein
+    if musfade + musfadein >= 255 then
+      musfadein = 0
+      musfade = 255
+    end
+  elseif musfadein < 0 then
+    musfade = musfade + musfadein
+    if musfade +musfadein <= 0 then
+      musfadein = 0
+      musfade = 0
+    end
+  end
+
+  if thesong~= nil then
+    if musfade == 0 then
+      thesong:pause()
+    else
+      thesong:play()
+      thesong:setPitch(musfade/255)
+    end
+  end
+end
+
 function repplay(x)
   if not mute then
     --[[
@@ -57,268 +85,268 @@ function repplay(x)
       ]]--
       if x:isStopped() then
         x:play()
-      else x:rewind()
-        x:play()
+        else x:rewind()
+          x:play()
+        end
+      end
+
+
+
+    end
+
+
+    function randomizePitch()
+      for i,xx in ipairs(players) do
+        xx.blues:setPitch(.7 + (math.random() * .3) )
+        
+        xx.airpurp2:setPitch(.5 + (math.random() * .3) )
+        
+        xx.airpurp2:setPitch(.4 + (math.random() * .3) )
+        
+        xx.greens:setPitch(1.2 + (math.random() * .3) )
+        
+        
+        xx.purpsound:setPitch(.8 + (math.random() * .3) )
+
+        xx.purp2:setPitch(.8 + (math.random() * .3) )
+        xx.green:setPitch(1.2 + (math.random() * .3) )
+        
+        xx.land:setPitch(.8 + (math.random() * .3) )
+        xx.flinch1:setPitch(.3 + (math.random() * .3) )
+        
+        xx.flinch2:setPitch(.9 + (math.random() * .3) )
+        
+        xx.slidesound:setPitch(.8 + (math.random() * .3) )
+        
+        xx.runsound:setPitch(1.3 + (math.random() * .3) )
+        
+        xx.jumpd:setPitch(1.65 + (math.random() * .3) )
+
+        wallbreaks:setPitch(1.3 + (math.random() * .3) )
+        greenwallbreaks:setPitch(2 + (math.random() * .3) )
+        glassbreaks:setPitch(1.3 + (math.random() * .3) )
+        me.wallhit:setPitch(.5 + (math.random() * .3) )
+
+        xx.climbsound:setPitch(1.55 + (math.random() * .3) )
+        
+        blocksound:setPitch(.8+ (math.random() * .3) )
+        xx.whiff:setPitch(1.6 + (math.random() * .3) )
+        xx.orangesou3:setPitch(.6 + (math.random() * .4) )
+        
+        xx.orangesou:setPitch(.5 + (math.random() * .4) )
+        
+        xx.orangesou2:setPitch(.5 + (math.random() * .4) )
+        
+        xx.orangesou4:setPitch(.6 + (math.random() * .4) )
+        
+        xx.redsound:setPitch(.8 + (math.random() * .4) )
+        
+        xx.redsound2:setPitch(.8 + (math.random() * .4) )
+        
+        xx.redsound3:setPitch(.8 + (math.random() * .4) )
+        xx.flapsou:setPitch((.4 + (math.random() * .4) ))
+        xx.redshattersou:setPitch(.8 + (math.random() * .4) )
+        xx.redpushsou:setPitch(.9 + (math.random() * .4) )
       end
     end
 
-
-
-  end
-
-
-  randomizePitch = function ()
     for i,xx in ipairs(players) do
-    xx.blues:setPitch(.7 + (math.random() * .3) )
- 
-    xx.airpurp2:setPitch(.5 + (math.random() * .3) )
-    
-    xx.airpurp2:setPitch(.4 + (math.random() * .3) )
-    
-    xx.greens:setPitch(1.2 + (math.random() * .3) )
-  
-    
-    xx.purpsound:setPitch(.8 + (math.random() * .3) )
-
-    xx.purp2:setPitch(.8 + (math.random() * .3) )
-    xx.green:setPitch(1.2 + (math.random() * .3) )
- 
-    xx.land:setPitch(.8 + (math.random() * .3) )
-    xx.flinch1:setPitch(.3 + (math.random() * .3) )
-  
-    xx.flinch2:setPitch(.9 + (math.random() * .3) )
-  
-    xx.slidesound:setPitch(.8 + (math.random() * .3) )
-   
-    xx.runsound:setPitch(1.3 + (math.random() * .3) )
-  
-    xx.jumpd:setPitch(1.65 + (math.random() * .3) )
-
-    wallbreaks:setPitch(1.3 + (math.random() * .3) )
-    greenwallbreaks:setPitch(2 + (math.random() * .3) )
-    glassbreaks:setPitch(1.3 + (math.random() * .3) )
-    me.wallhit:setPitch(.5 + (math.random() * .3) )
-
-    xx.climbsound:setPitch(1.55 + (math.random() * .3) )
-    
-    blocksound:setPitch(.8+ (math.random() * .3) )
-    xx.whiff:setPitch(1.6 + (math.random() * .3) )
-    xx.orangesou3:setPitch(.6 + (math.random() * .4) )
-    
-    xx.orangesou:setPitch(.5 + (math.random() * .4) )
-   
-    xx.orangesou2:setPitch(.5 + (math.random() * .4) )
-    
-    xx.orangesou4:setPitch(.6 + (math.random() * .4) )
-    
-    xx.redsound:setPitch(.8 + (math.random() * .4) )
-  
-    xx.redsound2:setPitch(.8 + (math.random() * .4) )
-   
-    xx.redsound3:setPitch(.8 + (math.random() * .4) )
-    xx.flapsou:setPitch((.4 + (math.random() * .4) ))
-    xx.redshattersou:setPitch(.8 + (math.random() * .4) )
-    xx.redpushsou:setPitch(.9 + (math.random() * .4) )
-end
-  end
-
-for i,xx in ipairs(players) do
-  
-  
-  xx.redpushsou = love.audio.newSource("sounds/redpush.wav", "stream")
-xx.redpushsou:setVolume(.1)
-  
-  xx.redshattersou = love.audio.newSource("sounds/redshatter.wav", "stream")
-xx.redshattersou:setVolume(.7)
-  
-xx.flapsou = love.audio.newSource("sounds/flap.wav", "stream")
-xx.flapsou:setVolume(.7)
-  
-  xx.redblocksou = love.audio.newSource("sounds/redblock.wav", "stream")
-xx.redblocksou:setVolume(.8)
-  
-xx.redsound = love.audio.newSource("sounds/red.wav", "stream")
-xx.redsound:setVolume(.4)
-xx.redsound2 = love.audio.newSource("sounds/red2.wav", "stream")
-xx.redsound2:setVolume(.4)
-xx.redsound3 = love.audio.newSource("sounds/red3.wav", "stream")
-xx.redsound3:setVolume(.4)
+      
+      
+      xx.redpushsou = love.audio.newSource("sounds/redpush.wav", "stream")
+      xx.redpushsou:setVolume(.1)
+      
+      xx.redshattersou = love.audio.newSource("sounds/redshatter.wav", "stream")
+      xx.redshattersou:setVolume(.7)
+      
+      xx.flapsou = love.audio.newSource("sounds/flap.wav", "stream")
+      xx.flapsou:setVolume(.7)
+      
+      xx.redblocksou = love.audio.newSource("sounds/redblock.wav", "stream")
+      xx.redblocksou:setVolume(.8)
+      
+      xx.redsound = love.audio.newSource("sounds/red.wav", "stream")
+      xx.redsound:setVolume(.4)
+      xx.redsound2 = love.audio.newSource("sounds/red2.wav", "stream")
+      xx.redsound2:setVolume(.4)
+      xx.redsound3 = love.audio.newSource("sounds/red3.wav", "stream")
+      xx.redsound3:setVolume(.4)
 
 
 
-  xx.blocksound = love.audio.newSource("sounds/blocksound.wav", "stream")
-  xx.blocksound:setVolume(.1)
-  xx.blocksound:setPitch(1.2)
-  
-    xx.orangesou = love.audio.newSource("sounds/orange2.wav", "stream")
-  xx.orangesou:setVolume(.16)
-  
-   xx.orangesou3 = love.audio.newSource("sounds/orange2.wav", "stream")
-  xx.orangesou3:setVolume(.16)
+      xx.blocksound = love.audio.newSource("sounds/blocksound.wav", "stream")
+      xx.blocksound:setVolume(.1)
+      xx.blocksound:setPitch(1.2)
+      
+      xx.orangesou = love.audio.newSource("sounds/orange2.wav", "stream")
+      xx.orangesou:setVolume(.16)
+      
+      xx.orangesou3 = love.audio.newSource("sounds/orange2.wav", "stream")
+      xx.orangesou3:setVolume(.16)
 
- 
-  xx.orangesou4 = love.audio.newSource("sounds/orange4.wav", "stream")
-  xx.orangesou4:setVolume(1)
-  
+      
+      xx.orangesou4 = love.audio.newSource("sounds/orange4.wav", "stream")
+      xx.orangesou4:setVolume(1)
+      
 
-  
-  xx.orangesou2 = love.audio.newSource("sounds/orange3.wav", "stream")
-  xx.orangesou2:setVolume(.8)
+      
+      xx.orangesou2 = love.audio.newSource("sounds/orange3.wav", "stream")
+      xx.orangesou2:setVolume(.8)
 
-  miscsounds = function()
+      miscsounds = function()
 
-    if me.im == slide and msready and not me.dodge then
-      repplay(me.slidesound)
-      msready = false
-    elseif me.im ~= slide then msready = true
-    end
+      if me.im == slide and msready and not me.dodge then
+        repplay(me.slidesound)
+        msready = false
+      elseif me.im ~= slide then msready = true
+      end
 
-    if you.im == slide and not you.dodge and ysready then
-      repplay(you.slidesound)
-      ysready = false
-    elseif you.im ~= slide then ysready = true
+      if you.im == slide and not you.dodge and ysready then
+        repplay(you.slidesound)
+        ysready = false
+      elseif you.im ~= slide then ysready = true
+      end
+
+
     end
 
 
-  end
+    grabsou = love.audio.newSource("sounds/grab.wav", "stream")
+    grabsou:setVolume(SFXV - .5)
+    grabreleasesou = love.audio.newSource("sounds/grabrelease.wav", "stream")
+    grabreleasesou:setVolume(SFXV - .5)
+    throwsou = love.audio.newSource("sounds/throw.wav", "stream")
+    throwsou:setVolume(SFXV - .5)
+
+    readysound = love.audio.newSource("sounds/ready.wav", "stream")
+    readysound:setVolume(SFXV - .7)
 
 
- grabsou = love.audio.newSource("sounds/grab.wav", "stream")
-  grabsou:setVolume(SFXV - .5)
-   grabreleasesou = love.audio.newSource("sounds/grabrelease.wav", "stream")
-  grabreleasesou:setVolume(SFXV - .5)
-   throwsou = love.audio.newSource("sounds/throw.wav", "stream")
-  throwsou:setVolume(SFXV - .5)
+    collides = love.audio.newSource("sounds/collide.wav", "stream")
+    collides:setVolume(SFXV - .82)
 
-  readysound = love.audio.newSource("sounds/ready.wav", "stream")
-  readysound:setVolume(SFXV - .7)
-
-
-  collides = love.audio.newSource("sounds/collide.wav", "stream")
-  collides:setVolume(SFXV - .82)
-
-  collidesar = {}
-  collidesar[1] = love.audio.newSource("sounds/collide.wav", "stream")
-  collidesar[1]:setVolume(SFXV - .82)
-  collidesar[2] = love.audio.newSource("sounds/collide.wav", "stream")
-  collidesar[2]:setVolume(SFXV - .82)
-  collidesar[3] = love.audio.newSource("sounds/collide.wav", "stream")
-  collidesar[3]:setVolume(SFXV - .82)
-  collidesar[4] = love.audio.newSource("sounds/collide.wav", "stream")
-  collidesar[4]:setVolume(SFXV - .82)
-  collidesar[5] = love.audio.newSource("sounds/collide.wav", "stream")
-  collidesar[5]:setVolume(SFXV - .82)
-  collidesar[6] = love.audio.newSource("sounds/collide.wav", "stream")
-  collidesar[6]:setVolume(SFXV - .82)
-  collidesar[7] = love.audio.newSource("sounds/collide.wav", "stream")
-  collidesar[7]:setVolume(SFXV - .82)
-  collidesar[8] = love.audio.newSource("sounds/collide.wav", "stream")
-  collidesar[8]:setVolume(SFXV - .82)
+    collidesar = {}
+    collidesar[1] = love.audio.newSource("sounds/collide.wav", "stream")
+    collidesar[1]:setVolume(SFXV - .82)
+    collidesar[2] = love.audio.newSource("sounds/collide.wav", "stream")
+    collidesar[2]:setVolume(SFXV - .82)
+    collidesar[3] = love.audio.newSource("sounds/collide.wav", "stream")
+    collidesar[3]:setVolume(SFXV - .82)
+    collidesar[4] = love.audio.newSource("sounds/collide.wav", "stream")
+    collidesar[4]:setVolume(SFXV - .82)
+    collidesar[5] = love.audio.newSource("sounds/collide.wav", "stream")
+    collidesar[5]:setVolume(SFXV - .82)
+    collidesar[6] = love.audio.newSource("sounds/collide.wav", "stream")
+    collidesar[6]:setVolume(SFXV - .82)
+    collidesar[7] = love.audio.newSource("sounds/collide.wav", "stream")
+    collidesar[7]:setVolume(SFXV - .82)
+    collidesar[8] = love.audio.newSource("sounds/collide.wav", "stream")
+    collidesar[8]:setVolume(SFXV - .82)
 
 
-  colorgsound = love.audio.newSource("sounds/gsound.mp3", "stream")
+    colorgsound = love.audio.newSource("sounds/gsound.mp3", "stream")
 
-  colorpsound = love.audio.newSource("sounds/psound.mp3", "stream")
-
-
-  adj = .14
+    colorpsound = love.audio.newSource("sounds/psound.mp3", "stream")
 
 
-  blocksound = love.audio.newSource("sounds/block.wav", "stream")
-  blocksound:setVolume(SFXV - .6)
+    adj = .14
+
+
+    blocksound = love.audio.newSource("sounds/block.wav", "stream")
+    blocksound:setVolume(SFXV - .6)
 
 
 
-  blueflap = love.audio.newSource("sounds/flap.wav", "stream")
-  blueflap:setVolume(SFXV)
-  blueflap:setPitch(1.5)
+    blueflap = love.audio.newSource("sounds/flap.wav", "stream")
+    blueflap:setVolume(SFXV)
+    blueflap:setPitch(1.5)
 
 
-  wavesound = love.audio.newSource("sounds/wave.wav", "stream")
-  wavesound:setVolume(SFXV - .92)
-  wavesound:setPitch(.6)
+    wavesound = love.audio.newSource("sounds/wave.wav", "stream")
+    wavesound:setVolume(SFXV - .92)
+    wavesound:setPitch(.6)
 
-  modesound = love.audio.newSource("sounds/mode.wav", "stream")
-  modesound:setVolume(SFXV-.82)
-
-
- 
-  xx.jumpd = love.audio.newSource("sounds/dodgeslide.wav", "stream")
-  xx.jumpd:setVolume(SFXV - .7)
+    modesound = love.audio.newSource("sounds/mode.wav", "stream")
+    modesound:setVolume(SFXV-.82)
 
 
-  xx.backdodge = love.audio.newSource("sounds/backdodge.wav", "stream")
-  xx.slidedodge = love.audio.newSource("sounds/dodgeslide.wav", "stream")
-  xx.backdodge:setVolume(SFXV - .6)
-  xx.slidedodge:setVolume(SFXV - .6)
-  xx.backdodge:setPitch(1.2)
+    
+    xx.jumpd = love.audio.newSource("sounds/dodgeslide.wav", "stream")
+    xx.jumpd:setVolume(SFXV - .7)
 
 
-  gosound = love.audio.newSource("sounds/go.mp3", "stream")
-  gosound:setVolume(SFXV - .6)
+    xx.backdodge = love.audio.newSource("sounds/backdodge.wav", "stream")
+    xx.slidedodge = love.audio.newSource("sounds/dodgeslide.wav", "stream")
+    xx.backdodge:setVolume(SFXV - .6)
+    xx.slidedodge:setVolume(SFXV - .6)
+    xx.backdodge:setPitch(1.2)
 
 
-  startb = love.audio.newSource("sounds/startb.wav", "stream")
-  startb:setVolume(SFXV - .93)
-  startb:setPitch(.8)
-  startb2 = love.audio.newSource("sounds/startb.wav", "stream")
-  startb2:setVolume(SFXV - .93)
-  startb2:setPitch(.8)
+    gosound = love.audio.newSource("sounds/go.mp3", "stream")
+    gosound:setVolume(SFXV - .6)
 
-  xx.selected = love.audio.newSource("sounds/selected.wav", "stream")
-  xx.selected:setVolume(SFXV - .85)
-  xx.selected:setPitch(1)
-  mov = love.audio.newSource("sounds/moving.wav", "stream")
-  mov:setVolume(SFXV - .7)
 
-  if i == 1 then
-  xx.mov = love.audio.newSource("sounds/moving.wav", "stream")
-  xx.mov:setVolume(SFXV - .7)
-  xx.mov:setPitch(1.1)
-end
+    startb = love.audio.newSource("sounds/startb.wav", "stream")
+    startb:setVolume(SFXV - .93)
+    startb:setPitch(.8)
+    startb2 = love.audio.newSource("sounds/startb.wav", "stream")
+    startb2:setVolume(SFXV - .93)
+    startb2:setPitch(.8)
 
-if i == 2 then
-  xx.mov = love.audio.newSource("sounds/moving.wav", "stream")
-  xx.mov:setVolume(SFXV - .7)
-  xx.mov:setPitch(.9)
-  end
-  
+    xx.selected = love.audio.newSource("sounds/selected.wav", "stream")
+    xx.selected:setVolume(SFXV - .85)
+    xx.selected:setPitch(1)
+    mov = love.audio.newSource("sounds/moving.wav", "stream")
+    mov:setVolume(SFXV - .7)
 
-  xx.slidesound = love.audio.newSource("sounds/slide.wav", "static")
-  xx.slidesound:setVolume(SFXV-.82)
-  
-  xx.runsound = love.audio.newSource("sounds/run.wav", "static")
-  xx.runsound:setVolume(SFXV-.8)
+    if i == 1 then
+      xx.mov = love.audio.newSource("sounds/moving.wav", "stream")
+      xx.mov:setVolume(SFXV - .7)
+      xx.mov:setPitch(1.1)
+    end
 
-  replaced = love.audio.newSource("sounds/replaced.wav", "static")
-  replaced:setVolume(SFXV-.50)
-  replaced:setPitch(.8)
-  replaced2 = love.audio.newSource("sounds/replaced.wav", "static")
-  replaced2:setVolume(SFXV-.50)
-  replaced2:setPitch(.9)
+    if i == 2 then
+      xx.mov = love.audio.newSource("sounds/moving.wav", "stream")
+      xx.mov:setVolume(SFXV - .7)
+      xx.mov:setPitch(.9)
+    end
+    
 
-  deathsound = love.audio.newSource("sounds/death.wav", "static")
-  deathsound:setVolume(SFXV-.99)
-  deathsound2 = love.audio.newSource("sounds/death2.wav", "static")
-  deathsound2:setVolume(SFXV-.9)
+    xx.slidesound = love.audio.newSource("sounds/slide.wav", "static")
+    xx.slidesound:setVolume(SFXV-.82)
+    
+    xx.runsound = love.audio.newSource("sounds/run.wav", "static")
+    xx.runsound:setVolume(SFXV-.8)
+
+    replaced = love.audio.newSource("sounds/replaced.wav", "static")
+    replaced:setVolume(SFXV-.50)
+    replaced:setPitch(.8)
+    replaced2 = love.audio.newSource("sounds/replaced.wav", "static")
+    replaced2:setVolume(SFXV-.50)
+    replaced2:setPitch(.9)
+
+    deathsound = love.audio.newSource("sounds/death.wav", "static")
+    deathsound:setVolume(SFXV-.99)
+    deathsound2 = love.audio.newSource("sounds/death2.wav", "static")
+    deathsound2:setVolume(SFXV-.9)
 
 
 
 
-  wallbreaks = love.audio.newSource("sounds/Purple.wav", "static")
-  greenwallbreaks = love.audio.newSource("sounds/Purple.wav", "static")
-  wallbreaks:setPitch(1.4)
-  wallbreaks:setVolume(SFXV-.15-adj)
-  greenwallbreaks:setPitch(1.8)
-  greenwallbreaks:setVolume(SFXV-.3-adj)
+    wallbreaks = love.audio.newSource("sounds/Purple.wav", "static")
+    greenwallbreaks = love.audio.newSource("sounds/Purple.wav", "static")
+    wallbreaks:setPitch(1.4)
+    wallbreaks:setVolume(SFXV-.15-adj)
+    greenwallbreaks:setPitch(1.8)
+    greenwallbreaks:setVolume(SFXV-.3-adj)
 
-  glassbreaks = love.audio.newSource("sounds/glass.wav", "static")
-  glassbreaks:setPitch(1.8)
-  glassbreaks:setVolume(SFXV-.7-adj)
+    glassbreaks = love.audio.newSource("sounds/glass.wav", "static")
+    glassbreaks:setPitch(1.8)
+    glassbreaks:setVolume(SFXV-.7-adj)
 
-  xx.greenbreak = love.audio.newSource("sounds/glass.wav", "static")
-  xx.greenbreak:setPitch(1.1)
-  xx.greenbreak:setVolume(SFXV-.37-adj)
+    xx.greenbreak = love.audio.newSource("sounds/glass.wav", "static")
+    xx.greenbreak:setPitch(1.1)
+    xx.greenbreak:setVolume(SFXV-.37-adj)
 
 
 
@@ -326,28 +354,28 @@ if i == 2 then
 
 
 
-  xx.flinch1 = love.audio.newSource("sounds/flinch3.wav", "static")
-  xx.flinch1:setVolume(SFXV-.7-adj)
+    xx.flinch1 = love.audio.newSource("sounds/flinch3.wav", "static")
+    xx.flinch1:setVolume(SFXV-.7-adj)
 
 
-  xx.flinch2 = love.audio.newSource("sounds/flinch2.wav", "static")
-  xx.flinch2:setVolume(SFXV-.8-adj)
+    xx.flinch2 = love.audio.newSource("sounds/flinch2.wav", "static")
+    xx.flinch2:setVolume(SFXV-.8-adj)
 
 
-  xx.minch = love.audio.newSource("sounds/greenhit.wav", "static")
-  xx.minch:setVolume(SFXV-.7-adj)
+    xx.minch = love.audio.newSource("sounds/greenhit.wav", "static")
+    xx.minch:setVolume(SFXV-.7-adj)
 
 
 
 
-  xx.green = love.audio.newSource("sounds/green.mp3", "static")
-  xx.green:setVolume(SFXV-.8-adj)
+    xx.green = love.audio.newSource("sounds/green.mp3", "static")
+    xx.green:setVolume(SFXV-.8-adj)
 
-  xx.whiff = love.audio.newSource("sounds/green.mp3", "static")
-  xx.whiff:setVolume(SFXV-.7-adj)
+    xx.whiff = love.audio.newSource("sounds/green.mp3", "static")
+    xx.whiff:setVolume(SFXV-.7-adj)
 
-  xx.wallhit = love.audio.newSource("sounds/Purple.wav", "static")
-  xx.wallhit:setVolume(SFXV-.47-adj)
+    xx.wallhit = love.audio.newSource("sounds/Purple.wav", "static")
+    xx.wallhit:setVolume(SFXV-.47-adj)
 
   --distance between two points
   function p_distance(p1,p2)
@@ -380,7 +408,7 @@ if i == 2 then
   slowmo:setVolume(SFXV-.3-adj)
 
 
-xx.airpurp2 = love.audio.newSource("sounds/blue.mp3", "static")
+  xx.airpurp2 = love.audio.newSource("sounds/blue.mp3", "static")
   xx.airpurp2:setVolume(SFXV-.6-adj)
 
 
@@ -393,4 +421,4 @@ xx.airpurp2 = love.audio.newSource("sounds/blue.mp3", "static")
 
   xx.greens = love.audio.newSource("sounds/blue.mp3", "static")
   xx.greens:setVolume(SFXV-.6-adj)
- end
+end

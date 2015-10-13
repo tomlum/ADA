@@ -40,7 +40,6 @@ me.v = 0
 me.push = 0
 --vertical velocity (j.ump)
 me.j = 0
-me.next = me.feet - me.j
 me.jt = 0
 me.ht = 0
 me.firstjump = true
@@ -97,7 +96,6 @@ you.v = 0
 you.push = 0
 --vertical velocity (j.ump) and jump time (jt) and hang time (ht)
 you.j = 0
-you.next = you.feet - you.j
 you.jt = 0
 you.ht = 0
 you.firstjump = true
@@ -186,7 +184,6 @@ function loadmeandyou2()
   me.v = 0
   --vertical velocity (j.ump)
   me.j = 0
-  me.next = me.feet - me.j
   me.jt = 0
   me.ht = 0
   me.firstjump = true
@@ -241,7 +238,6 @@ function loadmeandyou2()
   you.v = 0
   --vertical velocity (j.ump) and jump time (jt) and hang time (ht)
   you.j = 0
-  you.next = you.feet - you.j
   you.jt = 0
   you.ht = 0
   you.firstjump = true
@@ -287,12 +283,12 @@ function loadmeandyou2()
   for i,v in ipairs(mymines) do table.remove(mymines,i) end
   for i,v in ipairs(yourmines) do table.remove(yourmines,i) end
 
-  if themap.name == "street" then 
+  if theMap.name == "street" then 
     floor = 1900 - 3
     me.x = 1000
     you.x = 6000
     floor = 1900 - 3
-  elseif themap.name == "library" then 
+  elseif theMap.name == "library" then 
     me.x = 700
     you.x = 2000
     me.y = 300
@@ -398,7 +394,6 @@ function loadmeandyou()
   me.v = 0
   --vertical velocity (j.ump)
   me.j = 0
-  me.next = me.feet - me.j
   me.jt = 0
   me.ht = 0
   me.firstjump = true
@@ -455,7 +450,6 @@ function loadmeandyou()
   you.v = 0
   --vertical velocity (j.ump) and jump time (jt) and hang time (ht)
   you.j = 0
-  you.next = you.feet - you.j
   you.jt = 0
   you.ht = 0
   you.firstjump = true
@@ -494,9 +488,6 @@ function loadmeandyou()
 
 end
 
-
-me.xoffset = 0
-you.xoffset = 0
 
 
 
