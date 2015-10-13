@@ -22,25 +22,60 @@ function initPlayer(xx)
 	xx.spikes = {}
 end
 
-function initWorld()
+function initFightClub()
+
+
+	if menu == "play" then
+		loadImagesNow = true
+		placespeople = true 
+	end
+
+	if fightclub then 
+		themode = "fractal"
+		menu = "play"
+		if not loadImagesNow then
+			mapNum = 100
+		end
+		themap = themaps[mapNum]
+		placespeople = true
+		while(not finishedLoading) do
+			loadStage()
+			loader.update() 
+		end
+	end
+
+end
+
+function initJoysticks()
+	joysticks = love.joystick.getJoysticks()
+
 end
 
 function initMenus()
 	stagey = 0
 	modenum = 0
 	pause = false
+	oldmenu = "begin"
 
 	mefaceselector = 0
 	youfaceselector = 0
 	juststartedpost = true
 	ln = 0
 	rn = 0
-	
+
 	retryfade = 0
 	fadeupretry = 0
+
+	lcx = -screenwidth 
+	rcx = screenwidth*1.5
 end
 
 function initLove()
+
+
+	screenwidth = lg.getWidth()
+	screenheight = lg.getHeight()
+
 	if fullscreen then 
 		love.window.setMode(1280, 800, {resizable=true, fullscreen = true, vsync=true})
 	else
@@ -80,4 +115,5 @@ require "chaptermanage"
 loader = require "love-loader"
 require "blossom"
 require "story/ch1/ch1"
+require "platforms"
 end

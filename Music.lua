@@ -67,7 +67,7 @@ function repplay(x)
   end
 
 
-  randomizepitch = function ()
+  randomizePitch = function ()
     for i,xx in ipairs(players) do
     xx.blues:setPitch(.7 + (math.random() * .3) )
  

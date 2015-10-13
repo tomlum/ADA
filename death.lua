@@ -1,4 +1,4 @@
-DEATH = false
+
 
 function death2(xx)
   if (themode == "duel" and xx.health < 0) or 
@@ -7,7 +7,7 @@ function death2(xx)
   (themode == "koth" and xx.score >= kothscoretowin)
   or 
   (themode == "fractal" and xx.lives <= 0) then
-    DEATH = true
+        menu = "retry"
   end
   
   

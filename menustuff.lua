@@ -1,5 +1,4 @@
 --menu values--
-
 --title
 --modes
 --map
@@ -8,62 +7,17 @@
 --play
 --retry
 
-screenwidth = lg.getWidth()
-screenheight = lg.getHeight()
 
+--menu that fades into another???
 
 pressanybutton = lg.newImage("enviro/pressanybutton.png")
 
-oldmenu = "begin"
---menu that fades into another???
-noplat = {n=0;}
-
-maxmodenum = 2
-
-themaps = {}
-themaps[1]= {name = "street", 
-plats = {}, walls = {},
-floor = 1896,
-lightx = 707+2.5,
-lighty = 142+2.5,
-lightcolor = {r = 40, g = 255, b = 0},
-rightwall = 7000,
-paralaxscale = 4/7,
-paralaxscale2 = .4
-}
-themaps[2]= {name = "library", 
-plats = {}, walls = {}, boxes = {},
-floor = 1027,
-lightx = 293.5,
-lighty = 229.5,
-lightcolor = {r = 87, g = 0, b = 158},
-rightwall = 3829,
-paralaxscale = .65,
-paralaxscale2 = .523
-}
---paralax has 500 vert and horizontal buffer
-themaps[3]= {name = "floors", 
-plats = {}, walls = {}, boxes = {},
-floor = 5898,
-lightx = 442+2.5,
-lighty = 311+2.5,
-lightcolor = {r = 255, g = 99, b = 0},
-rightwall = 5000,
-paralaxscale = .5,
-paralaxscale2 = .25
-}
+noplat = {n=0}
 
 
 
-themaps[100]= {name = "fightclub", 
-plats = {}, walls = {},
-floor = 896,
-paralaxscale = 1,
-rightwall = 2000
-}
 
 
-themap = themaps[1]
 
 
 
@@ -115,7 +69,7 @@ table.insert(tiles2, {y=0,ud="bottom",lr=-1,j=inittilej, column = 4})
 
 
 function pausing()
-if menu == "play" then 
+  if menu == "play" then 
     if not (me.start or you.start) then
       if pause then
         readytounpause = true
@@ -149,7 +103,7 @@ function drawoverlays()
   end
 
   if not fightclub then
-    go()
+    drawGo()
   end
   drawroulettenumbers()
   if pause and not hitpause then
@@ -181,7 +135,7 @@ lg.setNewFont(20)
 lightsize = 7
 maxwob = 7
 
-function refreshMenu()
+function refreshMenus()
   if menu == "title" and oldmenu ~= "title" then
     musfadein = 3
     musfade = 0
@@ -991,28 +945,26 @@ end
 
 
 
-    function panstuff()
-      menu = "pan"
-      rset = false
-      lset = false
+function panstuff()
+  menu = "pan"
 
 
-      if enviro.dolly == 0 then
-        if not mute then
-          thesong:rewind()
-          repplay(thesong)
-        end
-      elseif streetfadehold <= 0 then menu = "preplay"
-      elseif streetfade <= 0 then streetfadehold = streetfadehold - 1
-      elseif streetfadestart then streetfade = streetfade - 5
-      elseif enviro.dolly + screenwidth > enviro.rightwall/2
-        or c1accept() or c2accept()
-        then 
-        streetfadestart = true	
-      end
-
-      enviro.dolly = enviro.dolly + enviro.ds
-
+  if enviro.dolly == 0 then
+    if not mute then
+      thesong:rewind()
+      repplay(thesong)
     end
+  elseif streetfadehold <= 0 then menu = "preplay"
+  elseif streetfade <= 0 then streetfadehold = streetfadehold - 1
+  elseif streetfadestart then streetfade = streetfade - 5
+  elseif enviro.dolly + screenwidth > enviro.rightwall/2
+    or c1accept() or c2accept()
+    then 
+    streetfadestart = true	
+  end
+
+  enviro.dolly = enviro.dolly + enviro.ds
+
+end
 
 

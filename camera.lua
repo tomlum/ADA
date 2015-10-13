@@ -30,6 +30,14 @@ cscale = .7
 growrate = .02
 shrinkrate = .001
 
+
+function updateScreenStats()
+    screenwidth = lg.getWidth()
+    screenheight = lg.getHeight()
+    enviro.screenheight = screenheight - barheight
+    healthratio = (screenwidth/2)/maxhealth
+  end
+
 function drawcolorstuff(xx)
   spikedraw(xx)
   boltdraw(xx)
@@ -851,7 +859,7 @@ function drawx(xx)
     end
 
     --lg.draw(enviro.stage, 0, 0) 
-    if themap.name == "street" then
+    if mapNum == 1 then
       drawstreetprestuff()
     end
     lg.setShader()
@@ -902,11 +910,11 @@ function drawx(xx)
     cclear()
 
 
-    if themap.name == "street" then
+    if mapNum == 1 then
       drawstreetstuff()
-    elseif themap.name == "library" then
+    elseif mapNum == 2 then
       drawlibrarystuff()
-    elseif themap.name == "floors" then
+    elseif mapNum == 3 then
       drawfloorsstuff()
     end
     if drawboxes then drawHexBoxes() end

@@ -139,7 +139,6 @@ function loadmeandyou2()
   you.push = 0
   waitforitplay = -1
   playfadeout = 0
-  backtowhite = false
   song1:rewind()
 
   me.im =idle1
@@ -311,7 +310,6 @@ function loadmeandyou()
   spines = {}
   n = 10
   sosfirst = true
-  backtowhite = false
   song1:rewind()
   selecsong:rewind()
   selecsong:setPitch(1)
@@ -375,24 +373,6 @@ function loadmeandyou()
 
 
 
-  startsfade = false
-
-  lcx = -screenwidth 
-  rcx = screenwidth*1.5
-  lset = false
-  rset = false
-  msy = 0
-  ysy = 0
-  mr2c = true
-  yr2c = true
-
-
-
-  meseleccurrent = 0
-  youseleccurrent = 0
-
-  mecurrentframe = enviro.bframe
-  youcurrentframe = enviro.bframe
 
 
 

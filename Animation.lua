@@ -450,9 +450,8 @@ end
 
 me.j = 0
 
-whatlevel = function()
+function loadStage()
 
-if placespeople then
   placespeople = false
 
   you.initwy = 0
@@ -495,8 +494,11 @@ if placespeople then
   me.oldhealth = me.health
   you.oldhealth = you.health
 
+  themap = themaps[mapNum]
+  floor = themaps[mapNum].floor
 
-  if themap.name == "fightclub" then
+
+  if mapNum == 100 then
 
     loader.start(function()
       finishedLoading = true
@@ -624,18 +626,16 @@ if placespeople then
     for i,v in ipairs(players) do
       players[i].old_feet = players[i].y 
     end
-
   end
-end
-ma1fade= 100
-ma2fade= 100
-ma3fade= 100
-ma4fade= 100
-ya1fade= 100
-ya2fade= 100
-ya3fade= 100
-ya4fade= 100
-basefade = 80
+  ma1fade= 100
+  ma2fade= 100
+  ma3fade= 100
+  ma4fade= 100
+  ya1fade= 100
+  ya2fade= 100
+  ya3fade= 100
+  ya4fade= 100
+  basefade = 80
 
 
 --actionshotdur = 70
@@ -822,7 +822,7 @@ function actionshotstuff(xx)
   end
   ]]
 
-  function lights()
+  function drawStreetLights()
     if lighttimer >= 70
       then
       lighttimer = - math.random(100,300)
@@ -859,7 +859,7 @@ you.wallx = 0
 
 function drawstreetprestuff()
   lg.draw(enviro.light, 4448, 1525)
-  lights()
+  drawStreetLights()
 end
 function drawstreetstuff()
   lg.draw(enviro.stagefloor, 0, 0, 0, 1, 20)
@@ -1731,11 +1731,15 @@ end
 
 
       gotimer = 0
-      function go()
+      function drawGo()
         if gotimer==0 then gosound:rewind()
+          goColor = {r = math.random(0,255),
+          g = math.random(0,255),
+          b = math.random(0,255)}
         end
         if gotimer < 40 then
           gotimer = gotimer + 1
+          setColor(goColor)
           lg.draw(enviro.go,screenwidth/4 -5 + math.random(10),screenheight/4-5 + math.random(10),0,screenwidth/1440,screenheight/900)
           gosound:play()
         end

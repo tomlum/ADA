@@ -557,6 +557,8 @@ function nottoomanyuppercuts(xx)
   xx.oldattacknum = xx.attack_num
   xx.oldcolor = xx.color.n
   xx.oldft = xx.ft
+
+  xx.old_health = xx.health
 end
 
 
@@ -603,14 +605,14 @@ invis = {im=lg.newImage("me/attack/invis.png"),c=lg.newImage("me/attack/invis.pn
 
 
 
-you.prevhealth = 0
-me.prevhealth = 0
+you.old_health = 0
+me.old_health = 0
 
 
 
 function camshakeflinch()
-	yhdif = you.prevhealth-you.health
-	mhdif = me.prevhealth-me.health
+	yhdif = you.old_health-you.health
+	mhdif = me.old_health-me.health
 	if not (me.actionshot or you.actionshot) and not noshake then
 
 		if ((you.shake) and you.x >= me.x)  or shakeboth then 
@@ -966,7 +968,7 @@ function newforwarddodge(xx)
 
 
 
-    if xx.prevhealth > xx.health then 
+    if xx.old_health > xx.health then 
     	if xx.v/(math.abs(xx.v)) < 0 then
     		if xx.lr > 0 then
     			xx.flinchway = -1

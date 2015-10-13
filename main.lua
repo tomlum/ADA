@@ -6,6 +6,7 @@
 --j = vertical velocity
 --can't kick combo out of purple kick
 
+--love.timer.sleep?
 --change push to prevent pulling
 --can rapid kick
 --slowdown is weird/notworking 
@@ -20,18 +21,18 @@ require "initializers"
 
 --Debug/Test Utilities
 fightclub = false
-menu = "title"
+menu = "color"
 notilebouncing = true
 melcolor = 1
 mercolor = 4
 youlcolor = 3
 yourcolor = 2
 therampspeed = .2
-mapNum = 1
+mapNum = 3
 rampspeed= therampspeed
 drawBoxes = false
 drawFeet = true
-volume=0
+volume = 0
 fullscreen = false
 readout = false
 putmehere = 1000
@@ -41,11 +42,7 @@ oldchapter = "bob"
 lassoisathing = false
 dangerCloseIsAThing = true
 
-if menu == "play" then
-  loadImagesNow = true
-  mapNum = 2
-  placespeople = true 
-end
+
 mute = false
 
 love.audio.setVolume(volume)
@@ -62,78 +59,22 @@ end
 function love.load()
   initPlayer(me)
   initPlayer(you)
-  initWorld()
   initMenus()
-
-
-
-
-  startsfade = false
-
-  lcx = -screenwidth 
-  rcx = screenwidth*1.5
-  lset = false
-  rset = false
-  msy = 0
-  ysy = 0
-  mr2c = true
-  yr2c = true
-
-  meseleccurrent = 0
-  youseleccurrent = 0
-
-  mecurrentframe = enviro.bframe
-  youcurrentframe = enviro.bframe
-
-
-  adafade = 0
-
-  backtowhite = false
-
-
-  joysticks = love.joystick.getJoysticks()
-
-
-
-  x = 11
-
-  me.actionshot = false
-  me.actiontimer = 0
-  you.actiontimer = 0
-
-  if fightclub then 
-    themode = "fractal"
-    menu = "play"
-    mapNum = 100
-    themap = themaps[mapNum]
-    placespeople = true
-    while(not finishedLoading) do
-      whatlevel()
-      loader.update() 
-    end
-
-
-  end
-
+  initJoysticks()
+  initFightClub()
 end
-
-
-
-
-
-
 
 
 function love.update()
 
-  refreshMenu()
+  refreshMenus()
   if menu == "story" then
     updatechapters()
   end
   --colorshift(thecolors[2].c,8)
   --colorshift(me.outline,6)
-  --FOR SLOWMO if love.timer then love.timer.sleep(1/60) end
   if love.keyboard.isDown("x")  then rampspeed = .2 end
+  
   if speedramp then 
     rampspeed = therampspeed
     if ramptimer >= 1 then 
@@ -153,114 +94,88 @@ function love.update()
     end
   end
 
-  if not finishedLoading then
-    loader.update()   end
+  if not finishedLoading then loader.update() end
+
+  if placespeople then
+    loadStage()
+  end
+
+  updateScreenStats()
+
+  randomizePitch()
 
 
-    whatlevel()
-
-
-    me.prevhealth = me.health
-    you.prevhealth = you.health
-
-
-    screenwidth = lg.getWidth()
-    screenheight = lg.getHeight()
-    enviro.screenheight = screenheight - barheight
-    healthratio = (screenwidth/2)/maxhealth
-
-
-    randomizepitch()
-
-
-    if me.flinch then me.jstop = false end
-    if you.flinch then you.jstop = false end
-
+  if 
+    love.keyboard.isDown("z")
+    then slowt = slowt + 1
+    if slowt > slowrate then slowt = 0
+    end
+  else 
+    slowrate = 10
+    slowt = slowrate
+  end
 
 
 
-    if 
-      love.keyboard.isDown("z")
-      then slowt = slowt + 1
-      if slowt > slowrate then slowt = 0
+  updateControllers()
+
+  if menu == "preplay" or menu == "play" then 
+    menu = "play"
+    gavinAndDan()
+
+    if musfadein > 0 then 
+      musfade = musfade + musfadein
+      if musfade + musfadein >= 255 then
+        musfadein = 0
+        musfade = 255
       end
-    else 
-      slowrate = 10
-      slowt = slowrate
+    elseif musfadein < 0 then
+      musfade = musfade + musfadein
+      if musfade +musfadein <= 0 then
+        musfadein = 0
+        musfade = 0
+      end
     end
 
-
-
-
-    keyboardcontrols()
-
-
-
-    jjstick(me,me.joystick)
-    jjstick(you,you.joystick)
-
-    controlsstuff(me)
-    controlsstuff(you)
-
-
-    if menu == "preplay" or menu == "play" then 
-      menu = "play"
-      DEATH = false
-      gavinAndDan()
-
-      if musfadein > 0 then 
-        musfade = musfade + musfadein
-        if musfade + musfadein >= 255 then
-          musfadein = 0
-          musfade = 255
-        end
-      elseif musfadein < 0 then
-        musfade = musfade + musfadein
-        if musfade +musfadein <= 0 then
-          musfadein = 0
-          musfade = 0
-        end
+    if thesong~= nil then
+      if musfade == 0 then
+        thesong:pause()
+      else
+        thesong:play()
+        thesong:setPitch(musfade/255)
       end
+    end
 
-      if thesong~= nil then
-        if musfade == 0 then
-          thesong:pause()
-        else
-          thesong:play()
-          thesong:setPitch(musfade/255)
-        end
-      end
-
-      if slowt == slowrate and not (pause or hitpause) and not me.actionshot 
-        then
+    if slowt == slowrate and not (pause or hitpause) and not me.actionshot 
+      then
 
 
 
-        movex(me,you)
-        movex(you,me)
-        hboxwall()
-        platformcheckx()
-        monplatupdate()
-        
-
-        you.y = you.y - you.j*.9*you.rampspeed
-        me.y = me.y - me.j*.9*me.rampspeed
-        you.x = you.x + you.v*you.rampspeed
-        me.x = me.x + me.v*me.rampspeed
-        you.next = you.feet - you.j*.9*you.rampspeed
-        me.next = me.feet - me.j*.9*me.rampspeed
+      movex(me,you)
+      movex(you,me)
+      hboxwall()
+      platformcheckx()
+      monplatupdate()
 
 
-        me.oldj = me.j
-        you.oldj = you.j
+      you.y = you.y - you.j*.9*you.rampspeed
+      me.y = me.y - me.j*.9*me.rampspeed
+      you.x = you.x + you.v*you.rampspeed
+      me.x = me.x + me.v*me.rampspeed
+      you.next = you.feet - you.j*.9*you.rampspeed
+      me.next = me.feet - me.j*.9*me.rampspeed
 
-        me.oldv = me.v
-        you.oldv = you.v
 
-        you.push = rodib(you.push,1,0)
-        me.push = rodib(me.push,1,0)
+      me.oldj = me.j
+      you.oldj = you.j
 
-      end
+      me.oldv = me.v
+      you.oldv = you.v
+
+      you.push = rodib(you.push,1,0)
+      me.push = rodib(me.push,1,0)
+
+    end
 
       --cammovement()
       --if here then slideycling to person
@@ -402,18 +317,10 @@ function love.update()
       end
 
 
-      if DEATH
-        then 
-        menu = "retry"
+      cclear()
+      lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, screenwidth/1440,1)
+      lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, -screenwidth/1440, 1)
 
-
-      else
-
-        cclear()
-        lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, screenwidth/1440,1)
-        lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, -screenwidth/1440, 1)
-
-      end
       lg.setScissor(0, 0, screenwidth/2, winheight)
       camera:set()
       drawx(camera)

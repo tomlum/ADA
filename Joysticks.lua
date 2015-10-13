@@ -189,6 +189,7 @@ end
 --abletochangecolor
 me.atcc = true
 you.atcc = true
+
 function controlsstuff(xx)
   doubledown(xx)
   
@@ -530,8 +531,15 @@ function c1accept()
     else xx.angle = 0
     end
   end
+end
 
-  
-  
 
+function updateControllers()
+
+  keyboardcontrols()
+  joystickUpdate()
+  jjstick(me)
+  jjstick(you)
+  controlsstuff(me)
+  controlsstuff(you)
 end
