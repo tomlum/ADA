@@ -83,7 +83,7 @@ you.dirholda = false
 function holdmanage(xx)
 
 
-  if (xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.blockb) or (menu ~= "play" and (xx.rightbump or xx.leftbump)) then
+  if (xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.blockb) or (MODE ~= "play" and (xx.rightbump or xx.leftbump)) then
     if not xx.holda then
       xx.holda = true
     end
@@ -135,6 +135,7 @@ function holdmanage(xx)
       xx.hitsomeonewithpurp = false
       xx.combo = 0
       xx.cancombo = false
+      xx.jstop = false
     end
     xx.attack_num = 0
     xx.repcounter = 0
@@ -153,7 +154,7 @@ end
 function doubledown(xx)
 
   if xx.dubtimer >= 0 then
-    xx.dubtimer = rodib(xx.dubtimer,1,0)
+    xx.dubtimer = r2b(xx.dubtimer,1,0)
   end
 
   if not xx.down and xx.doubledown then
@@ -326,14 +327,14 @@ function c1accept()
 
     function clicks()
 
-      if menu == "choose" and (me.block or you.block) then
+      if MODE == "choose" and (me.block or you.block) then
         backtimer = backtimer + 1
         if backtimer > 50 then backtostage() 
         end
         else backtimer = 0
         end
 
-        if menu ~= "play" then
+        if MODE ~= "play" then
 
 
 

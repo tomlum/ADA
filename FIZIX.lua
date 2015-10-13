@@ -71,6 +71,25 @@ function gavinAndDan()
 
 end
 
+function bumpDetection()
+  if math.abs(me.v) > math.abs(you.v) then
+    bump(me)
+    bump(you)
+  elseif math.abs(me.v) < math.abs(you.v) then
+    bump(you)
+    bump(me)
+  else
+    if math.random()>.5 then 
+      bump(me)
+      bump(you)
+    else 
+      bump(you)
+      bump(me)
+    end
+
+  end
+end
+
 function respawntravel(xx)
   if xx.go_here ~= nil then
     xx.gothroughplats = true
@@ -272,20 +291,21 @@ function transferofenergy(xx)
 
 end
 
+slide_time = 6
 function fric(xx) 
 
-  xx.v = rodib(xx.v,fricrate*ramp(xx),xx.push)
+  xx.v = r2b(xx.v,friction*ramp(xx),0)
 
-  if not xx.landing
+  if not xx.landing and not ((xx.v < 0 and xx.leftb) or (xx.v > 0 and xx.rightb))
     then
-    if xx.v > 0+xx.push and not xx.dodge 
+    if xx.v > 0 and not xx.dodge 
       then
       xx.slide = true
-      xx.slidetimer = 0
-    elseif xx.v < 0+xx.push and not xx.dodge 
+      xx.slidetimer = slide_time
+    elseif xx.v < 0 and not xx.dodge 
       then
       xx.slide = true
-      xx.slidetimer = 0
+      xx.slidetimer = slide_time
     end
   end
 end
@@ -296,24 +316,24 @@ end
 
 function vroomright(xx)
   if (xx.animcounter == 0 or xx.greenkcondition) and not (xx.landing and xx.purplanding) and not xx.running then
-    if xx.v == 0+xx.push
-      then xx.v = 1.5+xx.push
-    elseif xx.v >0+xx.push and xx.v < (speedlimit -accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash 
-      then xx.v = xx.v + (accel+xx.push)*xx.color.s.speed*xx.speedpenalty
-    elseif xx.v >0+xx.push and xx.v >= (speedlimit -accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash 
-      then xx.v = (speedlimit -accel+xx.push)*xx.color.s.speed*xx.speedpenalty
+    if xx.v == 0
+      then xx.v = 1.5
+    elseif xx.v >0 and xx.v < (speedlimit -accel)*xx.color.s.speed*xx.speedpenalty*whiplash 
+      then xx.v = xx.v + (accel)*xx.color.s.speed*xx.speedpenalty
+    elseif xx.v >0 and xx.v >= (speedlimit -accel)*xx.color.s.speed*xx.speedpenalty*whiplash 
+      then xx.v = (speedlimit -accel)*xx.color.s.speed*xx.speedpenalty
     end
   end
 end 
 
 function vroomleft(xx)
   if (xx.animcounter == 0 or xx.greenkcondition) and not (xx.landing and xx.purplanding) and not xx.running then
-    if xx.v == 0+xx.push 
-      then xx.v = -1.5+xx.push
-    elseif xx.v < 0+xx.push and xx.v > (-speedlimit + accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash
-      then xx.v = xx.v - (accel+xx.push)*xx.color.s.speed*xx.speedpenalty
-    elseif xx.v < 0+xx.push and xx.v <= (-speedlimit + accel+xx.push)*xx.color.s.speed*xx.speedpenalty*whiplash
-      then xx.v = (-speedlimit + accel+xx.push)*xx.color.s.speed*xx.speedpenalty
+    if xx.v == 0 
+      then xx.v = -1.5
+    elseif xx.v < 0 and xx.v > (-speedlimit + accel)*xx.color.s.speed*xx.speedpenalty*whiplash
+      then xx.v = xx.v - (accel)*xx.color.s.speed*xx.speedpenalty
+    elseif xx.v < 0 and xx.v <= (-speedlimit + accel)*xx.color.s.speed*xx.speedpenalty*whiplash
+      then xx.v = (-speedlimit + accel)*xx.color.s.speed*xx.speedpenalty
     end
   end
 end 
@@ -355,10 +375,6 @@ function runrunrun(xx)
   fallthroughglassfloor(xx)
   if not xx.g then xx.running = false end
 
-  if xx.running and math.abs(xx.push) > 0 then 
-    --xx.j = 14 xx.g = false
-    xx.v = xx.v + xx.push
-  end
   if xx.flinch or math.abs(xx.v) <= speedminit then 
     xx.running = false
   elseif xx.running then 
@@ -387,7 +403,6 @@ function runrunrun(xx)
     xx.a3 = false
     xx.a4 = false
     xx.running = true
-    xx.limitbreak = true
     if xx.right and xx.v > 0 then
       xx.v = runspeed
     elseif xx.left and xx.v < 0 then
@@ -401,47 +416,44 @@ function runrunrun(xx)
 
 end
 
-climbs = function(xx)
+function climbs(xx)
 
+  if xx.flinch then xx.ctim = 0 end
 
+  if xx.ctim > 0 then xx.ctim = xx.ctim + 1
+    xx.busy = true
 
+    if xx.ctim > 10 then
+      xx.ctim = 0
+      if xx.up then 
+        xx.g = false
+        xx.j = hopj
+        repplay(xx.jumpd) 
+      elseif xx.left then 
+        xx.g = false
+        xx.j = hopj2
+        xx.v = -hopv2
+      elseif xx.right then 
+        xx.g = false
+        xx.j = hopj2
+        xx.v = hopv2
+      end
 
-if xx.flinch then xx.ctim = 0 end
+    elseif xx.ctim > 7 then
+      xx.im = climb3
+      xx.j = climbj
+    elseif xx.ctim > 4 then
+      xx.im = climb2
+      xx.j = climbj
 
-if xx.ctim > 0 then xx.ctim = xx.ctim + 1
-  xx.busy = true
-
-  if xx.ctim > 10 then
-    xx.ctim = 0
-    if xx.up then 
-      xx.g = false
-      xx.j = hopj
-      repplay(xx.jumpd) 
-    elseif xx.left then 
-      xx.g = false
-      xx.j = hopj2
-      xx.v = -hopv2
-    elseif xx.right then 
-      xx.g = false
-      xx.j = hopj2
-      xx.v = hopv2
+    elseif xx.ctim > 0 then
+      xx.im = climb
+      if xx.ctim == 4 then
+        repplay(xx.climbsound) 
+      end
     end
 
-  elseif xx.ctim > 7 then
-    xx.im = climb3
-    xx.j = climbj
-  elseif xx.ctim > 4 then
-    xx.im = climb2
-    xx.j = climbj
-
-  elseif xx.ctim > 0 then
-    xx.im = climb
-    if xx.ctim == 4 then
-      repplay(xx.climbsound) 
-    end
   end
-
-end
 
 
 
@@ -552,11 +564,11 @@ end
       xx.firstjump = true
       xx.g = false
       repplay(xx.jumpd)
-    elseif xx.right and xx.v >= xx.push and not xx.stop and not xx.flinch and xx.landing_counter < land_pause_time
+    elseif xx.right and xx.v >= 0 and not xx.stop and not xx.flinch and xx.landing_counter < land_pause_time
       and not xx.left 
       then 
       vroomright(xx)
-    elseif xx.left and xx.v <= xx.push and xx.stop == false and not xx.flinch and xx.landing_counter < land_pause_time
+    elseif xx.left and xx.v <= 0 and xx.stop == false and not xx.flinch and xx.landing_counter < land_pause_time
       and not xx.right 
       then 
       vroomleft(xx)
@@ -582,7 +594,7 @@ end
           xx.onplat = true
           xx.j = climbj
           xx.v = xx.v/2
-        elseif xx.left and xx.v >= 1 + xx.push*1.5
+        elseif xx.left and xx.v >= 1 
           then 
           if xx.flinch then
             xx.v = xx.v - adecrate/5*ramp(xx)
@@ -591,7 +603,7 @@ end
           end
           xx.slowdown = true
 
-        elseif xx.right and xx.v <= -1 + xx.push*1.5
+        elseif xx.right and xx.v <= -1 
           then 
           if xx.flinch then
             xx.v = xx.v + adecrate/5*ramp(xx)
@@ -599,7 +611,7 @@ end
             xx.v = xx.v + adecrate*ramp(xx)
           end
           xx.slowdown = true
-        elseif xx.left and xx.v > - maxairmove + xx.push*1.5
+        elseif xx.left and xx.v > - maxairmove 
           then 
           if xx.flinch then
             xx.v = xx.v - amovrate/5*ramp(xx)
@@ -607,7 +619,7 @@ end
             xx.v = xx.v - amovrate*ramp(xx)
           end
           xx.slowdown = false
-        elseif xx.right and xx.v < maxairmove + xx.push*1.5
+        elseif xx.right and xx.v < maxairmove 
           then 
           if xx.flinch then
             xx.v = xx.v + amovrate/5*ramp(xx)
@@ -615,14 +627,6 @@ end
             xx.v = xx.v + amovrate*ramp(xx)
           end
           xx.slowdown = false
-
-        elseif xx.push > 0 then
-          bloop = 2
-          if xx.v > xx.push*1.5 then 
-            xx.v = xx.v - 1
-          elseif xx.v < xx.push*1.5 then 
-            xx.v = xx.v + 1
-          end
 
 
         end

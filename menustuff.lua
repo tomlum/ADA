@@ -1,4 +1,4 @@
---menu values--
+--Mode values--
 --title
 --modes
 --map
@@ -8,17 +8,11 @@
 --retry
 
 
---menu that fades into another???
+--MODE that fades into another???
 
 pressanybutton = lg.newImage("enviro/pressanybutton.png")
 
 noplat = {n=0}
-
-
-
-
-
-
 
 
 letterboxheight = 80
@@ -68,8 +62,13 @@ table.insert(tiles2, {y=0,ud="bottom",lr=1,j=inittilej, column = 3})
 table.insert(tiles2, {y=0,ud="bottom",lr=-1,j=inittilej, column = 4})
 
 
+function handleRetry()
+  death2(me)
+  death2(you)
+end
+
 function pausing()
-  if menu == "play" then 
+  if MODE == "play" then 
     if not (me.start or you.start) then
       if pause then
         readytounpause = true
@@ -89,7 +88,7 @@ function pausing()
   end
 end
 
-function drawoverlays()
+function drawOverlays()
   cclear()
 
   if not(oldonescreen and onescreen) then
@@ -116,6 +115,8 @@ function drawoverlays()
   lg.srectangle("fill",0,900,1440,-barey)
   lg.setColor(255,255,255)
 
+  lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, screenwidth/1440,1)
+  lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, -screenwidth/1440, 1)
 end
 
 function lg.sdraw(im, x, y, rot, sx, sy) 
@@ -126,8 +127,8 @@ function lg.sdraw(im, x, y, rot, sx, sy)
   end
 end
 
-function lg.srectangle(mode, x, y, width, height) 
-  lg.rectangle(mode, x*screenwidth/1440, y*screenheight/900, width*screenwidth/1440, height*screenheight/900) 
+function lg.srectangle(drawType, x, y, width, height) 
+  lg.rectangle(drawType, x*screenwidth/1440, y*screenheight/900, width*screenwidth/1440, height*screenheight/900) 
 end
 
 lg.setNewFont(20)
@@ -135,8 +136,8 @@ lg.setNewFont(20)
 lightsize = 7
 maxwob = 7
 
-function refreshMenus()
-  if menu == "title" and oldmenu ~= "title" then
+function modeManager()
+  if MODE == "title" and oldmenu ~= "title" then
     musfadein = 3
     musfade = 0
     allfade = 0
@@ -145,20 +146,20 @@ function refreshMenus()
     thesong:rewind()
     repplay(thesong)
     stagey = 0
-  elseif menu == "modes" and oldmenu ~= "modes" then
+  elseif MODE == "modes" and oldmenu ~= "modes" then
     allfade = 0
     fadein = 8
     wipex = -screenwidth*6
     wipefraction = 5
     wobv = 1
     wobj = 1
-  elseif menu == "map" and oldmenu ~= "map" then
+  elseif MODE == "map" and oldmenu ~= "map" then
     allfade = 1
     fadein = 9
-  elseif menu == "color" and oldmenu ~= "color" then
+  elseif MODE == "color" and oldmenu ~= "color" then
     soscillator = 0
-    finishedLoading = false
-    if themode == nil or themode == "none" then themode = "duel" end
+    finished_loading = false
+    if game_mode == nil or game_mode == "none" then game_mode = "duel" end
     me.drawontop = function() end
     you.drawontop = function() end
     spines = {}
@@ -211,7 +212,7 @@ function refreshMenus()
     allfade = 255
     fadein = 0
 
-  elseif menu == "pan" and oldmenu ~= "pan" then
+  elseif MODE == "pan" and oldmenu ~= "pan" then
     thesong:play()
     spines = {}
     fadein = 0
@@ -223,7 +224,7 @@ function refreshMenus()
     streetfadehold = 1
     streetfadestart = false
 
-  elseif menu == "retry" and oldmenu ~= "retry" then
+  elseif MODE == "retry" and oldmenu ~= "retry" then
 
     me.readytoplay = false
     you.readytoplay = false
@@ -238,13 +239,13 @@ function refreshMenus()
     streetfadehold = 1
     streetfadestart = false
 
-  elseif menu == "story" and oldmenu ~= "story" then
+  elseif MODE == "story" and oldmenu ~= "story" then
 
     chapterinit()
 
   end
   
-  oldmenu = menu
+  oldmenu = MODE
 end
 
 wobx = 0
@@ -317,18 +318,18 @@ function drawmenus()
     end
   end
 
-  if menu == "title" or menu == "premode" then
-    if (c1accept() or c2accept()) and menu=="title" then
-      menu = "premode" 
+  if MODE == "title" or MODE == "premode" then
+    if (c1accept() or c2accept()) and MODE=="title" then
+      MODE = "premode" 
       repplay(wavesound)
     end
 
-    if menu == "premode" then
+    if MODE == "premode" then
       if stagey < 300 then
         stagey = stagey + 1
         stagey = stagey + stagey/200*menuspeed
       else 
-        menu = "modes"
+        MODE = "modes"
       end
     end
 
@@ -355,30 +356,30 @@ function drawmenus()
     lg.srectangle("fill", 0, 900-stagey*4, 1440, 900)
 
 
-  elseif menu == "modes" or menu == "premap" then
+  elseif MODE == "modes" or MODE == "premap" then
 
-    if cancels() then menu = "title" end
-
-
+    if cancels() then MODE = "title" end
 
 
-    if menu == "premap" then
+
+
+    if MODE == "premap" then
       if wipex < 0 then
         wipex = wipex + screenwidth/wipefraction
       else 
-        menu = "map"
+        MODE = "map"
       end
     end
 
-    if menu == "modes" then
+    if MODE == "modes" then
 
       if downs() and modenum < maxmodenum then modenum = modenum + 1 mov:play()
       elseif ups() and modenum > 0 then modenum = modenum - 1 mov:play()	
       end
     end
 
-    if (c1accept() and not me.holda) or (not you.holda and c2accept()) and menu == "modes" then
-      menu = "premap"
+    if (c1accept() and not me.holda) or (not you.holda and c2accept()) and MODE == "modes" then
+      MODE = "premap"
       repplay(modesound)
     end
 
@@ -386,15 +387,15 @@ function drawmenus()
     if modenum == 0 then 
       selectorx = 285
       selectory = 167
-      themode = "duel"
+      game_mode = "duel"
     elseif modenum == 1 then 
       selectorx = 326
       selectory = 411
-      themode = "spectrum"
+      game_mode = "spectrum"
     elseif modenum == 2 then 
       selectorx = 365
       selectory = 642
-      themode = "koth"
+      game_mode = "koth"
     end
     lg.setColor(allfade,allfade,allfade,255)
     blurdraw(.001,function() lg.sdraw(backstreet,wobx-maxwob/2,woby-maxwob/2,0,1.1,1.1) end)
@@ -403,10 +404,10 @@ function drawmenus()
     lg.sdraw(modeselector, selectorx, selectory)
     lg.sdraw(wiper,wipex,0)
 
-  elseif menu == "map" or menu == "precolor" then
+  elseif MODE == "map" or MODE == "precolor" then
 
 
-    if cancels() then menu = "modes" end
+    if cancels() then MODE = "modes" end
 
     if downs() and mapNum < 3 then mapNum = mapNum + 1 repplay(mov)
     elseif ups() and mapNum > 1 then mapNum = mapNum - 1 repplay(mov)
@@ -414,14 +415,14 @@ function drawmenus()
 
     theMap = theMaps[mapNum]
 
-    if (c1accept() and not me.holda) or (not you.holda and c2accept())and menu == "map" then
+    if (c1accept() and not me.holda) or (not you.holda and c2accept())and MODE == "map" then
       fadein = -5
       repplay(modesound)
       musfadein = -5
     end
 
     if allfade - fadein <= 0 then
-      menu = "color"
+      MODE = "color"
     end
 
 
@@ -436,7 +437,7 @@ function drawmenus()
 
 
 
-  elseif menu == "color" or menu == "prepan" then
+  elseif MODE == "color" or MODE == "prepan" then
 
     tileset = true
     for i,v in ipairs(tiles) do
@@ -737,11 +738,11 @@ function drawmenus()
   end
 
   if me.block and not me.holda and not me.readytoplay then 
-    menu = "map"
+    MODE = "map"
     tileset = false
   end
   if you.block and not you.holda and not you.readytoplay then 
-    menu = "map" 
+    MODE = "map" 
     tileset = false
   end
 
@@ -800,18 +801,18 @@ function drawmenus()
     elseif tilesep < 4000 then
       tilesep = tilesep +  tilesep*.09
     end
-    if finishedLoading then
+    if finished_loading then
       separatespines = true
     end
   end
   if 
     math.abs(soscillator)>400 then 
-    menu = "pan"
+    MODE = "pan"
   end
 
 
 
-elseif menu == "pan" then
+elseif MODE == "pan" then
 
 
   if dollyx == 0 then
@@ -820,7 +821,7 @@ elseif menu == "pan" then
       repplay(thesong)
     end
   elseif streetfadehold <= 0 then 
-    menu = "play"
+    MODE = "play"
     gotimer = 0
   elseif streetfadestart then streetfadehold = streetfadehold - 1
   elseif dollyx + screenwidth > theMap.rightwall-1440*1.5
@@ -847,12 +848,12 @@ elseif menu == "pan" then
   dollyx = dollyx + dollyv
 
 
-elseif menu == "retry" then
+elseif MODE == "retry" then
 
   if allfade +fadein*2<= 0 and nextstop ~= "?" then
     allfade = 0
-    menu = nextstop
-    if menu == "pan" then
+    MODE = nextstop
+    if MODE == "pan" then
       placespeople = true
     end
   end
@@ -946,7 +947,7 @@ end
 
 
 function panstuff()
-  menu = "pan"
+  MODE = "pan"
 
 
   if enviro.dolly == 0 then
@@ -954,7 +955,7 @@ function panstuff()
       thesong:rewind()
       repplay(thesong)
     end
-  elseif streetfadehold <= 0 then menu = "preplay"
+  elseif streetfadehold <= 0 then MODE = "preplay"
   elseif streetfade <= 0 then streetfadehold = streetfadehold - 1
   elseif streetfadestart then streetfade = streetfade - 5
   elseif enviro.dolly + screenwidth > enviro.rightwall/2

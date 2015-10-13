@@ -3,6 +3,16 @@ require "love.image"
 require "love.audio"
 require "love.sound"
 
+
+function updateLoader()
+  if not finished_loading then loader.update() end
+
+  if placespeople then
+    loadStage()
+  end
+end
+
+--These guys are awesome, thanks so much
 local loader = {
   _VERSION     = 'love-loader v2.0.2',
   _DESCRIPTION = 'Threaded resource loading for LÖVE',

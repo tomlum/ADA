@@ -209,7 +209,7 @@ WHEN DODGE FROM FALLING DO AN ACTION ROLL
 
 
 
---colorcontrol, go, size,menu
+--colorcontrol, go, size,MODE
 
 
 --when dead, flash white, background cuts to black, characters are stark white

@@ -1,6 +1,5 @@
-
 kothscoretowin = 100
-ranplattimer = 0
+plathighlight = lg.newImage("enviro/plathighlight.png")
 karrow = lg.newImage("enviro/karrow.png")
 krown = lg.newImage("enviro/krown.png")
 kothcolor = {r = 253, g= 253, b = 25}
@@ -15,14 +14,14 @@ krownshader = lg.newShader(
 
 
     if (texcolor[0] - texcolor[1]>.8)
-    return outline; 
+      return outline; 
 
-    if (texcolor[2]>score[1]&&texcolor[3]>0)
-    return ncolor;
-    
-    return vec4(0.0,0.0,0.0,0.0);
-  }
-  ]] )
+      if (texcolor[2]>score[1]&&texcolor[3]>0)
+        return ncolor;
+
+        return vec4(0.0,0.0,0.0,0.0);
+      }
+      ]] )
 
 
 kotharrowradius = 30
@@ -36,7 +35,7 @@ function kotharrowdraw(xx)
       (kothplat.y-(xx.y+30))
       /
       -(platx-xx.mid)
-    )
+      )
     if (platx-xx.mid) > 0 then
       kangle = kangle + math.rad(180)
     end
@@ -44,21 +43,21 @@ function kotharrowdraw(xx)
     lg.draw(karrow,xx.mid+kotharrowradius*math.cos(kangle),
       xx.y+30+kotharrowradius*math.sin(kangle), kangle+math.rad(45),1,1,0,10)
   else
-    
+
     xx.score = xx.score + 1
     
     local myscore = 1-(xx.score/kothscoretowin)
     lg.setShader(krownshader)
     krownshader:send("ncolor", 
       {1,1,0,1}
-    ) 
+      ) 
     krownshader:send("score", 
       {myscore, myscore, myscore, myscore}
-    ) 
+      ) 
 
     krownshader:send("outline", 
       {.5, .5, 0, 1}
-    )
+      )
     lg.draw(krown, xx.mid, xx.y-10, 0, 1, 1, 6, 8) 
     lg.setShader()
   end
@@ -84,21 +83,14 @@ function drawhighlight()
   if kothplat ~= nil then
     lg.draw(plathighlight, kothplat.x1, kothplat.y, 0, kothplat.x2-kothplat.x1, -1)
   end
- cclear()
-
+  cclear()
 end
 
 function randomizeplat()
-  if ranplattimer > 1000 then
-    ranplattimer = 0
-oldplat = kothplat
-    kothplat = nil
-  end
-  ranplattimer = ranplattimer + 1 
   
-    while(kothplat == nil or kothplat.floor) or (kothplat==oldplat) do
-      local rannum = math.random(1,#theMaps[mapNum].plats)
-      kothplat = theMaps[mapNum].plats[rannum]
-    end
+  while(kothplat == nil or kothplat.floor) or (kothplat==oldplat) do
+    local rannum = math.random(1,#theMaps[mapNum].plats)
+    kothplat = theMaps[mapNum].plats[rannum]
+  end
 
 end

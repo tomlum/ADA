@@ -9,14 +9,6 @@ function xcolor( name )
    return rgb[ name ]
 end
 
-function setColor( name )
-   local color = rgb[ name ]
-   if color then
-      love.graphics.setColor( color.r, color.g, color.b )
-   else
-      error( "bad color name: " .. name )
-   end
-end
 -------------------------------------------------------------------------------
 local function load( color, name )
   local r = tonumber( "0x" .. string.sub( color, 1, 2 ) )

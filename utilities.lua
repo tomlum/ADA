@@ -2,95 +2,7 @@ require "xkcdcolor"
 require "monitors"
 lg = love.graphics
 
---decimal random
-function floRan(low,up)
-  return math.random(low+1,up-1)+math.random()*math.random(-1,1)
-end
-
-function drawbackgroundbox(x,y,w,h)
-  lg.setBackgroundColor(backgroundcolor.r,backgroundcolor.g,backgroundcolor.b)
-  lg.rectangle("fill", x, y, w, h)
-  
-end
-
-function isabout(n, v)
-  return math.abs(n-v) < .1
-
-end
-
-function absv(v, y)
-  return math.sqrt((0-v)^2 + (0-y)^2)
-end
-
-function dis(p1, p2)
-  return math.sqrt((p1.y-p2.y)^2 + (p1.x-p2.x)^2)
-end
---box outline
-function bo(x,y,w,h,color)
-  setColor(color)
-  lg.rectangle("line", x, y, w, h)
-  
-  cclear()
-end
-
-
-function cclear()
-  lg.setColor(255,255,255)
-end
-
-
-
-
-
-
-function rollover(val,i,pivot)
-  if val + i > pivot then
-    return pivot-val+i
-  else
-    return val + i
-  end
-end
-
-
---resting orbital decimal interval base
-function rodib(val,i,base)
-  if val > base then 
-    if val - i < base then
-      return base
-    else
-      return val - i
-    end
-  elseif val < base then 
-    if val + i > base then
-      return base
-    else
-      return val + i
-    end
-    else return base
-    end
-  end
-
-
-  function returntobase(val,i,base)
-    if val > base then 
-      if val - i < base then
-        val = base
-      else
-        val = val - i
-      end
-    elseif val < base then 
-      if val + i > base then
-        val = base
-      else
-        val = val + i
-      end
-    end
-  end
-
-
-
-
-
+--functions that begin with t_ have specific table inputs (e.g. a table representing a color in rgb values)
 
 
 function clone (t) -- deep-copy a table
@@ -108,41 +20,38 @@ function clone (t) -- deep-copy a table
   return target
 end
 
+--------------------
+--COLOR UTILITIES---
+--------------------
 function setColorA(c, a)
   lg.setColor(c.r,c.g,c.b, a)
 end
 
-function setColor(c)
 
+function t_setColor(c)
   lg.setColor(c.r,c.g,c.b)
 end
+
 
 function colorChange(v)
   local vv = math.random(-5,5)
   return hof(lof(v+vv, 255), 0)
 end
 
-function colorchange2(v,amount)
-  local vv = amount*math.random(-1,1)
-  return hof(lof(v+vv, 255), 0)
+function t_colorShift(table_color)
+  table_color.r = bof(0, table_color.r+math.random(-5,5), 255)
+  table_color.g = bof(0, table_color.g+math.random(-5,5), 255)
+  table_color.b = bof(0, table_color.b+math.random(-5,5), 255)
 end
 
-function coinflip(per)
-  if per==nil then
-    if math.random()>.5 then return true
-      else return false
-      end
-    else
-      if math.random()>per then return true
-        else return false
-        end
-
-      end
 
 
-    end
 
---Return higher of x and y
+--------------------
+---MATH UTILITIES---
+--------------------
+
+--Return "higher of" x and y
 function hof(x,y)
   if x > y then return x
     else return y
@@ -150,7 +59,7 @@ function hof(x,y)
 
   end
 
---Return lower of x and y
+--Return "lower of" x and y
 function lof(x,y)
   if x < y then return x
     else return y
@@ -158,41 +67,39 @@ function lof(x,y)
 
   end
 
---bounded of between x and y
-function bof(x, n, y)
-  if n < x then return x
-  elseif n > y then return y 
-    else return n
+--"bounded of" between x and y
+function bof(lower_limit, n, upper_limit)
+  if n < lower_limit then 
+    return lower_limit
+  elseif n > upper_limit then 
+    return upper_limit 
+  else 
+    return n
   end
 
 end
 
---Many lower of, find the lowest in the table
-function mlof(x)
-  local lof = x[1]
-  for i = 2, #x do
-    if lof > x[i] then lof = x[i]
-
-    end
-  end
-  return lof
-
-end
-
-
---Many higher of, find the lowest in the table
+--"Many higher of", find the highest value in the table
 function mhof(x)
   local hof = x[1]
   for i = 2, #x do
     if hof < x[i] then hof = x[i]
-
     end
   end
   return hof
-
 end
 
---Many lower of, greater than zero
+--"Many lower of", find the lowest in the table
+function mlof(x)
+  local lof = x[1]
+  for i = 2, #x do
+    if lof > x[i] then lof = x[i]
+    end
+  end
+  return lof
+end
+
+--"Many lower of, greater than zero"
 function mlofgz(x)
   local lof = 10000000
   for i = 1, #x do
@@ -209,7 +116,97 @@ function mlofgz(x)
 end
 
 
+function isabout(n, v)
+  return math.abs(n-v) < .1
 
+end
+
+
+function absv(v, y)
+  return math.sqrt((0-v)^2 + (0-y)^2)
+end
+
+
+--box outline
+function bo(x,y,w,h,color)
+  t_setColor(color)
+  lg.rectangle("line", x, y, w, h)
+  
+  cclear()
+end
+
+
+function cclear()
+  lg.setColor(255,255,255)
+end
+
+
+
+function rollover(val,i,pivot)
+  if val + i > pivot then
+    return pivot-val+i
+  else
+    return val + i
+  end
+end
+
+
+--Return to Base
+--try to get bal to base by the interval i
+function r2b(val,i,base)
+  if val > base then 
+    if val - i < base then
+      return base
+    else
+      return val - i
+    end
+  elseif val < base then 
+    if val + i > base then
+      return base
+    else
+      return val + i
+    end
+  else 
+    return base
+  end
+end
+
+
+------------------------------
+---RANDOM(number) UTILITIES---
+------------------------------
+
+function coinflip(per)
+  if per==nil then
+    if math.random()>.5 then return true
+      else return false
+      end
+    else
+      if math.random()>per then return true
+        else return false
+        end
+
+      end
+
+
+    end
+
+--generate a float random
+function floRan(low,up)
+  return math.random(low+1,up-1)+math.random()*math.random(-1,1)
+end
+
+
+
+
+--------------------
+---LINE UTILITIES---
+--------------------
+
+
+function dis(p1, p2)
+  return math.sqrt((p1.y-p2.y)^2 + (p1.x-p2.x)^2)
+end
 
 
 function retfindIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, seg1, seg2)

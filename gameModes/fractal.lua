@@ -457,7 +457,7 @@ function changebackgroundcolor(rate)
   backgroundcolor.g = colorChange(backgroundcolor.g,rate)
   backgroundcolor.b = colorChange(backgroundcolor.b,rate)
   lg.setBackgroundColor(backgroundcolor.r,backgroundcolor.g,backgroundcolor.b)
-
-
 end
+
+
 backgroundcolor = {r = math.random(255),g = math.random(255),b = math.random(255)}

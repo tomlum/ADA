@@ -267,15 +267,6 @@ end
     end
 
   end
-
-
-
-
-
-
-
-
-
 end
 
 
@@ -284,6 +275,6 @@ function colorshift(see, rate)
   c = c - rate
   if c < -255 then c = 255
   end
-
+  
   return c
 end

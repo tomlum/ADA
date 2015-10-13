@@ -135,7 +135,6 @@ function camreturntozoom()
 end
 
 function cammovement()
-  
 
   cinemabars()
 
@@ -223,7 +222,7 @@ function cammovement()
     mecamfloor = false
   end
 
-  if themode == "fractal" then 
+  if game_mode == "fractal" then 
     mecamfloor = false
     youcamfloor = false
   end
@@ -676,7 +675,7 @@ function drawx(xx)
     paralaxcamshake = shakedis*math.random(-3,3)*math.random()
   end
 
-  if menu ~= "retry" then
+  if MODE ~= "retry" then
     tods()
 
     local pzoom2 = 1+(1-math.sqrt(math.sqrt(cscale)))
@@ -881,16 +880,16 @@ function drawx(xx)
     drawPlayer(me)
 
   end
-  if menu ~= "retry" then
+  if MODE ~= "retry" then
 
     drawparticles()
     lg.setShader()
 
     mondraw()
   end
-  if themode == "koth" then
+  if game_mode == "koth" then
     drawhighlight()
-    if menu == "retry" then
+    if MODE == "retry" then
       if me.score >= kothscoretowin then 
         kotharrowdraw(me)
       else
@@ -902,7 +901,7 @@ function drawx(xx)
     end
   end
 
-  if menu ~= "retry" then
+  if MODE ~= "retry" then
     if theMap.facade~=nil then
       lg.draw(theMap.facade,0,0)
     end
@@ -923,3 +922,7 @@ function drawx(xx)
 end
 
 
+function drawbackgroundbox(x,y,w,h)
+  lg.setBackgroundColor(backgroundcolor.r,backgroundcolor.g,backgroundcolor.b)
+  lg.rectangle("fill", x, y, w, h)
+end

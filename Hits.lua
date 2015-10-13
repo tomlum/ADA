@@ -685,7 +685,7 @@ function hline(xx, theid, P1, P2, special)
 
             --Generate rubble/glass from wall
             wallRubbleCheck(xx)
-            orientlr(xx)
+            orient(xx)
           end
 
 

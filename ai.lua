@@ -1,3 +1,5 @@
+--DEPRICATED.  To be worked on further some other time
+
 --constantly spinning head and rows of spinning heads in series spinning are great
 --default hpx 3 hpy 8
 
@@ -73,7 +75,7 @@ function monplatupdate()
  for i,xx in ipairs(monsters) do
 
     if rampcanhit and xx.g then
-      xx.v = rodib(xx.v,fricrate*ramp(xx),xx.push)
+      xx.v = r2b(xx.v,friction*ramp(xx),xx.push)
     end
 
 
@@ -81,7 +83,7 @@ function monplatupdate()
     xx.y = xx.y-xx.j*ramp(xx)
 
 
-    xx.push = rodib(xx.push,1,0)
+
        extra_height = 0
         if xx.im.extra_height ~= nil then
           extra_height = -xx.im.extra_height
@@ -93,6 +95,7 @@ function monplatupdate()
   end
 end
 
+--used to go at the end of love.update
 function postmonupdate()
   
   for i,xx in ipairs(monsters) do

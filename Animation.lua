@@ -1,4 +1,7 @@
-
+idle1 = {im = lg.newImage("me/idle/idle1.png")}
+idle2 = {im = lg.newImage("me/idle/idle2.png")}
+idle3 = {im = lg.newImage("me/idle/idle3.png")}
+idle4 = {im = lg.newImage("me/idle/idle4.png")}
 
 walklegs1 = {im = lg.newImage("me/walk/legs1.png")}
 walklegs2 = {im = lg.newImage("me/walk/legs2.png")}
@@ -246,31 +249,31 @@ barey = 0
 bardis = 100
 
 function cinemabars()
+  if not pause then
+    dangervertone = ydif/dangerZoom <= beigedif
+    dangeronescreen = xdif <= screenwidth*dangerZoom/2 + tolandr*2
+    dangerclose = dangerCloseIsAThing and dangeronescreen and dangervertone and not slowww
 
-  dangervertone = ydif/dangerZoom <= beigedif
-  dangeronescreen = xdif <= screenwidth*dangerZoom/2 + tolandr*2
-  dangerclose = dangerCloseIsAThing and dangeronescreen and dangervertone and not slowww
+    local tbardis = bardis
+    if dangerclose then tbardis = dangerbarey end
 
-  local tbardis = bardis
-  if dangerclose then tbardis = dangerbarey end
-
-  if barsmovein > 0 then 
-    barey = barey + barsmovein
-    if barey >= tbardis then
-      barsmovein = 0
-      barey = tbardis 
+    if barsmovein > 0 then 
+      barey = barey + barsmovein
+      if barey >= tbardis then
+        barsmovein = 0
+        barey = tbardis 
+      end
+    elseif barsmovein < 0 then
+      barey = barey + barsmovein
+      if barey <= 0 then
+        barsmovein = 0
+        barey = 0
+      end
     end
-  elseif barsmovein < 0 then
-    barey = barey + barsmovein
-    if barey <= 0 then
-      barsmovein = 0
-      barey = 0
-    end
-  end
 
 
 
-  if dangerclose then
+    if dangerclose then
     --[[
     if maxzoom > dangerZoom then
       maxzoom = maxzoom - dangerZoomDelta
@@ -287,7 +290,7 @@ function cinemabars()
   end
   barey = 120*(1-rampspeed)
 
-
+end
 end
 
 --colorshader draw start
@@ -452,7 +455,7 @@ end
 function loadStage()
 
   placespeople = false
-  finishedLoading = false
+  finished_loading = false
   playfade = 0
   me.deathclock = 0
   you.deathclock = 0
@@ -460,8 +463,6 @@ function loadStage()
   you.animcounter = 0
   me.v = 0
   you.v = 0
-  me.push = 0
-  you.push = 0
   me.lr = 1
   you.lr = -1
   me.j = 0
@@ -474,13 +475,13 @@ function loadStage()
   maxzoom = defaultmaxzoom
 
 
-  if themode == "fractal" then 
+  if game_mode == "fractal" then 
     you.lives = fractal_lives
     me.lives = fractal_lives
     maxhealth = fractal_max_health
-  elseif themode == "duel" then 
+  elseif game_mode == "duel" then 
     maxhealth = 150
-  elseif themode == "koth" then 
+  elseif game_mode == "koth" then 
     maxhealth = 50
   end
   me.score = 0
@@ -497,7 +498,7 @@ function loadStage()
   if mapNum == 100 then
 
     loader.start(function()
-      finishedLoading = true
+      finished_loading = true
       end)
 
     enviro.rightwall = 2000
@@ -529,7 +530,7 @@ function loadStage()
 
       else
         loader.start(function()
-          finishedLoading = true
+          finished_loading = true
           end)
         loader.newImage(enviro,'stage', "enviro/astreet.png")
 
@@ -565,7 +566,7 @@ function loadStage()
 
       else
         loader.start(function()
-          finishedLoading = true
+          finished_loading = true
           end)
         loader.newImage(enviro,'paralax',"enviro/libraryparalax.png")
         loader.newImage(enviro,'paralax2', "enviro/libraryparalax2.png")
@@ -597,7 +598,7 @@ function loadStage()
 
       else
         loader.start(function()
-          finishedLoading = true
+          finished_loading = true
           end)
         loader.newImage(enviro,'paralax',"enviro/floorsparalax.png")
         loader.newImage(enviro,'stage', "enviro/floors.png")
@@ -677,7 +678,7 @@ function drawPlayer(xx)
 
 
 
-  if mode == "retry" and fadein < 0 then
+  if MODE == "retry" and fadein < 0 then
     lg.setColor(255,255,255,allfade)
   end
 
@@ -1568,7 +1569,7 @@ spinespacing = 10
 spineymove = -40-spinespacing
 separatespines = false
 drawspine = function()
-if table.getn(spines) < 1 and menu == "color"
+if table.getn(spines) < 1 and MODE == "color"
   then
   soup=true
   spinestartx = 615
@@ -1728,7 +1729,7 @@ end
         end
         if gotimer < 40 then
           gotimer = gotimer + 1
-          setColor(goColor)
+          t_setColor(goColor)
           lg.draw(enviro.go,screenwidth/4 -5 + math.random(10),screenheight/4-5 + math.random(10),0,screenwidth/1440,screenheight/900)
           gosound:play()
         end
@@ -1738,7 +1739,7 @@ end
       you.deathclock = 0
       function drawroulettenumbers()
         numshake = math.random(-5,5)
-        if themode == "roulette" then
+        if game_mode == "roulette" then
           if you.deathclock < 5 and you.deathclock > 0 then
             lg.draw(enviro.x,0,0,0,screenwidth/1440,screenheight/900)
             if you.lives == 4 then lg.draw(enviro.iv,screenwidth - (530/1440)*screenwidth+numshake,(100/900)*screenheight+numshake,0,screenwidth/1440,screenheight/900)
@@ -1770,7 +1771,7 @@ end
   you.walktimer = 0
 
 
-  function orientlr(xx)
+  function orient(xx)
 
     if xx.wall_grab then
       xx.x = xx.wallx
@@ -1793,9 +1794,6 @@ end
     else 
       xx.xanimate = xx.xleft
     end
-
-
-
   end
 
 
@@ -1829,7 +1827,7 @@ end
     elseif xx.superjumptimer > 0 then
       xx.im = landing 
       xx.can_super_jump = true
-      xx.superjumptimer = rodib(xx.superjumptimer,1,0)
+      xx.superjumptimer = r2b(xx.superjumptimer,1,0)
 
     end
 
@@ -1882,25 +1880,24 @@ end
   end
 end
 
-landxcheck = function (xx)
-if xx.landing_counter <= 0	
-  then xx.landing = false
-else
-  xx.landing_counter = xx.landing_counter - 1*ramp(xx)
-end
-end
-you.slidetimer = 0
-me.slidetimer = 0
-slidexcheck = function (xx)
-if xx.slidetimer < 6
-  then 
-  xx.slidetimer = xx.slidetimer + 1*ramp(xx)
-elseif xx.slidetimer >= 6
-  then xx.slide = false
-
-end
+function landxcheck (xx)
+  if xx.landing_counter <= 0	
+    then xx.landing = false
+  else
+    xx.landing_counter = xx.landing_counter - 1*ramp(xx)
+  end
 end
 
+
+function slidexcheck(xx)
+  if xx.slidetimer > 0
+    then 
+    xx.slidetimer = xx.slidetimer - 1*ramp(xx)
+  else
+    xx.slidetimer = 0
+    xx.slide = false
+  end
+end
 
 function animate(xx)
   landxcheck(xx)
@@ -1918,7 +1915,7 @@ function animate(xx)
     else
       xx.im = landing
     end
-  elseif xx.g and aboutso(xx.v, xx.push) and not xx.slide 
+  elseif xx.g and aboutso(xx.v, 0) and not xx.slide 
     then idleanimatex(xx)
     xx.walktimer = 0
   elseif not xx.g

@@ -4,10 +4,13 @@ require "lasso"
 function initPlayer(xx)
 	xx.is_player = true
 
+	xx.x = 0
+	xx.mid = 0
+	xx.y = 0
+
 	xx.oldv = 0
 	xx.hit = false
 	xx.old_feet = xx.y
-
 
 	xx.rampspeed = 1
 	xx.ramptimer = 0
@@ -21,28 +24,33 @@ function initPlayer(xx)
 	--Purple Initializers
 	xx.spikes = {}
 
+	xx.slidetimer = 0
+	xx.slide = false
 end
 
 function initFightClub()
 	if fightclub then 
-		if menu == "play" then
+		if MODE == "play" then
 			loadImagesNow = true
 			placespeople = true 
 		end
 
-		themode = "fractal"
-		menu = "play"
+		game_mode = "fractal"
+		MODE = "play"
 		if not loadImagesNow then
 			mapNum = 100
 		end
 		theMap = theMaps[mapNum]
 		placespeople = true
-			loadStage()
-		while(not finishedLoading) do
+		loadStage()
+		while(not finished_loading) do
 			loader.update() 
 		end
 	end
 
+	for i,xx in ipairs(players) do
+		xx.g = true
+	end
 end
 
 function initJoysticks()
@@ -83,7 +91,7 @@ function initLove()
 
 	lg.setDefaultFilter("linear","nearest",1)
 	math.randomseed(os.clock())
-	finishedLoading = false
+	finished_loading = false
 end
 
 function initDependencies()
@@ -115,4 +123,5 @@ loader = require "love-loader"
 require "blossom"
 require "story/ch1/ch1"
 require "platforms"
+require "play"
 end

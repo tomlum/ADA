@@ -175,7 +175,7 @@ end
 
 function spikedraw(xx)
   for i = #xx.spikes, 1, -1 do
-    setColor(thecolors[1].c)
+    t_setColor(thecolors[1].c)
     local cur = xx.spikes[i] 
     if cur.t >= -3 then
 

@@ -8,6 +8,12 @@ attack_num
 5 = air special
 6 = air uppercut
 ]]
+
+-----------------------------
+--Table of all attack stats--
+-----------------------------
+at = {}
+
 blockrelease = {im=lg.newImage("me/attack/blockrelease.png"), xoff = 3, yoff = -4}
 
 throw = {im=lg.newImage("me/attack/throw.png"), xoff = 8, yoff = 5}
@@ -15,8 +21,6 @@ airthrow = {im=lg.newImage("me/attack/airthrow.png"), xoff = 9, yoff = 5}
 
 throwft = 26
 throwz = .1
-
-
 
 function attackmanage(xx)
 
@@ -272,6 +276,8 @@ function grab(xx)
 	you.cmbo = false
 	me.hit_a_box = false
 	you.hit_a_box = false
+
+	
 	function combo(xx)
 
 		if xx.animcounter > 0 and xx.animcounter <= 2 then
@@ -696,7 +702,7 @@ dodgerefreshtime = 38
 me.dodgerefreshtimer = 0
 you.dodgerefreshtimer = 0
 
-function newforwarddodge(xx)
+function dodging(xx)
 
 
 	if not xx.dodge then xx.dodgelr = xx.lr

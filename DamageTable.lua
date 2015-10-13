@@ -7,7 +7,6 @@ combo_pause = false
 
 spark_intensity = 2
 
-
 wave_frame_rate = 8 --(2 is fast, higher is lower)
 
 v_for_wall_flinch = 10
@@ -31,9 +30,7 @@ superJumpRatio = 1.5
 --set to 0 for whiplash like turning(?)
 whiplash = 1 
 
---THE BIG ONES
---THE BIG ONES
---THE BIG ONES
+--DANGER CLOSE
 dangerrampspeed = .5
 rampnormaldelta = .008
 dangerRampDelta = rampnormaldelta*1.5
@@ -41,12 +38,13 @@ dangerbarey = 70
 --only for maxzoom
 dangerZoom = .4
 dangerZoomDelta = .001
+
+--Walking Speed
 defSpeedMInit = 6
 minMaxSpeedDif = 4
 accel = .5
 --higher means more fric
---friction
-fricrate = .6
+friction = .4
 
 awaypenalty = .7
 
@@ -79,11 +77,6 @@ speedlimit = speedminit
 shakedis = 2
 noshake = false
 
-thebug = 0
-
-towardaway = true
-
-minvforwalljump = 2
 walljumpjt = 14
 walljumpj = 12
 walljumpv = 12
@@ -99,22 +92,8 @@ papertime = 100
 --speed necessary to move it
 paperweight = 4
 
-blanddam = 15
-bsft = 30
-swaittime = 48
-sandboltdam = 8
-sandboltknockup = 20
-gsft = 15
-
 fallflinchtime = 55
 
-psft = 75
-psdam = 5
-
-windft = 4
-
-sminedam = 12
-gsft = 10
 
 hopj = 15
 hopj2 = 10
@@ -224,7 +203,7 @@ local dis = 1
 local v = 1
 while dis < x
 	do dis = dis + v
-		v = v + fricrate-.04
+		v = v + friction-.04
 end
 
 return v
