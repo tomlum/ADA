@@ -22,7 +22,7 @@ require "initializers"
 
 --Debug/Test Utilities
 debug = false
-fightclub = true
+fightclub = false
 MODE = "color"
 notilebouncing = true
 melcolor = 1

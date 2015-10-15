@@ -7,6 +7,7 @@
 --play
 --retry
 
+numofcolors = 4
 
 --MODE that fades into another???
 
@@ -17,6 +18,11 @@ noplat = {n=0}
 
 letterboxheight = 80
 menuspeed = 7
+
+enviro.wave = lg.newImage("enviro/wave2.png")
+enviro.retry = lg.newImage("enviro/retry.png")
+
+ready = lg.newImage("enviro/READY.png")
 pausescreen = lg.newImage("enviro/paused.png")
 modes = lg.newImage("enviro/mode.png")
 backstreet = lg.newImage("enviro/backstreet.png")
@@ -223,6 +229,13 @@ function modeManager()
     dollyv = 7
     streetfadehold = 1
     streetfadestart = false
+
+
+    enviro.dolly = 0
+    enviro.ds = 5
+    streetfadestart = false
+    streetfade = 255
+    streetfadehold = 50 + math.random(50) 
 
   elseif MODE == "retry" and oldmenu ~= "retry" then
 
@@ -813,6 +826,7 @@ function drawmenus()
 
 
 elseif MODE == "pan" then
+
 
 
   if dollyx == 0 then

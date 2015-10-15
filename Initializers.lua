@@ -26,6 +26,10 @@ function initPlayer(xx)
 
 	xx.slidetimer = 0
 	xx.slide = false
+	xx.dodgetype = 0
+
+	xx.jt = 0
+	xx.landing_counter = 0
 end
 
 function initFightClub()

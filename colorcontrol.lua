@@ -165,13 +165,6 @@ function changePlayerColor(xx)
   end
 
 
-
-
-
-
-
-
-
   if not xx.actionshot and xx.color.n~=-1 then 
     xx.cantreturntothis = xx.color.n
   end
