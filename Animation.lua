@@ -251,7 +251,7 @@ bardis = 100
 function cinemabars()
   if not pause then
     dangervertone = ydif/dangerZoom <= beigedif
-    dangeronescreen = xdif <= screenwidth*dangerZoom/2 + tolandr*2
+    dangeronescreen = xdif <= screenwidth*dangerZoom/2 + camera_center_offset*2
     dangerclose = dangerCloseIsAThing and dangeronescreen and dangervertone and not slowww
 
     local tbardis = bardis
@@ -891,6 +891,7 @@ end
 
 enviro.rubble = lg.newImage("enviro/rubble.png")
 enviro.glass = lg.newImage("enviro/glass.png")
+enviro.glass2 = lg.newImage("enviro/glass2.png")
 enviro.spark = lg.newImage("enviro/spark.png")
 enviro.spark2 = lg.newImage("enviro/spark2.png")
 enviro.spark3 = lg.newImage("enviro/spark3.png")
@@ -1140,7 +1141,11 @@ function updatepapers()
             glassclarity = math.random(55,255)
           end
           tsetColor(glassn,255,255,glassclarity)
-          lg.draw(enviro.glass,v.x,v.y,70/(v.v+v.y),math.random()*math.random(-1,1),math.random()*math.random(-1,1), 1, 1)
+          if v.type == 1 then
+            lg.draw(enviro.glass,v.x,v.y,70/(v.v+v.y),math.random()*math.random(-1,1),math.random()*math.random(-1,1), 1, 1)
+          elseif v.type == 2 then
+            lg.draw(enviro.glass2,v.x,v.y,70/(v.v+v.y),floRan(-.4,.4),floRan(-.4,.4), 5, 5)
+          end
           lg.setColor(255,255,255)
 
         end
@@ -1377,7 +1382,11 @@ function updatepapers()
 
   function makenglass(ex,why,vee,jay,n)
     for i = 1, n do
-      table.insert(glasseses,{x = ex, y = why, v=vee*math.random(), j = jay*math.random()+math.random()*4})
+      if coinflip() then
+        table.insert(glasseses,{x = ex, y = why, v=vee*math.random(), j = jay*math.random()+math.random()*4, type = 1})
+      else
+        table.insert(glasseses,{x = ex, y = why, v=vee*math.random(), j = jay*math.random()+math.random()*4, type = 2})
+      end
     end
   end
 
@@ -1557,7 +1566,7 @@ retry = function()
   end
 
   lg.setColor(0, 0, 0, retryfade)
-  lg.draw(enviro.retry, 0, 0, 0, screenwidth/1440, screenheight/900)
+  lg.draw(retryim, 0, 0, 0, screenwidth/1440, screenheight/900)
 end
 ]]--
 
@@ -1634,28 +1643,28 @@ end
             elseif v.spinecolor == 1 then 
               lg.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
             end
-            lg.sdraw(enviro.spine, v.x, (v.n * (40+spinespacing))+spineymove)
+            lg.sdraw(vertebrae, v.x, (v.n * (40+spinespacing))+spineymove)
 
             if v.spinecolor2 == 0 then 
               lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
             elseif v.spinecolor2 == 1 then 
               lg.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
             end
-            lg.sdraw(enviro.spine, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
+            lg.sdraw(vertebrae, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
           else
             if v.spinecolor2 == 0 then 
               lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
             elseif v.spinecolor2 == 1 then 
               lg.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
             end
-            lg.sdraw(enviro.spine, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
+            lg.sdraw(vertebrae, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
 
             if v.spinecolor == 0 then 
               lg.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
             elseif v.spinecolor == 1 then 
               lg.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
             end
-            lg.sdraw(enviro.spine, v.x, (v.n * (40+spinespacing))+spineymove)
+            lg.sdraw(vertebrae, v.x, (v.n * (40+spinespacing))+spineymove)
           end
         end
 
@@ -1714,7 +1723,7 @@ end
               v.y = v.y - v.v
             end
           end
-          lg.draw(enviro.wave, v.x, v.y+(screenheight*.7)-stagey*(screenheight/350), 0, screenwidth/1440, screenheight/700)
+          lg.draw(waveim, v.x, v.y+(screenheight*.7)-stagey*(screenheight/350), 0, screenwidth/1440, screenheight/700)
 
         end
       end

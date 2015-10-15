@@ -8,6 +8,7 @@
 --can't kick combo out of purple kick
 
 --notes:
+--put images in more organized place, delete meanyou
 --love.timer.sleep?
 --change push to prevent pulling
 --can rapid kick
@@ -22,7 +23,7 @@ require "initializers"
 
 --Debug/Test Utilities
 debug = false
-fightclub = false
+fightclub = true
 MODE = "color"
 notilebouncing = true
 melcolor = 1

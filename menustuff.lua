@@ -11,17 +11,17 @@ numofcolors = 4
 
 --MODE that fades into another???
 
-pressanybutton = lg.newImage("enviro/pressanybutton.png")
 
 noplat = {n=0}
+enviro = {}
 
-
+health_bar_height = 50
 letterboxheight = 80
 menuspeed = 7
 
-enviro.wave = lg.newImage("enviro/wave2.png")
-enviro.retry = lg.newImage("enviro/retry.png")
-
+pressanybutton = lg.newImage("enviro/pressanybutton.png")
+waveim = lg.newImage("enviro/wave2.png")
+retryim = lg.newImage("enviro/retry.png")
 ready = lg.newImage("enviro/READY.png")
 pausescreen = lg.newImage("enviro/paused.png")
 modes = lg.newImage("enviro/mode.png")
@@ -29,6 +29,7 @@ backstreet = lg.newImage("enviro/backstreet.png")
 modeselector = lg.newImage("enviro/modeselector.png")
 wiper = lg.newImage("enviro/wiper.png")
 map = lg.newImage("enviro/map.png")
+
 ptile = lg.newImage("enviro/ptile.png")
 gtile = lg.newImage("enviro/gtile.png")
 otile = lg.newImage("enviro/otile.png")
@@ -37,6 +38,34 @@ glogo = {im = lg.newImage("enviro/greenlogo.png")}
 questionlogo = {im=lg.newImage("enviro/questionmark.png")}
 shoulder = lg.newImage("enviro/shoulder.png")
 ready = lg.newImage("enviro/ready.png")
+
+if not fightclub then 
+
+  enviro.vert = lg.newImage("enviro/vert.png")
+  enviro.horiz = lg.newImage("enviro/horiz.png")
+
+  enviro.iv = lg.newImage("enviro/iv.png")
+  enviro.iii = lg.newImage("enviro/iii.png")
+  enviro.ii = lg.newImage("enviro/ii.png")
+  enviro.i = lg.newImage("enviro/i.png")
+  enviro.x = lg.newImage("enviro/x.png")
+
+  vertebrae = lg.newImage("enviro/spine.png")
+
+  buildings1 = lg.newImage("enviro/v1.png")
+  buildings2 = lg.newImage("enviro/v2.png")
+  buildings3 = lg.newImage("enviro/v3.png")
+
+  facade = buildings1
+
+  enviro.sunback = lg.newImage("enviro/sunback.png")
+  enviro.ada = lg.newImage("enviro/Ada.png")
+  enviro.go = lg.newImage("enviro/go.png")
+  enviro.screenheight = screenheight - health_bar_height
+end
+enviro.light = lg.newImage("enviro/lightson.png")
+enviro.healthbar = lg.newImage("enviro/healthbar.png")
+enviro.stagefloor = lg.newImage("enviro/floor.png")
 
 musfadein = 0
 musfade = 0
@@ -121,8 +150,8 @@ function drawOverlays()
   lg.srectangle("fill",0,900,1440,-barey)
   lg.setColor(255,255,255)
 
-  lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, screenwidth/1440,1)
-  lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-barheight, 0, -screenwidth/1440, 1)
+  lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, screenwidth/1440,1)
+  lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, -screenwidth/1440, 1)
 end
 
 function lg.sdraw(im, x, y, rot, sx, sy) 
@@ -350,8 +379,8 @@ function drawmenus()
     lg.setColor(allfade,allfade,allfade,255)
     --lg.setColor(255,255,255,255)
     lg.draw(enviro.sunback, 0, 0, 0, screenwidth/1440, screenheight/900)
-    lg.draw(enviro.v3, 0, 0-stagey*(screenheight/400), 0, screenwidth/1440, screenheight/900)
-    lg.draw(enviro.v2, 0, 0-stagey*(screenheight/375), 0, screenwidth/1440, screenheight/900)
+    lg.draw(buildings3, 0, 0-stagey*(screenheight/400), 0, screenwidth/1440, screenheight/900)
+    lg.draw(buildings2, 0, 0-stagey*(screenheight/375), 0, screenwidth/1440, screenheight/900)
     lg.draw(facade, 0, 0-stagey*(screenheight/350), 0, screenwidth/1440, screenheight/900)
 
     drawwaves()
@@ -933,7 +962,7 @@ elseif MODE == "retry" then
     --retry()
 
     lg.setColor(0,0,0,allfade)
-    lg.sdraw(enviro.retry, 0, 0)
+    lg.sdraw(retryim, 0, 0)
 
     if beginretry then
       fadein = 5

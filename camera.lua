@@ -1,10 +1,10 @@
+--Winheight = 
+
+--updated also later on
+winheight = (lg.getHeight()-health_bar_height)
 
 
---IF Y DIF GREAT THEN GROW THE LINE MORE have an 'or' clause
---HAVE IT SPLIT VERT ALSO? if horiz is same but different vert?
-
---partition, the hole in the ceiling, the right edge of the apartment
-
+paralaxoffset = 40
 var2tb = true
 defhead2ceiling = 90
 deffeet2bottom = 90
@@ -13,9 +13,11 @@ feet2bottom = deffeet2bottom
 --danger 2 top bottom
 danger2tb = dangerbarey
 
-tolandr=0
---updated also later on
-winheight = (lg.getHeight()-barheight)
+--After dangerclose this makes it so 
+--xdis necessary for separation is greater
+--after separation, camera returns smoothly to 
+camera_center_offset=0
+
 
 
 defaultminzoom = .7
@@ -34,7 +36,7 @@ shrinkrate = .001
 function updateScreenInfo()
     screenwidth = lg.getWidth()
     screenheight = lg.getHeight()
-    enviro.screenheight = screenheight - barheight
+    enviro.screenheight = screenheight - health_bar_height
     healthratio = (screenwidth/2)/maxhealth
   end
 
@@ -81,17 +83,17 @@ function camreturntozoom()
 
   if onescreen and vertone then
     if lasso then 
-    tolandr = cscale*lg.getWidth()/4-2*lassowidth
+    camera_center_offset = cscale*lg.getWidth()/4-2*lassowidth
       else
-    tolandr = lg.getWidth()/14
+    camera_center_offset = lg.getWidth()/14
     end
 
 
   else
-    if tolandr - 1 > 0 then
-      tolandr = tolandr/1.03
+    if camera_center_offset - 1 > 0 then
+      camera_center_offset = camera_center_offset/1.03
     else
-      tolandr = 0
+      camera_center_offset = 0
     end
 
   end
@@ -176,8 +178,10 @@ function cammovement()
 
   end
 
-  winheight = (lg.getHeight()-barheight)
+  winheight = (lg.getHeight()-health_bar_height)
+
   camreturntozoom()
+
   beigedif = (winheight - head2ceiling - feet2bottom-120)
   jumpj = initjumpj * cscale/minzoom
   --
@@ -284,7 +288,7 @@ camerafol = function ()
 
 
 
-  if xdif <= screenwidth*cscale/2 + tolandr*2 then 
+  if xdif <= screenwidth*cscale/2 + camera_center_offset*2 then 
     onescreen = true
   else onescreen = false
   end
@@ -299,8 +303,8 @@ camerafol = function ()
   end
 
 
-  mexrig = me.mid - (screenwidth*cscale*.25)+tolandr 
-  youxrig = you.mid - (screenwidth*cscale*.75)-tolandr
+  mexrig = me.mid - (screenwidth*cscale*.25)--+camera_center_offset 
+  youxrig = you.mid - (screenwidth*cscale*.75)---camera_center_offset
 
   meyrig = me.y+60 - winheight*cscale + feet2bottom*cscale
   youyrig = you.y+60 - winheight*cscale + feet2bottom*cscale
@@ -343,8 +347,8 @@ camerafol = function ()
 
   if you.x < me.x then
 
-    youxrig = me.mid - (screenwidth*cscale*.75)-tolandr 
-    mexrig = you.mid - (screenwidth*cscale*.25)+tolandr
+    youxrig = me.mid - (screenwidth*cscale*.75)-camera_center_offset 
+    mexrig = you.mid - (screenwidth*cscale*.25)+camera_center_offset
 
     tempyrig = meyrig
     meyrig = youyrig

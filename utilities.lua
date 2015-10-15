@@ -176,13 +176,13 @@ end
 ---RANDOM(number) UTILITIES---
 ------------------------------
 
-function coinflip(per)
-  if per==nil then
+function coinflip(decimal)
+  if decimal==nil then
     if math.random()>.5 then return true
       else return false
       end
     else
-      if math.random()>per then return true
+      if math.random()>decimal then return true
         else return false
         end
 
@@ -193,7 +193,7 @@ function coinflip(per)
 
 --generate a float random
 function floRan(low,up)
-  return math.random(low+1,up-1)+math.random()*math.random(-1,1)
+  return low+math.random()*(up-low)
 end
 
 

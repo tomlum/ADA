@@ -1,6 +1,12 @@
 require "utilities"
 require "lasso"
 
+me = {}
+you = {}
+
+me.id = 1
+you.id = 2
+
 function initPlayer(xx)
 	xx.is_player = true
 
@@ -102,7 +108,6 @@ function initDependencies()
 require "blur"
 require "menustuff"
 require "damageTable"
-require "meandyou"
 require "camera"
 require "hits"
 require "music"
