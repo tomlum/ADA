@@ -17,16 +17,16 @@ function colorcombomonitor(xx, x, y)
 end
 
 function cameraoutline()
-        bo(0, 0, screenwidth/2, winheight, "light purple")
-        bo(screenwidth/2, 0, screenwidth/2, winheight, "red")
+        bo(0, 0, screenwidth/2, playheight, "light purple")
+        bo(screenwidth/2, 0, screenwidth/2, playheight, "red")
 
         if onescreen and not vertone then
           if me.x < you.x then 
-            bo(screenwidth/2, topy,twidth, winheight/2, "teal")
-            bo(screenwidth/2-twidth+1, bottomy,twidth, winheight/2,"yellow")
+            bo(screenwidth/2, topy,twidth, playheight/2, "teal")
+            bo(screenwidth/2-twidth+1, bottomy,twidth, playheight/2,"yellow")
           elseif me.x >= you.x then
-            bo(screenwidth/2-twidth+1, topy,twidth, enviro.screenheight/2, "teal")
-            bo(screenwidth/2, bottomy,twidth, enviro.screenheight/2, "yellow")
+            bo(screenwidth/2-twidth+1, topy,twidth, playheight/2, "teal")
+            bo(screenwidth/2, bottomy,twidth, playheight/2, "yellow")
           end
 
         end

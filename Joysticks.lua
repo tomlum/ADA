@@ -23,7 +23,7 @@ you.rrum = 0
 me.joystickn = 0
 you.joystickn = 0
 
-function setControllers()
+function checkForControllers()
   for i,v in ipairs(love.joystick.getJoysticks()) do
     if me.joystick == nil then
       if v:isGamepadDown("guide") then
@@ -537,9 +537,13 @@ end
 
 function updateControllers()
 
+  checkForControllers()
   keyboardcontrols()
   jjstick(me)
   jjstick(you)
   controlsstuff(me)
   controlsstuff(you)
+  rumblemodule(me)
+  rumblemodule(you)
+  pausing()
 end

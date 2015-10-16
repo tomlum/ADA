@@ -1,7 +1,5 @@
---Winheight = 
+--playheight = screenheight-health_bar_height
 
---updated also later on
-winheight = (lg.getHeight()-health_bar_height)
 
 
 paralaxoffset = 40
@@ -18,8 +16,6 @@ danger2tb = dangerbarey
 --after separation, camera returns smoothly to 
 camera_center_offset=0
 
-
-
 defaultminzoom = .7
 defaultmaxzoom = .5
 minzoom = defaultminzoom
@@ -34,11 +30,11 @@ shrinkrate = .001
 
 
 function updateScreenInfo()
-    screenwidth = lg.getWidth()
-    screenheight = lg.getHeight()
-    enviro.screenheight = screenheight - health_bar_height
-    healthratio = (screenwidth/2)/maxhealth
-  end
+  screenwidth = lg.getWidth()
+  screenheight = lg.getHeight()
+  playheight = screenheight - health_bar_height
+  healthratio = (screenwidth/2)/maxhealth
+end
 
 function drawcolorstuff(xx)
   spikedraw(xx)
@@ -48,7 +44,7 @@ function drawcolorstuff(xx)
     lg.setShader(fillshader)
     fillshader:send("shade", 
       vct(thecolors[xx.currentc].c
-      ))
+        ))
     if xx.im.sdir ~= nil then
       lg.draw(xx.im.slash,xx.mid,
         xx.y, -math.rad(90), 1, 1, 0, 36)
@@ -83,9 +79,9 @@ function camreturntozoom()
 
   if onescreen and vertone then
     if lasso then 
-    camera_center_offset = cscale*lg.getWidth()/4-2*lassowidth
-      else
-    camera_center_offset = lg.getWidth()/14
+      camera_center_offset = cscale*lg.getWidth()/4-2*lassowidth
+    else
+      camera_center_offset = lg.getWidth()/14
     end
 
 
@@ -104,86 +100,84 @@ function camreturntozoom()
       if minzoom + shrinkrate > defaultminzoom then
         minzoom = defaultminzoom
         maxzoom = defaultmaxzoom
-      else minzoom = minzoom + shrinkrate
-        maxzoom = maxzoom + shrinkrate
-      end
+        else minzoom = minzoom + shrinkrate
+          maxzoom = maxzoom + shrinkrate
+        end
 
-    elseif maxzoom > defaultminzoom then
-      if minzoom - growrate < defaultminzoom then
-        minzoom = defaultminzoom
-        maxzoom = defaultmaxzoom
-      else maxzoom = minzoom - growrate
-        maxzoom = maxzoom - growrate
-      end
-    end
-  else
-    if maxzoom < dangerZoom then
-      if minzoom + dangerZoomDelta > dangerZoom + (defaultminzoom-defaultmaxzoom) then
-        minzoom = dangerZoom + (defaultminzoom-defaultmaxzoom)
-        maxzoom = dangerZoom
-      else minzoom = minzoom + dangerZoomDelta
-        maxzoom = maxzoom + dangerZoomDelta
-      end
+      elseif maxzoom > defaultminzoom then
+        if minzoom - growrate < defaultminzoom then
+          minzoom = defaultminzoom
+          maxzoom = defaultmaxzoom
+          else maxzoom = minzoom - growrate
+            maxzoom = maxzoom - growrate
+          end
+        end
+      else
+        if maxzoom < dangerZoom then
+          if minzoom + dangerZoomDelta > dangerZoom + (defaultminzoom-defaultmaxzoom) then
+            minzoom = dangerZoom + (defaultminzoom-defaultmaxzoom)
+            maxzoom = dangerZoom
+            else minzoom = minzoom + dangerZoomDelta
+              maxzoom = maxzoom + dangerZoomDelta
+            end
 
-    elseif maxzoom > dangerZoom then
-      if minzoom - dangerZoomDelta < dangerZoom then
-        minzoom = dangerZoom + (defaultminzoom-defaultmaxzoom)
-        maxzoom = dangerZoom
-      else minzoom = minzoom - dangerZoomDelta
-        maxzoom = maxzoom - dangerZoomDelta
-      end
-    end
-  end
-end
+          elseif maxzoom > dangerZoom then
+            if minzoom - dangerZoomDelta < dangerZoom then
+              minzoom = dangerZoom + (defaultminzoom-defaultmaxzoom)
+              maxzoom = dangerZoom
+              else minzoom = minzoom - dangerZoomDelta
+                maxzoom = maxzoom - dangerZoomDelta
+              end
+            end
+          end
+        end
 
-function cammovement()
+        function cammovement()
 
-  cinemabars()
+          cinemabars()
+          camreturntozoom()
 
-  if dangerclose and var2tb then
+          if dangerclose and var2tb then
 
-    if head2ceiling > danger2tb
-    then
-      head2ceiling = head2ceiling/1.01
+            if head2ceiling > danger2tb
+              then
+              head2ceiling = head2ceiling/1.01
 
-    else
-      head2ceiling = danger2tb
-    end
+            else
+              head2ceiling = danger2tb
+            end
 
 
-    if feet2bottom > danger2tb and not bothfloor
-    then
-      feet2bottom = feet2bottom/1.01
+            if feet2bottom > danger2tb and not bothfloor
+              then
+              feet2bottom = feet2bottom/1.01
 
-    elseif not bothfloor then
-      feet2bottom = danger2tb
-    end
+            elseif not bothfloor then
+              feet2bottom = danger2tb
+            end
 
-  else
-    if head2ceiling < defhead2ceiling 
-    then
-      local change = math.log(defhead2ceiling-head2ceiling)/3
-      head2ceiling = head2ceiling + change
-    else
-      head2ceiling = defhead2ceiling
-    end
+          else
+            if head2ceiling < defhead2ceiling 
+              then
+              local change = math.log(defhead2ceiling-head2ceiling)/3
+              head2ceiling = head2ceiling + change
+            else
+              head2ceiling = defhead2ceiling
+            end
 
-    if feet2bottom < deffeet2bottom 
-    then
-      local change = math.log(deffeet2bottom-feet2bottom)/1.5
-      feet2bottom = feet2bottom + change
-    else
-      feet2bottom = deffeet2bottom
-    end
+            if feet2bottom < deffeet2bottom 
+              then
+              local change = math.log(deffeet2bottom-feet2bottom)/1.5
+              feet2bottom = feet2bottom + change
+            else
+              feet2bottom = deffeet2bottom
+            end
 
-  end
+          end
 
-  winheight = (lg.getHeight()-health_bar_height)
 
-  camreturntozoom()
-
-  beigedif = (winheight - head2ceiling - feet2bottom-120)
-  jumpj = initjumpj * cscale/minzoom
+          beigedif = (playheight - head2ceiling - feet2bottom-120)
+          jumpj = initjumpj * cscale/minzoom
   --
   jmax = initjmax * cscale/minzoom
   --basically min j
@@ -192,13 +186,13 @@ function cammovement()
 
   if ydif/cscale <= beigedif then
     vertone = true
-  else vertone = false
-  end
+    else vertone = false
+    end
 
-  if me.y <= you.y then 
-    midypoint = (me.y + (ydif/2) + 30)
-  else midypoint = (you.y + (ydif/2) + 30)
-  end
+    if me.y <= you.y then 
+      midypoint = (me.y + (ydif/2) + 30)
+      else midypoint = (you.y + (ydif/2) + 30)
+      end
 
 
   --removed cause stopping at edges is no
@@ -217,8 +211,8 @@ function cammovement()
 
 
 
-  if midypoint >= theMap.floor - ((winheight/2) - (feet2bottom))*cscale
-  then
+  if midypoint >= theMap.floor - ((playheight/2) - (feet2bottom))*cscale
+    then
     youcamfloor = true
     mecamfloor = true
   else
@@ -261,8 +255,8 @@ beigedif = 0
 
 
 
-camerafol = function ()
-  
+function camerafol()
+
 
   xdif = math.abs((you.x+you.v) - (me.x+me.v))
   absdis = math.sqrt(((you.y-me.y)^2)+((you.x-me.x)^2))
@@ -271,7 +265,7 @@ camerafol = function ()
 
 
   if absdis <= minzdis
-  then cscale = maxzoom
+    then cscale = maxzoom
   elseif absdis > maxzdis then
     cscale = minzoom
   elseif absdis > minzdis then
@@ -290,8 +284,8 @@ camerafol = function ()
 
   if xdif <= screenwidth*cscale/2 + camera_center_offset*2 then 
     onescreen = true
-  else onescreen = false
-  end
+    else onescreen = false
+    end
 
 
 
@@ -303,34 +297,33 @@ camerafol = function ()
   end
 
 
-  mexrig = me.mid - (screenwidth*cscale*.25)--+camera_center_offset 
-  youxrig = you.mid - (screenwidth*cscale*.75)---camera_center_offset
+  mexrig = me.mid - (screenwidth*cscale*.25) + camera_center_offset 
+  youxrig = you.mid - (screenwidth*cscale*.75) - camera_center_offset
 
-  meyrig = me.y+60 - winheight*cscale + feet2bottom*cscale
-  youyrig = you.y+60 - winheight*cscale + feet2bottom*cscale
+  meyrig = me.y+60 - playheight*cscale + feet2bottom*cscale
+  youyrig = you.y+60 - playheight*cscale + feet2bottom*cscale
 
 
   if not mecamfloor and you.y > me.y then 
-    youyrig = you.y+60 - winheight*cscale + feet2bottom*cscale
+    youyrig = you.y+60 - playheight*cscale + feet2bottom*cscale
 
   elseif youcamfloor 
-  then
-    youyrig = theMap.floor - winheight*cscale + feet2bottom*cscale
+    then
+    youyrig = theMap.floor - playheight*cscale + feet2bottom*cscale
   elseif not vertone and you.y < me.y then
     youyrig = you.y - head2ceiling*cscale
   end
 
 
   if not youcamfloor and you.y < me.y then 
-    meyrig = me.y+60 - winheight*cscale + feet2bottom*cscale
+    meyrig = me.y+60 - playheight*cscale + feet2bottom*cscale
 
   elseif mecamfloor 
-  then
-    meyrig = theMap.floor - winheight*cscale + feet2bottom*cscale
+    then
+    meyrig = theMap.floor - playheight*cscale + feet2bottom*cscale
   elseif not vertone and me.y < you.y then
     meyrig = me.y - head2ceiling*cscale
   end
-
 
 
 
@@ -341,8 +334,6 @@ camerafol = function ()
 
   -- if mecamrwall or youcamrwall then camera2.x = enviro.rightwall-screenwidth*cscale
   -- end
-
-
 
 
   if you.x < me.x then
@@ -360,23 +351,21 @@ camerafol = function ()
 
 
     if camera.xfollow 
-    then
+      then
       tempxfol = true
-    else tempxfol = false
-    end
+      else tempxfol = false
+      end
 
-    if camera.yfollow 
-    then
-      tempyfol = true
-    else tempyfol = false
-    end
-    camera.xfollow = camera2.xfollow
-    camera.yfollow = camera2.yfollow
-    camera2.xfollow = tempxfol
-    camera2.yfollow = tempyfol
-  end
-
-
+      if camera.yfollow 
+        then
+        tempyfol = true
+        else tempyfol = false
+        end
+        camera.xfollow = camera2.xfollow
+        camera.yfollow = camera2.yfollow
+        camera2.xfollow = tempxfol
+        camera2.yfollow = tempyfol
+      end
 
 
 
@@ -385,35 +374,37 @@ camerafol = function ()
 
 
 
-  if camera.xfollow then
-    camera.x = mexrig
-  end
-
-  camera.y = meyrig
 
 
+      if camera.xfollow then
+        camera.x = mexrig
+      end
 
-
-  if camera2.xfollow then
-    camera2.x = youxrig
-  end 
-
-  camera2.y = youyrig
+      camera.y = meyrig
 
 
 
 
+      if camera2.xfollow then
+        camera2.x = youxrig
+      end 
 
-  if onescreen 
-  then 
-
-    camera.x = midpoint - screenwidth*cscale/2
-    camera2.x = camera.x
+      camera2.y = youyrig
 
 
-  end
 
-  if camera.x <= 0 and camera2.x <= 0 then 
+
+
+      if onescreen 
+        then 
+
+        camera.x = midpoint - screenwidth*cscale/2
+        camera2.x = camera.x
+
+
+      end
+
+      if camera.x <= 0 and camera2.x <= 0 then 
     --removed cause stopping at edges is no
     -- camera.x = 0 
     -- camera2.x = camera.x
@@ -430,7 +421,7 @@ camerafol = function ()
 
 
   if vertone and not bothfloor then 
-    camera.y = midypoint - (winheight/2)*cscale
+    camera.y = midypoint - (playheight/2)*cscale
     camera2.y = camera.y  
   end
 
@@ -454,40 +445,42 @@ camerafol = function ()
   elseif xdif > screenwidth*cscale/2 then 
     width = (xdif - screenwidth*cscale/2)/(screenwidth*cscale/2) + .3
     wallx = (screenwidth/2 - 7) + ((1-width) * 7)
-  else wallx = 0
+    else wallx = 0
+
+    end
+
+    if onescreen then width = 0
+      wallx = 0
+    end
+
+    if ydif/cscale > beigedif*4 then 
+      bwidth = 15
+    elseif ydif/cscale >= beigedif  then
+      bwidth =1 + ((ydif/cscale-beigedif)/(beigedif*4)) * 15
+
+    elseif ydif/cscale <= beigedif
+      then
+      bwidth = 0
+
+
+
+    end 
+
+    topbottomcam()
+    camera.x = camera.x + camwobx
+    camera2.x = camera2.x + camwobx
+    camera.y = camera.y + camwoby
+    camera2.y = camera2.y + camwoby
+    camerawobble()
+
 
   end
 
-  if onescreen then width = 0
-    wallx = 0
-  end
-
-  if ydif/cscale > beigedif*4 then 
-    bwidth = 15
-  elseif ydif/cscale >= beigedif  then
-    bwidth =1 + ((ydif/cscale-beigedif)/(beigedif*4)) * 15
-
-  elseif ydif/cscale <= beigedif
-  then
-    bwidth = 0
 
 
 
-  end 
-
-  topbottomcam()
-  camera.x = camera.x + camwobx
-  camera2.x = camera2.x + camwobx
-  camera.y = camera.y + camwoby
-  camera2.y = camera2.y + camwoby
-
-end
-
-
-
-
-twidth = 0
-topy = 0
+  twidth = 0
+  topy = 0
 
 
 --length of horiz bar is related to xdif, thickness related to ydif
@@ -498,13 +491,13 @@ function topbottomcam()
 
 
     topy = 0
-    bottomy = winheight/2
+    bottomy = playheight/2
 
   else
 
 
     bottomy = 0
-    topy = winheight/2
+    topy = playheight/2
 
   end
 
@@ -636,24 +629,24 @@ camwobjflip = -1
 function camerawobble()
   if dangerclose then
 
-      camwobv = camwobv+camwobvflip*floRan(.1, .2)
-      if camwobv > camwob_max-floRan(0, camwob_max/5)  then
-        camwobvflip = -1
-        camwobv = -camwobv/2
-      elseif camwobv < -camwob_max + floRan(0, camwob_max/5) then
-        camwobvflip = 1
-        camwobv = -camwobv/2
-      end
+    camwobv = camwobv+camwobvflip*floRan(.1, .2)
+    if camwobv > camwob_max-floRan(0, camwob_max/5)  then
+      camwobvflip = -1
+      camwobv = -camwobv/2
+    elseif camwobv < -camwob_max + floRan(0, camwob_max/5) then
+      camwobvflip = 1
+      camwobv = -camwobv/2
+    end
 
 
-      camwobj = camwobj+camwobjflip*floRan(.1, .2)
-      if camwobj > camwob_max-floRan(0, camwob_max/5) then 
-        camwobjflip = -1
-        camwobj = -camwobj/2
-      elseif camwobj < -camwob_max + floRan(0, camwob_max/5) then
-        camwobjflip = 1
-        camwobj = -camwobj/2
-      end
+    camwobj = camwobj+camwobjflip*floRan(.1, .2)
+    if camwobj > camwob_max-floRan(0, camwob_max/5) then 
+      camwobjflip = -1
+      camwobj = -camwobj/2
+    elseif camwobj < -camwob_max + floRan(0, camwob_max/5) then
+      camwobjflip = 1
+      camwobj = -camwobj/2
+    end
 
     camwobx = bof(-camwob_max, camwobx+camwobv/cam_wobble_degree, camwob_max)
     camwoby = bof(-camwob_max, camwoby+camwobj/cam_wobble_degree, camwob_max)
@@ -679,6 +672,8 @@ function drawx(xx)
     paralaxcamshake = shakedis*math.random(-3,3)*math.random()
   end
 
+  paralaxshake = false
+
   if MODE ~= "retry" then
     tods()
 
@@ -688,14 +683,14 @@ function drawx(xx)
 
     if not fightclub and theMap.paralaxscale2 ~= nil then
       blurdraw(blur_scale1, function()
-          lg.draw(enviro.paralax2, 
-            (xx.x+(screenwidth/4)*cscale*pzoom2+paralaxcamshake)*(1-theMaps[mapNum].paralaxscale2*pzoom2)
-            -(500*(1-theMaps[mapNum].paralaxscale2*pzoom2))
-            ,
-            (xx.y+(screenheight/2)*cscale+paralaxcamshake)*(1-theMaps[mapNum].paralaxscale2*pzoom2)+(feet2bottom-paralaxoffset)*(cscale*(1-theMaps[mapNum].paralaxscale2*pzoom2)),
-            0,
-            pzoom2,
-            pzoom2)
+        lg.draw(enviro.paralax2, 
+          (xx.x+(screenwidth/4)*cscale*pzoom2+paralaxcamshake)*(1-theMaps[mapNum].paralaxscale2*pzoom2)
+          -(500*(1-theMaps[mapNum].paralaxscale2*pzoom2))
+          ,
+          (xx.y+(screenheight/2)*cscale+paralaxcamshake)*(1-theMaps[mapNum].paralaxscale2*pzoom2)+(feet2bottom-paralaxoffset)*(cscale*(1-theMaps[mapNum].paralaxscale2*pzoom2)),
+          0,
+          pzoom2,
+          pzoom2)
 
         end)
     end
@@ -707,7 +702,7 @@ function drawx(xx)
     local pzoom = 1+(1-math.sqrt(cscale))
     if theMap.paralaxscale ~= nil then
       if theMap.rotation ~= nil then
-        
+
         local ps = theMap.paralaxscale
         local ips = 1/ps
         
@@ -715,26 +710,25 @@ function drawx(xx)
         local xoffset = 0
         local yoffset = 0
         if math.deg(theMap.rotation)%360 < 10 then
-        xoffset = (100)*theMap.paralaxscale
-        
-        yoffset = (100)*theMap.paralaxscale
-      elseif math.deg(theMap.rotation)%360 < 100 then
-        yoffset = (theMap.height+100)*theMap.paralaxscale
-        xoffset = (100)*theMap.paralaxscale
-      elseif math.deg(theMap.rotation)%360 < 190 then
-        xoffset = (theMap.width+100)*theMap.paralaxscale
-        yoffset = (theMap.height+100)*theMap.paralaxscale
-    elseif math.deg(theMap.rotation)%360 < 280 then
-        xoffset = (theMap.width+100)*theMap.paralaxscale  
-        yoffset = (100)*theMap.paralaxscale
+          xoffset = (100)*theMap.paralaxscale
+          yoffset = (100)*theMap.paralaxscale
+        elseif math.deg(theMap.rotation)%360 < 100 then
+          yoffset = (theMap.height+100)*theMap.paralaxscale
+          xoffset = (100)*theMap.paralaxscale
+        elseif math.deg(theMap.rotation)%360 < 190 then
+          xoffset = (theMap.width+100)*theMap.paralaxscale
+          yoffset = (theMap.height+100)*theMap.paralaxscale
+        elseif math.deg(theMap.rotation)%360 < 280 then
+          xoffset = (theMap.width+100)*theMap.paralaxscale  
+          yoffset = (100)*theMap.paralaxscale
         end
-       blurdraw(blur_scale1, function()
+        blurdraw(blur_scale1, function()
 
-            lg.draw(theMap.paralax, 
-              (xx.x+(screenwidth/2)*cscale*pzoom+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)
-              
-              -(50*(1-theMap.paralaxscale*pzoom))
-              ,
+          lg.draw(theMap.paralax, 
+            (xx.x+(screenwidth/2)*cscale*pzoom+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)
+            
+            -(50*(1-theMap.paralaxscale*pzoom))
+            ,
               (xx.y+(screenheight/2)--*pzoom
                 *cscale+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-theMap.paralaxscale*pzoom))
               
@@ -747,59 +741,16 @@ function drawx(xx)
               yoffset)
 
           end)
---[[
-        if math.deg(theMap.rotation)%360 < 80 then     
-          lg.draw(theMap.paralax, 
-            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-theMap.paralaxscale*pzoom),
-            (xx.y+(screenheight/2)--*pzoom
-              *cscale+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-theMap.paralaxscale*pzoom)),
-            theMap.rotation,
-            pzoom,
-            pzoom)
-
-        elseif math.deg(theMap.rotation)%360 < 170 then
-
-          lg.draw(theMap.paralax, 
-            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)+theMap.height,
-            (xx.y+(screenheight/2)--*pzoom
-              *cscale+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-theMap.paralaxscale*pzoom))
-            
-            ,
-            theMap.rotation,
-            pzoom,
-            pzoom)
 
 
-        elseif math.deg(theMap.rotation)%360 < 260 then     
-          lg.draw(theMap.paralax, 
-            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)+theMap.width,
-            (xx.y+(screenheight/2)--*pzoom
-              *cscale+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-theMap.paralaxscale*pzoom))+theMap.height,
-            theMap.rotation,
-            pzoom,
-            pzoom)
-          
-          elseif math.deg(theMap.rotation)%360 < 360 then     
-           lg.draw(theMap.paralax, 
-            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-theMap.paralaxscale*pzoom),
-            (xx.y+(screenheight/2)--*pzoom
-              *cscale+paralaxcamshake)*(1-theMap.paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-theMap.paralaxscale*pzoom))+theMap.width,
-            theMap.rotation,
-            pzoom,
-            pzoom)
-
-      end
-      ]]--
-      
-      
 
       else
 
         blurdraw(blur_scale1, function()
 
-            lg.draw(enviro.paralax, 
-              (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-theMaps[mapNum].paralaxscale*pzoom)
-              -(500*(1-theMaps[mapNum].paralaxscale*pzoom)),
+          lg.draw(enviro.paralax, 
+            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-theMaps[mapNum].paralaxscale*pzoom)
+            -(500*(1-theMaps[mapNum].paralaxscale*pzoom)),
               (xx.y+(screenheight/2)--*pzoom
                 *cscale+paralaxcamshake)*(1-theMaps[mapNum].paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-theMaps[mapNum].paralaxscale*pzoom)),
               0,
@@ -811,31 +762,6 @@ function drawx(xx)
     end
 
 
-
-    --[[
-    for i = 0, .9, .1 do
-
-      blurdraw(blur_scale1, function()
-          lg.draw(p, 
-            (xx.x+(screenwidth/2)*cscale+rob)*(1-i),
-            (xx.y+(screenheight/2)*cscale+rob)*(1-i)+(feet2bottom-paralaxoffset)*(cscale*(1-i)),
-            0,
-            i,
-            i)
-        end)
-    end
-    ]]--
-
-    --[[
-    blurdraw(.0002/cscale, function()
-        lg.draw(p, 
-          xx.x*.75,
-          xx.y*.75+feet2bottom*(cscale/.75),
-          0,
-          1/4,
-          1/4)
-      end)
-    ]]--
 
     cclear()
 

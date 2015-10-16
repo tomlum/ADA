@@ -61,7 +61,6 @@ if not fightclub then
   enviro.sunback = lg.newImage("enviro/sunback.png")
   enviro.ada = lg.newImage("enviro/Ada.png")
   enviro.go = lg.newImage("enviro/go.png")
-  enviro.screenheight = screenheight - health_bar_height
 end
 enviro.light = lg.newImage("enviro/lightson.png")
 enviro.healthbar = lg.newImage("enviro/healthbar.png")
@@ -128,11 +127,11 @@ function drawOverlays()
 
   if not(oldonescreen and onescreen) then
     lg.setColor(53, 53, 53)
-    lg.rectangle("fill", wallx, 0, 14*width, enviro.screenheight)
+    lg.rectangle("fill", wallx, 0, 14*width, playheight)
   end
   if not(oldvertone and vertone) then
     lg.setColor(53, 53, 53)
-    lg.rectangle("fill",(lg.getWidth()/2)-twidth,(enviro.screenheight/2)-bwidth/2,twidth*2,bwidth)
+    lg.rectangle("fill",(lg.getWidth()/2)-twidth,(playheight/2)-bwidth/2,twidth*2,bwidth)
     lg.setColor(255, 255, 255, 255)
   end
 
@@ -911,7 +910,7 @@ elseif MODE == "retry" then
   lg.srectangle("fill", 0, 0, 1440, 900)
 
 
-  lg.setScissor(0, 0, screenwidth/2, winheight)
+  lg.setScissor(0, 0, screenwidth/2, playheight)
   camera:set()
   drawx(camera)
   camera:unset()
@@ -919,7 +918,7 @@ elseif MODE == "retry" then
 
 
 
-  lg.setScissor(screenwidth/2, 0, screenwidth/2, winheight)
+  lg.setScissor(screenwidth/2, 0, screenwidth/2, playheight)
   camera2:set()
 
   drawx(camera2)
@@ -930,26 +929,26 @@ elseif MODE == "retry" then
   if onescreen and not vertone then
     if me.x < you.x then 
 
-      lg.setScissor(screenwidth/2, topy,screenwidth, winheight/2+1)
+      lg.setScissor(screenwidth/2, topy,screenwidth, playheight/2+1)
       camera:set()
       drawx(camera)
       camera:unset()
       lg.setScissor()
 
-      lg.setScissor(screenwidth/2-twidth, bottomy,screenwidth, winheight/2+1)
+      lg.setScissor(screenwidth/2-twidth, bottomy,screenwidth, playheight/2+1)
       camera2:set()
       drawx(camera2)
       camera2:unset()
       lg.setScissor()
     elseif me.x >= you.x then
 
-      lg.setScissor(screenwidth/2-twidth, topy,screenwidth, enviro.screenheight/2+1)
+      lg.setScissor(screenwidth/2-twidth, topy,screenwidth, playheight/2+1)
       camera2:set()
       drawx(camera2)
       camera2:unset()
       lg.setScissor()
 
-      lg.setScissor(screenwidth/2, bottomy,screenwidth, enviro.screenheight/2+1)
+      lg.setScissor(screenwidth/2, bottomy,screenwidth, playheight/2+1)
       camera:set()
       drawx(camera)
       camera:unset()

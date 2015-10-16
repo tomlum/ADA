@@ -67,9 +67,9 @@ thecolors[0] = {n=0,c={r = 255, g = 255, b = 255}, c2=c,
   s = {def=1, speed = 1-speeddif, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
 
 thecolors[1] = {n=1,c=color1,c2=c,
-  s = {def=1.2, speed = .8-speeddif, jump = .8, weight = 1.3, brittle = 1}, tile = ptile, logo=apa11, sound = colorpsound}
+  s = {def=1.2, speed = .8-speeddif, jump = .8, weight = 1.3, brittle = 1}, tile = ptile, logo=apa11}
 thecolors[2] = {n=2,c=color2,c2=c,
-  s = {def=.7, speed = 1.2-speeddif, jump = 1.1, weight = 1, brittle = 1}, tile = gtile, logo=glogo, sound = colorgsound}
+  s = {def=.7, speed = 1.2-speeddif, jump = 1.1, weight = 1, brittle = 1}, tile = gtile, logo=glogo}
 thecolors[3] = {n=3, tile = otile,c=color3,c2=c, logo=ao32, sound = colorgsound,
   s = {def=1, speed = 1-speeddif, jump = 1.1, weight = .8, brittle = 2}}
 thecolors[4] = {n=4, tile = tile,c=color4,c2=c, logo=redap1, sound = colorpsound,

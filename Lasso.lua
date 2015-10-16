@@ -5,7 +5,7 @@ lassodurability = 100
 readytobreak = false
 
 
-function golasso()
+function lassoScreen()
   if lassoisathing then
     if ((onescreen and not oldonescreen) or 
       (vertone and not oldvertone)) then

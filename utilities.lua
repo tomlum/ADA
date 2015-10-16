@@ -5,20 +5,108 @@ lg = love.graphics
 --functions that begin with t_ have specific table inputs (e.g. a table representing a color in rgb values)
 
 
-function clone (t) -- deep-copy a table
-  if type(t) ~= "table" then return t end
-  local meta = getmetatable(t)
-  local target = {}
-  for k, v in pairs(t) do
-    if type(v) == "table" then
-      target[k] = clone(v)
-    else
-      target[k] = v
-    end
+
+
+---------------------
+---DEBUG UTILITIES---
+---------------------
+
+function debugReadouts()
+if debug then
+    lg.print(tostring(chaptime),10,10)
   end
-  setmetatable(target, meta)
-  return target
+
+  if fightclub then
+    lg.setColor(20,20,20)
+    lg.print(tostring(me.combo),10,20)
+    lg.print(tostring(me.color.n)..
+      "       animcounter: "..tostring(me.animcounter).."current"..tostring(me.currentc)
+      ..
+      "       type: "..tostring(me.attack_num),10,30)
+    lg.print("throughplats "..tostring("bla").."|| height "..tostring(me.height), 10, 50)
+    lg.print("j "..tostring(you.j), 10, 70)
+  end
+
+
+
+    --lg.setShader()
+    --[[
+    boop = joystick:isVibrationSupported()
+    if boop then
+      lg.print("yeah",100,10,100)
+    end
+    ]]--
+    lg.setColor(255,255,255)
+    if readout then
+      lg.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+      lg.print("me.x, me.y: "..tostring(me.x).." "..tostring(me.y), 10, 40)
+      lg.print("you.x, you.y: "..tostring(you.x).." "..tostring(you.y), 10, 70)
+
+      lg.setColor(255,10,0)
+      lg.print("themenu "..tostring(MODE), 10, 90)
+      lg.print("oldmenu "..tostring(oldmenu), 10, 110)
+      lg.print("fadein "..tostring(fadein), 10, 130)
+      lg.print("allfade "..tostring(allfade), 10, 150)
+      lg.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
+      lg.print("slowt "..tostring(slowt), 10, 230)
+      lg.print("#joysticks"..tostring(#love.joystick.getJoysticks()), 10, 250)
+      lg.print("#monsters"..tostring(#monsters), 10, 280)
+      for i,v in ipairs(love.joystick.getJoysticks()) do
+        lg.print("hey"..v:getName()..tostring(i), 200, 20+20*i)
+      end
+
+
+      lg.setColor(255,0,0)
+
+
+    end
+
+
+
+    if not love.keyboard.isDown("3") and not love.keyboard.isDown("4") and not love.keyboard.isDown("2") then
+
+      boxstop = false
+    end
+    if love.keyboard.isDown("5") and not boxstop then
+      boxstop = true
+      throwinto()
+      --rotatefractal()
+    end
+
+
+    -- moveTOD(.03)
+    if love.keyboard.isDown("4") and not boxstop then
+      throwinto()
+      --makecolorbox(me.x, me.y+30)
+      boxstop = true
+      --fractalrotate()
+    end
+
+    if love.keyboard.isDown("5") and not boxstop then
+      rotatefractal()
+      --makecolorbox(me.x, me.y+30)
+      boxstop = true
+      --fractalrotate()
+    end
+
+    if love.keyboard.isDown("2")then
+      me.no_spikes = true
+    end
+    if fightclub then
+
+      lg.print("pause: "..tostring(pause), 400,360)
+      lg.print("me.walllr: "..tostring(me.walllr), 400,380)
+      lg.print("me.lr: "..tostring(me.lr), 400,400)
+      lg.print("me.oldattacknum: "..tostring(me.oldattacknum), 400,420)
+      lg.print("me.oldcolor: "..tostring(me.oldcolor), 400,440)
+      lg.print("me.up : "..tostring(me.up), 400,460)
+      changebackgroundcolor(4)
+      
+    end
 end
+
+
+
 
 --------------------
 --COLOR UTILITIES---
@@ -204,7 +292,7 @@ end
 --------------------
 
 
-function dis(p1, p2)
+function p_distance(p1, p2)
   return math.sqrt((p1.y-p2.y)^2 + (p1.x-p2.x)^2)
 end
 
@@ -270,4 +358,21 @@ function findxIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y)
 
 
 
+-------------------
+---LUA UTILITIES---
+-------------------
 
+function clone (t) -- deep-copy a table
+  if type(t) ~= "table" then return t end
+  local meta = getmetatable(t)
+  local target = {}
+  for k, v in pairs(t) do
+    if type(v) == "table" then
+      target[k] = clone(v)
+    else
+      target[k] = v
+    end
+  end
+  setmetatable(target, meta)
+  return target
+end
