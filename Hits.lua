@@ -621,7 +621,7 @@ function hline(xx, theid, P1, P2, special)
               end
             elseif xx.wall_grab then 
               xx.v = 0
-              xx.j = hof(-max_wall_fall,xx.j)
+              xx.j = math.max(-max_wall_fall,xx.j)
               xx.im = wallgrab
               makendust(xx.wallx+xx.lr, xx.feet, xx.lr*1, -xx.j,2,1)
 
@@ -794,9 +794,9 @@ function hline(xx, theid, P1, P2, special)
                 xx.plat = plat;
                 if slipoffedges then
                   if xx.x < plat.x2 and xx.mid > plat.x2 then
-                    xx.v = hof(xx.v,2)
+                    xx.v = math.max(xx.v,2)
                   elseif xx.mid < plat.x1 and xx.x+xx.width> plat.x1 then
-                    xx.v = lof(xx.v,-2)
+                    xx.v = math.min(xx.v,-2)
                   end
                 end
 
@@ -862,9 +862,9 @@ function hline(xx, theid, P1, P2, special)
               xx.plat = plat;
 
               if xx.x < plat.x2 and xx.mid > plat.x2 then
-                xx.v = hof(xx.v,2)
+                xx.v = math.max(xx.v,2)
               elseif xx.mid < plat.x1 and xx.x+xx.width> plat.x1 then
-                xx.v = lof(xx.v,-2)
+                xx.v = math.min(xx.v,-2)
               end
 
 

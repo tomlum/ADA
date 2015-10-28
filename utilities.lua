@@ -12,7 +12,7 @@ lg = love.graphics
 ---------------------
 
 function debugReadouts()
-if debug then
+  if debug then
     lg.print(tostring(chaptime),10,10)
   end
 
@@ -103,7 +103,7 @@ if debug then
       changebackgroundcolor(4)
       
     end
-end
+  end
 
 
 
@@ -111,6 +111,10 @@ end
 --------------------
 --COLOR UTILITIES---
 --------------------
+
+function genRanColor()
+  return {r = math.random(255), g = math.random(255), b = math.random(255)}
+end
 function setColorA(c, a)
   lg.setColor(c.r,c.g,c.b, a)
 end
@@ -123,7 +127,7 @@ end
 
 function colorChange(v)
   local vv = math.random(-5,5)
-  return hof(lof(v+vv, 255), 0)
+  return math.max(math.min(v+vv, 255), 0)
 end
 
 function t_colorShift(table_color)
@@ -132,28 +136,37 @@ function t_colorShift(table_color)
   table_color.b = bof(0, table_color.b+math.random(-5,5), 255)
 end
 
+function t_colorShift2(table_color, amount)
+  if table_color.r_up == nil then
+    table_color.r_up = 1
+  end
+  if table_color.g_up == nil then
+    table_color.g_up = 1
+  end
+  if table_color.b_up == nil then
+    table_color.b_up = 1
+  end
+  table_color.r = bof(0, table_color.r+floRan(amount/2,amount)*table_color_up, 255)
+  table_color.g = bof(0, table_color.g+floRan(amount/2,amount)*table_color_up, 255)
+  table_color.b = bof(0, table_color.b+floRan(amount/2,amount)*table_color_up, 255)
+
+  if table_color.r == 255 or table_color.r == 0 then
+    table_color.r_up = -table_color.r_up
+  end
+  if table_color.g == 255 or table_color.g == 0 then
+    table_color.g_up = -table_color.g_up
+  end
+  if table_color.b == 255 or table_color.b == 0 then
+    table_color.b_up = -table_color.b_up
+  end
+
+end
 
 
 
 --------------------
 ---MATH UTILITIES---
 --------------------
-
---Return "higher of" x and y
-function hof(x,y)
-  if x > y then return x
-    else return y
-    end
-
-  end
-
---Return "lower of" x and y
-function lof(x,y)
-  if x < y then return x
-    else return y
-    end
-
-  end
 
 --"bounded of" between x and y
 function bof(lower_limit, n, upper_limit)
@@ -167,28 +180,9 @@ function bof(lower_limit, n, upper_limit)
 
 end
 
---"Many higher of", find the highest value in the table
-function mhof(x)
-  local hof = x[1]
-  for i = 2, #x do
-    if hof < x[i] then hof = x[i]
-    end
-  end
-  return hof
-end
 
---"Many lower of", find the lowest in the table
-function mlof(x)
-  local lof = x[1]
-  for i = 2, #x do
-    if lof > x[i] then lof = x[i]
-    end
-  end
-  return lof
-end
-
---"Many lower of, greater than zero"
-function mlofgz(x)
+--"lower of, greater than zero"
+function lofgz(x)
   local lof = 10000000
   for i = 1, #x do
 

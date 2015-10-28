@@ -5,26 +5,26 @@
 --xx = generic parameter for either player
 --v = horizontal velocity
 --j = vertical velocity
+--MODE = primary game mode
 --can't kick combo out of purple kick
 
 --notes:
---put images in more organized place, delete meanyou
+--Times square, have a facade layer that's black or something so this way it looks like back lit
+--If you hit glass floor with enough j break through it
 --love.timer.sleep?
 --change push to prevent pulling
 --can rapid kick
 --slowdown is weird/notworking 
---pause is broken
---xx.attack_num be more meaningful than 1 - 6
 --apa13 xoff is incorrect
---implement action_done on all attacks
 --can hexHit use colon and self?
 
 require "initializers"
 
 --Debug/Test Utilities
+demo = true
 debug = false
-fightclub = true
-MODE = "color"
+fightclub = false
+MODE = "controllerSetup"
 notilebouncing = true
 melcolor = 1
 mercolor = 4
@@ -56,11 +56,13 @@ initDependencies()
 theMap = theMaps[mapNum]
 
 function love.load()
+
   initPlayer(me)
   initPlayer(you)
   initMenus()
   initJoysticks()
   initFightClub()
+  
 end
 
 
@@ -73,6 +75,7 @@ function love.update()
 
   if MODE == "story" then
     updatechapters()
+
   elseif MODE == "preplay" or MODE == "play" then 
     MODE = "play"
     --Update characters, physics, points, etc, there's a lot behind this
@@ -80,9 +83,11 @@ function love.update()
     handleRetry()
     t_colorShift(thecolors[2].c)
     t_colorShift(me.outline)
+    t_colorShift(you.outline)
 
   elseif MODE == "retry" then
     handleRetry()
+
   end
 
 end

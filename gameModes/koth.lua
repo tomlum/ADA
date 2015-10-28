@@ -88,9 +88,9 @@ end
 
 function randomizeplat()
   
-  while(kothplat == nil or kothplat.floor) or (kothplat==oldplat) do
+
     local rannum = math.random(1,#theMaps[mapNum].plats)
     kothplat = theMaps[mapNum].plats[rannum]
-  end
+
 
 end

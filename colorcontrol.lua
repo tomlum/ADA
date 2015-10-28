@@ -25,7 +25,7 @@ color1 = xcolor("rich purple")
 color2 = xcolor("flat blue")
 --orange pink
 color3 =  xcolor("blood orange")
-color4 = xcolor("indian red")
+color4 = xcolor("bright red")
 
 --color1 = xcolor("dark mauve")
 --color2 = xcolor("dark gold")

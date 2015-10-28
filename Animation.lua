@@ -942,7 +942,7 @@ function drawclouds()
   if not pause then
     dustn = math.random(100,250)
   end
-  lg.setColor(dustn,dustn,dustn,hof(0,100-v.fade))
+  lg.setColor(dustn,dustn,dustn,math.max(0,100-v.fade))
   lg.rectangle("fill", v.x-v.size/2, v.y-v.size/2, v.size, v.size)
 end
 lg.setColor(255,255,255)
@@ -1065,7 +1065,7 @@ function updatepapers()
               v.j = v.j + you.j*.02 + .2
             end
 
-            local rotaval = 6-hof(lof(6,v.v), -6)
+            local rotaval = 6-math.max(math.min(6,v.v), -6)
             v.r = math.rad(-90) + math.rad(180)*rotaval/12
 
           end
@@ -2029,9 +2029,9 @@ function animate(xx)
     for i,v in ipairs(sparks)do
 
 
-      v.r = lof(v.r+math.random()*sparkfaderate*rampspeed,255)
-      v.g = lof(v.g+math.random()*sparkfaderate*rampspeed,255)
-      v.b = lof(v.b+math.random()*sparkfaderate*rampspeed,255)
+      v.r = math.min(v.r+math.random()*sparkfaderate*rampspeed,255)
+      v.g = math.min(v.g+math.random()*sparkfaderate*rampspeed,255)
+      v.b = math.min(v.b+math.random()*sparkfaderate*rampspeed,255)
       lg.setColor(v.r,v.g,v.b,math.random(150,255))
       if v.shape == 1 then
         lg.draw(enviro.spark,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)

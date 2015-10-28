@@ -1,11 +1,6 @@
---origsetPitch = setPitch
---function Source:setPitch(pitch)
---  self:origsetPitch(pitch * .1)
---end
-
---function Account:withdraw (v)
---      self.balance = self.balance - v
---    end
+-----------------------------------------------
+---------------------Songs---------------------
+-----------------------------------------------
 
 colortheme = love.audio.newSource("sounds/colortheme.mp3", "stream")
 colortheme:setVolume(.25)
@@ -32,10 +27,9 @@ end
 openingsong:setLooping(true)
 
 
-SFXV = 1
---TEsound.volume("all",.1)
-
-ss = {}
+------------------------------------------------
+---------------------Sounds---------------------
+------------------------------------------------
 
 function updateSounds()
 
@@ -202,171 +196,171 @@ function repplay(x)
 
 
       xx.jumpd = love.audio.newSource("sounds/dodgeslide.wav", "stream")
-      xx.jumpd:setVolume(SFXV - .7)
+      xx.jumpd:setVolume(1 - .7)
 
 
       xx.backdodge = love.audio.newSource("sounds/backdodge.wav", "stream")
       xx.slidedodge = love.audio.newSource("sounds/dodgeslide.wav", "stream")
-      xx.backdodge:setVolume(SFXV - .6)
-      xx.slidedodge:setVolume(SFXV - .6)
+      xx.backdodge:setVolume(1 - .6)
+      xx.slidedodge:setVolume(1 - .6)
       xx.backdodge:setPitch(1.2)
 
 
       xx.selected = love.audio.newSource("sounds/selected.wav", "stream")
-      xx.selected:setVolume(SFXV - .85)
+      xx.selected:setVolume(1 - .85)
       xx.selected:setPitch(1)
 
 
       if i == 1 then
         xx.mov = love.audio.newSource("sounds/moving.wav", "stream")
-        xx.mov:setVolume(SFXV - .7)
+        xx.mov:setVolume(1 - .7)
         xx.mov:setPitch(1.1)
       end
 
       if i == 2 then
         xx.mov = love.audio.newSource("sounds/moving.wav", "stream")
-        xx.mov:setVolume(SFXV - .7)
+        xx.mov:setVolume(1 - .7)
         xx.mov:setPitch(.9)
       end
 
 
       xx.slidesound = love.audio.newSource("sounds/slide.wav", "static")
-      xx.slidesound:setVolume(SFXV-.82)
+      xx.slidesound:setVolume(1-.82)
 
       xx.runsound = love.audio.newSource("sounds/run.wav", "static")
-      xx.runsound:setVolume(SFXV-.8)
+      xx.runsound:setVolume(1-.8)
 
       xx.greenbreak = love.audio.newSource("sounds/glass.wav", "static")
       xx.greenbreak:setPitch(1.1)
-      xx.greenbreak:setVolume(SFXV-.37-adj)
+      xx.greenbreak:setVolume(1-.37-adj)
 
       xx.flinch1 = love.audio.newSource("sounds/flinch3.wav", "static")
-      xx.flinch1:setVolume(SFXV-.7-adj)
+      xx.flinch1:setVolume(1-.7-adj)
 
       xx.flinch2 = love.audio.newSource("sounds/flinch2.wav", "static")
-      xx.flinch2:setVolume(SFXV-.8-adj)
+      xx.flinch2:setVolume(1-.8-adj)
 
       xx.minch = love.audio.newSource("sounds/greenhit.wav", "static")
-      xx.minch:setVolume(SFXV-.7-adj)
+      xx.minch:setVolume(1-.7-adj)
 
       xx.green = love.audio.newSource("sounds/green.mp3", "static")
-      xx.green:setVolume(SFXV-.8-adj)
+      xx.green:setVolume(1-.8-adj)
 
       xx.whiff = love.audio.newSource("sounds/green.mp3", "static")
-      xx.whiff:setVolume(SFXV-.7-adj)
+      xx.whiff:setVolume(1-.7-adj)
 
       xx.wallhit = love.audio.newSource("sounds/Purple.wav", "static")
-      xx.wallhit:setVolume(SFXV-.47-adj)
+      xx.wallhit:setVolume(1-.47-adj)
 
       xx.purpsound = love.audio.newSource("sounds/Purple.wav", "static")
-      xx.purpsound:setVolume(SFXV-.3-adj)
+      xx.purpsound:setVolume(1-.3-adj)
 
 
       xx.purp2 = love.audio.newSource("sounds/Purple3.wav", "static")
-      xx.purp2:setVolume(SFXV-.7-adj)
+      xx.purp2:setVolume(1-.7-adj)
 
 
       xx.land = love.audio.newSource("sounds/land.wav", "static")
-      xx.land:setVolume(SFXV-.68-adj)
+      xx.land:setVolume(1-.68-adj)
 
 
       xx.climbsound = love.audio.newSource("sounds/land.wav", "static")
-      xx.climbsound:setVolume(SFXV-.6-adj)
+      xx.climbsound:setVolume(1-.6-adj)
 
       xx.airpurp2 = love.audio.newSource("sounds/blue.mp3", "static")
-      xx.airpurp2:setVolume(SFXV-.6-adj)
+      xx.airpurp2:setVolume(1-.6-adj)
 
       xx.airpurp1 = love.audio.newSource("sounds/blue.mp3", "static")
-      xx.airpurp1:setVolume(SFXV-.6-adj)
+      xx.airpurp1:setVolume(1-.6-adj)
 
       xx.blues = love.audio.newSource("sounds/blue.mp3", "static")
-      xx.blues:setVolume(SFXV-.73-adj)
+      xx.blues:setVolume(1-.73-adj)
 
       xx.greens = love.audio.newSource("sounds/blue.mp3", "static")
-      xx.greens:setVolume(SFXV-.6-adj)
+      xx.greens:setVolume(1-.6-adj)
     end
 
 
     gosound = love.audio.newSource("sounds/go.mp3", "stream")
-    gosound:setVolume(SFXV - .6)
+    gosound:setVolume(1 - .6)
 
 
     startb = love.audio.newSource("sounds/startb.wav", "stream")
-    startb:setVolume(SFXV - .93)
+    startb:setVolume(1 - .93)
     startb:setPitch(.8)
     startb2 = love.audio.newSource("sounds/startb.wav", "stream")
-    startb2:setVolume(SFXV - .93)
+    startb2:setVolume(1 - .93)
     startb2:setPitch(.8)
     mov = love.audio.newSource("sounds/moving.wav", "stream")
-    mov:setVolume(SFXV - .7)
-    
+    mov:setVolume(1 - .7)
+
     blocksound = love.audio.newSource("sounds/block.wav", "stream")
-    blocksound:setVolume(SFXV - .6)
+    blocksound:setVolume(1 - .6)
 
     wavesound = love.audio.newSource("sounds/wave.wav", "stream")
-    wavesound:setVolume(SFXV - .92)
+    wavesound:setVolume(1 - .92)
     wavesound:setPitch(.6)
 
     modesound = love.audio.newSource("sounds/mode.wav", "stream")
-    modesound:setVolume(SFXV-.82)
+    modesound:setVolume(1-.82)
 
     slowmo = love.audio.newSource("sounds/slowmo.mp3", "static")
-    slowmo:setVolume(SFXV-.3-adj)
+    slowmo:setVolume(1-.3-adj)
 
     replaced = love.audio.newSource("sounds/replaced.wav", "static")
-    replaced:setVolume(SFXV-.50)
+    replaced:setVolume(1-.50)
     replaced:setPitch(.8)
     replaced2 = love.audio.newSource("sounds/replaced.wav", "static")
-    replaced2:setVolume(SFXV-.50)
+    replaced2:setVolume(1-.50)
     replaced2:setPitch(.9)
 
     deathsound = love.audio.newSource("sounds/death.wav", "static")
-    deathsound:setVolume(SFXV-.99)
+    deathsound:setVolume(1-.99)
     deathsound2 = love.audio.newSource("sounds/death2.wav", "static")
-    deathsound2:setVolume(SFXV-.9)
+    deathsound2:setVolume(1-.9)
 
     wallbreaks = love.audio.newSource("sounds/Purple.wav", "static")
     greenwallbreaks = love.audio.newSource("sounds/Purple.wav", "static")
     wallbreaks:setPitch(1.4)
-    wallbreaks:setVolume(SFXV-.15-adj)
+    wallbreaks:setVolume(1-.15-adj)
     greenwallbreaks:setPitch(1.8)
-    greenwallbreaks:setVolume(SFXV-.3-adj)
+    greenwallbreaks:setVolume(1-.3-adj)
 
     glassbreaks = love.audio.newSource("sounds/glass.wav", "static")
     glassbreaks:setPitch(1.8)
-    glassbreaks:setVolume(SFXV-.7-adj)
+    glassbreaks:setVolume(1-.7-adj)
 
     grabsou = love.audio.newSource("sounds/grab.wav", "stream")
-    grabsou:setVolume(SFXV - .5)
+    grabsou:setVolume(1 - .5)
     grabreleasesou = love.audio.newSource("sounds/grabrelease.wav", "stream")
-    grabreleasesou:setVolume(SFXV - .5)
+    grabreleasesou:setVolume(1 - .5)
     throwsou = love.audio.newSource("sounds/throw.wav", "stream")
-    throwsou:setVolume(SFXV - .5)
+    throwsou:setVolume(1 - .5)
 
     readysound = love.audio.newSource("sounds/ready.wav", "stream")
-    readysound:setVolume(SFXV - .7)
+    readysound:setVolume(1 - .7)
 
 
     collides = love.audio.newSource("sounds/collide.wav", "stream")
-    collides:setVolume(SFXV - .82)
+    collides:setVolume(1 - .82)
 
     collidesar = {}
     collidesar[1] = love.audio.newSource("sounds/collide.wav", "stream")
-    collidesar[1]:setVolume(SFXV - .82)
+    collidesar[1]:setVolume(1 - .82)
     collidesar[2] = love.audio.newSource("sounds/collide.wav", "stream")
-    collidesar[2]:setVolume(SFXV - .82)
+    collidesar[2]:setVolume(1 - .82)
     collidesar[3] = love.audio.newSource("sounds/collide.wav", "stream")
-    collidesar[3]:setVolume(SFXV - .82)
+    collidesar[3]:setVolume(1 - .82)
     collidesar[4] = love.audio.newSource("sounds/collide.wav", "stream")
-    collidesar[4]:setVolume(SFXV - .82)
+    collidesar[4]:setVolume(1 - .82)
     collidesar[5] = love.audio.newSource("sounds/collide.wav", "stream")
-    collidesar[5]:setVolume(SFXV - .82)
+    collidesar[5]:setVolume(1 - .82)
     collidesar[6] = love.audio.newSource("sounds/collide.wav", "stream")
-    collidesar[6]:setVolume(SFXV - .82)
+    collidesar[6]:setVolume(1 - .82)
     collidesar[7] = love.audio.newSource("sounds/collide.wav", "stream")
-    collidesar[7]:setVolume(SFXV - .82)
+    collidesar[7]:setVolume(1 - .82)
     collidesar[8] = love.audio.newSource("sounds/collide.wav", "stream")
-    collidesar[8]:setVolume(SFXV - .82)
+    collidesar[8]:setVolume(1 - .82)
 
 
     function miscsounds()

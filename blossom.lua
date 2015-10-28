@@ -48,9 +48,9 @@ function blossom(xx,yy, leaves, sides, scale)
 		table.insert(blooms,
 		{
 			points = clone(pointss),
-			colors = {r = hof(0, lof(255, yy.color.c.r*colordif)),
-			g = hof(0, lof(255, yy.color.c.g*colordif)),
-			b = hof(0, lof(255, yy.color.c.b*colordif))
+			colors = {r = math.max(0, math.min(255, yy.color.c.r*colordif)),
+			g = math.max(0, math.min(255, yy.color.c.g*colordif)),
+			b = math.max(0, math.min(255, yy.color.c.b*colordif))
 			},
 			t = 1
 

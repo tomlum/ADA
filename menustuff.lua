@@ -7,7 +7,7 @@
 --play
 --retry
 
-numofcolors = 4
+num_of_colors = 4
 
 --MODE that fades into another???
 
@@ -16,8 +16,8 @@ noplat = {n=0}
 enviro = {}
 
 health_bar_height = 50
-letterboxheight = 80
-menuspeed = 7
+letter_box_height = 80
+menu_speed = 7
 
 pressanybutton = lg.newImage("enviro/pressanybutton.png")
 waveim = lg.newImage("enviro/wave2.png")
@@ -38,6 +38,9 @@ glogo = {im = lg.newImage("enviro/greenlogo.png")}
 questionlogo = {im=lg.newImage("enviro/questionmark.png")}
 shoulder = lg.newImage("enviro/shoulder.png")
 ready = lg.newImage("enviro/ready.png")
+
+p1controllercheck = lg.newImage("enviro/p1controllercheck.png")
+p2controllercheck = lg.newImage("enviro/p2controllercheck.png")
 
 if not fightclub then 
 
@@ -68,6 +71,7 @@ enviro.stagefloor = lg.newImage("enviro/floor.png")
 
 musfadein = 0
 musfade = 0
+fadein = 0
 tilezoom = .1
 colorfromwallspace = 100
 
@@ -96,82 +100,10 @@ table.insert(tiles2, {y=0,ud="bottom",lr=1,j=inittilej, column = 3})
 table.insert(tiles2, {y=0,ud="bottom",lr=-1,j=inittilej, column = 4})
 
 
-function handleRetry()
-  death2(me)
-  death2(you)
-end
-
-function pausing()
-  if MODE == "play" then 
-    if not (me.start or you.start) then
-      if pause then
-        readytounpause = true
-      else
-        readytounpause = false
-      end
-    end
-
-    if pause and readytounpause and (me.start or you.start) then
-      pause = false
-    end
-
-    if (me.start or you.start) and not pause and not readytounpause then
-      pause = true
-      readytounpause = false
-    end
-  end
-end
-
-function drawOverlays()
-  cclear()
-
-  if not(oldonescreen and onescreen) then
-    lg.setColor(53, 53, 53)
-    lg.rectangle("fill", wallx, 0, 14*width, playheight)
-  end
-  if not(oldvertone and vertone) then
-    lg.setColor(53, 53, 53)
-    lg.rectangle("fill",(lg.getWidth()/2)-twidth,(playheight/2)-bwidth/2,twidth*2,bwidth)
-    lg.setColor(255, 255, 255, 255)
-  end
-
-  if not fightclub then
-    drawGo()
-  end
-  drawroulettenumbers()
-  if pause and not hitpause then
-    lg.sdraw(pausescreen,0,0,0,10,10)
-  end
-
-  lg.setShader()
-  lg.setColor(0,0,0)
-  lg.srectangle("fill",0,0,1440,barey)
-  lg.srectangle("fill",0,900,1440,-barey)
-  lg.setColor(255,255,255)
-
-  lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, screenwidth/1440,1)
-  lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, -screenwidth/1440, 1)
-end
-
-function lg.sdraw(im, x, y, rot, sx, sy) 
-  if rot == nil then 
-    lg.draw(im,x*(screenwidth/1440),y*(screenheight/900), 0, (screenwidth/1440), (screenheight/900))
-  else
-    lg.draw(im,x*(screenwidth/1440),y*(screenheight/900), rot, sx*(screenwidth/1440), sy*(screenheight/900))
-  end
-end
-
-function lg.srectangle(drawType, x, y, width, height) 
-  lg.rectangle(drawType, x*screenwidth/1440, y*screenheight/900, width*screenwidth/1440, height*screenheight/900) 
-end
-
-lg.setNewFont(20)
-
-lightsize = 7
-maxwob = 7
-
 function modeManager()
-  if MODE == "title" and oldmenu ~= "title" then
+  if MODE == "controllerSetup" and oldmenu ~= "controllerSetup" then
+
+  elseif MODE == "title" and oldmenu ~= "title" then
     musfadein = 3
     musfade = 0
     allfade = 0
@@ -289,6 +221,83 @@ function modeManager()
   oldmenu = MODE
 end
 
+
+function handleRetry()
+  death2(me)
+  death2(you)
+end
+
+function pausing()
+  if MODE == "play" then 
+    if not (me.start or you.start) then
+      if pause then
+        readytounpause = true
+      else
+        readytounpause = false
+      end
+    end
+
+    if pause and readytounpause and (me.start or you.start) then
+      pause = false
+    end
+
+    if (me.start or you.start) and not pause and not readytounpause then
+      pause = true
+      readytounpause = false
+    end
+  end
+end
+
+function drawOverlays()
+  cclear()
+
+  if not(oldonescreen and onescreen) then
+    lg.setColor(53, 53, 53)
+    lg.rectangle("fill", wallx, 0, 14*width, playheight)
+  end
+  if not(oldvertone and vertone) then
+    lg.setColor(53, 53, 53)
+    lg.rectangle("fill",(lg.getWidth()/2)-twidth,(playheight/2)-bwidth/2,twidth*2,bwidth)
+    lg.setColor(255, 255, 255, 255)
+  end
+
+  if not fightclub then
+    drawGo()
+  end
+  drawroulettenumbers()
+  if pause and not hitpause then
+    lg.sdraw(pausescreen,0,0,0,10,10)
+  end
+
+  lg.setShader()
+  lg.setColor(0,0,0)
+  lg.srectangle("fill",0,0,1440,barey)
+  lg.srectangle("fill",0,900,1440,-barey)
+  lg.setColor(255,255,255)
+
+  lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, screenwidth/1440,1)
+  lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, -screenwidth/1440, 1)
+end
+
+function lg.sdraw(im, x, y, rot, sx, sy) 
+  if rot == nil then 
+    lg.draw(im,x*(screenwidth/1440),y*(screenheight/900), 0, (screenwidth/1440), (screenheight/900))
+  else
+    lg.draw(im,x*(screenwidth/1440),y*(screenheight/900), rot, sx*(screenwidth/1440), sy*(screenheight/900))
+  end
+end
+
+function lg.srectangle(drawType, x, y, width, height) 
+  lg.rectangle(drawType, x*screenwidth/1440, y*screenheight/900, width*screenwidth/1440, height*screenheight/900) 
+end
+
+lg.setNewFont(20)
+
+lightsize = 7
+maxwob = 7
+
+
+
 wobx = 0
 woby = 0
 wobj = 0
@@ -359,7 +368,9 @@ function drawmenus()
     end
   end
 
-  if MODE == "title" or MODE == "premode" then
+  if MODE == "controllerSetup" then
+    drawControllerCheck()
+  elseif MODE == "title" or MODE == "premode" then
     if (c1accept() or c2accept()) and MODE=="title" then
       MODE = "premode" 
       repplay(wavesound)
@@ -368,7 +379,7 @@ function drawmenus()
     if MODE == "premode" then
       if stagey < 300 then
         stagey = stagey + 1
-        stagey = stagey + stagey/200*menuspeed
+        stagey = stagey + stagey/200*menu_speed
       else 
         MODE = "modes"
       end
@@ -493,12 +504,12 @@ function drawmenus()
       tilefadein = tilefadeinf(tilefadein,tilefade,5)
 
       if me.rightc.n ~= 0 then
-        lg.setColor(255,255,255,hof(0, 220-me.right_color_flash))
+        lg.setColor(255,255,255,math.max(0, 220-me.right_color_flash))
         lg.rectangle("fill", 0, 0, screenwidth/2, screenheight)
       end
 
       if me.leftc.n ~= 0 then
-        lg.setColor(255,255,255,hof(0, 220-me.left_color_flash))
+        lg.setColor(255,255,255,math.max(0, 220-me.left_color_flash))
         lg.rectangle("fill", 0, 0, screenwidth/2, screenheight)
       end
 
@@ -512,9 +523,9 @@ function drawmenus()
           end
         end
         lg.setColor(
-          hof(me.leftc.c.r, 255-me.left_color_flash),
-          hof(me.leftc.c.g, 255-me.left_color_flash),
-          hof(me.leftc.c.b, 255-me.left_color_flash))
+          math.max(me.leftc.c.r, 255-me.left_color_flash),
+          math.max(me.leftc.c.g, 255-me.left_color_flash),
+          math.max(me.leftc.c.b, 255-me.left_color_flash))
       end
       lg.polygon("fill", screenwidth*3/10+tilesep/30, screenheight+tilesep, screenwidth*1/10+tilesep, 0, 0+tilesep, 0)
 
@@ -530,21 +541,21 @@ function drawmenus()
           end
         end
         lg.setColor(
-          hof(me.rightc.c.r, 255-me.right_color_flash),
-          hof(me.rightc.c.g, 255-me.right_color_flash),
-          hof(me.rightc.c.b, 255-me.right_color_flash))
+          math.max(me.rightc.c.r, 255-me.right_color_flash),
+          math.max(me.rightc.c.g, 255-me.right_color_flash),
+          math.max(me.rightc.c.b, 255-me.right_color_flash))
       end      
       lg.polygon("fill", screenwidth*1/10-tilesep/30, screenheight, screenwidth*4/10-tilesep, 0, screenwidth*3/10-tilesep, 0)
 
 
 
       if you.rightc.n ~= 0 then
-        lg.setColor(255,255,255,hof(0, 220-you.right_color_flash))
+        lg.setColor(255,255,255,math.max(0, 220-you.right_color_flash))
         lg.rectangle("fill", screenwidth/2, 0, screenwidth/2, screenheight)
       end
 
       if you.leftc.n ~= 0 then
-        lg.setColor(255,255,255,hof(0, 220-you.left_color_flash))
+        lg.setColor(255,255,255,math.max(0, 220-you.left_color_flash))
         lg.rectangle("fill", screenwidth/2, 0, screenwidth/2, screenheight)
       end
 
@@ -559,9 +570,9 @@ function drawmenus()
           end
         end
         lg.setColor(
-          hof(you.leftc.c.r, 255-you.left_color_flash),
-          hof(you.leftc.c.g, 255-you.left_color_flash),
-          hof(you.leftc.c.b, 255-you.left_color_flash))
+          math.max(you.leftc.c.r, 255-you.left_color_flash),
+          math.max(you.leftc.c.g, 255-you.left_color_flash),
+          math.max(you.leftc.c.b, 255-you.left_color_flash))
       end
       lg.polygon("fill", screenwidth*9/10+tilesep/30, screenheight, screenwidth*6/10+tilesep, 0, screenwidth*7/10+tilesep, 0)
       --lg.sdraw(shoulder, 720 +colorfromwallspace+140,-tilesep)
@@ -578,9 +589,9 @@ function drawmenus()
           end
         end
         lg.setColor(
-          hof(you.rightc.c.r, 255-you.right_color_flash),
-          hof(you.rightc.c.g, 255-you.right_color_flash),
-          hof(you.rightc.c.b, 255-you.right_color_flash))
+          math.max(you.rightc.c.r, 255-you.right_color_flash),
+          math.max(you.rightc.c.g, 255-you.right_color_flash),
+          math.max(you.rightc.c.b, 255-you.right_color_flash))
       end
       lg.polygon("fill", screenwidth*7/10-tilesep/30, screenheight+tilesep, screenwidth*9/10-tilesep, 0, screenwidth-tilesep, 0)
       --lg.sdraw(shoulder, 1440-colorfromwallspace+80,tilesep,0,-1,1)
@@ -607,7 +618,7 @@ function drawmenus()
         vct(me.outline)
 
         ) 
-      if me.selectedcolor+1>numofcolors then
+      if me.selectedcolor+1>num_of_colors then
         lg.sdraw(thecolors[me.selectedcolor+1].logo.im,360+tilesep,-tilesep,0,7,7) 
       else
         lg.sdraw(thecolors[me.selectedcolor+1].logo.im,520+tilesep,-tilesep, math.rad(15), 5,5) 
@@ -623,7 +634,7 @@ function drawmenus()
         vct(you.outline)
 
         ) 
-      if you.selectedcolor+1>numofcolors then
+      if you.selectedcolor+1>num_of_colors then
         lg.sdraw(thecolors[you.selectedcolor+1].logo.im,1440-520-220-tilesep,-tilesep,0,7,7) 
       else
         lg.sdraw(thecolors[you.selectedcolor+1].logo.im,1440-520-tilesep,-tilesep,-math.rad(15),-5,5) 
@@ -707,7 +718,7 @@ function drawmenus()
             else
               if v.y - v.j <450-(25+tile_y_closeness) then 
 
-                collidesar[i]:setVolume(SFXV - .82-(.1/(math.abs(v.j))))
+                collidesar[i]:setVolume(1 - .82-(.1/(math.abs(v.j))))
                 repplay(collidesar[i])
                 if v.j > 10 and not notilebouncing then
                   v.j = -v.j/3
@@ -881,12 +892,12 @@ elseif MODE == "pan" then
 
   lg.setColor(allfade,allfade,allfade)
   lg.sdraw(enviro.sky, 0, 0, 0, 150, 1)
-  lg.sdraw(enviro.paralax, -dollyx/2,  -enviro.paralax:getHeight()+900-letterboxheight-30)
-  lg.sdraw(enviro.stage, -dollyx, -theMap.floor+900 -letterboxheight-30)
+  lg.sdraw(enviro.paralax, -dollyx/2,  -enviro.paralax:getHeight()+900-letter_box_height-30)
+  lg.sdraw(enviro.stage, -dollyx, -theMap.floor+900 -letter_box_height-30)
   lg.setColor(0,0,0)
-  lg.srectangle("fill", 0, 0, 1440, hof(letterboxheight, 450-3^(dollyx/50)))
+  lg.srectangle("fill", 0, 0, 1440, math.max(letter_box_height, 450-3^(dollyx/50)))
 
-  lg.srectangle("fill", 0, 900, 1440, -hof(letterboxheight, 450-3^(dollyx/50)))
+  lg.srectangle("fill", 0, 900, 1440, -math.max(letter_box_height, 450-3^(dollyx/50)))
   dollyx = dollyx + dollyv
 
 

@@ -23,6 +23,18 @@ you.rrum = 0
 me.joystickn = 0
 you.joystickn = 0
 
+controller_menu_c = genRanColor()
+
+function drawControllerCheck()
+  t_colorShift(controller_menu_c, 1)
+  t_setColor(controller_menu_c)  
+  lg.rectangle("fill",0,0,screenwidth,screenheight)
+  cclear()  
+  lg.sdraw(p1controllercheck, 0, 0)
+  lg.sdraw(p2controllercheck, 720, 0)
+
+end
+
 function checkForControllers()
   for i,v in ipairs(love.joystick.getJoysticks()) do
     if me.joystick == nil then
@@ -55,14 +67,14 @@ function rumblemodule(xx)
     base = (xx.cct/colorchangetime)*colorvib
     if xx.rumbleint >= 1 then
       xx.lrum = 1
-      xx.rrum = lof(1, xx.rumbleint - 1)
+      xx.rrum = math.min(1, xx.rumbleint - 1)
     else
       xx.lrum = xx.rumbleint 
       xx.rrum = 0
     end
     
     xx.joystick:setVibration(xx.lrum,xx.rrum)
-    xx.rumbleint = hof(base,xx.rumbleint-.05)
+    xx.rumbleint = math.max(base,xx.rumbleint-.05)
     
   end
 end

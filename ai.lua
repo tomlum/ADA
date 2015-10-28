@@ -46,9 +46,9 @@ function spawnmon(ex, why)
   local eyedee = 0
   for i,v in ipairs(monsters) do
 
-    eyedee = hof(eyedee, i+1)
+    eyedee = math.max(eyedee, i+1)
   end
-    eyedee = hof(eyedee, 1)
+    eyedee = math.max(eyedee, 1)
   
   local temp = {x = ex, y = why, v = 0, j = 0, old_feet = why,
     flinch = false, ft = 0, block = false, weight = 1, width = 40, height = 50, id = eyedee, im = ei1, mid = ex+35/2, lr = 1, wallrubbletimer = 0, health = 1+0*monbasehealth, gothroughplats = false,headrot = 0, headrot2 = 0, headvel = 0, push = 0, mode = "idle", animt = 0, oldemode = "bleh", drawwidth = 24, flinchway = 1, cantfly = false, c = {r = 25, g=25, b= 25}, hit = false}
@@ -401,9 +401,9 @@ function trackplayer(xx)
     end
   end
 if not (xx.mode == "attack" and xx.animt < 4*6+13+10 ) then
-  xx.headrot2 = hof(math.atan((xx.target.y+xx.target.height/5-xx.y)/(xx.target.mid-xx.mid)), math.rad(-60))
+  xx.headrot2 = math.max(math.atan((xx.target.y+xx.target.height/5-xx.y)/(xx.target.mid-xx.mid)), math.rad(-60))
   if xx.headrot2 > math.rad(-50) then
-    xx.headrot2 = lof(math.atan((xx.target.y+xx.target.height/5-xx.y)/(xx.target.mid-xx.mid)), math.rad(30))
+    xx.headrot2 = math.min(math.atan((xx.target.y+xx.target.height/5-xx.y)/(xx.target.mid-xx.mid)), math.rad(30))
   end
   end
 

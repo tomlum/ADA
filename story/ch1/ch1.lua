@@ -17,15 +17,15 @@ function ch1update(ct)
   local starttime = 100
   if ct < -starttime+300 then
   elseif ct < -starttime+300*2 then
-    titlefade1 = hof(0, (titlefade1-6))
+    titlefade1 = math.max(0, (titlefade1-6))
   elseif ct < -starttime+300*3 then
-    titlefade2 = hof(0, (titlefade2-6))
+    titlefade2 = math.max(0, (titlefade2-6))
   elseif ct < -starttime+300*4 then
-    titlefade3 = hof(0, (titlefade3-6))
+    titlefade3 = math.max(0, (titlefade3-6))
   elseif ct < -starttime+300*5 then
-    titlefade4 = hof(0, (titlefade4-6))
+    titlefade4 = math.max(0, (titlefade4-6))
   elseif ct < -starttime+300*6 then
-    titlefade5 = hof(0, (titlefade5-6))
+    titlefade5 = math.max(0, (titlefade5-6))
   end
 end
 
@@ -38,7 +38,7 @@ function act1update(ct)
 end
 
 function drawch1()
-  titleflicker = hof(lof(titleflicker + math.random(-5,5), 255), 150)
+  titleflicker = math.max(math.min(titleflicker + math.random(-5,5), 255), 150)
   lg.setColor(titleflicker,titleflicker,titleflicker)
   lg.sdraw(brotherstitle,0, 0)
   lg.setColor(0,0,0,titlefade1)

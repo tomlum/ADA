@@ -1,65 +1,65 @@
 function play()
 
+	if game_mode == "koth" then 
+     while(kothplat == nil or kothplat.floor) or (kothplat==oldplat) do
+        randomizeplat()
+    end
+end
 
-	if game_mode == "koth" then
-		randomizeplat()
-	end
+speedRamp()
+updateSounds()
+miscsounds()
+gavinAndDan()
 
-	speedRamp()
+if slowt == slowrate and not (pause or hitpause) and not me.actionshot 
+  then
 
-	updateSounds()
-    miscsounds()
-    gavinAndDan()
+  movex(me,you)
+  movex(you,me)
+  hboxwall()
+  platformcheckx()
+  monplatupdate()
+  applyMovements()
 
-    if slowt == slowrate and not (pause or hitpause) and not me.actionshot 
-      then
+  updateboxes()
+  updateparticles()
 
-      movex(me,you)
-      movex(you,me)
-      hboxwall()
-      platformcheckx()
-      monplatupdate()
-      applyMovements()
+  whoupdatesfirst = math.random()
+  if whoupdatesfirst>.5 then
+   attackmanage(me)
+   spikeupdate(me)
+   boltupdate(me) 
+end
+attackmanage(you)
+spikeupdate(you)
+boltupdate(you)  
+if whoupdatesfirst<=.5 then
+   attackmanage(me)
+   spikeupdate(me)
+   boltupdate(me) 
+end
 
-      updateboxes()
-      updateparticles()
+postattackmanage(me)
+postattackmanage(you)
 
-      whoupdatesfirst = math.random()
-      if whoupdatesfirst>.5 then
-       attackmanage(me)
-       spikeupdate(me)
-       boltupdate(me) 
-   end
-   attackmanage(you)
-   spikeupdate(you)
-   boltupdate(you)  
-   if whoupdatesfirst<=.5 then
-       attackmanage(me)
-       spikeupdate(me)
-       boltupdate(me) 
-   end
+flinchingx(me,you)
+flinchingx(you,me)
 
-   postattackmanage(me)
-   postattackmanage(you)
+bumpDetection()
 
-   flinchingx(me,you)
-   flinchingx(you,me)
-   
-   bumpDetection()
-   
-   dodging(me)
-   dodging(you)
+dodging(me)
+dodging(you)
 
-   climbs(me)
-   climbs(you)
+climbs(me)
+climbs(you)
 
-   holdmanage(me)
-   holdmanage(you)
+holdmanage(me)
+holdmanage(you)
 
-   orient(me)
-   orient(you)
+orient(me)
+orient(you)
 
-   cammovement()
+cammovement()
         --if here then no slow mo twitter
         camerafol()
         camshakeflinch()
@@ -119,7 +119,6 @@ function drawPlay()
         camera:unset()
         lg.setScissor()
     end
+    drawOverlays()
 end
-
-drawOverlays()
 end
