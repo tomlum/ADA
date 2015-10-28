@@ -26,13 +26,34 @@ you.joystickn = 0
 controller_menu_c = genRanColor()
 
 function drawControllerCheck()
-  t_colorShift(controller_menu_c, 1)
+  t_colorShift2(controller_menu_c, 1, .5)
   t_setColor(controller_menu_c)  
   lg.rectangle("fill",0,0,screenwidth,screenheight)
   cclear()  
   lg.sdraw(p1controllercheck, 0, 0)
   lg.sdraw(p2controllercheck, 720, 0)
 
+  if debug then
+    if too_dark then
+      lg.print("too dark", 100,100)
+      lg.print(controller_menu_c.r_up, 100,120)
+      lg.print(controller_menu_c.g_up, 100,140)
+      lg.print(controller_menu_c.b_up, 100,160)
+      lg.print(controller_menu_c.r, 140,120)
+      lg.print(controller_menu_c.g, 140,140)
+      lg.print(controller_menu_c.b, 140,160)
+    elseif too_bright then
+      lg.setColor(0,0,0)
+      lg.print("too bright", 100,100)
+      lg.print(controller_menu_c.r_up, 100,120)
+      lg.print(controller_menu_c.g_up, 100,140)
+      lg.print(controller_menu_c.b_up, 100,160)
+      lg.print(controller_menu_c.r, 140,120)
+      lg.print(controller_menu_c.g, 140,140)
+      lg.print(controller_menu_c.b, 140,160)
+    end
+  end
+  cclear()  
 end
 
 function checkForControllers()

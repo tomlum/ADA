@@ -113,7 +113,8 @@ function debugReadouts()
 --------------------
 
 function genRanColor()
-  return {r = math.random(255), g = math.random(255), b = math.random(255)}
+  return {r = math.random(255), g = math.random(255), b = math.random(255)
+}
 end
 function setColorA(c, a)
   lg.setColor(c.r,c.g,c.b, a)
@@ -136,7 +137,7 @@ function t_colorShift(table_color)
   table_color.b = bof(0, table_color.b+math.random(-5,5), 255)
 end
 
-function t_colorShift2(table_color, amount)
+function t_colorShift2(table_color, amount, speed)
   if table_color.r_up == nil then
     table_color.r_up = 1
   end
@@ -146,9 +147,17 @@ function t_colorShift2(table_color, amount)
   if table_color.b_up == nil then
     table_color.b_up = 1
   end
-  table_color.r = bof(0, table_color.r+floRan(amount/2,amount)*table_color_up, 255)
-  table_color.g = bof(0, table_color.g+floRan(amount/2,amount)*table_color_up, 255)
-  table_color.b = bof(0, table_color.b+floRan(amount/2,amount)*table_color_up, 255)
+  if math.random() < speed then 
+    table_color.r = bof(0, table_color.r+floRan(amount/2,amount)*table_color.r_up, 255)
+  end
+  if math.random() < speed then 
+    table_color.g = bof(0, table_color.g+floRan(amount/2,amount)*table_color.g_up, 255)
+  end
+  if math.random() < speed then 
+    table_color.b = bof(0, table_color.b+floRan(amount/2,amount)*table_color.b_up, 255)
+  end
+  too_dark = (table_color.r + table_color.g + table_color.b) < 300 
+  too_bright = (table_color.r + table_color.g + table_color.b) > 400 
 
   if table_color.r == 255 or table_color.r == 0 then
     table_color.r_up = -table_color.r_up
@@ -160,6 +169,25 @@ function t_colorShift2(table_color, amount)
     table_color.b_up = -table_color.b_up
   end
 
+  if too_dark or too_bright then
+    local culprit = math.min(table_color.r,table_color.g,table_color.b)
+    local correction = 1
+    if too_bright then
+      culprit = math.max(table_color.r,table_color.g,table_color.b)
+      correction = -1
+    end
+
+
+    if isabout(table_color.r, culprit) then
+      table_color.r_up = correction
+    end
+    if isabout(table_color.g, culprit) then
+      table_color.g_up = correction
+    end
+    if isabout(table_color.b, culprit) then
+      table_color.b_up = correction
+    end
+  end
 end
 
 
