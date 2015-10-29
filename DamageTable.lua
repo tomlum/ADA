@@ -12,7 +12,7 @@ wave_frame_rate = 8 --(2 is fast, higher is lower)
 v_for_wall_flinch = 10
 
 --FRACTAL
-fractal_max_health = 300
+fractal_max_health = 50
 fractal_lives = 4
 
 --Landing
@@ -58,7 +58,6 @@ risegrav = 1
 dropgrav = .3
 maxgravity = 28
 
-      maxhealth = 70
 
 
 

@@ -9,7 +9,6 @@
 --can't kick combo out of purple kick
 
 --notes:
---fix go, fix paralax2, fix cinemabars, fix vert bar
 --more rubble ims
 --air dash
 --Times square, have a facade layer that's black or something so this way it looks like back lit against lights
@@ -26,15 +25,15 @@ require "initializers"
 --Debug/Test Utilities
 demo = true
 debug = false
-fightclub = true
-MODE = "controllerSetup"
+fightclub = false
+MODE = "color"
 notilebouncing = true
 melcolor = 1
 mercolor = 4
 youlcolor = 3
 yourcolor = 2
 therampspeed = .2
-mapNum = 1
+mapNum = 3
 rampspeed= therampspeed
 drawBoxes = false
 drawFeet = true

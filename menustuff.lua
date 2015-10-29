@@ -32,6 +32,7 @@ map = lg.newImage("images/enviro/map.png")
 
 ptile = lg.newImage("images/enviro/ptile.png")
 gtile = lg.newImage("images/enviro/gtile.png")
+rtile = lg.newImage("images/enviro/rtile.png")
 otile = lg.newImage("images/enviro/otile.png")
 tile = lg.newImage("images/enviro/tile.png")
 glogo = {im = lg.newImage("images/enviro/greenlogo.png")}
@@ -117,6 +118,7 @@ function modeManager()
   elseif MODE == "map" and oldmenu ~= "map" then
     allfade = 1
     fadein = 9
+    mapNum = 1
   elseif MODE == "color" and oldmenu ~= "color" then
     soscillator = 0
     finished_loading = false
@@ -181,7 +183,6 @@ function modeManager()
     musfade = 255
     allfade = 255
     dollyx = 0
-    dollyv = 7
     streetfadehold = 1
     streetfadestart = false
 
@@ -243,34 +244,36 @@ function pausing()
   end
 end
 
-me.health_color = 0
-you.health_color = 0
+me.health_color = math.random()
+you.health_color = math.random()
 function drawOverlays()
   cclear()
 
-  me.health_color = me.health_color + 1
-  if me.health_color > 255 then
+  me.health_color = me.health_color + math.random()/500
+  if me.health_color > 1 then
     me.health_color = 0
   end
-  you.health_color = you.health_color + 1
-  if you.health_color > 255 then
+  you.health_color = you.health_color + math.random()/500
+  if you.health_color > 1 then
     you.health_color = 0
   end
 
-  hls_SetColor(me.health_color, 255/2, 255, 255)
+  lg.setColor(0,0,0)
+  lg.rectangle("fill", 0, screenheight-health_bar_height, screenwidth, health_bar_height)
+  hls_SetColor(me.health_color, .5, .5*(me.health/maxhealth), 1)
   lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, screenwidth/1440,1)
-  hls_SetColor(me.health_color, 255/2, 255, 255)
+  hls_SetColor(you.health_color, .5, .5*(you.health/maxhealth), 1)
   lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, -screenwidth/1440, 1)
   cclear()
   if not(oldonescreen and onescreen) then
-    lg.setColor(255, 255, 255)
+    lg.setColor(0, 0, 0)
     lg.rectangle("fill", wallx, 0, 14*width, playheight)
   end
   if not(oldvertone and vertone) then
-    lg.setColor(255, 255, 255)
+    lg.setColor(0, 0, 0)
     lg.rectangle("fill",(lg.getWidth()/2)-twidth,(playheight/2)-bwidth/2,twidth*2,bwidth)
-    lg.setColor(255, 255, 255, 255)
   end
+  cclear()
 
   if not fightclub then
     drawGo()
@@ -900,13 +903,16 @@ elseif MODE == "pan" then
   end
 
   lg.setColor(allfade,allfade,allfade)
+  lg.setColor(255,255,255)
   lg.sdraw(enviro.sky, 0, 0, 0, 150, 1)
+  if enviro.paralax ~= nil then 
+    lg.sdraw(enviro.paralax2, -dollyx/4,  -enviro.paralax2:getHeight()+900-letter_box_height-35)
+  end
   lg.sdraw(enviro.paralax, -dollyx/2,  -enviro.paralax:getHeight()+900-letter_box_height-30)
   lg.sdraw(enviro.stage, -dollyx, -theMap.floor+900 -letter_box_height-30)
   lg.setColor(0,0,0)
-  lg.srectangle("fill", 0, 0, 1440, math.max(letter_box_height, 450-3^(dollyx/50)))
-
-  lg.srectangle("fill", 0, 900, 1440, -math.max(letter_box_height, 450-3^(dollyx/50)))
+  --lg.srectangle("fill", 0, 0, 1440, math.max(letter_box_height, 450-3^(dollyx/50)))
+  --lg.srectangle("fill", 0, 900, 1440, -math.max(letter_box_height, 450-3^(dollyx/50)))
   dollyx = dollyx + dollyv
 
 

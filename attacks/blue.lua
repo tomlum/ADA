@@ -376,7 +376,7 @@ function breadandbutter(xx)
       end
 
   elseif xx.attack_num == 7 then
-      if xx.animcounter == 2 then
+      if xx.animcounter <= 2 then
         xx.j = at.bb.run.j
         xx.im = brun1
       elseif xx.animcounter < 7 then

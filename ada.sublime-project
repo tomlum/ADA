@@ -1,10 +1,15 @@
 {
-    "folders":
-    [
-        {
-            "path": "/Users/Hi/Desktop/Game/ADA",
-            "file_include_patterns": ["*.lua"]
-        }
-        
-    ]
+	"folders":
+	[
+		{
+			"file_include_patterns":
+			[
+				"*.lua"
+			],
+			"path": "."
+		},
+		{
+			"path": "/Users/Hi/Library/Containers/com.apple.iChat/Data/Library/Messages/Archive"
+		}
+	]
 }

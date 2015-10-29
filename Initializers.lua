@@ -14,6 +14,15 @@ function initPlayer(xx)
 	xx.mid = 0
 	xx.y = 0
 
+	xx.v = 0
+	xx.j = 0
+	xx.g = false
+	xx.lr = 1
+	xx.health = maxhealth
+	xx.oldhealth = xx.health
+	xx.ft = 0
+	xx.im = idle1
+
 	xx.oldv = 0
 	xx.hit = false
 	xx.old_feet = xx.y

@@ -27,13 +27,15 @@ cscale = .7
 
 growrate = .02
 shrinkrate = .001
-
+maxhealth = 1
 
 function updateScreenInfo()
   screenwidth = lg.getWidth()
   screenheight = lg.getHeight()
-  playheight = screenheight - health_bar_height
-  healthratio = (screenwidth/2)/maxhealth
+  if MODE == "play" then
+    playheight = screenheight - health_bar_height
+    healthratio = (screenwidth/2)/maxhealth
+  end
 end
 
 function drawcolorstuff(xx)

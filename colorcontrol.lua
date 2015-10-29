@@ -22,10 +22,9 @@ turq = {r=145,g=222,b=161}
 pink = {r=255,g=0,b=255}
 
 color1 = xcolor("rich purple")
-color2 = xcolor("flat blue")
---orange pink
-color3 =  xcolor("blood orange")
-color4 = xcolor("bright red")
+color2 = xcolor("neon green")
+color3 =  xcolor("neon red")
+color4 = xcolor("neon blue")
 
 --color1 = xcolor("dark mauve")
 --color2 = xcolor("dark gold")
@@ -70,9 +69,9 @@ thecolors[1] = {n=1,c=color1,c2=c,
   s = {def=1.2, speed = .8-speeddif, jump = .8, weight = 1.3, brittle = 1}, tile = ptile, logo=apa11}
 thecolors[2] = {n=2,c=color2,c2=c,
   s = {def=.7, speed = 1.2-speeddif, jump = 1.1, weight = 1, brittle = 1}, tile = gtile, logo=glogo}
-thecolors[3] = {n=3, tile = otile,c=color3,c2=c, logo=ao32, sound = colorgsound,
+thecolors[3] = {n=3, tile = otile,c=color3,c2=c, logo=ao32,
   s = {def=1, speed = 1-speeddif, jump = 1.1, weight = .8, brittle = 2}}
-thecolors[4] = {n=4, tile = tile,c=color4,c2=c, logo=redap1, sound = colorpsound,
+thecolors[4] = {n=4, tile = rtile,c=color4,c2=c, logo=redap1, 
   s = {def=.8, speed = 1.1-speeddif, jump = 1.1, weight = .9, brittle = 1.2}
   }
 thecolors[5] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}

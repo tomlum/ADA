@@ -164,7 +164,7 @@ function hls_SetColor(h,l,s,a)
   lg.setColor(r * 255, g * 255, b * 255, a * 255)
 end
 
- function t_colorShift2(table_color, amount, speed)
+function t_colorShift2(table_color, amount, speed)
   if table_color.r_up == nil then
     table_color.r_up = 1
   end
@@ -315,18 +315,30 @@ end
 
 function coinflip(decimal)
   if decimal==nil then
-    if math.random()>.5 then return true
-      else return false
-      end
-    else
-      if math.random()>decimal then return true
-        else return false
-        end
-
-      end
-
-
+    if math.random()>.5 then 
+      return true
+    else 
+      return false
     end
+  else
+    if math.random()>decimal then 
+      return true
+    else 
+      return false
+    end
+
+  end
+
+
+end
+
+function posnegflip()
+    if math.random()>.5 then 
+      return 1
+    else 
+      return -1
+    end
+end
 
 --generate a float random
 function floRan(low,up)

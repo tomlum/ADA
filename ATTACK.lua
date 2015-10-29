@@ -347,155 +347,151 @@ function grab(xx)
 						xx.animcounter = 1
 						if xx.repcounter == 0 then xx.combo = xx.combo + 1 end
 						xx.repcounter = xx.repcounter + 1
+					end
+
+				elseif xx.a4 then
+
+					if func~= nil then func() end
+					if xx.color.n==0  then
+						xx.combo = xx.combo + 1
+						xx.animcounter = 1
+						xx.attack_num = 2
+					elseif xx.color.n==1 and not xx.hitsomeonewithpurp then
+						xx.attack_num = 2
+						xx.animcounter = 17
+						xx.repcounter = xx.repcounter + 1
+						xx.combo = xx.combo + 1
+					elseif xx.color.n==2 then
+						xx.attack_num = 2
+						xx.animcounter = 1
+						xx.combo = xx.combo + 1
+					elseif xx.color.n==3 then
+						xx.attack_num = 2
+						xx.animcounter = 7
+						xx.combo = xx.combo + 1
+					elseif xx.color.n==4 then
+						xx.attack_num = 2
+						xx.animcounter = 1
+						xx.combo = xx.combo + 1
+
+					end
+				elseif xx.a1 then
+
+					if func~= nil then func() end
+					if xx.color.n==0 then
+						xx.attack_num = 3
+						xx.animcounter = 1
+						xx.combo = xx.combo + 1
+					elseif xx.color.n==1 then
+						xx.attack_num = 3
+						xx.animcounter = 1
+						xx.combo = xx.combo + 1
+					elseif xx.color.n==2 then
+						xx.attack_num = 3
+						xx.animcounter = 1
+						xx.combo = xx.combo + 1
+					elseif xx.color.n==3 then
+						xx.attack_num = 3
+						xx.animcounter = 1
+						xx.combo = xx.combo + 1
+					elseif xx.color.n==4 then
+						xx.attack_num = 3
+						xx.animcounter = 1
+						xx.combo = xx.combo + 1
+						xx.counteractivate = false
+					end
 
 
+
+				end
+			else
+
+				if xx.a2 or xx.a3 then
+					if xx.color.n==4 then
+						xx.attack_num = 4
+						xx.animcounter = 1
+						xx.repcounter = xx.repcounter + 1
+					elseif xx.color.n==1 then
+						xx.attack_num = 4
+						xx.animcounter = 1
+						xx.repcounter = xx.repcounter + 1
+					elseif xx.color.n==2 then
+						xx.attack_num = 4
+						xx.animcounter = 1
+						xx.repcounter = xx.repcounter + 1
+					elseif xx.color.n==3 then
+						xx.attack_num = 4
+						xx.animcounter = 1
+						xx.repcounter = xx.repcounter + 1
+					elseif xx.color.n==0 then
+						xx.attack_num = 4
+						xx.animcounter = 1
+						xx.repcounter = xx.repcounter + 1
+					end
+
+
+				elseif xx.a1 then  
+					if xx.color.n==4 then
+						xx.attack_num = 6
+						xx.animcounter = 1
+						xx.repcounter = xx.repcounter + 1
+					elseif xx.color.n==1 then
+						xx.attack_num = 6
+						xx.animcounter = 1
+						xx.repcounter = xx.repcounter + 1
+					elseif xx.color.n==2 then
+						xx.attack_num = 6
+						xx.animcounter = 1
+						xx.repcounter = xx.repcounter + 1
+					elseif xx.color.n==3 then
+						xx.attack_num = 6
+						xx.animcounter = 1
+						xx.repcounter = xx.repcounter + 1
+					elseif xx.color.n==0 then
+						xx.attack_num = 6
+						xx.animcounter = 1
+						xx.repcounter = xx.repcounter + 1
+					end
+
+				elseif xx.a4 then
+					if xx.color.n==3 and xx.o5repcounter < at.o.ak.max then
+						xx.animcounter = 1
+						xx.attack_num = 5
+						xx.combo = xx.combo + 1
+						xx.o5repcounter = xx.o5repcounter + 1
+						if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
+						xx.j = 2
+					elseif xx.color.n==2 then
+						xx.attack_num = 5
+						xx.animcounter = 1
+						xx.repcounter = xx.repcounter + 1
+					elseif xx.color.n==4 then
+						xx.attack_num = 5
+						xx.animcounter = 1
+						xx.repcounter = xx.repcounter + 1
+					elseif xx.color.n==1 then
+						xx.attack_num = 5
+						xx.animcounter = 1
+						xx.repcounter = xx.repcounter + 1
+					elseif xx.color.n==0 then
+						xx.attack_num = 5
+						xx.animcounter = 1
+						xx.repcounter = xx.repcounter + 1
 
 					end
 
-				elseif xx.a4-- or xx.actionshot) 
-	then
 
-	if func~= nil then func() end
-	if xx.color.n==0  then
-		xx.combo = xx.combo + 1
-		xx.animcounter = 1
-		xx.attack_num = 2
-	elseif xx.color.n==1 and not xx.hitsomeonewithpurp then
-		xx.attack_num = 2
-		xx.animcounter = 17
-		xx.repcounter = xx.repcounter + 1
-		xx.combo = xx.combo + 1
-	elseif xx.color.n==2 then
-		xx.attack_num = 2
-		xx.animcounter = 1
-		xx.combo = xx.combo + 1
-	elseif xx.color.n==3 then
-		xx.attack_num = 2
-		xx.animcounter = 7
-		xx.combo = xx.combo + 1
-	elseif xx.color.n==4 then
-		xx.attack_num = 2
-		xx.animcounter = 1
-		xx.combo = xx.combo + 1
-
-	end
-elseif xx.a1 then
-
-	if func~= nil then func() end
-	if xx.color.n==0 then
-		xx.attack_num = 3
-		xx.animcounter = 1
-		xx.combo = xx.combo + 1
-	elseif xx.color.n==1 then
-		xx.attack_num = 3
-		xx.animcounter = 1
-		xx.combo = xx.combo + 1
-	elseif xx.color.n==2 then
-		xx.attack_num = 3
-		xx.animcounter = 1
-		xx.combo = xx.combo + 1
-	elseif xx.color.n==3 then
-		xx.attack_num = 3
-		xx.animcounter = 1
-		xx.combo = xx.combo + 1
-	elseif xx.color.n==4 then
-		xx.attack_num = 3
-		xx.animcounter = 1
-		xx.combo = xx.combo + 1
-		xx.counteractivate = false
-	end
+				end
 
 
-
-end
-else
-
-	if xx.a2 or xx.a3 then
-		if xx.color.n==4 then
-			xx.attack_num = 4
-			xx.animcounter = 1
-			xx.repcounter = xx.repcounter + 1
-		elseif xx.color.n==1 then
-			xx.attack_num = 4
-			xx.animcounter = 1
-			xx.repcounter = xx.repcounter + 1
-		elseif xx.color.n==2 then
-			xx.attack_num = 4
-			xx.animcounter = 1
-			xx.repcounter = xx.repcounter + 1
-		elseif xx.color.n==3 then
-			xx.attack_num = 4
-			xx.animcounter = 1
-			xx.repcounter = xx.repcounter + 1
-		elseif xx.color.n==0 then
-			xx.attack_num = 4
-			xx.animcounter = 1
-			xx.repcounter = xx.repcounter + 1
+			end
 		end
-
-
-	elseif xx.a1 then  
-		if xx.color.n==4 then
-			xx.attack_num = 6
-			xx.animcounter = 1
-			xx.repcounter = xx.repcounter + 1
-		elseif xx.color.n==1 then
-			xx.attack_num = 6
-			xx.animcounter = 1
-			xx.repcounter = xx.repcounter + 1
-		elseif xx.color.n==2 then
-			xx.attack_num = 6
-			xx.animcounter = 1
-			xx.repcounter = xx.repcounter + 1
-		elseif xx.color.n==3 then
-			xx.attack_num = 6
-			xx.animcounter = 1
-			xx.repcounter = xx.repcounter + 1
-		elseif xx.color.n==0 then
-			xx.attack_num = 6
-			xx.animcounter = 1
-			xx.repcounter = xx.repcounter + 1
-		end
-
-	elseif xx.a4 then
-		if xx.color.n==3 and xx.o5repcounter < at.o.ak.max then
-			xx.animcounter = 1
-			xx.attack_num = 5
-			xx.combo = xx.combo + 1
-			xx.o5repcounter = xx.o5repcounter + 1
-			if xx.repcounter == 1 then xx.combo = xx.combo + 1 end
-			xx.j = 2
-		elseif xx.color.n==2 then
-			xx.attack_num = 5
-			xx.animcounter = 1
-			xx.repcounter = xx.repcounter + 1
-		elseif xx.color.n==4 then
-			xx.attack_num = 5
-			xx.animcounter = 1
-			xx.repcounter = xx.repcounter + 1
-		elseif xx.color.n==1 then
-			xx.attack_num = 5
-			xx.animcounter = 1
-			xx.repcounter = xx.repcounter + 1
-		elseif xx.color.n==0 then
-			xx.attack_num = 5
-			xx.animcounter = 1
-			xx.repcounter = xx.repcounter + 1
-
-		end
-
-
-	end
-
-
-end
-end
-if not xx.combo_pause 
-	and xx.animcounter < oldanimc 
-	and xx.animcounter > 0 
-	and 
-	xx.currentc ~= xx.color.n then
-	xx.currentc = xx.color.n
+		if not xx.combo_pause 
+			and xx.animcounter < oldanimc 
+			and xx.animcounter > 0 
+			and 
+			xx.currentc ~= xx.color.n then
+			xx.currentc = xx.color.n
     --xx.repcounter = 0
 end
 xx.cmbo = false
