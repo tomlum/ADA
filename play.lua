@@ -1,9 +1,9 @@
 function play()
 
 	if game_mode == "koth" then 
-     while(kothplat == nil or kothplat.floor) or (kothplat==oldplat) do
-        randomizeplat()
-    end
+   while(kothplat == nil or kothplat.floor) or (kothplat==oldplat) do
+    randomizeplat()
+  end
 end
 
 speedRamp()
@@ -29,54 +29,54 @@ if slowt == slowrate and not (pause or hitpause) and not me.actionshot
    attackmanage(me)
    spikeupdate(me)
    boltupdate(me) 
-end
-attackmanage(you)
-spikeupdate(you)
-boltupdate(you)  
-if whoupdatesfirst<=.5 then
+ end
+ attackmanage(you)
+ spikeupdate(you)
+ boltupdate(you)  
+ if whoupdatesfirst<=.5 then
    attackmanage(me)
    spikeupdate(me)
    boltupdate(me) 
-end
+ end
 
-postattackmanage(me)
-postattackmanage(you)
+ postattackmanage(me)
+ postattackmanage(you)
 
-flinchingx(me,you)
-flinchingx(you,me)
+ flinchingx(me,you)
+ flinchingx(you,me)
 
-bumpDetection()
+ bumpDetection()
 
-dodging(me)
-dodging(you)
+ dodging(me)
+ dodging(you)
 
-climbs(me)
-climbs(you)
+ climbs(me)
+ climbs(you)
 
-holdmanage(me)
-holdmanage(you)
+ holdmanage(me)
+ holdmanage(you)
 
-orient(me)
-orient(you)
+ orient(me)
+ orient(you)
 
-cammovement()
+ cammovement()
         --if here then no slow mo twitter
         camerafol()
         camshakeflinch()
         lassoScreen()
 
+      end
+      monupdate()
+      pauseonhit()
+
     end
-    monupdate()
-    pauseonhit()
-
-end
 
 
 
 
 
-function drawPlay()
-    cclear()
+    function drawPlay()
+      cclear()
 
     --Left Primary Camera
     lg.setScissor(0, 0, screenwidth/2, playheight)
@@ -106,7 +106,7 @@ function drawPlay()
         drawx(camera2)
         camera2:unset()
         lg.setScissor()
-    elseif me.x >= you.x then
+      elseif me.x >= you.x then
         lg.setScissor(screenwidth/2-twidth, topy,twidth+1, playheight/2+1)
         camera2:set()
         drawx(camera2)
@@ -118,7 +118,7 @@ function drawPlay()
         drawx(camera)
         camera:unset()
         lg.setScissor()
+      end
     end
     drawOverlays()
-end
-end
+  end

@@ -5,39 +5,39 @@ amountstuckinfloor = 45
 creaturerate = .95
 
 
-bolt = lg.newImage("me/attack/green/bolt.png")
+bolt = lg.newImage("images/me/attack/green/bolt.png")
 
-greena12 = {im=lg.newImage("me/attack/green/greena12.png"), xoff = 3,yoff = 6}
-greena13 = {im=lg.newImage("me/attack/green/greena13.png"), xoff = 3,yoff = 19}
-greena14 = {im=lg.newImage("me/attack/green/greena14.png"), xoff = 3,yoff = 33}
-greena15 = {im=lg.newImage("me/attack/green/greena15.png"), xoff = 3,yoff = 42}
+greena12 = {im=lg.newImage("images/me/attack/green/greena12.png"), xoff = 3,yoff = 6}
+greena13 = {im=lg.newImage("images/me/attack/green/greena13.png"), xoff = 3,yoff = 19}
+greena14 = {im=lg.newImage("images/me/attack/green/greena14.png"), xoff = 3,yoff = 33}
+greena15 = {im=lg.newImage("images/me/attack/green/greena15.png"), xoff = 3,yoff = 42}
 
-greena21 = {im=lg.newImage("me/attack/green/greena21.png"), xoff = 20,yoff = -6}
-greena22 = {im=lg.newImage("me/attack/green/greena22.png"), xoff = 30+3, yoff = -4}
+greena21 = {im=lg.newImage("images/me/attack/green/greena21.png"), xoff = 20,yoff = -6}
+greena22 = {im=lg.newImage("images/me/attack/green/greena22.png"), xoff = 30+3, yoff = -4}
 
-greena22s = {im=lg.newImage("me/attack/green/greena22s.png"), xoff = 30+8, yoff = 1}
-greencreatures = {im=lg.newImage("me/attack/green/greencreatures.png"), xoff = 30+8+8, yoff = 8}
-greencreature = {im=lg.newImage("me/attack/green/greencreature.png"), xoff = 30+8+8, yoff = 8}
-
-
-agreena22 = {im=lg.newImage("me/attack/green/agreena22.png"), xoff = 20, xoff = 40, yoff = 4}
-agreena22s = {im=lg.newImage("me/attack/green/agreena22s.png"), xoff = 45, yoff = 2}
-
-agreena1 = {im=lg.newImage("me/attack/green/agreena1.png"), xoff = 20, yoff = 0}
-agreena1s = {im=lg.newImage("me/attack/green/agreena1s.png"), xoff = 20, yoff = 44}
-
-garmfront = lg.newImage("me/attack/green/garmfront.png")
-garmback = lg.newImage("me/attack/green/garmback.png")
-
-greenk03 = {im=lg.newImage("me/attack/green/greenk03.png"), xoff = 1, yoff = -6}
-greenk01 = {im=lg.newImage("me/attack/green/greenk01.png"), xoff = 1, yoff = -6}
-greenk02 = {im=lg.newImage("me/attack/green/greenk02.png"), xoff = 4, yoff = -6}
-
-greenk1 = {im=lg.newImage("me/attack/green/greenk1.png"), xoff = 2, yoff = -6, legs = lg.newImage("me/attack/green/greenk1legs.png"), legsy = 36}
-greenk2 = {im=lg.newImage("me/attack/green/greenk2.png"), xoff = 0, yoff = -2}
+greena22s = {im=lg.newImage("images/me/attack/green/greena22s.png"), xoff = 30+8, yoff = 1}
+greencreatures = {im=lg.newImage("images/me/attack/green/greencreatures.png"), xoff = 30+8+8, yoff = 8}
+greencreature = {im=lg.newImage("images/me/attack/green/greencreature.png"), xoff = 30+8+8, yoff = 8}
 
 
-agk1 = {im=lg.newImage("me/attack/green/agk1.png"), xoff = 2, yoff = -6}
+agreena22 = {im=lg.newImage("images/me/attack/green/agreena22.png"), xoff = 20, xoff = 40, yoff = 4}
+agreena22s = {im=lg.newImage("images/me/attack/green/agreena22s.png"), xoff = 45, yoff = 2}
+
+agreena1 = {im=lg.newImage("images/me/attack/green/agreena1.png"), xoff = 20, yoff = 0}
+agreena1s = {im=lg.newImage("images/me/attack/green/agreena1s.png"), xoff = 20, yoff = 44}
+
+garmfront = lg.newImage("images/me/attack/green/garmfront.png")
+garmback = lg.newImage("images/me/attack/green/garmback.png")
+
+greenk03 = {im=lg.newImage("images/me/attack/green/greenk03.png"), xoff = 1, yoff = -6}
+greenk01 = {im=lg.newImage("images/me/attack/green/greenk01.png"), xoff = 1, yoff = -6}
+greenk02 = {im=lg.newImage("images/me/attack/green/greenk02.png"), xoff = 4, yoff = -6}
+
+greenk1 = {im=lg.newImage("images/me/attack/green/greenk1.png"), xoff = 2, yoff = -6, legs = lg.newImage("images/me/attack/green/greenk1legs.png"), legsy = 36}
+greenk2 = {im=lg.newImage("images/me/attack/green/greenk2.png"), xoff = 0, yoff = -2}
+
+
+agk1 = {im=lg.newImage("images/me/attack/green/agk1.png"), xoff = 2, yoff = -6}
 
 
 me.greenkhit = false

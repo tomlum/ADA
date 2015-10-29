@@ -1,42 +1,42 @@
 
 
 
-op1 = {im=lg.newImage("me/attack/orange/op1.png"), xoff = 2}
-op2 = {im=lg.newImage("me/attack/orange/op2n.png"), xoff = 9,yoff = 10}
-op3 = {im=lg.newImage("me/attack/orange/op3n.png"), xoff = 9+11,yoff = 12+7}
-op4 = {im=lg.newImage("me/attack/orange/op4n.png"), xoff = 9,yoff = 12}
-op5 = {im=lg.newImage("me/attack/orange/op5n.png"), xoff = 9+11,yoff = 12+7}
+op1 = {im=lg.newImage("images/me/attack/orange/op1.png"), xoff = 2}
+op2 = {im=lg.newImage("images/me/attack/orange/op2n.png"), xoff = 9,yoff = 10}
+op3 = {im=lg.newImage("images/me/attack/orange/op3n.png"), xoff = 9+11,yoff = 12+7}
+op4 = {im=lg.newImage("images/me/attack/orange/op4n.png"), xoff = 9,yoff = 12}
+op5 = {im=lg.newImage("images/me/attack/orange/op5n.png"), xoff = 9+11,yoff = 12+7}
 
 
-ao21 = {im=lg.newImage("me/attack/orange/ao21.png"), xoff = 9, yoff = 17, extra_height = 5}
-ao22 = {im=lg.newImage("me/attack/orange/ao22.png"), xoff = 9-5+13, extra_height = 5, yoff = 22}
+ao21 = {im=lg.newImage("images/me/attack/orange/ao21.png"), xoff = 9, yoff = 17, extra_height = 5}
+ao22 = {im=lg.newImage("images/me/attack/orange/ao22.png"), xoff = 9-5+13, extra_height = 5, yoff = 22}
 
 
-ao23 = {im=lg.newImage("me/attack/orange/ao23.png"), xoff = 5,yoff = 17, extra_height = 5}
-ao24 = {im=lg.newImage("me/attack/orange/ao24.png"), xoff = 9-5+13, extra_height = 5+14, yoff = 23}
+ao23 = {im=lg.newImage("images/me/attack/orange/ao23.png"), xoff = 5,yoff = 17, extra_height = 5}
+ao24 = {im=lg.newImage("images/me/attack/orange/ao24.png"), xoff = 9-5+13, extra_height = 5+14, yoff = 23}
 
 
-ok2 = {im=lg.newImage("me/attack/orange/ok2.png"), xoff = 9,yoff = 15}
-ok3 = {im=lg.newImage("me/attack/orange/ok3.png"), xoff = 84,yoff = 3}
-ok4 = {im=lg.newImage("me/attack/orange/ok4.png"), xoff = 45,yoff = 0, extra_height = 5}
+ok2 = {im=lg.newImage("images/me/attack/orange/ok2.png"), xoff = 9,yoff = 15}
+ok3 = {im=lg.newImage("images/me/attack/orange/ok3.png"), xoff = 84,yoff = 3}
+ok4 = {im=lg.newImage("images/me/attack/orange/ok4.png"), xoff = 45,yoff = 0, extra_height = 5}
 
 
-o32 = {im=lg.newImage("me/attack/orange/o32.png"), 
+o32 = {im=lg.newImage("images/me/attack/orange/o32.png"), 
   xoff = 9,yoff = -5}
 
-o33 = {im=lg.newImage("me/attack/orange/o33.png"), xoff = 4}
+o33 = {im=lg.newImage("images/me/attack/orange/o33.png"), xoff = 4}
 
-ao31 = {im=lg.newImage("me/attack/orange/ao31.png"), xoff = 15, yoff = 9}
-ao32 = {im=lg.newImage("me/attack/orange/ao32.png"), yoff = 52, xoff = 12}
+ao31 = {im=lg.newImage("images/me/attack/orange/ao31.png"), xoff = 15, yoff = 9}
+ao32 = {im=lg.newImage("images/me/attack/orange/ao32.png"), yoff = 52, xoff = 12}
 
 
 
-aop1 = {im=lg.newImage("me/attack/orange/aop1.png"), xoff = 5,yoff = 17, extra_height = 5}
-aop2 = {im=lg.newImage("me/attack/orange/aop2.png"),yoff = 32, extra_height = 5, xoff = 10}
+aop1 = {im=lg.newImage("images/me/attack/orange/aop1.png"), xoff = 5,yoff = 17, extra_height = 5}
+aop2 = {im=lg.newImage("images/me/attack/orange/aop2.png"),yoff = 32, extra_height = 5, xoff = 10}
 
-orun = {im=lg.newImage("me/attack/orange/orun.png")}
-aorun1 = {im=lg.newImage("me/attack/orange/aorun1.png"), xoff = 3, yoff = 0}
-aorun2 = {im=lg.newImage("me/attack/orange/aorun2.png"), xoff = 3, yoff = 0}
+orun = {im=lg.newImage("images/me/attack/orange/orun.png")}
+aorun1 = {im=lg.newImage("images/me/attack/orange/aorun1.png"), xoff = 3, yoff = 0}
+aorun2 = {im=lg.newImage("images/me/attack/orange/aorun2.png"), xoff = 3, yoff = 0}
 
 
 at.o = {}

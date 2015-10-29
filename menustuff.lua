@@ -19,55 +19,50 @@ health_bar_height = 50
 letter_box_height = 80
 menu_speed = 7
 
-pressanybutton = lg.newImage("enviro/pressanybutton.png")
-waveim = lg.newImage("enviro/wave2.png")
-retryim = lg.newImage("enviro/retry.png")
-ready = lg.newImage("enviro/READY.png")
-pausescreen = lg.newImage("enviro/paused.png")
-modes = lg.newImage("enviro/mode.png")
-backstreet = lg.newImage("enviro/backstreet.png")
-modeselector = lg.newImage("enviro/modeselector.png")
-wiper = lg.newImage("enviro/wiper.png")
-map = lg.newImage("enviro/map.png")
+pressanybutton = lg.newImage("images/enviro/pressanybutton.png")
+waveim = lg.newImage("images/enviro/wave2.png")
+retryim = lg.newImage("images/enviro/retry.png")
+ready = lg.newImage("images/enviro/ready.png")
+pausescreen = lg.newImage("images/enviro/paused.png")
+modes = lg.newImage("images/enviro/mode.png")
+backstreet = lg.newImage("images/enviro/backstreet.png")
+modeselector = lg.newImage("images/enviro/modeselector.png")
+wiper = lg.newImage("images/enviro/wiper.png")
+map = lg.newImage("images/enviro/map.png")
 
-ptile = lg.newImage("enviro/ptile.png")
-gtile = lg.newImage("enviro/gtile.png")
-otile = lg.newImage("enviro/otile.png")
-tile = lg.newImage("enviro/tile.png")
-glogo = {im = lg.newImage("enviro/greenlogo.png")}
-questionlogo = {im=lg.newImage("enviro/questionmark.png")}
-shoulder = lg.newImage("enviro/shoulder.png")
-ready = lg.newImage("enviro/ready.png")
+ptile = lg.newImage("images/enviro/ptile.png")
+gtile = lg.newImage("images/enviro/gtile.png")
+otile = lg.newImage("images/enviro/otile.png")
+tile = lg.newImage("images/enviro/tile.png")
+glogo = {im = lg.newImage("images/enviro/greenlogo.png")}
+questionlogo = {im=lg.newImage("images/enviro/questionmark.png")}
+shoulder = lg.newImage("images/enviro/shoulder.png")
+ready = lg.newImage("images/enviro/ready.png")
 
-p1controllercheck = lg.newImage("enviro/p1controllercheck.png")
-p2controllercheck = lg.newImage("enviro/p2controllercheck.png")
+p1controllercheck = lg.newImage("images/enviro/p1controllercheck.png")
+p2controllercheck = lg.newImage("images/enviro/p2controllercheck.png")
 
 if not fightclub then 
 
-  enviro.vert = lg.newImage("enviro/vert.png")
-  enviro.horiz = lg.newImage("enviro/horiz.png")
+  enviro.vert = lg.newImage("images/enviro/vert.png")
+  enviro.horiz = lg.newImage("images/enviro/horiz.png")
 
-  enviro.iv = lg.newImage("enviro/iv.png")
-  enviro.iii = lg.newImage("enviro/iii.png")
-  enviro.ii = lg.newImage("enviro/ii.png")
-  enviro.i = lg.newImage("enviro/i.png")
-  enviro.x = lg.newImage("enviro/x.png")
 
-  vertebrae = lg.newImage("enviro/spine.png")
+  vertebrae = lg.newImage("images/enviro/spine.png")
 
-  buildings1 = lg.newImage("enviro/v1.png")
-  buildings2 = lg.newImage("enviro/v2.png")
-  buildings3 = lg.newImage("enviro/v3.png")
+  buildings1 = lg.newImage("images/enviro/v1.png")
+  buildings2 = lg.newImage("images/enviro/v2.png")
+  buildings3 = lg.newImage("images/enviro/v3.png")
 
   facade = buildings1
 
-  enviro.sunback = lg.newImage("enviro/sunback.png")
-  enviro.ada = lg.newImage("enviro/Ada.png")
-  enviro.go = lg.newImage("enviro/go.png")
+  enviro.sunback = lg.newImage("images/enviro/sunback.png")
+  enviro.ada = lg.newImage("images/enviro/Ada.png")
+  enviro.go = lg.newImage("images/enviro/go.png")
 end
-enviro.light = lg.newImage("enviro/lightson.png")
-enviro.healthbar = lg.newImage("enviro/healthbar.png")
-enviro.stagefloor = lg.newImage("enviro/floor.png")
+enviro.light = lg.newImage("images/maps/street/lightson.png")
+enviro.healthbar = lg.newImage("images/enviro/healthbar.png")
+enviro.stagefloor = lg.newImage("images/enviro/floor.png")
 
 musfadein = 0
 musfade = 0
@@ -248,15 +243,31 @@ function pausing()
   end
 end
 
+me.health_color = 0
+you.health_color = 0
 function drawOverlays()
   cclear()
 
+  me.health_color = me.health_color + 1
+  if me.health_color > 255 then
+    me.health_color = 0
+  end
+  you.health_color = you.health_color + 1
+  if you.health_color > 255 then
+    you.health_color = 0
+  end
+
+  hls_SetColor(me.health_color, 255/2, 255, 255)
+  lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, screenwidth/1440,1)
+  hls_SetColor(me.health_color, 255/2, 255, 255)
+  lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, -screenwidth/1440, 1)
+  cclear()
   if not(oldonescreen and onescreen) then
-    lg.setColor(53, 53, 53)
+    lg.setColor(255, 255, 255)
     lg.rectangle("fill", wallx, 0, 14*width, playheight)
   end
   if not(oldvertone and vertone) then
-    lg.setColor(53, 53, 53)
+    lg.setColor(255, 255, 255)
     lg.rectangle("fill",(lg.getWidth()/2)-twidth,(playheight/2)-bwidth/2,twidth*2,bwidth)
     lg.setColor(255, 255, 255, 255)
   end
@@ -264,7 +275,7 @@ function drawOverlays()
   if not fightclub then
     drawGo()
   end
-  drawroulettenumbers()
+
   if pause and not hitpause then
     lg.sdraw(pausescreen,0,0,0,10,10)
   end
@@ -275,8 +286,6 @@ function drawOverlays()
   lg.srectangle("fill",0,900,1440,-barey)
   lg.setColor(255,255,255)
 
-  lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, screenwidth/1440,1)
-  lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, -screenwidth/1440, 1)
 end
 
 function lg.sdraw(im, x, y, rot, sx, sy) 
@@ -807,7 +816,7 @@ function drawmenus()
 
   lg.setColor(255, 255, 255)
   if me.readytoplay then
-    lg.sdraw(ready, 100, 70+tilesep,0,5,5)
+    lg.sdraw(ready, 120, 90+tilesep,0,5,5)
   else
     if me.right and not me.dirholda then me.selectedcolor = (me.selectedcolor + 1)%(#tiles)
       repplay(me.mov)
@@ -823,7 +832,7 @@ function drawmenus()
   end
 
   if you.readytoplay then
-    lg.sdraw(ready, 1440-100-(64*5), 70+tilesep,0,5,5)
+    lg.sdraw(ready, 1440-120-(64*5), 70+tilesep,0,5,5)
 
   else
     if you.right and not you.dirholda then you.selectedcolor = (you.selectedcolor - 1)%(#tiles2)

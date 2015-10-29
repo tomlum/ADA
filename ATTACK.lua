@@ -14,10 +14,10 @@ attack_num
 -----------------------------
 at = {}
 
-blockrelease = {im=lg.newImage("me/attack/blockrelease.png"), xoff = 3, yoff = -4}
+blockrelease = {im=lg.newImage("images/me/attack/blockrelease.png"), xoff = 3, yoff = -4}
 
-throw = {im=lg.newImage("me/attack/throw.png"), xoff = 8, yoff = 5}
-airthrow = {im=lg.newImage("me/attack/airthrow.png"), xoff = 9, yoff = 5}
+throw = {im=lg.newImage("images/me/attack/throw.png"), xoff = 8, yoff = 5}
+airthrow = {im=lg.newImage("images/me/attack/airthrow.png"), xoff = 9, yoff = 5}
 
 throwft = 26
 throwz = .1
@@ -576,38 +576,38 @@ you.nododge = false
 
 
 
-dying ={im = lg.newImage("me/attack/dying.png")}
-airdying = {im = lg.newImage("me/attack/airdying.png")}
+dying ={im = lg.newImage("images/me/attack/dying.png")}
+airdying = {im = lg.newImage("images/me/attack/airdying.png")}
 
 
-climb = {im=lg.newImage("me/attack/climb.png")}
-climb2 = {im=lg.newImage("me/attack/climb2.png")}
-climb3 = {im=lg.newImage("me/attack/climb3.png")}
+climb = {im=lg.newImage("images/me/attack/climb.png")}
+climb2 = {im=lg.newImage("images/me/attack/climb2.png")}
+climb3 = {im=lg.newImage("images/me/attack/climb3.png")}
 
-flinch = {im = lg.newImage("me/attack/flinch.png")}
-
-
-fallback = {im=lg.newImage("me/attack/fallback.png"),xoff = 12, dodge_height = 32, dodge_width = 26, yoff = -40}
-fallbackbounce = {im=lg.newImage("me/attack/fallbackbounce.png"),xoff = 12, yoff = -40, dodge_height = 32, dodge_width = 26}
-fallbackbouncedown = {im=lg.newImage("me/attack/fallbackbouncedown.png"),xoff = 12, yoff = -39, dodge_height = 32, dodge_width = 26}
-fallforward = {im=lg.newImage("me/attack/fallforward.png"), yoff = -32}
-fallback1 = {im=lg.newImage("me/attack/fallback1.png")}
-fallforward1 = {im=lg.newImage("me/attack/fallforward1.png"), xoff = -1, yoff = -2}
-gettingup1 = {im=lg.newImage("me/attack/gettingup1.png"), yoff = -9}
-gettingup2 = {im=lg.newImage("me/attack/gettingup2.png"),yoff = -7}
-gettingup11 = {im=lg.newImage("me/attack/gettingup11.png"),xoff = -4, yoff = -23}
-
-flinchback = {im=lg.newImage("me/attack/flinchback.png"),yoff = -3}
-block = {im = lg.newImage("me/attack/block.png")}
-dodgeback = {im = lg.newImage("me/attack/dodgeback.png"), xoff = 3}
-dodgeback2 = {im = lg.newImage("me/attack/dodgeback2.png"), xoff = 4, yoff = -3}
+flinch = {im = lg.newImage("images/me/attack/flinch.png")}
 
 
-dodge = {im=lg.newImage("me/attack/dodge.png"), dodge_height = 32, dodge_width = 10, yoff = -24}
-dodge2 = {im=lg.newImage("me/attack/dodge2.png"),xoff = 10, yoff = -17}
-dodge21 = {im=lg.newImage("me/attack/dodge21.png"), xoff = 10, yoff = -21}
+fallback = {im=lg.newImage("images/me/attack/fallback.png"),xoff = 12, dodge_height = 32, dodge_width = 26, yoff = -40}
+fallbackbounce = {im=lg.newImage("images/me/attack/fallbackbounce.png"),xoff = 12, yoff = -40, dodge_height = 32, dodge_width = 26}
+fallbackbouncedown = {im=lg.newImage("images/me/attack/fallbackbouncedown.png"),xoff = 12, yoff = -39, dodge_height = 32, dodge_width = 26}
+fallforward = {im=lg.newImage("images/me/attack/fallforward.png"), yoff = -32}
+fallback1 = {im=lg.newImage("images/me/attack/fallback1.png")}
+fallforward1 = {im=lg.newImage("images/me/attack/fallforward1.png"), xoff = -1, yoff = -2}
+gettingup1 = {im=lg.newImage("images/me/attack/gettingup1.png"), yoff = -9}
+gettingup2 = {im=lg.newImage("images/me/attack/gettingup2.png"),yoff = -7}
+gettingup11 = {im=lg.newImage("images/me/attack/gettingup11.png"),xoff = -4, yoff = -23}
 
-invis = {im=lg.newImage("me/attack/invis.png"),c=lg.newImage("me/attack/invis.png")}
+flinchback = {im=lg.newImage("images/me/attack/flinchback.png"),yoff = -3}
+block = {im = lg.newImage("images/me/attack/block.png")}
+dodgeback = {im = lg.newImage("images/me/attack/dodgeback.png"), xoff = 3}
+dodgeback2 = {im = lg.newImage("images/me/attack/dodgeback2.png"), xoff = 4, yoff = -3}
+
+
+dodge = {im=lg.newImage("images/me/attack/dodge.png"), dodge_height = 32, dodge_width = 10, yoff = -24}
+dodge2 = {im=lg.newImage("images/me/attack/dodge2.png"),xoff = 10, yoff = -17}
+dodge21 = {im=lg.newImage("images/me/attack/dodge21.png"), xoff = 10, yoff = -21}
+
+invis = {im=lg.newImage("images/me/attack/invis.png"),c=lg.newImage("images/me/attack/invis.png")}
 
 
 

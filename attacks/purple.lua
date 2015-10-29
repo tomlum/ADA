@@ -1,28 +1,28 @@
 --ppunch3 inserts some p's around
-ppunch1 = {im = lg.newImage("me/attack/purple/ppunch1.png"), ppunch1im, xoff = 10, yoff = 10}
-ppunch2 = {im = lg.newImage("me/attack/purple/ppunch2.png"), xoff = 5}
-ppunch3 = {im = lg.newImage("me/attack/purple/ppunch3.png"), xoff = 5, yoff = -5}
-stomp1 = {im=lg.newImage("me/attack/purple/stomp1.png")}
-stomp2 = {im=lg.newImage("me/attack/purple/stomp2.png")}
+ppunch1 = {im = lg.newImage("images/me/attack/purple/ppunch1.png"), ppunch1im, xoff = 10, yoff = 10}
+ppunch2 = {im = lg.newImage("images/me/attack/purple/ppunch2.png"), xoff = 5}
+ppunch3 = {im = lg.newImage("images/me/attack/purple/ppunch3.png"), xoff = 5, yoff = -5}
+stomp1 = {im=lg.newImage("images/me/attack/purple/stomp1.png")}
+stomp2 = {im=lg.newImage("images/me/attack/purple/stomp2.png")}
 
-pa11 = {im=lg.newImage("me/attack/purple/pa11.png"), xoff = -2, yoff = 20}
-pa12 = {im=lg.newImage("me/attack/purple/pa12.png"), xoff = 2, yoff = -2}
-pa13 = {im=lg.newImage("me/attack/purple/pa13.png"), xoff = 4, yoff = -6}
+pa11 = {im=lg.newImage("images/me/attack/purple/pa11.png"), xoff = -2, yoff = 20}
+pa12 = {im=lg.newImage("images/me/attack/purple/pa12.png"), xoff = 2, yoff = -2}
+pa13 = {im=lg.newImage("images/me/attack/purple/pa13.png"), xoff = 4, yoff = -6}
 
-apa21 = {im=lg.newImage("me/attack/purple/apa21.png"), xoff = 2,yoff = -1, extra_height = 5}
-apa22 = {im=lg.newImage("me/attack/purple/apa22.png"), xoff = 0, yoff = -1, extra_height = 5}
-apa23 = {im=lg.newImage("me/attack/purple/apa23.png"), xoff = 3, yoff = -4, extra_height = 5}
+apa21 = {im=lg.newImage("images/me/attack/purple/apa21.png"), xoff = 2,yoff = -1, extra_height = 5}
+apa22 = {im=lg.newImage("images/me/attack/purple/apa22.png"), xoff = 0, yoff = -1, extra_height = 5}
+apa23 = {im=lg.newImage("images/me/attack/purple/apa23.png"), xoff = 3, yoff = -4, extra_height = 5}
 
-apa11 = {im=lg.newImage("me/attack/purple/apa11.png"), xoff = 5, yoff = -3, extra_height = 5}
-apa12 = {im=lg.newImage("me/attack/purple/apa12.png"), xoff = 13, yoff = 38, extra_height = 5}
-apa13 = {im=lg.newImage("me/attack/purple/apa13.png"), xoff = 26, yoff = 8, extra_height = 5}
+apa11 = {im=lg.newImage("images/me/attack/purple/apa11.png"), xoff = 5, yoff = -3, extra_height = 5}
+apa12 = {im=lg.newImage("images/me/attack/purple/apa12.png"), xoff = 13, yoff = 38, extra_height = 5}
+apa13 = {im=lg.newImage("images/me/attack/purple/apa13.png"), xoff = 26, yoff = 8, extra_height = 5}
 
-pp1back = {im=lg.newImage("me/attack/purple/pp1back.png"), xoff = -2, yoff = 2}
-pp1back2 = {im=lg.newImage("me/attack/purple/pp1back2.png"), xoff = 10, yoff = 38}
-pp1back3 = {im=lg.newImage("me/attack/purple/pp1back3.png"), xoff = 37, yoff = -4}
-pp1back4 = {im=lg.newImage("me/attack/purple/pp1back4.png"), xoff = 37, yoff = -8}
-apk1 = {im=lg.newImage("me/attack/purple/apk1.png"),extra_height = 5}
-apk2 = {im=lg.newImage("me/attack/purple/apk2.png"), xoff = 0, yoff = -15}
+pp1back = {im=lg.newImage("images/me/attack/purple/pp1back.png"), xoff = -2, yoff = 2}
+pp1back2 = {im=lg.newImage("images/me/attack/purple/pp1back2.png"), xoff = 10, yoff = 38}
+pp1back3 = {im=lg.newImage("images/me/attack/purple/pp1back3.png"), xoff = 37, yoff = -4}
+pp1back4 = {im=lg.newImage("images/me/attack/purple/pp1back4.png"), xoff = 37, yoff = -8}
+apk1 = {im=lg.newImage("images/me/attack/purple/apk1.png"),extra_height = 5}
+apk2 = {im=lg.newImage("images/me/attack/purple/apk2.png"), xoff = 0, yoff = -15}
 
 
 spikesize = 12

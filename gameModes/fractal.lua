@@ -1,13 +1,13 @@
 
-fractal1 = lg.newImage("enviro/fractals/fractal1.png")
-fractal2 = lg.newImage("enviro/fractals/fractal2.png")
-fractal3 = lg.newImage("enviro/fractals/fractal3.png")
-fractal3paralax = lg.newImage("enviro/fractals/fractal3paralax.png")
-fractal4 = lg.newImage("enviro/fractals/fractal4.png")
-fractal4paralax = lg.newImage("enviro/fractals/fractal4paralax.png")
-fractal5 = lg.newImage("enviro/fractals/fractal5.png")
-fractal5paralax = lg.newImage("enviro/fractals/fractal5paralax.png")
-fractal1facade = lg.newImage("enviro/fractals/fractal1facade.png")
+fractal1 = lg.newImage("images/enviro/fractals/fractal1.png")
+fractal2 = lg.newImage("images/enviro/fractals/fractal2.png")
+fractal3 = lg.newImage("images/enviro/fractals/fractal3.png")
+fractal3paralax = lg.newImage("images/enviro/fractals/fractal3paralax.png")
+fractal4 = lg.newImage("images/enviro/fractals/fractal4.png")
+fractal4paralax = lg.newImage("images/enviro/fractals/fractal4paralax.png")
+fractal5 = lg.newImage("images/enviro/fractals/fractal5.png")
+fractal5paralax = lg.newImage("images/enviro/fractals/fractal5paralax.png")
+fractal1facade = lg.newImage("images/enviro/fractals/fractal1facade.png")
 
 function fractalrespawn(xx)
 

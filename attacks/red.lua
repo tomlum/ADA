@@ -1,67 +1,67 @@
-redp1 = {im=lg.newImage("me/attack/red/redp1.png"),
+redp1 = {im=lg.newImage("images/me/attack/red/redp1.png"),
 xoff = 25,yoff = -10}
-redp2 = {im=lg.newImage("me/attack/red/redp2.png"), xoff = 7,yoff = -7}
-redp3 = {im=lg.newImage("me/attack/red/redp3.png"), xoff = 13,yoff = -5}
-redp4 = {im=lg.newImage("me/attack/red/redp4.png"), xoff = 7,yoff = 10}
-redp5 = {im=lg.newImage("me/attack/red/redp5.png"), xoff = 25,yoff = -13}
-redcounter = {im=lg.newImage("me/attack/red/redcounter.png"), xoff = 25,yoff = -13}
+redp2 = {im=lg.newImage("images/me/attack/red/redp2.png"), xoff = 7,yoff = -7}
+redp3 = {im=lg.newImage("images/me/attack/red/redp3.png"), xoff = 13,yoff = -5}
+redp4 = {im=lg.newImage("images/me/attack/red/redp4.png"), xoff = 7,yoff = 10}
+redp5 = {im=lg.newImage("images/me/attack/red/redp5.png"), xoff = 25,yoff = -13}
+redcounter = {im=lg.newImage("images/me/attack/red/redcounter.png"), xoff = 25,yoff = -13}
 
-redblock = {im=lg.newImage("me/attack/red/redblock.png"), yoff = -4}
-redaslash = lg.newImage("me/attack/red/redaslash.png")
-redap1 = {im=lg.newImage("me/attack/red/redap1.png"),
+redblock = {im=lg.newImage("images/me/attack/red/redblock.png"), yoff = -4}
+redaslash = lg.newImage("images/me/attack/red/redaslash.png")
+redap1 = {im=lg.newImage("images/me/attack/red/redap1.png"),
 xoff = 15,slash = redaslash,extra_height = 5}
-redap2 = {im=lg.newImage("me/attack/red/redap2.png"),
+redap2 = {im=lg.newImage("images/me/attack/red/redap2.png"),
 xoff = 15,slash = redaslash,extra_height = 5}
-redap3 = {im=lg.newImage("me/attack/red/redap3.png"),
+redap3 = {im=lg.newImage("images/me/attack/red/redap3.png"),
 xoff = 8, yoff = 4,slash = redaslash,extra_height = 5}
-redap4 = {im=lg.newImage("me/attack/red/redap4.png"),
+redap4 = {im=lg.newImage("images/me/attack/red/redap4.png"),
 xoff = 3, yoff = 4,slash = redaslash,extra_height = 5}
 
-redcounter1 = {im=lg.newImage("me/attack/red/redcounter1.png"),
+redcounter1 = {im=lg.newImage("images/me/attack/red/redcounter1.png"),
 xoff = 10, yoff = -4}
-redcounter2 = {im=lg.newImage("me/attack/red/redcounter2.png"),
+redcounter2 = {im=lg.newImage("images/me/attack/red/redcounter2.png"),
 xoff = 4, yoff = -4}
-redcounter3 = {im=lg.newImage("me/attack/red/redcounter3.png"),
+redcounter3 = {im=lg.newImage("images/me/attack/red/redcounter3.png"),
 xoff = 8, yoff = -11}
-redcounter4 = {im=lg.newImage("me/attack/red/redcounter4.png"),
+redcounter4 = {im=lg.newImage("images/me/attack/red/redcounter4.png"),
 xoff = 9, yoff = -11}
 
 
---redcounter2 = {im=lg.newImage("me/attack/red/redcounter2.png"), xoff = 25, yoff = -4}
-counterat1 = {im=lg.newImage("me/attack/red/counterat1.png"), xoff = 1, yoff = -4}
-counterat2 = {im=lg.newImage("me/attack/red/counterat2.png"), xoff = 1, yoff = -4}
-counterat3 = {im=lg.newImage("me/attack/red/counterat3.png"), xoff = 1, yoff = -4}
+--redcounter2 = {im=lg.newImage("images/me/attack/red/redcounter2.png"), xoff = 25, yoff = -4}
+counterat1 = {im=lg.newImage("images/me/attack/red/counterat1.png"), xoff = 1, yoff = -4}
+counterat2 = {im=lg.newImage("images/me/attack/red/counterat2.png"), xoff = 1, yoff = -4}
+counterat3 = {im=lg.newImage("images/me/attack/red/counterat3.png"), xoff = 1, yoff = -4}
 
-counterat4 = {im=lg.newImage("me/attack/red/counterat4.png"), xoff = 5, yoff = -8}
+counterat4 = {im=lg.newImage("images/me/attack/red/counterat4.png"), xoff = 5, yoff = -8}
 
-counterat42 = {im=lg.newImage("me/attack/red/counterat42.png"), xoff = 5, yoff = 38}
+counterat42 = {im=lg.newImage("images/me/attack/red/counterat42.png"), xoff = 5, yoff = 38}
 
-counterat43 = {im=lg.newImage("me/attack/red/counterat43.png"), xoff = 5, yoff = -14}
+counterat43 = {im=lg.newImage("images/me/attack/red/counterat43.png"), xoff = 5, yoff = -14}
 
-counterat44 = {im=lg.newImage("me/attack/red/counterat44.png"), xoff = 4, yoff = -6}
+counterat44 = {im=lg.newImage("images/me/attack/red/counterat44.png"), xoff = 4, yoff = -6}
 
-counterat45 = {im=lg.newImage("me/attack/red/counterat45.png"), xoff = 1, yoff = -4}
+counterat45 = {im=lg.newImage("images/me/attack/red/counterat45.png"), xoff = 1, yoff = -4}
 
-redu1 = {im=lg.newImage("me/attack/red/redu1.png"), xoff = 12,yoff = -3}
-redu12 = {im=lg.newImage("me/attack/red/redu12.png"), xoff = 12,yoff = -10}
-redu2 = {im=lg.newImage("me/attack/red/redu2.png"), yoff = 24}
+redu1 = {im=lg.newImage("images/me/attack/red/redu1.png"), xoff = 12,yoff = -3}
+redu12 = {im=lg.newImage("images/me/attack/red/redu12.png"), xoff = 12,yoff = -10}
+redu2 = {im=lg.newImage("images/me/attack/red/redu2.png"), yoff = 24}
 
-redau1 = {im=lg.newImage("me/attack/red/redau1.png"), xoff = 4,yoff = 15}
-redau2 = {im=lg.newImage("me/attack/red/redau2.png"), xoff = 27
+redau1 = {im=lg.newImage("images/me/attack/red/redau1.png"), xoff = 4,yoff = 15}
+redau2 = {im=lg.newImage("images/me/attack/red/redau2.png"), xoff = 27
 ,slash = redaslash, sdir = "up"}
 
 
-redak1 = {im=lg.newImage("me/attack/red/redak1.png"),
+redak1 = {im=lg.newImage("images/me/attack/red/redak1.png"),
 yoff = 13,extra_height = 5}
-redak2 = {im=lg.newImage("me/attack/red/redak2.png"),
+redak2 = {im=lg.newImage("images/me/attack/red/redak2.png"),
 xoff = 6,extra_height = 5}
 
-redk10 = {im=lg.newImage("me/attack/red/redk10.png"),
+redk10 = {im=lg.newImage("images/me/attack/red/redk10.png"),
 xoff = 3, yoff = 4, extra_height = 4}
-redk11 = {im=lg.newImage("me/attack/red/redk11.png"),
+redk11 = {im=lg.newImage("images/me/attack/red/redk11.png"),
 xoff = 13+17, yoff = -6, extra_height = 5}
 
-redak11 = {im=lg.newImage("me/attack/red/redak11.png"),
+redak11 = {im=lg.newImage("images/me/attack/red/redak11.png"),
 xoff = 12+17,extra_height = 5}
 
 me.rlvltimer = 0

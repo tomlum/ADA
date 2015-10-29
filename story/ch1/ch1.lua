@@ -1,4 +1,4 @@
-brotherstitle = lg.newImage("story/ch1/brothers.png")
+brotherstitle = lg.newImage("images/story/ch1/brothers.png")
 
 
 cinematicbusy = false

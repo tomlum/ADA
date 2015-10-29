@@ -9,7 +9,10 @@
 --can't kick combo out of purple kick
 
 --notes:
---Times square, have a facade layer that's black or something so this way it looks like back lit
+--fix go, fix paralax2, fix cinemabars, fix vert bar
+--more rubble ims
+--air dash
+--Times square, have a facade layer that's black or something so this way it looks like back lit against lights
 --If you hit glass floor with enough j break through it
 --love.timer.sleep?
 --change push to prevent pulling
@@ -23,7 +26,7 @@ require "initializers"
 --Debug/Test Utilities
 demo = true
 debug = false
-fightclub = false
+fightclub = true
 MODE = "controllerSetup"
 notilebouncing = true
 melcolor = 1
@@ -31,7 +34,7 @@ mercolor = 4
 youlcolor = 3
 yourcolor = 2
 therampspeed = .2
-mapNum = 3
+mapNum = 1
 rampspeed= therampspeed
 drawBoxes = false
 drawFeet = true

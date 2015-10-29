@@ -1,6 +1,6 @@
-colorbox = lg.newImage("enviro/colorbox.png")
-colorboxbottom = lg.newImage("enviro/colorboxbottom.png")
-colorboxleaf = lg.newImage("enviro/colorboxleaf.png")
+colorbox = lg.newImage("images/enviro/colorbox.png")
+colorboxbottom = lg.newImage("images/enviro/colorboxbottom.png")
+colorboxleaf = lg.newImage("images/enviro/colorboxleaf.png")
 
 colorboxes = {}
 

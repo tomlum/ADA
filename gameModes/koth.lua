@@ -1,7 +1,7 @@
 kothscoretowin = 100
-plathighlight = lg.newImage("enviro/plathighlight.png")
-karrow = lg.newImage("enviro/karrow.png")
-krown = lg.newImage("enviro/krown.png")
+plathighlight = lg.newImage("images/enviro/plathighlight.png")
+karrow = lg.newImage("images/enviro/karrow.png")
+krown = lg.newImage("images/enviro/krown.png")
 kothcolor = {r = 253, g= 253, b = 25}
 krownshader = lg.newShader(
   [[
