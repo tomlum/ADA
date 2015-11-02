@@ -113,6 +113,7 @@ table.insert(theMaps[100].plats, {n=1, y = 896, x1 = 0, x2 = 2000+1, floor = tru
 table.insert(theMaps[100].plats, {n=2, y = 465, x1 = 32, x2 = 236})
 table.insert(theMaps[100].plats, {n=3, y = 541, x1 = 839, x2 = 1016})
 table.insert(theMaps[100].plats, {n=4, y = 719, x1 = 655, x2 = 1560})
+table.insert(theMaps[100].plats, {n=5, y = 439, x1 = 601, x2 = 760})
 table.insert(theMaps[100].walls, {n=1, y1 = -1, y2 = theMaps[100].floor, x=0, barrier = true})
 table.insert(theMaps[100].walls, {n=2, y1 = -1, y2 = theMaps[100].floor, x=2000, barrier = true})
 table.insert(theMaps[100].walls, {n=2, y1 = 3, y2 = theMaps[100].floor+1, x=500, glasswall = theMaps[3].floor})

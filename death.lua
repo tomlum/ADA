@@ -6,6 +6,7 @@ function death2(xx)
     or 
     (game_mode == "fractal" and xx.lives <= 0) then
     MODE = "retry"
+    modeManager()
   end
   
   

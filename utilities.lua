@@ -1,6 +1,5 @@
 require "xkcdcolor" 
 require "monitors"
-lg = love.graphics
 
 --functions that begin with t_ have specific table inputs (e.g. a table representing a color in rgb values)
 
@@ -16,7 +15,7 @@ function debugReadouts()
     lg.print(tostring(chaptime),10,10)
   end
 
-  if fightclub then
+  if fightclub and debug then
     lg.setColor(20,20,20)
     lg.print(tostring(me.combo),10,20)
     lg.print(tostring(me.color.n)..
@@ -92,15 +91,14 @@ function debugReadouts()
     if love.keyboard.isDown("2")then
       me.no_spikes = true
     end
-    if fightclub then
+    if fightclub and debug then
 
       lg.print("pause: "..tostring(pause), 400,360)
       lg.print("me.walllr: "..tostring(me.walllr), 400,380)
       lg.print("me.lr: "..tostring(me.lr), 400,400)
-      lg.print("me.oldattacknum: "..tostring(me.oldattacknum), 400,420)
       lg.print("me.oldcolor: "..tostring(me.oldcolor), 400,440)
       lg.print("me.up : "..tostring(me.up), 400,460)
-      changebackgroundcolor(4)
+      --changebackgroundcolor(4)
       
     end
   end
@@ -122,7 +120,11 @@ end
 
 
 function t_setColor(c)
-  lg.setColor(c.r,c.g,c.b)
+  if c.a == nil then
+    lg.setColor(c.r,c.g,c.b)
+  else
+    lg.setColor(c.r,c.g,c.b,c.a)
+  end
 end
 
 
@@ -137,7 +139,7 @@ function t_colorShift(table_color)
   table_color.b = bof(0, table_color.b+math.random(-5,5), 255)
 end
 
-function hls_SetColor(h,l,s,a)
+function hls2rgb(h,l,s,a)
   local r, g, b
 
   if s == 0 then
@@ -161,7 +163,7 @@ function hls_SetColor(h,l,s,a)
     b = hue2rgb(p, q, h - 1/3)
   end
 
-  lg.setColor(r * 255, g * 255, b * 255, a * 255)
+  return{r=r * 255, g=g * 255, b=b * 255, a=a * 255}
 end
 
 function t_colorShift2(table_color, amount, speed)
@@ -333,11 +335,11 @@ function coinflip(decimal)
 end
 
 function posnegflip()
-    if math.random()>.5 then 
-      return 1
-    else 
-      return -1
-    end
+  if math.random()>.5 then 
+    return 1
+  else 
+    return -1
+  end
 end
 
 --generate a float random

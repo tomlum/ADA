@@ -353,7 +353,7 @@ function randr(xx)
             hexRadial(xx.id, {x=xx.mid, y = xx.y+30}, 70+90*xx.rlvl, 
               function(p)
                 xx.cancombo = true
-                radialthrow(xx, p, (xx.rlvl*1.5+5)*((70+90*xx.rlvl)-math.sqrt((p.y-xx.y)^2 + (p.mid-xx.x)^2))/(72+10*xx.rlvl))
+                radialpush(xx, p, (xx.rlvl*1.5+5)*((70+90*xx.rlvl)-math.sqrt((p.y-xx.y)^2 + (p.mid-xx.x)^2))/(72+10*xx.rlvl))
                 makensparks(xx.mid,xx.y+30,xx.v+3, xx.j-3, xx.color.c.r/(xx.rlvl/15+1),xx.color.c.g/(xx.rlvl/15+1),xx.color.c.b/(xx.rlvl/15+1), 5*(xx.rlvl+1))
                 makensparks(xx.mid,xx.y+30,xx.v-3, xx.j-3, xx.color.c.r/(xx.rlvl/15+1),xx.color.c.g/(xx.rlvl/15+1),xx.color.c.b/(xx.rlvl/15+1), 5*(xx.rlvl+1))
               end
@@ -653,7 +653,7 @@ elseif xx.animcounter < 230 - reddelta*xx.rlvl then
     hexRadial(xx.id, {x=xx.mid, y = xx.y+30}, 70+90*xx.rlvl, 
       function(p)
         xx.cancombo = true
-        radialthrow(xx, p, (xx.rlvl*2+7)*((70+90*xx.rlvl)-math.sqrt((p.y-xx.y)^2 + (p.mid-xx.x)^2))/(72+10*xx.rlvl))
+        radialpush(xx, p, (xx.rlvl*2+7)*((70+90*xx.rlvl)-math.sqrt((p.y-xx.y)^2 + (p.mid-xx.x)^2))/(72+10*xx.rlvl))
 
         makensparks(xx.mid,xx.y+30,xx.v+3, xx.j-3, xx.color.c.r/(xx.rlvl/15+1),xx.color.c.g/(xx.rlvl/15+1),xx.color.c.b/(xx.rlvl/15+1), 5*(xx.rlvl+1))
         makensparks(xx.mid,xx.y+30,xx.v-3, xx.j-3, xx.color.c.r/(xx.rlvl/15+1),xx.color.c.g/(xx.rlvl/15+1),xx.color.c.b/(xx.rlvl/15+1), 5*(xx.rlvl+1))

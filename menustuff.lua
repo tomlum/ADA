@@ -15,7 +15,7 @@ num_of_colors = 4
 noplat = {n=0}
 enviro = {}
 
-health_bar_height = 50
+health_bar_height = 0
 letter_box_height = 80
 menu_speed = 7
 
@@ -246,6 +246,7 @@ end
 
 me.health_color = math.random()
 you.health_color = math.random()
+wallx = 0
 function drawOverlays()
   cclear()
 
@@ -260,18 +261,20 @@ function drawOverlays()
 
   lg.setColor(0,0,0)
   lg.rectangle("fill", 0, screenheight-health_bar_height, screenwidth, health_bar_height)
-  hls_SetColor(me.health_color, .5, .5*(me.health/maxhealth), 1)
-  lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, screenwidth/1440,1)
-  hls_SetColor(you.health_color, .5, .5*(you.health/maxhealth), 1)
-  lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, -screenwidth/1440, 1)
+  t_setColor(hls2rgb(me.health_color, .5, .5*(me.health/maxhealth), 1))
+  --lg.draw(enviro.healthbar, ((me.health - maxhealth)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, screenwidth/1440,1)
+  t_setColor(hls2rgb(you.health_color, .5, .5*(you.health/maxhealth), 1))
+  --lg.draw(enviro.healthbar, screenwidth + ((maxhealth - you.health)/maxhealth)*(screenwidth/2), screenheight-health_bar_height, 0, -screenwidth/1440, 1)
   cclear()
-  if not(oldonescreen and onescreen) then
-    lg.setColor(0, 0, 0)
-    lg.rectangle("fill", wallx, 0, 14*width, playheight)
-  end
-  if not(oldvertone and vertone) then
-    lg.setColor(0, 0, 0)
-    lg.rectangle("fill",(lg.getWidth()/2)-twidth,(playheight/2)-bwidth/2,twidth*2,bwidth)
+  if not no_screen_follow then
+    if not(oldonescreen and onescreen) then
+      lg.setColor(0, 0, 0)
+      lg.rectangle("fill", wallx, 0, 14*width, playheight)
+    end
+    if not(oldvertone and vertone) then
+      lg.setColor(0, 0, 0)
+      lg.rectangle("fill",(lg.getWidth()/2)-twidth,(playheight/2)-bwidth/2,twidth*2,bwidth)
+    end
   end
   cclear()
 
@@ -288,6 +291,15 @@ function drawOverlays()
   lg.srectangle("fill",0,0,1440,barey)
   lg.srectangle("fill",0,900,1440,-barey)
   lg.setColor(255,255,255)
+  if drawControllers then
+    if me.joystick~=nil and drawControllers then
+      drawController(screenwidth/4,screenheight-300,me.joystick,6)
+    end
+
+    if you.joystick~=nil and drawControllers then
+      drawController(screenwidth*(3/4),screenheight-300,you.joystick,6)
+    end
+  end
 
 end
 
@@ -889,7 +901,7 @@ elseif MODE == "pan" then
     MODE = "play"
     gotimer = 0
   elseif streetfadestart then streetfadehold = streetfadehold - 1
-  elseif dollyx + screenwidth > theMap.rightwall-1440*1.5
+  elseif dollyx + screenwidth > theMap.rightwall-1440*1.2+100000 and not infinitepan
     or c1accept() or c2accept()
     then 
     fadein = -5
@@ -903,7 +915,6 @@ elseif MODE == "pan" then
   end
 
   lg.setColor(allfade,allfade,allfade)
-  lg.setColor(255,255,255)
   lg.sdraw(enviro.sky, 0, 0, 0, 150, 1)
   if enviro.paralax ~= nil then 
     lg.sdraw(enviro.paralax2, -dollyx/4,  -enviro.paralax2:getHeight()+900-letter_box_height-35)
@@ -918,7 +929,7 @@ elseif MODE == "pan" then
 
 elseif MODE == "retry" then
 
-  if allfade +fadein*2<= 0 and nextstop ~= "?" then
+  if allfade+fadein*2<= 0 and nextstop ~= "?" then
     allfade = 0
     MODE = nextstop
     if MODE == "pan" then

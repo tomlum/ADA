@@ -292,8 +292,15 @@ function cinemabars()
 
 end
 end
+--------------------------------------------------------------
+--csds - colorshader draw start
+--
+--All that follows will be shaded accordingly to info from xx
+--
+--xx - the player to get shade/color info from
+--flip - if true flip right and left colors depending on xx.lr
+--------------------------------------------------------------
 
---colorshader draw start
 function csds(xx, flip)
 
   local bleed = ((maxhealth-xx.health)/maxhealth)
@@ -353,6 +360,11 @@ end
     rc = vct(xx.rightc.c,colora)
   end
 ]]--
+
+if waver_outlines then
+  me.outline = hls2rgb(me.health_color, .2, .5*(me.health/maxhealth), 1)
+  you.outline = hls2rgb(you.health_color, .2, .5*(me.health/maxhealth), 1)
+end
 
 local outlinee = {
   r=xx.outline.r - 
@@ -512,7 +524,7 @@ function loadStage()
     me.y = theMaps[100].floor - 60
     you.y = theMaps[100].floor - 60
     floor = theMaps[100].floor
-    dollyv = 4
+    dollyv = 6
 
   elseif mapNum == 1 then
     me.y = theMaps[1].floor - 200
@@ -545,7 +557,7 @@ function loadStage()
     enviro.rightwall = 6600-20
     enviro.ds = 5
     thesong = song1
-    dollyv = 4
+    dollyv = 6
 
 
   elseif mapNum == 2 then
@@ -579,7 +591,7 @@ function loadStage()
       you.y = 300
       enviro.rightwall = 3700 
       enviro.ds = 2
-      dollyv = 4
+      dollyv = 6
 
       thesong = song2
 
@@ -615,7 +627,7 @@ function loadStage()
       enviro.rightwall = 5000
       enviro.ds = 5
       thesong = song2
-      dollyv = 4
+      dollyv = 6
 
     end
 
@@ -641,11 +653,9 @@ you.im = idle1
 
 
 function drawPlayer(xx)
-  if dangerclose and xx.v ~=0 then
+  if (dangerclose and xx.v ~=0) or drawtrails then
     table.insert(xx.trail, 
-      {color = clone(xx.color), im = clone(xx.im), lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = .3, colornum = xx.currentc, legs = clone(xx.curimlegs), legsy = xx.im.legsy,dangertrail = true})
-
-
+      {im = clone(xx.im), lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = .3, colornum = xx.currentc, legs = clone(xx.curimlegs), legsy = xx.im.legsy,dangertrail = true})
   end
 
   drawmytrail(xx)
@@ -1231,12 +1241,12 @@ function updatepapers()
           end
           tsetColor(blackn,blackn,blackn)
           if v.type == 1 then
-          lg.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,2,2,1,1)
+            lg.draw(enviro.rubble,v.x,v.y,rubbletimer/10+v.rot,2,2,1,1)
           elseif v.type == 2 then
-          lg.draw(enviro.rubble2,v.x,v.y,rubbletimer/10+v.rot,2,2,1,1)
+            lg.draw(enviro.rubble2,v.x,v.y,rubbletimer/10+v.rot,2,2,1,1)
           elseif v.type == 3 then
-          lg.draw(enviro.rubble3,v.x,v.y,rubbletimer/10+v.rot,2,2,1,1)
-        end
+            lg.draw(enviro.rubble3,v.x,v.y,rubbletimer/10+v.rot,2,2,1,1)
+          end
           lg.setColor(255,255,255)
         end
       end
@@ -1400,129 +1410,35 @@ function updatepapers()
   end
 
 
+  lvfade = 255
+  lvfade2 = 255
 
-
-  function makefloorrubble(ex,why,vee,jay)
-    if jay > 0 then miscjay = 1
-      why = why - 60
-      jay = jay/2
-      else miscjay = -1
-      end
-
-      table.insert(rubble,{x = ex-2, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-4, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-6, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-8, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-10, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-12, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-14, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-16, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-18, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+2, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+4, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+6, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+8, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+10, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+12, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+14, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+16, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+18, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-2, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-4, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-6, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-8, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-10, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-12, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-14, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-16, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex-18, y = why, v=vee - math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+2, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+4, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+6, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+8, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+10, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+12, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+14, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+16, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      table.insert(rubble,{x = ex+18, y = why, v=vee + math.random()*(5), j = jay + miscjay*math.random()*3})
-      blackn = math.random(200)
-
+  function wallslowmehdown()
+    if me.v > 6 then me.v = me.v - 5
+    elseif me.v < -6 then me.v = me.v + 5
     end
-
-    function makefloorglass(ex,why,vee,jay)
-      if jay > 0 then miscjay = 1
-        why = why - 60
-        jay = jay/2
-        else miscjay = -1
-        end
-        table.insert(glasseses,{x = ex-2, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-4, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-6, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-8, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-10, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-12, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-14, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-16, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-18, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+2, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+4, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+6, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+8, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+10, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+12, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+14, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+16, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+18, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-2, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-4, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-6, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-8, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-10, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-12, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-14, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-16, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex-18, y = why, v=vee - math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+2, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+4, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+6, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+8, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+10, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+12, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+14, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+16, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        table.insert(glasseses,{x = ex+18, y = why, v=vee + math.random(5), j = jay + miscjay*math.random(3)})
-        blackn = math.random(200)
+  end
+  function wallslowyouhdown()
+    if you.v > 6 then you.v = you.v - 5
+    elseif you.v < -6 then you.v = you.v + 5
+    end
+  end
+  function wallslowyouvdown()
+    if you.j > 5 then you.j = you.j - 4
+    elseif you.j < -5 then you.j = you.j + 4
+    end
+  end
+  function wallslowmevdown()
+    if me.j > 5 then me.j = me.j - 4
+    elseif me.j < -5 then me.j = me.j + 4
+    end
+  end
+  function libraryveneer()
+    if theMap.name == "library" then
+      if lvfade > 0  and ((me.mid > 1605 and me.mid < 3202 and me.feet > 0) or (you.mid > 1605 and you.mid < 3202 and you.feet > 0))
+        then lvfade = lvfade - 5
+      elseif lvfade < 255 then lvfade = lvfade + 5
       end
-
-      lvfade = 255
-      lvfade2 = 255
-
-      function wallslowmehdown()
-        if me.v > 6 then me.v = me.v - 5
-        elseif me.v < -6 then me.v = me.v + 5
-        end
-      end
-      function wallslowyouhdown()
-        if you.v > 6 then you.v = you.v - 5
-        elseif you.v < -6 then you.v = you.v + 5
-        end
-      end
-      function wallslowyouvdown()
-        if you.j > 5 then you.j = you.j - 4
-        elseif you.j < -5 then you.j = you.j + 4
-        end
-      end
-      function wallslowmevdown()
-        if me.j > 5 then me.j = me.j - 4
-        elseif me.j < -5 then me.j = me.j + 4
-        end
-      end
-      function libraryveneer()
-        if theMap.name == "library" then
-          if lvfade > 0  and ((me.mid > 1605 and me.mid < 3202 and me.feet > 0) or (you.mid > 1605 and you.mid < 3202 and you.feet > 0))
-            then lvfade = lvfade - 5
-          elseif lvfade < 255 then lvfade = lvfade + 5
-          end
     --tsetColor(255,255,255,lvfade)
     lg.setColor(255*tod[1],255*tod[2],255*tod[3],lvfade)
     lg.draw(enviro.thelibraryveneer, 1535, 0)

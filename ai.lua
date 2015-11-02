@@ -48,10 +48,10 @@ function spawnmon(ex, why)
 
     eyedee = math.max(eyedee, i+1)
   end
-    eyedee = math.max(eyedee, 1)
+  eyedee = math.max(eyedee, 1)
   
   local temp = {x = ex, y = why, v = 0, j = 0, old_feet = why,
-    flinch = false, ft = 0, block = false, weight = 1, width = 40, height = 50, id = eyedee, im = ei1, mid = ex+35/2, lr = 1, wallrubbletimer = 0, health = 1+0*monbasehealth, gothroughplats = false,headrot = 0, headrot2 = 0, headvel = 0, push = 0, mode = "idle", animt = 0, oldemode = "bleh", drawwidth = 24, flinchway = 1, cantfly = false, c = {r = 25, g=25, b= 25}, hit = false}
+  flinch = false, ft = 0, block = false, weight = 1, width = 40, height = 50, id = eyedee, im = ei1, mid = ex+35/2, lr = 1, wallrubbletimer = 0, health = 1+0*monbasehealth, gothroughplats = false,headrot = 0, headrot2 = 0, headvel = 0, push = 0, mode = "idle", animt = 0, oldemode = "bleh", drawwidth = 24, flinchway = 1, cantfly = false, c = {r = 25, g=25, b= 25}, hit = false}
   --monsters[eyedee] = temp
   table.insert(monsters, temp)
 end
@@ -60,11 +60,11 @@ function disintegrate(xx,i)
   if xx.health < 0 then
     for i = xx.y, xx.y+xx.height do
       if xx.v==0 then
-        
-    makenslashsparks(xx.mid,i,xx.lr*(math.abs(xx.y+xx.height-i))/4, xx.j, xx.c.r,xx.c.g,xx.c.b,2)
-        else
-    makenslashsparks(xx.mid,i,xx.v*(math.abs(xx.y+xx.height-i))/5, xx.j, xx.c.r,xx.c.g,xx.c.b,2)
-    end
+
+        makenslashsparks(xx.mid,i,xx.lr*(math.abs(xx.y+xx.height-i))/4, xx.j, xx.c.r,xx.c.g,xx.c.b,2)
+      else
+        makenslashsparks(xx.mid,i,xx.v*(math.abs(xx.y+xx.height-i))/5, xx.j, xx.c.r,xx.c.g,xx.c.b,2)
+      end
     end
     table.remove(monsters,i)
   end
@@ -72,7 +72,7 @@ function disintegrate(xx,i)
 end
 
 function monplatupdate()
- for i,xx in ipairs(monsters) do
+  for i,xx in ipairs(monsters) do
 
     if rampcanhit and xx.g then
       xx.v = r2b(xx.v,friction*ramp(xx),xx.push)
@@ -84,25 +84,22 @@ function monplatupdate()
 
 
 
-       extra_height = 0
-        if xx.im.extra_height ~= nil then
-          extra_height = -xx.im.extra_height
-        end
-  xx.feet = xx.y+xx.height-extra_height
-
-
-
+    extra_height = 0
+    if xx.im.extra_height ~= nil then
+      extra_height = -xx.im.extra_height
+    end
+    xx.feet = xx.y+xx.height-extra_height
   end
 end
 
 --used to go at the end of love.update
 function postmonupdate()
-  
+
   for i,xx in ipairs(monsters) do
- 
+
     disintegrate(xx,i)
     
-    end
+  end
   
 end
 
@@ -132,12 +129,10 @@ function monupdate()
 
     appropriateanim(xx)
 
-
-
     xx.gothroughplats = false
 
     if math.abs(xx.target.x-xx.x) < armsreach*4 and
-    xx.target.y > xx.y+xx.height+30 then xx.gothroughplats = true
+      xx.target.y > xx.y+xx.height+30 then xx.gothroughplats = true
     end
 
     if not xx.g then
@@ -240,7 +235,7 @@ function whichmode(xx)
   else
     if xx.target~= nil then
       if math.abs(xx.tardis) <= armsreach or xx.attacking then
-      xx.mode = "attack"
+        xx.mode = "attack"
       elseif math.abs(xx.tardis) > armsreach then
         xx.mode = "chase"
       end
@@ -285,155 +280,156 @@ end
 
 
 function monflinching(xx)
-  
+
   if xx.mode == "flinch" then
     if xx.ft > 0 then 
       xx.ft = xx.ft - .5*ramp(xx)
-    else xx.ft = 0
-      xx.flinch = false
-    end
+      else xx.ft = 0
+        xx.flinch = false
+      end
 
-    if xx.animt == 0 then
-      xx.animt = xx.ft
-      if xx.v/(math.abs(xx.v)) < 0 then
-        if xx.lr > 0 then
-          xx.flinchway = -1
+      if xx.animt == 0 then
+        xx.animt = xx.ft
+        if xx.v/(math.abs(xx.v)) < 0 then
+          if xx.lr > 0 then
+            xx.flinchway = -1
+          else
+            xx.flinchway = 11
+          end
         else
-          xx.flinchway = 11
-        end
-      else
-        if xx.lr > 0 then
-          xx.flinchway = 11
-        else
-          xx.flinchway = -1
+          if xx.lr > 0 then
+            xx.flinchway = 11
+          else
+            xx.flinchway = -1
+          end
         end
       end
     end
-end
-
-  
-end
-
-function appropriateanim(xx)
 
 
+  end
 
-  if xx.mode == "flinch" then
-    if xx.flinchway > 1 then xx.im = eff
-    else xx.im = ebf
+  function appropriateanim(xx)
+
+
+
+    if xx.mode == "flinch" then
+      if xx.flinchway > 1 then xx.im = eff
+        else xx.im = ebf
+        end
+
+
+      elseif xx.mode == "chase" then
+        walkanimation(xx) 
+      elseif xx.mode == "idle" then
+        idleanim(xx)
+
+      elseif xx.mode == "attack" then
+        monbite(xx) 
+
+
+
+      end
+
     end
 
 
-  elseif xx.mode == "chase" then
-    walkanimation(xx) 
-  elseif xx.mode == "idle" then
-    idleanim(xx)
 
-  elseif xx.mode == "attack" then
-    monbite(xx) 
+    function monbite(xx) 
+      xx.attacking = true
+      xx.animt = xx.animt + 1*ramp(xx)
+      if xx.animt <4 then xx.im = ea2
+      elseif xx.animt <4*2 then xx.im = ea3
+      elseif xx.animt <4*3 then xx.im = ea4
+      elseif xx.animt <4*4 then xx.im = ea5
+      elseif xx.animt <4*5+10+10 then 
+        xx.im = ea6
+        if xx.animt < 4*4+1 and rampcanhit then
+
+         hexHit(xx, xx.id, 
+          {x=xx.mid, y = xx.y+15},
+          {x=xx.mid+63*math.cos(xx.headrot)*xx.lr, y = xx.y+15+63*math.sin(xx.headrot)*xx.lr},
+          {x=xx.mid, y = xx.y+15},
+          {x=xx.mid+63*math.cos(xx.headrot)*xx.lr, y = xx.y+15+63*math.sin(xx.headrot)*xx.lr},
+          function(z)
+
+            z.v = z.v/3 + math.cos(xx.headrot)*at.e.b.v*xx.lr
+            z.j = z.j/3 + math.sin(xx.headrot)*at.e.b.j*xx.lr
+            z.g = false
+            if not (z.block and z.lr == -xx.lr) then
+              z.health = z.health - at.e.b.dam
+              z.flinch = true
+              z.ft = z.ft+at.e.b.ft
+            end
+            shakez(at.e.b.z)
+
+            end, true)
+       end
+     elseif xx.animt <4*6+13+10 then xx.im = ea7
+     elseif xx.animt <4*7+16+10 then xx.im = ea8
+     elseif xx.animt <4*7+16+55 then
+
+     else
+      xx.animt = 0
+      xx.attacking = false
+
+    end
 
 
 
   end
 
-end
-
-
-
-function monbite(xx) 
-  xx.attacking = true
-  xx.animt = xx.animt + 1*ramp(xx)
-  if xx.animt <4 then xx.im = ea2
-  elseif xx.animt <4*2 then xx.im = ea3
-  elseif xx.animt <4*3 then xx.im = ea4
-  elseif xx.animt <4*4 then xx.im = ea5
-elseif xx.animt <4*5+10+10 then 
-  xx.im = ea6
-  if xx.animt < 4*4+1 and rampcanhit then
-
-     hexHit(xx, xx.id, 
-            {x=xx.mid, y = xx.y+15},
-            {x=xx.mid+63*math.cos(xx.headrot)*xx.lr, y = xx.y+15+63*math.sin(xx.headrot)*xx.lr},
-             {x=xx.mid, y = xx.y+15},
-            {x=xx.mid+63*math.cos(xx.headrot)*xx.lr, y = xx.y+15+63*math.sin(xx.headrot)*xx.lr},
-            function(z)
-
-              z.v = z.v/3 + math.cos(xx.headrot)*at.e.b.v*xx.lr
-              z.j = z.j/3 + math.sin(xx.headrot)*at.e.b.j*xx.lr
-              z.g = false
-              if not (z.block and z.lr == -xx.lr) then
-                z.health = z.health - at.e.b.dam
-                z.flinch = true
-                z.ft = z.ft+at.e.b.ft
-              end
-              shakez(at.e.b.z)
-
-          end, true)
-  end
-  elseif xx.animt <4*6+13+10 then xx.im = ea7
-elseif xx.animt <4*7+16+10 then xx.im = ea8
-elseif xx.animt <4*7+16+55 then
-
-else
-  xx.animt = 0
-  xx.attacking = false
-
-  end
-
-
-
-end
-
-function trackplayer(xx)
-  xx.target = nearestplayer(xx.x,xx.y)
-  xx.tardis = math.sqrt((xx.target.mid-xx.mid)^2 + (xx.target.y+xx.target.height/2-xx.y)^2)
-  if xx.target.x > xx.x then 
-    xx.chaselr = math.log(math.abs(xx.target.x-xx.x))/5
-  else
-    xx.chaselr = -math.abs(math.log(math.abs(xx.target.x-xx.x))/5)
-  end
-
-  if not xx.flinch then
-    if xx.target.y+100 < xx.y and not xx.cantfly then 
-      xx.flyyoufool = true
+  function trackplayer(xx)
+    xx.target = nearestplayer(xx.x,xx.y)
+    xx.tardis = math.sqrt((xx.target.mid-xx.mid)^2 + (xx.target.y+xx.target.height/2-xx.y)^2)
+    if xx.target.x > xx.x then 
+      xx.chaselr = math.log(math.abs(xx.target.x-xx.x))/5
     else
-      xx.flyyoufool = false
+      xx.chaselr = -math.abs(math.log(math.abs(xx.target.x-xx.x))/5)
+    end
+
+    if not xx.flinch then
+      if xx.target.y+100 < xx.y and not xx.cantfly then 
+        xx.flyyoufool = true
+      else
+        xx.flyyoufool = false
+      end
+    end
+    if not (xx.mode == "attack" and xx.animt < 4*6+13+10 ) then
+      xx.headrot2 = math.max(math.atan((xx.target.y+xx.target.height/5-xx.y)/(xx.target.mid-xx.mid)), math.rad(-60))
+      if xx.headrot2 > math.rad(-50) then
+        xx.headrot2 = math.min(math.atan((xx.target.y+xx.target.height/5-xx.y)/(xx.target.mid-xx.mid)), math.rad(30))
+      end
+    end
+
+    if xx.headrot2-.1 > xx.headrot then 
+      xx.headrot = xx.headrot + .04+math.random()/100
+    elseif xx.headrot2+.1 < xx.headrot then
+      xx.headrot = xx.headrot - .04+math.random()/100
+
+    end
+
+
+    --xx.headrot = math.atan((np.y-xx.y)/(np.x-xx.x))
+
+    local hrot = math.deg(xx.headrot)
+    
+    if not (xx.mode == "attack" and xx.animt < 4*6+13+10 )  then
+      if xx.target.x < xx.x and (xx.headrot >= math.rad(-58) or xx.headrot <= math.rad(28)) and xx.lr > 0  then
+        xx.lr = -1
+        if xx.headrot > 0 then
+          xx.headrot = math.rad(0)-xx.headrot - 0
+        else
+          xx.headrot = math.rad(0)-xx.headrot + 0
+        end
+      elseif xx.lr < 0 and xx.target.x >= xx.x and (xx.headrot >= math.rad(-58) or xx.headrot <= math.rad(28)) then
+        xx.lr = 1
+
+        if xx.headrot > 0 then
+          xx.headrot = -math.rad(60)-xx.headrot - 0
+        else
+          xx.headrot = math.rad(0)-xx.headrot + 0
+        end
+      end
     end
   end
-if not (xx.mode == "attack" and xx.animt < 4*6+13+10 ) then
-  xx.headrot2 = math.max(math.atan((xx.target.y+xx.target.height/5-xx.y)/(xx.target.mid-xx.mid)), math.rad(-60))
-  if xx.headrot2 > math.rad(-50) then
-    xx.headrot2 = math.min(math.atan((xx.target.y+xx.target.height/5-xx.y)/(xx.target.mid-xx.mid)), math.rad(30))
-  end
-  end
-
-  if xx.headrot2-.1 > xx.headrot then 
-    xx.headrot = xx.headrot + .04+math.random()/100
-  elseif xx.headrot2+.1 < xx.headrot then
-    xx.headrot = xx.headrot - .04+math.random()/100
-
-  end
-
-
-  --xx.headrot = math.atan((np.y-xx.y)/(np.x-xx.x))
-
-  local hrot = math.deg(xx.headrot)
-  if not (xx.mode == "attack" and xx.animt < 4*6+13+10 )  then
-  if xx.target.x < xx.x and (xx.headrot >= math.rad(-58) or xx.headrot <= math.rad(28)) and xx.lr > 0  then
-    xx.lr = -1
-    if xx.headrot > 0 then
-      xx.headrot = math.rad(0)-xx.headrot - 0
-    else
-      xx.headrot = math.rad(0)-xx.headrot + 0
-    end
-  elseif xx.lr < 0 and xx.target.x >= xx.x and (xx.headrot >= math.rad(-58) or xx.headrot <= math.rad(28)) then
-    xx.lr = 1
-
-    if xx.headrot > 0 then
-      xx.headrot = -math.rad(60)-xx.headrot - 0
-    else
-      xx.headrot = math.rad(0)-xx.headrot + 0
-    end
-  end
-  end
-end

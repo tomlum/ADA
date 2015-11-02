@@ -5,7 +5,7 @@ vforrunningattack = 5
 bolts_fly_relative = true
 combo_pause = false
 
-spark_intensity = 2
+spark_intensity = 3
 
 wave_frame_rate = 8 --(2 is fast, higher is lower)
 

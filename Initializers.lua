@@ -1,11 +1,12 @@
-require "utilities"
-require "lasso"
 
+lg = love.graphics
+lg.setDefaultFilter("linear","nearest",1)
 me = {}
 you = {}
 
 me.id = 1
 you.id = 2
+
 
 function initPlayer(xx)
 	xx.is_player = true
@@ -14,14 +15,7 @@ function initPlayer(xx)
 	xx.mid = 0
 	xx.y = 0
 
-	xx.v = 0
-	xx.j = 0
-	xx.g = false
-	xx.lr = 1
-	xx.health = maxhealth
-	xx.oldhealth = xx.health
-	xx.ft = 0
-	xx.im = idle1
+	xx.outlineh = math.random()
 
 	xx.oldv = 0
 	xx.hit = false
@@ -54,7 +48,7 @@ function initFightClub()
 			placespeople = true 
 		end
 
-		game_mode = "fractal"
+		game_mode = "duel"
 		MODE = "play"
 		if not loadImagesNow then
 			mapNum = 100
@@ -108,12 +102,13 @@ function initLove()
 		love.window.setMode(1280/1.5, 800/1.5, {resizable=true, fullscreen = false, vsync=true})
 	end
 
-	lg.setDefaultFilter("linear","nearest",1)
 	math.randomseed(os.clock())
 	finished_loading = false
 end
 
 function initDependencies()
+require "utilities"
+require "lasso"
 require "blur"
 require "menustuff"
 require "damageTable"

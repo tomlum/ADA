@@ -14,14 +14,14 @@ slow_mo_t = 0
 
 function speedRamp()
 
-  if love.keyboard.isDown("x")  then rampspeed = .2 end
+  if love.keyboard.isDown("x") then rampspeed = .2 end
   if 
-    love.keyboard.isDown("z")
+    love.keyboard.isDown("z") or slowbutton
     then slowt = slowt + 1
     if slowt > slowrate then slowt = 0
     end
   else 
-    slowrate = 10
+    slowrate = 2
     slowt = slowrate
   end
   
@@ -503,13 +503,10 @@ end
       xx.holda = true
     end
 
-    if ((xx.g and xx.doubledown) or (not xx.g and xx.down)) and not xx.stop then 
+    if ((xx.g and xx.doubledown) or (not xx.g and xx.down and not xx.runb)) and not (xx.stop and not xx.grabbing) then 
       xx.gothroughplats = true
-    else
-      xx.gothroughplats = false
     end
 
-    xx.forcethroughplats = false
 
   ------?????--------
   if xx.flinch then

@@ -77,7 +77,7 @@ function drawControllerCheck()
       controller_menu_l = 255
     end
 
-    hls_SetColor(controller_menu_h,math.abs(controller_menu_l),math.abs(controller_menu_s),1)
+    t_setColor(hls2rgb(controller_menu_h,math.abs(controller_menu_l),math.abs(controller_menu_s),1))
 
     lg.rectangle("fill",0,0,screenwidth,screenheight)
     cclear()  
@@ -607,6 +607,8 @@ function c1accept()
 
   xx.rightbumpb = xx.joystick:getGamepadAxis("triggerright") > .5
   xx.leftbumpb = xx.joystick:getGamepadAxis("triggerleft") > .5
+
+  slowbutton = xx.joystick:isGamepadDown("rightshoulder") or xx.joystick:isGamepadDown("leftshoulder")
 
   xx.jly = xx.joystick:getGamepadAxis("lefty")
   xx.jlx = xx.joystick:getGamepadAxis("leftx")
