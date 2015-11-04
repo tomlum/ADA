@@ -6,10 +6,11 @@ xboxtrigger = lg.newImage("images/enviro/xboxtrigger.png")
 
 
 function drawController(x,y,joystick,scale)
-  lg.draw(xboxbase, x, y, 0, scale, scale, 14, 11)
 
-    lg.draw(xboxtrigger, 8*scale+x, 3*scale+y, 0, scale*4/5, scale*4/5*(1-(xx.joystick:getGamepadAxis("triggerleft"))), 2, 3)
-    lg.draw(xboxtrigger, 20*scale+x, 3*scale+y, 0, scale*4/5, scale*4/5*(1-(xx.joystick:getGamepadAxis("triggerright"))), 1, 3)
+  lg.draw(xboxtrigger, -6.5*scale+x, -10*scale+y, 0, scale*4/5, scale*4/5*(1-(joystick:getGamepadAxis("triggerleft"))), 2, 3)
+  lg.draw(xboxtrigger, 6.5*scale+x, -10*scale+y, 0, scale*4/5, scale*4/5*(1-(joystick:getGamepadAxis("triggerright"))), 1, 3)
+
+  lg.draw(xboxbase, x, y, 0, scale, scale, 14, 11)
 
   if joystick:isGamepadDown("rightstick") then
     lg.setColor(190,190,190)
@@ -21,10 +22,10 @@ function drawController(x,y,joystick,scale)
 
   if joystick:isGamepadDown("leftstick") then
     lg.setColor(190,190,190)
-    lg.draw(xboxjoystick, -7*scale+x+ajoystick:getGamepadAxis("leftx")*scale*1.8, -5*scale+y+ajoystick:getGamepadAxis("lefty")*scale*1.8, 0, scale*4/5, scale*4/5, 2, 2)
+    lg.draw(xboxjoystick, -7*scale+x+joystick:getGamepadAxis("leftx")*scale*1.8, -5*scale+y+joystick:getGamepadAxis("lefty")*scale*1.8, 0, scale*4/5, scale*4/5, 2, 2)
   else  
     cclear()
-    lg.draw(xboxjoystick, -7*scale+x+ajoystick:getGamepadAxis("leftx")*scale*1.8, -5*scale+y+ajoystick:getGamepadAxis("lefty")*scale*1.8, 0, scale, scale, 2, 2)
+    lg.draw(xboxjoystick, -7*scale+x+joystick:getGamepadAxis("leftx")*scale*1.8, -5*scale+y+joystick:getGamepadAxis("lefty")*scale*1.8, 0, scale, scale, 2, 2)
   end
   --lg.draw(xboxlstick, x+joystick:getGamepadAxis("leftx")*scale*1.8, y+joystick:getGamepadAxis("lefty")*scale*1.5, 0, scale, scale, 14, 11)
   --lg.draw(xboxrstick, x+joystick:getGamepadAxis("rightx")*scale*1.8, y+joystick:getGamepadAxis("righty")*scale*1.5, 0, scale, scale, 14, 11)

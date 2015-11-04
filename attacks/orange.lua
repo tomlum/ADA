@@ -1,42 +1,42 @@
 
 
 
-op1 = {im=lg.newImage("images/me/attack/orange/op1.png"), xoff = 2}
-op2 = {im=lg.newImage("images/me/attack/orange/op2n.png"), xoff = 9,yoff = 10}
-op3 = {im=lg.newImage("images/me/attack/orange/op3n.png"), xoff = 9+11,yoff = 12+7}
-op4 = {im=lg.newImage("images/me/attack/orange/op4n.png"), xoff = 9,yoff = 12}
-op5 = {im=lg.newImage("images/me/attack/orange/op5n.png"), xoff = 9+11,yoff = 12+7}
+op1 = {im=lg.newImage("images/player/attack/orange/op1.png"), xoff = 2}
+op2 = {im=lg.newImage("images/player/attack/orange/op2n.png"), xoff = 9,yoff = 10}
+op3 = {im=lg.newImage("images/player/attack/orange/op3n.png"), xoff = 9+11,yoff = 12+7}
+op4 = {im=lg.newImage("images/player/attack/orange/op4n.png"), xoff = 9,yoff = 12}
+op5 = {im=lg.newImage("images/player/attack/orange/op5n.png"), xoff = 9+11,yoff = 12+7}
 
 
-ao21 = {im=lg.newImage("images/me/attack/orange/ao21.png"), xoff = 9, yoff = 17, extra_height = 5}
-ao22 = {im=lg.newImage("images/me/attack/orange/ao22.png"), xoff = 9-5+13, extra_height = 5, yoff = 22}
+ao21 = {im=lg.newImage("images/player/attack/orange/ao21.png"), xoff = 9, yoff = 17, extra_height = 5}
+ao22 = {im=lg.newImage("images/player/attack/orange/ao22.png"), xoff = 9-5+13, extra_height = 5, yoff = 22}
 
 
-ao23 = {im=lg.newImage("images/me/attack/orange/ao23.png"), xoff = 5,yoff = 17, extra_height = 5}
-ao24 = {im=lg.newImage("images/me/attack/orange/ao24.png"), xoff = 9-5+13, extra_height = 5+14, yoff = 23}
+ao23 = {im=lg.newImage("images/player/attack/orange/ao23.png"), xoff = 5,yoff = 17, extra_height = 5}
+ao24 = {im=lg.newImage("images/player/attack/orange/ao24.png"), xoff = 9-5+13, extra_height = 5+14, yoff = 23}
 
 
-ok2 = {im=lg.newImage("images/me/attack/orange/ok2.png"), xoff = 9,yoff = 15}
-ok3 = {im=lg.newImage("images/me/attack/orange/ok3.png"), xoff = 84,yoff = 3}
-ok4 = {im=lg.newImage("images/me/attack/orange/ok4.png"), xoff = 45,yoff = 0, extra_height = 5}
+ok2 = {im=lg.newImage("images/player/attack/orange/ok2.png"), xoff = 9,yoff = 15}
+ok3 = {im=lg.newImage("images/player/attack/orange/ok3.png"), xoff = 84,yoff = 3}
+ok4 = {im=lg.newImage("images/player/attack/orange/ok4.png"), xoff = 45,yoff = 0, extra_height = 5}
 
 
-o32 = {im=lg.newImage("images/me/attack/orange/o32.png"), 
+o32 = {im=lg.newImage("images/player/attack/orange/o32.png"), 
   xoff = 9,yoff = -5}
 
-o33 = {im=lg.newImage("images/me/attack/orange/o33.png"), xoff = 4}
+o33 = {im=lg.newImage("images/player/attack/orange/o33.png"), xoff = 4}
 
-ao31 = {im=lg.newImage("images/me/attack/orange/ao31.png"), xoff = 15, yoff = 9}
-ao32 = {im=lg.newImage("images/me/attack/orange/ao32.png"), yoff = 52, xoff = 12}
+ao31 = {im=lg.newImage("images/player/attack/orange/ao31.png"), xoff = 15, yoff = 9}
+ao32 = {im=lg.newImage("images/player/attack/orange/ao32.png"), yoff = 52, xoff = 12}
 
 
 
-aop1 = {im=lg.newImage("images/me/attack/orange/aop1.png"), xoff = 5,yoff = 17, extra_height = 5}
-aop2 = {im=lg.newImage("images/me/attack/orange/aop2.png"),yoff = 32, extra_height = 5, xoff = 10}
+aop1 = {im=lg.newImage("images/player/attack/orange/aop1.png"), xoff = 5,yoff = 17, extra_height = 5}
+aop2 = {im=lg.newImage("images/player/attack/orange/aop2.png"),yoff = 32, extra_height = 5, xoff = 10}
 
-orun = {im=lg.newImage("images/me/attack/orange/orun.png")}
-aorun1 = {im=lg.newImage("images/me/attack/orange/aorun1.png"), xoff = 3, yoff = 0}
-aorun2 = {im=lg.newImage("images/me/attack/orange/aorun2.png"), xoff = 3, yoff = 0}
+orun = {im=lg.newImage("images/player/attack/orange/orun.png")}
+aorun1 = {im=lg.newImage("images/player/attack/orange/aorun1.png"), xoff = 3, yoff = 0}
+aorun2 = {im=lg.newImage("images/player/attack/orange/aorun2.png"), xoff = 3, yoff = 0}
 
 
 at.o = {}
@@ -49,13 +49,13 @@ at.o.p.j = -20
 
 at.o.ap = {}
 at.o.ap.dam = 10
-at.o.ap.ft = 25
+at.o.ap.ft = 19
 at.o.ap.z = 3.5
 at.o.ap.j = -20
 
 at.o.ak = {}
 at.o.ak.dam = 15
-at.o.ak.ft = 20
+at.o.ak.ft = 18
 at.o.ak.max = 5
 at.o.ak.z = 4.5
 at.o.ak.j = -10
@@ -65,7 +65,7 @@ you.o5repcounter = 0
 
 at.o.k = {}
 at.o.k.dam = 15
-at.o.k.ft = 20
+at.o.k.ft = 18
 at.o.k.z = 4
 at.o.k.j = -20
 at.o.k.mj = 17
@@ -73,7 +73,7 @@ at.o.k.mj = 17
 
 at.o.u = {}
 at.o.u.dam = 15
-at.o.u.ft = 30
+at.o.u.ft = 24
 at.o.u.j = 25
 at.o.u.v = 0
 at.o.u.z = 4
@@ -416,12 +416,9 @@ function orangeyouglad(xx)
           end
 
 
-          if xx.animcounter >= 10 then 
-            xx.cmbo=true--combo(xx)
-          end
 
 
-        elseif xx.animcounter < 40 then
+        elseif xx.animcounter < 30 then
           xx.cmbo=true--combo(xx)
           xx.im = aop1
         else

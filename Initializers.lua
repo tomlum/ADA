@@ -53,7 +53,7 @@ function initFightClub()
 		if not loadImagesNow then
 			mapNum = 100
 		end
-		theMap = theMaps[mapNum]
+		the_map = the_maps[mapNum]
 		placespeople = true
 		loadStage()
 		while(not finished_loading) do
@@ -135,6 +135,6 @@ require "chaptermanage"
 loader = require "love-loader"
 require "blossom"
 require "story/ch1/ch1"
-require "platforms"
+require "stages"
 require "play"
 end

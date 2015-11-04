@@ -1,4 +1,5 @@
 -----Naming Conventions-----
+
 --fightclub = a mode/area for testing basic physics and combat
 --me = player 1
 --you = player 2
@@ -9,7 +10,13 @@
 --can't kick combo out of purple kick
 
 --notes:
---CAN YOU GRAB WHILE FALLING DOWN THROUGH A PLAT
+--repeated o k doesn't work
+--on reset after go, it shows last frame still
+--fix pan speed
+--fix map paralax heights
+--get action shot working again?
+--Fix right wall of floors
+
 --air dash
 --Times square, have a facade layer that's black or something so this way it looks like back lit against lights
 --If you hit glass floor with enough j break through it
@@ -25,16 +32,16 @@ require "initializers"
 
 --Filming utilities
 infinitepan = false
-no_screen_follow = false
-drawControllers = false
+no_screen_follow = true
+drawControllers = true
 waver_outlines = false
-drawtrails = false
+drawtrails = true
 
 --Debug/Test Utilities
+fightclub = true
 demo = true
 debug = false
-fightclub = false
-MODE = "color"
+MODE = "controllerSetup"
 
 notilebouncing = false
 melcolor = 1
@@ -64,7 +71,7 @@ love.audio.setVolume(volume)
 initLove()
 initDependencies()
 
-theMap = theMaps[mapNum]
+the_map = the_maps[mapNum]
 
 function love.load()
 
@@ -116,6 +123,6 @@ function love.draw()
   if debug or fightclub then
     debugReadouts()
   end
-  lg.setColor(0,0,0)
-
+  lg.setColor(25,25,25)
+  lg.rectangle("fill", screenwidth/2,0,screenwidth,screenheight)
 end

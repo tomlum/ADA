@@ -82,29 +82,29 @@ you.repcounter = 0
 you.bbpready = false
 
 
-punch1 = {im=lg.newImage("images/me/attack/bb/punch1.png"),xoff = -2}
-punch2 = {im=lg.newImage("images/me/attack/bb/punch2.png"),xoff = -1,yoff = -3}
-punch3 = {im=lg.newImage("images/me/attack/bb/punch3.png"), yoff = -4}
-punch4 = {im=lg.newImage("images/me/attack/bb/punch4.png"),xoff = -1, yoff = -3}
-punch5 = {im=lg.newImage("images/me/attack/bb/punch5.png"),xoff = -2, yoff = -2}
-punch6 = {im=lg.newImage("images/me/attack/bb/punch6.png"),yoff = -5}
-kick1 = {im = lg.newImage("images/me/attack/bb/kick1.png"), xoff = 1, yoff = 1}
-kick2 = {im = lg.newImage("images/me/attack/bb/kick2.png"), xoff = -1, yoff = -1}
-kick3 = {im = lg.newImage("images/me/attack/bb/kick3.png"), yoff = -3}
-uppercut = {im=lg.newImage("images/me/attack/bb/uppercut.png"), xoff = 1}
-jumpuppercut = {im=lg.newImage("images/me/attack/bb/jumpuppercut.png")}
-dropkick1 = {im=lg.newImage("images/me/attack/bb/dropkick1.png"), xoff = 5,yoff = -7,extra_height=10}
-dropkick2 = {im=lg.newImage("images/me/attack/bb/dropkick2.png"), xoff = 8,yoff = -7,extra_height=-15}
-divekick = {im=lg.newImage("images/me/attack/bb/divekick.png"), xoff = 1,yoff = -7,extra_height=15}
+punch1 = {im=lg.newImage("images/player/attack/bb/punch1.png"),xoff = -2}
+punch2 = {im=lg.newImage("images/player/attack/bb/punch2.png"),xoff = -1,yoff = -3}
+punch3 = {im=lg.newImage("images/player/attack/bb/punch3.png"), yoff = -4}
+punch4 = {im=lg.newImage("images/player/attack/bb/punch4.png"),xoff = -1, yoff = -3}
+punch5 = {im=lg.newImage("images/player/attack/bb/punch5.png"),xoff = -2, yoff = -2}
+punch6 = {im=lg.newImage("images/player/attack/bb/punch6.png"),yoff = -5}
+kick1 = {im = lg.newImage("images/player/attack/bb/kick1.png"), xoff = 1, yoff = 1}
+kick2 = {im = lg.newImage("images/player/attack/bb/kick2.png"), xoff = -1, yoff = -1}
+kick3 = {im = lg.newImage("images/player/attack/bb/kick3.png"), yoff = -3}
+uppercut = {im=lg.newImage("images/player/attack/bb/uppercut.png"), xoff = 1}
+jumpuppercut = {im=lg.newImage("images/player/attack/bb/jumpuppercut.png")}
+dropkick1 = {im=lg.newImage("images/player/attack/bb/dropkick1.png"), xoff = 5,yoff = -7,extra_height=10}
+dropkick2 = {im=lg.newImage("images/player/attack/bb/dropkick2.png"), xoff = 8,yoff = -7,extra_height=-15}
+divekick = {im=lg.newImage("images/player/attack/bb/divekick.png"), xoff = 1,yoff = -7,extra_height=15}
 
-brun1 = {im=lg.newImage("images/me/attack/bb/brun1.png"), xoff = 12,yoff = 1,extra_height=-6}
-brun2 = {im=lg.newImage("images/me/attack/bb/brun2.png"), xoff = 13,extra_height=-6}
-brun3 = {im=lg.newImage("images/me/attack/bb/brun3.png"), xoff = 13,extra_height=-6}
+brun1 = {im=lg.newImage("images/player/attack/bb/brun1.png"), xoff = 12,yoff = 1,extra_height=-6}
+brun2 = {im=lg.newImage("images/player/attack/bb/brun2.png"), xoff = 13,extra_height=-6}
+brun3 = {im=lg.newImage("images/player/attack/bb/brun3.png"), xoff = 13,extra_height=-6}
 
 
-airgrab1 = {im=lg.newImage("images/me/attack/airgrab1.png"),xoff=0}
-airgrab2 = {im=lg.newImage("images/me/attack/airgrab2.png"),yoff = -3}
-airgrab3 = {im=lg.newImage("images/me/attack/airgrab3.png"),xoff=1}
+airgrab1 = {im=lg.newImage("images/player/attack/airgrab1.png"),xoff=0}
+airgrab2 = {im=lg.newImage("images/player/attack/airgrab2.png"),yoff = -3}
+airgrab3 = {im=lg.newImage("images/player/attack/airgrab3.png"),xoff=1}
 
 
 

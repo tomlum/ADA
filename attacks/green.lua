@@ -5,39 +5,39 @@ amountstuckinfloor = 45
 creaturerate = .95
 
 
-bolt = lg.newImage("images/me/attack/green/bolt.png")
+bolt = lg.newImage("images/player/attack/green/bolt.png")
 
-greena12 = {im=lg.newImage("images/me/attack/green/greena12.png"), xoff = 3,yoff = 6}
-greena13 = {im=lg.newImage("images/me/attack/green/greena13.png"), xoff = 3,yoff = 19}
-greena14 = {im=lg.newImage("images/me/attack/green/greena14.png"), xoff = 3,yoff = 33}
-greena15 = {im=lg.newImage("images/me/attack/green/greena15.png"), xoff = 3,yoff = 42}
+greena12 = {im=lg.newImage("images/player/attack/green/greena12.png"), xoff = 3,yoff = 6}
+greena13 = {im=lg.newImage("images/player/attack/green/greena13.png"), xoff = 3,yoff = 19}
+greena14 = {im=lg.newImage("images/player/attack/green/greena14.png"), xoff = 3,yoff = 33}
+greena15 = {im=lg.newImage("images/player/attack/green/greena15.png"), xoff = 3,yoff = 42}
 
-greena21 = {im=lg.newImage("images/me/attack/green/greena21.png"), xoff = 20,yoff = -6}
-greena22 = {im=lg.newImage("images/me/attack/green/greena22.png"), xoff = 30+3, yoff = -4}
+greena21 = {im=lg.newImage("images/player/attack/green/greena21.png"), xoff = 20,yoff = -6}
+greena22 = {im=lg.newImage("images/player/attack/green/greena22.png"), xoff = 30+3, yoff = -4}
 
-greena22s = {im=lg.newImage("images/me/attack/green/greena22s.png"), xoff = 30+8, yoff = 1}
-greencreatures = {im=lg.newImage("images/me/attack/green/greencreatures.png"), xoff = 30+8+8, yoff = 8}
-greencreature = {im=lg.newImage("images/me/attack/green/greencreature.png"), xoff = 30+8+8, yoff = 8}
-
-
-agreena22 = {im=lg.newImage("images/me/attack/green/agreena22.png"), xoff = 20, xoff = 40, yoff = 4}
-agreena22s = {im=lg.newImage("images/me/attack/green/agreena22s.png"), xoff = 45, yoff = 2}
-
-agreena1 = {im=lg.newImage("images/me/attack/green/agreena1.png"), xoff = 20, yoff = 0}
-agreena1s = {im=lg.newImage("images/me/attack/green/agreena1s.png"), xoff = 20, yoff = 44}
-
-garmfront = lg.newImage("images/me/attack/green/garmfront.png")
-garmback = lg.newImage("images/me/attack/green/garmback.png")
-
-greenk03 = {im=lg.newImage("images/me/attack/green/greenk03.png"), xoff = 1, yoff = -6}
-greenk01 = {im=lg.newImage("images/me/attack/green/greenk01.png"), xoff = 1, yoff = -6}
-greenk02 = {im=lg.newImage("images/me/attack/green/greenk02.png"), xoff = 4, yoff = -6}
-
-greenk1 = {im=lg.newImage("images/me/attack/green/greenk1.png"), xoff = 2, yoff = -6, legs = lg.newImage("images/me/attack/green/greenk1legs.png"), legsy = 36}
-greenk2 = {im=lg.newImage("images/me/attack/green/greenk2.png"), xoff = 0, yoff = -2}
+greena22s = {im=lg.newImage("images/player/attack/green/greena22s.png"), xoff = 30+8, yoff = 1}
+greencreatures = {im=lg.newImage("images/player/attack/green/greencreatures.png"), xoff = 30+8+8, yoff = 8}
+greencreature = {im=lg.newImage("images/player/attack/green/greencreature.png"), xoff = 30+8+8, yoff = 8}
 
 
-agk1 = {im=lg.newImage("images/me/attack/green/agk1.png"), xoff = 2, yoff = -6}
+agreena22 = {im=lg.newImage("images/player/attack/green/agreena22.png"), xoff = 20, xoff = 40, yoff = 4}
+agreena22s = {im=lg.newImage("images/player/attack/green/agreena22s.png"), xoff = 45, yoff = 2}
+
+agreena1 = {im=lg.newImage("images/player/attack/green/agreena1.png"), xoff = 20, yoff = 0}
+agreena1s = {im=lg.newImage("images/player/attack/green/agreena1s.png"), xoff = 20, yoff = 44}
+
+garmfront = lg.newImage("images/player/attack/green/garmfront.png")
+garmback = lg.newImage("images/player/attack/green/garmback.png")
+
+greenk03 = {im=lg.newImage("images/player/attack/green/greenk03.png"), xoff = 1, yoff = -6}
+greenk01 = {im=lg.newImage("images/player/attack/green/greenk01.png"), xoff = 1, yoff = -6}
+greenk02 = {im=lg.newImage("images/player/attack/green/greenk02.png"), xoff = 4, yoff = -6}
+
+greenk1 = {im=lg.newImage("images/player/attack/green/greenk1.png"), xoff = 2, yoff = -6, legs = lg.newImage("images/player/attack/green/greenk1legs.png"), legsy = 36}
+greenk2 = {im=lg.newImage("images/player/attack/green/greenk2.png"), xoff = 0, yoff = -2}
+
+
+agk1 = {im=lg.newImage("images/player/attack/green/agk1.png"), xoff = 2, yoff = -6}
 
 
 me.greenkhit = false
@@ -175,6 +175,9 @@ function gandg(xx)
 
 
       elseif xx.animcounter < 40 then
+        if xx.animcounter > 16 then
+            xx.cmbo=true
+          end
         if xx.creature and math.abs(xx.v)>6 then 
           xx.im = greencreature
         else
@@ -192,60 +195,55 @@ function gandg(xx)
         end
 
         if xx.animcounter <= 9 then
-          if xx.animcounter < 20 then
-
             if xx.rampcanhit then
               if xx.repcounter ==1 then
-                xx.v = xx.v + (xx.lr*20)/3*ramp(xx)
-              --xx.origgreenlr  = xx.lr
-            elseif xx.repcounter==2 then
-              --xx.lr=-xx.origgreenlr  
-              xx.v = xx.v*xx.lr + (xx.lr*12)/3*ramp(xx)
-            elseif xx.repcounter==3 then
-              --xx.lr=xx.origgreenlr 
-              xx.v = xx.v*xx.lr + (xx.lr*7)/3*ramp(xx)
+                xx.v = xx.v + (xx.lr*5)*xx.rampspeed
+                --xx.origgreenlr  = xx.lr
+              elseif xx.repcounter==2 then
+                --xx.lr=-xx.origgreenlr  
+                xx.v = math.abs(xx.v)*xx.lr + (xx.lr*3)*xx.rampspeed
+              elseif xx.repcounter==3 then
+                --xx.lr=xx.origgreenlr 
+                xx.v = math.abs(xx.v)*xx.lr + (xx.lr*4)*xx.rampspeed
+              end
             end
-          end
 
-          if xx.creature then 
-            xx.im = greencreatures
-          else
-            xx.im = greena22s
-          end
-          repplay(xx.greens)
+            if xx.creature then 
+              xx.im = greencreatures
+            else
+              xx.im = greena22s
+            end
+            repplay(xx.greens)
 
 
-          rumbleme(xx, .1)
+            rumbleme(xx, .1)
 
-          hexHit(xx, xx.id, 
-            {x=xx.mid, y = xx.y},
-            {x=xx.mid+xx.v+(xx.lr*67), y = xx.y-xx.j},
-            {x=xx.mid+xx.v+(xx.lr*67), y = xx.y+40-xx.j},
-            {x=xx.mid, y = me.y+47},
-            function(z)
+            hexHit(xx, xx.id, 
+              {x=xx.mid, y = xx.y},
+              {x=xx.mid+xx.v+(xx.lr*67), y = xx.y-xx.j},
+              {x=xx.mid+xx.v+(xx.lr*67), y = xx.y+40-xx.j},
+              {x=xx.mid, y = me.y+47},
+              function(z)
 
-              makenslashsparks(xx.y+30,xx.v+xx.x+xx.lr*(15),-xx.lr*slashsparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,20)
+                makenslashsparks(xx.y+30,xx.v+xx.x+xx.lr*(15),-xx.lr*slashsparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,20)
 
-              xx.cancombo = true
-              if xx.repcounter == at.g.p.max then
-                z.v = xx.lr*at.g.p.kb*3
-              else
-                z.v = xx.lr*at.g.p.kb
-              end
+                xx.cancombo = true
+                if xx.repcounter == at.g.p.max then
+                  z.v = xx.lr*at.g.p.kb*3
+                else
+                  z.v = xx.lr*at.g.p.kb
+                end
 
-              if not (z.block and z.lr == -xx.lr) then
-                z.health = z.health - at.g.p.dam
+                if not (z.block and z.lr == -xx.lr) then
+                  z.health = z.health - at.g.p.dam
 
-                z.flinch = true
-                z.ft = z.ft+at.g.p.ft
-              end
-              shakez(at.g.p.z)
-              end)
-        end
+                  z.flinch = true
+                  z.ft = z.ft+at.g.p.ft
+                end
+                shakez(at.g.p.z)
+                end)
 
-        if xx.animcounter > 16 then
-          xx.cmbo=true
-        end
+          
           --combo(xx)
         end
 
@@ -565,90 +563,90 @@ function boltupdate(xx)
 
     if v.t >= greendissolvetime then
     table.remove(xx.bolts, i)
-    end--[[
-    local xnex =  v.x+(v.speed * math.cos(math.rad(v.angle)))*
-    local ynex = v.y+(v.speed * math.sin(math.rad(v.angle)))*
-    for i = #you.spikes, 1, -1 do 
-      local spike1 = you.spikes[i-1] 
-      if pint({x = spike1[1], y = spike1[2]}, {x = spike1[3], y = spike1[4]}, {x = v.x, y = v.y}, {x = xnex, y = ynex}) or
+  end--[[
+  local xnex =  v.x+(v.speed * math.cos(math.rad(v.angle)))*
+  local ynex = v.y+(v.speed * math.sin(math.rad(v.angle)))*
+  for i = #you.spikes, 1, -1 do 
+    local spike1 = you.spikes[i-1] 
+    if pint({x = spike1[1], y = spike1[2]}, {x = spike1[3], y = spike1[4]}, {x = v.x, y = v.y}, {x = xnex, y = ynex}) or
       pint({x = spike1[3], y = spike1[4]}, {x = spike1[5], y = spike1[6]}, {x = v.x, y = v.y}, {x = xnex, y = ynex}) or
       pint({x = spike1[5], y = spike1[6]}, {x = spike1[1], y = spike1[2]}, {x = v.x, y = v.y}, {x = xnex, y = ynex})
 
       then
-        makeslashsparks(v.y,v.x, (v.speed * math.cos(math.rad(v.angle)))/8,(v.speed * math.sin(math.rad(v.angle)))+5, xx.color.c.r,xx.color.c.g,xx.color.c.b)
-        table.remove(xx.bolts, i)
-      end
-
+      makeslashsparks(v.y,v.x, (v.speed * math.cos(math.rad(v.angle)))/8,(v.speed * math.sin(math.rad(v.angle)))+5, xx.color.c.r,xx.color.c.g,xx.color.c.b)
+      table.remove(xx.bolts, i)
     end
-    ]]--
-    for j,k in ipairs(theMap.walls) do 
-      if k.barrier then
-        if bolts_fly_relative then
-          if ((v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) > k.x+amountstuckinwall and v.x > k.x) 
-            or 
-            (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) < k.x-amountstuckinwall and v.x < k.x)
 
-            ) and v.y > k.y1 and (k.y2 == nil or v.y < k.y2) then
-          v.stuck = true
-        end
-      else
-        if (v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed > k.x+amountstuckinwall) 
+  end
+  ]]--
+  for j,k in ipairs(the_map.walls) do 
+    if k.barrier then
+      if bolts_fly_relative then
+        if ((v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) > k.x+amountstuckinwall and v.x > k.x) 
           or 
-          (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed < k.x-amountstuckinwall) then
-          v.stuck = true
-        end
+          (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) < k.x-amountstuckinwall and v.x < k.x)
+
+          ) and v.y > k.y1 and (k.y2 == nil or v.y < k.y2) then
+        v.stuck = true
       end
-    end
-  end
-
-
-
-  if v.y <= theMap.floor+amountstuckinfloor and not v.stuck then
-    table.insert(xx.bolttrail, {angle = v.angle, speed = v.speed, x = v.x, y = v.y, t = 0})
-    if bolts_fly_relative then
-      v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx)
-      v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*ramp(xx)
-
     else
-      v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed
-      v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*rampspeed
-    end
-    else v.stuck = true
-    end
-    if not v.stuck then 
-
-      hexRadial(xx.id, {x = v.x, y = v.y}, 200, function()
-        repplay(xx.whiff)
+      if (v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed > k.x+amountstuckinwall) 
+        or 
+        (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed < k.x-amountstuckinwall) then
+        v.stuck = true
       end
-
-
-      )
-      
-      hline(xx, xx.id, 
-        {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y},
-        function(p)
-          if math.abs(p.v) < at.g.k.kb then
-            p.v = p.v + (v.speed/2 * math.cos(math.rad(v.angle)))
-          end
-          if math.abs(p.j) < at.g.k.kb then
-            p.j = p.j - (v.speed/2 * math.sin(math.rad(v.angle)))
-          end
-          p.flinch = true
-          if (v.speed * math.cos(math.rad(v.angle))) > 0 then p.flinchway = -1 
-          else
-            p.flinchway = 1
-          end
-          p.ft = at.g.k.ft
-          repplay(xx.greenbreak)
-          makenslashsparks(v.x, v.y, 
-            (v.speed * math.cos(math.rad(v.angle)))/4, 
-            (v.speed * math.sin(math.rad(v.angle)))+5,
-            green.r, green.g, green.b, 10)
-          v.removeme = 0
-          xx.greenhit = true
-          end)
     end
   end
+end
+
+
+
+if v.y <= the_map.floor+amountstuckinfloor and not v.stuck then
+  table.insert(xx.bolttrail, {angle = v.angle, speed = v.speed, x = v.x, y = v.y, t = 0})
+  if bolts_fly_relative then
+    v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx)
+    v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*ramp(xx)
+
+  else
+    v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed
+    v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*rampspeed
+  end
+  else v.stuck = true
+  end
+  if not v.stuck then 
+
+    hexRadial(xx.id, {x = v.x, y = v.y}, 200, function()
+      repplay(xx.whiff)
+    end
+
+
+    )
+
+    hline(xx, xx.id, 
+      {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y},
+      function(p)
+        if math.abs(p.v) < at.g.k.kb then
+          p.v = p.v + (v.speed/2 * math.cos(math.rad(v.angle)))
+        end
+        if math.abs(p.j) < at.g.k.kb then
+          p.j = p.j - (v.speed/2 * math.sin(math.rad(v.angle)))
+        end
+        p.flinch = true
+        if (v.speed * math.cos(math.rad(v.angle))) > 0 then p.flinchway = -1 
+        else
+          p.flinchway = 1
+        end
+        p.ft = at.g.k.ft
+        repplay(xx.greenbreak)
+        makenslashsparks(v.x, v.y, 
+          (v.speed * math.cos(math.rad(v.angle)))/4, 
+          (v.speed * math.sin(math.rad(v.angle)))+5,
+          green.r, green.g, green.b, 10)
+        v.removeme = 0
+        xx.greenhit = true
+        end)
+  end
+end
 end
 
 function xpint(a,A,b,B)

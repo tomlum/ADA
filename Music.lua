@@ -6,7 +6,7 @@ colortheme = love.audio.newSource("sounds/colortheme.mp3", "stream")
 colortheme:setVolume(.25)
 colortheme:setLooping(true)
 
-song1 = love.audio.newSource("sounds/song1.mp3", "stream")
+song1 = love.audio.newSource("sounds/day 44.wav", "stream")
 song1:setVolume(.25)
 song1:setLooping(true)
 

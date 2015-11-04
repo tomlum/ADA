@@ -7,9 +7,9 @@ readytounpause = false
 
 
 doubletime = 14
-me.doubledown = false
+me.double_down  = false
 me.dubtimer = 0
-you.doubledown = false
+you.double_down  = false
 you.dubtimer = 0
 me.superjumptimer = 0
 you.superjumptimer = 0
@@ -31,176 +31,181 @@ controller_black_fade=0
 
 function drawControllerCheck()
   controllersReady = me.joystick ~= nil and you.joystick ~= nil
+
   if controller_white_fade > 5 then 
     if controllersReady then
       controller_white_fade = controller_white_fade/1.035
     else
       controller_white_fade = controller_white_fade/1.03
     end
-    else controller_white_fade = 0
-    end
+  else 
+    controller_white_fade = 0
+  end
 
-    if love.keyboard.isDown(" ") or not me.oldcontrollerready and me.joystick ~= nil then
-      controller_white_fade = 255
-    end
+  if love.keyboard.isDown(" ") or not me.oldcontrollerready and me.joystick ~= nil then
+    controller_white_fade = 255
+  end
 
-    if not you.oldcontrollerready and you.joystick ~= nil then
-      controller_white_fade = 255
-    end
-
-
-
-    if not controllersReady then
-
-      controller_menu_h = controller_menu_h + .001
-      controller_menu_l = controller_menu_l + math.random()/500
-      controller_menu_s = controller_menu_s + math.random()/200
+  if not you.oldcontrollerready and you.joystick ~= nil then
+    controller_white_fade = 255
+  end
 
 
-      if controller_menu_h > 1 then
-        controller_menu_h = 0
-      end 
 
-      if controller_menu_l > .65 then
-        controller_menu_l = -.65
-      elseif controller_menu_l < 0 and controller_menu_l > -.35 then
-        controller_menu_l = .35
-      end 
+  if not controllersReady then
 
-      if controller_menu_s > 1 then
-        controller_menu_s = -1
-      elseif controller_menu_s < 0 and controller_menu_s > -.7 then
-        controller_menu_s = .7
-      end 
-    else
-      controller_menu_s = 255
-      controller_menu_l = 255
-    end
+    controller_menu_h = controller_menu_h + .001
+    controller_menu_l = controller_menu_l + math.random()/500
+    controller_menu_s = controller_menu_s + math.random()/200
 
-    t_setColor(hls2rgb(controller_menu_h,math.abs(controller_menu_l),math.abs(controller_menu_s),1))
 
+    if controller_menu_h > 1 then
+      controller_menu_h = 0
+    end 
+
+    if controller_menu_l > .65 then
+      controller_menu_l = -.65
+    elseif controller_menu_l < 0 and controller_menu_l > -.35 then
+      controller_menu_l = .35
+    end 
+
+    if controller_menu_s > 1 then
+      controller_menu_s = -1
+    elseif controller_menu_s < 0 and controller_menu_s > -.7 then
+      controller_menu_s = .7
+    end 
+  else
+    controller_menu_s = 255
+    controller_menu_l = 255
+  end
+
+  t_setColor(hls2rgb(controller_menu_h,math.abs(controller_menu_l),math.abs(controller_menu_s),1))
+
+  lg.rectangle("fill",0,0,screenwidth,screenheight)
+  cclear()  
+
+  if me.joystick == nil then 
+    lg.sdraw(p1controllercheck, 720/2, 0)
+  elseif you.joystick == nil then 
+    lg.sdraw(p2controllercheck, 720/2, 0)
+  end
+
+
+  if controllersReady then
+    lg.setColor(0,0,0)
     lg.rectangle("fill",0,0,screenwidth,screenheight)
-    cclear()  
+  end
+  lg.setColor(255,255,255,controller_white_fade)
+  lg.rectangle("fill",0,0,screenwidth,screenheight)
+  cclear()  
 
-    if me.joystick == nil then 
-      lg.sdraw(p1controllercheck, 720/2, 0)
-    elseif you.joystick == nil then 
-      lg.sdraw(p2controllercheck, 720/2, 0)
-    end
-
-
-    if controllersReady then
-      lg.setColor(0,0,0)
-      lg.rectangle("fill",0,0,screenwidth,screenheight)
-    end
-    lg.setColor(255,255,255,controller_white_fade)
-    lg.rectangle("fill",0,0,screenwidth,screenheight)
-    cclear()  
-
-    if controller_white_fade == 0 and controllersReady then
-      MODE = "title"
-    end
-
-    me.oldcontrollerready = me.joystick ~= nil
-    you.oldcontrollerready = you.joystick ~= nil
+  if controller_white_fade == 0 and controllersReady then
+    MODE = "title"
   end
 
-  function checkForControllers()
-    for i,v in ipairs(love.joystick.getJoysticks()) do
-      if me.joystick == nil then
-        if v:isGamepadDown("guide") then
-          if me.joystick == nil then 
-            repplay(readysound)
-          end
-          me.joystick = v
-          me.joystickn = i
-        end
-      end
+  me.oldcontrollerready = me.joystick ~= nil
+  you.oldcontrollerready = you.joystick ~= nil
+end
 
-      if you.joystick == nil and i~=me.joystickn then
-        if v:isGamepadDown("guide") then
-          if you.joystick == nil then 
-            repplay(readysound)
-          end
-          you.joystick = v
-          you.joystickn = i
+function checkForControllers()
+  for i,v in ipairs(love.joystick.getJoysticks()) do
+    if me.joystick == nil then
+      if v:isGamepadDown("guide") then
+        if me.joystick == nil then 
+          repplay(readysound)
         end
+        me.joystick = v
+        me.joystickn = i
       end
     end
 
+    if you.joystick == nil and i~=me.joystickn then
+      if v:isGamepadDown("guide") then
+        if you.joystick == nil then 
+          repplay(readysound)
+        end
+        you.joystick = v
+        you.joystickn = i
+      end
+    end
   end
 
-  function rumbleme(xx,i)
-    if i > xx.rumbleint then
-      xx.rumbleint = i
+end
+
+function rumbleme(xx,i)
+  if i > xx.rumbleint then
+    xx.rumbleint = i
+  else
+    xx.rumbleint = xx.rumbleint + i/2
+  end
+end
+
+function rumblemodule(xx)
+  if xx.joystick ~= nil then
+    base = (xx.cct/colorchangetime)*colorvib
+    if xx.rumbleint >= 1 then
+      xx.lrum = 1
+      xx.rrum = math.min(1, xx.rumbleint - 1)
     else
-      xx.rumbleint = xx.rumbleint + i/2
+      xx.lrum = xx.rumbleint 
+      xx.rrum = 0
     end
+
+    xx.joystick:setVibration(xx.lrum,xx.rrum)
+    xx.rumbleint = math.max(base,xx.rumbleint-.05)
+
+  end
+end
+
+
+
+
+me.clicka = false
+you.clicka = false
+me.holda = false
+you.holda = false
+
+
+
+
+me.dirholda = false
+you.dirholda = false
+
+function holdmanage(xx)
+
+
+  if (xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.blockb) or (MODE ~= "play" and (xx.rightbump or xx.leftbump)) then
+    if not xx.holda then
+      xx.holda = true
+    end
+  else 
+    xx.holda = false
   end
 
-  function rumblemodule(xx)
-    if xx.joystick ~= nil then
-      base = (xx.cct/colorchangetime)*colorvib
-      if xx.rumbleint >= 1 then
-        xx.lrum = 1
-        xx.rrum = math.min(1, xx.rumbleint - 1)
-      else
-        xx.lrum = xx.rumbleint 
-        xx.rrum = 0
-      end
-
-      xx.joystick:setVibration(xx.lrum,xx.rrum)
-      xx.rumbleint = math.max(base,xx.rumbleint-.05)
-
+  if (xx.up or xx.down or xx.left or xx.right) then
+    if not xx.dirholda then
+      xx.dirholda = true
     end
+  else 
+    xx.dirholda = false
   end
 
+end
 
 
+function combomanage(xx)
 
-  me.clicka = false
-  you.clicka = false
-  me.holda = false
-  you.holda = false
-
-
-
-
-  me.dirholda = false
-  you.dirholda = false
-  function holdmanage(xx)
-
-
-    if (xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.blockb) or (MODE ~= "play" and (xx.rightbump or xx.leftbump)) then
-      if not xx.holda then
-        xx.holda = true
-      end
-      else xx.holda = false
-      end
-
-      if (xx.up or xx.down or xx.left or xx.right) then
-        if not xx.dirholda then
-          xx.dirholda = true
-        end
-        else xx.dirholda = false
-        end
-
-      end
-
-
-      function combomanage(xx)
-
-        if (xx.a1 or xx.a2 or xx.a3 or xx.a4) then
-          if not xx.clicka then
-            xx.clicka = true
-            xx.readya = true
-          else 
-            xx.readya = false
-          end
-        else
-          xx.clicka = false
-          xx.readya = false
-        end
+  if (xx.a1 or xx.a2 or xx.a3 or xx.a4) then
+    if not xx.clicka then
+      xx.clicka = true
+      xx.readya = true
+    else 
+      xx.readya = false
+    end
+  else
+    xx.clicka = false
+    xx.readya = false
+  end
 
 
   --  if xx.anibusy --or not xx.readya
@@ -236,20 +241,46 @@ function cancelas(xx)
   xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false
 end
 
+me.lrdubtimer = 0
+you.lrdubtimer = 0
+
+function doubleDirection(xx)
 
 
 
-function doubledown(xx)
+  if ((not (xx.oldright or xx.oldleft) and xx.lrdubtimer ~= 0) or xx.runtap) and
+    ((xx.right and xx.lrdubtimer > 0) or (xx.left and xx.lrdubtimer < 0)) then
+    xx.runtap = true
+  else
+    xx.runtap = false
+  end
+
+  if xx.right then
+    xx.lrdubtimer = doubletime
+  elseif xx.left then
+    xx.lrdubtimer = -doubletime
+  end
+
+  if xx.lrdubtimer ~= 0 and not runtap then
+    xx.lrdubtimer = r2b(xx.lrdubtimer,1,0)
+  end
+
+  xx.oldright = xx.right
+  xx.oldleft = xx.left
+
+end
+
+function doubleDown(xx)
 
   if xx.dubtimer >= 0 then
     xx.dubtimer = r2b(xx.dubtimer,1,0)
   end
 
-  if not xx.down and xx.doubledown then
+  if not xx.down and xx.double_down  then
     xx.dubtimer = 0
-    xx.doubledown = false
+    xx.double_down  = false
   elseif xx.down and xx.dubtimer > 0 then
-    xx.doubledown = true
+    xx.double_down  = true
     xx.dubtimer = 10
   elseif not xx.down and xx.dubtimer < 0 then
     xx.dubtimer = doubletime
@@ -280,8 +311,9 @@ me.atcc = true
 you.atcc = true
 
 function controlsstuff(xx)
-  doubledown(xx)
-  
+  doubleDirection(xx)
+  doubleDown(xx)
+
   xx.a1 = xx.a1b
   xx.a2 = xx.a2b
   xx.a3 = xx.a3b
@@ -598,42 +630,42 @@ function c1accept()
 
 
 
-  -- if 
-  --      xx.joystick:getGamepadAxis("righty") > .4 then
-  --     xx.block = true
-  -- end 
+              -- if 
+              --      xx.joystick:getGamepadAxis("righty") > .4 then
+              --     xx.block = true
+              -- end 
 
 
 
-  xx.rightbumpb = xx.joystick:getGamepadAxis("triggerright") > .5
-  xx.leftbumpb = xx.joystick:getGamepadAxis("triggerleft") > .5
+              xx.rightbumpb = xx.joystick:getGamepadAxis("triggerright") > .5
+              xx.leftbumpb = xx.joystick:getGamepadAxis("triggerleft") > .5
 
-  slowbutton = xx.joystick:isGamepadDown("rightshoulder") or xx.joystick:isGamepadDown("leftshoulder")
+              slowbutton = xx.joystick:isGamepadDown("rightshoulder") or xx.joystick:isGamepadDown("leftshoulder")
 
-  xx.jly = xx.joystick:getGamepadAxis("lefty")
-  xx.jlx = xx.joystick:getGamepadAxis("leftx")
+              xx.jly = xx.joystick:getGamepadAxis("lefty")
+              xx.jlx = xx.joystick:getGamepadAxis("leftx")
 
-  xx.leftdeadzone = math.abs(xx.jlx/math.cos(math.atan(-xx.jly/xx.jlx))) < .3
+              xx.leftdeadzone = math.abs(xx.jlx/math.cos(math.atan(-xx.jly/xx.jlx))) < .3
 
-  xx.start = xx.joystick:isGamepadDown("start")
+              xx.start = xx.joystick:isGamepadDown("start")
 
-  if not xx.leftdeadzone then
-    xx.angle = math.atan(-xx.joystick:getGamepadAxis("lefty")/(math.abs(xx.joystick:getGamepadAxis("leftx"))))
-    else xx.angle = 0
-    end
-  end
-end
+              if not xx.leftdeadzone then
+                xx.angle = math.atan(-xx.joystick:getGamepadAxis("lefty")/(math.abs(xx.joystick:getGamepadAxis("leftx"))))
+                else xx.angle = 0
+                end
+              end
+            end
 
 
-function updateControllers()
+            function updateControllers()
 
-  checkForControllers()
-  keyboardcontrols()
-  jjstick(me)
-  jjstick(you)
-  controlsstuff(me)
-  controlsstuff(you)
-  rumblemodule(me)
-  rumblemodule(you)
-  pausing()
-end
+              checkForControllers()
+              keyboardcontrols()
+              jjstick(me)
+              jjstick(you)
+              controlsstuff(me)
+              controlsstuff(you)
+              rumblemodule(me)
+              rumblemodule(you)
+              pausing()
+            end

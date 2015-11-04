@@ -193,9 +193,9 @@ you.plat = noplat
 
 
 function updateboxes()
-  if theMaps[mapNum].boxes ~= nil and not pause then
+  if the_maps[mapNum].boxes ~= nil and not pause then
     for i,xx in ipairs(players) do 
-      for j,b in ipairs(theMaps[mapNum].boxes) do
+      for j,b in ipairs(the_maps[mapNum].boxes) do
         local xline = {p1 = {x = xx.mid, y = xx.y+xx.height/2},
         p2 = {x = xx.mid+xx.v, y = xx.y+xx.height/2-xx.j}
       }
@@ -386,7 +386,7 @@ function runrunrun(xx)
 
   end
 
-  if xx.runb and xx.running and (xx.right or xx.left) and xx.runb and not xx.block and not xx.slide and not xx.dodge then         
+  if xx.runtap and xx.running and (xx.right or xx.left) and not xx.block and not xx.dodge then         
     if xx.right and xx.v > 0 then
       xx.v = xx.color.s.speed*runspeed*xx.speedpenalty
     elseif xx.left and xx.v < 0 then
@@ -397,7 +397,7 @@ function runrunrun(xx)
 
 
 
-  elseif math.abs(xx.v) > xx.color.s.speed*xx.speedpenalty*speedminit-accel*2 and (xx.left or xx.right) and xx.g  and xx.runb and not xx.block and not xx.slide and not xx.dodge and xx.attack_num ~= 2 then
+  elseif math.abs(xx.v) > xx.color.s.speed*xx.speedpenalty*speedminit-accel*2 and (xx.left or xx.right) and xx.g and xx.runtap and not xx.block and not xx.dodge and xx.attack_num ~= 2 then
     xx.a1 = false
     xx.a2 = false
     xx.a3 = false
@@ -485,6 +485,7 @@ end
   ]]
   function movex(xx,yy)
 
+    doubleDirection(xx)
 
     if xx.dodge or (xx.block and xx.g)
       then xx.a1, xx.a2, xx.a3, xx.a4, xx.up = false,false,false,false,false
@@ -503,7 +504,7 @@ end
       xx.holda = true
     end
 
-    if ((xx.g and xx.doubledown) or (not xx.g and xx.down and not xx.runb)) and not (xx.stop and not xx.grabbing) then 
+    if ((xx.g and xx.double_down ) or (not xx.g and xx.down and not xx.runb)) and not (xx.stop and not xx.grabbing) then 
       xx.gothroughplats = true
     end
 
@@ -545,15 +546,15 @@ end
       then 
       if xx.running then
         xx.jt = runjt
-        xx.jmax = runjmax*xx.color.s.jump
+        xx.jmax = runjmax*xx.color.s.jump/the_map.gravity
         xx.j = runj
       else
         xx.jt = regJT
         xx.jmax = jmax*xx.color.s.jump
         if xx.can_super_jump then
-          xx.j = jumpj*superJumpRatio*xx.color.s.speed
+          xx.j = jumpj*superJumpRatio*xx.color.s.jump/the_map.gravity
         else
-          xx.j = jumpj*xx.color.s.speed
+          xx.j = jumpj*xx.color.s.jump/the_map.gravity
         end
 
       end

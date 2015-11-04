@@ -474,8 +474,8 @@ function climbplatcheck(ex, why, lr, h, v, j)
   midv = {x = (ex)+15*lr, y=why+h-j}
 
 
-  for j = #theMap.plats, 1, -1 do 
-    plat = theMap.plats[j]
+  for j = #the_map.plats, 1, -1 do 
+    plat = the_map.plats[j]
     local linep1 = {x = plat.x1, y = plat.y}
     local linep2 = {x = plat.x2, y = plat.y}
     if (plat.floor==nil) and pint(linep1, linep2, midv, midv2) 
@@ -494,8 +494,8 @@ function lineWallCheck(ex, why,v, j)
     return false
   end
 
-  for j = #theMap.walls, 1, -1 do 
-    wall = theMap.walls[j]
+  for j = #the_map.walls, 1, -1 do 
+    wall = the_map.walls[j]
     local linep1 = {x = wall.x, y = wall.y1}
     local linep2 = {x = wall.x, y = wall.y2}
     if pint(linep1, linep2, midv, midv2) 
@@ -515,8 +515,8 @@ function linePlatCheck(ex, why,v, j)
     return true
   end
 
-  for j = #theMap.plats, 1, -1 do 
-    plat = theMap.plats[j]
+  for j = #the_map.plats, 1, -1 do 
+    plat = the_map.plats[j]
     local linep1 = {x = plat.x1, y = plat.y}
     local linep2 = {x = plat.x2, y = plat.y}
     if pint(linep1, linep2, midv, midv2) 
@@ -536,7 +536,7 @@ function retlineplatcheck(ex, why,v, j)
     return nil
   end
 
-  for j,plat in ipairs(theMap.plats) do 
+  for j,plat in ipairs(the_map.plats) do 
     local linep1 = {x = plat.x1, y = plat.y}
     local linep2 = {x = plat.x2, y = plat.y}
     if pint(linep1, linep2, midv, midv2) 
@@ -624,8 +624,8 @@ function hboxwall()
     end
 
 
-    for j = #theMap.walls, 1, -1 do 
-      local wall = theMap.walls[j]
+    for j = #the_map.walls, 1, -1 do 
+      local wall = the_map.walls[j]
 
       --Wall jump check
       if xx.is_player~=nil and not xx.flinch
@@ -686,8 +686,8 @@ end
 
 
 function retOWallCheck(ex, why,vee, jay)
-  for j = #theMap.walls, 1, -1 do
-    local wallace = theMap.walls[j]
+  for j = #the_map.walls, 1, -1 do
+    local wallace = the_map.walls[j]
     local res = retpint({x = wallace.x, y = wallace.y1}, {x = wallace.x, y = wallace.y2}, {x = ex, y = why}, {x = ex+vee, y = why-jay})
     if res[2] > 0 then
       if wallace.glasswall~=nil then 
@@ -709,7 +709,7 @@ end
 --The platform detection function
 function hexPlat()
   for i,xx in ipairs(players) do
-    for j,plat in ipairs(theMap.plats) do 
+    for j,plat in ipairs(the_map.plats) do 
 
       local extra_height = 0
       local dodge_height = 0
@@ -785,8 +785,8 @@ end
 
 
 for i,xx in ipairs(monsters) do
-  for j = #theMap.plats, 1, -1 do 
-    plat = theMap.plats[j]
+  for j = #the_map.plats, 1, -1 do 
+    plat = the_map.plats[j]
 
     local extra_height = 0
     local dodge_height = 0

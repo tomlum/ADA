@@ -1,4 +1,5 @@
 --Mode values--
+--controllerSetup
 --title
 --modes
 --map
@@ -489,7 +490,7 @@ function drawmenus()
     elseif ups() and mapNum > 1 then mapNum = mapNum - 1 repplay(mov)
     end
 
-    theMap = theMaps[mapNum]
+    the_map = the_maps[mapNum]
 
     if (c1accept() and not me.holda) or (not you.holda and c2accept())and MODE == "map" then
       fadein = -5
@@ -504,11 +505,11 @@ function drawmenus()
 
     lg.setColor(allfade,allfade,allfade,255)
     lg.draw(map,0,0, 0, screenwidth/1440, screenheight/900)
-    lg.setColor(theMaps[mapNum].lightcolor.r,theMaps[mapNum].lightcolor.g,theMaps[mapNum].lightcolor.b,math.random(150,255)*(allfade/255))
-    lg.circle("fill",(theMaps[mapNum].lightx)*(screenwidth/1440),(theMaps[mapNum].lighty)*(screenheight/900),lightsize*(screenwidth/1440))
+    lg.setColor(the_maps[mapNum].lightcolor.r,the_maps[mapNum].lightcolor.g,the_maps[mapNum].lightcolor.b,math.random(150,255)*(allfade/255))
+    lg.circle("fill",(the_maps[mapNum].lightx)*(screenwidth/1440),(the_maps[mapNum].lighty)*(screenheight/900),lightsize*(screenwidth/1440))
     local wordspacing = 20
     for i = 0, screenheight/wordspacing do
-      lg.print(string.upper(theMaps[mapNum].name), 1000*(screenwidth/1440), i*wordspacing)
+      lg.print(string.upper(the_maps[mapNum].name), 1000*(screenwidth/1440), i*wordspacing)
     end
 
 
@@ -901,7 +902,7 @@ elseif MODE == "pan" then
     MODE = "play"
     gotimer = 0
   elseif streetfadestart then streetfadehold = streetfadehold - 1
-  elseif dollyx + screenwidth > theMap.rightwall-1440*1.2+100000 and not infinitepan
+  elseif dollyx + screenwidth > the_map.rightwall-1440*1.2+100000 and not infinitepan
     or c1accept() or c2accept()
     then 
     fadein = -5
@@ -920,7 +921,7 @@ elseif MODE == "pan" then
     lg.sdraw(enviro.paralax2, -dollyx/4,  -enviro.paralax2:getHeight()+900-letter_box_height-35)
   end
   lg.sdraw(enviro.paralax, -dollyx/2,  -enviro.paralax:getHeight()+900-letter_box_height-30)
-  lg.sdraw(enviro.stage, -dollyx, -theMap.floor+900 -letter_box_height-30)
+  lg.sdraw(enviro.stage, -dollyx, -the_map.floor+900 -letter_box_height-30)
   lg.setColor(0,0,0)
   --lg.srectangle("fill", 0, 0, 1440, math.max(letter_box_height, 450-3^(dollyx/50)))
   --lg.srectangle("fill", 0, 900, 1440, -math.max(letter_box_height, 450-3^(dollyx/50)))

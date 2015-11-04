@@ -1,28 +1,28 @@
 --ppunch3 inserts some p's around
-ppunch1 = {im = lg.newImage("images/me/attack/purple/ppunch1.png"), ppunch1im, xoff = 10, yoff = 10}
-ppunch2 = {im = lg.newImage("images/me/attack/purple/ppunch2.png"), xoff = 5}
-ppunch3 = {im = lg.newImage("images/me/attack/purple/ppunch3.png"), xoff = 5, yoff = -5}
-stomp1 = {im=lg.newImage("images/me/attack/purple/stomp1.png")}
-stomp2 = {im=lg.newImage("images/me/attack/purple/stomp2.png")}
+ppunch1 = {im = lg.newImage("images/player/attack/purple/ppunch1.png"), ppunch1im, xoff = 10, yoff = 10}
+ppunch2 = {im = lg.newImage("images/player/attack/purple/ppunch2.png"), xoff = 5}
+ppunch3 = {im = lg.newImage("images/player/attack/purple/ppunch3.png"), xoff = 5, yoff = -5}
+stomp1 = {im=lg.newImage("images/player/attack/purple/stomp1.png")}
+stomp2 = {im=lg.newImage("images/player/attack/purple/stomp2.png")}
 
-pa11 = {im=lg.newImage("images/me/attack/purple/pa11.png"), xoff = -2, yoff = 20}
-pa12 = {im=lg.newImage("images/me/attack/purple/pa12.png"), xoff = 2, yoff = -2}
-pa13 = {im=lg.newImage("images/me/attack/purple/pa13.png"), xoff = 4, yoff = -6}
+pa11 = {im=lg.newImage("images/player/attack/purple/pa11.png"), xoff = -2, yoff = 20}
+pa12 = {im=lg.newImage("images/player/attack/purple/pa12.png"), xoff = 2, yoff = -2}
+pa13 = {im=lg.newImage("images/player/attack/purple/pa13.png"), xoff = 4, yoff = -6}
 
-apa21 = {im=lg.newImage("images/me/attack/purple/apa21.png"), xoff = 2,yoff = -1, extra_height = 5}
-apa22 = {im=lg.newImage("images/me/attack/purple/apa22.png"), xoff = 0, yoff = -1, extra_height = 5}
-apa23 = {im=lg.newImage("images/me/attack/purple/apa23.png"), xoff = 3, yoff = -4, extra_height = 5}
+apa21 = {im=lg.newImage("images/player/attack/purple/apa21.png"), xoff = 2,yoff = -1, extra_height = 5}
+apa22 = {im=lg.newImage("images/player/attack/purple/apa22.png"), xoff = 0, yoff = -1, extra_height = 5}
+apa23 = {im=lg.newImage("images/player/attack/purple/apa23.png"), xoff = 3, yoff = -4, extra_height = 5}
 
-apa11 = {im=lg.newImage("images/me/attack/purple/apa11.png"), xoff = 5, yoff = -3, extra_height = 5}
-apa12 = {im=lg.newImage("images/me/attack/purple/apa12.png"), xoff = 13, yoff = 38, extra_height = 5}
-apa13 = {im=lg.newImage("images/me/attack/purple/apa13.png"), xoff = 26, yoff = 8, extra_height = 5}
+apa11 = {im=lg.newImage("images/player/attack/purple/apa11.png"), xoff = 5, yoff = -3, extra_height = 5}
+apa12 = {im=lg.newImage("images/player/attack/purple/apa12.png"), xoff = 13, yoff = 38, extra_height = 5}
+apa13 = {im=lg.newImage("images/player/attack/purple/apa13.png"), xoff = 26, yoff = 8, extra_height = 5}
 
-pp1back = {im=lg.newImage("images/me/attack/purple/pp1back.png"), xoff = -2, yoff = 2}
-pp1back2 = {im=lg.newImage("images/me/attack/purple/pp1back2.png"), xoff = 10, yoff = 38}
-pp1back3 = {im=lg.newImage("images/me/attack/purple/pp1back3.png"), xoff = 37, yoff = -4}
-pp1back4 = {im=lg.newImage("images/me/attack/purple/pp1back4.png"), xoff = 37, yoff = -8}
-apk1 = {im=lg.newImage("images/me/attack/purple/apk1.png"),extra_height = 5}
-apk2 = {im=lg.newImage("images/me/attack/purple/apk2.png"), xoff = 0, yoff = -15}
+pp1back = {im=lg.newImage("images/player/attack/purple/pp1back.png"), xoff = -2, yoff = 2}
+pp1back2 = {im=lg.newImage("images/player/attack/purple/pp1back2.png"), xoff = 10, yoff = 38}
+pp1back3 = {im=lg.newImage("images/player/attack/purple/pp1back3.png"), xoff = 37, yoff = -4}
+pp1back4 = {im=lg.newImage("images/player/attack/purple/pp1back4.png"), xoff = 37, yoff = -8}
+apk1 = {im=lg.newImage("images/player/attack/purple/apk1.png"),extra_height = 5}
+apk2 = {im=lg.newImage("images/player/attack/purple/apk2.png"), xoff = 0, yoff = -15}
 
 
 spikesize = 12
@@ -105,16 +105,16 @@ function spikegrow(cur, n, xx)
     vv[4] = vv[4]-(floRan(10, 30))
     local growmount = vv[5]+(math.random()*(spikesize))*cur.lr
 
-    if growmount > theMap.plats[xx.plat.n].x1 and 
-      growmount < theMap.plats[xx.plat.n].x2 then
+    if growmount > the_map.plats[xx.plat.n].x1 and 
+      growmount < the_map.plats[xx.plat.n].x2 then
       vv[5] = growmount
     end
   elseif n == 2 then
     vv[3] = vv[3]+(floRan(2, 5))*cur.lr
     vv[4] = vv[4]-(floRan(10, 20))
     local growmount = vv[5]+(math.random(4, 10)+math.random()*(cur.t/5))*cur.lr
-    if growmount > theMap.plats[xx.plat.n].x1 and 
-      growmount < theMap.plats[xx.plat.n].x2 then
+    if growmount > the_map.plats[xx.plat.n].x1 and 
+      growmount < the_map.plats[xx.plat.n].x2 then
       vv[5] = growmount
     end
   end
@@ -145,15 +145,15 @@ function dopurpakspikes(xx)
       lverts2[5]= xx.mid+(-xx.lr*20*(sn))
       lverts2[6]= xx.feet
 
-      if lverts[1] > theMap.plats[xx.plat.n].x1+spikesize and 
-        lverts[1] < theMap.plats[xx.plat.n].x2-spikesize then
+      if lverts[1] > the_map.plats[xx.plat.n].x1+spikesize and 
+        lverts[1] < the_map.plats[xx.plat.n].x2-spikesize then
         table.insert(xx.spikes,
           {verts = lverts,
           t = 0, lr=-xx.lr}) 
       end
 
-      if lverts2[1] > theMap.plats[xx.plat.n].x1+spikesize and 
-        lverts2[1] < theMap.plats[xx.plat.n].x2-spikesize then
+      if lverts2[1] > the_map.plats[xx.plat.n].x1+spikesize and 
+        lverts2[1] < the_map.plats[xx.plat.n].x2-spikesize then
         table.insert(xx.spikes,
           {verts = lverts2,
           t = 0, lr=xx.lr})
@@ -500,15 +500,15 @@ function pandp(xx)
               lverts2[5]= xx.mid+(xx.lr*25*(sn))
               lverts2[6]= xx.feet
 
-              if lverts[1] > theMap.plats[xx.plat.n].x1+spikesize and 
-                lverts[1] < theMap.plats[xx.plat.n].x2-spikesize then
+              if lverts[1] > the_map.plats[xx.plat.n].x1+spikesize and 
+                lverts[1] < the_map.plats[xx.plat.n].x2-spikesize then
                 table.insert(xx.spikes, 
                   {verts = lverts,
                   t = 0, lr=xx.lr})
                 repplay(xx.purpsound)
               end
-              if lverts2[1] > theMap.plats[xx.plat.n].x1+spikesize and 
-                lverts2[1] < theMap.plats[xx.plat.n].x2-spikesize then
+              if lverts2[1] > the_map.plats[xx.plat.n].x1+spikesize and 
+                lverts2[1] < the_map.plats[xx.plat.n].x2-spikesize then
                 table.insert(xx.spikes, 
                   {verts = lverts2,
                   t = 0, lr=xx.lr})
@@ -534,8 +534,8 @@ function pandp(xx)
               --  {verts = lverts2,
               --    t = 0, lr=-1})
 
-if lverts[1] > theMap.plats[xx.plat.n].x1+spikesize and 
-  lverts[1] < theMap.plats[xx.plat.n].x2-spikesize then
+if lverts[1] > the_map.plats[xx.plat.n].x1+spikesize and 
+  lverts[1] < the_map.plats[xx.plat.n].x2-spikesize then
 
   repplay(xx.purpsound)
   if math.random() > .5 then
