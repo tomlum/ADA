@@ -224,16 +224,30 @@ function modeManager()
   OLD_MODE = MODE
 end
 
-function controlsOverlay()
-  if MODE == "title" or MODE == "modes" or MODE == "map" then
-    if joysticks[1]:getName() == "PLAYSTATION(R)3 Controller" then
-    else
-    end
-  elseif MODE == "color" then
-    if joysticks[1]:getName() == "PLAYSTATION(R)3 Controller" then
-    else
+ps3menubuttons = lg.newImage("images/enviro/ps3menubuttons.png")
+xboxmenubuttons = lg.newImage("images/enviro/xboxmenubuttons.png")
+ps3assigncolor = lg.newImage("images/enviro/ps3assigncolor.png")
+xboxassigncolor = lg.newImage("images/enviro/xboxassigncolor.png")
+
+function drawControlsOverlay()
+
+  lg.setColor(255,255,255)
+  if true or joysticks[1] ~= nil then
+    if MODE == "modes" or MODE == "map" or MODE == "premap" then
+      if true or joysticks[1]:getName() == "PLAYSTATION(R)3 Controller" then
+        lg.draw(ps3menubuttons, 0, screenheight, 0, 2, 2, 0, 24)
+      else
+        lg.draw(xboxmenubuttons, 0, screenheight, 0, 2, 2, 0, 24)
+      end
+    elseif MODE == "color" then
+      if true or joysticks[1]:getName() == "PLAYSTATION(R)3 Controller" then
+        lg.draw(ps3assigncolor, 0, screenheight, 0, 2, 2, 0, 24)
+      else
+        lg.draw(xboxassigncolor, 0, screenheight, 0, 2, 2, 0, 24)
+      end
     end
   end
+
 end
 
 

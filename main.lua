@@ -114,6 +114,8 @@ function love.draw()
     drawStory()
   end
 
+  drawControlsOverlay()
+
   if debug or fightclub then
     debugReadouts()
   end
