@@ -11,7 +11,6 @@
 
 --notes:
 --on reset after go, it shows last frame still
---Fix right wall of floors
 
 --air dash
 --Times square, have a facade layer that's black or something so this way it looks like back lit against lights

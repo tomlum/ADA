@@ -727,6 +727,7 @@ function drawfloorsstuff()
   lg.draw(enviro.pfloors,0,0)
   drawpartition(0, the_maps[3].floor, -1)
   drawpartition(the_maps[3].rightwall, the_maps[3].floor, 1)
+    lg.rectangle("fill", -3000, the_maps[2].floor, 6000+the_maps[2].rightwall, 1000)
   floorsveneer()
 end
 
