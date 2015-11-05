@@ -15,8 +15,7 @@ slow_mo_t = 0
 function speedRamp()
 
   if love.keyboard.isDown("x") then rampspeed = .2 end
-  if 
-    love.keyboard.isDown("z") or slowbutton
+  if love.keyboard.isDown("z") or slowbutton
     then slowt = slowt + 1
     if slowt > slowrate then slowt = 0
     end
@@ -292,6 +291,7 @@ function transferofenergy(xx)
 end
 
 slide_time = 6
+
 function fric(xx) 
 
   xx.v = r2b(xx.v,friction*ramp(xx),0)

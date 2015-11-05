@@ -1,6 +1,5 @@
 the_maps = {}
 
-maxmodenum = 2
 
 the_maps[1]= {name = "street", 
 plats = {}, walls = {},
@@ -32,8 +31,8 @@ lightx = 442+2.5,
 lighty = 311+2.5,
 lightcolor = {r = 255, g = 99, b = 0},
 rightwall = 5000,
-paralaxscale = .5,
-paralaxscale2 = .25,
+paralaxscale = .49,
+paralaxscale2 = .23,
 gravity = .9
 }
 
@@ -46,6 +45,179 @@ paralaxscale = 1,
 rightwall = 2000,
 gravity = .9
 }
+
+
+function loadStage()
+
+  placespeople = false
+  finished_loading = false
+  playfade = 0
+  me.deathclock = 0
+  you.deathclock = 0
+  me.animcounter = 0
+  you.animcounter = 0
+  me.v = 0
+  you.v = 0
+  me.lr = 1
+  you.lr = -1
+  me.j = 0
+  you.j = 0
+  me.flinch = false
+  you.flinch = false
+  me.ft = 0
+  you.ft = 0
+  minzoom = defaultminzoom
+  maxzoom = defaultmaxzoom
+
+
+  if game_mode == "fractal" then 
+    you.lives = fractal_lives
+    me.lives = fractal_lives
+    maxhealth = fractal_max_health
+  elseif game_mode == "duel" then 
+    maxhealth = 1
+  elseif game_mode == "koth" then 
+    maxhealth = 50
+  end
+  me.score = 0
+  you.score = 0
+  me.health = maxhealth
+  you.health = maxhealth
+  me.oldhealth = me.health
+  you.oldhealth = you.health
+
+  the_map = the_maps[mapNum]
+  floor = the_maps[mapNum].floor
+
+
+  if mapNum == 100 then
+
+    loader.start(function()
+      finished_loading = true
+      end)
+
+    enviro.rightwall = 2000
+    loader.newImage(enviro,'paralax', "images/maps/fightclub/fightclubparalax.png")
+    loader.newImage(enviro,'stage', "images/maps/fightclub/fightclub.png")
+    loader.newImage(enviro,"sky","images/enviro/ready.png")
+    me.x = putmehere
+    you.x = putyouhere
+    me.im = idle1
+    you.im = idle1
+    me.y = the_maps[100].floor - 60
+    you.y = the_maps[100].floor - 60
+    floor = the_maps[100].floor
+    dollyv = 3
+
+  elseif mapNum == 1 then
+    me.y = the_maps[1].floor - 200
+    you.y = the_maps[1].floor - 200
+    if loadImagesNow then
+      enviro.stage=lg.newImage("images/maps/street/astreet.png")
+      enviro.paralax=lg.newImage("images/maps/street/paralax.png")
+      enviro.paralax2=lg.newImage("images/maps/street/paralax2.png")
+      enviro.sky=lg.newImage("images/maps/street/sky.png")
+      enviro.lightson=lg.newImage("images/maps/street/lightson.png")
+      enviro.lightsoff=lg.newImage( "images/maps/street/lightsoff.png")
+      enviro.rafters=lg.newImage("images/maps/street/rafters.png")
+
+    else
+      loader.start(function()
+        finished_loading = true
+        end)
+      loader.newImage(enviro,'stage', "images/maps/street/astreet.png")
+
+      loader.newImage(enviro,"paralax","images/maps/street/paralax.png")
+      loader.newImage(enviro,"paralax2","images/maps/street/paralax2.png")
+      loader.newImage(enviro,"sky","images/maps/street/sky.png")
+      loader.newImage(enviro,'lightson',"images/maps/street/lightson.png")
+      loader.newImage(enviro,'lightsoff', "images/maps/street/lightsoff.png")
+      loader.newImage(enviro,'rafters',"images/maps/street/rafters.png")
+    end
+    lighttimer = 0
+    me.x = 1000
+    you.x = 6000
+    enviro.rightwall = 6600-20
+    enviro.ds = 5
+    thesong = song1
+    dollyv = 3
+
+
+  elseif mapNum == 2 then
+
+    if loadImagesNow then 
+
+      enviro.paralax = lg.newImage("images/maps/library/libraryparalax.png")
+      enviro.paralax2 = lg.newImage("images/maps/library/libraryparalax2.png")
+      enviro.stage = lg.newImage("images/maps/library/library.png")
+      enviro.sky = lg.newImage("images/maps/library/librarysky.png")
+
+      enviro.plibrary = lg.newImage("images/maps/library/libraryplayer.png")
+      enviro.thelibraryveneer = lg.newImage("images/maps/library/libraryveneer.png")
+
+
+    else
+      loader.start(function()
+        finished_loading = true
+        end)
+      loader.newImage(enviro,'paralax',"images/maps/library/libraryparalax.png")
+      loader.newImage(enviro,'paralax2', "images/maps/library/libraryparalax2.png")
+      loader.newImage(enviro,'stage', "images/maps/library/library.png")
+      loader.newImage(enviro,'sky',"images/maps/library/librarysky.png")
+      loader.newImage(enviro,'plibrary', "images/maps/library/libraryplayer.png")
+      loader.newImage(enviro, 'thelibraryveneer',"images/maps/library/libraryveneer.png")
+    end
+
+    me.x = 20--700
+    you.x = 2000
+    me.y = 300
+    you.y = 300
+    enviro.rightwall = 3700 
+    enviro.ds = 2
+    dollyv = 3
+
+    thesong = song1
+
+  elseif mapNum == 3 then
+    if loadImagesNow then 
+
+      enviro.paralax = lg.newImage("images/maps/floors/floorsparalax.png")
+      enviro.stage = lg.newImage("images/maps/floors/floors.png")
+      enviro.sky = lg.newImage("images/maps/floors/floorssky.png")
+      enviro.pfloors = lg.newImage("images/maps/floors/floorsplayer.png")
+      enviro.floorsveneer2 = lg.newImage("images/maps/floors/floorsveneer2.png")
+      enviro.floorsveneer1 = lg.newImage("images/maps/floors/floorsveneer1.png")
+      enviro.paralax2 = lg.newImage("images/maps/floors/floorparalax2.png")
+
+    else
+      loader.start(function()
+        finished_loading = true
+        end)
+      loader.newImage(enviro,'paralax',"images/maps/floors/floorsparalax.png")
+      loader.newImage(enviro,'stage', "images/maps/floors/floors.png")
+      loader.newImage(enviro,'sky',"images/maps/floors/floorssky.png")
+      loader.newImage(enviro,'pfloors', "images/maps/floors/floorsplayer.png")
+      loader.newImage(enviro, 'floorsveneer2',"images/maps/floors/floorsveneer2.png")
+      loader.newImage(enviro, 'floorsveneer1',"images/maps/floors/floorsveneer1.png")
+      loader.newImage(enviro,'paralax2', "images/maps/floors/floorparalax2.png")
+    end
+
+
+    me.x = 500
+    you.x = 3000
+    me.y = 900
+    you.y = 900
+    enviro.rightwall = 5000
+    enviro.ds = 5
+    thesong = song1
+    dollyv = 3
+
+  end
+
+  for i,v in ipairs(players) do
+    players[i].old_feet = players[i].y 
+  end
+end
 
 
 table.insert(the_maps[1].plats, {n=1, y = the_maps[1].floor, x1 = 0, x2 = the_maps[1].rightwall+1, floor = true})
@@ -90,8 +262,8 @@ table.insert(the_maps[2].boxes, {p1 = {x = 1105, y = 723},  size = 40, kind = "l
 table.insert(the_maps[2].boxes, {p1 = {x = 1270, y = 642},  size = 40, kind = "leaf", density = 8})
 
 table.insert(the_maps[3].plats, {n=1, y = the_maps[3].floor, x1 = 0, x2 = the_maps[3].rightwall+1, floor = true})
-table.insert(the_maps[3].walls, {y1 = -1, y2 = the_maps[3].floor+1, x=0})
-table.insert(the_maps[3].walls, {y1 = -1, y2 = the_maps[3].floor+1, x=the_maps[3].rightwall})
+table.insert(the_maps[3].walls, {y1 = -1, y2 = the_maps[3].floor+1, x=0, barrier = true})
+table.insert(the_maps[3].walls, {y1 = -1, y2 = the_maps[3].floor+1, x=the_maps[3].rightwall, barrier = true})
 table.insert(the_maps[3].plats, {n=1,y = 2688, x1 = 2154, x2 = 2726,glass = true})
 table.insert(the_maps[3].plats, {n=2,y = 5616, x1 = 419, x2 = 2139})
 table.insert(the_maps[3].plats, {n=3,y = 2756, x1 = 419, x2 = 2139})

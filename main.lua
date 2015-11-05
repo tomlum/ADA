@@ -10,11 +10,7 @@
 --can't kick combo out of purple kick
 
 --notes:
---repeated o k doesn't work
 --on reset after go, it shows last frame still
---fix pan speed
---fix map paralax heights
---get action shot working again?
 --Fix right wall of floors
 
 --air dash
@@ -32,16 +28,17 @@ require "initializers"
 
 --Filming utilities
 infinitepan = false
-no_screen_follow = true
+no_screen_follow = false
 drawControllers = true
-waver_outlines = false
-drawtrails = true
+waver_outlines = true
+drawtrails = false
+noslowmo = false
 
 --Debug/Test Utilities
-fightclub = true
+fightclub = false
 demo = true
 debug = false
-MODE = "controllerSetup"
+MODE = "title"
 
 notilebouncing = false
 melcolor = 1
@@ -62,7 +59,6 @@ chapter = 1
 oldchapter = "bob"
 lassoisathing = false
 dangerCloseIsAThing = not no_screen_follow
-noslowmo = true
 
 mute = false
 
@@ -123,6 +119,9 @@ function love.draw()
   if debug or fightclub then
     debugReadouts()
   end
+  if slowww ~= nil then
+lg.print(tostring(slowww),200,100)
+end
   lg.setColor(25,25,25)
-  lg.rectangle("fill", screenwidth/2,0,screenwidth,screenheight)
+  --lg.rectangle("fill", screenwidth/2,0,screenwidth,screenheight)
 end

@@ -278,124 +278,125 @@ function cinemabars()
       if maxzoom > dangerZoom then
         maxzoom = maxzoom - dangerZoomDelta
         minzoom = minzoom - dangerZoomDelta
-        end]]--
-
-        if barey < dangerbarey then
-          barsmovein = 2
-        end
-
-      elseif slowww then barsmovein = 3
-      elseif barey > 0 and slow_mo_t == 0 then
-        barsmovein = -4
       end
-      barey = 120*(1-rampspeed)
+      ]]--
 
+      if barey < dangerbarey then
+        barsmovein = 2
+      end
+
+    elseif slowww then barsmovein = 3
+    elseif barey > 0 and slow_mo_t == 0 then
+      barsmovein = -4
     end
-  end
-  --------------------------------------------------------------
-  --csds - colorshader draw start
-  --
-  --All that follows will be shaded accordingly to info from xx
-  --
-  --xx - the player to get shade/color info from
-  --flip - if true flip right and left colors depending on xx.lr
-  --------------------------------------------------------------
-
-  function csds(xx, flip)
-
-    local bleed = ((maxhealth-xx.health)/maxhealth)
-    local shadee = {
-      r=xx.shade.r - 
-      (xx.shade.r - xx.shade.r/255*(xx.color.c.r))*bleed/2,
-      g=xx.shade.g -
-      (xx.shade.g - xx.shade.g/255*(xx.color.c.g))*bleed/2,
-      b=xx.shade.b -
-      (xx.shade.b - xx.shade.b/255*(xx.color.c.b))*bleed/2
-    }
-    local shadeea = 255
-
-    if xx.color.n == 2 and xx.animcounter >= 7 and xx.greenflicker and math.sqrt(xx.v^2+xx.j^2) > 6 and xx.attack_num ~= 2 then
-     shadeea = 0
-   end
-
-   local colora = 150
-
-   local cctv = (xx.cct/colorchangetime)
-   local lefcolor = {r = (xx.leftc.c.r + shadee.r/2)*2/3,
-   g = (xx.leftc.c.g + shadee.g/2)*2/3,
-   b = (xx.leftc.c.b + shadee.b/2)*2/3}
-   if xx.leftc.n == xx.currentc then
-
-     lefcolor = {r = (xx.leftc.c.r + shadee.r)/2+(((xx.leftc.c.r - shadee.r)/2)*cctv),
-     g = (xx.leftc.c.g + shadee.g)/2+(((xx.leftc.c.g - shadee.g)/2)*cctv),
-     b = (xx.leftc.c.b + shadee.b)/2+(((xx.leftc.c.b - shadee.b)/2)*cctv)}
-
-   end
-
-   local righcolor = {r = (xx.rightc.c.r + shadee.r/2)*2/3,
-   g = (xx.rightc.c.g + shadee.g/2)*2/3,
-   b = (xx.rightc.c.b + shadee.b/2)*2/3}
-   if xx.rightc.n == xx.currentc then
-
-    righcolor = {r = (xx.rightc.c.r + shadee.r)/2+(((xx.rightc.c.r - shadee.r)/2)*cctv),
-    g = (xx.rightc.c.g + shadee.g)/2+(((xx.rightc.c.g - shadee.g)/2)*cctv),
-    b = (xx.rightc.c.b + shadee.b)/2+(((xx.rightc.c.b - shadee.b)/2)*cctv)}
+    barey = 120*(1-rampspeed)
 
   end
+end
+--------------------------------------------------------------
+--csds - colorshader draw start
+--
+--All that follows will be shaded accordingly to info from xx
+--
+--xx - the player to get shade/color info from
+--flip - if true flip right and left colors depending on xx.lr
+--------------------------------------------------------------
 
+function csds(xx, flip)
 
-
-
-  local rc = vct(lefcolor)
-  local lc = vct(righcolor)
-  if (xx.lr < 0 and flip~=nil) or xx.lr > 0 then
-    lc = vct(lefcolor)
-    rc = vct(righcolor)
-  end
-  --[[
-  local rc = vct(xx.leftc.c,colora)
-  local lc = vct(xx.rightc.c,colora)
-  if (xx.lr < 0 and flip~=nil) or xx.lr > 0 then
-    lc = vct(xx.leftc.c,colora)
-    rc = vct(xx.rightc.c,colora)
-  end
-  ]]--
-
-  if waver_outlines then
-    me.outline = hls2rgb(me.health_color, .2, .5*(me.health/maxhealth), 1)
-    you.outline = hls2rgb(you.health_color, .2, .5*(me.health/maxhealth), 1)
-  end
-
-  local outlinee = {
-    r=xx.outline.r - 
-    (xx.outline.r - xx.outline.r/200*(xx.color.c.r))*bleed,
-    g=xx.outline.g -
-    (xx.outline.g - xx.outline.r/200*(xx.color.c.g))*bleed,
-    b=xx.outline.b -
-    (xx.outline.b - xx.outline.r/200*(xx.color.c.b))*bleed
+  local bleed = ((maxhealth-xx.health)/maxhealth)
+  local shadee = {
+    r=xx.shade.r - 
+    (xx.shade.r - xx.shade.r/255*(xx.color.c.r))*bleed/2,
+    g=xx.shade.g -
+    (xx.shade.g - xx.shade.g/255*(xx.color.c.g))*bleed/2,
+    b=xx.shade.b -
+    (xx.shade.b - xx.shade.b/255*(xx.color.c.b))*bleed/2
   }
+  local shadeea = 255
 
-  lg.setShader(cshader)
-  if xx.currentc == 4 or xx.cchangeto.n == 4 then
-    cshader:send( "palette", 
-      vct(shadee), 
-      vct({r = xx.color.c.r/(xx.rlvl/10+1),g = xx.color.c.g/(xx.rlvl/10+1),b = xx.color.c.b/(xx.rlvl/10+1)}),
-      vct({r = thecolors[xx.currentc].c.r/(xx.rlvl/6+1), g = thecolors[xx.currentc].c.g/(xx.rlvl/6+1), b = thecolors[xx.currentc].c.b/(xx.rlvl/6+1)}), 
-      vct(outlinee),
-      lc,
-      rc
-      ) 
-  else
-    cshader:send( "palette", 
-      vct(shadee, shadeea), 
-      vct(xx.color.c),
-      vct(thecolors[xx.currentc].c), 
-      vct(outlinee),
-      lc,
-      rc
+  if xx.color.n == 2 and xx.animcounter >= 7 and xx.greenflicker and math.sqrt(xx.v^2+xx.j^2) > 6 and xx.attack_num ~= 2 then
+   shadeea = 0
+ end
 
-      ) 
-  end
+ local colora = 150
+
+ local cctv = (xx.cct/colorchangetime)
+ local lefcolor = {r = (xx.leftc.c.r + shadee.r/2)*2/3,
+ g = (xx.leftc.c.g + shadee.g/2)*2/3,
+ b = (xx.leftc.c.b + shadee.b/2)*2/3}
+ if xx.leftc.n == xx.currentc then
+
+   lefcolor = {r = (xx.leftc.c.r + shadee.r)/2+(((xx.leftc.c.r - shadee.r)/2)*cctv),
+   g = (xx.leftc.c.g + shadee.g)/2+(((xx.leftc.c.g - shadee.g)/2)*cctv),
+   b = (xx.leftc.c.b + shadee.b)/2+(((xx.leftc.c.b - shadee.b)/2)*cctv)}
+
+ end
+
+ local righcolor = {r = (xx.rightc.c.r + shadee.r/2)*2/3,
+ g = (xx.rightc.c.g + shadee.g/2)*2/3,
+ b = (xx.rightc.c.b + shadee.b/2)*2/3}
+ if xx.rightc.n == xx.currentc then
+
+  righcolor = {r = (xx.rightc.c.r + shadee.r)/2+(((xx.rightc.c.r - shadee.r)/2)*cctv),
+  g = (xx.rightc.c.g + shadee.g)/2+(((xx.rightc.c.g - shadee.g)/2)*cctv),
+  b = (xx.rightc.c.b + shadee.b)/2+(((xx.rightc.c.b - shadee.b)/2)*cctv)}
+
+end
+
+
+
+
+local rc = vct(lefcolor)
+local lc = vct(righcolor)
+if (xx.lr < 0 and flip~=nil) or xx.lr > 0 then
+  lc = vct(lefcolor)
+  rc = vct(righcolor)
+end
+--[[
+local rc = vct(xx.leftc.c,colora)
+local lc = vct(xx.rightc.c,colora)
+if (xx.lr < 0 and flip~=nil) or xx.lr > 0 then
+  lc = vct(xx.leftc.c,colora)
+  rc = vct(xx.rightc.c,colora)
+end
+]]--
+
+if waver_outlines then
+  me.outline = hls2rgb(me.health_color, .2, .5*(me.health/maxhealth), 1)
+  you.outline = hls2rgb(you.health_color, .2, .5*(me.health/maxhealth), 1)
+end
+
+local outlinee = {
+  r=xx.outline.r - 
+  (xx.outline.r - xx.outline.r/200*(xx.color.c.r))*bleed,
+  g=xx.outline.g -
+  (xx.outline.g - xx.outline.r/200*(xx.color.c.g))*bleed,
+  b=xx.outline.b -
+  (xx.outline.b - xx.outline.r/200*(xx.color.c.b))*bleed
+}
+
+lg.setShader(cshader)
+if xx.currentc == 4 or xx.cchangeto.n == 4 then
+  cshader:send( "palette", 
+    vct(shadee), 
+    vct({r = xx.color.c.r/(xx.rlvl/10+1),g = xx.color.c.g/(xx.rlvl/10+1),b = xx.color.c.b/(xx.rlvl/10+1)}),
+    vct({r = thecolors[xx.currentc].c.r/(xx.rlvl/6+1), g = thecolors[xx.currentc].c.g/(xx.rlvl/6+1), b = thecolors[xx.currentc].c.b/(xx.rlvl/6+1)}), 
+    vct(outlinee),
+    lc,
+    rc
+    ) 
+else
+  cshader:send( "palette", 
+    vct(shadee, shadeea), 
+    vct(xx.color.c),
+    vct(thecolors[xx.currentc].c), 
+    vct(outlinee),
+    lc,
+    rc
+
+    ) 
+end
 end
 
 
@@ -403,7 +404,7 @@ end
 
 
 
-traillength = 7
+traillength = 4
 trailfadeness = 10
 
 me.trail={}
@@ -464,177 +465,6 @@ function drawmytrail(xx)
 end
 
 
-function loadStage()
-
-  placespeople = false
-  finished_loading = false
-  playfade = 0
-  me.deathclock = 0
-  you.deathclock = 0
-  me.animcounter = 0
-  you.animcounter = 0
-  me.v = 0
-  you.v = 0
-  me.lr = 1
-  you.lr = -1
-  me.j = 0
-  you.j = 0
-  me.flinch = false
-  you.flinch = false
-  me.ft = 0
-  you.ft = 0
-  minzoom = defaultminzoom
-  maxzoom = defaultmaxzoom
-
-
-  if game_mode == "fractal" then 
-    you.lives = fractal_lives
-    me.lives = fractal_lives
-    maxhealth = fractal_max_health
-  elseif game_mode == "duel" then 
-    maxhealth = 100
-  elseif game_mode == "koth" then 
-    maxhealth = 50
-  end
-  me.score = 0
-  you.score = 0
-  me.health = maxhealth
-  you.health = maxhealth
-  me.oldhealth = me.health
-  you.oldhealth = you.health
-
-  the_map = the_maps[mapNum]
-  floor = the_maps[mapNum].floor
-
-
-  if mapNum == 100 then
-
-    loader.start(function()
-      finished_loading = true
-      end)
-
-    enviro.rightwall = 2000
-    loader.newImage(enviro,'paralax', "images/maps/fightclub/fightclubparalax.png")
-    loader.newImage(enviro,'stage', "images/maps/fightclub/fightclub.png")
-    loader.newImage(enviro,"sky","images/enviro/ready.png")
-    me.x = putmehere
-    you.x = putyouhere
-    me.im = idle1
-    you.im = idle1
-    me.y = the_maps[100].floor - 60
-    you.y = the_maps[100].floor - 60
-    floor = the_maps[100].floor
-    dollyv = 3
-
-  elseif mapNum == 1 then
-    me.y = the_maps[1].floor - 200
-    you.y = the_maps[1].floor - 200
-    if loadImagesNow then
-      enviro.stage=lg.newImage("images/maps/street/astreet.png")
-      enviro.paralax=lg.newImage("images/maps/street/paralax.png")
-      enviro.paralax2=lg.newImage("images/maps/street/paralax2.png")
-      enviro.sky=lg.newImage("images/maps/street/sky.png")
-      enviro.lightson=lg.newImage("images/maps/street/lightson.png")
-      enviro.lightsoff=lg.newImage( "images/maps/street/lightsoff.png")
-      enviro.rafters=lg.newImage("images/maps/street/rafters.png")
-
-    else
-      loader.start(function()
-        finished_loading = true
-        end)
-      loader.newImage(enviro,'stage', "images/maps/street/astreet.png")
-
-      loader.newImage(enviro,"paralax","images/maps/street/paralax.png")
-      loader.newImage(enviro,"paralax2","images/maps/street/paralax2.png")
-      loader.newImage(enviro,"sky","images/maps/street/sky.png")
-      loader.newImage(enviro,'lightson',"images/maps/street/lightson.png")
-      loader.newImage(enviro,'lightsoff', "images/maps/street/lightsoff.png")
-      loader.newImage(enviro,'rafters',"images/maps/street/rafters.png")
-    end
-    lighttimer = 0
-    me.x = 1000
-    you.x = 6000
-    enviro.rightwall = 6600-20
-    enviro.ds = 5
-    thesong = song1
-    dollyv = 3
-
-
-  elseif mapNum == 2 then
-
-    if loadImagesNow then 
-
-      enviro.paralax = lg.newImage("images/maps/library/libraryparalax.png")
-      enviro.paralax2 = lg.newImage("images/maps/library/libraryparalax2.png")
-      enviro.stage = lg.newImage("images/maps/library/library.png")
-      enviro.sky = lg.newImage("images/maps/library/librarysky.png")
-
-      enviro.plibrary = lg.newImage("images/maps/library/libraryplayer.png")
-      enviro.thelibraryveneer = lg.newImage("images/maps/library/libraryveneer.png")
-
-
-    else
-      loader.start(function()
-        finished_loading = true
-        end)
-      loader.newImage(enviro,'paralax',"images/maps/library/libraryparalax.png")
-      loader.newImage(enviro,'paralax2', "images/maps/library/libraryparalax2.png")
-      loader.newImage(enviro,'stage', "images/maps/library/library.png")
-      loader.newImage(enviro,'sky',"images/maps/library/librarysky.png")
-      loader.newImage(enviro,'plibrary', "images/maps/library/libraryplayer.png")
-      loader.newImage(enviro, 'thelibraryveneer',"images/maps/library/libraryveneer.png")
-    end
-
-    me.x = 20--700
-    you.x = 2000
-    me.y = 300
-    you.y = 300
-    enviro.rightwall = 3700 
-    enviro.ds = 2
-    dollyv = 3
-
-    thesong = song1
-
-  elseif mapNum == 3 then
-    if loadImagesNow then 
-
-      enviro.paralax = lg.newImage("images/maps/floors/floorsparalax.png")
-      enviro.stage = lg.newImage("images/maps/floors/floors.png")
-      enviro.sky = lg.newImage("images/maps/floors/floorssky.png")
-      enviro.pfloors = lg.newImage("images/maps/floors/floorsplayer.png")
-      enviro.floorsveneer2 = lg.newImage("images/maps/floors/floorsveneer2.png")
-      enviro.floorsveneer1 = lg.newImage("images/maps/floors/floorsveneer1.png")
-      enviro.paralax2 = lg.newImage("images/maps/floors/floorparalax2.png")
-
-    else
-      loader.start(function()
-        finished_loading = true
-        end)
-      loader.newImage(enviro,'paralax',"images/maps/floors/floorsparalax.png")
-      loader.newImage(enviro,'stage', "images/maps/floors/floors.png")
-      loader.newImage(enviro,'sky',"images/maps/floors/floorssky.png")
-      loader.newImage(enviro,'pfloors', "images/maps/floors/floorsplayer.png")
-      loader.newImage(enviro, 'floorsveneer2',"images/maps/floors/floorsveneer2.png")
-      loader.newImage(enviro, 'floorsveneer1',"images/maps/floors/floorsveneer1.png")
-      loader.newImage(enviro,'paralax2', "images/maps/floors/floorparalax2.png")
-    end
-
-
-    me.x = 500
-    you.x = 3000
-    me.y = 300
-    you.y = 300
-    enviro.rightwall = 5000
-    enviro.ds = 5
-    thesong = song1
-    dollyv = 3
-
-  end
-
-  for i,v in ipairs(players) do
-    players[i].old_feet = players[i].y 
-  end
-end
 ma1fade= 100
 ma2fade= 100
 ma3fade= 100
@@ -1470,522 +1300,522 @@ function floorsveneer()
 end
 
 spines = {}
-function aboutso(x,y)
-  if (x <= y and x + 2 > y) or (x >= y and x - 2 < y)
-    then return true
-    else return false
+--[[
+retry = function()
+
+  if (you.dead and me.dead) then 
+  elseif you.dead or you.score > me.score then 
+    lg.setColor(me.color.c.r,me.color.c.g,me.color.c.b, retryfade)
+    lg.sdraw(enviro.v, 100, 100, 0, 1, 1)
+  elseif me.dead or me.score > you.score then
+    lg.setColor(you.color.c.r,you.color.c.g,you.color.c.b, retryfade)
+    lg.sdraw(enviro.v, screenwidth-100, 100, 0, -1, 1)
+  end
+
+  lg.setColor(0, 0, 0, retryfade)
+  lg.draw(retryim, 0, 0, 0, screenwidth/1440, screenheight/900)
+end
+]]--
+
+oscillator = 0
+oup=true
+soscillator = 15
+soup=true
+spinespacing = 10
+spineymove = -40-spinespacing
+separatespines = false
+
+function drawspine()
+  if table.getn(spines) < 1 and MODE == "color"
+    then
+    soup=true
+    spinestartx = 615
+    for i=1, 24 do
+      table.insert(spines, {x=spinestartx, y=0, n=24-i, v=0, spinecolor = 0, spinecolor2 = 0})
+
+
+    end
+
+
+  end
+
+  if separatespines then 
+    if soscillator < -8 then soscillator = soscillator - 2
+    elseif soscillator > 8 then  soscillator = soscillator + 2
     end
   end
-  --[[
-  retry = function()
 
-    if (you.dead and me.dead) then 
-    elseif you.dead or you.score > me.score then 
-      lg.setColor(me.color.c.r,me.color.c.g,me.color.c.b, retryfade)
-      lg.sdraw(enviro.v, 100, 100, 0, 1, 1)
-    elseif me.dead or me.score > you.score then
-      lg.setColor(you.color.c.r,you.color.c.g,you.color.c.b, retryfade)
-      lg.sdraw(enviro.v, screenwidth-100, 100, 0, -1, 1)
-    end
+  oddeven = oddeven + 1
 
-    lg.setColor(0, 0, 0, retryfade)
-    lg.draw(retryim, 0, 0, 0, screenwidth/1440, screenheight/900)
+  if soscillator == 15 then soup = false
+  elseif soscillator == -15 then soup = true 
   end
-  ]]--
-
-  oscillator = 0
-  oup=true
-  soscillator = 15
-  soup=true
-  spinespacing = 10
-  spineymove = -40-spinespacing
-  separatespines = false
-  drawspine = function()
-    if table.getn(spines) < 1 and MODE == "color"
-      then
-      soup=true
-      spinestartx = 615
-      for i=1, 24 do
-        table.insert(spines, {x=spinestartx, y=0, n=24-i, v=0, spinecolor = 0, spinecolor2 = 0})
-
-
-      end
-
-
-    end
-
-    if separatespines then 
-      if soscillator < -8 then soscillator = soscillator - 2
-      elseif soscillator > 8 then  soscillator = soscillator + 2
-      end
-    end
-
-    oddeven = oddeven + 1
-
-    if soscillator == 15 then soup = false
-    elseif soscillator == -15 then soup = true 
-    end
-    if soup then soscillator = soscillator + .5
-      else soscillator = soscillator - .5
-      end
-      for i,v in ipairs(spines) do
-        if oddeven%4 == 1 then
-          if v.n >= 1 then 
-            v.v = spines[i+1].v
-            v.x = v.x + v.v 
-            if v.v == 14.5 then 
-              v.spinecolor = spines[i+1].spinecolor
-            elseif v.v == -14.5 then 
-              v.spinecolor2 = spines[i+1].spinecolor2
-            end
-          else
-            if v.v == 14.5 then 
-              if v.spinecolor2 == 0 then v.spinecolor2 = 1
-                else v.spinecolor2 = 0
-                end
-              elseif v.v == -14.5 then 
-                if v.spinecolor == 0 then v.spinecolor = 1
-                  else v.spinecolor = 0
-                  end
-                end
-
-                v.v = soscillator
-                v.x = v.x + v.v
-              end
-            end
-
-            if v.v >= 0 then
-              if v.spinecolor == 0 then 
-                lg.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
-              elseif v.spinecolor == 1 then 
-                lg.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
-              end
-              lg.sdraw(vertebrae, v.x, (v.n * (40+spinespacing))+spineymove)
-
-              if v.spinecolor2 == 0 then 
-                lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
-              elseif v.spinecolor2 == 1 then 
-                lg.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
-              end
-              lg.sdraw(vertebrae, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
-            else
-              if v.spinecolor2 == 0 then 
-                lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
-              elseif v.spinecolor2 == 1 then 
-                lg.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
-              end
-              lg.sdraw(vertebrae, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
-
-              if v.spinecolor == 0 then 
-                lg.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
-              elseif v.spinecolor == 1 then 
-                lg.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
-              end
-              lg.sdraw(vertebrae, v.x, (v.n * (40+spinespacing))+spineymove)
-            end
+  if soup then soscillator = soscillator + .5
+  else 
+    soscillator = soscillator - .5
+  end
+  for i,v in ipairs(spines) do
+    if oddeven%4 == 1 then
+      if v.n >= 1 then 
+        v.v = spines[i+1].v
+        v.x = v.x + v.v 
+        if v.v == 14.5 then 
+          v.spinecolor = spines[i+1].spinecolor
+        elseif v.v == -14.5 then 
+          v.spinecolor2 = spines[i+1].spinecolor2
+        end
+      else
+        if v.v == 14.5 then 
+          if v.spinecolor2 == 0 then v.spinecolor2 = 1
+          else 
+            v.spinecolor2 = 0
           end
+        elseif v.v == -14.5 then 
+          if v.spinecolor == 0 then v.spinecolor = 1
+          else 
+            v.spinecolor = 0
+          end
+        end
+
+        v.v = soscillator
+        v.x = v.x + v.v
+      end
+    end
+
+    if v.v >= 0 then
+      if v.spinecolor == 0 then 
+        lg.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
+      elseif v.spinecolor == 1 then 
+        lg.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
+      end
+      lg.sdraw(vertebrae, v.x, (v.n * (40+spinespacing))+spineymove)
+
+      if v.spinecolor2 == 0 then 
+        lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
+      elseif v.spinecolor2 == 1 then 
+        lg.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
+      end
+      lg.sdraw(vertebrae, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
+    else
+      if v.spinecolor2 == 0 then 
+        lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
+      elseif v.spinecolor2 == 1 then 
+        lg.setColor(you.rightc.c.r,you.rightc.c.g,you.rightc.c.b)
+      end
+      lg.sdraw(vertebrae, 1440 - v.x, (v.n * (40+spinespacing))+spineymove, 0, -1, 1)
+
+      if v.spinecolor == 0 then 
+        lg.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
+      elseif v.spinecolor == 1 then 
+        lg.setColor(me.rightc.c.r,me.rightc.c.g,me.rightc.c.b)
+      end
+      lg.sdraw(vertebrae, v.x, (v.n * (40+spinespacing))+spineymove)
+    end
+  end
+
+end
+
+
+waves = {}
+table.insert(waves, {x=0, y=0, n=23, v=0})
+table.insert(waves, {x=0, y=0, n=22, v=0})
+table.insert(waves, {x=0, y=0, n=21, v=0})
+table.insert(waves, {x=0, y=0, n=20, v=0})
+table.insert(waves, {x=0, y=0, n=19, v=0})
+table.insert(waves, {x=0, y=0, n=18, v=0})
+table.insert(waves, {x=0, y=0, n=17, v=0})
+table.insert(waves, {x=0, y=0, n=16, v=0})
+table.insert(waves, {x=0, y=0, n=15, v=0})
+table.insert(waves, {x=0, y=0, n=14, v=0})
+table.insert(waves, {x=0, y=0, n=13, v=0})
+table.insert(waves, {x=0, y=0, n=12, v=0})
+table.insert(waves, {x=0, y=0, n=11, v=0})
+table.insert(waves, {x=0, y=0, n=10, v=0})
+table.insert(waves, {x=0, y=0, n=9, v=0})
+table.insert(waves, {x=0, y=0, n=8, v=0})
+table.insert(waves, {x=0, y=0, n=7, v=0})
+table.insert(waves, {x=0, y=0, n=6, v=0})
+table.insert(waves, {x=0, y=0, n=5, v=0})
+table.insert(waves, {x=0, y=0, n=4, v=0})
+table.insert(waves, {x=0, y=0, n=3, v=0})
+table.insert(waves, {x=0, y=0, n=2, v=0})
+table.insert(waves, {x=0, y=0, n=1, v=0})
+table.insert(waves, {x=0, y=0, n=0, v=0})
+
+oddeven = 0
+
+drawwaves = function()
+  if oddeven >=100 then
+    oddeven = 1
+  else
+    oddeven = oddeven + 1
+  end
+
+  if oscillator >= 4 then oup = false
+  elseif oscillator <= -4                                                                                                                then oup = true
+  end
+  if oup then oscillator = oscillator + .1 + math.random()/10
+  else
+    oscillator = oscillator - .1 - math.random()/10
+  end
+
+  for i,v in ipairs(waves) do
+    v.x = (screenwidth/24) * v.n
+    if oddeven%wave_frame_rate == 1 then
+      if v.n >= 1 then v.v = waves[i+1].v
+        v.y = v.y - v.v
+      else 
+        v.v = oscillator 
+        v.y = v.y - v.v
+      end
+    end
+    lg.draw(waveim, v.x, v.y+(screenheight*.7)-stagey*(screenheight/350), 0, screenwidth/1440, screenheight/700)
+
+  end
+end
+
+
+gotimer = 0
+
+function drawGo()
+  if gotimer==0 then gosound:rewind()
+    goColor = {r = math.random(0,255),
+    g = math.random(0,255),
+    b = math.random(0,255)}
+  end
+  if gotimer < 40 then
+    gotimer = gotimer + 1
+    t_setColor(goColor)
+    lg.draw(enviro.go,screenwidth/4 -5 + math.random(10),screenheight/4-5 + math.random(10),0,screenwidth/1440,screenheight/900)
+    gosound:play()
+  end
+end
+
+me.deathclock = 0
+you.deathclock = 0
+
+
+you.idletimer = 0
+me.idletimer = 0
+ay = 0
+me.walktimer = 0
+you.walktimer = 0
+
+
+function orient(xx)
+
+  if xx.wall_grab then
+    xx.x = xx.wallx
+  end
+
+  xx.xleft = xx.x + 30
+  xx.mid = xx.x + 15
+
+  if not xx.slowdown and not xx.stop and not xx.pause and not xx.flinch
+    and (xx.dodgetype~=2 and xx.dodgetype >-1) and not xx.wall_grab and not xx.purplanding
+    and not xx.greenkcondition
+    then
+    if xx.right then xx.lr = 1
+    elseif xx.left then xx.lr = -1
+    end
+  end
+
+  if xx.lr > 0 then
+    xx.xanimate = xx.x
+  else 
+    xx.xanimate = xx.xleft
+  end
+end
+
+
+function idleanimatex (xx)
+  if xx.idletimer < 17 then 
+    xx.idletimer = xx.idletimer + 1*ramp(xx)
+    if xx.health<maxhealth/2 then
+      xx.im = idle3
+    else
+      xx.im = idle1
+    end
+  elseif xx.idletimer >= 17 and xx.idletimer < 33 then
+    xx.idletimer = xx.idletimer + 1
+    if xx.health<maxhealth/2 then
+
+      xx.im = idle4
+    else
+
+      xx.im = idle2
+    end
+  elseif xx.idletimer >=33 then
+    xx.idletimer = 0
+  end
+
+  if xx.j ~= 0 then
+    xx.superjumptimer = 0
+  elseif xx.dubtimer < -15 then
+    xx.can_super_jump = true
+    xx.superjumptimer = 13
+    xx.im = landing 
+  elseif xx.superjumptimer > 0 then
+    xx.im = landing 
+    xx.can_super_jump = true
+    xx.superjumptimer = r2b(xx.superjumptimer,1,0)
+
+  end
+
+
+end
+
+
+walkxx = function (xx)
+
+  if xx.v*xx.lr > 0 then
+    xx.walktimer = xx.walktimer + 1*ramp(xx)
+  else
+    xx.walktimer = xx.walktimer - 1*ramp(xx)
+  end
+
+
+
+  if xx.running and not xx.dodge then 
+
+    if xx.walktimer >= xx.runpace+2 then xx.im = run4 
+      xx.walktimer = 0
+      repplay(xx.runsound)
+      makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
+    elseif xx.walktimer >= xx.runpace + 1 then xx.im = run4 
+      makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
+    elseif xx.walktimer >= xx.runpace/2 + 2 then xx.im = run3 
+    elseif xx.walktimer >= xx.runpace/2 then xx.im = run2 
+      makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
+      repplay(xx.runsound)
+    elseif xx.walktimer >= 0 then xx.im = run1 
+    end  
+  else
+
+    if xx.walktimer < 7 then 
+      xx.im = walk1
+      if xx.walktimer < 0 then 
+        xx.walktimer = 34
+      end
+    elseif xx.walktimer >= 7 and xx.walktimer < 14 then
+      xx.im = walk2
+    elseif xx.walktimer >= 14 and xx.walktimer < 21 then
+      xx.im = walk3
+    elseif xx.walktimer >= 21 and xx.walktimer < 28 then
+      xx.im = walk4
+    elseif xx.walktimer >= 28 and xx.walktimer < 35 then
+      xx.im = walk5
+    else
+      xx.walktimer = 0
+    end
+  end
+end
+
+function landxcheck (xx)
+  if xx.landing_counter <= 0	
+    then xx.landing = false
+  else
+    xx.landing_counter = xx.landing_counter - 1*ramp(xx)
+  end
+end
+
+
+function slidexcheck(xx)
+  if xx.slidetimer > 0
+    then 
+    xx.slidetimer = xx.slidetimer - 1*ramp(xx)
+  else
+    xx.slidetimer = 0
+    xx.slide = false
+  end
+end
+
+function animate(xx)
+  landxcheck(xx)
+  slidexcheck(xx)
+  if xx.slide 
+    then xx.im = slide
+    makeslidedust(xx.y+50,xx.mid + 15 * xx.lr,xx.v)
+
+
+  elseif xx.landing
+    then 
+    if xx.purplanding then
+      xx.im = apk2
+
+    else
+      xx.im = landing
+    end
+  elseif xx.g and isabout(xx.v, 0) and not xx.slide 
+    then idleanimatex(xx)
+    xx.walktimer = 0
+  elseif not xx.g
+    then
+    if not xx.wall_grab then
+      if xx.j > 0 then 
+        xx.im = jumprise
+        else xx.im = jumpfalling
+        end
+      end
+    else
+      walkxx(xx)
+    end
+
+
+  end
+
+
+  sparks = {}
+
+
+  function makensparks(ex,why,ve, jy, arr,gee,bee, n)
+    local force = ve+jy/2
+    for i = n*spark_intensity, 1, -1 do
+      local flip1 = 1
+      local flip2 = 1
+      if math.random()>.5 then
+        flip1 = -1
+      end
+      if math.random()>.5 then
+        flip2 = -1
+      end
+      local vee = force*math.asin(math.rad(math.random(1,90)))*flip1
+      local jay = force*math.acos(math.rad(math.random(1,90)))*flip2
+      local offset_amount = floRan(-20,20)
+      local x_offset = offset_amount*math.asin(math.rad(math.random(1,90)))*flip1
+      local y_offset = offset_amount*math.asin(math.rad(math.random(1,90)))*flip2
+      table.insert(sparks,{x = ex+x_offset, y = why+y_offset, v=vee, j = jay,r=colorChange(arr),g=colorChange(gee),b=colorChange(bee), rot = math.random(0,360), shape = math.random(1,3)})
+
+    end
+  end
+
+  function makensparksbox(ex,why,vee, jay, arr,gee,bee, n)
+
+    for i = n, 1, -1 do
+      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay)+math.random(),r=colorChange(arr),g=colorChange(gee),b=colorChange(bee), rot = math.random(0,360), shape = math.random(1,3)})
+      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay)+math.random(),r=colorChange(arr),g=colorChange(gee),b=colorChange(bee), rot = math.random(0,360), shape = math.random(1,3)})
+      table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0)+math.random(),r=colorChange(arr),g=colorChange(gee),b=colorChange(bee), rot = math.random(0,360), shape = math.random(1,3)})
+      table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2)+math.random(),r=colorChange(arr),g=colorChange(gee),b=colorChange(bee), rot = math.random(0,360), shape = math.random(1,3)})
+
+    end
+
+
+  end
+
+  function makenslashsparks(ex,why,vee, jay, arr,gee,bee,n)
+    for i = 0, n do
+      if vee > 0 then
+        if jay < 0 then
+          table.insert(sparks,{x = ex, y = why, v=floRan(0,vee), j = floRan(jay,0),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
+        else
+          table.insert(sparks,{x = ex, y = why, v=floRan(0,vee), j = floRan(0,jay),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
+        end
+      else
+        if jay < 0 then
+          table.insert(sparks,{x = ex, y = why, v=floRan(vee,0), j = floRan(jay,0),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
+        else
+          table.insert(sparks,{x = ex, y = why, v=floRan(vee,0), j = floRan(0,jay),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
+        end
+      end
+    end
+  end
+
+  function updatesparks()
+
+    for i, temp in ipairs(sparks) do
+      if linePlatCheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6) or
+        lineWallCheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6)or temp.x < 0 or temp.y < 0
+        or temp.x > the_map.rightwall or
+        temp.y > the_map.floor then table.remove(sparks,i)
+
+      end
+
+    end
+
+    for i,v in ipairs(sparks)do
+      if not pause then
+        v.y = v.y - v.j*rampspeed*1.6
+        v.x = v.x + v.v*rampspeed*1.6
+        v.j = v.j - .1*rampspeed*1.6
+        v.rot = v.rot + math.random() *rampspeed
+      end
+
+
+
+    end
+  end
+
+
+  function drawsparks()
+
+    for i,v in ipairs(sparks)do
+
+
+      v.r = math.min(v.r+math.random()*sparkfaderate*rampspeed,255)
+      v.g = math.min(v.g+math.random()*sparkfaderate*rampspeed,255)
+      v.b = math.min(v.b+math.random()*sparkfaderate*rampspeed,255)
+      lg.setColor(v.r,v.g,v.b,math.random(150,255))
+      if v.shape == 1 then
+        lg.draw(enviro.spark,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)
+      elseif v.shape == 2 then
+        lg.draw(enviro.spark2,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)
+
+      elseif v.shape == 3 then
+        lg.draw(enviro.spark3,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)
+
+      end
+
+    end
+    lg.setColor(255,255,255)
+  end
+
+
+
+
+
+
+  function wallRubbleCheck(xx)
+    for i = #the_map.walls, 1, -1 do 
+      local wall = the_map.walls[i]
+      if (
+        (xx.mid + xx.v > wall.x and xx.mid <= wall.x) or
+        (xx.mid + xx.v < wall.x and xx.mid >= wall.x)
+        )
+      and 
+      (
+        (xx.y+(xx.height)/2 >= wall.y1 and 
+          xx.y+(xx.height)/2 <= wall.y2 )
+        ) then
+      if xx.flinch then
+        slowww = true
+      end
+      for i = xx.y, xx.feet, 1 do
+        if wall.fractal ~= nil then
+          if math.floor(i%10)==0 then
+            makensparks(wall.x+(math.abs(xx.v)/xx.v), i, xx.v, xx.j, xx.color.c.r,xx.color.c.g,xx.color.c.b,1)
+
+          end
+
+        elseif wall.glasswall~=nil then
+          if (wall.glasswall > 0 and i < wall.glasswall) or (wall.glasswall < 0 and i > -wall.glasswall)
+            and math.floor(i%2)==0
+            then 
+            makenglass(wall.x,i,xx.v,xx.j, 1)
+          elseif math.floor(i%20)==0 then
+            makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
+          end
+        elseif math.floor(i%5)==0 then
+          makenrubble("vert", wall.x,i,xx.v,xx.j/2, 1)
 
         end
 
 
-        waves = {}
-        table.insert(waves, {x=0, y=0, n=23, v=0})
-        table.insert(waves, {x=0, y=0, n=22, v=0})
-        table.insert(waves, {x=0, y=0, n=21, v=0})
-        table.insert(waves, {x=0, y=0, n=20, v=0})
-        table.insert(waves, {x=0, y=0, n=19, v=0})
-        table.insert(waves, {x=0, y=0, n=18, v=0})
-        table.insert(waves, {x=0, y=0, n=17, v=0})
-        table.insert(waves, {x=0, y=0, n=16, v=0})
-        table.insert(waves, {x=0, y=0, n=15, v=0})
-        table.insert(waves, {x=0, y=0, n=14, v=0})
-        table.insert(waves, {x=0, y=0, n=13, v=0})
-        table.insert(waves, {x=0, y=0, n=12, v=0})
-        table.insert(waves, {x=0, y=0, n=11, v=0})
-        table.insert(waves, {x=0, y=0, n=10, v=0})
-        table.insert(waves, {x=0, y=0, n=9, v=0})
-        table.insert(waves, {x=0, y=0, n=8, v=0})
-        table.insert(waves, {x=0, y=0, n=7, v=0})
-        table.insert(waves, {x=0, y=0, n=6, v=0})
-        table.insert(waves, {x=0, y=0, n=5, v=0})
-        table.insert(waves, {x=0, y=0, n=4, v=0})
-        table.insert(waves, {x=0, y=0, n=3, v=0})
-        table.insert(waves, {x=0, y=0, n=2, v=0})
-        table.insert(waves, {x=0, y=0, n=1, v=0})
-        table.insert(waves, {x=0, y=0, n=0, v=0})
+      end
 
-        oddeven = 0
 
-        drawwaves = function()
-          if oddeven >=100 then
-            oddeven = 1
-          else
-            oddeven = oddeven + 1
-          end
+      break
+    end
 
-          if oscillator >= 4 then oup = false
-          elseif oscillator <= -4                                                                                                                then oup = true
-          end
-          if oup then oscillator = oscillator + .1 + math.random()/10
-            else  oscillator = oscillator - .1 - math.random()/10
-            end
-
-            for i,v in ipairs(waves) do
-              v.x = (screenwidth/24) * v.n
-              if oddeven%wave_frame_rate == 1 then
-                if v.n >= 1 then v.v = waves[i+1].v
-                  v.y = v.y - v.v
-                else 
-                  v.v = oscillator 
-                  v.y = v.y - v.v
-                end
-              end
-              lg.draw(waveim, v.x, v.y+(screenheight*.7)-stagey*(screenheight/350), 0, screenwidth/1440, screenheight/700)
-
-            end
-          end
-
-
-          gotimer = 0
-          function drawGo()
-            if gotimer==0 then gosound:rewind()
-              goColor = {r = math.random(0,255),
-              g = math.random(0,255),
-              b = math.random(0,255)}
-            end
-            if gotimer < 40 then
-              gotimer = gotimer + 1
-              t_setColor(goColor)
-              lg.draw(enviro.go,screenwidth/4 -5 + math.random(10),screenheight/4-5 + math.random(10),0,screenwidth/1440,screenheight/900)
-              gosound:play()
-            end
-          end
-
-          me.deathclock = 0
-          you.deathclock = 0
-
-
-          you.idletimer = 0
-          me.idletimer = 0
-          ay = 0
-          me.walktimer = 0
-          you.walktimer = 0
-
-
-          function orient(xx)
-
-            if xx.wall_grab then
-              xx.x = xx.wallx
-            end
-
-            xx.xleft = xx.x + 30
-            xx.mid = xx.x + 15
-
-            if not xx.slowdown and not xx.slide and not xx.stop and not xx.pause and not xx.flinch
-              and (xx.dodgetype~=2 and xx.dodgetype >-1) and not xx.wall_grab and not xx.purplanding
-              and not xx.greenkcondition
-              then
-              if xx.right then xx.lr = 1
-              elseif xx.left then xx.lr = -1
-              end
-            end
-            if xx.lr > 0 then
-
-              xx.xanimate = xx.x
-            else 
-              xx.xanimate = xx.xleft
-            end
-          end
-
-
-          function idleanimatex (xx)
-            if xx.idletimer < 17 then 
-              xx.idletimer = xx.idletimer + 1*ramp(xx)
-              if xx.health<maxhealth/2 then
-                xx.im = idle3
-              else
-                xx.im = idle1
-              end
-            elseif xx.idletimer >= 17 and xx.idletimer < 33 then
-              xx.idletimer = xx.idletimer + 1
-              if xx.health<maxhealth/2 then
-
-                xx.im = idle4
-              else
-
-                xx.im = idle2
-              end
-            elseif xx.idletimer >=33 then
-              xx.idletimer = 0
-            end
-
-            if xx.j ~= 0 then
-              xx.superjumptimer = 0
-            elseif xx.dubtimer < -15 then
-              xx.can_super_jump = true
-              xx.superjumptimer = 13
-              xx.im = landing 
-            elseif xx.superjumptimer > 0 then
-              xx.im = landing 
-              xx.can_super_jump = true
-              xx.superjumptimer = r2b(xx.superjumptimer,1,0)
-
-            end
-
-
-          end
-
-
-          walkxx = function (xx)
-
-            if xx.v*xx.lr > 0 then
-              xx.walktimer = xx.walktimer + 1*ramp(xx)
-            else
-              xx.walktimer = xx.walktimer - 1*ramp(xx)
-            end
-
-
-
-            if xx.running and not xx.dodge then 
-
-              if xx.walktimer >= xx.runpace+2 then xx.im = run4 
-                xx.walktimer = 0
-                repplay(xx.runsound)
-                makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
-              elseif xx.walktimer >= xx.runpace + 1 then xx.im = run4 
-                makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
-              elseif xx.walktimer >= xx.runpace/2 + 2 then xx.im = run3 
-              elseif xx.walktimer >= xx.runpace/2 then xx.im = run2 
-                makerunrubble(xx.y+50,xx.mid,-xx.v,xx.lr)
-                repplay(xx.runsound)
-              elseif xx.walktimer >= 0 then xx.im = run1 
-              end  
-            else
-
-              if xx.walktimer < 7 then 
-                xx.im = walk1
-                if xx.walktimer < 0 then 
-                  xx.walktimer = 34
-                end
-              elseif xx.walktimer >= 7 and xx.walktimer < 14 then
-                xx.im = walk2
-              elseif xx.walktimer >= 14 and xx.walktimer < 21 then
-                xx.im = walk3
-              elseif xx.walktimer >= 21 and xx.walktimer < 28 then
-                xx.im = walk4
-              elseif xx.walktimer >= 28 and xx.walktimer < 35 then
-                xx.im = walk5
-              else
-                xx.walktimer = 0
-              end
-            end
-          end
-
-          function landxcheck (xx)
-            if xx.landing_counter <= 0	
-              then xx.landing = false
-            else
-              xx.landing_counter = xx.landing_counter - 1*ramp(xx)
-            end
-          end
-
-
-          function slidexcheck(xx)
-            if xx.slidetimer > 0
-              then 
-              xx.slidetimer = xx.slidetimer - 1*ramp(xx)
-            else
-              xx.slidetimer = 0
-              xx.slide = false
-            end
-          end
-
-          function animate(xx)
-            landxcheck(xx)
-            slidexcheck(xx)
-            if xx.slide 
-              then xx.im = slide
-              makeslidedust(xx.y+50,xx.mid + 15 * xx.lr,xx.v)
-
-
-            elseif xx.landing
-              then 
-              if xx.purplanding then
-                xx.im = apk2
-
-              else
-                xx.im = landing
-              end
-            elseif xx.g and aboutso(xx.v, 0) and not xx.slide 
-              then idleanimatex(xx)
-              xx.walktimer = 0
-            elseif not xx.g
-              then
-              if not xx.wall_grab then
-                if xx.j > 0 then 
-                  xx.im = jumprise
-                  else xx.im = jumpfalling
-                  end
-                end
-              else
-                walkxx(xx)
-              end
-
-
-            end
-
-
-            sparks = {}
-
-
-            function makensparks(ex,why,ve, jy, arr,gee,bee, n)
-              local force = ve+jy/2
-              for i = n*spark_intensity, 1, -1 do
-                local flip1 = 1
-                local flip2 = 1
-                if math.random()>.5 then
-                  flip1 = -1
-                end
-                if math.random()>.5 then
-                  flip2 = -1
-                end
-                local vee = force*math.asin(math.rad(math.random(1,90)))*flip1
-                local jay = force*math.acos(math.rad(math.random(1,90)))*flip2
-                local offset_amount = floRan(-20,20)
-                local x_offset = offset_amount*math.asin(math.rad(math.random(1,90)))*flip1
-                local y_offset = offset_amount*math.asin(math.rad(math.random(1,90)))*flip2
-                table.insert(sparks,{x = ex+x_offset, y = why+y_offset, v=vee, j = jay,r=colorChange(arr),g=colorChange(gee),b=colorChange(bee), rot = math.random(0,360), shape = math.random(1,3)})
-
-              end
-            end
-
-            function makensparksbox(ex,why,vee, jay, arr,gee,bee, n)
-
-              for i = n, 1, -1 do
-                table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(0,jay)+math.random(),r=colorChange(arr),g=colorChange(gee),b=colorChange(bee), rot = math.random(0,360), shape = math.random(1,3)})
-                table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(0,jay)+math.random(),r=colorChange(arr),g=colorChange(gee),b=colorChange(bee), rot = math.random(0,360), shape = math.random(1,3)})
-                table.insert(sparks,{x = ex, y = why, v=vee*math.random(), j = math.random(-jay,0)+math.random(),r=colorChange(arr),g=colorChange(gee),b=colorChange(bee), rot = math.random(0,360), shape = math.random(1,3)})
-                table.insert(sparks,{x = ex, y = why, v=-vee*math.random(), j = math.random(-jay/2,jay/2)+math.random(),r=colorChange(arr),g=colorChange(gee),b=colorChange(bee), rot = math.random(0,360), shape = math.random(1,3)})
-
-              end
-
-
-            end
-
-            function makenslashsparks(ex,why,vee, jay, arr,gee,bee,n)
-              for i = 0, n do
-                if vee > 0 then
-                  if jay < 0 then
-                    table.insert(sparks,{x = ex, y = why, v=floRan(0,vee), j = floRan(jay,0),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
-                  else
-                    table.insert(sparks,{x = ex, y = why, v=floRan(0,vee), j = floRan(0,jay),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
-                  end
-                else
-                  if jay < 0 then
-                    table.insert(sparks,{x = ex, y = why, v=floRan(vee,0), j = floRan(jay,0),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
-                  else
-                    table.insert(sparks,{x = ex, y = why, v=floRan(vee,0), j = floRan(0,jay),r=arr,g=gee,b=bee,rot=math.random(0,360), shape = math.random(1,3)})
-                  end
-                end
-              end
-            end
-
-            function updatesparks()
-
-              for i, temp in ipairs(sparks) do
-                if linePlatCheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6) or
-                  lineWallCheck(temp.x, temp.y,temp.v*1.6, temp.j*1.6)or temp.x < 0 or temp.y < 0
-                  or temp.x > the_map.rightwall or
-                  temp.y > the_map.floor then table.remove(sparks,i)
-
-                end
-
-              end
-
-              for i,v in ipairs(sparks)do
-                if not pause then
-                  v.y = v.y - v.j*rampspeed*1.6
-                  v.x = v.x + v.v*rampspeed*1.6
-                  v.j = v.j - .1*rampspeed*1.6
-                  v.rot = v.rot + math.random() *rampspeed
-                end
-
-
-
-              end
-            end
-
-
-            function drawsparks()
-
-              for i,v in ipairs(sparks)do
-
-
-                v.r = math.min(v.r+math.random()*sparkfaderate*rampspeed,255)
-                v.g = math.min(v.g+math.random()*sparkfaderate*rampspeed,255)
-                v.b = math.min(v.b+math.random()*sparkfaderate*rampspeed,255)
-                lg.setColor(v.r,v.g,v.b,math.random(150,255))
-                if v.shape == 1 then
-                  lg.draw(enviro.spark,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)
-                elseif v.shape == 2 then
-                  lg.draw(enviro.spark2,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)
-
-                elseif v.shape == 3 then
-                  lg.draw(enviro.spark3,v.x-2,v.y-2,v.rot,math.random()/2,math.random()/2)
-
-                end
-
-              end
-              lg.setColor(255,255,255)
-            end
-
-
-
-
-
-
-            function wallRubbleCheck(xx)
-              for i = #the_map.walls, 1, -1 do 
-                local wall = the_map.walls[i]
-                if (
-                  (xx.mid + xx.v > wall.x and xx.mid <= wall.x) or
-                  (xx.mid + xx.v < wall.x and xx.mid >= wall.x)
-                  )
-                and 
-                (
-                  (xx.y+(xx.height)/2 >= wall.y1 and 
-                    xx.y+(xx.height)/2 <= wall.y2 )
-                  ) then
-                if xx.flinch then
-                  slowww = true
-                end
-                for i = xx.y, xx.feet, 1 do
-                  if wall.fractal ~= nil then
-                    if math.floor(i%10)==0 then
-                      makensparks(wall.x+(math.abs(xx.v)/xx.v), i, xx.v, xx.j, xx.color.c.r,xx.color.c.g,xx.color.c.b,1)
-
-                    end
-
-                  elseif wall.glasswall~=nil then
-                    if (wall.glasswall > 0 and i < wall.glasswall) or (wall.glasswall < 0 and i > -wall.glasswall)
-                      and math.floor(i%2)==0
-                      then 
-                      makenglass(wall.x,i,xx.v,xx.j, 1)
-                    elseif math.floor(i%20)==0 then
-                      makenrubble("vert", wall.x,i,xx.v,xx.j, 1)
-                    end
-                  elseif math.floor(i%5)==0 then
-                    makenrubble("vert", wall.x,i,xx.v,xx.j/2, 1)
-
-                  end
-
-
-                end
-
-
-                break
-              end
-
-            end
-          end
+  end
+end
 
