@@ -51,11 +51,11 @@ function blossom(xx,yy, leaves, sides, scale)
 			colors = {r = math.max(0, math.min(255, yy.color.c.r*colordif)),
 			g = math.max(0, math.min(255, yy.color.c.g*colordif)),
 			b = math.max(0, math.min(255, yy.color.c.b*colordif))
-			},
-			t = 1
+		},
+		t = 1
 
-		}
-		)
+	}
+	)
 	end
 end
 
@@ -107,56 +107,57 @@ bloom_bar_min = screenwidth*1/30
 bloom_bar_max = screenwidth*2/30
 
 function pauseonhit()
-  if hitpausecounter > hitpauseamount/2 and hitpause then
-    hitpausecounter = 0
-    hitpause = false
-  elseif hitpause then
-    if hitpausecounter == 0 then
-      hitpausecounter = -hitpauseamount/2+.01
-      topblossombar = 
-      {
-        0, 0,
-        lg.getWidth(), 0,
-        lg.getWidth(), floRan(bloom_bar_min,bloom_bar_max),
-        0, floRan(bloom_bar_min,bloom_bar_max)
-      }
+	
+	if hitpausecounter > hitpauseamount/2 and hitpause then
+		hitpausecounter = 0
+		hitpause = false
+	elseif hitpause then
+		if hitpausecounter == 0 then
+			hitpausecounter = -hitpauseamount/2+.01
+			topblossombar = 
+			{
+				0, 0,
+				lg.getWidth(), 0,
+				lg.getWidth(), floRan(bloom_bar_min,bloom_bar_max),
+				0, floRan(bloom_bar_min,bloom_bar_max)
+			}
 
-      bottomblossombar = 
-      {
-        0, lg.getHeight(),
-        lg.getWidth(), lg.getHeight(),
-        lg.getWidth(), lg.getHeight()-floRan(bloom_bar_min,bloom_bar_max),
-        0, lg.getHeight()-floRan(bloom_bar_min,bloom_bar_max)
-      }
+			bottomblossombar = 
+			{
+				0, lg.getHeight(),
+				lg.getWidth(), lg.getHeight(),
+				lg.getWidth(), lg.getHeight()-floRan(bloom_bar_min,bloom_bar_max),
+				0, lg.getHeight()-floRan(bloom_bar_min,bloom_bar_max)
+			}
 
 
-      leftblossombar = 
-      {
-        0, 0,
-        floRan(bloom_bar_min,bloom_bar_max), 0,
-        floRan(bloom_bar_min,bloom_bar_max), lg.getHeight(),
-        0, lg.getHeight()
-      }
+			leftblossombar = 
+			{
+				0, 0,
+				floRan(bloom_bar_min,bloom_bar_max), 0,
+				floRan(bloom_bar_min,bloom_bar_max), lg.getHeight(),
+				0, lg.getHeight()
+			}
 
-      rightblossombar = 
-      {
-        lg.getWidth(), 0,
-        lg.getWidth()-floRan(bloom_bar_min,bloom_bar_max), 0,
-        lg.getWidth()-floRan(bloom_bar_min,bloom_bar_max), lg.getHeight(),
-        lg.getWidth(), lg.getHeight()
-      }
-    end
-    for i,xx in ipairs(players) do
-      if not xx.flinch then
-        setColorA(xx.color.c, 155*math.abs((math.abs(hitpausecounter)-(hitpauseamount/2)))/(hitpauseamount/2))
-      end
-    end
-    lg.polygon("fill", topblossombar)
-    lg.polygon("fill", bottomblossombar)
-    lg.polygon("fill", leftblossombar)
-    lg.polygon("fill", rightblossombar)
-    blooms:update()
+			rightblossombar = 
+			{
+				lg.getWidth(), 0,
+				lg.getWidth()-floRan(bloom_bar_min,bloom_bar_max), 0,
+				lg.getWidth()-floRan(bloom_bar_min,bloom_bar_max), lg.getHeight(),
+				lg.getWidth(), lg.getHeight()
+			}
+		end
+		for i,xx in ipairs(players) do
+			if not xx.flinch then
+				setColorA(xx.color.c, 155*math.abs((math.abs(hitpausecounter)-(hitpauseamount/2)))/(hitpauseamount/2))
+			end
+		end
+		lg.polygon("fill", topblossombar)
+		lg.polygon("fill", bottomblossombar)
+		lg.polygon("fill", leftblossombar)
+		lg.polygon("fill", rightblossombar)
+		blooms:update()
 
-    hitpausecounter = hitpausecounter+1
-  end
+		hitpausecounter = hitpausecounter+1
+	end
 end

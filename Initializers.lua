@@ -75,7 +75,7 @@ function initMenus()
 	stagey = 0
 	modenum = 0
 	pause = false
-	oldmenu = "begin"
+	OLD_MODE = "begin"
 
 	mefaceselector = 0
 	youfaceselector = 0

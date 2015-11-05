@@ -1341,8 +1341,8 @@ function drawspine()
   end
 
   if separatespines then 
-    if soscillator < -8 then soscillator = soscillator - 2
-    elseif soscillator > 8 then  soscillator = soscillator + 2
+    if soscillator < 0 then soscillator = soscillator - 2
+    elseif soscillator > 0 then  soscillator = soscillator + 2
     end
   end
 

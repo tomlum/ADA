@@ -50,6 +50,14 @@ gravity = .9
 function loadStage()
 
   placespeople = false
+
+  
+  hitpausecounter = 0
+  hitpause = false
+
+  initPlayer(me)
+  initPlayer(you)
+
   finished_loading = false
   playfade = 0
   me.deathclock = 0
@@ -68,6 +76,8 @@ function loadStage()
   you.ft = 0
   minzoom = defaultminzoom
   maxzoom = defaultmaxzoom
+  me.im = idle1
+  you.im = idle1
 
 
   if game_mode == "fractal" then 
@@ -91,19 +101,19 @@ function loadStage()
 
 
   if mapNum == 100 then
+    if not same_stage then
 
-    loader.start(function()
-      finished_loading = true
-      end)
+      loader.start(function()
+        finished_loading = true
+        end)
 
-    enviro.rightwall = 2000
-    loader.newImage(enviro,'paralax', "images/maps/fightclub/fightclubparalax.png")
-    loader.newImage(enviro,'stage', "images/maps/fightclub/fightclub.png")
-    loader.newImage(enviro,"sky","images/enviro/ready.png")
+      enviro.rightwall = 2000
+      loader.newImage(enviro,'paralax', "images/maps/fightclub/fightclubparalax.png")
+      loader.newImage(enviro,'stage', "images/maps/fightclub/fightclub.png")
+      loader.newImage(enviro,"sky","images/enviro/ready.png")
+    end
     me.x = putmehere
     you.x = putyouhere
-    me.im = idle1
-    you.im = idle1
     me.y = the_maps[100].floor - 60
     you.y = the_maps[100].floor - 60
     floor = the_maps[100].floor
@@ -112,27 +122,29 @@ function loadStage()
   elseif mapNum == 1 then
     me.y = the_maps[1].floor - 200
     you.y = the_maps[1].floor - 200
-    if loadImagesNow then
-      enviro.stage=lg.newImage("images/maps/street/astreet.png")
-      enviro.paralax=lg.newImage("images/maps/street/paralax.png")
-      enviro.paralax2=lg.newImage("images/maps/street/paralax2.png")
-      enviro.sky=lg.newImage("images/maps/street/sky.png")
-      enviro.lightson=lg.newImage("images/maps/street/lightson.png")
-      enviro.lightsoff=lg.newImage( "images/maps/street/lightsoff.png")
-      enviro.rafters=lg.newImage("images/maps/street/rafters.png")
+    if not same_stage then
+      if loadImagesNow then
+        enviro.stage=lg.newImage("images/maps/street/astreet.png")
+        enviro.paralax=lg.newImage("images/maps/street/paralax.png")
+        enviro.paralax2=lg.newImage("images/maps/street/paralax2.png")
+        enviro.sky=lg.newImage("images/maps/street/sky.png")
+        enviro.lightson=lg.newImage("images/maps/street/lightson.png")
+        enviro.lightsoff=lg.newImage( "images/maps/street/lightsoff.png")
+        enviro.rafters=lg.newImage("images/maps/street/rafters.png")
 
-    else
-      loader.start(function()
-        finished_loading = true
-        end)
-      loader.newImage(enviro,'stage', "images/maps/street/astreet.png")
+      else
+        loader.start(function()
+          finished_loading = true
+          end)
+        loader.newImage(enviro,'stage', "images/maps/street/astreet.png")
 
-      loader.newImage(enviro,"paralax","images/maps/street/paralax.png")
-      loader.newImage(enviro,"paralax2","images/maps/street/paralax2.png")
-      loader.newImage(enviro,"sky","images/maps/street/sky.png")
-      loader.newImage(enviro,'lightson',"images/maps/street/lightson.png")
-      loader.newImage(enviro,'lightsoff', "images/maps/street/lightsoff.png")
-      loader.newImage(enviro,'rafters',"images/maps/street/rafters.png")
+        loader.newImage(enviro,"paralax","images/maps/street/paralax.png")
+        loader.newImage(enviro,"paralax2","images/maps/street/paralax2.png")
+        loader.newImage(enviro,"sky","images/maps/street/sky.png")
+        loader.newImage(enviro,'lightson',"images/maps/street/lightson.png")
+        loader.newImage(enviro,'lightsoff', "images/maps/street/lightsoff.png")
+        loader.newImage(enviro,'rafters',"images/maps/street/rafters.png")
+      end
     end
     lighttimer = 0
     me.x = 1000
@@ -145,27 +157,29 @@ function loadStage()
 
   elseif mapNum == 2 then
 
-    if loadImagesNow then 
+    if not same_stage then
+      if loadImagesNow then 
 
-      enviro.paralax = lg.newImage("images/maps/library/libraryparalax.png")
-      enviro.paralax2 = lg.newImage("images/maps/library/libraryparalax2.png")
-      enviro.stage = lg.newImage("images/maps/library/library.png")
-      enviro.sky = lg.newImage("images/maps/library/librarysky.png")
+        enviro.paralax = lg.newImage("images/maps/library/libraryparalax.png")
+        enviro.paralax2 = lg.newImage("images/maps/library/libraryparalax2.png")
+        enviro.stage = lg.newImage("images/maps/library/library.png")
+        enviro.sky = lg.newImage("images/maps/library/librarysky.png")
 
-      enviro.plibrary = lg.newImage("images/maps/library/libraryplayer.png")
-      enviro.thelibraryveneer = lg.newImage("images/maps/library/libraryveneer.png")
+        enviro.plibrary = lg.newImage("images/maps/library/libraryplayer.png")
+        enviro.thelibraryveneer = lg.newImage("images/maps/library/libraryveneer.png")
 
 
-    else
-      loader.start(function()
-        finished_loading = true
-        end)
-      loader.newImage(enviro,'paralax',"images/maps/library/libraryparalax.png")
-      loader.newImage(enviro,'paralax2', "images/maps/library/libraryparalax2.png")
-      loader.newImage(enviro,'stage', "images/maps/library/library.png")
-      loader.newImage(enviro,'sky',"images/maps/library/librarysky.png")
-      loader.newImage(enviro,'plibrary', "images/maps/library/libraryplayer.png")
-      loader.newImage(enviro, 'thelibraryveneer',"images/maps/library/libraryveneer.png")
+      else
+        loader.start(function()
+          finished_loading = true
+          end)
+        loader.newImage(enviro,'paralax',"images/maps/library/libraryparalax.png")
+        loader.newImage(enviro,'paralax2', "images/maps/library/libraryparalax2.png")
+        loader.newImage(enviro,'stage', "images/maps/library/library.png")
+        loader.newImage(enviro,'sky',"images/maps/library/librarysky.png")
+        loader.newImage(enviro,'plibrary', "images/maps/library/libraryplayer.png")
+        loader.newImage(enviro, 'thelibraryveneer',"images/maps/library/libraryveneer.png")
+      end
     end
 
     me.x = 20--700
@@ -179,27 +193,30 @@ function loadStage()
     thesong = song1
 
   elseif mapNum == 3 then
-    if loadImagesNow then 
 
-      enviro.paralax = lg.newImage("images/maps/floors/floorsparalax.png")
-      enviro.stage = lg.newImage("images/maps/floors/floors.png")
-      enviro.sky = lg.newImage("images/maps/floors/floorssky.png")
-      enviro.pfloors = lg.newImage("images/maps/floors/floorsplayer.png")
-      enviro.floorsveneer2 = lg.newImage("images/maps/floors/floorsveneer2.png")
-      enviro.floorsveneer1 = lg.newImage("images/maps/floors/floorsveneer1.png")
-      enviro.paralax2 = lg.newImage("images/maps/floors/floorparalax2.png")
+    if not same_stage then
+      if loadImagesNow then 
 
-    else
-      loader.start(function()
-        finished_loading = true
-        end)
-      loader.newImage(enviro,'paralax',"images/maps/floors/floorsparalax.png")
-      loader.newImage(enviro,'stage', "images/maps/floors/floors.png")
-      loader.newImage(enviro,'sky',"images/maps/floors/floorssky.png")
-      loader.newImage(enviro,'pfloors', "images/maps/floors/floorsplayer.png")
-      loader.newImage(enviro, 'floorsveneer2',"images/maps/floors/floorsveneer2.png")
-      loader.newImage(enviro, 'floorsveneer1',"images/maps/floors/floorsveneer1.png")
-      loader.newImage(enviro,'paralax2', "images/maps/floors/floorparalax2.png")
+        enviro.paralax = lg.newImage("images/maps/floors/floorsparalax.png")
+        enviro.stage = lg.newImage("images/maps/floors/floors.png")
+        enviro.sky = lg.newImage("images/maps/floors/floorssky.png")
+        enviro.pfloors = lg.newImage("images/maps/floors/floorsplayer.png")
+        enviro.floorsveneer2 = lg.newImage("images/maps/floors/floorsveneer2.png")
+        enviro.floorsveneer1 = lg.newImage("images/maps/floors/floorsveneer1.png")
+        enviro.paralax2 = lg.newImage("images/maps/floors/floorparalax2.png")
+
+      else
+        loader.start(function()
+          finished_loading = true
+          end)
+        loader.newImage(enviro,'paralax',"images/maps/floors/floorsparalax.png")
+        loader.newImage(enviro,'stage', "images/maps/floors/floors.png")
+        loader.newImage(enviro,'sky',"images/maps/floors/floorssky.png")
+        loader.newImage(enviro,'pfloors', "images/maps/floors/floorsplayer.png")
+        loader.newImage(enviro, 'floorsveneer2',"images/maps/floors/floorsveneer2.png")
+        loader.newImage(enviro, 'floorsveneer1',"images/maps/floors/floorsveneer1.png")
+        loader.newImage(enviro,'paralax2', "images/maps/floors/floorparalax2.png")
+      end
     end
 
 
@@ -217,6 +234,11 @@ function loadStage()
   for i,v in ipairs(players) do
     players[i].old_feet = players[i].y 
   end
+  if same_stage then
+    camerafol()
+  end
+  same_stage = false
+
 end
 
 

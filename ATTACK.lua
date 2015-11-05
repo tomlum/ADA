@@ -615,7 +615,7 @@ me.old_health = 0
 function camshakeflinch()
 	yhdif = you.old_health-you.health
 	mhdif = me.old_health-me.health
-	if not (me.actionshot or you.actionshot) and not noshake then
+	if not (me.health == 0 or you.health == 0) and not (me.actionshot or you.actionshot) and not noshake then
 
 		if ((you.shake) and you.x >= me.x)  or shakeboth then 
 			camera2.x = camera2.x + math.ceil(math.random()) * (shakedis + yhdif/2)

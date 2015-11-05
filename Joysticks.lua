@@ -339,7 +339,6 @@ function controlsstuff(xx)
     xx.a3 = false
     xx.a4 = false
   end
-
 end
 
 function keyboardcontrols()

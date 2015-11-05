@@ -43,7 +43,7 @@ function debugReadouts()
 
       lg.setColor(255,10,0)
       lg.print("themenu "..tostring(MODE), 10, 90)
-      lg.print("oldmenu "..tostring(oldmenu), 10, 110)
+      lg.print("OLD_MODE "..tostring(OLD_MODE), 10, 110)
       lg.print("fadein "..tostring(fadein), 10, 130)
       lg.print("allfade "..tostring(allfade), 10, 150)
       lg.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)

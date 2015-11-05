@@ -6,7 +6,7 @@ require "love.sound"
 
 function updateLoader()
   if not finished_loading then loader.update() end
-
+  
   if placespeople then
     loadStage()
   end

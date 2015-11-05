@@ -10,8 +10,6 @@
 --can't kick combo out of purple kick
 
 --notes:
---on reset after go, it shows last frame still
-
 --air dash
 --Times square, have a facade layer that's black or something so this way it looks like back lit against lights
 --If you hit glass floor with enough j break through it
@@ -37,7 +35,7 @@ noslowmo = false
 fightclub = false
 demo = true
 debug = false
-MODE = "title"
+MODE = "color"
 
 notilebouncing = false
 melcolor = 1
@@ -45,7 +43,7 @@ mercolor = 4
 youlcolor = 3
 yourcolor = 2
 therampspeed = .2
-mapNum = 3
+mapNum = 2
 rampspeed= therampspeed
 drawBoxes = false
 drawFeet = false
@@ -94,6 +92,7 @@ function love.update()
     --Update characters, physics, points, etc, there's a lot behind this
     play()
     handleRetry()
+
   elseif MODE == "retry" then
     handleRetry()
 
@@ -118,9 +117,6 @@ function love.draw()
   if debug or fightclub then
     debugReadouts()
   end
-  if slowww ~= nil then
-lg.print(tostring(slowww),200,100)
-end
   lg.setColor(25,25,25)
   --lg.rectangle("fill", screenwidth/2,0,screenwidth,screenheight)
 end
