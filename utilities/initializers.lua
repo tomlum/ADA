@@ -1,6 +1,7 @@
 
 lg = love.graphics
 lg.setDefaultFilter("linear","nearest",1)
+players = {}
 me = {}
 you = {}
 
@@ -107,34 +108,30 @@ function initLove()
 end
 
 function initDependencies()
-require "utilities"
-require "lasso"
-require "blur"
-require "menustuff"
-require "damageTable"
-require "camera"
-require "hits"
-require "music"
-require "fizix"
-require "animation"
-require "joysticks"
-require "attack"
-require "attacks/green"
-require "attacks/blue"
-require "attacks/purple"
-require "attacks/orange"
-require "attacks/red"
-require "ai"
-require "gameModes/koth"
-require "gameModes/fractal"
-require "colorcontrol"
+require "utilities/utilities"
+require "menus"
+require "sounds/sounds"
+require "animation/animation"
+require "animation/blur"
+require "animation/colorbox"
+require "animation/blossom"
+require "story/chaptermanage"
 require "story/ch1/ch1"
-require "colorbox"
-require "death"
-require "chaptermanage"
-loader = require "love-loader"
-require "blossom"
-require "story/ch1/ch1"
-require "stages"
-require "play"
+require "combat/damageTable"
+require "combat/fizix"
+require "combat/attack"
+require "combat/colorcontrol"
+require "combat/death"
+require "combat/colors/green"
+require "combat/colors/blue"
+require "combat/colors/purple"
+require "combat/colors/orange"
+require "combat/colors/red"
+require "combat/ai"
+require "combat/hits"
+require "combat/stages"
+require "combat/play"
+require "combat/lasso"
+require "combat/gameModes/koth"
+require "combat/gameModes/fractal"
 end

@@ -12,6 +12,7 @@ paralaxscale = 4/7,
 paralaxscale2 = .4,
 gravity = 1
 }
+
 the_maps[2]= {name = "library", 
 plats = {}, walls = {}, boxes = {},
 floor = 1027,
@@ -51,7 +52,7 @@ function loadStage()
 
   placespeople = false
 
-  
+
   hitpausecounter = 0
   hitpause = false
 
@@ -151,7 +152,7 @@ function loadStage()
     you.x = 6000
     enviro.rightwall = 6600-20
     enviro.ds = 5
-    thesong = song1
+    thesong = song2
     dollyv = 3
 
 
@@ -226,7 +227,7 @@ function loadStage()
     you.y = 900
     enviro.rightwall = 5000
     enviro.ds = 5
-    thesong = song1
+    thesong = song2
     dollyv = 3
 
   end

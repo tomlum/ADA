@@ -15,7 +15,6 @@ walljumpdis = 12
 
 hexbuffer = 10
 
-players = {}
 me.height = 60
 you.height = 60
 me.width = 30

@@ -20,13 +20,13 @@
 --apa13 xoff is incorrect
 --can hexHit use colon and self?
 
-require "initializers"
+require "utilities/initializers"
 
 
 --Filming utilities
 infinitepan = false
 no_screen_follow = false
-drawControllers = true
+drawControllers = false
 waver_outlines = true
 drawtrails = false
 noslowmo = false
@@ -35,7 +35,7 @@ noslowmo = false
 fightclub = false
 demo = true
 debug = false
-MODE = "color"
+MODE = "controllerSetup"
 
 notilebouncing = false
 melcolor = 1
@@ -48,7 +48,7 @@ rampspeed= therampspeed
 drawBoxes = false
 drawFeet = false
 volume = 0
-fullscreen = false
+fullscreen = true
 readout = false
 putmehere = 1000
 putyouhere = 1025

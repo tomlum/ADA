@@ -1,5 +1,8 @@
-require "xkcdcolor" 
-require "monitors"
+require "utilities/xkcdcolor" 
+require "utilities/monitors"
+require "utilities/joysticks"
+require "utilities/camera"
+loader = require "utilities/love-loader"
 
 --functions that begin with t_ have specific table inputs (e.g. a table representing a color in rgb values)
 
