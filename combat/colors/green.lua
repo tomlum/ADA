@@ -1,4 +1,4 @@
-
+greenspeedlimit = 12
 amountstuckinwall = boltspeed - 1
 amountstuckinfloor = 45
 
@@ -51,8 +51,6 @@ at.g.p.ft = 10
 at.g.p.max = 4
 at.g.p.z = 2
 
-
-
 at.g.u = {}
 at.g.u.dam = 5
 at.g.u.kb = 4
@@ -61,7 +59,6 @@ at.g.u.mv = 10
 at.g.u.ft = 25
 at.g.u.z = 2.5
 greena1adj = 10
-
 
 at.g.au = {}
 at.g.au.mj = 15
@@ -161,6 +158,9 @@ function gandg(xx)
   else
 
     if xx.attack_num == 1 then
+      if xx.animcounter > 16 then
+        xx.cmbo=true
+      end
       if xx.animcounter < 7 then
         xx.im = greena21
         if math.random() > creaturerate then
@@ -175,9 +175,6 @@ function gandg(xx)
 
 
       elseif xx.animcounter < 40 then
-        if xx.animcounter > 16 then
-            xx.cmbo=true
-          end
         if xx.creature and math.abs(xx.v)>6 then 
           xx.im = greencreature
         else
@@ -195,53 +192,53 @@ function gandg(xx)
         end
 
         if xx.animcounter <= 9 then
-            if xx.rampcanhit then
-              if xx.repcounter ==1 then
-                xx.v = xx.v + (xx.lr*5)*xx.rampspeed
-                --xx.origgreenlr  = xx.lr
-              elseif xx.repcounter==2 then
-                --xx.lr=-xx.origgreenlr  
-                xx.v = math.abs(xx.v)*xx.lr + (xx.lr*3)*xx.rampspeed
-              elseif xx.repcounter==3 then
-                --xx.lr=xx.origgreenlr 
-                xx.v = math.abs(xx.v)*xx.lr + (xx.lr*4)*xx.rampspeed
+          if xx.rampcanhit then
+            if xx.repcounter ==1 and math.abs(xx.v) < greenspeedlimit then
+              xx.v = xx.v + (xx.lr*7)*xx.rampspeed/1.1
+              --xx.origgreenlr  = xx.lr
+            elseif xx.repcounter==2 and math.abs(xx.v) < greenspeedlimit then
+              --xx.lr=-xx.origgreenlr  
+              xx.v = math.abs(xx.v)*xx.lr + (xx.lr*5)*xx.rampspeed/1.1
+            elseif xx.repcounter==3 and math.abs(xx.v) < greenspeedlimit then
+              --xx.lr=xx.origgreenlr 
+              xx.v = math.abs(xx.v)*xx.lr + (xx.lr*6)*xx.rampspeed/1.1
+            end
+          end
+
+          if xx.creature then 
+            xx.im = greencreatures
+          else
+            xx.im = greena22s
+          end
+          repplay(xx.greens)
+
+
+          rumbleme(xx, .1)
+
+          hexHit(xx, xx.id, 
+            {x=xx.mid, y = xx.y},
+            {x=xx.mid+xx.v+(xx.lr*67), y = xx.y-xx.j},
+            {x=xx.mid+xx.v+(xx.lr*67), y = xx.y+40-xx.j},
+            {x=xx.mid, y = me.y+47},
+            function(z)
+
+              makenslashsparks(xx.y+30,xx.v+xx.x+xx.lr*(15),-xx.lr*slashsparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,20)
+
+              xx.cancombo = true
+              if xx.repcounter == at.g.p.max then
+                z.v = xx.lr*at.g.p.kb*3
+              else
+                z.v = xx.lr*at.g.p.kb
               end
-            end
 
-            if xx.creature then 
-              xx.im = greencreatures
-            else
-              xx.im = greena22s
-            end
-            repplay(xx.greens)
+              if not (z.block and z.lr == -xx.lr) then
+                z.health = z.health - at.g.p.dam
 
-
-            rumbleme(xx, .1)
-
-            hexHit(xx, xx.id, 
-              {x=xx.mid, y = xx.y},
-              {x=xx.mid+xx.v+(xx.lr*67), y = xx.y-xx.j},
-              {x=xx.mid+xx.v+(xx.lr*67), y = xx.y+40-xx.j},
-              {x=xx.mid, y = me.y+47},
-              function(z)
-
-                makenslashsparks(xx.y+30,xx.v+xx.x+xx.lr*(15),-xx.lr*slashsparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,20)
-
-                xx.cancombo = true
-                if xx.repcounter == at.g.p.max then
-                  z.v = xx.lr*at.g.p.kb*3
-                else
-                  z.v = xx.lr*at.g.p.kb
-                end
-
-                if not (z.block and z.lr == -xx.lr) then
-                  z.health = z.health - at.g.p.dam
-
-                  z.flinch = true
-                  z.ft = z.ft+at.g.p.ft
-                end
-                shakez(at.g.p.z)
-                end)
+                z.flinch = true
+                z.ft = z.ft+at.g.p.ft
+              end
+              shakez(at.g.p.z)
+              end)
 
           
           --combo(xx)
@@ -284,7 +281,6 @@ function gandg(xx)
           if (xx.a1b or xx.a2b or xx.a3b or xx.a4b)and #joysticks>=xx.id then
             at.g.k.angle = xx.gangle
             xx.animcounter = 14
-
           elseif xx.a1b then
             at.g.k.angle = 90
             xx.animcounter = 14

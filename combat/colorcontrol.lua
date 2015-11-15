@@ -35,45 +35,44 @@ thecolors = {}
 
 
 function colorshift(c,rate)
-local dr = math.floor(math.random(-rate,rate))
-local dg = math.floor(math.random(-rate,rate))
-local db = math.floor(math.random(-rate,rate))
-if c.r + dr > 255 or c.r+dr<0 then
-  c.r = c.r - dr
-else
-  c.r = c.r + dr
-end
+  local dr = math.floor(math.random(-rate,rate))
+  local dg = math.floor(math.random(-rate,rate))
+  local db = math.floor(math.random(-rate,rate))
+  if c.r + dr > 255 or c.r+dr<0 then
+    c.r = c.r - dr
+  else
+    c.r = c.r + dr
+  end
 
 
-if c.g + dg > 255 or c.g+dg<0 then
-  c.g = c.g - dg
-else
-  c.g = c.g + dg
-end
+  if c.g + dg > 255 or c.g+dg<0 then
+    c.g = c.g - dg
+  else
+    c.g = c.g + dg
+  end
 
 
-if c.b + db > 255 or c.b+db<0 then
-  c.b = c.b - db
-else
-  c.b = c.b + db
-end
+  if c.b + db > 255 or c.b+db<0 then
+    c.b = c.b - db
+  else
+    c.b = c.b + db
+  end
 
 
 end
 
 speeddif = .1
 thecolors[0] = {n=0,c={r = 255, g = 255, b = 255}, c2=c,
-  s = {def=1, speed = 1-speeddif, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
+s = {def=1, speed = 1-speeddif, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
 
-thecolors[1] = {n=1,c=color1,c2=c,
-  s = {def=1.2, speed = .8-speeddif, jump = .8, weight = 1.3, brittle = 1}, tile = ptile, logo=apa11}
-thecolors[2] = {n=2,c=color2,c2=c,
-  s = {def=.7, speed = 1.2-speeddif, jump = 1.1, weight = 1, brittle = 1}, tile = gtile, logo=glogo}
+thecolors[1] = {n=1,c=color1,c2=c, tile = ptile, logo=apa11,
+s = {def=1.2, speed = .8-speeddif, jump = .8, weight = 1.3, brittle = 1}}
+thecolors[2] = {n=2,c=color2,c2=c, tile = gtile, logo=glogo,
+s = {def=.7, speed = 1.2-speeddif, jump = 1.1, weight = 1, brittle = 1}}
 thecolors[3] = {n=3, tile = otile,c=color3,c2=c, logo=ao32,
-  s = {def=1, speed = 1-speeddif, jump = 1.1, weight = .8, brittle = 2}}
+s = {def=1, speed = 1-speeddif, jump = 1.1, weight = .8, brittle = 2}}
 thecolors[4] = {n=4, tile = rtile,c=color4,c2=c, logo=redap1, 
-  s = {def=.8, speed = 1.1-speeddif, jump = 1.1, weight = .9, brittle = 1.2}
-  }
+s = {def=.8, speed = 1.1-speeddif, jump = 1.1, weight = .9, brittle = 1.2}}
 thecolors[5] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 thecolors[6] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 thecolors[7] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
@@ -83,7 +82,7 @@ thecolors[10] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlo
 thecolors[11] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 --transition color, weaker
 thecolors[-1] = {n=-1,c={r = 0, g = 0, b = 0},
-  s = {def=.7, speed = 1, jump = 1, weight = 1, brittle = 1.1}, c2={r = 255, g = 255, b = 255}, logo=questionlogo}
+s = {def=.7, speed = 1, jump = 1, weight = 1, brittle = 1.1}, c2={r = 255, g = 255, b = 255}, logo=questionlogo}
 
 
 
@@ -160,69 +159,69 @@ function changePlayerColor(xx)
     xx.cchangeto = xx.rightc
   elseif xx.leftbump then
     xx.cchangeto = xx.leftc 
-  else xx.cchangeto = thecolors[0]
-  end
-
-
-  if not xx.actionshot and xx.color.n~=-1 then 
-    xx.cantreturntothis = xx.color.n
-  end
-  if xx.cchangeto.n > 0  then
-    if xx.oldcctn ~= xx.cchangeto.n and xx.oldcctn ~= 0 then
-      xx.atcc = false
+    else xx.cchangeto = thecolors[0]
     end
-    if xx.cct < colorchangetime and (not combo_pause or (xx.animcounter == 0 or xx.actionshot))  then
-      xx.cct = xx.cct + 1
+
+
+    if not xx.actionshot and xx.color.n~=-1 then 
+      xx.cantreturntothis = xx.color.n
+    end
+    if xx.cchangeto.n > 0  then
+      if xx.oldcctn ~= xx.cchangeto.n and xx.oldcctn ~= 0 then
+        xx.atcc = false
+      end
+      if xx.cct < colorchangetime and (not combo_pause or (xx.animcounter == 0 or xx.actionshot))  then
+        xx.cct = xx.cct + 1
+        --[[
+        if xx.cct > 0 then
+          xx.colorsound:setPitch((xx.cct+1)/colorchangetime)
+          xx.colorsound:setVolume(((xx.cct+1)/(colorchangetime+300)))
+        else
+          xx.colorsound = xx.cchangeto.sound:clone()
+          xx.colorsound:setPitch(.01)
+          xx.colorsound:setVolume(.01)
+        end
+        if xx.cct%1 == 0 then
+          repplay(xx.colorsound)
+        end
+        ]]--
+      end
+      xx.ctri = (thecolors[0].c.r-xx.cchangeto.c.r)/colorchangetime
+      xx.ctgi = (thecolors[0].c.g-xx.cchangeto.c.g)/colorchangetime
+      xx.ctbi = (thecolors[0].c.b-xx.cchangeto.c.b)/colorchangetime
+
+    elseif xx.cct > 0 then
+      xx.cct = xx.cct - 3
       --[[
       if xx.cct > 0 then
-      xx.colorsound:setPitch((xx.cct+1)/colorchangetime)
-      xx.colorsound:setVolume(((xx.cct+1)/(colorchangetime+300)))
-    else
-      xx.colorsound = xx.cchangeto.sound:clone()
-      xx.colorsound:setPitch(.01)
-      xx.colorsound:setVolume(.01)
+        xx.colorsound:setPitch((xx.cct+1)/colorchangetime)
+        xx.colorsound:setVolume(((xx.cct+1)/(colorchangetime+300)))
       end
-      if xx.cct%1 == 0 then
-      repplay(xx.colorsound)
+      ]]--
     end
-    ]]--
-    end
-    xx.ctri = (thecolors[0].c.r-xx.cchangeto.c.r)/colorchangetime
-    xx.ctgi = (thecolors[0].c.g-xx.cchangeto.c.g)/colorchangetime
-    xx.ctbi = (thecolors[0].c.b-xx.cchangeto.c.b)/colorchangetime
 
-  elseif xx.cct > 0 then
-    xx.cct = xx.cct - 3
-    --[[
-    if xx.cct > 0 then
-      xx.colorsound:setPitch((xx.cct+1)/colorchangetime)
-      xx.colorsound:setVolume(((xx.cct+1)/(colorchangetime+300)))
+    if xx.cct == colorchangetime then 
+      if xx.color.n == -1 then
+        xx.color = clone(xx.cchangeto)
+        xx.runpace = defrunpace /  (xx.color.s.speed*3/4)
+      end
+    elseif xx.cct <= 0  then
+      xx.cct = 0
+      xx.runpace = defrunpace
+      xx.color = thecolors[0]
+    else 
+      xx.color = thecolors[-1]
+      xx.color.c.r = thecolors[0].c.r-xx.ctri * xx.cct
+      xx.color.c.g = thecolors[0].c.g-xx.ctgi * xx.cct
+      xx.color.c.b = thecolors[0].c.b-xx.ctbi * xx.cct
     end
-    ]]--
-  end
 
-  if xx.cct == colorchangetime then 
-    if xx.color.n == -1 then
-      xx.color = clone(xx.cchangeto)
-      xx.runpace = defrunpace /  (xx.color.s.speed*3/4)
-    end
-  elseif xx.cct <= 0  then
-    xx.cct = 0
-    xx.runpace = defrunpace
-    xx.color = thecolors[0]
-  else 
-    xx.color = thecolors[-1]
-    xx.color.c.r = thecolors[0].c.r-xx.ctri * xx.cct
-    xx.color.c.g = thecolors[0].c.g-xx.ctgi * xx.cct
-    xx.color.c.b = thecolors[0].c.b-xx.ctbi * xx.cct
-  end
-  
-  xx.oldcctn = xx.cchangeto.n
-  
-   if xx.color.n == 4 then
+    xx.oldcctn = xx.cchangeto.n
+
+    if xx.color.n == 4 then
       local t = thecolors[4].s
       xx.color.s = {def=t.def+rsdel*xx.rlvl, speed = t.speed-rsdel*xx.rlvl, jump = t.jump-rsdel*xx.rlvl, weight = t.weight+rsdel*xx.rlvl, brittle = t.brittle-rsdel*xx.rlvl}
 
     end
-  
-end
+
+  end

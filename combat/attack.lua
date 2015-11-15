@@ -557,10 +557,13 @@ function postattackmanage(xx)
 	end
 	]]
 
+	if math.abs(xx.v) > speedlimit+3*xx.color.s.speed and xx.animcounter > 0 then
+		xx.v = xx.v - signOf(xx.v)
+	end
+
 	xx.oldcolor = xx.color.n
 	xx.oldft = xx.ft
 
-	xx.old_health = xx.health
 end
 
 
@@ -643,8 +646,6 @@ function camshakeflinch()
 			if #joysticks>0 then
 				me.joystick:setVibration(1,1)
 			end
-
-
 		end
 	end
 
@@ -700,424 +701,432 @@ you.dodgerefreshtimer = 0
 
 function dodging(xx)
 
-
 	if not xx.dodge then xx.dodgelr = xx.lr
-		xx.makeslidesound = true end
+		xx.makeslidesound = true 
+	end
 
-		if xx.dodgerefreshtimer > 0 then xx.dodgerefreshtimer = xx.dodgerefreshtimer - 1
+	if xx.dodgerefreshtimer > 0 then xx.dodgerefreshtimer = xx.dodgerefreshtimer - 1
+	end
+
+	if xx.flinch or xx.falling
+		then xx.dodgecounter = 0
+		xx.dodge = false
+		xx.dodgetype = 0
+		xx.dodgedelaycounter = 0
+		xx.stop = true
+		xx.purpgroundtimer = 0
+		xx.landing_counter = 0
+	end
+
+	if xx.dodgedelaycounter > 0 then 
+		xx.dodgedelaycounter = xx.dodgedelaycounter - 1*ramp(xx)
+		xx.stop = true
+		xx.dodge = false
+		xx.dodgetype = 0
+	end
+
+	if xx.dodgecounter > 1 then 
+		xx.dodgecounter = xx.dodgecounter-1*ramp(xx)
+		if xx.dodgecounter-1*ramp(xx)<1 then
+			xx.dodgecounter = 1
 		end
 
+	elseif xx.dodgecounter == 1 then
+		xx.dodgecounter = 0
+		if xx.dodgetype == 1 or xx.dodgetype == -1 then 
+			xx.dodgedelaycounter = dodgedelay
+			xx.dodgerefreshtimer = dodgerefreshtime
+		elseif xx.dodgetype == 2 then
+			xx.dodgedelaycounter = 2
+			xx.dodgerefreshtimer = dodgerefreshtime
 
-		if xx.flinch or xx.falling
-			then xx.dodgecounter = 0
-			xx.dodge = false
+		elseif xx.dodgetype == -2 then
 			xx.dodgetype = 0
-			xx.dodgedelaycounter = 0
-			xx.stop = true
-			xx.purpgroundtimer = 0
-			xx.landing_counter = 0
-		end
-
-		if xx.dodgedelaycounter > 0 then 
-			xx.dodgedelaycounter = xx.dodgedelaycounter - 1*ramp(xx)
-			xx.stop = true
 			xx.dodge = false
-			xx.dodgetype = 0
+			xx.dodgerefreshtimer = dodgerefreshtime*1.5
 		end
+	end
 
 
-		if xx.dodgecounter > 1 then 
-			xx.dodgecounter = xx.dodgecounter-1*ramp(xx)
-			if xx.dodgecounter-1*ramp(xx)<1 then
-				xx.dodgecounter = 1
-			end
+	if xx.dodgetype == -2 then
+		xx.im = dodgeback
+		xx.v = backdodgespeed * -xx.lr
+		xx.dodge = true
 
-		elseif xx.dodgecounter == 1 then
-			xx.dodgecounter = 0
-			if xx.dodgetype == 1 or xx.dodgetype == -1 then 
-				xx.dodgedelaycounter = dodgedelay
-				xx.dodgerefreshtimer = dodgerefreshtime
-			elseif xx.dodgetype == 2 then
-				xx.dodgedelaycounter = 2
-				xx.dodgerefreshtimer = dodgerefreshtime
-
-			elseif xx.dodgetype == -2 then
-				xx.dodgetype = 0
-				xx.dodge = false
-				xx.dodgerefreshtimer = dodgerefreshtime*1.5
-			end
-		end
-
-
-		if xx.dodgetype == -2 then
+	elseif xx.dodgetype == -1 then  
+		xx.dodge = true
+		xx.im = dodgeback2
+		xx.v = backdodgespeed*-xx.lr
+		if xx.dodgecounter < 7 and ((xx.left and xx.lr > 0) or (xx.right and xx.lr < 0)) then 
 			xx.im = dodgeback
-			xx.v = backdodgespeed * -xx.lr
-			xx.dodge = true
+			xx.dodgetype = -2
 
-		elseif xx.dodgetype == -1 then  
-			xx.dodge = true
-			xx.im = dodgeback2
-			xx.v = backdodgespeed*-xx.lr
-			if xx.dodgecounter < 7 and ((xx.left and xx.lr > 0) or (xx.right and xx.lr < 0)) then 
-				xx.im = dodgeback
-				xx.dodgetype = -2
+		end
 
-			end
+	elseif xx.dodgetype == 2 then 
+		xx.v = xx.v/1.2
 
-		elseif xx.dodgetype == 2 then 
-
-			if xx.dodgecounter > turnaroundtime-7 then 
-				xx.im = dodge21
-				xx.v = xx.v - xx.lr*1
-				else xx.im=dodge2
-				end
-			elseif xx.dodgetype == 1 then
-				xx.dodge = true
-				xx.im = dodge
-				xx.v = xx.currentdodgev/3+(dodgespeed*xx.lr)
-				if (xx.dodgelr > 0 and xx.left) or (xx.dodgelr < 0 and xx.right) then
-					xx.v = xx.currentdodgev/3-(dodgespeed*xx.lr)/2
-					xx.dodgetype = 2
-					xx.dodgecounter = turnaroundtime
-					xx.makeslidesound = true
-					xx.im = dodge21
-				end
-			elseif xx.dodgetype == 0 and xx.dodgerefreshtimer == 0 then
-				if xx.g and ((xx.lr > 0 and xx.runb and xx.rightb) or (xx.lr < 0 and xx.leftb and xx.runb)) and xx.animcounter ==0  then
-					xx.dodgetype = 1
-					xx.dodgecounter = dodgetime
-					xx.currentdodgev = xx.v
-				elseif xx.g and ((xx.lr < 0 and xx.runb and xx.rightb) or (xx.lr > 0 and xx.leftb and xx.runb))  and not xx.running  then
-					xx.dodgetype = -1
-					xx.dodgecounter = backdodgetime
-				end
-			end
+		if xx.dodgecounter > turnaroundtime-7 then 
+			xx.im = dodge21
+			xx.v = xx.v - xx.lr*1
+		else 
+			xx.im=dodge2
+		end
+		
+	elseif xx.dodgetype == 1 then
+		xx.dodge = true
+		xx.im = dodge
+		xx.v = xx.v/1.005
+		if (xx.dodgelr > 0 and xx.left) or (xx.dodgelr < 0 and xx.right) then
+			xx.v = xx.currentdodgev/3-(dodgespeed*xx.lr)/2
+			xx.dodgetype = 2
+			xx.dodgecounter = turnaroundtime
+			xx.makeslidesound = true
+			xx.im = dodge21
+		end
+	elseif xx.dodgetype == 0 and xx.dodgerefreshtimer == 0 then
+		if xx.g and ((xx.lr > 0 and xx.runb and xx.rightb) or (xx.lr < 0 and xx.leftb and xx.runb)) and xx.animcounter ==0  then
+			xx.dodgetype = 1
+			xx.dodgecounter = dodgetime
+			xx.v = dodgespeed*xx.lr
+		elseif xx.g and ((xx.lr < 0 and xx.runb and xx.rightb) or (xx.lr > 0 and xx.leftb and xx.runb)) and not xx.running  then
+			xx.dodgetype = -1
+			xx.dodgecounter = backdodgetime
+		end
+	end
 
 
-			if xx.dodgetype >= 1 and xx.makeslidesound then 
-				repplay(xx.slidedodge)
-				xx.makeslidesound = false
-			elseif xx.dodgetype <= -1 and xx.makeslidesound then
-				repplay(xx.backdodge)
-				xx.makeslidesound = false
+	if xx.dodgetype >= 1 and xx.makeslidesound then 
+		repplay(xx.slidedodge)
+		xx.makeslidesound = false
+	elseif xx.dodgetype <= -1 and xx.makeslidesound then
+		repplay(xx.backdodge)
+		xx.makeslidesound = false
 
-			end
-			if xx.dodgetype~=0 then
-				if(math.abs(xx.v) > math.abs(xx.oldv)) then
-					xx.v = xx.oldv + (xx.v-xx.oldv)*(ramp(xx))
-				end
-			end
-			if not simpledodge then
-				xx.qualifyfordodge = xx.down and not (xx.rightb or xx.leftb)
+	end
+
+	if xx.dodgetype~=0 then
+		if(math.abs(xx.v) > math.abs(xx.oldv)) then
+			--xx.v = xx.oldv + (xx.v-xx.oldv)*(ramp(xx))
+		end
+	end
+
+	if not simpledodge then
+		xx.qualifyfordodge = xx.down and not (xx.rightb or xx.leftb)
+	else
+		xx.qualifyfordodge = xx.down
+	end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+me.releaseblock = false
+you.releaseblock = false
+function blocknbusy(xx)
+
+	if xx.currentc == 4 and xx.attack_num ~= 2 then 
+		if xx.releaseblock then
+			xx.rlvl = xx.rlvl + 1
+		end
+		xx.releaseblock = false 
+	end
+
+	if xx.releaseblock then
+		xx.stop = true
+		xx.im = blockrelease
+	end
+
+	if not xx.blockb then xx.releaseblock = false 
+	end
+
+
+	if xx.g and xx.blockb and xx.dodgedelaycounter <= 0 and not xx.a1 and not xx.a2 and not xx.a3 and not xx.a4 and xx.g and not xx.dodge and not xx.landing and not xx.releaseblock
+		then 
+		if xx.currentc == 4 then
+			xx.im = redblock
+		else
+			xx.im = block
+		end
+		xx.block = true
+		xx.stop = true
+
+		if not xx.oldblock then repplay(xx.blocksound) end
+
+
+	else 
+		xx.block = false 
+	end
+
+
+	if xx.landing or xx.flinch 
+		then xx.busy = true
+	else 
+		xx.busy = false
+	end
+
+	xx.oldblock = xx.block
+
+	if xx.releaseblock and not xx.oldreleaseblock then
+		hitpause = true
+	end
+
+
+	xx.oldreleaseblock = xx.releaseblock
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+you.oldft = 0
+you.oldg = 0
+me.oldft = 0
+me.oldg = 0
+me.falltimer = 0
+you.falltimer = 0
+you.flinchway = 1
+me.flinchway = 1
+you.gflinchleft = 1
+me.gflinchleft = -1
+
+me.hittheground = false
+you.hittheground = false
+
+me.falling = false
+you.falling = false
+
+fttofall = 25
+fallframes = 4
+me.oldflinch = false
+you.oldflinch = false
+me.bouncej = 0
+you.bouncej = 0
+
+
+getuptime = 8
+forgetuptime = 3
+me.old_health = me.health
+you.old_health = you.health
+
+jforfallbackbounce = 5
+
+
+function flinchingx(xx,yy)
+
+
+	if xx.old_health > xx.health then 
+		if xx.v/(math.abs(xx.v)) < 0 then
+			if xx.lr > 0 then
+				xx.flinchway = -1
 			else
-				xx.qualifyfordodge = xx.down
+				xx.flinchway = 11
+			end
+		else
+			if xx.lr > 0 then
+				xx.flinchway = 11
+			else
+				xx.flinchway = -1
+			end
+		end
+		if xx.flinch then 
+			--if xx.g then xx.gflinchleft = xx.ft end
+			repplay(xx.flinch1)
+			repplay(xx.flinch2)
+			--else 
+			-- repplay(xx.minch)
+		end
+	end
+
+
+	if xx.health < xx.old_health then
+		xx.health = xx.old_health + (xx.health-xx.old_health)*(ramp(xx))/xx.color.s.def
+		local dif = xx.old_health - xx.health
+		makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,math.floor(dif/ramp(xx) * 2/3)*15)
+		blossom(xx,yy, 1, blossom_sides, .2)
+		hitpause = true
+	end
+
+	if xx.ft > fttofall then
+		xx.falling = true
+	end
+
+	if (not xx.oldflinch and xx.flinch) or (xx.flinchway > 0 and not xx.g) then
+		xx.falltimer = fallframes
+	end
+
+	if xx.ft < fttofall and xx.falling and not xx.g and not xx.hittheground then xx.falling = false
+	end
+
+	if xx.ft == 0 and not xx.falling and xx.falltimer == 0 then 
+
+		xx.hittheground = false 
+	end
+
+	if (xx.ft <= 0 and xx.ft + 1*ramp(xx) >0) or (xx.ft >= 0 and xx.ft - 1*ramp(xx) <0)  then 
+		xx.ft = 0
+	elseif xx.ft < 0 then xx.ft = xx.ft + 1*ramp(xx)
+	elseif xx.ft > 0 then xx.ft = xx.ft - 1*ramp(xx)
+	end
+	--camshakeflinch()
+
+
+
+	if xx.falltimer < 0 then
+		if xx.falltimer + 1*ramp(xx) > 0 then
+			xx.falltimer = 0
+		else
+			xx.falltimer = xx.falltimer + 1*ramp(xx)
+		end
+		xx.flinch = true
+		xx.stop = true
+		if xx.flinchway > 0 then 
+			xx.im = gettingup2
+		else
+			if xx.falltimer < -4 then 
+				xx.im = gettingup11
+			else 
+				xx.im = gettingup1
+			end
+		end
+
+	elseif not xx.falling and xx.flinch then 
+		if xx.flinchway < 0 then xx.im = flinch
+		else 
+			xx.im = flinchback
+		end
+
+	elseif xx.falling then
+
+
+		if xx.ft == 0 and xx.falltimer == 0 then
+			if xx.flinchway > 0 then
+				xx.im = fallforward
+			else
+				xx.im = fallback
+			end
+			if xx.extratimer == 1 then
+				xx.falling = false
+				xx.extratimer = 0
+				xx.flinch = true
+				xx.stop = true
+				if xx.flinchway > 0 then 
+					xx.falltimer = -forgetuptime
+				elseif xx.j==0 then
+					xx.falltimer = -getuptime
+				end
+			elseif xx.extratimer == 0 and xx.j==0
+				--and xx.v ==0
+				then xx.extratimer = extrastayonthegroundtime
+				xx.flinch = true
+			elseif xx.extratimer > 0 then
+
+				xx.flinch = true
+				xx.stop = true
+				if xx.extratimer - 1*ramp(xx) < 1 then
+					xx.extratimer = 1
+				else
+					xx.extratimer = xx.extratimer - 1*ramp(xx)
+				end
+			end
+
+		end
+
+		if xx.falltimer > 0  then 
+			if xx.falltimer - 1*ramp(xx) > 0 then
+				xx.falltimer = xx.falltimer - 1*ramp(xx)
+			else
+				xx.falltimer = 0
+			end
+		else 
+			xx.hittheground = true
+		end
+
+		if not xx.g then 
+
+			if xx.j < -jforfallbackbounce then xx.bouncej = xx.j
+			else 
+				xx.bouncej = 0 
+			end
+
+			xx.falltimer = fallframes
+			if not xx.hittheground then
+				if xx.flinchway > 0 then xx.im = fallforward1
+				else 
+					xx.im = fallback1
+				end
+			else
+				if xx.flinchway > 0 then 
+					xx.im = fallforward1
+				else 
+					if xx.j >=0 then xx.im = fallbackbounce
+					else 
+						xx.im = fallbackbouncedown
+					end
+				end
+			end
+
+		else 
+
+
+			if xx.flinchway > 0 
+				--and not (xx.flinchway < 0 and xx.hittheground) 
+				then
+				if xx.falltimer > 0 then
+					xx.im = fallforward1
+				else
+					xx.im = fallforward
+				end
+			else
+				if xx.falltimer > 0 and not xx.hittheground then
+					xx.im = fallback1
+				else
+					if xx.bouncej < 0 then
+						xx.j = -xx.bouncej*.2
+					end
+					xx.im = fallback
+				end
 			end
 		end
 
 
 
-
-
-
-
-
-
-
-
-
-
-		me.releaseblock = false
-		you.releaseblock = false
-		function blocknbusy(xx)
-
-			if xx.currentc == 4 and xx.attack_num ~= 2 then 
-				if xx.releaseblock then
-					xx.rlvl = xx.rlvl + 1
-				end
-				xx.releaseblock = false 
-			end
-
-			if xx.releaseblock then
-				xx.stop = true
-				xx.im = blockrelease
-			end
-
-			if not xx.blockb then xx.releaseblock = false 
-			end
-
-
-			if xx.g and xx.blockb and xx.dodgedelaycounter <= 0 and not xx.a1 and not xx.a2 and not xx.a3 and not xx.a4 and xx.g and not xx.dodge and not xx.landing and not xx.releaseblock
-				then 
-				if xx.currentc == 4 then
-					xx.im = redblock
-				else
-					xx.im = block
-				end
-				xx.block = true
-				xx.stop = true
-
-				if not xx.oldblock then repplay(xx.blocksound) end
-
-
-			else 
-				xx.block = false 
-			end
-
-
-			if xx.landing or xx.flinch 
-				then xx.busy = true
-				else xx.busy = false
-				end
-
-				xx.oldblock = xx.block
-
-				if xx.releaseblock and not xx.oldreleaseblock then
-					hitpause = true
-				end
-
-
-				xx.oldreleaseblock = xx.releaseblock
-			end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			you.oldft = 0
-			you.oldg = 0
-			me.oldft = 0
-			me.oldg = 0
-			me.falltimer = 0
-			you.falltimer = 0
-			you.flinchway = 1
-			me.flinchway = 1
-			you.gflinchleft = 1
-			me.gflinchleft = -1
-
-			me.hittheground = false
-			you.hittheground = false
-
-			me.falling = false
-			you.falling = false
-
-			fttofall = 25
-			fallframes = 4
-			me.oldflinch = false
-			you.oldflinch = false
-			me.bouncej = 0
-			you.bouncej = 0
-
-
-			getuptime = 8
-			forgetuptime = 3
-			me.oldhealth = me.health
-			you.oldhealth = you.health
-
-			jforfallbackbounce = 5
-
-
-			function flinchingx(xx,yy)
-
-
-
-
-				if xx.health < xx.oldhealth then
-					xx.health = xx.oldhealth + (xx.health-xx.oldhealth)*(ramp(xx))/xx.color.s.def
-					local dif = xx.oldhealth - xx.health
-					makensparks(xx.v+xx.mid,xx.y+30,sparkspeed, 7, xx.color.c.r,xx.color.c.g,xx.color.c.b,math.floor(dif/ramp(xx) * 2/3)*15)
-					blossom(xx,yy, 1, blossom_sides, .2)
-					hitpause = true
-				end
-				xx.oldhealth = xx.health
-
-				if xx.ft > fttofall then
-					xx.falling = true
-				end
-
-				if (not xx.oldflinch and xx.flinch) or (xx.flinchway > 0 and not xx.g) then
-					xx.falltimer = fallframes
-				end
-
-				if xx.ft < fttofall and xx.falling and not xx.g and not xx.hittheground then xx.falling = false
-				end
-
-				if xx.ft == 0 and not xx.falling and xx.falltimer == 0 then 
-
-					xx.hittheground = false 
-				end
-
-				if (xx.ft <= 0 and xx.ft + 1*ramp(xx) >0) or (xx.ft >= 0 and xx.ft - 1*ramp(xx) <0)  then 
-					xx.ft = 0
-				elseif xx.ft < 0 then xx.ft = xx.ft + 1*ramp(xx)
-				elseif xx.ft > 0 then xx.ft = xx.ft - 1*ramp(xx)
-				end
-				--camshakeflinch()
-
-
-
-				if xx.old_health > xx.health then 
-					if xx.v/(math.abs(xx.v)) < 0 then
-						if xx.lr > 0 then
-							xx.flinchway = -1
-						else
-							xx.flinchway = 11
-						end
-					else
-						if xx.lr > 0 then
-							xx.flinchway = 11
-						else
-							xx.flinchway = -1
-						end
-					end
-					if xx.flinch then 
-						--if xx.g then xx.gflinchleft = xx.ft end
-						repplay(xx.flinch1)
-						repplay(xx.flinch2)
-						--else 
-						-- repplay(xx.minch)
-					end
-				end
-
-
-				if xx.falltimer < 0 then
-					if xx.falltimer + 1*ramp(xx) > 0 then
-						xx.falltimer = 0
-					else
-						xx.falltimer = xx.falltimer + 1*ramp(xx)
-					end
-					xx.flinch = true
-					xx.stop = true
-					if xx.flinchway > 0 then 
-						xx.im = gettingup2
-					else
-						if xx.falltimer < -4 then 
-							xx.im = gettingup11
-							else xx.im = gettingup1
-							end
-						end
-
-					elseif not xx.falling and xx.flinch then 
-						if xx.flinchway < 0 then xx.im = flinch
-							else xx.im = flinchback
-							end
-
-						elseif xx.falling then
-
-
-							if xx.ft == 0 and xx.falltimer == 0 then
-								if xx.flinchway > 0 then
-									xx.im = fallforward
-								else
-									xx.im = fallback
-								end
-								if xx.extratimer == 1 then
-									xx.falling = false
-									xx.extratimer = 0
-									xx.flinch = true
-									xx.stop = true
-									if xx.flinchway > 0 then 
-										xx.falltimer = -forgetuptime
-									elseif xx.j==0 then
-										xx.falltimer = -getuptime
-									end
-								elseif xx.extratimer == 0 and xx.j==0
-									--and xx.v ==0
-									then xx.extratimer = extrastayonthegroundtime
-									xx.flinch = true
-								elseif xx.extratimer > 0 then
-
-									xx.flinch = true
-									xx.stop = true
-									if xx.extratimer - 1*ramp(xx) < 1 then
-										xx.extratimer = 1
-									else
-										xx.extratimer = xx.extratimer - 1*ramp(xx)
-									end
-								end
-
-							end
-
-							if xx.falltimer > 0  then 
-								if xx.falltimer - 1*ramp(xx) > 0 then
-									xx.falltimer = xx.falltimer - 1*ramp(xx)
-								else
-									xx.falltimer = 0
-								end
-							else 
-								xx.hittheground = true
-							end
-
-							if not xx.g then 
-
-								if xx.j < -jforfallbackbounce then xx.bouncej = xx.j
-									else xx.bouncej = 0 
-									end
-
-									xx.falltimer = fallframes
-									if not xx.hittheground then
-										if xx.flinchway > 0 then xx.im = fallforward1
-											else xx.im = fallback1
-											end
-										else
-											if xx.flinchway > 0 then 
-												xx.im = fallforward1
-											else 
-												if xx.j >=0 then xx.im = fallbackbounce
-													else xx.im = fallbackbouncedown
-													end
-												end
-											end
-
-										else 
-
-
-											if xx.flinchway > 0 
-												--and not (xx.flinchway < 0 and xx.hittheground) 
-												then
-												if xx.falltimer > 0 then
-													xx.im = fallforward1
-												else
-													xx.im = fallforward
-												end
-											else
-												if xx.falltimer > 0 and not xx.hittheground then
-													xx.im = fallback1
-												else
-													if xx.bouncej < 0 then
-														xx.j = -xx.bouncej*.2
-													end
-													xx.im = fallback
-												end
-											end
-										end
-
-
-
-									end
-
-									if xx.ft ~= 0 or xx.extratimer ~= 0 or xx.falltimer < 0 then xx.flinch = true 
-										else xx.flinch = false
-										end
-
-										xx.oldflinch = xx.flinch
-										xx.oldft = xx.ft
-										xx.oldg = xx.g
-
-									end
+	end
+
+	if xx.ft ~= 0 or xx.extratimer ~= 0 or xx.falltimer < 0 then xx.flinch = true 
+	else 
+		xx.flinch = false
+	end
+
+	xx.old_health = xx.health
+	xx.oldflinch = xx.flinch
+	xx.oldft = xx.ft
+	xx.oldg = xx.g
+
+end
 
 

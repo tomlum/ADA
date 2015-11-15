@@ -9,9 +9,10 @@ function play()
   speedRamp()
   updateSounds()
   miscsounds()
+  
   if not noslowmo then
-  gavinAndDan()
-end
+    gavinAndDan()
+  end
 
   if slowt == slowrate and not (pause or hitpause) and not me.actionshot 
     then
@@ -67,7 +68,7 @@ end
    cammovement()
    --if here then no slow mo twitter
    camerafol()
-   camshakeflinch()
+   --camshakeflinch()
    lassoScreen()
 
  end

@@ -60,14 +60,7 @@ function updatecolorboxes()
       v.flipdir = -v.flipdir
     end
     v.flip = v.flip + boxfliprate
-
-
-
-
-
-
   end
-
 end
 
 --boxpartdis

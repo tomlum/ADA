@@ -1,9 +1,12 @@
-
 lg = love.graphics
 lg.setDefaultFilter("linear","nearest",1)
 players = {}
 me = {}
 you = {}
+table.insert(players, 
+  me)
+table.insert(players, 
+  you)
 
 me.id = 1
 you.id = 2
@@ -93,7 +96,6 @@ end
 
 function initLove()
 
-
 	screenwidth = lg.getWidth()
 	screenheight = lg.getHeight()
 
@@ -108,30 +110,30 @@ function initLove()
 end
 
 function initDependencies()
+require "combat/damageTable"
 require "utilities/utilities"
-require "menus"
 require "sounds/sounds"
+require "menus"
 require "animation/animation"
 require "animation/blur"
 require "animation/colorbox"
 require "animation/blossom"
 require "story/chaptermanage"
 require "story/ch1/ch1"
-require "combat/damageTable"
 require "combat/fizix"
 require "combat/attack"
-require "combat/colorcontrol"
 require "combat/death"
 require "combat/colors/green"
 require "combat/colors/blue"
 require "combat/colors/purple"
 require "combat/colors/orange"
 require "combat/colors/red"
+require "combat/colorcontrol"
 require "combat/ai"
 require "combat/hits"
 require "combat/stages"
-require "combat/play"
 require "combat/lasso"
 require "combat/gameModes/koth"
 require "combat/gameModes/fractal"
+require "combat/play"
 end

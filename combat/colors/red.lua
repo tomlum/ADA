@@ -629,13 +629,17 @@ function randr(xx)
                     end
                     z.j = z.j/3-at.r.ak.j-(xx.rlvl+1)*2-xx.j
                     repplay(xx.redsound3)
+                    repplay(xx.redsound2)
+                    repplay(xx.redsound)
 
                     z.health = z.health - (at.r.ak.dam+at.r.ak.delta*xx.rlvl)
                     z.flinch = true
                     z.ft = z.ft+at.r.ak.ft+at.r.ak.delta*xx.rlvl
                     makensparks(xx.mid,xx.y+30,xx.v+3, xx.j-3, xx.color.c.r/(xx.rlvl/15+1),xx.color.c.g/(xx.rlvl/15+1),xx.color.c.b/(xx.rlvl/15+1), 10*(xx.rlvl+1))
                     xx.rlvl = 0
-                    shakez(at.r.ak.z)end)
+                    shakez(at.r.ak.z)
+                  end
+                  )
 end
 
 

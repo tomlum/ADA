@@ -48,21 +48,16 @@ friction = .4
 
 awaypenalty = .7
 
-initrunspeed = 8
+initrunspeed = 7
 defrunpace = 19
 
+jump_delay = 6
 initjmax = 17+9
 jumpheight = .6
 initjumpj = 12
 risegrav = 1
 dropgrav = .3
 maxgravity = 28
-
-
-
-
-
-
 
 
 

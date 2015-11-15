@@ -228,6 +228,10 @@ end
 ---MATH UTILITIES---
 --------------------
 
+function signOf(x)
+  if x > 0 then return 1 else return -1 end
+end
+
 --"bounded of" between x and y
 function bof(lower_limit, n, upper_limit)
   if n < lower_limit then 
@@ -318,7 +322,7 @@ end
 ---RANDOM(number) UTILITIES---
 ------------------------------
 
-function coinflip(decimal)
+function coinFlip(decimal)
   if decimal==nil then
     if math.random()>.5 then 
       return true
@@ -423,6 +427,12 @@ function findxIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y)
 
 
 
+-------------------
+---LOVE UTILITIES---
+-------------------
+function setFontSize(size)
+  love.graphics.setNewFont("utilities/munro.ttf", size)
+end
 
 -------------------
 ---LUA UTILITIES---

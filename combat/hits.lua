@@ -1,16 +1,3 @@
---DUDE, MAYBE MAKE ALL BLOCKS SHOULD BE INTEGERS
---also remember that flinch dir depends on the object hitting dir not necessarily the lr of the other person
---DUDE, MAYBE MAKE ALL BLOCKS SHOULD BE INTEGERS
---also remember that flinch dir depends on the object hitting dir not necessarily the lr of the other person
-
-
-
-
-slipoffedges = true
-
-
---for dis from height to feet in fall anim
-wallhangtime = 20
 walljumpdis = 12
 
 hexbuffer = 10
@@ -22,13 +9,8 @@ you.width = 30
 
 max_wall_fall = 2.5
 
-table.insert(players, 
-  me)
-
-table.insert(players, 
-  you)
-
---The base hit detection function, based on the hexagon formed from the rectangle box of the current and next frames
+--The base hit detection function, based on the hexagon formed from the rectangle 
+--surrounding the current player image the and next player image given v and j
 function hexHit(xx, theid, P1, P2, P3, P4, special, effectattack)
 
   --detect hits on monsters
@@ -749,6 +731,7 @@ function hexPlat()
           xx.v = xx.v * landing_fric
         end
         repplay(xx.land)
+        makeLandDust(xx.mid, xx.feet, xx.v, math.floor(math.abs(xx.j)/2))
         xx.slowdown = false
 
       end

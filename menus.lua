@@ -15,6 +15,8 @@ else
   num_of_modes = 2
 end
 
+font_size = 20
+
 --MODE that fades into another???
 
 
@@ -228,22 +230,67 @@ ps3menubuttons = lg.newImage("images/enviro/ps3menubuttons.png")
 xboxmenubuttons = lg.newImage("images/enviro/xboxmenubuttons.png")
 ps3assigncolor = lg.newImage("images/enviro/ps3assigncolor.png")
 xboxassigncolor = lg.newImage("images/enviro/xboxassigncolor.png")
+keymenubuttons = lg.newImage("images/enviro/keymenubuttons.png")
+key2menubuttons = lg.newImage("images/enviro/key2menubuttons.png")
+keyassigncolor = lg.newImage("images/enviro/keyassigncolor.png")
+key2assigncolor = lg.newImage("images/enviro/key2assigncolor.png")
+key_im = lg.newImage("images/enviro/key.png")
+keypressed_im = lg.newImage("images/enviro/keypressed.png")
+widekey_im = lg.newImage("images/enviro/widekey.png")
+widekeypressed_im = lg.newImage("images/enviro/widekeypressed.png")
+lcmd_im = lg.newImage("images/enviro/lcmd.png")
+lcmdpressed_im = lg.newImage("images/enviro/lcmdpressed.png")
+rcmd_im = lg.newImage("images/enviro/rcmd.png")
+rcmdpressed_im = lg.newImage("images/enviro/rcmdpressed.png")
+
+
+
+function drawKey(key, x, y, size)
+
+  cclear()
+  if love.keyboard.isDown(key) then
+    if key == "lgui" then
+      lg.draw(lcmdpressed_im, x, y, 0, size/2, size/2, 32, 18)
+
+    else
+    lg.draw(keypressed_im, x, y, 0, size, size, 11, 9)
+    setFontSize(9*size)
+    lg.setColor(0,0,0)
+    lg.printf(string.upper(key), x, y-6*size, 0, "center")
+  end
+  else
+    if key == "lgui" then
+      lg.draw(lcmd_im, x, y, 0, size/2, size/2, 32, 18)
+
+    else
+    lg.draw(key_im, x, y, 0, size, size, 11, 9)
+    setFontSize(9*size)
+    lg.setColor(0,0,0)
+    lg.printf(string.upper(key), x, y-8*size, 0, "center")
+  end
+  end
+  cclear()
+  setFontSize(font_size)
+
+end
 
 function drawControlsOverlay()
 
   lg.setColor(255,255,255)
   if true or joysticks[1] ~= nil then
     if MODE == "modes" or MODE == "map" then
-      if true or joysticks[1]:getName() == "PLAYSTATION(R)3 Controller" then
-        lg.draw(ps3menubuttons, 0, screenheight, 0, 2, 2, 0, 24)
+      if joysticks[1]:getName() == "PLAYSTATION(R)3 Controller" then
+        lg.draw(ps3menubuttons, 0, screenheight, 0, 1, 1, 0, 48)
+      elseif  joysticks[1]:getName() == "PLAYSTATION(R)3 Controller"  then
       else
-        lg.draw(xboxmenubuttons, 0, screenheight, 0, 2, 2, 0, 24)
+        drawKey("c", 200, 200, 2)
+        lg.draw(keymenubuttons, 0, screenheight, 0, 1, 1, 0, 48)
       end
     elseif MODE == "color" then
-      if true or joysticks[1]:getName() == "PLAYSTATION(R)3 Controller" then
-        lg.draw(ps3assigncolor, 0, screenheight, 0, 2, 2, 0, 24)
+      if joysticks[1]:getName() == "PLAYSTATION(R)3 Controller" then
+        lg.draw(ps3assigncolor, 0, screenheight, 0, 1, 1, 0, 48)
       else
-        lg.draw(xboxassigncolor, 0, screenheight, 0, 2, 2, 0, 24)
+        lg.draw(xboxassigncolor, 0, screenheight, 0, 1, 1, 0, 48)
       end
     end
   end
@@ -348,7 +395,6 @@ function lg.srectangle(drawType, x, y, width, height)
   lg.rectangle(drawType, x*screenwidth/1440, y*screenheight/900, width*screenwidth/1440, height*screenheight/900) 
 end
 
-lg.setNewFont(20)
 
 lightsize = 10
 maxwob = 7
@@ -1043,8 +1089,6 @@ function drawmenus()
       end
     end
 
-
-
     --retry()
 
     lg.setColor(0,0,0,allfade)
@@ -1055,12 +1099,11 @@ function drawmenus()
       lg.srectangle("fill", 0, 0, screenwidth, screenheight)
     end
 
-
-
-
   end
+
   holdmanage(me)
   holdmanage(you)
+
 end
 
 

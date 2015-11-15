@@ -5,6 +5,73 @@ xboxjoystick = lg.newImage("images/enviro/xboxjoystick.png")
 xboxtrigger = lg.newImage("images/enviro/xboxtrigger.png")
 
 
+function monitorParticles(x,y)
+  lg.print("leaves: " .. #leaves .. 
+    "| rubble: " .. #rubble ..  
+    "| glasseses: " .. #glasseses ..  
+    "| clouds: " .. #clouds ..  
+    "| dust: " .. #dust ..    
+    "| sparks: " .. #sparks ..  
+    "| papers: " .. #papers 
+    ,x,y)
+end
+
+function drawKeyboardControls1(x, y, scale)
+  drawKey("w", x+(21*1)*scale, y-16*scale, scale)
+
+  drawKey("a", x+(7+0)*scale, y, scale)
+  drawKey("s", x+(7+21*1)*scale, y, scale)
+  drawKey("d", x+(7+21*2)*scale, y, scale)
+  
+  drawKey("x", x+(14+21*1)*scale, y+16*scale, scale)
+  drawKey("c", x+(14+21*2)*scale, y+16*scale, scale)
+  drawKey("v", x+(14+21*3)*scale, y+16*scale, scale)
+
+  drawKey("lgui", x+(28)*scale, y+32*scale, scale)
+
+end
+
+function drawKeyboard(x, y, scale)
+  drawKey("q", x+(0)*scale, y-16*scale, scale)
+  drawKey("w", x+(21*1)*scale, y-16*scale, scale)
+  drawKey("e", x+(21*2)*scale, y-16*scale, scale)
+  drawKey("r", x+(21*3)*scale, y-16*scale, scale)
+  drawKey("t", x+(21*4)*scale, y-16*scale, scale)
+  drawKey("y", x+(21*5)*scale, y-16*scale, scale)
+  drawKey("u", x+(21*6)*scale, y-16*scale, scale)
+  drawKey("i", x+(21*7)*scale, y-16*scale, scale)
+  drawKey("o", x+(21*8)*scale, y-16*scale, scale)
+  drawKey("p", x+(21*9)*scale, y-16*scale, scale)
+  drawKey("[", x+(21*10)*scale, y-16*scale, scale)
+  drawKey("]", x+(21*11)*scale, y-16*scale, scale)
+  drawKey("\\", x+(21*12)*scale, y-16*scale, scale)
+
+  drawKey("a", x+(7+0)*scale, y, scale)
+  drawKey("s", x+(7+21*1)*scale, y, scale)
+  drawKey("d", x+(7+21*2)*scale, y, scale)
+  drawKey("f", x+(7+21*3)*scale, y, scale)
+  drawKey("g", x+(7+21*4)*scale, y, scale)
+  drawKey("h", x+(7+21*5)*scale, y, scale)
+  drawKey("j", x+(7+21*6)*scale, y, scale)
+  drawKey("k", x+(7+21*7)*scale, y, scale)
+  drawKey("l", x+(7+21*8)*scale, y, scale)
+  drawKey(";", x+(7+21*9)*scale, y, scale)
+  drawKey("'", x+(7+21*10)*scale, y, scale)
+
+  drawKey("z", x+(14+0)*scale, y+16*scale, scale)
+  drawKey("x", x+(14+21*1)*scale, y+16*scale, scale)
+  drawKey("c", x+(14+21*2)*scale, y+16*scale, scale)
+  drawKey("v", x+(14+21*3)*scale, y+16*scale, scale)
+  drawKey("b", x+(14+21*4)*scale, y+16*scale, scale)
+  drawKey("n", x+(14+21*5)*scale, y+16*scale, scale)
+  drawKey("m", x+(14+21*6)*scale, y+16*scale, scale)
+  drawKey(",", x+(14+21*7)*scale, y+16*scale, scale)
+  drawKey(".", x+(14+21*8)*scale, y+16*scale, scale)
+  drawKey("/", x+(14+21*9)*scale, y+16*scale, scale)
+  drawKey("lgui", x+(28)*scale, y+32*scale, scale)
+end
+
+
 function drawController(x,y,joystick,scale)
 
   lg.draw(xboxtrigger, -6.5*scale+x, -10*scale+y, 0, scale*4/5, scale*4/5*(1-(joystick:getGamepadAxis("triggerleft"))), 2, 3)
@@ -78,13 +145,16 @@ function cameramonitor(x,y)
   lg.print("maxzoom"..tostring(maxzoom),x,y+180)
   lg.print("head2ceiling"..tostring(head2ceiling),x,y+200)
   lg.print("feet2bottom"..tostring(feet2bottom),x,y+220)
+
 end
 
 function dangermonitor(x,y)
+
  lg.print("dangerclose"..tostring(dangerclose), x, y)
  lg.print("rampspeed"..tostring(rampspeed), x, y+20)
  lg.print("cscale"..tostring(cscale), x, y+40)
  lg.print("dangerZoom"..tostring(dangerZoom), x, y+60)
  lg.print("minzoom"..tostring(minzoom), x, y+80)
  lg.print("maxzoom"..tostring(maxzoom), x, y+100)
+
 end

@@ -30,7 +30,14 @@ controller_white_fade=0
 controller_black_fade=0
 
 function drawControllerCheck()
+
   controllersReady = me.joystick ~= nil and you.joystick ~= nil
+
+  if controllersReady then
+    controllerSetupSong:stop()
+  else
+    controllerSetupSong:play()
+  end
 
   if controller_white_fade > 5 then 
     if controllersReady then
@@ -49,8 +56,6 @@ function drawControllerCheck()
   if not you.oldcontrollerready and you.joystick ~= nil then
     controller_white_fade = 255
   end
-
-
 
   if not controllersReady then
 
@@ -74,6 +79,7 @@ function drawControllerCheck()
     elseif controller_menu_s < 0 and controller_menu_s > -.7 then
       controller_menu_s = .7
     end 
+
   else
     controller_menu_s = 255
     controller_menu_l = 255
@@ -90,11 +96,11 @@ function drawControllerCheck()
     lg.sdraw(p2controllercheck, 720/2, 0)
   end
 
-
   if controllersReady then
     lg.setColor(0,0,0)
     lg.rectangle("fill",0,0,screenwidth,screenheight)
   end
+
   lg.setColor(255,255,255,controller_white_fade)
   lg.rectangle("fill",0,0,screenwidth,screenheight)
   cclear()  
@@ -350,14 +356,14 @@ function keyboardcontrols()
   me.down = love.keyboard.isDown("s")
   me.leftb = love.keyboard.isDown("a")
   me.rightb = love.keyboard.isDown("d")
-  me.a1b = love.keyboard.isDown("t")
-  me.a2b = love.keyboard.isDown("f")
-  me.a3b = love.keyboard.isDown("h")
-  me.a4b = love.keyboard.isDown("g")
-  me.blockb = love.keyboard.isDown("e")
-  me.runb = love.keyboard.isDown("r")
-  me.rightbumpb = love.keyboard.isDown("2")
-  me.leftbumpb = love.keyboard.isDown("1")
+  me.a1b = love.keyboard.isDown("lgui") and me.up
+  me.a2b = love.keyboard.isDown("lgui") 
+  me.a3b = love.keyboard.isDown("lgui")
+  me.a4b = love.keyboard.isDown("lgui") and me.down
+  me.blockb = love.keyboard.isDown("x")
+  me.runb = me.blockb
+  me.rightbumpb = love.keyboard.isDown("v")
+  me.leftbumpb = love.keyboard.isDown("c")
 
 
 
@@ -365,17 +371,24 @@ function keyboardcontrols()
   you.down = love.keyboard.isDown("k")
   you.leftb = love.keyboard.isDown("j")
   you.rightb = love.keyboard.isDown("l")
-  you.a1b = love.keyboard.isDown("up")
-  you.a4b = love.keyboard.isDown("down")
-  you.a2b = love.keyboard.isDown("left")
-  you.a3b = love.keyboard.isDown("right")
+  you.a1b = love.keyboard.isDown("p") and you.up
+  you.a2b = love.keyboard.isDown("p")
+  you.a3b = love.keyboard.isDown("p")
+  you.a4b = love.keyboard.isDown("p") and you.down
   you.blockb = love.keyboard.isDown("o")
   you.start = love.keyboard.isDown("u")
-  you.runb = love.keyboard.isDown("p")
-  you.rightbumpb = love.keyboard.isDown("0")
-  you.leftbumpb = love.keyboard.isDown("9")
+  you.runb = you.runb
+  you.rightbumpb = love.keyboard.isDown("=")
+  you.leftbumpb = love.keyboard.isDown("-")
 
   me.a1 = you.a1
+
+  if me.a1b or me.a4b then
+    me.a2b, me.a3b = false
+  end
+  if you.a1b or you.a4b then
+    you.a2b, you.a3b = false
+  end
 
 end
 
@@ -423,248 +436,251 @@ clickclick = false
 function c1accept()    
   if (me.a1 or me.a2 or me.a3 or me.a4 or me.start) then
     return true
-    else return false
+  else 
+    return false
+  end
+end    
+
+function c2accept()    
+  if (you.a1 or you.a2 or you.a3 or you.a4 or you.start) then
+    return true
+  else 
+    return false
+  end
+end    
+
+
+function cancels()
+  if
+    (me.block and not me.holda) or (you.block and not you.holda) then return true
+  else
+    return false
+  end
+end
+
+
+function clicks()
+
+  if MODE == "choose" and (me.block or you.block) then
+    backtimer = backtimer + 1
+    if backtimer > 50 then backtostage() 
     end
-  end    
+  else 
+    backtimer = 0
+  end
 
-  function c2accept()    
-    if (you.a1 or you.a2 or you.a3 or you.a4 or you.start) then
-      return true
-      else return false
-      end
-    end    
+  if MODE ~= "play" then
 
 
-    function cancels()
-      if
-        (me.block and not me.holda) or (you.block and not you.holda) then return true
-      else
-        return false
-      end
+
+    if ns1 and (me.a1 or me.a2 or me.a3 or me.a4 or me.block or me.start) then
+      me.a1 = false
+      me.a2 = false
+      me.a3 = false
+      me.a4 = false
+      me.block = false
+      me.start = false
+    elseif (me.a1 or me.a2 or me.a3 or me.a4 or me.block or me.start) then
+      ns1 = true
+    else 
+      ns1 = false
+    end
+
+    if ns2 and (you.a1 or you.a2 or you.a3 or you.a4 or you.block or you.start) then
+      you.a1 = false
+      you.a2 = false
+      you.a3 = false
+      you.a4 = false
+      you.block = false
+      you.start = false
+    elseif (you.a1 or you.a2 or you.a3 or you.a4 or you.block or you.start) then
+      ns2 = true
+    else 
+      ns2 = false
+    end
+
+    if ns22 and (you.left or you.right or you.up or you.down) then
+      you.up = false
+      you.down = false
+      you.left = false
+      you.right = false
+    elseif (you.left or you.right or you.up or you.down) then
+      ns22 = true
+    else 
+      ns22 = false
+    end
+
+    if ns12 and (me.left or me.right or me.up or me.down) then
+      me.up = false
+      me.down = false
+      me.left = false
+      me.right = false
+    elseif (me.left or me.right or me.up or me.down) then
+      ns12 = true
+    else 
+      ns12 = false
     end
 
 
-    function clicks()
 
-      if MODE == "choose" and (me.block or you.block) then
-        backtimer = backtimer + 1
-        if backtimer > 50 then backtostage() 
-        end
-        else backtimer = 0
-        end
-
-        if MODE ~= "play" then
+  end
+end
 
 
+you.gupv = 0
+me.gupv = 0
+you.gv = boltspeed
+me.gv = boltspeed
 
-          if ns1 and (me.a1 or me.a2 or me.a3 or me.a4 or me.block or me.start) then
-            me.a1 = false
-            me.a2 = false
-            me.a3 = false
-            me.a4 = false
-            me.block = false
-            me.start = false
-          elseif (me.a1 or me.a2 or me.a3 or me.a4 or me.block or me.start) then
-            ns1 = true
-            else ns1 = false
-            end
+function jjstick(xx)
 
-            if ns2 and (you.a1 or you.a2 or you.a3 or you.a4 or you.block or you.start) then
-              you.a1 = false
-              you.a2 = false
-              you.a3 = false
-              you.a4 = false
-              you.block = false
-              you.start = false
-            elseif (you.a1 or you.a2 or you.a3 or you.a4 or you.block or you.start) then
-              ns2 = true
-              else ns2 = false
-              end
-
-              if ns22 and (you.left or you.right or you.up or you.down) then
-                you.up = false
-                you.down = false
-                you.left = false
-                you.right = false
-              elseif (you.left or you.right or you.up or you.down) then
-                ns22 = true
-                else ns22 = false
-                end
-
-                if ns12 and (me.left or me.right or me.up or me.down) then
-                  me.up = false
-                  me.down = false
-                  me.left = false
-                  me.right = false
-                elseif (me.left or me.right or me.up or me.down) then
-                  ns12 = true
-                  else ns12 = false
-                  end
+  if xx.joystick ~= nil then
+    xx.a4 = false
+    xx.a1 = false
+    xx.a2 = false
+    xx.a3 = false
 
 
+    xx.gupv = 0
+    xx.gv = boltspeed
 
-                end
-              end
-
-
-              you.gupv = 0
-              me.gupv = 0
-              you.gv = boltspeed
-              me.gv = boltspeed
-
-              function jjstick(xx)
+    xx.jry = xx.joystick:getGamepadAxis("righty")
+    xx.jrx = xx.joystick:getGamepadAxis("rightx")
 
 
+    xx.length = math.abs(xx.jrx/math.cos(math.atan(-xx.jry/xx.jrx)))
 
-                if xx.joystick ~= nil then
-                  xx.a4 = false
-                  xx.a1 = false
-                  xx.a2 = false
-                  xx.a3 = false
+    if xx.length > .8 then
 
 
-                  xx.gupv = 0
-                  xx.gv = boltspeed
+      if (xx.jry/xx.jrx >= 1
+        or xx.jry/xx.jrx <= -1)
+      and xx.jry < 0
+      then
+      xx.a1b = true
+    end
 
-                  xx.jry = xx.joystick:getGamepadAxis("righty")
-                  xx.jrx = xx.joystick:getGamepadAxis("rightx")
+    if xx.jry/xx.jrx >= -1
+      and xx.jry/xx.jrx <= 1
+      and xx.jrx < 0
+      then
+      xx.a2b = true
+    end
 
+    if xx.jry/xx.jrx >= -1
+      and xx.jry/xx.jrx <= 1
+      and xx.jrx > 0
+      then
+      xx.a3b = true
+    end
 
-                  xx.length = math.abs(xx.jrx/math.cos(math.atan(-xx.jry/xx.jrx)))
+    if (xx.jry/xx.jrx >= 1
+      or xx.jry/xx.jrx <= -1)
+    and xx.jry > 0
+    then
+    xx.a4b = true
+  end
 
-                  if xx.length > .8 then
-
-
-                    if (xx.jry/xx.jrx >= 1
-                      or xx.jry/xx.jrx <= -1)
-                    and xx.jry < 0
-                    then
-                    xx.a1b = true
-                  end
-
-                  if xx.jry/xx.jrx >= -1
-                    and xx.jry/xx.jrx <= 1
-                    and xx.jrx < 0
-                    then
-                    xx.a2b = true
-                  end
-
-                  if xx.jry/xx.jrx >= -1
-                    and xx.jry/xx.jrx <= 1
-                    and xx.jrx > 0
-                    then
-                    xx.a3b = true
-                  end
-
-                  if (xx.jry/xx.jrx >= 1
-                    or xx.jry/xx.jrx <= -1)
-                  and xx.jry > 0
-                  then
-                  xx.a4b = true
-                end
-              end
+end
 
 
 
 
 
-              if xx.joystick:isGamepadDown("dpleft") then
-                xx.leftb = true
-              elseif xx.joystick:isGamepadDown("dpright") then
-                xx.rightb = true
-              end
+if xx.joystick:isGamepadDown("dpleft") then
+  xx.leftb = true
+elseif xx.joystick:isGamepadDown("dpright") then
+  xx.rightb = true
+end
 
-              if xx.joystick:isGamepadDown("dpup") then
-                xx.upb = true
-              elseif xx.joystick:isGamepadDown("dpdown") then
-                xx.downb = true
-              end
+if xx.joystick:isGamepadDown("dpup") then
+  xx.upb = true
+elseif xx.joystick:isGamepadDown("dpdown") then
+  xx.downb = true
+end
 
-              if xx.joystick:isGamepadDown("a") then
-                xx.up = true
-              end
-
-
-              if xx.joystick:isGamepadDown("leftstick") then
-                xx.runb = true
-              end 
-
-              if xx.joystick:isGamepadDown("rightstick") then
-                xx.blockb = true
-              end 
-              if xx.joystick:isGamepadDown("start") then
-                xx.start = true
-              end 
+if xx.joystick:isGamepadDown("a") then
+  xx.up = true
+end
 
 
+if xx.joystick:isGamepadDown("leftstick") then
+  xx.runb = true
+end 
 
-              if xx.joystick:getGamepadAxis("leftx") < -.4 then
-                xx.leftb = true
-              elseif 
-                xx.joystick:getGamepadAxis("leftx")  > .4 then
-                xx.rightb = true
-              end 
-
-              if xx.runb then
-
-                if 
-                  xx.joystick:getGamepadAxis("lefty") > 2 then
-                  xx.down = true
-                elseif xx.joystick:getGamepadAxis("lefty") < - 2 then
-                  xx.up = true
-                end 
+if xx.joystick:isGamepadDown("rightstick") then
+  xx.blockb = true
+end 
+if xx.joystick:isGamepadDown("start") then
+  xx.start = true
+end 
 
 
 
-              else
+if xx.joystick:getGamepadAxis("leftx") < -.4 then
+  xx.leftb = true
+elseif 
+  xx.joystick:getGamepadAxis("leftx")  > .4 then
+  xx.rightb = true
+end 
 
-                if 
-                  xx.joystick:getGamepadAxis("lefty") > .5 then
-                  xx.down = true
-                elseif xx.joystick:getGamepadAxis("lefty") < - .5 then
-                  xx.up = true
-                end 
+if xx.runb then
 
-              end
-
-
-
-              -- if 
-              --      xx.joystick:getGamepadAxis("righty") > .4 then
-              --     xx.block = true
-              -- end 
+  if 
+    xx.joystick:getGamepadAxis("lefty") > 2 then
+    xx.down = true
+  elseif xx.joystick:getGamepadAxis("lefty") < - 2 then
+    xx.up = true
+  end 
 
 
 
-              xx.rightbumpb = xx.joystick:getGamepadAxis("triggerright") > .5
-              xx.leftbumpb = xx.joystick:getGamepadAxis("triggerleft") > .5
+else
 
-              slowbutton = xx.joystick:isGamepadDown("rightshoulder") or xx.joystick:isGamepadDown("leftshoulder")
+  if 
+    xx.joystick:getGamepadAxis("lefty") > .5 then
+    xx.down = true
+  elseif xx.joystick:getGamepadAxis("lefty") < - .5 then
+    xx.up = true
+  end 
 
-              xx.jly = xx.joystick:getGamepadAxis("lefty")
-              xx.jlx = xx.joystick:getGamepadAxis("leftx")
+end
 
-              xx.leftdeadzone = math.abs(xx.jlx/math.cos(math.atan(-xx.jly/xx.jlx))) < .3
+-- if 
+--      xx.joystick:getGamepadAxis("righty") > .4 then
+--     xx.block = true
+-- end 
 
-              xx.start = xx.joystick:isGamepadDown("start")
+xx.rightbumpb = xx.joystick:getGamepadAxis("triggerright") > .5
+xx.leftbumpb = xx.joystick:getGamepadAxis("triggerleft") > .5
 
-              if not xx.leftdeadzone then
-                xx.angle = math.atan(-xx.joystick:getGamepadAxis("lefty")/(math.abs(xx.joystick:getGamepadAxis("leftx"))))
-                else xx.angle = 0
-                end
-              end
-            end
+slowbutton = xx.joystick:isGamepadDown("rightshoulder") or xx.joystick:isGamepadDown("leftshoulder")
+
+xx.jly = xx.joystick:getGamepadAxis("lefty")
+xx.jlx = xx.joystick:getGamepadAxis("leftx")
+
+xx.leftdeadzone = math.abs(xx.jlx/math.cos(math.atan(-xx.jly/xx.jlx))) < .3
+
+xx.start = xx.joystick:isGamepadDown("start")
+
+if not xx.leftdeadzone then
+  xx.angle = math.atan(-xx.joystick:getGamepadAxis("lefty")/(math.abs(xx.joystick:getGamepadAxis("leftx"))))
+else 
+  xx.angle = 0
+end
+end
+end
 
 
-            function updateControllers()
+function updateControllers()
 
-              checkForControllers()
-              keyboardcontrols()
-              jjstick(me)
-              jjstick(you)
-              controlsstuff(me)
-              controlsstuff(you)
-              rumblemodule(me)
-              rumblemodule(you)
-              pausing()
-            end
+  checkForControllers()
+  keyboardcontrols()
+  jjstick(me)
+  jjstick(you)
+  controlsstuff(me)
+  controlsstuff(you)
+  rumblemodule(me)
+  rumblemodule(you)
+  pausing()
+end

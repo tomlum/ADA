@@ -10,6 +10,7 @@
 --can't kick combo out of purple kick
 
 --notes:
+--add new finish to combo to Orange, long strike
 --air dash
 --Times square, have a facade layer that's black or something so this way it looks like back lit against lights
 --If you hit glass floor with enough j break through it
@@ -22,7 +23,6 @@
 
 require "utilities/initializers"
 
-
 --Filming utilities
 infinitepan = false
 no_screen_follow = false
@@ -32,10 +32,10 @@ drawtrails = false
 noslowmo = false
 
 --Debug/Test Utilities
-fightclub = false
-demo = true
+fightclub = true
+demo = false
 debug = false
-MODE = "controllerSetup"
+MODE = "map"
 
 notilebouncing = false
 melcolor = 1
@@ -47,8 +47,8 @@ mapNum = 2
 rampspeed= therampspeed
 drawBoxes = false
 drawFeet = false
-volume = .8
-fullscreen = true
+volume = 0
+fullscreen = false
 readout = false
 putmehere = 1000
 putyouhere = 1025
@@ -58,6 +58,28 @@ lassoisathing = false
 dangerCloseIsAThing = not no_screen_follow
 
 mute = false
+
+
+if demo then
+
+  fightclub = false
+  infinitepan = false
+  no_screen_follow = false
+  drawControllers = false
+  waver_outlines = true
+  drawtrails = false
+  noslowmo = false
+  MODE = "controllerSetup"
+  melcolor = 0
+  mercolor = 0
+  youlcolor = 0
+  yourcolor = 0
+  fullscreen = true
+  mapNum = 1
+  volume = 1
+
+end
+
 
 love.audio.setVolume(volume)
 
@@ -120,5 +142,10 @@ function love.draw()
     debugReadouts()
   end
   lg.setColor(25,25,25)
+  drawKeyboardControls1(100, 100, 2)
+  monitorParticles(100,100)
+  lg.print(me.v, 300, 300)
+  lg.print(tostring(me.dodgetype), 300, 320)
   --lg.rectangle("fill", screenwidth/2,0,screenwidth,screenheight)
+
 end

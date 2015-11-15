@@ -293,8 +293,6 @@ function camerafol()
   camera.scaleX = cscale
   camera.scaleY = cscale
 
-
-
   if xdif <= screenwidth*cscale/2 + camera_center_offset*2 then 
     if no_screen_follow then 
     else
@@ -303,9 +301,6 @@ function camerafol()
   else 
     onescreen = false
   end
-
-
-
 
   --indicator function for when at wall, then midpoint becomes some other constant point
 
@@ -324,7 +319,6 @@ function camerafol()
 
   if not mecamfloor and you.y > me.y then 
     youyrig = you.y+60 - playheight*cscale + feet2bottom*cscale
-
   elseif youcamfloor 
     then
     youyrig = the_map.floor - playheight*cscale + feet2bottom*cscale
@@ -335,7 +329,6 @@ function camerafol()
 
   if not youcamfloor and you.y < me.y then 
     meyrig = me.y+60 - playheight*cscale + feet2bottom*cscale
-
   elseif mecamfloor 
     then
     meyrig = the_map.floor - playheight*cscale + feet2bottom*cscale
@@ -363,11 +356,6 @@ function camerafol()
     meyrig = youyrig
     youyrig = tempyrig
 
-
-
-
-
-
     if camera.xfollow 
       then
       tempxfol = true
@@ -388,22 +376,11 @@ function camerafol()
   end
 
 
-
-
-
-
-
-
-
-
   if camera.xfollow then
     camera.x = mexrig
   end
 
   camera.y = meyrig
-
-
-
 
   if camera2.xfollow then
     camera2.x = youxrig

@@ -171,25 +171,23 @@ function breadandbutter(xx)
           xx.im = punch5
         end
         repplay(xx.blues)
-        if xx.animcounter >0 then
-          hexHit(xx, xx.id, 
-            {x=xx.mid, y = xx.y+24},
-            {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
-            {x=xx.mid, y = xx.y+30},
-            {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32-xx.j},
-            function(z)
+        hexHit(xx, xx.id, 
+          {x=xx.mid, y = xx.y+24},
+          {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
+          {x=xx.mid, y = xx.y+30},
+          {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32-xx.j},
+          function(z)
 
-              xx.cancombo = true
-              z.v = z.v/3+xx.lr*at.bb.p.kb+xx.v
-              if not (z.block and z.lr == -xx.lr) then
-                z.health = z.health - at.bb.p.dam
-                z.flinch = true
-                z.ft = z.ft+at.bb.p.ft
-              end
-              shakez(at.bb.p.z)
+            xx.cancombo = true
+            z.v = z.v/3+xx.lr*at.bb.p.kb+xx.v
+            if not (z.block and z.lr == -xx.lr) then
+              z.health = z.health - at.bb.p.dam
+              z.flinch = true
+              z.ft = z.ft+at.bb.p.ft
+            end
+            shakez(at.bb.p.z)
 
             end)
-        end
         xx.v = xx.v + (xx.lr*3)*xx.rampspeed
 
       elseif xx.animcounter < 37 then
@@ -214,23 +212,23 @@ function breadandbutter(xx)
         xx.im = kick1
       elseif xx.animcounter < 18 then
         xx.im = kick2
-          hexHit(xx, xx.id, 
-            {x=xx.mid, y = xx.y+31},
-            {x=xx.mid+xx.v+(xx.lr*28), y = xx.y+31-xx.j},
-            {x=xx.mid+xx.v+(xx.lr*28), y = xx.y+39-xx.j},
-            {x=xx.mid, y = xx.y+37},
-            function(z)
-              xx.cancombo = true
-              z.health = z.health - at.bb.k.dam
-              z.flinch = true
-              if not (z.block and z.lr == -xx.lr) then
-                z.ft = z.ft+at.bb.k.ft
-                z.v = z.v/3+ xx.lr*at.bb.k.kb
-              else
-                z.ft = z.ft+at.bb.k.ft/2
-                z.v = z.v/3+ xx.lr*at.bb.k.kb*2/3
-              end
-              shakez(at.bb.k.z)
+        hexHit(xx, xx.id, 
+          {x=xx.mid, y = xx.y+31},
+          {x=xx.mid+xx.v+(xx.lr*28), y = xx.y+31-xx.j},
+          {x=xx.mid+xx.v+(xx.lr*28), y = xx.y+39-xx.j},
+          {x=xx.mid, y = xx.y+37},
+          function(z)
+            xx.cancombo = true
+            z.health = z.health - at.bb.k.dam
+            z.flinch = true
+            if not (z.block and z.lr == -xx.lr) then
+              z.ft = z.ft+at.bb.k.ft
+              z.v = z.v/3+ xx.lr*at.bb.k.kb
+            else
+              z.ft = z.ft+at.bb.k.ft/2
+              z.v = z.v/3+ xx.lr*at.bb.k.kb*2/3
+            end
+            shakez(at.bb.k.z)
 
             end)
       elseif xx.animcounter < 43 then
@@ -261,7 +259,7 @@ function breadandbutter(xx)
               z.flinch = true
               z.ft = z.ft+at.bb.u.ft
               shakez(at.bb.u.z)
-            end)
+              end)
         end
       elseif xx.animcounter >= 16 then
         xx.animcounter = 0
@@ -297,14 +295,14 @@ function breadandbutter(xx)
                 shakez(at.bb.ap.z)
               end
 
-          end)
+              end)
         end
 
       elseif xx.animcounter < 25 then
         xx.im=dropkick1
-          xx.cmbo = true
+        xx.cmbo = true
       elseif xx.animcounter < 45 then
-          xx.cmbo = true
+        xx.cmbo = true
 
       elseif xx.animcounter >= 45 then
         xx.animcounter = 0
@@ -341,7 +339,7 @@ function breadandbutter(xx)
               shakez(at.bb.ak.z)
             end
 
-          end)
+            end)
 
 
       elseif xx.animcounter <= 40 then
@@ -369,44 +367,44 @@ function breadandbutter(xx)
               z.flinch = true
               z.ft = z.ft+at.bb.u.ft
               shakez(at.bb.u.z)
-            end)
+              end)
         end
       elseif xx.animcounter >= 16 then
         xx.animcounter = 0
       end
 
-  elseif xx.attack_num == 7 then
+    elseif xx.attack_num == 7 then
       if xx.animcounter <= 2 then
         xx.j = at.bb.run.j
         xx.im = brun1
       elseif xx.animcounter < 7 then
         xx.im = brun1
       elseif xx.animcounter < 9 then
-           hexHit(xx, xx.id, 
-            {x=xx.mid, y = xx.y+19},
-            {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+23-xx.j},
-            {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+29-xx.j},
-            {x=xx.mid, y = xx.y+26},
-            function(z)
-              z.v = z.v/3+xx.lr*at.bb.rp.kb+xx.v
-              if not (z.block and z.lr == -xx.lr) then
-                z.health = z.health - at.bb.rp.dam
-                z.flinch = true
-                z.ft = z.ft+at.bb.rp.ft
-              end
-              shakez(at.bb.rp.z)
+       hexHit(xx, xx.id, 
+        {x=xx.mid, y = xx.y+19},
+        {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+23-xx.j},
+        {x=xx.mid+xx.v+(xx.lr*19), y = xx.y+29-xx.j},
+        {x=xx.mid, y = xx.y+26},
+        function(z)
+          z.v = z.v/3+xx.lr*at.bb.rp.kb+xx.v
+          if not (z.block and z.lr == -xx.lr) then
+            z.health = z.health - at.bb.rp.dam
+            z.flinch = true
+            z.ft = z.ft+at.bb.rp.ft
+          end
+          shakez(at.bb.rp.z)
 
-            end)
-          
-        xx.im = brun2
-      elseif xx.animcounter < 30 then
-        xx.im = brun3
-      else
-        xx.animcounter = 0
-      end
-      
-   
-      
+          end)
+       
+       xx.im = brun2
+     elseif xx.animcounter < 30 then
+      xx.im = brun3
+    else
+      xx.animcounter = 0
     end
+    
+    
+    
   end
+end
 end

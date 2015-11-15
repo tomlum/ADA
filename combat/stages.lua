@@ -86,7 +86,7 @@ function loadStage()
     me.lives = fractal_lives
     maxhealth = fractal_max_health
   elseif game_mode == "duel" then 
-    maxhealth = 1
+    maxhealth = 85
   elseif game_mode == "koth" then 
     maxhealth = 50
   end
@@ -94,8 +94,8 @@ function loadStage()
   you.score = 0
   me.health = maxhealth
   you.health = maxhealth
-  me.oldhealth = me.health
-  you.oldhealth = you.health
+  me.old_health = me.health
+  you.old_health = you.health
 
   the_map = the_maps[mapNum]
   floor = the_maps[mapNum].floor
