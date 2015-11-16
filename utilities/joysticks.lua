@@ -29,9 +29,12 @@ controllersReady = false
 controller_white_fade=0
 controller_black_fade=0
 
+me.using_keyboard = true
+you.using_keyboard = false
+
 function drawControllerCheck()
 
-  controllersReady = me.joystick ~= nil and you.joystick ~= nil
+  controllersReady = (me.joystick ~= nil or me.using_keyboard) and (you.joystick ~= nil or you.using_keyboard)
 
   if controllersReady then
     controllerSetupSong:stop()
@@ -49,12 +52,14 @@ function drawControllerCheck()
     controller_white_fade = 0
   end
 
-  if love.keyboard.isDown(" ") or not me.oldcontrollerready and me.joystick ~= nil then
+  if not me.oldcontrollerready and (me.joystick ~= nil or me.start) then
     controller_white_fade = 255
+    me.using_keyboard = true
   end
 
-  if not you.oldcontrollerready and you.joystick ~= nil then
+  if not you.oldcontrollerready and (you.joystick ~= nil or you.start) then
     controller_white_fade = 255
+    you.using_keyboard = true
   end
 
   if not controllersReady then
@@ -90,9 +95,9 @@ function drawControllerCheck()
   lg.rectangle("fill",0,0,screenwidth,screenheight)
   cclear()  
 
-  if me.joystick == nil then 
+  if me.joystick == nil and not me.using_keyboard then 
     lg.sdraw(p1controllercheck, 720/2, 0)
-  elseif you.joystick == nil then 
+  elseif you.joystick == nil and not you.using_keyboard then 
     lg.sdraw(p2controllercheck, 720/2, 0)
   end
 
@@ -109,17 +114,15 @@ function drawControllerCheck()
     MODE = "title"
   end
 
-  me.oldcontrollerready = me.joystick ~= nil
-  you.oldcontrollerready = you.joystick ~= nil
+  me.oldcontrollerready = me.joystick ~= nil or me.using_keyboard
+  you.oldcontrollerready = you.joystick ~= nil or you.using_keyboard
 end
 
 function checkForControllers()
   for i,v in ipairs(love.joystick.getJoysticks()) do
     if me.joystick == nil then
       if v:isGamepadDown("guide") then
-        if me.joystick == nil then 
-          repplay(readysound)
-        end
+        repplay(readysound)
         me.joystick = v
         me.joystickn = i
       end
@@ -127,15 +130,12 @@ function checkForControllers()
 
     if you.joystick == nil and i~=me.joystickn then
       if v:isGamepadDown("guide") then
-        if you.joystick == nil then 
-          repplay(readysound)
-        end
-        you.joystick = v
-        you.joystickn = i
+        repplay(readysound)
       end
+      you.joystick = v
+      you.joystickn = i
     end
   end
-
 end
 
 function rumbleme(xx,i)
@@ -351,7 +351,7 @@ function keyboardcontrols()
 
 
 
-  me.start = love.keyboard.isDown("q")
+  me.start = love.keyboard.isDown(" ")
   me.up = love.keyboard.isDown("w")
   me.down = love.keyboard.isDown("s")
   me.leftb = love.keyboard.isDown("a")
@@ -360,10 +360,10 @@ function keyboardcontrols()
   me.a2b = love.keyboard.isDown("lgui") 
   me.a3b = love.keyboard.isDown("lgui")
   me.a4b = love.keyboard.isDown("lgui") and me.down
-  me.blockb = love.keyboard.isDown("x")
+  me.blockb = love.keyboard.isDown("c")
   me.runb = me.blockb
-  me.rightbumpb = love.keyboard.isDown("v")
-  me.leftbumpb = love.keyboard.isDown("c")
+  me.rightbumpb = love.keyboard.isDown("e")
+  me.leftbumpb = love.keyboard.isDown("q")
 
 
 
@@ -376,8 +376,8 @@ function keyboardcontrols()
   you.a3b = love.keyboard.isDown("p")
   you.a4b = love.keyboard.isDown("p") and you.down
   you.blockb = love.keyboard.isDown("o")
-  you.start = love.keyboard.isDown("u")
-  you.runb = you.runb
+  you.start = love.keyboard.isDown(" ")
+  you.runb = you.blockb
   you.rightbumpb = love.keyboard.isDown("=")
   you.leftbumpb = love.keyboard.isDown("-")
 

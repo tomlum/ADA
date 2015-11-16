@@ -41,20 +41,20 @@ aorun2 = {im=lg.newImage("images/player/attack/orange/aorun2.png"), xoff = 3, yo
 
 at.o = {}
 at.o.p = {}
-at.o.p.dam = 10
+at.o.p.dam = 7
 at.o.p.ft = 25
 at.o.p.max = 2
 at.o.p.z = .4
 at.o.p.j = -20
 
 at.o.ap = {}
-at.o.ap.dam = 10
+at.o.ap.dam = 7
 at.o.ap.ft = 19
 at.o.ap.z = 3.5
 at.o.ap.j = -20
 
 at.o.ak = {}
-at.o.ak.dam = 15
+at.o.ak.dam = 10
 at.o.ak.ft = 18
 at.o.ak.max = 5
 at.o.ak.z = 4.5
@@ -64,7 +64,7 @@ you.o5repcounter = 0
 
 
 at.o.k = {}
-at.o.k.dam = 15
+at.o.k.dam = 9
 at.o.k.ft = 18
 at.o.k.z = 4
 at.o.k.j = -20
@@ -72,7 +72,7 @@ at.o.k.mj = 17
 
 
 at.o.u = {}
-at.o.u.dam = 15
+at.o.u.dam = 7
 at.o.u.ft = 24
 at.o.u.j = 25
 at.o.u.v = 0

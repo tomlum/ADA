@@ -145,13 +145,14 @@ function grab(xx)
 		xx.grabbing = true
 	end
 
-	if xx.blockb and (xx.a2b or xx.a3b) and xx.animcounter == 0 then
+	if xx.using_keyboard and xx.blockb and (xx.a2b or xx.a3b) and xx.animcounter == 0 and not xx.dodge and not xx.flinch and xx.dodgetype == 0 then
 		xx.animcounter = 1
 		xx.attack_num = 8
+		xx.grabbingx = nil
 	elseif xx.animcounter > 0 and xx.attack_num == 8 then
 		if xx.animcounter > 5 and xx.grabbingx ~= nil and xx.animcounter < 300 then
 			xx.grabbingx.gothroughplats = xx.downb
-			xx.grabbingx.x = xx.mid+15*xx.lr
+			xx.grabbingx.x = xx.mid+25*xx.lr-15
 			xx.grabbingx.y = xx.y
 		end
 		if xx.animcounter < 4 then
@@ -169,9 +170,9 @@ function grab(xx)
 			if xx.animcounter < 5 then
 				hexHit(xx, xx.id, 
 					{x=xx.mid, y = xx.y+24},
-					{x=xx.mid+xx.v+(xx.lr*24), y = xx.y+26-xx.j},
+					{x=xx.mid+xx.v+(xx.lr*20), y = xx.y+26-xx.j},
 					{x=xx.mid, y = xx.y+30},
-					{x=xx.mid+xx.v+(xx.lr*24), y = xx.y+32-xx.j},
+					{x=xx.mid+xx.v+(xx.lr*20), y = xx.y+32-xx.j},
 					function(z)
 						xx.animcounter = 100
 						xx.grabbingx = z
@@ -214,7 +215,6 @@ function grab(xx)
 					if xx.grabbingx.x < xx.x then
 						xx.grabbingx.x = xx.grabbingx.x + 15
 						xx.x = xx.x - 15
-
 					end
 				else 
 					xx.grabbingx.flinchway = 1

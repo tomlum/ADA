@@ -10,6 +10,8 @@
 --can't kick combo out of purple kick
 
 --notes:
+--Currently green forward can knock through floor... is it hline??
+--fix camera minor jump on fullscreen from verticalm
 --add new finish to combo to Orange, long strike
 --air dash
 --Times square, have a facade layer that's black or something so this way it looks like back lit against lights
@@ -35,7 +37,7 @@ noslowmo = false
 fightclub = true
 demo = false
 debug = false
-MODE = "map"
+MODE = "controllerSetup"
 
 notilebouncing = false
 melcolor = 1
@@ -47,7 +49,7 @@ mapNum = 2
 rampspeed= therampspeed
 drawBoxes = false
 drawFeet = false
-volume = 0
+volume = 1
 fullscreen = false
 readout = false
 putmehere = 1000
@@ -136,16 +138,16 @@ function love.draw()
     drawStory()
   end
 
-  drawControlsOverlay()
+  if demo then  drawControlsOverlay() end
 
   if debug or fightclub then
     debugReadouts()
   end
   lg.setColor(25,25,25)
-  drawKeyboardControls1(100, 100, 2)
-  monitorParticles(100,100)
-  lg.print(me.v, 300, 300)
-  lg.print(tostring(me.dodgetype), 300, 320)
+  drawKeyboardControls2(screenwidth-550, screenheight-50, 2)
+  --monitorParticles(100,100)
+  --lg.print(me.v, 300, 300)
+  --lg.print(tostring(me.dodgetype), 300, 320)
   --lg.rectangle("fill", screenwidth/2,0,screenwidth,screenheight)
 
 end

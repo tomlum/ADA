@@ -236,41 +236,74 @@ keyassigncolor = lg.newImage("images/enviro/keyassigncolor.png")
 key2assigncolor = lg.newImage("images/enviro/key2assigncolor.png")
 key_im = lg.newImage("images/enviro/key.png")
 keypressed_im = lg.newImage("images/enviro/keypressed.png")
+blockkey_im = lg.newImage("images/enviro/blockkey.png")
+blockkeypressed_im = lg.newImage("images/enviro/blockkeypressed.png")
+attackkey_im = lg.newImage("images/enviro/attackkey.png")
+attackkeypressed_im = lg.newImage("images/enviro/attackkeypressed.png")
 widekey_im = lg.newImage("images/enviro/widekey.png")
 widekeypressed_im = lg.newImage("images/enviro/widekeypressed.png")
 lcmd_im = lg.newImage("images/enviro/lcmd.png")
 lcmdpressed_im = lg.newImage("images/enviro/lcmdpressed.png")
+attacklcmd_im = lg.newImage("images/enviro/attacklcmd.png")
+attacklcmdpressed_im = lg.newImage("images/enviro/attacklcmdpressed.png")
 rcmd_im = lg.newImage("images/enviro/rcmd.png")
 rcmdpressed_im = lg.newImage("images/enviro/rcmdpressed.png")
 
+function drawAttackKey(key, x, y, size)
+  if love.keyboard.isDown(key) then
+    if key == "lgui" then
+      lg.draw(attacklcmdpressed_im, x, y, 0, size/2, size/2, 32, 18)
+    else
+      lg.draw(attackkeypressed_im, x, y-3*size, 0, size, size, 11, 9)
+      lg.setColor(0,0,0)
+      lg.printf(string.upper(key), x, y-5*size, 0, "center")
+    end
+  else
+    if key == "lgui" then
+      lg.draw(attacklcmd_im, x, y, 0, size/2, size/2, 32, 18)
+    else
+      lg.draw(attackkey_im, x, y-3*size, 0, size, size, 11, 9)
+      lg.setColor(0,0,0)
+      lg.printf(string.upper(key), x, y-7*size, 0, "center")
+    end
+  end
+end
 
+function drawBlockKey(key, x, y, size)
+  if love.keyboard.isDown(key) then
+    lg.draw(blockkeypressed_im, x, y-3*size, 0, size, size, 11, 9)
+    lg.setColor(0,0,0)
+    lg.printf(string.upper(key), x, y-6*size, 0, "center")
+
+  else
+    lg.draw(blockkey_im, x, y-3*size, 0, size, size, 11, 9)
+    lg.setColor(0,0,0)
+    lg.printf(string.upper(key), x, y-8*size, 0, "center")
+  end
+end
 
 function drawKey(key, x, y, size)
 
-  cclear()
   if love.keyboard.isDown(key) then
     if key == "lgui" then
       lg.draw(lcmdpressed_im, x, y, 0, size/2, size/2, 32, 18)
 
     else
-    lg.draw(keypressed_im, x, y, 0, size, size, 11, 9)
-    setFontSize(9*size)
-    lg.setColor(0,0,0)
-    lg.printf(string.upper(key), x, y-6*size, 0, "center")
-  end
+      lg.draw(keypressed_im, x, y, 0, size, size, 11, 9)
+      lg.setColor(0,0,0)
+      lg.printf(string.upper(key), x, y-6*size, 0, "center")
+    end
   else
     if key == "lgui" then
       lg.draw(lcmd_im, x, y, 0, size/2, size/2, 32, 18)
 
     else
-    lg.draw(key_im, x, y, 0, size, size, 11, 9)
-    setFontSize(9*size)
-    lg.setColor(0,0,0)
-    lg.printf(string.upper(key), x, y-8*size, 0, "center")
-  end
+      lg.draw(key_im, x, y, 0, size, size, 11, 9)
+      lg.setColor(0,0,0)
+      lg.printf(string.upper(key), x, y-8*size, 0, "center")
+    end
   end
   cclear()
-  setFontSize(font_size)
 
 end
 

@@ -96,95 +96,96 @@ function moveTOD(delta)
             tod = {
               1-.5*((minute-30)/30),
               1-.5*((minute-30)/30),
-              .8}
-            else
-              tod ={
-                1,
-                1,
-                1-.2*(minute/30)}
+              .8
+            }
+          else
+            tod ={
+              1,
+              1,
+              1-.2*(minute/30)
+            }
+          end
+        else 
+          tod = {.5,.5,.8}
+        end
 
-              end
+      end
 
-              else tod = {.5,.5,.8}
-              end
+      function tods()
 
-            end
+        lg.setShader(todshader)
+        todshader:send("todd", 
+          {tod[1], tod[2], tod[3], 1}
+          ) 
 
-            function tods()
+      end
 
-              lg.setShader(todshader)
-              todshader:send("todd", 
-                {tod[1], tod[2], tod[3], 1}
-                ) 
+      inverseshader = lg.newShader(
+        [[
+        vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
+        {
+          vec4 tc = Texel(texture, texture_coords); 
 
-            end
+          return vec4(1-tc[0], 1-tc[1], 1-tc[2], tc[3]);
+        }
+        ]] )
 
-            inverseshader = lg.newShader(
-              [[
-              vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
-              {
-                vec4 tc = Texel(texture, texture_coords); 
+      todshader = lg.newShader(
+        [[
+        extern vec4 todd;
+        vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
+        {
+          vec4 texcolor = Texel(texture, texture_coords); 
 
-                return vec4(1-tc[0], 1-tc[1], 1-tc[2], tc[3]);
-              }
-              ]] )
-
-            todshader = lg.newShader(
-              [[
-              extern vec4 todd;
-              vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
-              {
-                vec4 texcolor = Texel(texture, texture_coords); 
-
-                return vec4(todd[0]*texcolor[0],todd[1]*texcolor[1],todd[2]*texcolor[2],texcolor[3]);
-              }
-              ]] )
+          return vec4(todd[0]*texcolor[0],todd[1]*texcolor[1],todd[2]*texcolor[2],texcolor[3]);
+        }
+        ]] )
 
 
 
 
-            fillshader = lg.newShader(
-              [[
-              extern vec4 shade;
-              vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
-              {
-                vec4 texcolor = Texel(texture, texture_coords); 
+      fillshader = lg.newShader(
+        [[
+        extern vec4 shade;
+        vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
+        {
+          vec4 texcolor = Texel(texture, texture_coords); 
 
-                if (texcolor[3]>.01)
-                  return shade; 
+          if (texcolor[3]>.01)
+            return shade; 
 
-                  return texcolor; 
-                }
-                ]] )
+            return texcolor; 
+          }
+          ]] )
 
-            cshader = lg.newShader(
-              [[
-              vec4 lscreen = vec4(0.0, 1.0, 0.0, 1.0);
-              vec4 fscreen = vec4(0.0, 1.0, 1.0, 1.0);
-              vec4 rscreen = vec4(1.0, 1.0, 0.0, 1.0);
-              vec4 red = vec4(1.0, 0, 0.0, 1.0);
-              vec4 yellow = vec4(1.0, 1.0, 0.0, 1.0);
-              extern vec4 palette[6];
-              vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
-              {
-                vec4 texcolor = Texel(texture, texture_coords); 
+      cshader = lg.newShader(
+        [[
+        vec4 lscreen = vec4(0.0, 1.0, 0.0, 1.0);
+        vec4 fscreen = vec4(0.0, 1.0, 1.0, 1.0);
+        vec4 rscreen = vec4(1.0, 1.0, 0.0, 1.0);
+        vec4 red = vec4(1.0, 0, 0.0, 1.0);
+        vec4 yellow = vec4(1.0, 1.0, 0.0, 1.0);
+        extern vec4 palette[6];
+        vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
+        {
+          vec4 texcolor = Texel(texture, texture_coords); 
 
-                if (texcolor[0] == texcolor[1] &&
-                  texcolor[1] == texcolor[2] &&
-                  texcolor[2] == texcolor[0] && 
-                  texcolor[1] > .5)
-            return vec4(palette[0][0]*texcolor[0],palette[0][1]*texcolor[1],palette[0][2]*texcolor[2],texcolor[3]*palette[0][3]);
+          if (texcolor[0] == texcolor[1] &&
+            texcolor[1] == texcolor[2] &&
+            texcolor[2] == texcolor[0] && 
+            texcolor[1] > .5)
+      return vec4(palette[0][0]*texcolor[0],palette[0][1]*texcolor[1],palette[0][2]*texcolor[2],texcolor[3]*palette[0][3]);
 
-            if (texcolor == fscreen)
-              return palette[1];  
-              if (texcolor == lscreen)
-                return palette[4];
-                if (texcolor == rscreen)
-                  return palette[5];
+      if (texcolor == fscreen)
+        return palette[1];  
+        if (texcolor == lscreen)
+          return palette[4];
+          if (texcolor == rscreen)
+            return palette[5];
 
-                  if (texcolor[1] == red[1] && 
-                    texcolor[2] == red[2] && 
-                    texcolor[0] > 0)
+            if (texcolor[1] == red[1] && 
+              texcolor[2] == red[2] && 
+              texcolor[0] > 0)
 return vec4(palette[2][0]*texcolor[0],palette[2][1]*texcolor[0],palette[2][2]*texcolor[0],texcolor[3]); 
 
 
@@ -727,7 +728,8 @@ function drawfloorsstuff()
   lg.draw(enviro.pfloors,0,0)
   drawpartition(0, the_maps[3].floor, -1)
   drawpartition(the_maps[3].rightwall, the_maps[3].floor, 1)
-  lg.rectangle("fill", -3000, the_maps[2].floor, 6000+the_maps[2].rightwall, 1000)
+  lg.setColor(27,27,27,255)
+  lg.rectangle("fill", -3000, the_maps[3].floor, 6000+the_maps[2].rightwall, 1000)
   floorsveneer()
 end
 
@@ -1209,9 +1211,11 @@ end
 function makeslidedust(why,ex,vee)
   if rampcanhit then
     if vee > minvfordust and math.random() > .5 then
-      table.insert(dust,{x = ex, y = why, v=vee/3 + math.random(3), j = math.random(0,vee/5)})
+      table.insert(dust,{x = ex, y = why, v=vee/3 + floRan(3), j = floRan(vee/5)})
+      table.insert(clouds,{x = ex, y = why, v=vee/3+ floRan(3), j = floRan(vee/5), fade = 0, size = 3})
     elseif vee < -minvfordust and math.random() > .5 then
-      table.insert(dust,{x = ex, y = why, v=vee/3 - math.random(3), j = math.random(0,-vee/5)})
+      table.insert(dust,{x = ex, y = why, v=vee/3 - floRan(3), j = floRan(-vee/5)})
+      table.insert(clouds,{x = ex, y = why, v=vee/3- floRan(3), j = floRan(vee/5), fade = 0, size = 3})
     end
   end
 
@@ -1797,8 +1801,9 @@ function wallRubbleCheck(xx)
       (xx.y+(xx.height)/2 >= wall.y1 and 
         xx.y+(xx.height)/2 <= wall.y2 )
       ) then
-    if xx.flinch then
+    if xx.flinch and math.abs(xx.v) > v_for_slowww then
       slowww = true
+      repplay(xx.wallhit)
     end
     for i = xx.y, xx.feet, 1 do
       if wall.fractal ~= nil then
@@ -1825,8 +1830,10 @@ function wallRubbleCheck(xx)
 
 
     break
+
   end
 
 end
+
 end
 

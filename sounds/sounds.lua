@@ -2,7 +2,7 @@
 ---------------------Songs---------------------
 -----------------------------------------------
 
-colortheme = love.audio.newSource("sounds/colortheme.mp3", "stream")
+colortheme = love.audio.newSource("sounds/colortheme2.mp3", "stream")
 colortheme:setVolume(.25)
 colortheme:setLooping(true)
 
@@ -15,7 +15,7 @@ song2 = love.audio.newSource("sounds/song2.mp3", "stream")
 song2:setVolume(.25)
 song2:setLooping(true)
 
-controllerSetupSong = love.audio.newSource("sounds/record.wav", "stream")
+controllerSetupSong = love.audio.newSource("sounds/recordscratch.mp3", "stream")
 controllerSetupSong:setVolume(.3)
 controllerSetupSong:setLooping(true)
 
@@ -343,6 +343,9 @@ throwsou:setVolume(1 - .5)
 
 readysound = love.audio.newSource("sounds/ready.wav", "stream")
 readysound:setVolume(1 - .7)
+
+ready2sound = love.audio.newSource("sounds/pickcolor.wav", "stream")
+ready2sound:setVolume(1 - .7)
 
 
 collides = love.audio.newSource("sounds/collide.wav", "stream")

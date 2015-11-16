@@ -39,6 +39,9 @@ dangerbarey = 70
 dangerZoom = .4
 dangerZoomDelta = .001
 
+
+v_for_slowww = 5
+
 --Walking Speed
 defSpeedMInit = 6
 minMaxSpeedDif = 4

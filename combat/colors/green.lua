@@ -171,9 +171,6 @@ function gandg(xx)
           xx.creature = false
         end
 
-
-
-
       elseif xx.animcounter < 40 then
         if xx.creature and math.abs(xx.v)>6 then 
           xx.im = greencreature
@@ -201,7 +198,10 @@ function gandg(xx)
               xx.v = math.abs(xx.v)*xx.lr + (xx.lr*5)*xx.rampspeed/1.1
             elseif xx.repcounter==3 and math.abs(xx.v) < greenspeedlimit then
               --xx.lr=xx.origgreenlr 
-              xx.v = math.abs(xx.v)*xx.lr + (xx.lr*6)*xx.rampspeed/1.1
+              xx.v = math.abs(xx.v)*xx.lr + (xx.lr*4)*xx.rampspeed/1.1
+            elseif xx.repcounter==4 and math.abs(xx.v) < greenspeedlimit then
+              --xx.lr=xx.origgreenlr 
+              xx.v = math.abs(xx.v)*xx.lr + (xx.lr*3)*xx.rampspeed/1.1
             end
           end
 
@@ -314,8 +314,8 @@ function gandg(xx)
             rumbleme(xx, .7)
 
             table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx), speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
-            table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)+2.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
-            table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)-2.5, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
+            table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)+1, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
+            table.insert(xx.bolts, {angle = tang(at.g.k.angle,xx)-1, speed = boltspeed, x = xx.mid, y = xx.y+20, t = 0, stuck = false})
             xx.greenhit = false
           end
         elseif xx.animcounter >= 15 and xx.greenhit then 
@@ -510,10 +510,6 @@ me.bolts = {}
 
 
 function boltdraw(xx)
-
-
-  --lg.draw(garrow,xx.mid + (40 * math.cos(math.rad(xx.gangle)))*xx.lr, xx.y+xx.height/2 -(40 * math.sin(math.rad(xx.gangle))), math.rad(90-xx.gangle),1,1,2.5,2.5 )
-
   for i = #xx.bolts, 1, -1 do
     local v = xx.bolts[i]
     rgbset(thecolors[2].c)
@@ -526,7 +522,10 @@ end
 me.bolttrail = {}
 you.bolttrail = {}
 bolttraillength = 3
+
+
 function bolttraildraw(xx)
+
   for i = #xx.bolttrail, 1, -1 do
     local v = xx.bolttrail[i]
 
@@ -549,100 +548,94 @@ function boltupdate(xx)
       else
         v.removeme = v.removeme + 1
       end
-    end
-  end
-
-  for i = #xx.bolts, 1, -1 do
-    local v = xx.bolts[i]
-    v.t = v.t + 1
-
-
-    if v.t >= greendissolvetime then
-    table.remove(xx.bolts, i)
-  end--[[
-  local xnex =  v.x+(v.speed * math.cos(math.rad(v.angle)))*
-  local ynex = v.y+(v.speed * math.sin(math.rad(v.angle)))*
-  for i = #you.spikes, 1, -1 do 
-    local spike1 = you.spikes[i-1] 
-    if pint({x = spike1[1], y = spike1[2]}, {x = spike1[3], y = spike1[4]}, {x = v.x, y = v.y}, {x = xnex, y = ynex}) or
-      pint({x = spike1[3], y = spike1[4]}, {x = spike1[5], y = spike1[6]}, {x = v.x, y = v.y}, {x = xnex, y = ynex}) or
-      pint({x = spike1[5], y = spike1[6]}, {x = spike1[1], y = spike1[2]}, {x = v.x, y = v.y}, {x = xnex, y = ynex})
-
-      then
-      makeslashsparks(v.y,v.x, (v.speed * math.cos(math.rad(v.angle)))/8,(v.speed * math.sin(math.rad(v.angle)))+5, xx.color.c.r,xx.color.c.g,xx.color.c.b)
-      table.remove(xx.bolts, i)
-    end
-
-  end
-  ]]--
-  for j,k in ipairs(the_map.walls) do 
-    if k.barrier then
-      if bolts_fly_relative then
-        if ((v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) > k.x+amountstuckinwall and v.x > k.x) 
-          or 
-          (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) < k.x-amountstuckinwall and v.x < k.x)
-
-          ) and v.y > k.y1 and (k.y2 == nil or v.y < k.y2) then
-        v.stuck = true
-      end
     else
-      if (v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed > k.x+amountstuckinwall) 
-        or 
-        (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed < k.x-amountstuckinwall) then
-        v.stuck = true
+
+      if v.t >= greendissolvetime then
+      table.remove(xx.bolts, i)end
+      --[[
+      local xnex =  v.x+(v.speed * math.cos(math.rad(v.angle)))*
+      local ynex = v.y+(v.speed * math.sin(math.rad(v.angle)))*
+      for i = #you.spikes, 1, -1 do 
+        local spike1 = you.spikes[i-1] 
+        if pint({x = spike1[1], y = spike1[2]}, {x = spike1[3], y = spike1[4]}, {x = v.x, y = v.y}, {x = xnex, y = ynex}) or
+          pint({x = spike1[3], y = spike1[4]}, {x = spike1[5], y = spike1[6]}, {x = v.x, y = v.y}, {x = xnex, y = ynex}) or
+          pint({x = spike1[5], y = spike1[6]}, {x = spike1[1], y = spike1[2]}, {x = v.x, y = v.y}, {x = xnex, y = ynex})
+
+          then
+          makeslashsparks(v.y,v.x, (v.speed * math.cos(math.rad(v.angle)))/8,(v.speed * math.sin(math.rad(v.angle)))+5, xx.color.c.r,xx.color.c.g,xx.color.c.b)
+          table.remove(xx.bolts, i)
+        end
+
+      end
+      ]]--
+      for j,k in ipairs(the_map.walls) do 
+        if k.barrier then
+          if bolts_fly_relative then
+            if ((v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) > k.x+amountstuckinwall and v.x > k.x) 
+              or 
+              (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx) < k.x-amountstuckinwall and v.x < k.x)
+
+              ) and v.y > k.y1 and (k.y2 == nil or v.y < k.y2) then
+            v.stuck = true
+          end
+        else
+          if (v.x < k.x+amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed > k.x+amountstuckinwall) 
+            or 
+            (v.x > k.x-amountstuckinwall and v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed < k.x-amountstuckinwall) then
+            v.stuck = true
+          end
+        end
+      end
+    end
+
+
+
+    if v.y <= the_map.floor+amountstuckinfloor and not v.stuck then
+      table.insert(xx.bolttrail, {angle = v.angle, speed = v.speed, x = v.x, y = v.y, t = 0})
+      if bolts_fly_relative then
+        v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx)
+        v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*ramp(xx)
+
+      else
+        v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed
+        v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*rampspeed
+      end
+      else v.stuck = true
+      end
+      if not v.stuck then 
+
+        hexRadial(xx.id, {x = v.x, y = v.y}, 200, function()
+          repplay(xx.whiff)
+        end
+        )
+
+        hline(xx, xx.id, 
+          {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y},
+          function(p)
+            if math.abs(p.v) < at.g.k.kb then
+              p.v = p.v + (v.speed/2 * math.cos(math.rad(v.angle)))
+            end
+            if math.abs(p.j) < at.g.k.kb then
+              p.j = p.j - (v.speed/2 * math.sin(math.rad(v.angle)))
+            end
+            p.flinch = true
+            if (v.speed * math.cos(math.rad(v.angle))) > 0 then p.flinchway = -1 
+            else
+              p.flinchway = 1
+            end
+            p.ft = at.g.k.ft
+            repplay(xx.greenbreak)
+            makenslashsparks(v.x, v.y, 
+              (v.speed * math.cos(math.rad(v.angle)))/4, 
+              (v.speed * math.sin(math.rad(v.angle)))+5,
+              green.r, green.g, green.b, 10)
+            v.removeme = 0
+            xx.greenhit = true
+          end
+          )
       end
     end
   end
-end
-
-
-
-if v.y <= the_map.floor+amountstuckinfloor and not v.stuck then
-  table.insert(xx.bolttrail, {angle = v.angle, speed = v.speed, x = v.x, y = v.y, t = 0})
-  if bolts_fly_relative then
-    v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*ramp(xx)
-    v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*ramp(xx)
-
-  else
-    v.x = v.x+(v.speed * math.cos(math.rad(v.angle)))*rampspeed
-    v.y = v.y+(v.speed * math.sin(math.rad(v.angle)))*rampspeed
-  end
-  else v.stuck = true
-  end
-  if not v.stuck then 
-
-    hexRadial(xx.id, {x = v.x, y = v.y}, 200, function()
-      repplay(xx.whiff)
-    end
-
-
-    )
-
-    hline(xx, xx.id, 
-      {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y},
-      function(p)
-        if math.abs(p.v) < at.g.k.kb then
-          p.v = p.v + (v.speed/2 * math.cos(math.rad(v.angle)))
-        end
-        if math.abs(p.j) < at.g.k.kb then
-          p.j = p.j - (v.speed/2 * math.sin(math.rad(v.angle)))
-        end
-        p.flinch = true
-        if (v.speed * math.cos(math.rad(v.angle))) > 0 then p.flinchway = -1 
-        else
-          p.flinchway = 1
-        end
-        p.ft = at.g.k.ft
-        repplay(xx.greenbreak)
-        makenslashsparks(v.x, v.y, 
-          (v.speed * math.cos(math.rad(v.angle)))/4, 
-          (v.speed * math.sin(math.rad(v.angle)))+5,
-          green.r, green.g, green.b, 10)
-        v.removeme = 0
-        xx.greenhit = true
-        end)
-  end
-end
 end
 
 function xpint(a,A,b,B)

@@ -155,11 +155,17 @@ you.cct = 0
 
 function changePlayerColor(xx)
 
-  if xx.rightbump then 
-    xx.cchangeto = xx.rightc
-  elseif xx.leftbump then
-    xx.cchangeto = xx.leftc 
-    else xx.cchangeto = thecolors[0]
+  if xx.using_keyboard then
+
+  else
+
+
+    if xx.rightbump then 
+      xx.cchangeto = xx.rightc
+    elseif xx.leftbump then
+      xx.cchangeto = xx.leftc 
+    else 
+      xx.cchangeto = thecolors[0]
     end
 
 
@@ -225,3 +231,4 @@ function changePlayerColor(xx)
     end
 
   end
+end

@@ -527,7 +527,7 @@ end
     end
 
 
-    if xx.jump_delay_counter < jump_delay then
+    if xx.jump_delay_counter < jump_delay and not hitpause then
       xx.jump_delay_counter = xx.jump_delay_counter - 1
     end
 
@@ -612,7 +612,7 @@ end
         else xx.landing_counter = 0
         end
 
-        if xx.blockb and xx.a1b and math.abs(xx.j) + math.abs(xx.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j) and xx.j > 0 then 
+        if xx.blockb and (xx.using_keyboard or xx.a1b) and math.abs(xx.j) + math.abs(xx.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j) and xx.j > 0 then 
           if climbplatcheck(xx.x, xx.y+xx.height/2, xx.lr, xx.height/2, xx.v, xx.j) then
             xx.ctim = 7
           else 

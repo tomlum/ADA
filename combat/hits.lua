@@ -597,7 +597,7 @@ function hboxwall()
           xx.v = 0
           xx.j = math.max(-max_wall_fall,xx.j)
           xx.im = wallgrab
-          makendust(xx.wallx+xx.lr, xx.feet, xx.lr*1, -xx.j,2,1)
+          makendust(xx.mid-14*xx.lr, xx.feet, xx.lr*1, -xx.j,2,1)
 
 
         end
@@ -648,7 +648,6 @@ function hboxwall()
           xx.y = xx.y - 10
 
         else
-
           xx.v = 0
         end
 

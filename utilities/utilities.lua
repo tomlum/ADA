@@ -31,80 +31,80 @@ function debugReadouts()
 
 
 
-    --lg.setShader()
-    --[[
-    boop = joystick:isVibrationSupported()
-    if boop then
-      lg.print("yeah",100,10,100)
-    end
-    ]]--
-    lg.setColor(255,255,255)
-    if readout then
-      lg.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
-      lg.print("me.x, me.y: "..tostring(me.x).." "..tostring(me.y), 10, 40)
-      lg.print("you.x, you.y: "..tostring(you.x).." "..tostring(you.y), 10, 70)
-
-      lg.setColor(255,10,0)
-      lg.print("themenu "..tostring(MODE), 10, 90)
-      lg.print("OLD_MODE "..tostring(OLD_MODE), 10, 110)
-      lg.print("fadein "..tostring(fadein), 10, 130)
-      lg.print("allfade "..tostring(allfade), 10, 150)
-      lg.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
-      lg.print("slowt "..tostring(slowt), 10, 230)
-      lg.print("#joysticks"..tostring(#love.joystick.getJoysticks()), 10, 250)
-      lg.print("#monsters"..tostring(#monsters), 10, 280)
-      for i,v in ipairs(love.joystick.getJoysticks()) do
-        lg.print("hey"..v:getName()..tostring(i), 200, 20+20*i)
-      end
-
-
-      lg.setColor(255,0,0)
-
-
-    end
-
-
-
-    if not love.keyboard.isDown("3") and not love.keyboard.isDown("4") and not love.keyboard.isDown("2") then
-
-      boxstop = false
-    end
-    if love.keyboard.isDown("5") and not boxstop then
-      boxstop = true
-      throwinto()
-      --rotatefractal()
-    end
-
-
-    -- moveTOD(.03)
-    if love.keyboard.isDown("4") and not boxstop then
-      throwinto()
-      --makecolorbox(me.x, me.y+30)
-      boxstop = true
-      --fractalrotate()
-    end
-
-    if love.keyboard.isDown("5") and not boxstop then
-      rotatefractal()
-      --makecolorbox(me.x, me.y+30)
-      boxstop = true
-      --fractalrotate()
-    end
-
-    if love.keyboard.isDown("2")then
-      me.no_spikes = true
-    end
-    if fightclub and debug then
-
-      lg.print("pause: "..tostring(pause), 400,360)
-      lg.print("me.walllr: "..tostring(me.walllr), 400,380)
-      lg.print("me.lr: "..tostring(me.lr), 400,400)
-      lg.print("me.oldcolor: "..tostring(me.oldcolor), 400,440)
-      lg.print("me.up : "..tostring(me.up), 400,460)
-      --changebackgroundcolor(4)
-      
-    end
+  --lg.setShader()
+  --[[
+  boop = joystick:isVibrationSupported()
+  if boop then
+    lg.print("yeah",100,10,100)
   end
+  ]]--
+  lg.setColor(255,255,255)
+  if readout then
+    lg.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+    lg.print("me.x, me.y: "..tostring(me.x).." "..tostring(me.y), 10, 40)
+    lg.print("you.x, you.y: "..tostring(you.x).." "..tostring(you.y), 10, 70)
+
+    lg.setColor(255,10,0)
+    lg.print("themenu "..tostring(MODE), 10, 90)
+    lg.print("OLD_MODE "..tostring(OLD_MODE), 10, 110)
+    lg.print("fadein "..tostring(fadein), 10, 130)
+    lg.print("allfade "..tostring(allfade), 10, 150)
+    lg.print("me.a2b "..tostring(me.a2b)..tostring(you.speedpenalty), 10, 180)
+    lg.print("slowt "..tostring(slowt), 10, 230)
+    lg.print("#joysticks"..tostring(#love.joystick.getJoysticks()), 10, 250)
+    lg.print("#monsters"..tostring(#monsters), 10, 280)
+    for i,v in ipairs(love.joystick.getJoysticks()) do
+      lg.print("hey"..v:getName()..tostring(i), 200, 20+20*i)
+    end
+
+
+    lg.setColor(255,0,0)
+
+
+  end
+
+
+
+  if not love.keyboard.isDown("3") and not love.keyboard.isDown("4") and not love.keyboard.isDown("2") then
+
+    boxstop = false
+  end
+  if love.keyboard.isDown("5") and not boxstop then
+    boxstop = true
+    throwinto()
+    --rotatefractal()
+  end
+
+
+  -- moveTOD(.03)
+  if love.keyboard.isDown("4") and not boxstop then
+    throwinto()
+    --makecolorbox(me.x, me.y+30)
+    boxstop = true
+    --fractalrotate()
+  end
+
+  if love.keyboard.isDown("5") and not boxstop then
+    rotatefractal()
+    --makecolorbox(me.x, me.y+30)
+    boxstop = true
+    --fractalrotate()
+  end
+
+  if love.keyboard.isDown("2")then
+    me.no_spikes = true
+  end
+  if fightclub and debug then
+
+    lg.print("pause: "..tostring(pause), 400,360)
+    lg.print("me.walllr: "..tostring(me.walllr), 400,380)
+    lg.print("me.lr: "..tostring(me.lr), 400,400)
+    lg.print("me.oldcolor: "..tostring(me.oldcolor), 400,440)
+    lg.print("me.up : "..tostring(me.up), 400,460)
+    --changebackgroundcolor(4)
+
+  end
+end
 
 
 
@@ -351,7 +351,11 @@ end
 
 --generate a float random
 function floRan(low,up)
-  return low+math.random()*(up-low)
+  if up == nil then
+    return math.random()*(low)
+  else
+    return low+math.random()*(up-low)
+  end
 end
 
 
@@ -427,28 +431,28 @@ function findxIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y)
 
 
 
--------------------
----LOVE UTILITIES---
--------------------
-function setFontSize(size)
-  love.graphics.setNewFont("utilities/munro.ttf", size)
-end
-
--------------------
----LUA UTILITIES---
--------------------
-
-function clone (t) -- deep-copy a table
-  if type(t) ~= "table" then return t end
-  local meta = getmetatable(t)
-  local target = {}
-  for k, v in pairs(t) do
-    if type(v) == "table" then
-      target[k] = clone(v)
-    else
-      target[k] = v
+    -------------------
+    ---LOVE UTILITIES---
+    -------------------
+    function setFontSize(size)
+      love.graphics.setNewFont("utilities/munro.ttf", size)
     end
-  end
-  setmetatable(target, meta)
-  return target
-end
+
+    -------------------
+    ---LUA UTILITIES---
+    -------------------
+
+    function clone (t) -- deep-copy a table
+      if type(t) ~= "table" then return t end
+      local meta = getmetatable(t)
+      local target = {}
+      for k, v in pairs(t) do
+        if type(v) == "table" then
+          target[k] = clone(v)
+        else
+          target[k] = v
+        end
+      end
+      setmetatable(target, meta)
+      return target
+    end
