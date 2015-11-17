@@ -157,12 +157,91 @@ function changePlayerColor(xx)
 
   if xx.using_keyboard then
 
+    if xx.rightbump and not xx.rightbumphold then 
+      if xx.color.n == xx.rightc.n then
+        xx.cchangeto = thecolors[0]
+      else
+        xx.cchangeto = xx.rightc
+      end
+      xx.cct = 0
+    elseif xx.leftbump and not xx.leftbumphold then
+      if xx.color.n == xx.leftc.n then
+        xx.cchangeto = thecolors[0]
+      else
+        xx.cchangeto = xx.leftc 
+      end
+      xx.cct = 0
+    else 
+      --xx.cchangeto = thecolors[0]
+    end
+
+
+    if not xx.actionshot and xx.color.n~=-1 then 
+      xx.cantreturntothis = xx.color.n
+    end
+
+    if xx.cchangeto.n > 0  then
+      
+      if xx.cct < colorchangetime and (not combo_pause or (xx.animcounter == 0 or xx.actionshot))  then
+        xx.cct = xx.cct + 1
+        --[[
+        if xx.cct > 0 then
+          xx.colorsound:setPitch((xx.cct+1)/colorchangetime)
+          xx.colorsound:setVolume(((xx.cct+1)/(colorchangetime+300)))
+        else
+          xx.colorsound = xx.cchangeto.sound:clone()
+          xx.colorsound:setPitch(.01)
+          xx.colorsound:setVolume(.01)
+        end
+        if xx.cct%1 == 0 then
+          repplay(xx.colorsound)
+        end
+        ]]--
+      end
+      xx.ctri = (thecolors[0].c.r-xx.cchangeto.c.r)/colorchangetime
+      xx.ctgi = (thecolors[0].c.g-xx.cchangeto.c.g)/colorchangetime
+      xx.ctbi = (thecolors[0].c.b-xx.cchangeto.c.b)/colorchangetime
+
+    elseif xx.cct > 0 then
+      xx.cct = xx.cct - 3
+      --[[
+      if xx.cct > 0 then
+        xx.colorsound:setPitch((xx.cct+1)/colorchangetime)
+        xx.colorsound:setVolume(((xx.cct+1)/(colorchangetime+300)))
+      end
+      ]]--
+    end
+
+    if xx.cct == colorchangetime then 
+      if xx.color.n == -1 then
+        xx.color = clone(xx.cchangeto)
+        xx.runpace = defrunpace /  (xx.color.s.speed*3/4)
+      end
+    elseif xx.cct <= 0  then
+      xx.cct = 0
+      xx.runpace = defrunpace
+      xx.color = thecolors[0]
+    else 
+      xx.color = thecolors[-1]
+      xx.color.c.r = thecolors[0].c.r-xx.ctri * xx.cct
+      xx.color.c.g = thecolors[0].c.g-xx.ctgi * xx.cct
+      xx.color.c.b = thecolors[0].c.b-xx.ctbi * xx.cct
+    end
+
+    xx.oldcctn = xx.cchangeto.n
+
+    if xx.color.n == 4 then
+      local t = thecolors[4].s
+      xx.color.s = {def=t.def+rsdel*xx.rlvl, speed = t.speed-rsdel*xx.rlvl, jump = t.jump-rsdel*xx.rlvl, weight = t.weight+rsdel*xx.rlvl, brittle = t.brittle-rsdel*xx.rlvl}
+
+    end
+
   else
 
 
     if xx.rightbump then 
       xx.cchangeto = xx.rightc
-    elseif xx.leftbump then
+    elseif xx.leftbump  then
       xx.cchangeto = xx.leftc 
     else 
       xx.cchangeto = thecolors[0]

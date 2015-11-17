@@ -29,8 +29,8 @@ controllersReady = false
 controller_white_fade=0
 controller_black_fade=0
 
-me.using_keyboard = true
-you.using_keyboard = false
+me.using_keyboard = fightclub
+you.using_keyboard = fightclub
 
 function drawControllerCheck()
 
@@ -196,6 +196,17 @@ function holdmanage(xx)
     xx.dirholda = false
   end
 
+  if xx.rightbumpb then
+    xx.rightbumphold = true
+  else
+    xx.rightbumphold = false
+  end
+
+  if xx.leftbumpb then
+    xx.leftbumphold = true
+  else
+    xx.leftbumphold = false
+  end
 end
 
 
@@ -328,7 +339,7 @@ function controlsstuff(xx)
   xx.right = xx.rightb
   xx.left = xx.leftb
   if (xx.cct > 0 and not (xx.rightbumpb or xx.leftbumpb)) or (xx.rightbumpb and xx.leftbumpb) then
-    xx.atcc = false
+    xx.atcc = xx.using_keyboard
   elseif xx.cct <=0 then
     xx.atcc = true
   end
@@ -367,19 +378,19 @@ function keyboardcontrols()
 
 
 
-  you.up = love.keyboard.isDown("i")
-  you.down = love.keyboard.isDown("k")
-  you.leftb = love.keyboard.isDown("j")
-  you.rightb = love.keyboard.isDown("l")
-  you.a1b = love.keyboard.isDown("p") and you.up
-  you.a2b = love.keyboard.isDown("p")
-  you.a3b = love.keyboard.isDown("p")
-  you.a4b = love.keyboard.isDown("p") and you.down
-  you.blockb = love.keyboard.isDown("o")
+  you.up = love.keyboard.isDown("o")
+  you.down = love.keyboard.isDown("l")
+  you.leftb = love.keyboard.isDown("k")
+  you.rightb = love.keyboard.isDown(";")
+  you.a1b = love.keyboard.isDown("[") and you.up
+  you.a2b = love.keyboard.isDown("[")
+  you.a3b = love.keyboard.isDown("[")
+  you.a4b = love.keyboard.isDown("[") and you.down
+  you.blockb = love.keyboard.isDown("=")
   you.start = love.keyboard.isDown(" ")
   you.runb = you.blockb
-  you.rightbumpb = love.keyboard.isDown("=")
-  you.leftbumpb = love.keyboard.isDown("-")
+  you.rightbumpb = love.keyboard.isDown("p")
+  you.leftbumpb = love.keyboard.isDown("i")
 
   me.a1 = you.a1
 

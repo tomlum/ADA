@@ -22,10 +22,10 @@ function drawKeyboardControls3(x, y, scale)
   cclear()
   drawKey("u", x+(21*6)*scale, y-16*scale, scale)
 
-  drawKey("i", x+(21*7)*scale, y-16*scale, scale)
-  drawKey("j", x+(4+21*6)*scale, y, scale)
+  drawKey("o", x+(21*8)*scale, y-16*scale, scale)
   drawKey("k", x+(4+21*7)*scale, y, scale)
   drawKey("l", x+(4+21*8)*scale, y, scale)
+  drawKey(";", x+(4+21*9)*scale, y, scale)
   setFontSize(font_size)
 
 end
@@ -34,18 +34,16 @@ function drawKeyboardControls1(x, y, scale)
   setFontSize(9*scale)
   cclear()
 
-  drawKey("q", x+(0)*scale, y-16*scale, scale)
-
   drawKey("w", x+(21)*scale, y-16*scale, scale)
   drawKey("a", x+(4+0)*scale, y, scale)
   drawKey("s", x+(4+21*1)*scale, y, scale)
   drawKey("d", x+(4+21*2)*scale, y, scale)
   
-  drawBlockKey("x", x+(10+21*1)*scale, y+16*scale, scale)
+  drawBlockKey("c", x+(10+21*2)*scale, y+16*scale, scale)
   lg.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
-  drawKey("c", x+(10+21*2)*scale, y+16*scale, scale)
+  drawKey("q", x+(0)*scale, y-16*scale, scale)
   lg.setColor(me.rightc.c.r, me.rightc.c.g, me.rightc.c.b)
-  drawKey("v", x+(10+21*3)*scale, y+16*scale, scale)
+  drawKey("e", x+(21*2)*scale, y-16*scale, scale)
   lg.setColor(you.color.c.r,you.color.c.g,you.color.c.b)
   drawAttackKey("lgui", x+(20)*scale, y+32*scale, scale)
 
@@ -57,21 +55,20 @@ function drawKeyboardControls2(x, y, scale)
   setFontSize(9*scale)
 
   lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
-  drawKey("-", x+(-6+21*10)*scale, y-32*scale, scale)
+  drawKey("i", x+(21*7)*scale, y-16*scale, scale)
   lg.setColor(you.rightc.c.r, you.rightc.c.g, you.rightc.c.b)
-  drawKey("=", x+(-6+21*11)*scale, y-32*scale, scale)
+  drawKey("p", x+(21*9)*scale, y-16*scale, scale)
   cclear()
-  drawKey("u", x+(21*6)*scale, y-16*scale, scale)
   
-  drawBlockKey("o", x+(21*8)*scale, y-16*scale, scale)
+  drawBlockKey("=", x+(-6+21*11)*scale, y-32*scale, scale)
   lg.setColor(you.color.c.r,you.color.c.g,you.color.c.b)
-  drawAttackKey("p", x+(21*9)*scale, y-16*scale, scale)
+  drawAttackKey("[", x+(21*10)*scale, y-16*scale, scale)
   cclear()
 
-  drawKey("i", x+(21*7)*scale, y-16*scale, scale)
-  drawKey("j", x+(4+21*6)*scale, y, scale)
+  drawKey("o", x+(21*8)*scale, y-16*scale, scale)
   drawKey("k", x+(4+21*7)*scale, y, scale)
   drawKey("l", x+(4+21*8)*scale, y, scale)
+  drawKey(";", x+(4+21*9)*scale, y, scale)
 
   setFontSize(font_size)
 end
@@ -128,7 +125,7 @@ function drawKeyboard(x, y, scale)
   drawKey(",", x+(10+21*7)*scale, y+16*scale, scale)
   drawKey(".", x+(10+21*8)*scale, y+16*scale, scale)
   drawKey("/", x+(10+21*9)*scale, y+16*scale, scale)
-  drawKey("lgui", x+(24)*scale, y+32*scale, scale)
+  drawKey("lgui", x+(45)*scale, y+32*scale, scale)
 end
 
 

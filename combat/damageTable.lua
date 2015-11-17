@@ -1,4 +1,4 @@
-hitpauseamount = 12
+hitpauseamount = 13
 
 vforrunningattack = 5
 

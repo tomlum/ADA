@@ -49,7 +49,7 @@ mapNum = 2
 rampspeed= therampspeed
 drawBoxes = false
 drawFeet = false
-volume = 1
+volume = 0
 fullscreen = false
 readout = false
 putmehere = 1000
@@ -144,9 +144,11 @@ function love.draw()
     debugReadouts()
   end
   lg.setColor(25,25,25)
-  drawKeyboardControls2(screenwidth-550, screenheight-50, 2)
+  drawKeyboardControls1(50, screenheight-100, 2)
+  drawKeyboardControls2(screenwidth-550, screenheight-20, 2)
   --monitorParticles(100,100)
-  --lg.print(me.v, 300, 300)
+  lg.print(tostring(me.color.n), 300, 300)
+  lg.print(tostring(me.rightc.n), 300, 320)
   --lg.print(tostring(me.dodgetype), 300, 320)
   --lg.rectangle("fill", screenwidth/2,0,screenwidth,screenheight)
 
