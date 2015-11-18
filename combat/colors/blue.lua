@@ -102,9 +102,9 @@ brun2 = {im=lg.newImage("images/player/attack/bb/brun2.png"), xoff = 13,extra_he
 brun3 = {im=lg.newImage("images/player/attack/bb/brun3.png"), xoff = 13,extra_height=-6}
 
 
-airgrab1 = {im=lg.newImage("images/player/attack/airgrab1.png"),xoff=0}
-airgrab2 = {im=lg.newImage("images/player/attack/airgrab2.png"),yoff = -3}
-airgrab3 = {im=lg.newImage("images/player/attack/airgrab3.png"),xoff=1}
+airgrab1 = {im=lg.newImage("images/player/attack/airgrab1.png"),xoff=-1}
+airgrab2 = {im=lg.newImage("images/player/attack/airgrab2.png"),yoff = -4}
+airgrab3 = {im=lg.newImage("images/player/attack/airgrab3.png"),xoff=1, yoff = -5}
 
 
 
@@ -122,7 +122,7 @@ function breadandbutter(xx)
   if xx.animcounter == 0 then
 
     if xx.g then 
-      if xx.running and (xx.a2b or xx.a3b) then
+      if xx.running and (xx.a2b or xx.a3b) and not xx.dodge then
         xx.attack_num = 7
         xx.animcounter = 1
       elseif (xx.a2 or xx.a3) and xx.color.n == 0 and not xx.holda then

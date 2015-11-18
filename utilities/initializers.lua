@@ -4,9 +4,9 @@ players = {}
 me = {}
 you = {}
 table.insert(players, 
-  me)
+	me)
 table.insert(players, 
-  you)
+	you)
 
 me.id = 1
 you.id = 2
@@ -72,7 +72,6 @@ end
 
 function initJoysticks()
 	joysticks = love.joystick.getJoysticks()
-
 end
 
 function initMenus()
@@ -95,6 +94,8 @@ function initMenus()
 end
 
 function initLove()
+
+	OS_String = love.system.getOS()
 
 	screenwidth = lg.getWidth()
 	screenheight = lg.getHeight()

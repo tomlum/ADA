@@ -1,7 +1,5 @@
 --Can configure aiming the green thing, hit directly up, left, right, down
 
---STEPPING UP ANIMATION IF CLIMBING, SO THAT YOU CAN GET UP EVEN IF JUST AT FEET NARROWLY MISS IT
-
 --341a000000000000005f7000000000000
 readytounpause = false
 
@@ -52,14 +50,18 @@ function drawControllerCheck()
     controller_white_fade = 0
   end
 
-  if not me.oldcontrollerready and (me.joystick ~= nil or me.start) then
+  if not me.oldcontrollerready and (me.joystick ~= nil or love.keyboard.isDown(" ")) and not me.holda then
     controller_white_fade = 255
     me.using_keyboard = true
+
+        repplay(readysound)
   end
 
-  if not you.oldcontrollerready and (you.joystick ~= nil or you.start) then
+  if not you.oldcontrollerready and (you.joystick ~= nil or love.keyboard.isDown(" ")) and not you.holda and controller_white_fade~=255 then
     controller_white_fade = 255
     you.using_keyboard = true
+
+        repplay(readysound)
   end
 
   if not controllersReady then
@@ -180,7 +182,7 @@ you.dirholda = false
 function holdmanage(xx)
 
 
-  if (xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.blockb) or (MODE ~= "play" and (xx.rightbump or xx.leftbump)) then
+  if (xx.start or xx.a1b or xx.a2b or xx.a3b or xx.a4b or xx.blockb or love.keyboard.isDown(" ")) or (MODE ~= "play" and (xx.rightbump or xx.leftbump)) then
     if not xx.holda then
       xx.holda = true
     end
@@ -251,9 +253,9 @@ function combomanage(xx)
     xx.repcounter = 0
   end
 
-
-
 end
+
+
 function cancelas(xx) 
   xx.a1, xx.a2, xx.a3, xx.a4 = false, false, false, false
 end
@@ -367,10 +369,18 @@ function keyboardcontrols()
   me.down = love.keyboard.isDown("s")
   me.leftb = love.keyboard.isDown("a")
   me.rightb = love.keyboard.isDown("d")
-  me.a1b = love.keyboard.isDown("lgui") and me.up
-  me.a2b = love.keyboard.isDown("lgui") 
-  me.a3b = love.keyboard.isDown("lgui")
-  me.a4b = love.keyboard.isDown("lgui") and me.down
+
+  if OS_String == "OS X" then
+    me.a1b = love.keyboard.isDown("lgui") and me.up
+    me.a2b = love.keyboard.isDown("lgui") 
+    me.a3b = love.keyboard.isDown("lgui")
+    me.a4b = love.keyboard.isDown("lgui") and me.down
+  else
+    me.a1b = love.keyboard.isDown("lalt") and me.up
+    me.a2b = love.keyboard.isDown("lalt") 
+    me.a3b = love.keyboard.isDown("lalt")
+    me.a4b = love.keyboard.isDown("lalt") and me.down
+  end
   me.blockb = love.keyboard.isDown("c")
   me.runb = me.blockb
   me.rightbumpb = love.keyboard.isDown("e")

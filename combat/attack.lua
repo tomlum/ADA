@@ -136,7 +136,7 @@ you.grabtimer = 0
 --you.grabbingx = nil
 
 
-throw_amount = 17
+throw_amount = 13
 
 function grab(xx)
 	if xx.attack_num == 8 and xx.animcounter > 0 then 
@@ -199,37 +199,56 @@ function grab(xx)
 			end
 			xx.grabbingx.ft = 10
 
-			if not xx.holda and (xx.a1 or xx.a2 or xx.a3 or xx.a4) then 
+			if not xx.holda and ((not xx.using_keyboard and (xx.a1 or xx.a2 or xx.a3 or xx.a4)) or (xx.using_keyboard and (xx.down or xx.up or xx.left or xx.right))) then 
 
-				xx.grabbingx.j =  throw_amount*-xx.jry+xx.j
-				xx.grabbingx.v =  throw_amount*xx.jrx+xx.v
+				if xx.using_keyboard then
+					if xx.up then
+						xx.grabbingx.j =  throw_amount*1.5+xx.j
+						xx.grabbingx.v =  (throw_amount*xx.lr)/5+xx.v
+					elseif xx.left then
+						xx.grabbingx.j =  throw_amount+xx.j
+						xx.grabbingx.v =  (-throw_amount)+xx.v
+					elseif xx.right then
+						xx.grabbingx.j =  throw_amount+xx.j
+						xx.grabbingx.v =  (throw_amount)+xx.v
+					elseif xx.down then
+						xx.grabbingx.j =  -throw_amount+xx.j
+						xx.grabbingx.v =  (throw_amount*xx.lr)/5+xx.v
+
+					end
+				else
+
+					xx.grabbingx.j =  throw_amount*-xx.jry+xx.j
+					xx.grabbingx.v =  throw_amount*xx.jrx+xx.v
+				end
 
 
 				xx.animcounter = 300
 				shakez(throwz)
 				xx.grabbingx.ft = throwft
 
-				if xx.jrx > 0 then
-					xx.grabbingx.flinchway = -1
-					xx.lr = 1
-					if xx.grabbingx.x < xx.x then
-						xx.grabbingx.x = xx.grabbingx.x + 15
-						xx.x = xx.x - 15
+
+				if not xx.using_keyboard then
+					if xx.jrx > 0 then
+						xx.grabbingx.flinchway = -1
+						xx.lr = 1
+						if xx.grabbingx.x < xx.x then
+							xx.grabbingx.x = xx.grabbingx.x + 15
+							xx.x = xx.x - 15
+						end
+					else 
+						xx.grabbingx.flinchway = 1
+						if xx.grabbingx.x > xx.x then
+							xx.grabbingx.x = xx.grabbingx.x - 15
+							xx.x = xx.x + 15
+						end
+						xx.lr = -1
 					end
-				else 
-					xx.grabbingx.flinchway = 1
-					if xx.grabbingx.x > xx.x then
-						xx.grabbingx.x = xx.grabbingx.x - 15
-						xx.x = xx.x + 15
-					end
-					xx.lr = -1
 				end
 
 
-				if not xx.g then
 					xx.v = -xx.grabbingx.v*.8
 					xx.j = -xx.grabbingx.j*.8
-				end
 
 			end
 		elseif xx.animcounter <260 then

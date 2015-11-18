@@ -64,10 +64,10 @@ at.g.au = {}
 at.g.au.mj = 15
 
 at.g.k = {}
-at.g.k.dam = 6
+at.g.k.dam = 2.5
 at.g.k.kb = 16
 at.g.k.angle = 0
-at.g.k.ft = 30
+at.g.k.ft = 7
 at.g.k.delay = 50
 me.greenktimer = 0
 you.greenktimer = 0
@@ -97,10 +97,9 @@ function gandg(xx)
   xx.greenflickertimer = rollover(xx.greenflickertimer, xx.rampspeed, 16)
   xx.greenflicker = false
 
-  if #joysticks>=xx.id then
+  if not xx.using_keyboard then
     if math.sqrt(xx.jry^2+xx.jrx^2) > .1 then
       xx.gangle = math.deg(math.atan(-xx.jry/math.abs(xx.jrx)))
-
     end
     if xx.gangle > 75 then xx.gangle = 90 
     elseif xx.gangle < 15 and xx.gangle > -15 then
@@ -610,7 +609,8 @@ function boltupdate(xx)
         )
 
         hline(xx, xx.id, 
-          {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, {x=v.x, y=v.y},
+          {x=v.x+(v.speed * math.cos(math.rad(v.angle))), y=v.y+(v.speed * math.sin(math.rad(v.angle)))}, 
+          {x=v.x, y=v.y},
           function(p)
             if math.abs(p.v) < at.g.k.kb then
               p.v = p.v + (v.speed/2 * math.cos(math.rad(v.angle)))

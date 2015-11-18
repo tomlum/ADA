@@ -174,13 +174,12 @@ end
 
 
 function spikedraw(xx)
-  for i = #xx.spikes, 1, -1 do
+  for i,cur in ipairs(xx.spikes) do
     t_setColor(thecolors[1].c)
-    local cur = xx.spikes[i] 
     if cur.t >= -3 then
 
 
-      local vv = xx.spikes[i].verts 
+      local vv = cur.verts 
 
 
       local vvv = {}
@@ -190,89 +189,88 @@ function spikedraw(xx)
       vvv[4] = vv[4]
       vvv[5] = vv[5]
       vvv[6] = vv[6]
-      lg.polygon("fill", xx.spikes[i].verts)
+      lg.polygon("fill", cur.verts)
       lg.setColor(thecolors[1].c.r/2,thecolors[1].c.g/2,thecolors[1].c.b/2)
       lg.polygon("fill", vvv)
       franratio = 1.5
       lg.setColor(thecolors[1].c.r/franratio,thecolors[1].c.g/franratio,thecolors[1].c.b/franratio)
-      lg.polygon("line", xx.spikes[i].verts)
+      lg.polygon("line", cur.verts)
 
     end
   end
   lg.setColor(255,255,255)
 end
 
-bob123 = {}
+
 function spikeupdate(xx)
 
-  for i = #xx.spikes, 1, -1 do
-    local cur = xx.spikes[i] 
+  for i,cur in ipairs(xx.spikes) do
     local vv = cur.verts
 
     if cur.t<-3 then 
       table.remove(xx.spikes,i)
-    elseif cur.t < 0 then
-      local vv = xx.spikes[i].verts
-      vv[3] = vv[3]+cur.lr*math.abs(vv[1]-vv[3])/4
-      vv[4] = vv[4]+(vv[2]-vv[4])/4
-      vv[5] = vv[5]+cur.lr*math.abs(vv[1]-vv[5])/4
-      lg.polygon("fill", vv)
-    elseif cur.t > 0 and cur.t < 5  then
-      spikegrow(cur,1,xx)
-      if cur.t > 3 then
-        hexHit(xx, xx.id, 
+    else
+      if cur.t < 0 then
+        vv[3] = vv[3]+cur.lr*math.abs(vv[1]-vv[3])/4
+        vv[4] = vv[4]+(vv[2]-vv[4])/4
+        vv[5] = vv[5]+cur.lr*math.abs(vv[1]-vv[5])/4
+        lg.polygon("fill", vv)
+      elseif cur.t > 0 and cur.t < 5  then
+        spikegrow(cur,1,xx)
+        if cur.t > 3 then
+          hexHit(xx, xx.id, 
+            {x=vv[1], y = vv[2]},
+            {x=vv[3], y = vv[4]},
+            {x=vv[5], y = vv[6]},
+            {x=vv[1]+1, y = vv[2]+1},
+            function(z)
+              xx.cancombo = true
+              xx.hitsomeonewithpurp = true
+              z.v = z.v + math.abs((vv[3]-vv[1])/(20))*cur.lr
+              z.j = z.j + (vv[2]-vv[4])/6
+              z.flinch = true
+              z.ft = z.ft + at.p.k.ft
+              z.health = z.health - at.p.k.dam
+              end)
+        end
+      elseif cur.t >=5 then
+        hexHit(xx,0, 
           {x=vv[1], y = vv[2]},
           {x=vv[3], y = vv[4]},
           {x=vv[5], y = vv[6]},
-          {x=vv[1]+1, y = vv[2]+1},
+          {x=vv[1], y = vv[2]},
           function(z)
-            xx.cancombo = true
+            z.v=-z.v*.5
+            if z.flinch and math.abs(z.v)>5 then
+              z.flinchway = -z.flinchway
+            end
+            end, true)
+        hexHit(xx,0, 
+          {x=vv[3], y = vv[4]},
+          {x=vv[3]-(vv[3]-vv[1])/5, y = vv[4]-(vv[2]-vv[4])/5},
+          {x=vv[3]-(vv[3]-vv[1])/5, y = vv[4]-(vv[2]-vv[4])/5},
+          {x=vv[3], y = vv[4]},
+          function(z)
             xx.hitsomeonewithpurp = true
-            z.v = z.v + math.abs((vv[3]-vv[1])/(20))*cur.lr
-            z.j = z.j + (vv[2]-vv[4])/6
+            z.v = -z.v + (cur.lr*2)
+            z.j = z.j + 12
             z.flinch = true
             z.ft = z.ft + at.p.k.ft
-            z.health = z.health - at.p.k.dam
-            bob123 = vv
+            z.health = z.health - at.p.k.dam/3
             end)
       end
-    elseif cur.t >=5 then
-      hexHit(xx,0, 
-        {x=vv[1], y = vv[2]},
-        {x=vv[3], y = vv[4]},
-        {x=vv[5], y = vv[6]},
-        {x=vv[1], y = vv[2]},
-        function(z)
-          z.v=-z.v*.5
-          if z.flinch and math.abs(z.v)>5 then
-            z.flinchway = -z.flinchway
-          end
-          end, true)
-      hexHit(xx,0, 
-        {x=vv[3], y = vv[4]},
-        {x=vv[3]-(vv[3]-vv[1])/5, y = vv[4]-(vv[2]-vv[4])/5},
-        {x=vv[3]-(vv[3]-vv[1])/5, y = vv[4]-(vv[2]-vv[4])/5},
-        {x=vv[3], y = vv[4]},
-        function(z)
-          xx.hitsomeonewithpurp = true
-          z.v = -z.v + (cur.lr*2)
-          z.j = z.j + 12
-          z.flinch = true
-          z.ft = z.ft + at.p.k.ft
-          z.health = z.health - at.p.k.dam/3
-          end)
-    end
 
 
-    if not xx.no_spikes and xx.numofspikes > 0 then cur.t = cur.t + 1
-    else
-      if cur.t > 0 then cur.t = 0 
+      if not xx.no_spikes and xx.numofspikes > 0 then cur.t = cur.t + 1
       else
-        cur.t = cur.t - 1
+        if cur.t > 0 then cur.t = 0 
+        else
+          cur.t = cur.t - 1
+        end
       end
-    end
-    if cur.t == 2 then 
-      makenrubble("vert", cur.verts[3], cur.verts[2], 2*cur.lr,2,7)
+      if cur.t == 2 then 
+        makenrubble("vert", cur.verts[3], cur.verts[2], 2*cur.lr,2,7)
+      end
     end
   end
   if xx.no_spikes then
@@ -463,231 +461,220 @@ function pandp(xx)
         elseif xx.animcounter < 55 then
           xx.im = ppunch3
           if xx.animcounter >= pa2busytime then 
-                xx.cmbo=true--combo(xx)
-              end
-
-            elseif xx.animcounter >= 55 then
-              xx.animcounter = 0
-            end
+            xx.cmbo=true--combo(xx)
           end
 
-        elseif xx.attack_num == 2 then
-          xx.no_spikes = false
+        elseif xx.animcounter >= 55 then
+          xx.animcounter = 0
+        end
+      end
 
-          if xx.animcounter < 20 then
-            xx.im = stomp1
+    elseif xx.attack_num == 2 then
+      xx.no_spikes = false
 
-          elseif xx.animcounter <= 21 then
-            xx.im = stomp2
+      if xx.animcounter < 20 then
+        xx.im = stomp1
 
-            rumbleme(xx, 1.2)
-            xx.numofspikes = xx.numofspikes+1
-            local lverts = {}
-            local lverts2 = {}
-            local sn = xx.numofspikes
-            if (xx.numofspikes <= 2 ) then
-              lverts[1]= xx.mid+(xx.lr*25*(sn-1))
-              lverts[2]= xx.feet
-              lverts[3]= xx.mid+(xx.lr*25*(sn-1))
-              lverts[4]= xx.feet
-              lverts[5]= xx.mid+(xx.lr*25*(sn-1))
-              lverts[6]= xx.feet
+      elseif xx.animcounter <= 21 then
+        xx.im = stomp2
 
-              lverts2[1]= xx.mid+(xx.lr*25*(sn))
-              lverts2[2]= xx.feet
-              lverts2[3]= xx.mid+(xx.lr*25*(sn))
-              lverts2[4]= xx.feet
-              lverts2[5]= xx.mid+(xx.lr*25*(sn))
-              lverts2[6]= xx.feet
+        rumbleme(xx, 1.2)
+        xx.numofspikes = xx.numofspikes+1
+        local lverts = {}
+        local lverts2 = {}
+        local sn = xx.numofspikes
+        if (xx.numofspikes <= 2 ) then
+          lverts[1]= xx.mid+(xx.lr*25*(sn-1))
+          lverts[2]= xx.feet
+          lverts[3]= xx.mid+(xx.lr*25*(sn-1))
+          lverts[4]= xx.feet
+          lverts[5]= xx.mid+(xx.lr*25*(sn-1))
+          lverts[6]= xx.feet
 
-              if lverts[1] > the_map.plats[xx.plat.n].x1+spikesize and 
-                lverts[1] < the_map.plats[xx.plat.n].x2-spikesize then
-                table.insert(xx.spikes, 
-                  {verts = lverts,
-                  t = 0, lr=xx.lr})
-                repplay(xx.purpsound)
-              end
-              if lverts2[1] > the_map.plats[xx.plat.n].x1+spikesize and 
-                lverts2[1] < the_map.plats[xx.plat.n].x2-spikesize then
-                table.insert(xx.spikes, 
-                  {verts = lverts2,
-                  t = 0, lr=xx.lr})
-              end
+          lverts2[1]= xx.mid+(xx.lr*25*(sn))
+          lverts2[2]= xx.feet
+          lverts2[3]= xx.mid+(xx.lr*25*(sn))
+          lverts2[4]= xx.feet
+          lverts2[5]= xx.mid+(xx.lr*25*(sn))
+          lverts2[6]= xx.feet
 
+          if lverts[1] > the_map.plats[xx.plat.n].x1+spikesize and 
+            lverts[1] < the_map.plats[xx.plat.n].x2-spikesize then
+            table.insert(xx.spikes, 
+              {verts = lverts,
+              t = 0, lr=xx.lr})
+            repplay(xx.purpsound)
+          end
+          if lverts2[1] > the_map.plats[xx.plat.n].x1+spikesize and 
+            lverts2[1] < the_map.plats[xx.plat.n].x2-spikesize then
+            table.insert(xx.spikes, 
+              {verts = lverts2,
+              t = 0, lr=xx.lr})
+          end
+
+        else
+          lverts[1]= xx.mid+(xx.lr*40*(sn-1))
+          lverts[2]= xx.feet
+          lverts[3]= xx.mid+(xx.lr*40*(sn-1))
+          lverts[4]= xx.feet
+          lverts[5]= xx.mid+(xx.lr*40*(sn-1))
+          lverts[6]= xx.feet
+
+
+          if lverts[1] > the_map.plats[xx.plat.n].x1+spikesize and 
+            lverts[1] < the_map.plats[xx.plat.n].x2-spikesize then
+
+            repplay(xx.purpsound)
+            if math.random() > .5 then
+              table.insert(xx.spikes,
+                {verts = lverts,
+                t = 0, lr=-1})
             else
-              lverts[1]= xx.mid+(xx.lr*40*(sn-1))
-              lverts[2]= xx.feet
-              lverts[3]= xx.mid+(xx.lr*40*(sn-1))
-              lverts[4]= xx.feet
-              lverts[5]= xx.mid+(xx.lr*40*(sn-1))
-              lverts[6]= xx.feet
-
-
-              --  lverts2[1]= xx.mid+(xx.lr*25*(sn))
-              --  lverts2[2]= xx.feet
-              --  lverts2[3]= xx.mid+(xx.lr*25*(sn))
-              --  lverts2[4]= xx.feet
-              --  lverts2[5]= xx.mid+(xx.lr*25*(sn))
-              --  lverts2[6]= xx.feet
-
-              -- table.insert(xx.spikes, 
-              --  {verts = lverts2,
-              --    t = 0, lr=-1})
-
-if lverts[1] > the_map.plats[xx.plat.n].x1+spikesize and 
-  lverts[1] < the_map.plats[xx.plat.n].x2-spikesize then
-
-  repplay(xx.purpsound)
-  if math.random() > .5 then
-    table.insert(xx.spikes,
-      {verts = lverts,
-      t = 0, lr=-1})
-  else
-    table.insert(xx.spikes,
-      {verts = lverts,
-      t = 0, lr=1})
-  end
-end
-end
-
-if #joysticks>=xx.id then
-  xx.joystick:setVibration(1,1)
-end
-
-
-elseif xx.animcounter < 60 then
-  xx.im = stomp2
-  xx.cmbo=true
-  if  xx.a4 and not xx.holda and xx.numofspikes< at.p.k.max then 
-    xx.animcounter = 17
-  end
-elseif xx.animcounter < 70 then
-  xx.no_spikes = true
-elseif xx.animcounter < 70+at.p.k.duration then
-  xx.im = stomp2
-
-else
-  xx.im = stomp2
-  xx.animcounter = 0
-end
-
-elseif xx.attack_num == 3 then
-  if xx.animcounter < 20 then
-    xx.im = pa11
-
-  elseif xx.animcounter < 21 then
-    xx.im = pa12
-  elseif xx.animcounter < 40 then
-    xx.im = pa13
-    if xx.animcounter <= 22 then
-
-      makenrubble("vert", xx.mid, xx.feet-5, 5,2,7)
-      makenrubble("vert", xx.mid, xx.feet-5, -5,2,7)
-
-      repplay(xx.purpsound)
-      repplay(xx.purp2)
-      hall(xx.id, function(z) if z.plat.n == xx.plat.n then
-        z.j = at.p.u.kj 
-        xx.cancombo = true
-        z.flinch = true
-        z.ft = z.ft+at.p.u.ft
-        z.health = z.health - at.p.u.dam
-        end end)
-
-    elseif xx.animcounter > 23 then
-                xx.cmbo=true--combo(xx)
-              end
-            else 
-              xx.animcounter = 0
-            end
-
-
-          elseif xx.attack_num == 4 then
-            if xx.animcounter < 15 then
-              xx.im = apa21
-            elseif xx.animcounter < 17 then
-              xx.im = apa22
-            elseif xx.animcounter < 50 then
-              xx.im = apa23
-              if xx.animcounter <= 18 then
-
-                repplay(xx.airpurp1)
-                hexHit(xx, xx.id, 
-                  {x=xx.mid, y = xx.y+15},
-                  {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+29-xx.j},
-                  {x=xx.mid+xx.v+(xx.lr*18), y = xx.y+57-xx.j},
-                  {x=xx.mid-5*xx.lr, y = me.y+70},
-                  function(z)
-                    repplay(xx.purpsound)
-                    xx.cancombo = true
-                    z.health = z.health - at.p.p.dam
-                    z.v = xx.lr*at.p.p.kb
-                    z.flinch = true
-                    z.ft = z.ft + at.p.p.ft
-                    z.j = z.j + xx.j + at.p.ap.kj
-                    if z.plat.floor == nil then
-                      z.g = false
-                    end
-                    shakez(at.p.ap.z)
-                    end)
-              end
-            end
-
-
-          elseif xx.attack_num == 5 then
-            xx.purplanding = true 
-            if xx.animcounter < 3 then
-              xx.animcounter = 1
-              xx.im=apk1
-              xx.j = xx.j - 1
-              xx.landing_counter = at.p.ak.penalty + at.p.ak.time
-
-
-
-            elseif xx.animcounter <= 40 then
-              xx.im=apk2
-              if xx.animcounter > 30 then
-              end
-
-
-            elseif xx.animcounter >= 40 then
-              xx.animcounter = 0
-            end
-
-          elseif xx.attack_num == 6 then
-            if xx.animcounter < 15 then
-              xx.im = apa11
-            elseif xx.animcounter < 17 then
-              xx.im = apa12
-              if xx.animcounter < 16 then
-                xx.j = xx.j + at.p.au.kj 
-                xx.v = xx.v - at.p.au.kb*xx.lr 
-                repplay(xx.airpurp2)
-                hexHit(xx, xx.id, 
-                  {x=xx.mid+(xx.lr * -17), y = xx.y-31},
-                  {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38-xx.j},
-                  {x=xx.mid+xx.v+(xx.lr*50), y = xx.y+28-xx.j},
-                  {x=xx.mid+(xx.lr*-31), y = me.y+13},
-
-                  function(z)
-                    repplay(xx.purpsound)
-                    xx.cancombo = true
-                    z.health = z.health - at.p.au.dam
-                    z.v = z.v -xx.lr*at.p.au.kb/3 + xx.v
-                    z.flinch = true
-                    z.ft = z.ft + at.p.au.ft
-                    z.j=at.p.au.kj + xx.j
-                    shakez(at.p.au.z)
-
-
-                    end)
-              end
-            elseif xx.animcounter < 50 then
-              xx.im = apa13
-
-
+              table.insert(xx.spikes,
+                {verts = lverts,
+                t = 0, lr=1})
             end
           end
         end
 
+        if #joysticks>=xx.id then
+          xx.joystick:setVibration(1,1)
+        end
+
+      elseif xx.animcounter < 60 then
+        xx.im = stomp2
+        xx.cmbo=true
+        if  xx.a4 and not xx.holda and xx.numofspikes< at.p.k.max then 
+          xx.animcounter = 17
+        end
+      elseif xx.animcounter < 70 then
+        xx.im = stomp2
+        xx.no_spikes = true
+      elseif xx.animcounter < 70+at.p.k.duration then
+        xx.im = stomp2
+
+      else
+        xx.im = stomp2
+        xx.animcounter = 0
       end
+
+    elseif xx.attack_num == 3 then
+      if xx.animcounter < 20 then
+        xx.im = pa11
+
+      elseif xx.animcounter < 21 then
+        xx.im = pa12
+      elseif xx.animcounter < 40 then
+        xx.im = pa13
+        if xx.animcounter <= 22 then
+
+          makenrubble("vert", xx.mid, xx.feet-5, 5,2,7)
+          makenrubble("vert", xx.mid, xx.feet-5, -5,2,7)
+
+          repplay(xx.purpsound)
+          repplay(xx.purp2)
+          hall(xx.id, function(z) if z.plat.n == xx.plat.n then
+            z.j = at.p.u.kj 
+            xx.cancombo = true
+            z.flinch = true
+            z.ft = z.ft+at.p.u.ft
+            z.health = z.health - at.p.u.dam
+            end end)
+
+        elseif xx.animcounter > 23 then
+          xx.cmbo=true--combo(xx)
+        end
+      else 
+        xx.animcounter = 0
+      end
+
+
+    elseif xx.attack_num == 4 then
+      if xx.animcounter < 15 then
+        xx.im = apa21
+      elseif xx.animcounter < 17 then
+        xx.im = apa22
+      elseif xx.animcounter < 50 then
+        xx.im = apa23
+        if xx.animcounter <= 18 then
+
+          repplay(xx.airpurp1)
+          hexHit(xx, xx.id, 
+            {x=xx.mid, y = xx.y+15},
+            {x=xx.mid+xx.v+(xx.lr*24), y = xx.y+29-xx.j},
+            {x=xx.mid+xx.v+(xx.lr*18), y = xx.y+57-xx.j},
+            {x=xx.mid-5*xx.lr, y = me.y+70},
+            function(z)
+              repplay(xx.purpsound)
+              xx.cancombo = true
+              z.health = z.health - at.p.p.dam
+              z.v = xx.lr*at.p.p.kb
+              z.flinch = true
+              z.ft = z.ft + at.p.p.ft
+              z.j = z.j + xx.j + at.p.ap.kj
+              if z.plat.floor == nil then
+                z.g = false
+              end
+              shakez(at.p.ap.z)
+              end)
+        end
+      end
+
+
+    elseif xx.attack_num == 5 then
+      xx.purplanding = true 
+      if xx.animcounter < 3 then
+        xx.animcounter = 1
+        xx.im=apk1
+        xx.j = xx.j - 1
+        xx.landing_counter = at.p.ak.penalty + at.p.ak.time
+
+
+
+      elseif xx.animcounter <= 40 then
+        xx.im=apk2
+        if xx.animcounter > 30 then
+        end
+
+
+      elseif xx.animcounter >= 40 then
+        xx.animcounter = 0
+      end
+
+    elseif xx.attack_num == 6 then
+      if xx.animcounter < 15 then
+        xx.im = apa11
+      elseif xx.animcounter < 17 then
+        xx.im = apa12
+        if xx.animcounter < 16 then
+          xx.j = xx.j + at.p.au.kj 
+          xx.v = xx.v - at.p.au.kb*xx.lr 
+          repplay(xx.airpurp2)
+          hexHit(xx, xx.id, 
+            {x=xx.mid+(xx.lr * -17), y = xx.y-31},
+            {x=xx.mid+xx.v+(xx.lr*9), y = xx.y-38-xx.j},
+            {x=xx.mid+xx.v+(xx.lr*50), y = xx.y+28-xx.j},
+            {x=xx.mid+(xx.lr*-31), y = me.y+13},
+
+            function(z)
+              repplay(xx.purpsound)
+              xx.cancombo = true
+              z.health = z.health - at.p.au.dam
+              z.v = z.v -xx.lr*at.p.au.kb/3 + xx.v
+              z.flinch = true
+              z.ft = z.ft + at.p.au.ft
+              z.j=at.p.au.kj + xx.j
+              shakez(at.p.au.z)
+
+
+              end)
+        end
+      elseif xx.animcounter < 50 then
+        xx.im = apa13
+
+
+      end
+    end
+  end
+
+end

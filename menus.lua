@@ -253,6 +253,11 @@ function drawAttackKey(key, x, y, size)
   if love.keyboard.isDown(key) then
     if key == "lgui" then
       lg.draw(attacklcmdpressed_im, x, y, 0, size/2, size/2, 32, 18)
+    elseif key == "lalt" or key == "ralt" then  
+      setFontSize(7*size)
+      lg.draw(attackkeypressed_im, x, y, 0, size, size, 11, 9)
+      lg.setColor(0,0,0)
+      lg.printf("alt", x, y-2*size, 0, "center")
     else
       lg.draw(attackkeypressed_im, x, y-3*size, 0, size, size, 11, 9)
       lg.setColor(0,0,0)
@@ -261,6 +266,11 @@ function drawAttackKey(key, x, y, size)
   else
     if key == "lgui" then
       lg.draw(attacklcmd_im, x, y, 0, size/2, size/2, 32, 18)
+    elseif key == "lalt" or key == "ralt" then  
+      setFontSize(7*size)
+      lg.draw(attackkey_im, x, y, 0, size, size, 11, 9)
+      lg.setColor(0,0,0)
+      lg.printf("alt", x, y-4*size, 0, "center")
     else
       lg.draw(attackkey_im, x, y-3*size, 0, size, size, 11, 9)
       lg.setColor(0,0,0)
@@ -312,18 +322,24 @@ function drawControlsOverlay()
   lg.setColor(255,255,255)
   if true or joysticks[1] ~= nil then
     if MODE == "modes" or MODE == "map" then
-      if joysticks[1]:getName() == "PLAYSTATION(R)3 Controller" then
-        lg.draw(ps3menubuttons, 0, screenheight, 0, 1, 1, 0, 48)
-      elseif  joysticks[1]:getName() == "PLAYSTATION(R)3 Controller"  then
+      if me.using_keyboard then
       else
-        drawKey("c", 200, 200, 2)
-        lg.draw(keymenubuttons, 0, screenheight, 0, 1, 1, 0, 48)
+        if joysticks[1]:getName() == "PLAYSTATION(R)3 Controller" then
+          lg.draw(ps3menubuttons, 0, screenheight, 0, 1, 1, 0, 48)
+        elseif  joysticks[1]:getName() == "PLAYSTATION(R)3 Controller"  then
+        else
+          drawKey("c", 200, 200, 2)
+          lg.draw(keymenubuttons, 0, screenheight, 0, 1, 1, 0, 48)
+        end
       end
     elseif MODE == "color" then
-      if joysticks[1]:getName() == "PLAYSTATION(R)3 Controller" then
-        lg.draw(ps3assigncolor, 0, screenheight, 0, 1, 1, 0, 48)
+      if me.using_keyboard then
       else
-        lg.draw(xboxassigncolor, 0, screenheight, 0, 1, 1, 0, 48)
+        if joysticks[1]:getName() == "PLAYSTATION(R)3 Controller" then
+          lg.draw(ps3assigncolor, 0, screenheight, 0, 1, 1, 0, 48)
+        else
+          lg.draw(xboxassigncolor, 0, screenheight, 0, 1, 1, 0, 48)
+        end
       end
     end
   end

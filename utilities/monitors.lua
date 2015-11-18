@@ -4,6 +4,19 @@ xboxrstick = lg.newImage("images/enviro/xboxrstick.png")
 xboxjoystick = lg.newImage("images/enviro/xboxjoystick.png")
 xboxtrigger = lg.newImage("images/enviro/xboxtrigger.png")
 
+training_wheels = true
+
+function  drawTrainingWheels()
+  if training_wheels then
+    if me.using_keyboard then
+      drawKeyboardControls1(25, screenheight-100, 2)
+    end
+    if you.using_keyboard then
+      drawKeyboardControls2(screenwidth-480, screenheight-30, 2)
+    end
+  end
+end
+
 
 function monitorParticles(x,y)
   lg.print("leaves: " .. #leaves .. 
@@ -44,8 +57,12 @@ function drawKeyboardControls1(x, y, scale)
   drawKey("q", x+(0)*scale, y-16*scale, scale)
   lg.setColor(me.rightc.c.r, me.rightc.c.g, me.rightc.c.b)
   drawKey("e", x+(21*2)*scale, y-16*scale, scale)
-  lg.setColor(you.color.c.r,you.color.c.g,you.color.c.b)
-  drawAttackKey("lgui", x+(20)*scale, y+32*scale, scale)
+  lg.setColor(me.color.c.r,me.color.c.g,me.color.c.b)
+  if OS_String == "OS X" then
+    drawAttackKey("lgui", x+(24)*scale, y+32*scale, scale)
+  else
+    drawAttackKey("lalt", x+(32)*scale, y+32*scale, scale)
+  end
 
   cclear()
   setFontSize(font_size)
@@ -125,7 +142,8 @@ function drawKeyboard(x, y, scale)
   drawKey(",", x+(10+21*7)*scale, y+16*scale, scale)
   drawKey(".", x+(10+21*8)*scale, y+16*scale, scale)
   drawKey("/", x+(10+21*9)*scale, y+16*scale, scale)
-  drawKey("lgui", x+(45)*scale, y+32*scale, scale)
+  drawKey("lalt", x+(32)*scale, y+32*scale, scale)
+  --drawKey("lgui", x+(45)*scale, y+32*scale, scale)
 end
 
 

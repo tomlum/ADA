@@ -1,7 +1,5 @@
 hitpauseamount = 13
 
-vforrunningattack = 5
-
 bolts_fly_relative = true
 combo_pause = false
 
