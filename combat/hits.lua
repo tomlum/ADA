@@ -575,28 +575,31 @@ function hboxwall()
 
       if xx.wall_grab then 
         xx.lr = xx.walllr
-        if (xx.lr > 0 and xx.right) or (xx.lr < 0 and xx.left) then 
+        xx.v = 0
+        xx.j = math.max(-max_wall_fall,xx.j)
+        xx.im = wallgrab
+        makendust(xx.mid-14*xx.lr, xx.feet, xx.lr*1, -xx.j,2,1)
+
+        if not xx.wall_grab and ((xx.lr > 0 and xx.right) or (xx.lr < 0 and xx.left)) then 
           xx.wall_grab = false
-          if #joysticks>=xx.id then
-            xx.jt = walljumpjt
-            xx.j = -xx.jly*walljumpdis
-            xx.v = xx.jlx*walljumpdis
+          xx.jt = walljumpjt
+          xx.j = -xx.jly*walljumpdis
+          xx.v = xx.jlx*walljumpdis
+        elseif xx.wall_grab and (xx.up or xx.down or (xx.lr > 0 and xx.rightb) or (xx.lr < 0 and xx.leftb)) then
+          xx.wall_grab = false
+          if xx.up then
+            xx.jt = xx.jt + walljumpjt2
+            xx.j = walljumpj2
+            xx.v = walljumpv2 *xx.lr
+          elseif xx.down then
+            xx.jt = xx.jt + walljumpjt2
+            xx.j = -walljumpj2*.4
+            xx.v = walljumpv2 *xx.lr
           else
-            if xx.up then
-              xx.jt = xx.jt + walljumpjt2
-              xx.j = walljumpj2
-              xx.v = walljumpv2 *xx.lr
-            else
-              xx.jt = xx.jt + walljumpjt
-              xx.j = walljumpj
-              xx.v = walljumpv *xx.lr
-            end
+            xx.jt = xx.jt + walljumpjt
+            xx.j = walljumpj
+            xx.v = walljumpv *xx.lr
           end
-        elseif xx.wall_grab then 
-          xx.v = 0
-          xx.j = math.max(-max_wall_fall,xx.j)
-          xx.im = wallgrab
-          makendust(xx.mid-14*xx.lr, xx.feet, xx.lr*1, -xx.j,2,1)
 
 
         end
@@ -704,13 +707,13 @@ function hexPlat()
       end
       if plat.ceiling and xx.y - xx.j < plat.y and xx.y >= plat.y and plat.x1 < xx.mid+xx.width/2 and plat.x2 > xx.mid-xx.width/2  then
 
-        xx.y = plat.y+1
+        xx.y = plat.y
         xx.jt = 0
         xx.j = 0
         break
 
       elseif xx.go_here == nil and (not xx.gothroughplats or plat.floor~=nil) and (
-        (hexplatcheck2(plat.y, plat.x1, plat.x2, xx.x, xx.old_feet, xx.width, xx.y+xx.height+extra_height-xx.j, xx.v) and xx.j <= 0)
+        (hexplatcheck2(plat.y, plat.x1, plat.x2, xx.x, xx.old_feet, xx.width, xx.y+xx.height+extra_height-xx.j*ramp(xx), xx.v) and xx.j <= 0)
         or 
         (xx.y == plat.y-xx.height and xx.x+xx.width+xx.v >= plat.x1 and xx.x+xx.v <= plat.x2 and xx.j==0))
       then

@@ -21,7 +21,7 @@ function speedRamp()
     if slowt > slowrate then slowt = 0
     end
   else 
-    slowrate = 2
+    slowrate = 10
     slowt = slowrate
   end
   

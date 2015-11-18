@@ -593,7 +593,7 @@ function drawPlayer(xx)
     lg.setColor(255,0,0)
     lg.rectangle("fill", xx.x, xx.old_feet, xx.width,1)
     lg.setColor(0,0,255)
-    lg.rectangle("fill", xx.x, xx.y+me.height-xx.j+pextra, xx.width,1)
+    lg.rectangle("fill", xx.x, xx.y+me.height-xx.j*ramp(xx)+pextra, xx.width,1)
   end
 
 

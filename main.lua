@@ -26,6 +26,8 @@
 
 require "utilities/initializers"
 
+stop = false
+
 --Filming utilities
 infinitepan = false
 no_screen_follow = false
@@ -49,7 +51,7 @@ therampspeed = .2
 mapNum = 2
 rampspeed= therampspeed
 drawBoxes = false
-drawFeet = false
+drawFeet = true
 volume = 0
 fullscreen = false
 readout = false
@@ -103,6 +105,7 @@ end
 
 
 function love.update()
+  if not stop then
 
   modeManager()
   updateLoader()
@@ -122,12 +125,16 @@ function love.update()
     handleRetry()
 
   end
+end
 
 end
 
 
 
 function love.draw()
+  if me.y > floor then
+    stop = true
+  end
 
   if MODE ~= "play" and MODE ~= "story" then
     drawmenus()
@@ -147,6 +154,9 @@ function love.draw()
   lg.setColor(25,25,25)
 
   drawTrainingWheels()
+  lg.print(me.old_feet, 100, 100)
+  lg.print(me.y, 100, 120)
+  lg.print(me.j, 100, 140)
   --monitorParticles(100,100)
   --lg.print(tostring(me.dodgetype), 300, 320)
   --lg.rectangle("fill", screenwidth/2,0,screenwidth,screenheight)

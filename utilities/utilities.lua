@@ -371,88 +371,76 @@ function p_distance(p1, p2)
 end
 
 
-function retfindIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, seg1, seg2)
+function retfindIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y)
   local a1,b1,a2,b2 = l1p2y-l1p1y, l1p1x-l1p2x, l2p2y-l2p1y, l2p1x-l2p2x
   local c1,c2 = a1*l1p1x+b1*l1p1y, a2*l2p1x+b2*l2p1y
   local det,x,y = a1*b2 - a2*b1
   if det==0 then  return {0, 0} end
   x,y = (b2*c1-b1*c2)/det, (a1*c2-a2*c1)/det
-  if seg1 or seg2 then
-    local min,max = math.min, math.max
-    if seg1 and not (min(l1p1x,l1p2x) <= x and x <= max(l1p1x,l1p2x) and min(l1p1y,l1p2y) <= y and y <= max(l1p1y,l1p2y)) or
-      seg2 and not (min(l2p1x,l2p2x) <= x and x <= max(l2p1x,l2p2x) and min(l2p1y,l2p2y) <= y and y <= max(l2p1y,l2p2y)) then
-      return {0, 0}
-    end
+  local min,max = math.min, math.max
+  if not (min(l1p1x,l1p2x) <= x and x <= max(l1p1x,l1p2x) and min(l1p1y,l1p2y) <= y and y <= max(l1p1y,l1p2y)) or
+    not (min(l2p1x,l2p2x) <= x and x <= max(l2p1x,l2p2x) and min(l2p1y,l2p2y) <= y and y <= max(l2p1y,l2p2y)) then
+    return {0, 0}
   end
   return {x, y}
 end
 
 
-function findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, seg1, seg2)
+function findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y)
   local a1,b1,a2,b2 = l1p2y-l1p1y, l1p1x-l1p2x, l2p2y-l2p1y, l2p1x-l2p2x
   local c1,c2 = a1*l1p1x+b1*l1p1y, a2*l2p1x+b2*l2p1y
   local det,x,y = a1*b2 - a2*b1
   if det==0 then return false end
   x,y = (b2*c1-b1*c2)/det, (a1*c2-a2*c1)/det
-  if seg1 or seg2 then
-    local min,max = math.min, math.max
-    if seg1 and not (min(l1p1x,l1p2x) <= x and x <= max(l1p1x,l1p2x) and min(l1p1y,l1p2y) <= y and y <= max(l1p1y,l1p2y)) or
-      seg2 and not (min(l2p1x,l2p2x) <= x and x <= max(l2p1x,l2p2x) and min(l2p1y,l2p2y) <= y and y <= max(l2p1y,l2p2y)) then
-      return false
-    end
-  end
+  local min,max = math.min, math.max
+  if not (min(l1p1x,l1p2x) <= x and x <= max(l1p1x,l1p2x) and min(l1p1y,l1p2y) <= y and y <= max(l1p1y,l1p2y)) or
+    not (min(l2p1x,l2p2x) <= x and x <= max(l2p1x,l2p2x) and min(l2p1y,l2p2y) <= y and y <= max(l2p1y,l2p2y)) then
+    return false
+  end 
   return true
 end
 
-function findxIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y)
 
-  if findIntersect(l1p1x,l1p1y, l1p2x,l1p2y, l2p1x,l2p1y, l2p2x,l2p2y, true, true) or findIntersect(l1p2x,l1p2y,l1p1x,l1p1y,l2p1x,l2p1y, l2p2x,l2p2y, true, true) then
-    return true
-    else return false
+function lint(l1, l2)
+  return pint(l1.p1, l1.p2, l2.p1, l2.p2)
+end
+
+function pint(p11,p12,p21,p22)
+  return findIntersect(p11.x,p11.y+.0001,p12.x,p12.y,p21.x,p21.y,p22.x,p22.y)
+end
+
+function retpint(p11,p12,p21,p22)
+  local fred = retfindIntersect(p11.x,p11.y,p12.x,p12.y,p21.x,p21.y,p22.x,p22.y)
+  if fred[1] == nil then
+    return {0,0}
+    else return fred
     end
-
   end
 
-  function lint(l1, l2)
-    return pint(l1.p1, l1.p2, l2.p1, l2.p2)
+
+
+  -------------------
+  ---LOVE UTILITIES---
+  -------------------
+  function setFontSize(size)
+    love.graphics.setNewFont("utilities/munro.ttf", size)
   end
 
-  function pint(p11,p12,p21,p22)
-    return findIntersect(p11.x,p11.y,p12.x,p12.y,p21.x,p21.y,p22.x,p22.y,true,true)
-  end
+  -------------------
+  ---LUA UTILITIES---
+  -------------------
 
-  function retpint(p11,p12,p21,p22)
-    local fred = retfindIntersect(p11.x,p11.y,p12.x,p12.y,p21.x,p21.y,p22.x,p22.y,true,true)
-    if fred[1] == nil then
-      return {0,0}
-      else return fred
+  function clone (t) -- deep-copy a table
+    if type(t) ~= "table" then return t end
+    local meta = getmetatable(t)
+    local target = {}
+    for k, v in pairs(t) do
+      if type(v) == "table" then
+        target[k] = clone(v)
+      else
+        target[k] = v
       end
     end
-
-
-
-    -------------------
-    ---LOVE UTILITIES---
-    -------------------
-    function setFontSize(size)
-      love.graphics.setNewFont("utilities/munro.ttf", size)
-    end
-
-    -------------------
-    ---LUA UTILITIES---
-    -------------------
-
-    function clone (t) -- deep-copy a table
-      if type(t) ~= "table" then return t end
-      local meta = getmetatable(t)
-      local target = {}
-      for k, v in pairs(t) do
-        if type(v) == "table" then
-          target[k] = clone(v)
-        else
-          target[k] = v
-        end
-      end
-      setmetatable(target, meta)
-      return target
-    end
+    setmetatable(target, meta)
+    return target
+  end

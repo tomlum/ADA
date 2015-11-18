@@ -74,11 +74,11 @@ noshake = false
 
 walljumpjt = 14
 walljumpj = 12
-walljumpv = 12
+walljumpv = 9
 --for if holding up
 walljumpjt2 = 15
-walljumpj2 = 14
-walljumpv2 = 8
+walljumpj2 = 23
+walljumpv2 = 7
 
 whiffradius = 150
 
