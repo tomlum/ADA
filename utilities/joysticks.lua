@@ -54,14 +54,14 @@ function drawControllerCheck()
     controller_white_fade = 255
     me.using_keyboard = true
 
-        repplay(readysound)
+    repplay(readysound)
   end
 
   if not you.oldcontrollerready and (you.joystick ~= nil or love.keyboard.isDown(" ")) and not you.holda and controller_white_fade~=255 then
     controller_white_fade = 255
     you.using_keyboard = true
 
-        repplay(readysound)
+    repplay(readysound)
   end
 
   if not controllersReady then
@@ -387,20 +387,35 @@ function keyboardcontrols()
   me.leftbumpb = love.keyboard.isDown("q")
 
 
-
-  you.up = love.keyboard.isDown("o")
-  you.down = love.keyboard.isDown("l")
-  you.leftb = love.keyboard.isDown("k")
-  you.rightb = love.keyboard.isDown(";")
-  you.a1b = love.keyboard.isDown("[") and you.up
-  you.a2b = love.keyboard.isDown("[")
-  you.a3b = love.keyboard.isDown("[")
-  you.a4b = love.keyboard.isDown("[") and you.down
-  you.blockb = love.keyboard.isDown("=")
-  you.start = love.keyboard.isDown(" ")
-  you.runb = you.blockb
-  you.rightbumpb = love.keyboard.isDown("p")
-  you.leftbumpb = love.keyboard.isDown("i")
+  if youpuppet then
+    you.up = me.up 
+    you.down =     me.down 
+    you.leftb =     me.leftb 
+    you.rightb =     me.rightb 
+    you.a1b =     me.a1b 
+    you.a2b =     me.a2b 
+    you.a3b =     me.a3b 
+    you.a4b =     me.a4b 
+    you.blockb =     me.blockb 
+    you.start =     me.start 
+    you.runb =     me.runb 
+    you.rightbumpb =     me.rightbumpb 
+    you.leftbumpb =     me.leftbumpb
+  else
+    you.up = love.keyboard.isDown("o")
+    you.down = love.keyboard.isDown("l")
+    you.leftb = love.keyboard.isDown("k")
+    you.rightb = love.keyboard.isDown(";")
+    you.a1b = love.keyboard.isDown("[") and you.up
+    you.a2b = love.keyboard.isDown("[")
+    you.a3b = love.keyboard.isDown("[")
+    you.a4b = love.keyboard.isDown("[") and you.down
+    you.blockb = love.keyboard.isDown("=")
+    you.start = love.keyboard.isDown(" ")
+    you.runb = you.blockb
+    you.rightbumpb = love.keyboard.isDown("p")
+    you.leftbumpb = love.keyboard.isDown("i")
+  end
 
   me.a1 = you.a1
 

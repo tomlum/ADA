@@ -10,6 +10,7 @@
 --can't kick combo out of purple kick
 
 --notes:
+--fix paralax for top of library
 --fix fullscreen edges on maps
 --fix camera minor jump on fullscreen from verticalm
 --add new finish to combo to Orange, long strike
@@ -30,12 +31,16 @@ require "utilities/initializers"
 infinitepan = false
 no_screen_follow = false
 drawControllers = false
-waver_outlines = true
+waver_outlines = false
 drawtrails = false
 noslowmo = false
+wobblecamera = false
+youpuppet = true
+havecinemabars = false
+noidle = true
 
 --Debug/Test Utilities
-fightclub = false
+fightclub = true
 demo = false
 debug = false
 MODE = "color"
@@ -46,15 +51,15 @@ mercolor = 4
 youlcolor = 3
 yourcolor = 2
 therampspeed = .2
-mapNum = 1
+map_num = 1
 rampspeed= therampspeed
 drawBoxes = false
-drawFeet = true
+drawFeet = false
 volume = 0
 fullscreen = false
 readout = false
 putmehere = 1000
-putyouhere = 1025
+putyouhere = 1100
 chapter = 1
 oldchapter = "bob"
 lassoisathing = false
@@ -72,14 +77,18 @@ if demo then
   waver_outlines = true
   drawtrails = false
   noslowmo = false
+  wobblecamera = true
+  havecinemabars = true
+  youpuppet = false
   MODE = "controllerSetup"
   melcolor = 0
   mercolor = 0
   youlcolor = 0
   yourcolor = 0
   fullscreen = true
-  mapNum = 1
+  map_num = 1
   volume = 1
+  noidle = false
 
 end
 
@@ -89,7 +98,7 @@ love.audio.setVolume(volume)
 initLove()
 initDependencies()
 
-the_map = the_maps[mapNum]
+the_map = the_maps[map_num]
 
 function love.load()
 

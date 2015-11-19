@@ -58,9 +58,9 @@ function initFightClub()
 		game_mode = "duel"
 		MODE = "play"
 		if not loadImagesNow then
-			mapNum = 100
+			map_num = 100
 		end
-		the_map = the_maps[mapNum]
+		the_map = the_maps[map_num]
 		placespeople = true
 		loadStage()
 		while(not finished_loading) do

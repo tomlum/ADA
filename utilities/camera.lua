@@ -140,7 +140,7 @@ end
 
 function cammovement()
 
-  cinemabars()
+  if havecinemabars then cinemabars() end
   camreturntozoom()
 
   if dangerclose and var2tb then
@@ -475,7 +475,9 @@ function camerafol()
   camera.y = camera.y + camwoby
   camera2.y = camera2.y + camwoby
   if MODE ~= "retry" then
-    camerawobble()
+    if wobblecamera then
+      camerawobble()
+    end
   end
 
 
@@ -685,19 +687,21 @@ function drawx(xx)
     tods()
 
     local pzoom2 = 1+(1-math.sqrt(math.sqrt(cscale)))
-    lg.draw(enviro.sky, xx.x, 0, 0, 500, 1.1)
+    lg.draw(enviro.sky, xx.x, 0, 0, 500, 2, 0, enviro.paralaxoffset*1.5)
     --lg.draw(enviro.sky, camera.x, camera.y/1.1, 0, 500, 1.1)
 
     if not fightclub and the_map.paralaxscale2 ~= nil then
       blurdraw(blur_scale1, function()
         lg.draw(enviro.paralax2, 
-          (xx.x+(screenwidth/4)*cscale*pzoom2+paralaxcamshake)*(1-the_maps[mapNum].paralaxscale2*pzoom2)
-          -(500*(1-the_maps[mapNum].paralaxscale2*pzoom2))
+          (xx.x+(screenwidth/4)*cscale*pzoom2+paralaxcamshake)*(1-the_maps[map_num].paralaxscale2*pzoom2)
+          -(500*(1-the_maps[map_num].paralaxscale2*pzoom2))
           ,
-          (xx.y+(screenheight/2)*cscale+paralaxcamshake)*(1-the_maps[mapNum].paralaxscale2*pzoom2)+(feet2bottom-paralaxoffset)*(cscale*(1-the_maps[mapNum].paralaxscale2*pzoom2)),
+          (xx.y+(screenheight/2)*cscale+paralaxcamshake)*(1-the_maps[map_num].paralaxscale2*pzoom2)+(feet2bottom-paralaxoffset)*(cscale*(1-the_maps[map_num].paralaxscale2*pzoom2)),
           0,
           pzoom2,
-          pzoom2)
+          pzoom2,
+          0,
+          enviro.paralaxoffset)
         end)
     end
 
@@ -751,13 +755,15 @@ function drawx(xx)
         blurdraw(blur_scale1, function()
 
           lg.draw(enviro.paralax, 
-            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-the_maps[mapNum].paralaxscale*pzoom)
-            -(500*(1-the_maps[mapNum].paralaxscale*pzoom)),
+            (xx.x+(screenwidth/4)*cscale*pzoom+paralaxcamshake)*(1-the_maps[map_num].paralaxscale*pzoom)
+            -(500*(1-the_maps[map_num].paralaxscale*pzoom)),
             (xx.y+(screenheight/2)--*pzoom
-              *cscale+paralaxcamshake)*(1-the_maps[mapNum].paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-the_maps[mapNum].paralaxscale*pzoom)),
+              *cscale+paralaxcamshake)*(1-the_maps[map_num].paralaxscale*pzoom)+(feet2bottom-paralaxoffset)*(cscale*(1-the_maps[map_num].paralaxscale*pzoom)),
             0,
             pzoom,
-            pzoom)
+            pzoom,
+            0,
+            enviro.paralaxoffset)
 
           end)
       end
@@ -790,7 +796,7 @@ function drawx(xx)
     end
 
     --lg.draw(enviro.stage, 0, 0) 
-    if mapNum == 1 then
+    if map_num == 1 then
       drawstreetprestuff()
     end
     lg.setShader()
@@ -841,11 +847,11 @@ function drawx(xx)
     cclear()
 
 
-    if mapNum == 1 then
+    if map_num == 1 then
       drawstreetstuff()
-    elseif mapNum == 2 then
+    elseif map_num == 2 then
       drawlibrarystuff()
-    elseif mapNum == 3 then
+    elseif map_num == 3 then
       drawfloorsstuff()
     end
     if drawboxes then drawHexBoxes() end

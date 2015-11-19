@@ -71,23 +71,44 @@ end
 function drawKeyboardControls2(x, y, scale)
   setFontSize(9*scale)
 
-  lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
-  drawKey("i", x+(21*7)*scale, y-16*scale, scale)
-  lg.setColor(you.rightc.c.r, you.rightc.c.g, you.rightc.c.b)
-  drawKey("p", x+(21*9)*scale, y-16*scale, scale)
-  cclear()
-  
-  drawBlockKey("=", x+(-6+21*11)*scale, y-32*scale, scale)
-  lg.setColor(you.color.c.r,you.color.c.g,you.color.c.b)
-  drawAttackKey("[", x+(21*10)*scale, y-16*scale, scale)
-  cclear()
+  if youpuppet then
+    lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
+    drawKey("i", x+(21*7)*scale, y-16*scale, scale, "q")
+    lg.setColor(you.rightc.c.r, you.rightc.c.g, you.rightc.c.b)
+    drawKey("p", x+(21*9)*scale, y-16*scale, scale, "e")
+    cclear()
 
-  drawKey("o", x+(21*8)*scale, y-16*scale, scale)
-  drawKey("k", x+(4+21*7)*scale, y, scale)
-  drawKey("l", x+(4+21*8)*scale, y, scale)
-  drawKey(";", x+(4+21*9)*scale, y, scale)
+    drawBlockKey("=", x+(-6+21*11)*scale, y-32*scale, scale,"c")
+    lg.setColor(you.color.c.r,you.color.c.g,you.color.c.b)
+    drawAttackKey("[", x+(21*10)*scale, y-16*scale, scale,"lgui")
+    cclear()
 
-  setFontSize(font_size)
+    drawKey("o", x+(21*8)*scale, y-16*scale, scale, "w")
+    drawKey("k", x+(4+21*7)*scale, y, scale, "a")
+    drawKey("l", x+(4+21*8)*scale, y, scale, "s")
+    drawKey(";", x+(4+21*9)*scale, y, scale, "d")
+
+    setFontSize(font_size)
+
+  else
+    lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
+    drawKey("i", x+(21*7)*scale, y-16*scale, scale)
+    lg.setColor(you.rightc.c.r, you.rightc.c.g, you.rightc.c.b)
+    drawKey("p", x+(21*9)*scale, y-16*scale, scale)
+    cclear()
+
+    drawBlockKey("=", x+(-6+21*11)*scale, y-32*scale, scale)
+    lg.setColor(you.color.c.r,you.color.c.g,you.color.c.b)
+    drawAttackKey("[", x+(21*10)*scale, y-16*scale, scale)
+    cclear()
+
+    drawKey("o", x+(21*8)*scale, y-16*scale, scale)
+    drawKey("k", x+(4+21*7)*scale, y, scale)
+    drawKey("l", x+(4+21*8)*scale, y, scale)
+    drawKey(";", x+(4+21*9)*scale, y, scale)
+
+    setFontSize(font_size)
+  end
 end
 
 function drawKeyboard(x, y, scale)

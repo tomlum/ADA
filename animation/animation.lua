@@ -432,37 +432,37 @@ end
 
 function drawmytrail(xx)
 
+  if MODE ~= "retry" then
+    for i = #xx.trail, 1, -1 do
+      cur = xx.trail[i]
 
-  for i = #xx.trail, 1, -1 do
-    cur = xx.trail[i]
 
+      if cur.im.xoff == nil then cur.im.xoff = 0 end
+      if cur.im.yoff == nil then cur.im.yoff = 0 end
+      lg.setShader(fillshader)
+      if cur.dangertrail ~= nil then
+        fillshader:send("shade", 
+          vct(thecolors[cur.colornum].c, 
+            (255/traillength)*(traillength/cur.t)/trailfadeness
+            ))
+      else
+        fillshader:send("shade", 
+          vct(thecolors[cur.colornum].c, 
+            (255/traillength)*(traillength/cur.t)
+            ))
+      end
 
-    if cur.im.xoff == nil then cur.im.xoff = 0 end
-    if cur.im.yoff == nil then cur.im.yoff = 0 end
-    lg.setShader(fillshader)
-    if cur.dangertrail ~= nil then
-      fillshader:send("shade", 
-        vct(thecolors[cur.colornum].c, 
-          (255/traillength)*(traillength/cur.t)/trailfadeness
-          ))
-    else
-      fillshader:send("shade", 
-        vct(thecolors[cur.colornum].c, 
-          (255/traillength)*(traillength/cur.t)
-          ))
+      lg.draw(cur.im.im, cur.xanimate-cur.im.xoff*cur.lr, cur.y-cur.im.yoff, 0, cur.lr, 1)
+      if cur.legs ~= nil then
+        if cur.im.legsy == nil then cur.im.legsy = 0 end
+        lg.draw(cur.legs,cur.xanimate-cur.im.xoff*cur.lr, cur.y-cur.im.yoff+cur.im.legsy, 0, cur.lr, 1)
+      end
+      lg.setShader()
+      cclear()
+
     end
-
-    lg.draw(cur.im.im, cur.xanimate-cur.im.xoff*cur.lr, cur.y-cur.im.yoff, 0, cur.lr, 1)
-    if cur.legs ~= nil then
-      if cur.im.legsy == nil then cur.im.legsy = 0 end
-      lg.draw(cur.legs,cur.xanimate-cur.im.xoff*cur.lr, cur.y-cur.im.yoff+cur.im.legsy, 0, cur.lr, 1)
-    end
-    lg.setShader()
-    cclear()
 
   end
-
-
 end
 
 
@@ -1549,15 +1549,16 @@ end
 
 
 function idleanimatex (xx)
-  if xx.idletimer < 17 then 
+  if not noidle then
     xx.idletimer = xx.idletimer + 1*ramp(xx)
+  end
+  if xx.idletimer < 17 then 
     if xx.health<maxhealth/2 then
       xx.im = idle3
     else
       xx.im = idle1
     end
   elseif xx.idletimer >= 17 and xx.idletimer < 33 then
-    xx.idletimer = xx.idletimer + 1
     if xx.health<maxhealth/2 then
 
       xx.im = idle4

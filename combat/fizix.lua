@@ -193,9 +193,9 @@ you.plat = noplat
 
 
 function updateboxes()
-  if the_maps[mapNum].boxes ~= nil and not pause then
+  if the_maps[map_num].boxes ~= nil and not pause then
     for i,xx in ipairs(players) do 
-      for j,b in ipairs(the_maps[mapNum].boxes) do
+      for j,b in ipairs(the_maps[map_num].boxes) do
         local xline = {p1 = {x = xx.mid, y = xx.y+xx.height/2},
         p2 = {x = xx.mid+xx.v, y = xx.y+xx.height/2-xx.j}
       }
@@ -250,11 +250,11 @@ end
 --bounce method, if hit squares and not dodge then yeah
 function bump(xx)
   if not xx.dodge then
-    hexHit(xx, xx.id, 
+    hexHit(xx, xx.id,
+      {x=xx.mid, y = xx.y},
       {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y},
-      {x=xx.mid, y = xx.y+55},
       {x=xx.mid+(xx.v + (8 * (xx.v/(math.abs(xx.v))))), y = xx.y+xx.height},
-      {x=xx.mid, y = xx.y+5},
+      {x=xx.mid, y = xx.y+xx.height},
       function(z)
         if not(xx.color.n==2 and xx.attack_num==1) and not (z.color.n==2 and z.attack_num==1) and not z.flinch then
           if xx.v * (z.x - xx.x) > 0 and math.abs(z.x-xx.x)>5 then
@@ -475,7 +475,7 @@ end
   function speedpenaltycalc(xx,yy)
     if
       (xx.v * (xx.x - yy.x)/(math.abs(xx.x - yy.x))) > 0
-      then xx.speedpenalty = .7
+      then --xx.speedpenalty = .8
     else
       xx.speedpenalty = 1
     end

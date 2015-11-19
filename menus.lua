@@ -15,7 +15,7 @@ else
   num_of_modes = 2
 end
 
-font_size = 20
+font_size = 10
 
 --MODE that fades into another???
 
@@ -126,7 +126,7 @@ function modeManager()
   elseif MODE == "map" and OLD_MODE ~= "map" then
     allfade = 1
     fadein = 9
-    mapNum = 1
+    map_num = 1
   elseif MODE == "color" and OLD_MODE ~= "color" then
     soscillator = 0
     finished_loading = false
@@ -249,8 +249,8 @@ attacklcmdpressed_im = lg.newImage("images/enviro/attacklcmdpressed.png")
 rcmd_im = lg.newImage("images/enviro/rcmd.png")
 rcmdpressed_im = lg.newImage("images/enviro/rcmdpressed.png")
 
-function drawAttackKey(key, x, y, size)
-  if love.keyboard.isDown(key) then
+function drawAttackKey(key, x, y, size, override)
+  if love.keyboard.isDown(key) or (override~=nil and love.keyboard.isDown(override))  then
     if key == "lgui" then
       lg.draw(attacklcmdpressed_im, x, y, 0, size/2, size/2, 32, 18)
     elseif key == "lalt" or key == "ralt" then  
@@ -279,8 +279,8 @@ function drawAttackKey(key, x, y, size)
   end
 end
 
-function drawBlockKey(key, x, y, size)
-  if love.keyboard.isDown(key) then
+function drawBlockKey(key, x, y, size, override)
+  if love.keyboard.isDown(key) or (override~=nil and love.keyboard.isDown(override)) then
     lg.draw(blockkeypressed_im, x, y-3*size, 0, size, size, 11, 9)
     lg.setColor(0,0,0)
     lg.printf(string.upper(key), x, y-6*size, 0, "center")
@@ -292,9 +292,9 @@ function drawBlockKey(key, x, y, size)
   end
 end
 
-function drawKey(key, x, y, size)
+function drawKey(key, x, y, size, override)
 
-  if love.keyboard.isDown(key) then
+  if love.keyboard.isDown(key) or (override~=nil and love.keyboard.isDown(override)) then
     if key == "lgui" then
       lg.draw(lcmdpressed_im, x, y, 0, size/2, size/2, 32, 18)
 
@@ -610,11 +610,11 @@ function drawMenus()
 
     if cancels() then MODE = "modes" end
 
-    if downs() and mapNum < 3 then mapNum = mapNum + 1 repplay(mov)
-    elseif ups() and mapNum > 1 then mapNum = mapNum - 1 repplay(mov)
+    if downs() and map_num < 3 then map_num = map_num + 1 repplay(mov)
+    elseif ups() and map_num > 1 then map_num = map_num - 1 repplay(mov)
     end
 
-    the_map = the_maps[mapNum]
+    the_map = the_maps[map_num]
 
     if (c1accept() and not me.holda) or (not you.holda and c2accept())and MODE == "map" then
       fadein = -5
@@ -629,11 +629,12 @@ function drawMenus()
 
     lg.setColor(allfade,allfade,allfade,255)
     lg.draw(map,0,0, 0, screenwidth/1440, screenheight/900)
-    lg.setColor(the_maps[mapNum].lightcolor.r,the_maps[mapNum].lightcolor.g,the_maps[mapNum].lightcolor.b,math.random(180,255)*(allfade/255))
-    lg.circle("fill",(the_maps[mapNum].lightx)*(screenwidth/1440),(the_maps[mapNum].lighty)*(screenheight/900),lightsize*(screenwidth/1440))
+    lg.setColor(the_maps[map_num].lightcolor.r,the_maps[map_num].lightcolor.g,the_maps[map_num].lightcolor.b,math.random(180,255)*(allfade/255))
+    lg.circle("fill",(the_maps[map_num].lightx)*(screenwidth/1440),(the_maps[map_num].lighty)*(screenheight/900),lightsize*(screenwidth/1440))
     local wordspacing = 20
+    setFontSize(24)
     for i = 0, screenheight/wordspacing do
-      lg.print(string.upper(the_maps[mapNum].name)..string.upper(the_maps[mapNum].name)..string.upper(the_maps[mapNum].name)..string.upper(the_maps[mapNum].name)..string.upper(the_maps[mapNum].name)..string.upper(the_maps[mapNum].name)..string.upper(the_maps[mapNum].name)..string.upper(the_maps[mapNum].name)..string.upper(the_maps[mapNum].name)..string.upper(the_maps[mapNum].name)..string.upper(the_maps[mapNum].name)..string.upper(the_maps[mapNum].name)..string.upper(the_maps[mapNum].name),
+      lg.print(string.upper(the_maps[map_num].name)..string.upper(the_maps[map_num].name)..string.upper(the_maps[map_num].name)..string.upper(the_maps[map_num].name)..string.upper(the_maps[map_num].name)..string.upper(the_maps[map_num].name)..string.upper(the_maps[map_num].name)..string.upper(the_maps[map_num].name)..string.upper(the_maps[map_num].name)..string.upper(the_maps[map_num].name)..string.upper(the_maps[map_num].name)..string.upper(the_maps[map_num].name)..string.upper(the_maps[map_num].name),
        845*(screenwidth/1440), i*wordspacing)
     end
 
@@ -1028,7 +1029,7 @@ function drawMenus()
       MODE = "play"
       gotimer = 0
     elseif streetfadestart then streetfadehold = streetfadehold - 1
-    elseif dollyx + screenwidth > the_map.rightwall-1440*1.2 and not infinitepan
+    elseif dollyx + screenwidth > the_map.rightwall-1440*1 and not infinitepan
       or c1accept() or c2accept()
       then 
       fadein = -5
@@ -1041,10 +1042,10 @@ function drawMenus()
     end
 
     lg.setColor(allfade,allfade,allfade)
-    lg.sdraw(enviro.sky, 0, 0, 0, 150, 1)
-    if enviro.paralax ~= nil then 
+    lg.sdraw(enviro.sky, 0, 0, 0, 150, 1, 0, enviro.paralaxoffset)
+    if enviro.paralax ~= nil and map_num~=2 then 
       lg.sdraw(enviro.paralax2, -dollyx/4,  -enviro.paralax2:getHeight()+900-letter_box_height-35)
-    end
+    end 
     lg.sdraw(enviro.paralax, -dollyx/2,  -enviro.paralax:getHeight()+900-letter_box_height-30)
     lg.sdraw(enviro.stage, -dollyx, -the_map.floor+900 -letter_box_height-30)
     lg.setColor(0,0,0)

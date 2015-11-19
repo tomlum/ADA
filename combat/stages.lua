@@ -97,11 +97,12 @@ function loadStage()
   me.old_health = me.health
   you.old_health = you.health
 
-  the_map = the_maps[mapNum]
-  floor = the_maps[mapNum].floor
+  the_map = the_maps[map_num]
+  floor = the_maps[map_num].floor
 
 
-  if mapNum == 100 then
+  if map_num == 100 then
+    enviro.paralaxoffset = 0
     if not same_stage then
 
       loader.start(function()
@@ -120,9 +121,10 @@ function loadStage()
     floor = the_maps[100].floor
     dollyv = 4.5
 
-  elseif mapNum == 1 then
+  elseif map_num == 1 then
     me.y = the_maps[1].floor - 200
     you.y = the_maps[1].floor - 200
+    enviro.paralaxoffset = 0
     if not same_stage then
       if loadImagesNow then
         enviro.stage=lg.newImage("images/maps/street/astreet.png")
@@ -154,9 +156,10 @@ function loadStage()
     enviro.ds = 5
     thesong = song2
     dollyv = 4.5
+    enviro.paralaxoffset = 0
 
 
-  elseif mapNum == 2 then
+  elseif map_num == 2 then
 
     if not same_stage then
       if loadImagesNow then 
@@ -190,10 +193,11 @@ function loadStage()
     enviro.rightwall = 3700 
     enviro.ds = 2
     dollyv = 4.5
+    enviro.paralaxoffset = 500
 
     thesong = song1
 
-  elseif mapNum == 3 then
+  elseif map_num == 3 then
 
     if not same_stage then
       if loadImagesNow then 
@@ -229,6 +233,7 @@ function loadStage()
     enviro.ds = 5
     thesong = song2
     dollyv = 4.5
+    enviro.paralaxoffset = 0
 
   end
 
