@@ -118,7 +118,7 @@ function loadStage()
     me.y = the_maps[100].floor - 60
     you.y = the_maps[100].floor - 60
     floor = the_maps[100].floor
-    dollyv = 3
+    dollyv = 4.5
 
   elseif mapNum == 1 then
     me.y = the_maps[1].floor - 200
@@ -153,7 +153,7 @@ function loadStage()
     enviro.rightwall = 6600-20
     enviro.ds = 5
     thesong = song2
-    dollyv = 3
+    dollyv = 4.5
 
 
   elseif mapNum == 2 then
@@ -189,7 +189,7 @@ function loadStage()
     you.y = 300
     enviro.rightwall = 3700 
     enviro.ds = 2
-    dollyv = 3
+    dollyv = 4.5
 
     thesong = song1
 
@@ -228,7 +228,7 @@ function loadStage()
     enviro.rightwall = 5000
     enviro.ds = 5
     thesong = song2
-    dollyv = 3
+    dollyv = 4.5
 
   end
 

@@ -16,7 +16,10 @@ function initPlayer(xx)
 	xx.is_player = true
 
 	xx.x = 0
+	xx.v = 0
 	xx.mid = 0
+	xx.j = 0
+	xx.g = false
 	xx.y = 0
 
 	xx.outlineh = math.random()

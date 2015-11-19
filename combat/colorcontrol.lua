@@ -67,12 +67,16 @@ s = {def=1, speed = 1-speeddif, jump = 1, weight = 1, brittle = 1}, logo=questio
 
 thecolors[1] = {n=1,c=color1,c2=c, tile = ptile, logo=apa11,
 s = {def=1.2, speed = .8-speeddif, jump = .8, weight = 1.3, brittle = 1}}
+
 thecolors[2] = {n=2,c=color2,c2=c, tile = gtile, logo=glogo,
 s = {def=.7, speed = 1.2-speeddif, jump = 1.1, weight = 1, brittle = 1}}
+
 thecolors[3] = {n=3, tile = otile,c=color3,c2=c, logo=ao32,
 s = {def=1, speed = 1-speeddif, jump = 1.1, weight = .8, brittle = 2}}
+
 thecolors[4] = {n=4, tile = rtile,c=color4,c2=c, logo=redap1, 
 s = {def=.8, speed = 1.1-speeddif, jump = 1.1, weight = .9, brittle = 1.2}}
+
 thecolors[5] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 thecolors[6] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 thecolors[7] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
@@ -98,12 +102,10 @@ else
   you.leftc = thecolors[0]
 end
 
-
 me.color = thecolors[0]
 you.color = thecolors[0]
 
 function tilefadef(inf,f,rate)
-
 
   if inf > 0 then 
     return f + rate
@@ -116,6 +118,7 @@ function tilefadef(inf,f,rate)
 end
 
 function tilefadeinf(inf, f, rate)
+  
   if inf >= 0 and f + rate >= 255 then
     if tilefadehold > 100 then
       tilefadehold = 0

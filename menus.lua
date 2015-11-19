@@ -470,7 +470,7 @@ tile_y_closeness = 78*(screenheight/900)
 
 tile_dis_from_center = screenwidth/12.2
 
-function drawmenus()
+function drawMenus()
 
 
   if wobx- wobv > maxwob then wobv = wobv + math.random()/3

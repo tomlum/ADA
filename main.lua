@@ -10,8 +10,7 @@
 --can't kick combo out of purple kick
 
 --notes:
---Allow keyboard to do throw and wall jump
---Currently green forward can knock through floor... is it hline??
+--fix fullscreen edges on maps
 --fix camera minor jump on fullscreen from verticalm
 --add new finish to combo to Orange, long strike
 --air dash
@@ -26,7 +25,6 @@
 
 require "utilities/initializers"
 
-stop = false
 
 --Filming utilities
 infinitepan = false
@@ -37,10 +35,10 @@ drawtrails = false
 noslowmo = false
 
 --Debug/Test Utilities
-fightclub = true
+fightclub = false
 demo = false
 debug = false
-MODE = "controllerSetup"
+MODE = "color"
 
 notilebouncing = false
 melcolor = 1
@@ -48,7 +46,7 @@ mercolor = 4
 youlcolor = 3
 yourcolor = 2
 therampspeed = .2
-mapNum = 2
+mapNum = 1
 rampspeed= therampspeed
 drawBoxes = false
 drawFeet = true
@@ -105,7 +103,6 @@ end
 
 
 function love.update()
-  if not stop then
 
   modeManager()
   updateLoader()
@@ -125,19 +122,15 @@ function love.update()
     handleRetry()
 
   end
-end
 
 end
 
 
 
 function love.draw()
-  if me.y > floor then
-    stop = true
-  end
 
   if MODE ~= "play" and MODE ~= "story" then
-    drawmenus()
+    drawMenus()
 
   elseif MODE == "play" then
     drawPlay()
@@ -154,9 +147,6 @@ function love.draw()
   lg.setColor(25,25,25)
 
   drawTrainingWheels()
-  lg.print(me.old_feet, 100, 100)
-  lg.print(me.y, 100, 120)
-  lg.print(me.j, 100, 140)
   --monitorParticles(100,100)
   --lg.print(tostring(me.dodgetype), 300, 320)
   --lg.rectangle("fill", screenwidth/2,0,screenwidth,screenheight)

@@ -136,7 +136,7 @@ you.grabtimer = 0
 --you.grabbingx = nil
 
 
-throw_amount = 13
+throw_amount = 10
 
 function grab(xx)
 	if xx.attack_num == 8 and xx.animcounter > 0 then 
@@ -203,7 +203,7 @@ function grab(xx)
 
 				if xx.using_keyboard then
 					if xx.up then
-						xx.grabbingx.j =  throw_amount*1.5+xx.j
+						xx.grabbingx.j =  throw_amount*2+xx.j
 						xx.grabbingx.v =  (throw_amount*xx.lr)/5+xx.v
 					elseif xx.left then
 						xx.grabbingx.j =  throw_amount+xx.j

@@ -698,14 +698,16 @@ function drawstreetstuff()
   lg.draw(enviro.rafters,5608-502, 1536)
   drawpartition(0, the_maps[1].floor, -1)
   drawpartition(the_maps[1].rightwall, the_maps[1].floor, 1)
+  lg.setColor(0,0,0)
+  lg.rectangle("fill", -2000, the_maps[1].floor, 6000+the_maps[2].rightwall, 1000)
 end
 
 function drawpartition(fx, fy, lr)
   local i = fy
   while i > 0 do
-    lg.draw(partitionp2, fx-3*lr, i, 0, -lr*3, 3, 40, 115)
+    lg.draw(partitionp2, fx-3*lr, i+10, 0, -lr*5, 3, 40, 115)
     if i == fy then
-      lg.draw(partitionp1, fx-3*-lr, i, 0, -lr, 1, 0, 10)
+      lg.draw(partitionp1, fx-3*-lr, i, 0, -lr*5, 1, 0, 10)
     end
     i = i - 115*3
   end
@@ -719,7 +721,7 @@ function drawlibrarystuff()
   drawpartition(0, the_maps[2].floor, -1)
   drawpartition(the_maps[2].rightwall, 964, 1)
   libraryveneer()
-  lg.setColor(27,27,27,255)
+  lg.setColor(0,0,0)
   lg.rectangle("fill", -3000, the_maps[2].floor, 6000+the_maps[2].rightwall, 1000)
   cclear()
 end
@@ -728,7 +730,7 @@ function drawfloorsstuff()
   lg.draw(enviro.pfloors,0,0)
   drawpartition(0, the_maps[3].floor, -1)
   drawpartition(the_maps[3].rightwall, the_maps[3].floor, 1)
-  lg.setColor(27,27,27,255)
+  lg.setColor(0,0,0)
   lg.rectangle("fill", -3000, the_maps[3].floor, 6000+the_maps[2].rightwall, 1000)
   floorsveneer()
 end

@@ -569,7 +569,7 @@ function hboxwall()
 
     --wall jump/hold mechanics
     if xx.is_player~=nil then
-      if not (xx.runb or xx.blockb) or xx.flinch or xx.a1 or xx.a2 or xx.a3 or xx.a4 or xx.g then 
+      if not (xx.runb or xx.blockb) or xx.flinch or xx.a1 or xx.a2 or xx.a3 or xx.a4 or xx.g or xx.dodge then 
         xx.wall_grab = false 
       end
 
@@ -585,7 +585,7 @@ function hboxwall()
           xx.jt = walljumpjt
           xx.j = -xx.jly*walljumpdis
           xx.v = xx.jlx*walljumpdis
-        elseif xx.wall_grab and (xx.up or xx.down or (xx.lr > 0 and xx.rightb) or (xx.lr < 0 and xx.leftb)) then
+        elseif xx.wall_grab and (xx.up or xx.down or (xx.lr > 0 and xx.rightb) or (xx.lr < 0 and xx.leftb)) and not ((xx.lr < 0 and xx.rightb) or (xx.lr > 0 and xx.leftb)) then
           xx.wall_grab = false
           if xx.up then
             xx.jt = xx.jt + walljumpjt2

@@ -16,7 +16,7 @@ danger2tb = dangerbarey
 --after separation, camera returns smoothly to 
 camera_center_offset=0
 
-defaultminzoom = .7
+defaultminzoom = .6
 defaultmaxzoom = .5
 minzoom = defaultminzoom
 maxzoom = defaultmaxzoom
@@ -182,13 +182,13 @@ function cammovement()
   end
 
 
-  beigedif = (playheight - head2ceiling - feet2bottom-120)
+  beigedif = (playheight - head2ceiling - feet2bottom-120)-20
   jumpj = initjumpj * cscale/minzoom
   --
   jmax = initjmax * cscale/minzoom
   --basically min j
 
-  ydif = math.abs((you.y-you.j) - (me.y-me.j))
+  ydif = math.abs((you.y-you.j*ramp(you)) - (me.y-me.j*ramp(me)))
 
   if ydif/cscale <= beigedif then
 
