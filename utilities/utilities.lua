@@ -406,6 +406,10 @@ function lint(l1, l2)
 end
 
 function pint(p11,p12,p21,p22)
+  return findIntersect(p11.x+.2,p11.y+.2,p12.x,p12.y,p21.x+.2,p21.y+.2,p22.x,p22.y,true,true)
+end
+
+function platpint(p11,p12,p21,p22)
   return findIntersect(p11.x,p11.y+.0001,p12.x,p12.y,p21.x,p21.y,p22.x,p22.y)
 end
 

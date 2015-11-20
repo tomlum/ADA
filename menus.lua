@@ -412,7 +412,7 @@ function drawOverlays()
   end
 
   if pause and not hitpause then
-    lg.sdraw(pausescreen,0,0,0,10,10)
+    drawPause()
   end
 
   lg.setShader()
@@ -429,6 +429,8 @@ function drawOverlays()
       drawController(screenwidth*(3/4),screenheight-300,you.joystick,6)
     end
   end
+  
+  drawTrainingWheels()
 
 end
 
@@ -1179,6 +1181,16 @@ function panstuff()
 
   enviro.dolly = enviro.dolly + enviro.ds
 
+end
+
+
+function drawPause()
+  lg.sdraw(pausescreen,0,0,0,10,10)
+  local twString = "OFF"
+  if training_wheels then
+    twString = "ON"
+  end
+  lg.printf("T: Training Wheels: "..twString, screenwidth/2-100, screenheight*2/3,200,"center")
 end
 
 

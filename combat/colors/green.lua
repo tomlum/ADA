@@ -253,6 +253,7 @@ function gandg(xx)
 
     elseif xx.attack_num == 2 then
 
+
       if xx.animcounter < 4 then
         xx.im = greenk03
       elseif xx.animcounter < 7 then
@@ -268,6 +269,13 @@ function gandg(xx)
             xx.lr = 1
           else
             xx.lr = -1
+          end
+        else
+
+          if xx.runtap then
+            if xx.left then xx.lr = -1 
+            elseif xx.right then xx.lr = 1
+            end
           end
         end
         if xx.g then
@@ -297,6 +305,8 @@ function gandg(xx)
         if xx.v ~= 0 or xx.animcounter <25 then
           xx.im = greenk2
         end
+
+        if xx.v ~= 0 then xx.lr = -xx.v/math.abs(xx.v) end
 
         if xx.animcounter <= 15 then
           repplay(xx.greens)

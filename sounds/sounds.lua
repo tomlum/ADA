@@ -16,7 +16,7 @@ song2:setVolume(.25)
 song2:setLooping(true)
 
 controllerSetupSong = love.audio.newSource("sounds/recordscratch.mp3", "stream")
-controllerSetupSong:setVolume(.3)
+controllerSetupSong:setVolume(1.8)
 controllerSetupSong:setLooping(true)
 
 
@@ -25,11 +25,7 @@ controllersound:setVolume(.1)
 controllersound:setLooping(true)
 
 openingsong = love.audio.newSource("sounds/title.mp3", "stream")
-if not mute then
-  openingsong:setVolume(.8)
-else
-  openingsong:setVolume(0)
-end
+openingsong:setVolume(1.8)
 openingsong:setLooping(true)
 
 

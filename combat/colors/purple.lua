@@ -430,13 +430,14 @@ function pandp(xx)
           if #joysticks>=xx.id then
             xx.joystick:setVibration(1,1)
           end
+
           hall(xx.id, function(z) if z.plat.n == xx.plat.n
             and math.abs(z.x) - math.abs(xx.x) < at.p.u.range then
             z.j = 10
             z.flinch = true
             z.ft = z.ft+at.p.p.ft*2/3
             end end)
-
+          
           hexHit(xx, xx.id, 
             {x=xx.mid, y = xx.y+35},
             {x=xx.mid+xx.v+(xx.lr*44), y = xx.y+26},

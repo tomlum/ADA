@@ -61,7 +61,7 @@ function hexHit(xx, theid, P1, P2, P3, P4, special, effectattack)
       extra_height = -player.im.extra_height
     end
 
-    if not player.hit and (theid==0 or (theid ~= i))  and
+    if not player.hit and (theid==0 or (theid ~= i)) and
       (hexCheck(P1.x, P1.y, P2.x, P2.y, player.mid+player.lr*(dodge_w/2), player.y+(dodge_h)+hexbuffer/2,player.width+dodge_w-hexbuffer, player.height-dodge_h-hexbuffer-extra_height, player.v, player.j)
         or hexCheck(P2.x, P2.y, P3.x, P3.y, player.mid+player.lr*(dodge_w/2), player.y+(dodge_h)+hexbuffer/2,player.width+dodge_w-hexbuffer, player.height-dodge_h-hexbuffer-extra_height, player.v, player.j)
         or hexCheck(P3.x, P3.y, P4.x, P4.y, player.mid+player.lr*(dodge_w/2), player.y+(dodge_h)+hexbuffer/2,player.width+dodge_w-hexbuffer, player.height-dodge_h-hexbuffer-extra_height, player.v, player.j)
@@ -434,9 +434,9 @@ function hexplatcheck2(y1, x1, x2, ex, why, w, why2, v)
   midv = {x = ex+w/2, y=why}
   local linep1 = {x = x1, y = y1}
   local linep2 = {x = x2, y = y1}
-  if pint(linep1, linep2, midv, midv2)  or 
-    pint(linep1, linep2, midv, midv21)  or
-    pint(linep1, linep2, midv, midv22) 
+  if platpint(linep1, linep2, midv, midv2)  or 
+    platpint(linep1, linep2, midv, midv21)  or
+    platpint(linep1, linep2, midv, midv22) 
     then 
     return true
   else 

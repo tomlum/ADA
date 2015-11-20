@@ -10,6 +10,8 @@
 --can't kick combo out of purple kick
 
 --notes:
+--airpurp sound is weird
+--make dodge harder to do
 --fix paralax for top of library
 --fix fullscreen edges on maps
 --fix camera minor jump on fullscreen from verticalm
@@ -35,13 +37,13 @@ waver_outlines = false
 drawtrails = false
 noslowmo = false
 wobblecamera = false
-youpuppet = true
+youpuppet = false
 havecinemabars = false
 noidle = true
 
 --Debug/Test Utilities
 fightclub = true
-demo = false
+demo = true
 debug = false
 MODE = "color"
 
@@ -58,8 +60,8 @@ drawFeet = false
 volume = 0
 fullscreen = false
 readout = false
-putmehere = 1000
-putyouhere = 1100
+putmehere = 300+1000
+putyouhere = 300+1150
 chapter = 1
 oldchapter = "bob"
 lassoisathing = false
@@ -155,7 +157,6 @@ function love.draw()
   end
   lg.setColor(25,25,25)
 
-  drawTrainingWheels()
   --monitorParticles(100,100)
   --lg.print(tostring(me.dodgetype), 300, 320)
   --lg.rectangle("fill", screenwidth/2,0,screenwidth,screenheight)
