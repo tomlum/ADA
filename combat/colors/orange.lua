@@ -437,7 +437,7 @@ function orangeyouglad(xx)
 
         elseif xx.animcounter < 23 then
 
-          if isabout(xx.animcounter,  7) then
+          if isabout(xx.animcounter,  6) then
 
             ocontactstuff(xx, xx.mid, xx.y,xx.v+81*xx.lr, xx.j-138)
 
@@ -524,7 +524,6 @@ function orangeyouglad(xx)
         
         if xx.animcounter<7 then
           xx.im = ao31
-
 
         elseif xx.animcounter < 40 then
           xx.im = ao32

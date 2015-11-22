@@ -1,4 +1,6 @@
 lg = love.graphics
+draw = lg.draw
+newImage = lg.newImage
 lg.setDefaultFilter("linear","nearest",1)
 players = {}
 me = {}

@@ -128,6 +128,8 @@ function dopurpakspikes(xx)
   if xx.purpgroundtimer > 0 and xx.purpgroundtimer <= 1.3 then
     xx.purpgroundtimer = 0
     xx.numofspikes = 2*at.p.ak.n
+    repplay(xx.purp2)
+    
     for sn = 0, at.p.ak.n do
       local lverts = {}
       lverts[1]= xx.mid+(xx.lr*20*(sn))
@@ -162,11 +164,9 @@ function dopurpakspikes(xx)
 
     end
   elseif xx.purpgroundtimer < 0 then
-    repplay(xx.airpurp2)
     xx.purpgroundtimer = xx.purpgroundtimer + 1*ramp(xx)
   elseif xx.landing_counter < at.p.ak.exposedtime then
     xx.no_spikes = true
-    
   end
 
 

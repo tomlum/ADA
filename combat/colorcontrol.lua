@@ -62,20 +62,43 @@ function colorshift(c,rate)
 end
 
 speeddif = .1
-thecolors[0] = {n=0,c={r = 255, g = 255, b = 255}, c2=c,
-s = {def=1, speed = 1-speeddif, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
+if youpuppet then
 
-thecolors[1] = {n=1,c=color1,c2=c, tile = ptile, logo=apa11,
-s = {def=1.2, speed = .8-speeddif, jump = .8, weight = 1.3, brittle = 1}}
+  thecolors[0] = {n=0,c={r = 255, g = 255, b = 255}, c2=c,
+  s = {def=1, speed = 1, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
 
-thecolors[2] = {n=2,c=color2,c2=c, tile = gtile, logo=glogo,
-s = {def=.7, speed = 1.2-speeddif, jump = 1.1, weight = 1, brittle = 1}}
+  thecolors[1] = {n=1,c=color1,c2=c, tile = ptile, logo=apa11,
 
-thecolors[3] = {n=3, tile = otile,c=color3,c2=c, logo=ao32,
-s = {def=1, speed = 1-speeddif, jump = 1.1, weight = .8, brittle = 2}}
+  s = {def=1, speed = 1, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
 
-thecolors[4] = {n=4, tile = rtile,c=color4,c2=c, logo=redap1, 
-s = {def=.8, speed = 1.1-speeddif, jump = 1.1, weight = .9, brittle = 1.2}}
+  thecolors[2] = {n=2,c=color2,c2=c, tile = gtile, logo=glogo,
+
+  s = {def=1, speed = 1, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
+
+  thecolors[3] = {n=3, tile = otile,c=color3,c2=c, logo=ao32,
+
+  s = {def=1, speed = 1, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
+
+  thecolors[4] = {n=4, tile = rtile,c=color4,c2=c, logo=redap1, 
+
+  s = {def=1, speed = 1, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
+else
+  thecolors[0] = {n=0,c={r = 255, g = 255, b = 255}, c2=c,
+  s = {def=1, speed = 1-speeddif, jump = 1, weight = 1, brittle = 1}, logo=questionlogo}
+
+  thecolors[1] = {n=1,c=color1,c2=c, tile = ptile, logo=apa11,
+  s = {def=1.2, speed = .8-speeddif, jump = .8, weight = 1.3, brittle = 1}}
+
+  thecolors[2] = {n=2,c=color2,c2=c, tile = gtile, logo=glogo,
+  s = {def=.7, speed = 1.2-speeddif, jump = 1.1, weight = 1, brittle = 1}}
+
+  thecolors[3] = {n=3, tile = otile,c=color3,c2=c, logo=ao32,
+  s = {def=1, speed = 1-speeddif, jump = 1.1, weight = .8, brittle = 2}}
+
+  thecolors[4] = {n=4, tile = rtile,c=color4,c2=c, logo=redap1, 
+  s = {def=.8, speed = 1.1-speeddif, jump = 1.1, weight = .9, brittle = 1.2}}
+
+end
 
 thecolors[5] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
 thecolors[6] = {n=0, tile = tile,c={r = 255, g = 255, b = 255}, logo=questionlogo}
@@ -118,7 +141,7 @@ function tilefadef(inf,f,rate)
 end
 
 function tilefadeinf(inf, f, rate)
-  
+
   if inf >= 0 and f + rate >= 255 then
     if tilefadehold > 100 then
       tilefadehold = 0
@@ -160,22 +183,17 @@ function changePlayerColor(xx)
 
   if xx.using_keyboard then
 
-    if xx.rightbump and not xx.rightbumphold then 
+    if xx.color.n == 0 then
+      xx.cchangeto = xx.leftc 
+    end
+
+    if xx.swap and not xx.holding_swap then 
       if xx.color.n == xx.rightc.n then
-        xx.cchangeto = thecolors[0]
+        xx.cchangeto = xx.leftc 
       else
         xx.cchangeto = xx.rightc
       end
       xx.cct = 0
-    elseif xx.leftbump and not xx.leftbumphold then
-      if xx.color.n == xx.leftc.n then
-        xx.cchangeto = thecolors[0]
-      else
-        xx.cchangeto = xx.leftc 
-      end
-      xx.cct = 0
-    else 
-      --xx.cchangeto = thecolors[0]
     end
 
 
@@ -184,7 +202,7 @@ function changePlayerColor(xx)
     end
 
     if xx.cchangeto.n > 0  then
-      
+
       if xx.cct < colorchangetime and (not combo_pause or (xx.animcounter == 0 or xx.actionshot))  then
         xx.cct = xx.cct + 1
         --[[

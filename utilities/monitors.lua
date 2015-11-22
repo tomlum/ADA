@@ -9,10 +9,10 @@ training_wheels = true
 function  drawTrainingWheels()
   if training_wheels then
     if me.using_keyboard then
-      drawKeyboardControls1(25, screenheight-100, 2)
+      drawKeyboardControls1(22, screenheight-100, 2)
     end
     if you.using_keyboard then
-      drawKeyboardControls2(screenwidth-480, screenheight-30, 2)
+      drawKeyboardControls2(screenwidth-540, screenheight-30, 2)
     end
   end
 end
@@ -52,17 +52,18 @@ function drawKeyboardControls1(x, y, scale)
   drawKey("s", x+(4+21*1)*scale, y, scale)
   drawKey("d", x+(4+21*2)*scale, y, scale)
   
-  drawBlockKey("c", x+(10+21*2)*scale, y+16*scale, scale)
-  lg.setColor(me.leftc.c.r,me.leftc.c.g,me.leftc.c.b)
-  drawKey("q", x+(0)*scale, y-16*scale, scale)
-  lg.setColor(me.rightc.c.r, me.rightc.c.g, me.rightc.c.b)
-  drawKey("e", x+(21*2)*scale, y-16*scale, scale)
-  lg.setColor(me.color.c.r,me.color.c.g,me.color.c.b)
+  lg.setColor(80,80,80)
+  drawBlackKey("c", x+(10+21*2)*scale, y+16*scale, scale)
   if OS_String == "OS X" then
-    drawAttackKey("lgui", x+(24)*scale, y+32*scale, scale)
+    lg.setColor(80,80,80)
+    drawBlackKey("lgui", x+(24)*scale, y+32*scale, scale)
   else
-    drawAttackKey("lalt", x+(32)*scale, y+32*scale, scale)
+    lg.setColor(80,80,80)
+    drawBlackKey("lalt", x+(32)*scale, y+32*scale, scale)
   end
+  setFontSize(9*scale)
+  lg.setColor(me.color.c.r,me.color.c.g,me.color.c.b)
+  drawKey("v", x+(10+21*3)*scale, y+16*scale, scale)
 
   cclear()
   setFontSize(font_size)
@@ -72,40 +73,40 @@ function drawKeyboardControls2(x, y, scale)
   setFontSize(9*scale)
 
   if youpuppet then
-    lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
-    drawKey("i", x+(21*7)*scale, y-16*scale, scale, "q")
-    lg.setColor(you.rightc.c.r, you.rightc.c.g, you.rightc.c.b)
-    drawKey("p", x+(21*9)*scale, y-16*scale, scale, "e")
     cclear()
 
-    drawBlockKey("=", x+(-6+21*11)*scale, y-32*scale, scale,"c")
+    lg.setColor(80,80,80)
+    drawBlackKey("=", x+(-6+21*11)*scale, y-32*scale, scale,"c")
+
+    lg.setColor(80,80,80)
+    drawBlackKey("[", x+(21*10)*scale, y-16*scale, scale,"lgui")
+    setFontSize(9*scale)
+
+    drawKey("o", x+(21*8)*scale, y-16*scale, scale,"w")
+    drawKey("k", x+(4+21*7)*scale, y, scale,"a")
+    drawKey("l", x+(4+21*8)*scale, y, scale,"s")
+    drawKey(";", x+(4+21*9)*scale, y, scale,"d")
     lg.setColor(you.color.c.r,you.color.c.g,you.color.c.b)
-    drawAttackKey("[", x+(21*10)*scale, y-16*scale, scale,"lgui")
-    cclear()
-
-    drawKey("o", x+(21*8)*scale, y-16*scale, scale, "w")
-    drawKey("k", x+(4+21*7)*scale, y, scale, "a")
-    drawKey("l", x+(4+21*8)*scale, y, scale, "s")
-    drawKey(";", x+(4+21*9)*scale, y, scale, "d")
+    drawKey("backspace", x+(-6+21*12)*scale, y-32*scale, scale,"v")
 
     setFontSize(font_size)
 
   else
-    lg.setColor(you.leftc.c.r,you.leftc.c.g,you.leftc.c.b)
-    drawKey("i", x+(21*7)*scale, y-16*scale, scale)
-    lg.setColor(you.rightc.c.r, you.rightc.c.g, you.rightc.c.b)
-    drawKey("p", x+(21*9)*scale, y-16*scale, scale)
     cclear()
 
-    drawBlockKey("=", x+(-6+21*11)*scale, y-32*scale, scale)
-    lg.setColor(you.color.c.r,you.color.c.g,you.color.c.b)
-    drawAttackKey("[", x+(21*10)*scale, y-16*scale, scale)
-    cclear()
+    lg.setColor(80,80,80)
+    drawBlackKey("=", x+(-6+21*11)*scale, y-32*scale, scale)
+
+    lg.setColor(80,80,80)
+    drawBlackKey("[", x+(21*10)*scale, y-16*scale, scale)
+    setFontSize(9*scale)
 
     drawKey("o", x+(21*8)*scale, y-16*scale, scale)
     drawKey("k", x+(4+21*7)*scale, y, scale)
     drawKey("l", x+(4+21*8)*scale, y, scale)
     drawKey(";", x+(4+21*9)*scale, y, scale)
+    lg.setColor(you.color.c.r,you.color.c.g,you.color.c.b)
+    drawKey("backspace", x+(-6+21*12)*scale, y-32*scale, scale)
 
     setFontSize(font_size)
   end

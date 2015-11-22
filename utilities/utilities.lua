@@ -263,7 +263,7 @@ end
 
 
 function isabout(n, v)
-  return math.abs(n-v) < .1
+  return math.abs(n-v) < 1
 
 end
 

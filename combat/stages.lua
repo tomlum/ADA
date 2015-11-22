@@ -316,11 +316,11 @@ table.insert(the_maps[3].boxes, {p1 = {x = 1536, y = 3580},  size = 5, kind = "p
 table.insert(the_maps[100].plats, {n=1, y = 896, x1 = 0, x2 = 2000+1, floor = true})
 table.insert(the_maps[100].plats, {n=2, y = 465, x1 = 32, x2 = 236})
 table.insert(the_maps[100].plats, {n=3, y = 540, x1 = 839, x2 = 1016})
-table.insert(the_maps[100].plats, {n=4, y = 719, x1 = 655, x2 = 1560})
+table.insert(the_maps[100].plats, {n=4, y = 719, x1 = 0, x2 = 2000})
 table.insert(the_maps[100].plats, {n=5, y = 439, x1 = 601, x2 = 760})
 table.insert(the_maps[100].walls, {n=1, y1 = -1, y2 = the_maps[100].floor, x=0, barrier = true})
 table.insert(the_maps[100].walls, {n=2, y1 = -1, y2 = the_maps[100].floor, x=2000, barrier = true})
-table.insert(the_maps[100].walls, {n=2, y1 = 3, y2 = the_maps[100].floor+1, x=500, glasswall = the_maps[3].floor})
+table.insert(the_maps[100].walls, {n=3, y1 = 3, y2 = the_maps[100].floor+1, x=500, glasswall = the_maps[3].floor})
 for i=1, 8 do
   table.insert(the_maps[3].plats, {y = 5616-286*i, x1 = 419, x2 = 2139})
 end

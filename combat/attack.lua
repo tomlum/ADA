@@ -335,8 +335,6 @@ function combo(xx)
 				xx.attack_num = 2
 				xx.animcounter = 1
 				xx.combo = xx.combo + 1
-
-
 			elseif xx.a2 or xx.a3 then
 				if func~= nil then func() end
 				if xx.color.n==0 then
@@ -804,11 +802,11 @@ function dodging(xx)
 			xx.im = dodge21
 		end
 	elseif xx.dodgetype == 0 and xx.dodgerefreshtimer == 0 then
-		if xx.g and ((xx.lr > 0 and xx.runb and xx.rightb) or (xx.lr < 0 and xx.leftb and xx.runb)) and xx.animcounter ==0  then
+		if xx.g and xx.runtap and ((xx.lr > 0 and xx.runb and xx.rightb) or (xx.lr < 0 and xx.leftb and xx.runb)) and xx.animcounter ==0  then
 			xx.dodgetype = 1
 			xx.dodgecounter = dodgetime
 			xx.v = dodgespeed*xx.lr
-		elseif xx.g and ((xx.lr < 0 and xx.runb and xx.rightb) or (xx.lr > 0 and xx.leftb and xx.runb)) and not xx.running  then
+		elseif xx.g and xx.runtap and ((xx.lr < 0 and xx.runb and xx.rightb) or (xx.lr > 0 and xx.leftb and xx.runb)) and not xx.running  then
 			xx.dodgetype = -1
 			xx.dodgecounter = backdodgetime
 		end

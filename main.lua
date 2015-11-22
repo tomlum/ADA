@@ -10,11 +10,7 @@
 --can't kick combo out of purple kick
 
 --notes:
---airpurp sound is weird
---make dodge harder to do
---fix paralax for top of library
---fix fullscreen edges on maps
---fix camera minor jump on fullscreen from verticalm
+--ledge grabbing while wall sliding, special animation?  kinda funny
 --add new finish to combo to Orange, long strike
 --air dash
 --Times square, have a facade layer that's black or something so this way it looks like back lit against lights
@@ -43,11 +39,14 @@ noidle = true
 
 --Debug/Test Utilities
 fightclub = true
-demo = true
+demo = false
 debug = false
 MODE = "color"
+me.using_keyboard = true
+you.using_keyboard = true
 
-notilebouncing = false
+volume = 1
+notilebouncing = true
 melcolor = 1
 mercolor = 4
 youlcolor = 3
@@ -57,7 +56,6 @@ map_num = 1
 rampspeed= therampspeed
 drawBoxes = false
 drawFeet = false
-volume = 0
 fullscreen = false
 readout = false
 putmehere = 300+1000
@@ -66,13 +64,15 @@ chapter = 1
 oldchapter = "bob"
 lassoisathing = false
 dangerCloseIsAThing = not no_screen_follow
-
 mute = false
 
 
 if demo then
-
+  me.using_keyboard = false
+  you.using_keyboard = false
+  training_wheels = true
   fightclub = false
+  notilebouncing = false
   infinitepan = false
   no_screen_follow = false
   drawControllers = false
@@ -150,7 +150,7 @@ function love.draw()
     drawStory()
   end
 
-  if demo then  drawControlsOverlay() end
+  drawControlsOverlay()
 
   if debug or fightclub then
     debugReadouts()

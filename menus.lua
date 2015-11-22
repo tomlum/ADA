@@ -226,6 +226,9 @@ function modeManager()
   OLD_MODE = MODE
 end
 
+controlsoverlay1 = lg.newImage("images/enviro/controlsoverlay1.png")
+controlsoverlay2 = lg.newImage("images/enviro/controlsoverlay2.png")
+controlsoverlay22 = lg.newImage("images/enviro/controlsoverlay22.png")
 ps3menubuttons = lg.newImage("images/enviro/ps3menubuttons.png")
 xboxmenubuttons = lg.newImage("images/enviro/xboxmenubuttons.png")
 ps3assigncolor = lg.newImage("images/enviro/ps3assigncolor.png")
@@ -244,6 +247,8 @@ widekey_im = lg.newImage("images/enviro/widekey.png")
 widekeypressed_im = lg.newImage("images/enviro/widekeypressed.png")
 lcmd_im = lg.newImage("images/enviro/lcmd.png")
 lcmdpressed_im = lg.newImage("images/enviro/lcmdpressed.png")
+lcmdblack_im = lg.newImage("images/enviro/lcmdblack.png")
+lcmdpressedblack_im = lg.newImage("images/enviro/lcmdpressedblack.png")
 attacklcmd_im = lg.newImage("images/enviro/attacklcmd.png")
 attacklcmdpressed_im = lg.newImage("images/enviro/attacklcmdpressed.png")
 rcmd_im = lg.newImage("images/enviro/rcmd.png")
@@ -277,6 +282,7 @@ function drawAttackKey(key, x, y, size, override)
       lg.printf(string.upper(key), x, y-7*size, 0, "center")
     end
   end
+  cclear()
 end
 
 function drawBlockKey(key, x, y, size, override)
@@ -290,6 +296,7 @@ function drawBlockKey(key, x, y, size, override)
     lg.setColor(0,0,0)
     lg.printf(string.upper(key), x, y-8*size, 0, "center")
   end
+  cclear()
 end
 
 function drawKey(key, x, y, size, override)
@@ -297,7 +304,16 @@ function drawKey(key, x, y, size, override)
   if love.keyboard.isDown(key) or (override~=nil and love.keyboard.isDown(override)) then
     if key == "lgui" then
       lg.draw(lcmdpressed_im, x, y, 0, size/2, size/2, 32, 18)
-
+    elseif key == "backspace" then
+      setFontSize(7*size)
+      lg.draw(widekeypressed_im, x, y, 0, size, size, 11, 9)
+      lg.setColor(0,0,0)
+      lg.printf("delete", x+5*size, y-4*size, 0, "center")
+    elseif key == "lalt" or key == "ralt" then  
+      setFontSize(7*size)
+      lg.draw(keypressed_im, x, y, 0, size, size, 11, 9)
+      lg.setColor(0,0,0)
+      lg.printf("alt", x, y-4*size, 0, "center")
     else
       lg.draw(keypressed_im, x, y, 0, size, size, 11, 9)
       lg.setColor(0,0,0)
@@ -306,11 +322,82 @@ function drawKey(key, x, y, size, override)
   else
     if key == "lgui" then
       lg.draw(lcmd_im, x, y, 0, size/2, size/2, 32, 18)
-
+    elseif key == "backspace" then
+      setFontSize(7*size)
+      lg.draw(widekey_im, x, y, 0, size, size, 11, 9)
+      lg.setColor(0,0,0)
+      lg.printf("delete", x+5*size, y-6*size, 0, "center")
+    elseif key == "lalt" or key == "ralt" then  
+      setFontSize(7*size)
+      lg.draw(key_im, x, y, 0, size, size, 11, 9)
+      lg.setColor(0,0,0)
+      lg.printf("alt", x, y-6*size, 0, "center")
     else
       lg.draw(key_im, x, y, 0, size, size, 11, 9)
       lg.setColor(0,0,0)
       lg.printf(string.upper(key), x, y-8*size, 0, "center")
+    end
+  end
+  cclear()
+
+end
+
+function drawBlackKey(key, x, y, size, override)
+
+  if love.keyboard.isDown(key) or (override~=nil and love.keyboard.isDown(override)) then
+    if key == "lgui" then
+      lg.draw(lcmdpressed_im, x, y, 0, size/2, size/2, 32, 18)
+      cclear()
+      lg.draw(lcmdpressedblack_im, x, y, 0, size/2, size/2, 32, 18)
+    elseif key == "backspace" then
+      setFontSize(7*size)
+      lg.draw(widekeypressed_im, x, y, 0, size, size, 11, 9)
+      lg.setColor(255,255,255)
+      lg.printf("delete", x+5*size, y-4*size, 0, "center")
+    elseif key == "lalt" or key == "ralt" then  
+      setFontSize(7*size)
+      lg.draw(keypressed_im, x, y, 0, size, size, 11, 9)
+      lg.setColor(255,255,255)
+      lg.printf("alt", x, y-4*size, 0, "center")
+    else
+      if key == "[" then
+        setFontSize(6.5*size)
+        lg.draw(keypressed_im, x, y, 0, size, size, 11, 9)
+        lg.setColor(255,255,255)
+        lg.printf(string.upper(key), x, y-5*size, 0, "center")
+      else
+        lg.draw(keypressed_im, x, y, 0, size, size, 11, 9)
+        lg.setColor(255,255,255)
+        lg.printf(string.upper(key), x, y-6*size, 0, "center")
+      end
+    end
+  else
+    if key == "lgui" then
+      lg.draw(lcmd_im, x, y, 0, size/2, size/2, 32, 18)
+      cclear()
+      lg.draw(lcmdblack_im, x, y, 0, size/2, size/2, 32, 18)
+    elseif key == "backspace" then
+      setFontSize(7*size)
+      lg.draw(widekey_im, x, y, 0, size, size, 11, 9)
+      lg.setColor(255,255,255)
+      lg.printf("delete", x+5*size, y-6*size, 0, "center")
+    elseif key == "lalt" or key == "ralt" then  
+      setFontSize(7*size)
+      lg.draw(key_im, x, y, 0, size, size, 11, 9)
+      lg.setColor(255,255,255)
+      lg.printf("alt", x, y-6*size, 0, "center")
+    else
+
+      if key == "[" then
+        setFontSize(6.5*size)
+        lg.draw(key_im, x, y, 0, size, size, 11, 9)
+        lg.setColor(255,255,255)
+        lg.printf(string.upper(key), x, y-7*size, 0, "center")
+      else
+        lg.draw(key_im, x, y, 0, size, size, 11, 9)
+        lg.setColor(255,255,255)
+        lg.printf(string.upper(key), x, y-8*size, 0, "center")
+      end
     end
   end
   cclear()
@@ -323,22 +410,37 @@ function drawControlsOverlay()
   if true or joysticks[1] ~= nil then
     if MODE == "modes" or MODE == "map" then
       if me.using_keyboard then
+
+        setFontSize(18)
+        draw(controlsoverlay1, 0, screenheight, 0, 2, 2, 0, 48)
+        if OS_String == "OS X" then
+          drawKey("lgui", 21*2, screenheight-48*2+27*2, 2)
+        else
+          drawKey("lalt", (21+5)*2, screenheight-48*2+27*2, 2)
+        end
+        drawKey("c", 107*2, screenheight-48*2+27*2, 2)
       else
         if joysticks[1]:getName() == "PLAYSTATION(R)3 Controller" then
-          lg.draw(ps3menubuttons, 0, screenheight, 0, 1, 1, 0, 48)
-        elseif  joysticks[1]:getName() == "PLAYSTATION(R)3 Controller"  then
+          lg.draw(ps3menubuttons, 0, screenheight, 0, 2,2, 0, 48)
         else
-          drawKey("c", 200, 200, 2)
-          lg.draw(keymenubuttons, 0, screenheight, 0, 1, 1, 0, 48)
+          lg.draw(xboxmenubuttons, 0, screenheight, 0, 2,2, 0, 48)
         end
       end
     elseif MODE == "color" then
+      if you.using_keyboard then
+        setFontSize(18)
+        draw(controlsoverlay22, screenwidth, screenheight, 0, 2,2, 258, 48)
+        drawKey("backspace", screenwidth+(-258+15)*2, screenheight+(-48+30)*2, 2)
+      end
       if me.using_keyboard then
+        setFontSize(18)
+        draw(controlsoverlay2, 0, screenheight, 0, 2,2, 0, 48)
+        drawKey("v", 13*2, screenheight+(-48+30)*2, 2)
       else
         if joysticks[1]:getName() == "PLAYSTATION(R)3 Controller" then
-          lg.draw(ps3assigncolor, 0, screenheight, 0, 1, 1, 0, 48)
+          lg.draw(ps3assigncolor, 0, screenheight, 0, 2,2, 0, 48)
         else
-          lg.draw(xboxassigncolor, 0, screenheight, 0, 1, 1, 0, 48)
+          lg.draw(xboxassigncolor, 0, screenheight, 0, 2,2, 0, 48)
         end
       end
     end
@@ -471,6 +573,9 @@ tilescale = 1.3
 tile_y_closeness = 78*(screenheight/900)
 
 tile_dis_from_center = screenwidth/12.2
+
+me.current_menu_color = -1
+you.current_menu_color = -1
 
 function drawMenus()
 
@@ -917,13 +1022,15 @@ function drawMenus()
     you.drawontop()
 
     if not me.readytoplay then
-      if me.rightbump and not me.holda then 
+      if me.swap and not me.holding_swap and me.current_menu_color>0 then 
+        me.current_menu_color = -1
         me.rightc = thecolors[me.selectedcolor+1]
         repplay(me.selected)
 
         me.right_color_flash = 0 
         --repplay(thecolors[me.selectedcolor+1].sound)
-      elseif me.leftbump and not me.holda then 
+      elseif me.swap and not me.holding_swap and me.current_menu_color<0 then 
+        me.current_menu_color = 1
         me.leftc = thecolors[me.selectedcolor+1]
         repplay(me.selected)
         me.left_color_flash = 0 
@@ -931,18 +1038,19 @@ function drawMenus()
       end
     end
     if not you.readytoplay then
-      if you.rightbump and not you.holda then 
-
-        you.right_color_flash = 0 
+      if you.swap and not you.holding_swap and you.current_menu_color>0 then 
+        you.current_menu_color = -1
         you.rightc = thecolors[you.selectedcolor+1]
         repplay(you.selected)
-        --repplay(thecolors[you.selectedcolor+1].sound)
-      elseif you.leftbump and not you.holda then 
 
-        you.left_color_flash = 0 
+        you.right_color_flash = 0 
+        --repplay(thecolors[you.selectedcolor+1].sound)
+      elseif you.swap and not you.holding_swap and you.current_menu_color<0 then 
+        you.current_menu_color = 1
         you.leftc = thecolors[you.selectedcolor+1]
         repplay(you.selected)
-        --repplay(thecolors[you.selectedcolor+1].sound)
+        you.left_color_flash = 0 
+        --repplay(thecolors[me.selectedcolor+1].sound)
       end
     end
 
@@ -1140,8 +1248,6 @@ function drawMenus()
         lg.setScissor()
       end
     end
-
-    --retry()
 
     lg.setColor(0,0,0,allfade)
     lg.sdraw(retryim, 0, 0)

@@ -275,55 +275,81 @@
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 2021,
+				"buffer_size": 3052,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "menustuff.lua",
+			"file": "combat/colorcontrol.lua",
 			"settings":
 			{
-				"buffer_size": 29035,
+				"buffer_size": 8206,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "animation.lua",
+			"file": "utilities/joysticks.lua",
 			"settings":
 			{
-				"buffer_size": 63160,
+				"buffer_size": 15380,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "initializers.lua",
+			"contents": "Searching 492 files for \"orientlr\"\n\n0 matches\n\nSearching 492 files for \"orient\"\n\n/Users/Hi/Desktop/Game/ADA/animation/animation.lua:\n 1525: function orient(xx)\n\n/Users/Hi/Desktop/Game/ADA/combat/hits.lua:\n  663:     orient(xx)\n\n/Users/Hi/Desktop/Game/ADA/combat/play.lua:\n   65:    orient(me)\n   66:    orient(you)\n\n~/Desktop/Game/ADA/images/enviro/fractals/fractal3 copy 2.png:\n    <binary>\n\n6 matches across 4 files\n\n\nSearching 492 files for \"jump_delay\"\n\n/Users/Hi/Desktop/Game/ADA/animation/animation.lua:\n 1686:   if xx.jump_delay_counter < jump_delay then\n\n/Users/Hi/Desktop/Game/ADA/combat/damageTable.lua:\n   55: jump_delay = 6\n\n/Users/Hi/Desktop/Game/ADA/combat/fizix.lua:\n  485:   me.jump_delay_counter = 0\n  486:   you.jump_delay_counter = 0\n  525:     if not xx.g or (not xx.up and xx.jump_delay_counter<=0) or xx.flinch then\n  526:       xx.jump_delay_counter = jump_delay\n  530:     if xx.jump_delay_counter < jump_delay and not hitpause then\n  531:       xx.jump_delay_counter = xx.jump_delay_counter - 1\n  534:     if xx.superjumptimer > 0 and xx.jump_delay_counter < jump_delay then\n  535:       xx.jump_delay_counter = 0\n  563:       if ((xx.up or xx.jump_delay_counter <= 0) and not xx.flinch and not xx.block and not xx.jstop and not xx.busy and xx.animcounter == 0)\n  568:         if xx.jump_delay_counter == jump_delay then\n  569:           xx.jump_delay_counter = xx.jump_delay_counter - 1\n  571:         elseif xx.jump_delay_counter > 0 then\n\n21 matches across 3 files\n\n\nSearching 492 files for \"jump_delay\"\n\n/Users/Hi/Desktop/Game/ADA/animation/animation.lua:\n 1686:   if xx.jump_delay_counter < jump_delay then\n\n/Users/Hi/Desktop/Game/ADA/combat/damageTable.lua:\n   55: jump_delay = 6\n\n/Users/Hi/Desktop/Game/ADA/combat/fizix.lua:\n  485:   me.jump_delay_counter = 0\n  486:   you.jump_delay_counter = 0\n  525:     if not xx.g or (not xx.up and xx.jump_delay_counter<=0) or xx.flinch then\n  526:       xx.jump_delay_counter = jump_delay\n  530:     if xx.jump_delay_counter < jump_delay and not hitpause then\n  531:       xx.jump_delay_counter = xx.jump_delay_counter - 1\n  534:     if xx.superjumptimer > 0 and xx.jump_delay_counter < jump_delay then\n  535:       xx.jump_delay_counter = 0\n  563:       if ((xx.up or xx.jump_delay_counter <= 0) and not xx.flinch and not xx.block and not xx.jstop and not xx.busy and xx.animcounter == 0)\n  568:         if xx.jump_delay_counter == jump_delay then\n  569:           xx.jump_delay_counter = xx.jump_delay_counter - 1\n  571:         elseif xx.jump_delay_counter > 0 then\n\n21 matches across 3 files\n\n\nSearching 492 files for \"dodge\"\n\n/Users/Hi/Desktop/Game/ADA/animation/animation.lua:\n 1535:     and (xx.dodgetype~=2 and xx.dodgetype >-1) and not xx.wall_grab and not xx.purplanding\n 1599:   if xx.running and not xx.dodge then \n\n/Users/Hi/Desktop/Game/ADA/combat/attack.lua:\n  148: 	if xx.using_keyboard and xx.blockb and (xx.a2b or xx.a3b) and xx.animcounter == 0 and not xx.dodge and not xx.flinch and xx.dodgetype == 0 then\n  276: simpledodge = true\n  592: me.nododge = false\n  593: you.nododge = false\n  608: fallback = {im=lg.newImage(\"images/player/attack/fallback.png\"),xoff = 12, dodge_height = 32, dodge_width = 26, yoff = -40}\n  609: fallbackbounce = {im=lg.newImage(\"images/player/attack/fallbackbounce.png\"),xoff = 12, yoff = -40, dodge_height = 32, dodge_width = 26}\n  610: fallbackbouncedown = {im=lg.newImage(\"images/player/attack/fallbackbouncedown.png\"),xoff = 12, yoff = -39, dodge_height = 32, dodge_width = 26}\n  620: dodgeback = {im = lg.newImage(\"images/player/attack/dodgeback.png\"), xoff = 3}\n  621: dodgeback2 = {im = lg.newImage(\"images/player/attack/dodgeback2.png\"), xoff = 4, yoff = -3}\n  624: dodge = {im=lg.newImage(\"images/player/attack/dodge.png\"), dodge_height = 32, dodge_width = 10, yoff = -24}\n  625: dodge2 = {im=lg.newImage(\"images/player/attack/dodge2.png\"),xoff = 10, yoff = -17}\n  626: dodge21 = {im=lg.newImage(\"images/player/attack/dodge21.png\"), xoff = 10, yoff = -21}\n  688: me.dodgeanimatetimer = 0\n  691: you.dodgedelaycounter = 0\n  692: you.dodgecounter = 0\n  693: me.dodgedelaycounter = 0\n  694: me.dodgecounter = 0\n  695: backdodgetime = 20\n  696: dodgetime = 23\n  697: backdodgetime = 15\n  699: turndodgedelay = 10\n  700: dodgedelay = 20\n  701: dodgespeed = speedlimit*1.25\n  702: backdodgespeed = speedlimit*1\n  704: me.qualifyfordodge = false\n  705: you.qualifyfordodge = false\n  708: you.dodgeanimatetimer = 0\n  710: you.currentdodgev = 0\n  711: me.currentdodgev = 0\n  713: me.dodgelr = me.lr\n  716: --if hold dodge after a point just slide on the ground\n  717: dodgerefreshtime = 38\n  718: me.dodgerefreshtimer = 0\n  719: you.dodgerefreshtimer = 0\n  723: 	if not xx.dodge then xx.dodgelr = xx.lr\n  727: 	if xx.dodgerefreshtimer > 0 then xx.dodgerefreshtimer = xx.dodgerefreshtimer - 1\n  731: 		then xx.dodgecounter = 0\n  732: 		xx.dodge = false\n  733: 		xx.dodgetype = 0\n  734: 		xx.dodgedelaycounter = 0\n  740: 	if xx.dodgedelaycounter > 0 then \n  741: 		xx.dodgedelaycounter = xx.dodgedelaycounter - 1*ramp(xx)\n  743: 		xx.dodge = false\n  744: 		xx.dodgetype = 0\n  747: 	if xx.dodgecounter > 1 then \n  748: 		xx.dodgecounter = xx.dodgecounter-1*ramp(xx)\n  749: 		if xx.dodgecounter-1*ramp(xx)<1 then\n  750: 			xx.dodgecounter = 1\n  753: 	elseif xx.dodgecounter == 1 then\n  754: 		xx.dodgecounter = 0\n  755: 		if xx.dodgetype == 1 or xx.dodgetype == -1 then \n  756: 			xx.dodgedelaycounter = dodgedelay\n  757: 			xx.dodgerefreshtimer = dodgerefreshtime\n  758: 		elseif xx.dodgetype == 2 then\n  759: 			xx.dodgedelaycounter = 2\n  760: 			xx.dodgerefreshtimer = dodgerefreshtime\n  762: 		elseif xx.dodgetype == -2 then\n  763: 			xx.dodgetype = 0\n  764: 			xx.dodge = false\n  765: 			xx.dodgerefreshtimer = dodgerefreshtime*1.5\n  770: 	if xx.dodgetype == -2 then\n  771: 		xx.im = dodgeback\n  772: 		xx.v = backdodgespeed * -xx.lr\n  773: 		xx.dodge = true\n  775: 	elseif xx.dodgetype == -1 then  \n  776: 		xx.dodge = true\n  777: 		xx.im = dodgeback2\n  778: 		xx.v = backdodgespeed*-xx.lr\n  779: 		if xx.dodgecounter < 7 and ((xx.left and xx.lr > 0) or (xx.right and xx.lr < 0)) then \n  780: 			xx.im = dodgeback\n  781: 			xx.dodgetype = -2\n  785: 	elseif xx.dodgetype == 2 then \n  788: 		if xx.dodgecounter > turnaroundtime-7 then \n  789: 			xx.im = dodge21\n  792: 			xx.im=dodge2\n  795: 	elseif xx.dodgetype == 1 then\n  796: 		xx.dodge = true\n  797: 		xx.im = dodge\n  799: 		if (xx.dodgelr > 0 and xx.left) or (xx.dodgelr < 0 and xx.right) then\n  800: 			xx.v = xx.currentdodgev/3-(dodgespeed*xx.lr)/2\n  801: 			xx.dodgetype = 2\n  802: 			xx.dodgecounter = turnaroundtime\n  804: 			xx.im = dodge21\n  806: 	elseif xx.dodgetype == 0 and xx.dodgerefreshtimer == 0 then\n  808: 			xx.dodgetype = 1\n  809: 			xx.dodgecounter = dodgetime\n  810: 			xx.v = dodgespeed*xx.lr\n  812: 			xx.dodgetype = -1\n  813: 			xx.dodgecounter = backdodgetime\n  818: 	if xx.dodgetype >= 1 and xx.makeslidesound then \n  819: 		repplay(xx.slidedodge)\n  821: 	elseif xx.dodgetype <= -1 and xx.makeslidesound then\n  822: 		repplay(xx.backdodge)\n  827: 	if xx.dodgetype~=0 then\n  833: 	if not simpledodge then\n  834: 		xx.qualifyfordodge = xx.down and not (xx.rightb or xx.leftb)\n  836: 		xx.qualifyfordodge = xx.down\n  872: 	if xx.g and xx.blockb and xx.dodgedelaycounter <= 0 and not xx.a1 and not xx.a2 and not xx.a3 and not xx.a4 and xx.g and not xx.dodge and not xx.landing and not xx.releaseblock\n\n/Users/Hi/Desktop/Game/ADA/combat/colors/blue.lua:\n  125:       if xx.running and (xx.a2b or xx.a3b) and not xx.dodge then\n\n/Users/Hi/Desktop/Game/ADA/combat/fizix.lua:\n  250: --bounce method, if hit squares and not dodge then yeah\n  252:   if not xx.dodge then\n  298:   if xx.dodgetype == 0 then\n  304:     if xx.v > 0 and not xx.dodge \n  308:     elseif xx.v < 0 and not xx.dodge \n  392:     if xx.runtap and xx.running and (xx.right or xx.left) and not xx.block and not xx.dodge then         \n  403:     elseif math.abs(xx.v) > xx.color.s.speed*xx.speedpenalty*speedminit-accel*2 and (xx.left or xx.right) and xx.g and xx.runtap and not xx.block and not xx.dodge and xx.attack_num ~= 2 then\n  498:     if xx.dodge or (xx.block and xx.g)\n  595:       elseif xx.right and xx.v >= 0 and not xx.stop and not xx.flinch and xx.landing_counter < land_pause_time and not xx.dodge\n  599:       elseif xx.left and xx.v <= 0 and xx.stop == false and not xx.flinch and xx.landing_counter < land_pause_time and not xx.dodge\n\n/Users/Hi/Desktop/Game/ADA/combat/hits.lua:\n   19:       local dodge_h = 0\n   20:       local dodge_w = 0\n   22:       if mon.im.dodge_height ~= nil then\n   23:         dodge_h = mon.im.dodge_height\n   25:       if mon.im.dodge_width ~= nil then\n   26:         dodge_w = mon.im.dodge_width\n   33:         (hexCheck(P1.x, P1.y, P2.x, P2.y, mon.mid+mon.lr*(dodge_w/2), mon.y+(dodge_h)+hexbuffer/2,mon.width+dodge_w-hexbuffer, mon.height-dodge_h-hexbuffer-extra_height, mon.v, mon.j)\n   34:           or hexCheck(P2.x, P2.y, P3.x, P3.y, mon.mid+mon.lr*(dodge_w/2), mon.y+(dodge_h)+hexbuffer/2,mon.width+dodge_w-hexbuffer, mon.height-dodge_h-hexbuffer-extra_height, mon.v, mon.j)\n   35:           or hexCheck(P3.x, P3.y, P4.x, P4.y, mon.mid+mon.lr*(dodge_w/2), mon.y+(dodge_h)+hexbuffer/2,mon.width+dodge_w-hexbuffer, mon.height-dodge_h-hexbuffer-extra_height, mon.v, mon.j)\n   36:           or hexCheck(P4.x, P4.y, P1.x, P1.y, mon.mid+mon.lr*(dodge_w/2), mon.y+(dodge_h)+hexbuffer/2,mon.width+dodge_w-hexbuffer, mon.height-dodge_h-hexbuffer-extra_height, mon.v, mon.j)\n   51:     local dodge_h = 0\n   52:     local dodge_w = 0\n   54:     if player.im.dodge_height ~= nil then\n   55:       dodge_h = player.im.dodge_height\n   57:     if player.im.dodge_width ~= nil then\n   58:       dodge_w = player.im.dodge_width\n   65:       (hexCheck(P1.x, P1.y, P2.x, P2.y, player.mid+player.lr*(dodge_w/2), player.y+(dodge_h)+hexbuffer/2,player.width+dodge_w-hexbuffer, player.height-dodge_h-hexbuffer-extra_height, player.v, player.j)\n   66:         or hexCheck(P2.x, P2.y, P3.x, P3.y, player.mid+player.lr*(dodge_w/2), player.y+(dodge_h)+hexbuffer/2,player.width+dodge_w-hexbuffer, player.height-dodge_h-hexbuffer-extra_height, player.v, player.j)\n   67:         or hexCheck(P3.x, P3.y, P4.x, P4.y, player.mid+player.lr*(dodge_w/2), player.y+(dodge_h)+hexbuffer/2,player.width+dodge_w-hexbuffer, player.height-dodge_h-hexbuffer-extra_height, player.v, player.j)\n   68:         or hexCheck(P4.x, P4.y, P1.x, P1.y, player.mid+player.lr*(dodge_w/2), player.y+(dodge_h)+hexbuffer/2,player.width+dodge_w-hexbuffer, player.height-dodge_h-hexbuffer-extra_height, player.v, player.j)\n  246:     --dodgeoffsetx\n  247:     local dodge_h = 0\n  248:     local dodge_w = 0\n  250:     if v.im.dodge_height ~= nil then\n  251:       dodge_h = v.im.dodge_height\n  253:     if v.im.dodge_width ~= nil then\n  254:       dodge_w = v.im.dodge_width\n  260:     drawHexCheck(v.mid+v.lr*(dodge_w/2), v.y+(dodge_h)+hexbuffer/2, v.width+dodge_w-hexbuffer, v.height-dodge_h-hexbuffer-extra_height, v.v, v.j)\n  338:       local dodge_h = 0\n  339:       local dodge_w = 0\n  341:       if xx.im.dodge_height ~= nil then\n  342:         dodge_h = xx.im.dodge_height\n  344:       if xx.im.dodge_width ~= nil then\n  345:         dodge_w = xx.im.dodge_width\n  351:       if (hexCheck(P1.x, P1.y, P2.x, P2.y, xx.mid+xx.lr*(dodge_w/2), xx.y+(dodge_h)+hexbuffer/2,xx.width+dodge_w-hexbuffer, xx.height-dodge_h-hexbuffer-extra_height, xx.v, xx.j))\n  361:     local dodge_h = 0\n  362:     local dodge_w = 0\n  364:     if xx.im.dodge_height ~= nil then\n  365:       dodge_h = xx.im.dodge_height\n  367:     if xx.im.dodge_width ~= nil then\n  368:       dodge_w = xx.im.dodge_width\n  377:       (hexCheck(P1.x, P1.y, P2.x, P2.y, xx.mid+xx.lr*(dodge_w/2), xx.y+(dodge_h)+hexbuffer/2,xx.width+dodge_w-hexbuffer, xx.height-dodge_h-hexbuffer-extra_height, xx.v, xx.j)\n  556:     local dodge_h = 0\n  557:     local dodge_w = 0\n  559:     if xx.im.dodge_height ~= nil then\n  560:       dodge_h = xx.im.dodge_height\n  562:     if xx.im.dodge_width ~= nil then\n  563:       dodge_w = xx.im.dodge_width\n  572:       if not (xx.runb or xx.blockb) or xx.flinch or xx.a1 or xx.a2 or xx.a3 or xx.a4 or xx.g or xx.dodge then \n  697:       local dodge_height = 0\n  701:       if xx.im.dodge_height ~= nil then\n  702:         dodge_height= xx.im.dodge_height\n  775:     local dodge_height = 0\n  779:     if xx.im.dodge_height ~= nil then\n  780:       dodge_height= xx.im.dodge_height\n\n/Users/Hi/Desktop/Game/ADA/main.lua:\n   15: --make dodge harder to do (MAKE IT DOUBLE TAP AND BLOCK)\n  162:   --lg.print(tostring(me.dodgetype), 300, 320)\n\n/Users/Hi/Desktop/Game/ADA/sounds/sounds.lua:\n  198:   xx.jumpd = love.audio.newSource(\"sounds/dodgeslide.wav\", \"stream\")\n  202:   xx.backdodge = love.audio.newSource(\"sounds/backdodge.wav\", \"stream\")\n  203:   xx.slidedodge = love.audio.newSource(\"sounds/dodgeslide.wav\", \"stream\")\n  204:   xx.backdodge:setVolume(1 - .6)\n  205:   xx.slidedodge:setVolume(1 - .6)\n  206:   xx.backdodge:setPitch(1.2)\n  371:   if me.im == slide and msready and not me.dodge then\n  377:   if you.im == slide and not you.dodge and ysready then\n\n/Users/Hi/Desktop/Game/ADA/utilities/initializers.lua:\n   45: 	xx.dodgetype = 0\n\n/Users/Hi/Desktop/Game/ADA/utilities/xkcdcolor.lua:\n  205: load( \"3E82FC\", \"dodger blue\" )\n\n255 matches across 9 files\n\n\nSearching 492 files for \"double\"\n\n/Users/Hi/Desktop/Game/ADA/combat/fizix.lua:\n  496:     doubleDirection(xx)\n  515:     if ((xx.g and xx.double_down ) or (not xx.g and xx.down and not xx.runb)) and not (xx.stop and not xx.grabbing) then \n\n/Users/Hi/Desktop/Game/ADA/main.lua:\n   15: --make dodge harder to do (MAKE IT DOUBLE TAP AND BLOCK)\n\n/Users/Hi/Desktop/Game/ADA/utilities/joysticks.lua:\n    7: doubletime = 14\n    8: me.double_down  = false\n   10: you.double_down  = false\n  272: function doubleDirection(xx)\n  283:     xx.lrdubtimer = doubletime\n  285:     xx.lrdubtimer = -doubletime\n  297: function doubleDown(xx)\n  303:   if not xx.down and xx.double_down  then\n  305:     xx.double_down  = false\n  307:     xx.double_down  = true\n  310:     xx.dubtimer = doubletime\n  338:   doubleDirection(xx)\n  339:   doubleDown(xx)\n\n16 matches across 3 files\n\n\nSearching 492 files for \"dodge = true\"\n\n/Users/Hi/Desktop/Game/ADA/combat/attack.lua:\n  276: simpledodge = true\n  773: 		xx.dodge = true\n  776: 		xx.dodge = true\n  796: 		xx.dodge = true\n\n4 matches in 1 file\n\n\nSearching 492 files for \"leftbumpb\"\n\n/Users/Hi/Desktop/Game/ADA/utilities/joysticks.lua:\n  207:   if xx.leftbumpb then\n  348:   if (xx.cct > 0 and not (xx.rightbumpb or xx.leftbumpb)) or (xx.rightbumpb and xx.leftbumpb) then\n  355:     xx.leftbump = xx.leftbumpb\n  392:   me.leftbumpb = love.keyboard.isDown(\"q\")\n  409:     you.leftbumpb =     me.leftbumpb\n  424:     you.leftbumpb = love.keyboard.isDown(\"i\")\n  699: xx.leftbumpb = xx.joystick:getGamepadAxis(\"triggerleft\") > .5\n\n9 matches in 1 file\n\n\nSearching 492 files for \"drawkey\"\n\n/Users/Hi/Desktop/Game/ADA/menus.lua:\n  295: function drawKey(key, x, y, size, override)\n  331:           drawKey(\"c\", 200, 200, 2)\n\n/Users/Hi/Desktop/Game/ADA/utilities/monitors.lua:\n   12:       drawKeyboardControls1(25, screenheight-100, 2)\n   15:       drawKeyboardControls2(screenwidth-480, screenheight-30, 2)\n   33: function drawKeyboardControls3(x, y, scale)\n   36:   drawKey(\"u\", x+(21*6)*scale, y-16*scale, scale)\n   38:   drawKey(\"o\", x+(21*8)*scale, y-16*scale, scale)\n   39:   drawKey(\"k\", x+(4+21*7)*scale, y, scale)\n   40:   drawKey(\"l\", x+(4+21*8)*scale, y, scale)\n   41:   drawKey(\";\", x+(4+21*9)*scale, y, scale)\n   46: function drawKeyboardControls1(x, y, scale)\n   50:   drawKey(\"w\", x+(21)*scale, y-16*scale, scale)\n   51:   drawKey(\"a\", x+(4+0)*scale, y, scale)\n   52:   drawKey(\"s\", x+(4+21*1)*scale, y, scale)\n   53:   drawKey(\"d\", x+(4+21*2)*scale, y, scale)\n   57:   drawKey(\"q\", x+(0)*scale, y-16*scale, scale)\n   59:   drawKey(\"e\", x+(21*2)*scale, y-16*scale, scale)\n   71: function drawKeyboardControls2(x, y, scale)\n   76:     drawKey(\"i\", x+(21*7)*scale, y-16*scale, scale, \"q\")\n   78:     drawKey(\"p\", x+(21*9)*scale, y-16*scale, scale, \"e\")\n   86:     drawKey(\"o\", x+(21*8)*scale, y-16*scale, scale, \"w\")\n   87:     drawKey(\"k\", x+(4+21*7)*scale, y, scale, \"a\")\n   88:     drawKey(\"l\", x+(4+21*8)*scale, y, scale, \"s\")\n   89:     drawKey(\";\", x+(4+21*9)*scale, y, scale, \"d\")\n   95:     drawKey(\"i\", x+(21*7)*scale, y-16*scale, scale)\n   97:     drawKey(\"p\", x+(21*9)*scale, y-16*scale, scale)\n  105:     drawKey(\"o\", x+(21*8)*scale, y-16*scale, scale)\n  106:     drawKey(\"k\", x+(4+21*7)*scale, y, scale)\n  107:     drawKey(\"l\", x+(4+21*8)*scale, y, scale)\n  108:     drawKey(\";\", x+(4+21*9)*scale, y, scale)\n  114: function drawKeyboard(x, y, scale)\n  117:   drawKey(\"1\", x+(-6+0)*scale, y-32*scale, scale)\n  118:   drawKey(\"2\", x+(-6+21*1)*scale, y-32*scale, scale)\n  119:   drawKey(\"3\", x+(-6+21*2)*scale, y-32*scale, scale)\n  120:   drawKey(\"4\", x+(-6+21*3)*scale, y-32*scale, scale)\n  121:   drawKey(\"5\", x+(-6+21*4)*scale, y-32*scale, scale)\n  122:   drawKey(\"6\", x+(-6+21*5)*scale, y-32*scale, scale)\n  123:   drawKey(\"7\", x+(-6+21*6)*scale, y-32*scale, scale)\n  124:   drawKey(\"8\", x+(-6+21*7)*scale, y-32*scale, scale)\n  125:   drawKey(\"9\", x+(-6+21*8)*scale, y-32*scale, scale)\n  126:   drawKey(\"0\", x+(-6+21*9)*scale, y-32*scale, scale)\n  127:   drawKey(\"-\", x+(-6+21*10)*scale, y-32*scale, scale)\n  128:   drawKey(\"=\", x+(-6+21*11)*scale, y-32*scale, scale)\n  130:   drawKey(\"q\", x+(0)*scale, y-16*scale, scale)\n  131:   drawKey(\"w\", x+(21*1)*scale, y-16*scale, scale)\n  132:   drawKey(\"e\", x+(21*2)*scale, y-16*scale, scale)\n  133:   drawKey(\"r\", x+(21*3)*scale, y-16*scale, scale)\n  134:   drawKey(\"t\", x+(21*4)*scale, y-16*scale, scale)\n  135:   drawKey(\"y\", x+(21*5)*scale, y-16*scale, scale)\n  136:   drawKey(\"u\", x+(21*6)*scale, y-16*scale, scale)\n  137:   drawKey(\"i\", x+(21*7)*scale, y-16*scale, scale)\n  138:   drawKey(\"o\", x+(21*8)*scale, y-16*scale, scale)\n  139:   drawKey(\"p\", x+(21*9)*scale, y-16*scale, scale)\n  140:   drawKey(\"[\", x+(21*10)*scale, y-16*scale, scale)\n  141:   drawKey(\"]\", x+(21*11)*scale, y-16*scale, scale)\n  142:   drawKey(\"\\\\\", x+(21*12)*scale, y-16*scale, scale)\n  144:   drawKey(\"a\", x+(4+0)*scale, y, scale)\n  145:   drawKey(\"s\", x+(4+21*1)*scale, y, scale)\n  146:   drawKey(\"d\", x+(4+21*2)*scale, y, scale)\n  147:   drawKey(\"f\", x+(4+21*3)*scale, y, scale)\n  148:   drawKey(\"g\", x+(4+21*4)*scale, y, scale)\n  149:   drawKey(\"h\", x+(4+21*5)*scale, y, scale)\n  150:   drawKey(\"j\", x+(4+21*6)*scale, y, scale)\n  151:   drawKey(\"k\", x+(4+21*7)*scale, y, scale)\n  152:   drawKey(\"l\", x+(4+21*8)*scale, y, scale)\n  153:   drawKey(\";\", x+(4+21*9)*scale, y, scale)\n  154:   drawKey(\"'\", x+(4+21*10)*scale, y, scale)\n  156:   drawKey(\"z\", x+(10+0)*scale, y+16*scale, scale)\n  157:   drawKey(\"x\", x+(10+21*1)*scale, y+16*scale, scale)\n  158:   drawKey(\"c\", x+(10+21*2)*scale, y+16*scale, scale)\n  159:   drawKey(\"v\", x+(10+21*3)*scale, y+16*scale, scale)\n  160:   drawKey(\"b\", x+(10+21*4)*scale, y+16*scale, scale)\n  161:   drawKey(\"n\", x+(10+21*5)*scale, y+16*scale, scale)\n  162:   drawKey(\"m\", x+(10+21*6)*scale, y+16*scale, scale)\n  163:   drawKey(\",\", x+(10+21*7)*scale, y+16*scale, scale)\n  164:   drawKey(\".\", x+(10+21*8)*scale, y+16*scale, scale)\n  165:   drawKey(\"/\", x+(10+21*9)*scale, y+16*scale, scale)\n  166:   drawKey(\"lalt\", x+(32)*scale, y+32*scale, scale)\n  167:   --drawKey(\"lgui\", x+(45)*scale, y+32*scale, scale)\n\n79 matches across 2 files\n\n\nSearching 492 files for \"training\"\n\n/Users/Hi/Desktop/Game/ADA/menus.lua:\n  442:   drawTrainingWheels()\n 1205:   if training_wheels then\n 1208:   lg.printf(\"T: Training Wheels: \"..twString, screenwidth/2-100, screenheight*2/3,200,\"center\")\n\n/Users/Hi/Desktop/Game/ADA/utilities/monitors.lua:\n    7: training_wheels = true\n    9: function  drawTrainingWheels()\n   10:   if training_wheels then\n\n6 matches across 2 files\n\n\nSearching 492 files for \"backspace\"\n\n/Users/Hi/Desktop/Game/ADA/menus.lua:\n  302:     elseif key == \"backspace\" then\n  314:     elseif key == \"backspace\" then\n\n/Users/Hi/Desktop/Game/ADA/utilities/joysticks.lua:\n  425:     you.swap = love.keyboard.isDown(\"backspace\")\n\n3 matches across 2 files\n\n\nSearching 492 files for \"backspace\"\n\n/Users/Hi/Desktop/Game/ADA/menus.lua:\n  302:     elseif key == \"backspace\" then\n  314:     elseif key == \"backspace\" then\n\n/Users/Hi/Desktop/Game/ADA/utilities/joysticks.lua:\n  425:     you.swap = love.keyboard.isDown(\"backspace\")\n\n3 matches across 2 files\n\n\nSearching 492 files for \"drawkey\"\n\n/Users/Hi/Desktop/Game/ADA/menus.lua:\n  297: function drawKey(key, x, y, size, override)\n  340:           drawKey(\"c\", 200, 200, 2)\n\n/Users/Hi/Desktop/Game/ADA/utilities/monitors.lua:\n   12:       drawKeyboardControls1(25, screenheight-100, 2)\n   15:       drawKeyboardControls2(screenwidth-580, screenheight-30, 2)\n   33: function drawKeyboardControls3(x, y, scale)\n   36:   drawKey(\"u\", x+(21*6)*scale, y-16*scale, scale)\n   38:   drawKey(\"o\", x+(21*8)*scale, y-16*scale, scale)\n   39:   drawKey(\"k\", x+(4+21*7)*scale, y, scale)\n   40:   drawKey(\"l\", x+(4+21*8)*scale, y, scale)\n   41:   drawKey(\";\", x+(4+21*9)*scale, y, scale)\n   46: function drawKeyboardControls1(x, y, scale)\n   50:   drawKey(\"w\", x+(21)*scale, y-16*scale, scale)\n   51:   drawKey(\"a\", x+(4+0)*scale, y, scale)\n   52:   drawKey(\"s\", x+(4+21*1)*scale, y, scale)\n   53:   drawKey(\"d\", x+(4+21*2)*scale, y, scale)\n   62:   drawKey(\"v\", x+(10+21*3)*scale, y+16*scale, scale)\n   68: function drawKeyboardControls2(x, y, scale)\n   78:     drawKey(\"o\", x+(21*8)*scale, y-16*scale, scale, \"w\")\n   79:     drawKey(\"k\", x+(4+21*7)*scale, y, scale, \"a\")\n   80:     drawKey(\"l\", x+(4+21*8)*scale, y, scale, \"s\")\n   81:     drawKey(\";\", x+(4+21*9)*scale, y, scale, \"d\")\n   92:     drawKey(\"o\", x+(21*8)*scale, y-16*scale, scale)\n   93:     drawKey(\"k\", x+(4+21*7)*scale, y, scale)\n   94:     drawKey(\"l\", x+(4+21*8)*scale, y, scale)\n   95:     drawKey(\";\", x+(4+21*9)*scale, y, scale)\n  102: function drawKeyboard(x, y, scale)\n  105:   drawKey(\"1\", x+(-6+0)*scale, y-32*scale, scale)\n  106:   drawKey(\"2\", x+(-6+21*1)*scale, y-32*scale, scale)\n  107:   drawKey(\"3\", x+(-6+21*2)*scale, y-32*scale, scale)\n  108:   drawKey(\"4\", x+(-6+21*3)*scale, y-32*scale, scale)\n  109:   drawKey(\"5\", x+(-6+21*4)*scale, y-32*scale, scale)\n  110:   drawKey(\"6\", x+(-6+21*5)*scale, y-32*scale, scale)\n  111:   drawKey(\"7\", x+(-6+21*6)*scale, y-32*scale, scale)\n  112:   drawKey(\"8\", x+(-6+21*7)*scale, y-32*scale, scale)\n  113:   drawKey(\"9\", x+(-6+21*8)*scale, y-32*scale, scale)\n  114:   drawKey(\"0\", x+(-6+21*9)*scale, y-32*scale, scale)\n  115:   drawKey(\"-\", x+(-6+21*10)*scale, y-32*scale, scale)\n  116:   drawKey(\"=\", x+(-6+21*11)*scale, y-32*scale, scale)\n  118:   drawKey(\"q\", x+(0)*scale, y-16*scale, scale)\n  119:   drawKey(\"w\", x+(21*1)*scale, y-16*scale, scale)\n  120:   drawKey(\"e\", x+(21*2)*scale, y-16*scale, scale)\n  121:   drawKey(\"r\", x+(21*3)*scale, y-16*scale, scale)\n  122:   drawKey(\"t\", x+(21*4)*scale, y-16*scale, scale)\n  123:   drawKey(\"y\", x+(21*5)*scale, y-16*scale, scale)\n  124:   drawKey(\"u\", x+(21*6)*scale, y-16*scale, scale)\n  125:   drawKey(\"i\", x+(21*7)*scale, y-16*scale, scale)\n  126:   drawKey(\"o\", x+(21*8)*scale, y-16*scale, scale)\n  127:   drawKey(\"p\", x+(21*9)*scale, y-16*scale, scale)\n  128:   drawKey(\"[\", x+(21*10)*scale, y-16*scale, scale)\n  129:   drawKey(\"]\", x+(21*11)*scale, y-16*scale, scale)\n  130:   drawKey(\"\\\\\", x+(21*12)*scale, y-16*scale, scale)\n  132:   drawKey(\"a\", x+(4+0)*scale, y, scale)\n  133:   drawKey(\"s\", x+(4+21*1)*scale, y, scale)\n  134:   drawKey(\"d\", x+(4+21*2)*scale, y, scale)\n  135:   drawKey(\"f\", x+(4+21*3)*scale, y, scale)\n  136:   drawKey(\"g\", x+(4+21*4)*scale, y, scale)\n  137:   drawKey(\"h\", x+(4+21*5)*scale, y, scale)\n  138:   drawKey(\"j\", x+(4+21*6)*scale, y, scale)\n  139:   drawKey(\"k\", x+(4+21*7)*scale, y, scale)\n  140:   drawKey(\"l\", x+(4+21*8)*scale, y, scale)\n  141:   drawKey(\";\", x+(4+21*9)*scale, y, scale)\n  142:   drawKey(\"'\", x+(4+21*10)*scale, y, scale)\n  144:   drawKey(\"z\", x+(10+0)*scale, y+16*scale, scale)\n  145:   drawKey(\"x\", x+(10+21*1)*scale, y+16*scale, scale)\n  146:   drawKey(\"c\", x+(10+21*2)*scale, y+16*scale, scale)\n  147:   drawKey(\"v\", x+(10+21*3)*scale, y+16*scale, scale)\n  148:   drawKey(\"b\", x+(10+21*4)*scale, y+16*scale, scale)\n  149:   drawKey(\"n\", x+(10+21*5)*scale, y+16*scale, scale)\n  150:   drawKey(\"m\", x+(10+21*6)*scale, y+16*scale, scale)\n  151:   drawKey(\",\", x+(10+21*7)*scale, y+16*scale, scale)\n  152:   drawKey(\".\", x+(10+21*8)*scale, y+16*scale, scale)\n  153:   drawKey(\"/\", x+(10+21*9)*scale, y+16*scale, scale)\n  154:   drawKey(\"lalt\", x+(32)*scale, y+32*scale, scale)\n  155:   --drawKey(\"lgui\", x+(45)*scale, y+32*scale, scale)\n\n74 matches across 2 files\n\n\nSearching 492 files for \"drawkey\"\n\n/Users/Hi/Desktop/Game/ADA/menus.lua:\n  297: function drawKey(key, x, y, size, override)\n  340:           drawKey(\"c\", 200, 200, 2)\n\n/Users/Hi/Desktop/Game/ADA/utilities/monitors.lua:\n   12:       drawKeyboardControls1(25, screenheight-100, 2)\n   15:       drawKeyboardControls2(screenwidth-580, screenheight-30, 2)\n   33: function drawKeyboardControls3(x, y, scale)\n   36:   drawKey(\"u\", x+(21*6)*scale, y-16*scale, scale)\n   38:   drawKey(\"o\", x+(21*8)*scale, y-16*scale, scale)\n   39:   drawKey(\"k\", x+(4+21*7)*scale, y, scale)\n   40:   drawKey(\"l\", x+(4+21*8)*scale, y, scale)\n   41:   drawKey(\";\", x+(4+21*9)*scale, y, scale)\n   46: function drawKeyboardControls1(x, y, scale)\n   50:   drawKey(\"w\", x+(21)*scale, y-16*scale, scale)\n   51:   drawKey(\"a\", x+(4+0)*scale, y, scale)\n   52:   drawKey(\"s\", x+(4+21*1)*scale, y, scale)\n   53:   drawKey(\"d\", x+(4+21*2)*scale, y, scale)\n   62:   drawKey(\"v\", x+(10+21*3)*scale, y+16*scale, scale)\n   68: function drawKeyboardControls2(x, y, scale)\n   76:     drawKey(\"backspace\", x+(-6+21*12)*scale, y-32*scale, scale,\"lgui\")\n   78:     drawKey(\"o\", x+(21*8)*scale, y-16*scale, scale, \"w\")\n   79:     drawKey(\"k\", x+(4+21*7)*scale, y, scale, \"a\")\n   80:     drawKey(\"l\", x+(4+21*8)*scale, y, scale, \"s\")\n   81:     drawKey(\";\", x+(4+21*9)*scale, y, scale, \"d\")\n   92:     drawKey(\"o\", x+(21*8)*scale, y-16*scale, scale)\n   93:     drawKey(\"k\", x+(4+21*7)*scale, y, scale)\n   94:     drawKey(\"l\", x+(4+21*8)*scale, y, scale)\n   95:     drawKey(\";\", x+(4+21*9)*scale, y, scale)\n   97:     drawKey(\"backspace\", x+(-6+21*12)*scale, y-32*scale, scale)\n  103: function drawKeyboard(x, y, scale)\n  106:   drawKey(\"1\", x+(-6+0)*scale, y-32*scale, scale)\n  107:   drawKey(\"2\", x+(-6+21*1)*scale, y-32*scale, scale)\n  108:   drawKey(\"3\", x+(-6+21*2)*scale, y-32*scale, scale)\n  109:   drawKey(\"4\", x+(-6+21*3)*scale, y-32*scale, scale)\n  110:   drawKey(\"5\", x+(-6+21*4)*scale, y-32*scale, scale)\n  111:   drawKey(\"6\", x+(-6+21*5)*scale, y-32*scale, scale)\n  112:   drawKey(\"7\", x+(-6+21*6)*scale, y-32*scale, scale)\n  113:   drawKey(\"8\", x+(-6+21*7)*scale, y-32*scale, scale)\n  114:   drawKey(\"9\", x+(-6+21*8)*scale, y-32*scale, scale)\n  115:   drawKey(\"0\", x+(-6+21*9)*scale, y-32*scale, scale)\n  116:   drawKey(\"-\", x+(-6+21*10)*scale, y-32*scale, scale)\n  117:   drawKey(\"=\", x+(-6+21*11)*scale, y-32*scale, scale)\n  119:   drawKey(\"q\", x+(0)*scale, y-16*scale, scale)\n  120:   drawKey(\"w\", x+(21*1)*scale, y-16*scale, scale)\n  121:   drawKey(\"e\", x+(21*2)*scale, y-16*scale, scale)\n  122:   drawKey(\"r\", x+(21*3)*scale, y-16*scale, scale)\n  123:   drawKey(\"t\", x+(21*4)*scale, y-16*scale, scale)\n  124:   drawKey(\"y\", x+(21*5)*scale, y-16*scale, scale)\n  125:   drawKey(\"u\", x+(21*6)*scale, y-16*scale, scale)\n  126:   drawKey(\"i\", x+(21*7)*scale, y-16*scale, scale)\n  127:   drawKey(\"o\", x+(21*8)*scale, y-16*scale, scale)\n  128:   drawKey(\"p\", x+(21*9)*scale, y-16*scale, scale)\n  129:   drawKey(\"[\", x+(21*10)*scale, y-16*scale, scale)\n  130:   drawKey(\"]\", x+(21*11)*scale, y-16*scale, scale)\n  131:   drawKey(\"\\\\\", x+(21*12)*scale, y-16*scale, scale)\n  133:   drawKey(\"a\", x+(4+0)*scale, y, scale)\n  134:   drawKey(\"s\", x+(4+21*1)*scale, y, scale)\n  135:   drawKey(\"d\", x+(4+21*2)*scale, y, scale)\n  136:   drawKey(\"f\", x+(4+21*3)*scale, y, scale)\n  137:   drawKey(\"g\", x+(4+21*4)*scale, y, scale)\n  138:   drawKey(\"h\", x+(4+21*5)*scale, y, scale)\n  139:   drawKey(\"j\", x+(4+21*6)*scale, y, scale)\n  140:   drawKey(\"k\", x+(4+21*7)*scale, y, scale)\n  141:   drawKey(\"l\", x+(4+21*8)*scale, y, scale)\n  142:   drawKey(\";\", x+(4+21*9)*scale, y, scale)\n  143:   drawKey(\"'\", x+(4+21*10)*scale, y, scale)\n  145:   drawKey(\"z\", x+(10+0)*scale, y+16*scale, scale)\n  146:   drawKey(\"x\", x+(10+21*1)*scale, y+16*scale, scale)\n  147:   drawKey(\"c\", x+(10+21*2)*scale, y+16*scale, scale)\n  148:   drawKey(\"v\", x+(10+21*3)*scale, y+16*scale, scale)\n  149:   drawKey(\"b\", x+(10+21*4)*scale, y+16*scale, scale)\n  150:   drawKey(\"n\", x+(10+21*5)*scale, y+16*scale, scale)\n  151:   drawKey(\"m\", x+(10+21*6)*scale, y+16*scale, scale)\n  152:   drawKey(\",\", x+(10+21*7)*scale, y+16*scale, scale)\n  153:   drawKey(\".\", x+(10+21*8)*scale, y+16*scale, scale)\n  154:   drawKey(\"/\", x+(10+21*9)*scale, y+16*scale, scale)\n  155:   drawKey(\"lalt\", x+(32)*scale, y+32*scale, scale)\n  156:   --drawKey(\"lgui\", x+(45)*scale, y+32*scale, scale)\n\n76 matches across 2 files\n\n\nSearching 492 files for \"setfont\"\n\n/Users/Hi/Desktop/Game/ADA/menus.lua:\n  257:       setFontSize(7*size)\n  270:       setFontSize(7*size)\n  303:       setFontSize(7*size)\n  316:       setFontSize(7*size)\n  651:     setFontSize(24)\n\n/Users/Hi/Desktop/Game/ADA/utilities/monitors.lua:\n   34:   setFontSize(9*scale)\n   42:   setFontSize(font_size)\n   47:   setFontSize(9*scale)\n   65:   setFontSize(font_size)\n   69:   setFontSize(9*scale)\n   83:     setFontSize(font_size)\n   99:     setFontSize(font_size)\n\n/Users/Hi/Desktop/Game/ADA/utilities/utilities.lua:\n  429:   function setFontSize(size)\n\n13 matches across 3 files\n",
 			"settings":
 			{
-				"buffer_size": 2332,
+				"buffer_size": 29788,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "utilities/monitors.lua",
+			"settings":
+			{
+				"buffer_size": 8969,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "camera.lua",
+			"file": "combat/fizix.lua",
 			"settings":
 			{
-				"buffer_size": 18818,
+				"buffer_size": 15712,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "colorcontrol.lua",
+			"file": "combat/attack.lua",
 			"settings":
 			{
-				"buffer_size": 5817,
+				"buffer_size": 25194,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "attack.lua",
+			"file": "combat/damageTable.lua",
 			"settings":
 			{
-				"buffer_size": 24954,
+				"buffer_size": 2561,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "menus.lua",
+			"settings":
+			{
+				"buffer_size": 35678,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "animation/animation.lua",
+			"settings":
+			{
+				"buffer_size": 47521,
 				"line_ending": "Unix"
 			}
 		}
@@ -335,10 +361,18 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 392.0,
-		"last_filter": "open",
+		"height": 67.0,
+		"last_filter": "packageresou",
 		"selected_items":
 		[
+			[
+				"packageresou",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"packageresour",
+				"PackageResourceViewer: Open Resource"
+			],
 			[
 				"open",
 				"PackageResourceViewer: Open Resource"
@@ -380,7 +414,7 @@
 				"LaTeXTools: Reconfigure and migrate settings"
 			]
 		],
-		"width": 449.0
+		"width": 353.0
 	},
 	"console":
 	{
@@ -402,51 +436,81 @@
 	"expanded_folders":
 	[
 		"/Users/Hi/Desktop/Game/ADA",
-		"/Users/Hi/Desktop/Game/ADA/attacks",
-		"/Users/Hi/Desktop/Game/ADA/gameModes",
-		"/Users/Hi/Desktop/Game/ADA/story",
-		"/Users/Hi/Desktop/Game/ADA/story/ch1"
+		"/Users/Hi/Desktop/Game/ADA/animation",
+		"/Users/Hi/Desktop/Game/ADA/combat",
+		"/Users/Hi/Desktop/Game/ADA/combat/colors",
+		"/Users/Hi/Desktop/Game/ADA/sounds",
+		"/Users/Hi/Desktop/Game/ADA/utilities"
 	],
 	"file_history":
 	[
-		"/Users/Hi/Desktop/Game/ADA/gameModes/fractal.lua",
-		"/Users/Hi/Desktop/Game/ADA/utilities.lua",
-		"/Users/Hi/Desktop/Game/ADA/animation.lua",
-		"/Users/Hi/Desktop/Game/ADA/hits.lua",
-		"/Users/Hi/Desktop/Game/ADA/fizix.lua",
-		"/Users/Hi/Desktop/Game/ADA/menustuff.lua",
-		"/Users/Hi/Desktop/Game/ADA/camera.lua",
-		"/Users/Hi/Desktop/Game/ADA/platforms.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/colors/green.lua",
+		"/Users/Hi/Desktop/Game/ADA/sounds/sounds.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/stages.lua",
+		"/Users/Hi/Desktop/Game/ADA/animation/animation.lua",
+		"/Users/Hi/Desktop/Game/ADA/utilities/initializers.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/colors/purple.lua",
+		"/Users/Hi/Desktop/Game/ADA/menus.lua",
+		"/Users/Hi/Desktop/Game/ADA/utilities/utilities.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/play.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/hits.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/fizix.lua",
+		"/Users/Hi/Desktop/Game/ADA/utilities/joysticks.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/colors/blue.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/ai.lua",
+		"/Users/Hi/Desktop/Game/ADA/utilities/camera.lua",
+		"/Users/Hi/Desktop/Game/ADA/utilities/monitors.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/attack.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/colorcontrol.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/gameModes/koth.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/gameModes/fractal.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/damageTable.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/colors/orange.lua",
+		"/Users/Hi/Desktop/Game/ADA/animation/blossom.lua",
 		"/Users/Hi/Desktop/Game/ADA/main.lua",
-		"/Users/Hi/Desktop/Game/ADA/colorcontrol.lua",
-		"/Users/Hi/Desktop/Game/ADA/attack.lua",
-		"/Users/Hi/Desktop/Game/ADA/attacks/blue.lua",
-		"/Users/Hi/Desktop/Game/ADA/monitors.lua",
-		"/Users/Hi/Desktop/Game/ADA/damageTable.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/colors/red.lua",
+		"/Users/Hi/Desktop/Game/ADA/combat/lasso.lua",
+		"/Users/Hi/Desktop/Game/ADA/animation/colorbox.lua",
+		"/Users/Hi/Desktop/Game/ADA/menustuff.lua",
+		"/Users/Hi/Desktop/Game/ADA/stages.lua",
+		"/Users/Hi/Desktop/Game/ADA/animation.lua",
 		"/Users/Hi/Desktop/Game/ADA/joysticks.lua",
-		"/Users/Hi/Desktop/Game/ADA/play.lua",
+		"/Users/Hi/Desktop/Game/ADA/music.lua",
 		"/Users/Hi/Desktop/Game/ADA/initializers.lua",
+		"/Users/Hi/Desktop/Game/ADA/utilities.lua",
+		"/Users/Hi/Desktop/Game/ADA/camera.lua",
+		"/Users/Hi/Desktop/Game/ADA/love-loader.lua",
+		"/Users/Hi/Desktop/Game/ADA/play.lua",
+		"/Users/Hi/Desktop/Game/ADA/damageTable.lua",
+		"/Users/Hi/Desktop/Game/ADA/attack.lua",
+		"/Users/Hi/Desktop/Game/ADA/blossom.lua",
 		"/Users/Hi/Desktop/Game/ADA/ai.lua",
-		"/Users/Hi/Desktop/Game/ADA/attacks/green.lua",
+		"/Users/Hi/Desktop/Game/ADA/death.lua",
+		"/Users/Hi/Desktop/Game/ADA/fizix.lua",
+		"/Users/Hi/Desktop/Game/ADA/monitors.lua",
 		"/Users/Hi/Desktop/Game/ADA/attacks/orange.lua",
-		"/Users/Hi/Desktop/Game/ADA/attacks/purple.lua",
-		"/Users/Hi/Desktop/Game/ADA/attacks/red.lua",
-		"/Users/Hi/Desktop/Game/ADA/enviro/colorbox.lua",
+		"/Users/Hi/Desktop/Game/ADA/hits.lua",
+		"/Users/Hi/Desktop/Game/ADA/gameModes/fractal.lua",
 		"/Users/Hi/Desktop/Game/ADA/gameModes/koth.lua",
+		"/Users/Hi/Desktop/Game/ADA/attacks/purple.lua",
+		"/Users/Hi/Desktop/Game/ADA/attacks/green.lua",
+		"/Users/Hi/Desktop/Game/ADA/platforms.lua",
+		"/Users/Hi/Desktop/Game/ADA/attacks/blue.lua",
+		"/Users/Hi/Desktop/Game/ADA/attacks/red.lua",
+		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/Lua/Indent.tmPreferences",
+		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/Default/Indentation Rules - Comments.tmPreferences",
+		"/Users/Hi/Desktop/Game/ADA/colorcontrol.lua",
+		"/Users/Hi/Desktop/Game/ADA/enviro/colorbox.lua",
 		"/Users/Hi/Desktop/Game/ADA/story/ch1/ch1.lua",
 		"/Users/Hi/Desktop/Game/ADA/colorbox.lua",
-		"/Users/Hi/Desktop/Game/ADA/blossom.lua",
 		"/Users/Hi/Desktop/Game/ADA/enviro/floors.png",
 		"/Users/Hi/Desktop/Game/ADA/enviro/backstreet.png",
 		"/Users/Hi/Desktop/Game/ADA/untitled.lua",
-		"/Users/Hi/Desktop/Game/ADA/music.lua",
 		"/Users/Hi/Desktop/Game/ADA/lasso.lua",
-		"/Users/Hi/Desktop/Game/ADA/love-loader.lua",
 		"/Users/Hi/Desktop/Game/ADA/meandyou.lua",
 		"/Users/Hi/Desktop/Game/ADA/conf.lua",
 		"/Users/Hi/Desktop/Game/ADA/xkcdcolor.lua",
 		"/Users/Hi/Desktop/Game/ADA/story.lua",
-		"/Users/Hi/Desktop/Game/ADA/death.lua",
 		"/Users/Hi/Desktop/Game/ADA/Notes",
 		"/Users/Hi/Desktop/Game/ADA/fractal.lua",
 		"/Users/Hi/Desktop/Game/ADA/Find Results",
@@ -466,7 +530,6 @@
 		"/Users/Hi/Desktop/Game/ADA/at/BB.lua",
 		"/Users/Hi/Desktop/Game/ADA/at/pp.lua",
 		"/Users/Hi/Desktop/Game/ADA/DamageTable.lua",
-		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/Lua/Indent.tmPreferences",
 		"/Users/Hi/Desktop/Test/main.lua",
 		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/Love.sublime-build",
 		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/User/test.sublime-build",
@@ -516,134 +579,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"changebackgroundcolor",
-			"setbackground",
-			"dollyx",
-			"images/",
-			"floorsparalax",
-			"dollyx",
-			"quicktime",
-			"dollyx",
-			"dollyx <",
-			"dollyx >",
-			"dollyx",
-			"dollyx >",
-			"dolly",
-			"makenrubble",
-			"enviro.rubble2",
-			"enviro.rubble3",
-			"drawrubble",
-			"makenrubble",
-			"posneg",
-			"initplayer",
-			"load",
-			"makenrubble",
-			"enviro.rubble",
-			"drawrubble",
-			"drawglass",
-			"math.random(3)",
-			"drawrubble",
-			"makenrubble",
-			"makenglass",
-			"makenrubble",
-			"drawleaves",
-			"makenleaves",
-			"coinflip",
-			"makenleaves",
-			"drawleaves",
-			"updateboxes",
-			".boxes",
-			"makenpaper",
-			"box",
-			"makenleaves",
-			"paralax2",
-			"otile",
-			"tile =",
-			"gtile",
-			"rtile",
-			"gtile",
-			"dollyv",
-			"dollyv = 7",
-			"placespeople",
-			"dolly",
-			"dollyspeed",
-			"paralaxspeed",
-			"== 7",
-			"animcounter",
-			"== 7",
-			"running",
-			"cancombo",
-			".attack_num ==",
-			".attack_num",
-			".type ==",
-			"combo",
-			"srectangle",
-			"drawover",
-			"fractal_max_health",
-			"maxhealth =",
-			"255",
-			"drawoverla",
-			"wallx",
-			"initfight",
-			"enviro/ready",
-			"color u",
-			"h_",
-			"color",
-			"h_set",
-			"drawoverlays",
-			"drawOverlays",
-			"bwidth",
-			"beigedif",
-			"beige",
-			"drawgo",
-			"images/",
-			"mapNum =",
-			"paralax",
-			"draw(ready",
-			".draw(ready",
-			"ready.png",
-			"ready",
-			"controllersready",
-			"255",
-			"enviro",
-			"lightson",
-			"images/images",
-			"enviro/",
-			"maps",
-			"enviro/",
-			"fightclubplats",
-			".newImage( ",
-			"placespeople = false",
-			"placespeople",
-			"skycopy",
-			"test.png",
-			"test/png",
-			"glass2",
-			"paper",
-			"rselect",
+			"setfont",
+			"drawkey",
+			"backspace",
+			"training",
+			"drawkey",
+			"leftbumpb",
+			"bump",
+			"dodge = true",
+			"double",
+			"dodge",
+			"jump_delay",
+			"orient",
+			"orientlr",
+			"leftbumpb",
+			"swap",
+			"me.",
 			"me",
-			"drawroulette",
-			"iii",
-			"ministreet2",
-			"colorbox.png",
-			"enviro/colorbox",
-			"lg.newImage(\"",
-			".newimage",
-			"    controller_menu_l = controller_menu_l + math.random()/500\n",
-			"readysound",
-			".2",
-			"_l",
-			"color u",
-			"color",
-			"color-",
-			"t_colorShift2",
-			"g_up",
-			"gup",
-			"rancolor",
-			"isabout",
-			" then",
-			"brightest",
-			"255"
+			"hold_swap",
+			"hold_",
+			"hold",
+			"leftbump",
+			"color\"",
+			"holdmanage",
+			"holding",
+			"hold",
+			"leftbump",
+			"openingsong",
+			"getos",
+			"double",
+			"doubletap",
+			"hexplat",
+			"pint",
+			"record",
+			"openingsong",
+			"song",
+			"applyMovements",
+			"hall",
+			"me.j = ",
+			"me.v = 0",
+			"drawtrain",
+			"math.min",
+			"min",
+			"math.",
+			"lof",
+			"lower",
+			"low",
+			"fontsize",
+			"fontsizde",
+			"hls2rgb",
+			"rgb",
+			"fullscreen",
+			"printf",
+			"training",
+			"printf",
+			"pause",
+			"camera",
+			"putmehere",
+			"xx.x = xx.x",
+			"me.x = me.x",
+			"me.x = me.v",
+			"me.v = ",
+			"hexCheck",
+			"upper",
+			"putmehere",
+			"putme",
+			"idletimer =",
+			"idletimer",
+			"idle",
+			"cinema",
+			"drawblock",
+			"drawkey",
+			"= ",
+			" =",
+			" ",
+			" =",
+			"feet",
+			"drawfeet",
+			"drawmy",
+			"drawmytrail",
+			"trail",
+			"camerawobble",
+			"camshake",
+			"speedpenalty",
+			"vroom",
+			"bump",
+			"enviro.sky",
+			"enviro.paralaxoffset",
+			"paralaxsoffset",
+			"(1-the_maps[map_num].paralaxscale*pzoom)",
+			"enviro.paralaxoffset",
+			"-enviro.paralaxoffset",
+			"enviro.paralaxoffset",
+			"enviro.paralaxscale",
+			"enviro.paralax",
+			"enviro.paralaxoffset",
+			"paralaxoffset",
+			".paralax",
+			"enviro.paralax",
+			"paralax",
+			"the_map",
+			"dollyx",
+			"mapNum",
+			"mapnum",
+			"the_map.num",
+			"the_map",
+			"the_map.num",
+			"enviro.paralax",
+			"setFont",
+			"upper",
+			"toupper",
+			"upperc",
+			"font_size",
+			"fontsize",
+			"themap",
+			"the_map",
+			"themap.num",
+			"enviro.paralax",
+			"font_size",
+			"fontsize",
+			"upper",
+			"partitionp2",
+			"drawpartition",
+			"defaultminzoom",
+			"minzoom",
+			"paralaxscale",
+			"dollyv = 3",
+			"dollyv",
+			"pan"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -651,6 +714,19 @@
 		"regex": false,
 		"replace_history":
 		[
+			"map_num",
+			"drawMenus",
+			"old_health",
+			"coinFlip",
+			"OLD_MODE",
+			"num_of_modes",
+			"the_maps",
+			"the_map",
+			"images/player",
+			".double_down ",
+			"doubleDown",
+			"radialpush",
+			"hls2rgb",
 			"lg.newImage(\"images/",
 			"num_of_colors",
 			"menu_speed",
@@ -765,20 +841,7 @@
 			"landPauseTime",
 			"shortLandWait",
 			"landingWait",
-			"landingFric",
-			"jForLanding",
-			"fractalLives",
-			"fractalMaxHealth",
-			"wallJumpRange",
-			"vForWallFlinch",
-			"waveFrameRate",
-			"sparkIntensity",
-			"comboPause",
-			"boltsFlyRelative",
-			"minMaxSpeedDif",
-			"defSpeedMInit",
-			"dangerZoomDelta",
-			"dangerZoom"
+			"landingFric"
 		],
 		"reverse": false,
 		"show_context": false,
@@ -789,7 +852,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -798,15 +861,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2021,
+						"buffer_size": 3052,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								730,
-								730
+								1157,
+								1157
 							]
 						],
 						"settings":
@@ -816,27 +879,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 605.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "menustuff.lua",
+					"file": "combat/colorcontrol.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 29035,
+						"buffer_size": 8206,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								26296,
-								26296
+								3813,
+								3813
 							]
 						],
 						"settings":
@@ -846,27 +909,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 15112.0,
+						"translation.y": 2532.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "animation.lua",
+					"file": "utilities/joysticks.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 63160,
+						"buffer_size": 15380,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								15817,
-								15817
+								9461,
+								9461
 							]
 						],
 						"settings":
@@ -876,86 +939,2405 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 21759.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "initializers.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2332,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								81,
-								81
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "camera.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 18818,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								14152,
-								14152
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 6842.0,
+						"translation.y": 6896.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "colorcontrol.lua",
+					"buffer": 3,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5817,
+						"buffer_size": 29788,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										149,
+										155
+									],
+									[
+										216,
+										222
+									],
+									[
+										282,
+										288
+									],
+									[
+										303,
+										309
+									],
+									[
+										525,
+										535
+									],
+									[
+										546,
+										556
+									],
+									[
+										621,
+										631
+									],
+									[
+										694,
+										704
+									],
+									[
+										730,
+										740
+									],
+									[
+										797,
+										807
+									],
+									[
+										854,
+										864
+									],
+									[
+										875,
+										885
+									],
+									[
+										903,
+										913
+									],
+									[
+										924,
+										934
+									],
+									[
+										973,
+										983
+									],
+									[
+										997,
+										1007
+									],
+									[
+										1063,
+										1073
+									],
+									[
+										1084,
+										1094
+									],
+									[
+										1116,
+										1126
+									],
+									[
+										1169,
+										1179
+									],
+									[
+										1308,
+										1318
+									],
+									[
+										1330,
+										1340
+									],
+									[
+										1366,
+										1376
+									],
+									[
+										1390,
+										1400
+									],
+									[
+										1438,
+										1448
+									],
+									[
+										1600,
+										1610
+									],
+									[
+										1621,
+										1631
+									],
+									[
+										1696,
+										1706
+									],
+									[
+										1769,
+										1779
+									],
+									[
+										1805,
+										1815
+									],
+									[
+										1872,
+										1882
+									],
+									[
+										1929,
+										1939
+									],
+									[
+										1950,
+										1960
+									],
+									[
+										1978,
+										1988
+									],
+									[
+										1999,
+										2009
+									],
+									[
+										2048,
+										2058
+									],
+									[
+										2072,
+										2082
+									],
+									[
+										2138,
+										2148
+									],
+									[
+										2159,
+										2169
+									],
+									[
+										2191,
+										2201
+									],
+									[
+										2244,
+										2254
+									],
+									[
+										2383,
+										2393
+									],
+									[
+										2405,
+										2415
+									],
+									[
+										2441,
+										2451
+									],
+									[
+										2465,
+										2475
+									],
+									[
+										2513,
+										2523
+									],
+									[
+										2674,
+										2679
+									],
+									[
+										2694,
+										2699
+									],
+									[
+										2787,
+										2792
+									],
+									[
+										2947,
+										2952
+									],
+									[
+										2978,
+										2983
+									],
+									[
+										3011,
+										3016
+									],
+									[
+										3036,
+										3041
+									],
+									[
+										3063,
+										3068
+									],
+									[
+										3159,
+										3164
+									],
+									[
+										3178,
+										3183
+									],
+									[
+										3314,
+										3319
+									],
+									[
+										3333,
+										3338
+									],
+									[
+										3465,
+										3470
+									],
+									[
+										3484,
+										3489
+									],
+									[
+										3509,
+										3514
+									],
+									[
+										3561,
+										3566
+									],
+									[
+										3595,
+										3600
+									],
+									[
+										3648,
+										3653
+									],
+									[
+										3694,
+										3699
+									],
+									[
+										3740,
+										3745
+									],
+									[
+										3753,
+										3758
+									],
+									[
+										3772,
+										3777
+									],
+									[
+										3809,
+										3814
+									],
+									[
+										3856,
+										3861
+									],
+									[
+										3899,
+										3904
+									],
+									[
+										3947,
+										3952
+									],
+									[
+										3995,
+										4000
+									],
+									[
+										4028,
+										4033
+									],
+									[
+										4061,
+										4066
+									],
+									[
+										4088,
+										4093
+									],
+									[
+										4120,
+										4125
+									],
+									[
+										4148,
+										4153
+									],
+									[
+										4170,
+										4175
+									],
+									[
+										4196,
+										4201
+									],
+									[
+										4222,
+										4227
+									],
+									[
+										4245,
+										4250
+									],
+									[
+										4268,
+										4273
+									],
+									[
+										4308,
+										4313
+									],
+									[
+										4354,
+										4359
+									],
+									[
+										4389,
+										4394
+									],
+									[
+										4414,
+										4419
+									],
+									[
+										4454,
+										4459
+									],
+									[
+										4482,
+										4487
+									],
+									[
+										4503,
+										4508
+									],
+									[
+										4536,
+										4541
+									],
+									[
+										4588,
+										4593
+									],
+									[
+										4620,
+										4625
+									],
+									[
+										4653,
+										4658
+									],
+									[
+										4693,
+										4698
+									],
+									[
+										4707,
+										4712
+									],
+									[
+										4737,
+										4742
+									],
+									[
+										4767,
+										4772
+									],
+									[
+										4790,
+										4795
+									],
+									[
+										4829,
+										4834
+									],
+									[
+										4858,
+										4863
+									],
+									[
+										4884,
+										4889
+									],
+									[
+										4910,
+										4915
+									],
+									[
+										4946,
+										4951
+									],
+									[
+										4986,
+										4991
+									],
+									[
+										5009,
+										5014
+									],
+									[
+										5052,
+										5057
+									],
+									[
+										5078,
+										5083
+									],
+									[
+										5106,
+										5111
+									],
+									[
+										5141,
+										5146
+									],
+									[
+										5159,
+										5164
+									],
+									[
+										5198,
+										5203
+									],
+									[
+										5242,
+										5247
+									],
+									[
+										5277,
+										5282
+									],
+									[
+										5312,
+										5317
+									],
+									[
+										5344,
+										5349
+									],
+									[
+										5365,
+										5370
+									],
+									[
+										5400,
+										5405
+									],
+									[
+										5420,
+										5425
+									],
+									[
+										5444,
+										5449
+									],
+									[
+										5464,
+										5469
+									],
+									[
+										5500,
+										5505
+									],
+									[
+										5533,
+										5538
+									],
+									[
+										5568,
+										5573
+									],
+									[
+										5588,
+										5593
+									],
+									[
+										5624,
+										5629
+									],
+									[
+										5658,
+										5663
+									],
+									[
+										5685,
+										5690
+									],
+									[
+										5712,
+										5717
+									],
+									[
+										5732,
+										5737
+									],
+									[
+										5767,
+										5772
+									],
+									[
+										5805,
+										5810
+									],
+									[
+										5835,
+										5840
+									],
+									[
+										5867,
+										5872
+									],
+									[
+										5898,
+										5903
+									],
+									[
+										5933,
+										5938
+									],
+									[
+										5963,
+										5968
+									],
+									[
+										5994,
+										5999
+									],
+									[
+										6027,
+										6032
+									],
+									[
+										6126,
+										6131
+									],
+									[
+										6149,
+										6154
+									],
+									[
+										6182,
+										6187
+									],
+									[
+										6218,
+										6223
+									],
+									[
+										6274,
+										6279
+									],
+									[
+										6298,
+										6303
+									],
+									[
+										6323,
+										6328
+									],
+									[
+										6355,
+										6360
+									],
+									[
+										6385,
+										6390
+									],
+									[
+										6407,
+										6412
+									],
+									[
+										6439,
+										6444
+									],
+									[
+										6497,
+										6502
+									],
+									[
+										6507,
+										6512
+									],
+									[
+										6540,
+										6545
+									],
+									[
+										6567,
+										6572
+									],
+									[
+										6615,
+										6620
+									],
+									[
+										6641,
+										6646
+									],
+									[
+										6663,
+										6668
+									],
+									[
+										6704,
+										6709
+									],
+									[
+										6731,
+										6736
+									],
+									[
+										6746,
+										6751
+									],
+									[
+										6773,
+										6778
+									],
+									[
+										6803,
+										6808
+									],
+									[
+										6831,
+										6836
+									],
+									[
+										6850,
+										6855
+									],
+									[
+										6874,
+										6879
+									],
+									[
+										6942,
+										6947
+									],
+									[
+										6967,
+										6972
+									],
+									[
+										7034,
+										7039
+									],
+									[
+										7055,
+										7060
+									],
+									[
+										7094,
+										7099
+									],
+									[
+										7127,
+										7132
+									],
+									[
+										7197,
+										7202
+									],
+									[
+										7250,
+										7255
+									],
+									[
+										7349,
+										7354
+									],
+									[
+										7511,
+										7516
+									],
+									[
+										7615,
+										7620
+									],
+									[
+										7650,
+										7655
+									],
+									[
+										7676,
+										7681
+									],
+									[
+										7730,
+										7735
+									],
+									[
+										7775,
+										7780
+									],
+									[
+										7875,
+										7880
+									],
+									[
+										8059,
+										8064
+									],
+									[
+										8110,
+										8115
+									],
+									[
+										8268,
+										8273
+									],
+									[
+										8407,
+										8412
+									],
+									[
+										8477,
+										8482
+									],
+									[
+										8508,
+										8513
+									],
+									[
+										8543,
+										8548
+									],
+									[
+										8583,
+										8588
+									],
+									[
+										8600,
+										8605
+									],
+									[
+										8636,
+										8641
+									],
+									[
+										8675,
+										8680
+									],
+									[
+										8692,
+										8697
+									],
+									[
+										8769,
+										8774
+									],
+									[
+										8788,
+										8793
+									],
+									[
+										8819,
+										8824
+									],
+									[
+										8849,
+										8854
+									],
+									[
+										8964,
+										8969
+									],
+									[
+										8983,
+										8988
+									],
+									[
+										9014,
+										9019
+									],
+									[
+										9044,
+										9049
+									],
+									[
+										9159,
+										9164
+									],
+									[
+										9178,
+										9183
+									],
+									[
+										9209,
+										9214
+									],
+									[
+										9239,
+										9244
+									],
+									[
+										9354,
+										9359
+									],
+									[
+										9373,
+										9378
+									],
+									[
+										9404,
+										9409
+									],
+									[
+										9434,
+										9439
+									],
+									[
+										9497,
+										9502
+									],
+									[
+										9526,
+										9531
+									],
+									[
+										9562,
+										9567
+									],
+									[
+										9600,
+										9605
+									],
+									[
+										9620,
+										9625
+									],
+									[
+										9657,
+										9662
+									],
+									[
+										9694,
+										9699
+									],
+									[
+										9714,
+										9719
+									],
+									[
+										9795,
+										9800
+									],
+									[
+										9817,
+										9822
+									],
+									[
+										9851,
+										9856
+									],
+									[
+										9884,
+										9889
+									],
+									[
+										10009,
+										10014
+									],
+									[
+										10031,
+										10036
+									],
+									[
+										10065,
+										10070
+									],
+									[
+										10098,
+										10103
+									],
+									[
+										10223,
+										10228
+									],
+									[
+										10245,
+										10250
+									],
+									[
+										10279,
+										10284
+									],
+									[
+										10312,
+										10317
+									],
+									[
+										10437,
+										10442
+									],
+									[
+										10459,
+										10464
+									],
+									[
+										10493,
+										10498
+									],
+									[
+										10526,
+										10531
+									],
+									[
+										10591,
+										10596
+									],
+									[
+										10621,
+										10626
+									],
+									[
+										10650,
+										10655
+									],
+									[
+										10681,
+										10686
+									],
+									[
+										10719,
+										10724
+									],
+									[
+										10734,
+										10739
+									],
+									[
+										10766,
+										10771
+									],
+									[
+										10803,
+										10808
+									],
+									[
+										10818,
+										10823
+									],
+									[
+										10866,
+										10871
+									],
+									[
+										10883,
+										10888
+									],
+									[
+										10913,
+										10918
+									],
+									[
+										10941,
+										10946
+									],
+									[
+										11002,
+										11007
+									],
+									[
+										11033,
+										11038
+									],
+									[
+										11067,
+										11072
+									],
+									[
+										11107,
+										11112
+									],
+									[
+										11123,
+										11128
+									],
+									[
+										11158,
+										11163
+									],
+									[
+										11197,
+										11202
+									],
+									[
+										11213,
+										11218
+									],
+									[
+										11289,
+										11294
+									],
+									[
+										11307,
+										11312
+									],
+									[
+										11337,
+										11342
+									],
+									[
+										11366,
+										11371
+									],
+									[
+										11428,
+										11433
+									],
+									[
+										11457,
+										11462
+									],
+									[
+										11489,
+										11494
+									],
+									[
+										11527,
+										11532
+									],
+									[
+										11543,
+										11548
+									],
+									[
+										11576,
+										11581
+									],
+									[
+										11613,
+										11618
+									],
+									[
+										11629,
+										11634
+									],
+									[
+										11702,
+										11707
+									],
+									[
+										11720,
+										11725
+									],
+									[
+										11750,
+										11755
+									],
+									[
+										11779,
+										11784
+									],
+									[
+										11840,
+										11845
+									],
+									[
+										11869,
+										11874
+									],
+									[
+										11901,
+										11906
+									],
+									[
+										11939,
+										11944
+									],
+									[
+										11955,
+										11960
+									],
+									[
+										11988,
+										11993
+									],
+									[
+										12025,
+										12030
+									],
+									[
+										12041,
+										12046
+									],
+									[
+										12159,
+										12164
+									],
+									[
+										12190,
+										12195
+									],
+									[
+										12229,
+										12234
+									],
+									[
+										12269,
+										12274
+									],
+									[
+										12289,
+										12294
+									],
+									[
+										12319,
+										12324
+									],
+									[
+										12356,
+										12361
+									],
+									[
+										12394,
+										12399
+									],
+									[
+										12414,
+										12419
+									],
+									[
+										12479,
+										12484
+									],
+									[
+										12561,
+										12566
+									],
+									[
+										12679,
+										12684
+									],
+									[
+										12722,
+										12727
+									],
+									[
+										12763,
+										12768
+									],
+									[
+										12802,
+										12807
+									],
+									[
+										12839,
+										12844
+									],
+									[
+										12882,
+										12887
+									],
+									[
+										12923,
+										12928
+									],
+									[
+										12963,
+										12968
+									],
+									[
+										13033,
+										13038
+									],
+									[
+										13084,
+										13089
+									],
+									[
+										13174,
+										13179
+									],
+									[
+										13265,
+										13270
+									],
+									[
+										13400,
+										13406
+									],
+									[
+										13448,
+										13454
+									],
+									[
+										13629,
+										13635
+									],
+									[
+										13711,
+										13717
+									],
+									[
+										13737,
+										13743
+									],
+									[
+										13769,
+										13775
+									],
+									[
+										13806,
+										13812
+									],
+									[
+										13853,
+										13859
+									],
+									[
+										13892,
+										13898
+									],
+									[
+										13919,
+										13925
+									],
+									[
+										13965,
+										13971
+									],
+									[
+										13997,
+										14003
+									],
+									[
+										14032,
+										14038
+									],
+									[
+										14077,
+										14083
+									],
+									[
+										14097,
+										14103
+									],
+									[
+										14126,
+										14132
+									],
+									[
+										14269,
+										14281
+									],
+									[
+										14294,
+										14306
+									],
+									[
+										14319,
+										14331
+									],
+									[
+										14344,
+										14356
+									],
+									[
+										14484,
+										14493
+									],
+									[
+										14552,
+										14561
+									],
+									[
+										14589,
+										14598
+									],
+									[
+										14633,
+										14642
+									],
+									[
+										14655,
+										14664
+									],
+									[
+										14708,
+										14717
+									],
+									[
+										14727,
+										14736
+									],
+									[
+										14752,
+										14761
+									],
+									[
+										14800,
+										14809
+									],
+									[
+										14971,
+										14978
+									],
+									[
+										15023,
+										15030
+									],
+									[
+										15114,
+										15121
+									],
+									[
+										15174,
+										15181
+									],
+									[
+										15249,
+										15256
+									],
+									[
+										15293,
+										15300
+									],
+									[
+										15350,
+										15357
+									],
+									[
+										15407,
+										15414
+									],
+									[
+										15457,
+										15464
+									],
+									[
+										15507,
+										15514
+									],
+									[
+										15564,
+										15571
+									],
+									[
+										15608,
+										15615
+									],
+									[
+										15663,
+										15670
+									],
+									[
+										15710,
+										15717
+									],
+									[
+										15760,
+										15767
+									],
+									[
+										15810,
+										15817
+									],
+									[
+										15864,
+										15871
+									],
+									[
+										15928,
+										15935
+									],
+									[
+										15974,
+										15981
+									],
+									[
+										16038,
+										16045
+									],
+									[
+										16102,
+										16109
+									],
+									[
+										16166,
+										16173
+									],
+									[
+										16223,
+										16230
+									],
+									[
+										16280,
+										16287
+									],
+									[
+										16337,
+										16344
+									],
+									[
+										16396,
+										16403
+									],
+									[
+										16455,
+										16462
+									],
+									[
+										16514,
+										16521
+									],
+									[
+										16566,
+										16573
+									],
+									[
+										16618,
+										16625
+									],
+									[
+										16675,
+										16682
+									],
+									[
+										16710,
+										16717
+									],
+									[
+										16767,
+										16774
+									],
+									[
+										16827,
+										16834
+									],
+									[
+										16887,
+										16894
+									],
+									[
+										16947,
+										16954
+									],
+									[
+										17007,
+										17014
+									],
+									[
+										17067,
+										17074
+									],
+									[
+										17127,
+										17134
+									],
+									[
+										17187,
+										17194
+									],
+									[
+										17247,
+										17254
+									],
+									[
+										17307,
+										17314
+									],
+									[
+										17368,
+										17375
+									],
+									[
+										17429,
+										17436
+									],
+									[
+										17483,
+										17490
+									],
+									[
+										17540,
+										17547
+									],
+									[
+										17597,
+										17604
+									],
+									[
+										17654,
+										17661
+									],
+									[
+										17711,
+										17718
+									],
+									[
+										17768,
+										17775
+									],
+									[
+										17825,
+										17832
+									],
+									[
+										17882,
+										17889
+									],
+									[
+										17939,
+										17946
+									],
+									[
+										17996,
+										18003
+									],
+									[
+										18054,
+										18061
+									],
+									[
+										18112,
+										18119
+									],
+									[
+										18171,
+										18178
+									],
+									[
+										18218,
+										18225
+									],
+									[
+										18268,
+										18275
+									],
+									[
+										18318,
+										18325
+									],
+									[
+										18368,
+										18375
+									],
+									[
+										18418,
+										18425
+									],
+									[
+										18468,
+										18475
+									],
+									[
+										18518,
+										18525
+									],
+									[
+										18568,
+										18575
+									],
+									[
+										18618,
+										18625
+									],
+									[
+										18668,
+										18675
+									],
+									[
+										18719,
+										18726
+									],
+									[
+										18776,
+										18783
+									],
+									[
+										18836,
+										18843
+									],
+									[
+										18896,
+										18903
+									],
+									[
+										18956,
+										18963
+									],
+									[
+										19016,
+										19023
+									],
+									[
+										19076,
+										19083
+									],
+									[
+										19136,
+										19143
+									],
+									[
+										19196,
+										19203
+									],
+									[
+										19256,
+										19263
+									],
+									[
+										19316,
+										19323
+									],
+									[
+										19376,
+										19383
+									],
+									[
+										19541,
+										19549
+									],
+									[
+										19570,
+										19578
+									],
+									[
+										19614,
+										19622
+									],
+									[
+										19753,
+										19761
+									],
+									[
+										19797,
+										19805
+									],
+									[
+										19826,
+										19834
+									],
+									[
+										19976,
+										19985
+									],
+									[
+										20018,
+										20027
+									],
+									[
+										20131,
+										20140
+									],
+									[
+										20272,
+										20281
+									],
+									[
+										20314,
+										20323
+									],
+									[
+										20427,
+										20436
+									],
+									[
+										20556,
+										20563
+									],
+									[
+										20608,
+										20615
+									],
+									[
+										20699,
+										20706
+									],
+									[
+										20759,
+										20766
+									],
+									[
+										20834,
+										20841
+									],
+									[
+										20878,
+										20885
+									],
+									[
+										20935,
+										20942
+									],
+									[
+										20992,
+										20999
+									],
+									[
+										21042,
+										21049
+									],
+									[
+										21092,
+										21099
+									],
+									[
+										21149,
+										21156
+									],
+									[
+										21193,
+										21200
+									],
+									[
+										21248,
+										21255
+									],
+									[
+										21295,
+										21302
+									],
+									[
+										21345,
+										21352
+									],
+									[
+										21395,
+										21402
+									],
+									[
+										21462,
+										21469
+									],
+									[
+										21508,
+										21515
+									],
+									[
+										21572,
+										21579
+									],
+									[
+										21629,
+										21636
+									],
+									[
+										21686,
+										21693
+									],
+									[
+										21743,
+										21750
+									],
+									[
+										21802,
+										21809
+									],
+									[
+										21854,
+										21861
+									],
+									[
+										21906,
+										21913
+									],
+									[
+										21963,
+										21970
+									],
+									[
+										21998,
+										22005
+									],
+									[
+										22055,
+										22062
+									],
+									[
+										22115,
+										22122
+									],
+									[
+										22175,
+										22182
+									],
+									[
+										22235,
+										22242
+									],
+									[
+										22295,
+										22302
+									],
+									[
+										22355,
+										22362
+									],
+									[
+										22415,
+										22422
+									],
+									[
+										22475,
+										22482
+									],
+									[
+										22535,
+										22542
+									],
+									[
+										22595,
+										22602
+									],
+									[
+										22656,
+										22663
+									],
+									[
+										22717,
+										22724
+									],
+									[
+										22771,
+										22778
+									],
+									[
+										22828,
+										22835
+									],
+									[
+										22885,
+										22892
+									],
+									[
+										22942,
+										22949
+									],
+									[
+										22999,
+										23006
+									],
+									[
+										23056,
+										23063
+									],
+									[
+										23113,
+										23120
+									],
+									[
+										23170,
+										23177
+									],
+									[
+										23227,
+										23234
+									],
+									[
+										23284,
+										23291
+									],
+									[
+										23342,
+										23349
+									],
+									[
+										23400,
+										23407
+									],
+									[
+										23459,
+										23466
+									],
+									[
+										23506,
+										23513
+									],
+									[
+										23556,
+										23563
+									],
+									[
+										23606,
+										23613
+									],
+									[
+										23656,
+										23663
+									],
+									[
+										23706,
+										23713
+									],
+									[
+										23756,
+										23763
+									],
+									[
+										23806,
+										23813
+									],
+									[
+										23856,
+										23863
+									],
+									[
+										23906,
+										23913
+									],
+									[
+										23956,
+										23963
+									],
+									[
+										24007,
+										24014
+									],
+									[
+										24064,
+										24071
+									],
+									[
+										24124,
+										24131
+									],
+									[
+										24184,
+										24191
+									],
+									[
+										24244,
+										24251
+									],
+									[
+										24304,
+										24311
+									],
+									[
+										24364,
+										24371
+									],
+									[
+										24424,
+										24431
+									],
+									[
+										24484,
+										24491
+									],
+									[
+										24544,
+										24551
+									],
+									[
+										24604,
+										24611
+									],
+									[
+										24664,
+										24671
+									],
+									[
+										24831,
+										24838
+									],
+									[
+										24883,
+										24890
+									],
+									[
+										24974,
+										24981
+									],
+									[
+										25034,
+										25041
+									],
+									[
+										25109,
+										25116
+									],
+									[
+										25153,
+										25160
+									],
+									[
+										25210,
+										25217
+									],
+									[
+										25267,
+										25274
+									],
+									[
+										25317,
+										25324
+									],
+									[
+										25367,
+										25374
+									],
+									[
+										25424,
+										25431
+									],
+									[
+										25468,
+										25475
+									],
+									[
+										25523,
+										25530
+									],
+									[
+										25570,
+										25577
+									],
+									[
+										25620,
+										25627
+									],
+									[
+										25670,
+										25677
+									],
+									[
+										25737,
+										25744
+									],
+									[
+										25783,
+										25790
+									],
+									[
+										25861,
+										25868
+									],
+									[
+										25925,
+										25932
+									],
+									[
+										25982,
+										25989
+									],
+									[
+										26039,
+										26046
+									],
+									[
+										26096,
+										26103
+									],
+									[
+										26155,
+										26162
+									],
+									[
+										26207,
+										26214
+									],
+									[
+										26259,
+										26266
+									],
+									[
+										26311,
+										26318
+									],
+									[
+										26387,
+										26394
+									],
+									[
+										26422,
+										26429
+									],
+									[
+										26479,
+										26486
+									],
+									[
+										26539,
+										26546
+									],
+									[
+										26599,
+										26606
+									],
+									[
+										26659,
+										26666
+									],
+									[
+										26719,
+										26726
+									],
+									[
+										26779,
+										26786
+									],
+									[
+										26839,
+										26846
+									],
+									[
+										26899,
+										26906
+									],
+									[
+										26959,
+										26966
+									],
+									[
+										27019,
+										27026
+									],
+									[
+										27080,
+										27087
+									],
+									[
+										27141,
+										27148
+									],
+									[
+										27195,
+										27202
+									],
+									[
+										27252,
+										27259
+									],
+									[
+										27309,
+										27316
+									],
+									[
+										27366,
+										27373
+									],
+									[
+										27423,
+										27430
+									],
+									[
+										27480,
+										27487
+									],
+									[
+										27537,
+										27544
+									],
+									[
+										27594,
+										27601
+									],
+									[
+										27651,
+										27658
+									],
+									[
+										27708,
+										27715
+									],
+									[
+										27766,
+										27773
+									],
+									[
+										27824,
+										27831
+									],
+									[
+										27883,
+										27890
+									],
+									[
+										27930,
+										27937
+									],
+									[
+										27980,
+										27987
+									],
+									[
+										28030,
+										28037
+									],
+									[
+										28080,
+										28087
+									],
+									[
+										28130,
+										28137
+									],
+									[
+										28180,
+										28187
+									],
+									[
+										28230,
+										28237
+									],
+									[
+										28280,
+										28287
+									],
+									[
+										28330,
+										28337
+									],
+									[
+										28380,
+										28387
+									],
+									[
+										28431,
+										28438
+									],
+									[
+										28488,
+										28495
+									],
+									[
+										28548,
+										28555
+									],
+									[
+										28608,
+										28615
+									],
+									[
+										28668,
+										28675
+									],
+									[
+										28728,
+										28735
+									],
+									[
+										28788,
+										28795
+									],
+									[
+										28848,
+										28855
+									],
+									[
+										28908,
+										28915
+									],
+									[
+										28968,
+										28975
+									],
+									[
+										29028,
+										29035
+									],
+									[
+										29088,
+										29095
+									],
+									[
+										29252,
+										29259
+									],
+									[
+										29285,
+										29292
+									],
+									[
+										29318,
+										29325
+									],
+									[
+										29351,
+										29358
+									],
+									[
+										29382,
+										29389
+									],
+									[
+										29459,
+										29466
+									],
+									[
+										29489,
+										29496
+									],
+									[
+										29521,
+										29528
+									],
+									[
+										29551,
+										29558
+									],
+									[
+										29583,
+										29590
+									],
+									[
+										29615,
+										29622
+									],
+									[
+										29649,
+										29656
+									],
+									[
+										29743,
+										29750
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								29166,
+								29166
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 15,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 11543.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "utilities/monitors.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8969,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2903,
-								2903
+								2153,
+								2153
 							]
 						],
 						"settings":
@@ -965,27 +3347,57 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1181.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "attack.lua",
+					"buffer": 5,
+					"file": "combat/fizix.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 24954,
+						"buffer_size": 15712,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								438,
-								438
+								9834,
+								9834
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 8379.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "combat/attack.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 25194,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								18614,
+								18614
 							]
 						],
 						"settings":
@@ -994,10 +3406,98 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 18464.0,
+						"translation.y": 13332.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "combat/damageTable.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2561,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								917,
+								917
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 598.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "menus.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 35678,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9324,
+								9324
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5014.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "animation/animation.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 47521,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								39720,
+								39720
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 26020.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -1036,7 +3536,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 135.0
+		"height": 205.0
 	},
 	"output.find_results":
 	{
@@ -1055,6 +3555,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"colorcon",
+				"ADA/combat/colorcontrol.lua"
+			],
 			[
 				"",
 				"/Users/Hi/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings"

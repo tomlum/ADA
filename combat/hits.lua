@@ -574,19 +574,25 @@ function hboxwall()
       end
 
       if xx.wall_grab then 
+        if xx.wgt == 0 then
+          repplay(grabsou)
+        end
+        xx.wgt = xx.wgt + 1
         xx.lr = xx.walllr
         xx.v = 0
         xx.j = math.max(-max_wall_fall,xx.j)
         xx.im = wallgrab
         makendust(xx.mid-14*xx.lr, xx.feet, xx.lr*1, -xx.j,2,1)
 
-        if not xx.wall_grab and ((xx.lr > 0 and xx.right) or (xx.lr < 0 and xx.left)) then 
+        if not xx.using_keyboard and ((xx.lr > 0 and xx.right) or (xx.lr < 0 and xx.left)) then 
           xx.wall_grab = false
+        repplay(xx.jumpd)
           xx.jt = walljumpjt
           xx.j = -xx.jly*walljumpdis
           xx.v = xx.jlx*walljumpdis
-        elseif xx.wall_grab and (xx.up or xx.down or (xx.lr > 0 and xx.rightb) or (xx.lr < 0 and xx.leftb)) and not ((xx.lr < 0 and xx.rightb) or (xx.lr > 0 and xx.leftb)) then
+        elseif xx.using_keyboard and xx.wgt > min_wall_grab_time and (xx.up or xx.down or (xx.lr > 0 and xx.rightb) or (xx.lr < 0 and xx.leftb)) and not ((xx.lr < 0 and xx.rightb) or (xx.lr > 0 and xx.leftb)) then
           xx.wall_grab = false
+        repplay(xx.jumpd)
           if xx.up then
             xx.jt = xx.jt + walljumpjt2
             xx.j = walljumpj2
@@ -603,6 +609,8 @@ function hboxwall()
 
 
         end
+      else
+        xx.wgt = 0
       end
     end
 

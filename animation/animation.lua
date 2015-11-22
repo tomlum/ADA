@@ -573,7 +573,7 @@ function drawPlayer(xx)
       lg.draw(garmback,xx.mid -2*xx.lr,
         xx.y+26, math.rad(-xx.lr*xx.gangle),xx.lr,1,-7+4,-8+4)
 
-      lg.draw(gahead,xx.mid-11*xx.lr, xx.y+6, 0, xlr, 1) 
+      --lg.draw(gahead,xx.mid-11*xx.lr, xx.y+6, 0, xlr, 1) 
 
       lg.setShader()
     end
@@ -1320,22 +1320,6 @@ function floorsveneer()
 end
 
 spines = {}
---[[
-retry = function()
-
-  if (you.dead and me.dead) then 
-  elseif you.dead or you.score > me.score then 
-    lg.setColor(me.color.c.r,me.color.c.g,me.color.c.b, retryfade)
-    lg.sdraw(enviro.v, 100, 100, 0, 1, 1)
-  elseif me.dead or me.score > you.score then
-    lg.setColor(you.color.c.r,you.color.c.g,you.color.c.b, retryfade)
-    lg.sdraw(enviro.v, screenwidth-100, 100, 0, -1, 1)
-  end
-
-  lg.setColor(0, 0, 0, retryfade)
-  lg.draw(retryim, 0, 0, 0, screenwidth/1440, screenheight/900)
-end
-]]--
 
 oscillator = 0
 oup=true
@@ -1533,7 +1517,7 @@ function orient(xx)
 
   if not xx.slowdown and not xx.stop and not xx.pause and not xx.flinch
     and (xx.dodgetype~=2 and xx.dodgetype >-1) and not xx.wall_grab and not xx.purplanding
-    and not xx.greenkcondition
+    and not xx.greenkcondition and xx.animcounter == 0
     then
     if xx.right then xx.lr = 1
     elseif xx.left then xx.lr = -1

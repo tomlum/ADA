@@ -29,11 +29,14 @@ agreena1s = {im=lg.newImage("images/player/attack/green/agreena1s.png"), xoff = 
 garmfront = lg.newImage("images/player/attack/green/garmfront.png")
 garmback = lg.newImage("images/player/attack/green/garmback.png")
 
-greenk03 = {im=lg.newImage("images/player/attack/green/greenk03.png"), xoff = 1, yoff = -6}
-greenk01 = {im=lg.newImage("images/player/attack/green/greenk01.png"), xoff = 1, yoff = -6}
-greenk02 = {im=lg.newImage("images/player/attack/green/greenk02.png"), xoff = 4, yoff = -6}
+agreenk11 = {im=lg.newImage("images/player/attack/green/agreenk11.png"), xoff = 1, yoff = -6}
+agreenk12 = {im=lg.newImage("images/player/attack/green/agreenk12.png"), xoff = 1, yoff = -6}
+agreenk13 = {im=lg.newImage("images/player/attack/green/agreenk13.png"), xoff = 4, yoff = -6}
+greenk11 = {im=lg.newImage("images/player/attack/green/greenk11.png"), xoff = 1, yoff = -6}
+greenk12 = {im=lg.newImage("images/player/attack/green/greenk12.png"), xoff = 1, yoff = -6}
+greenk13 = {im=lg.newImage("images/player/attack/green/greenk13.png"), xoff = 4, yoff = -6}
 
-greenk1 = {im=lg.newImage("images/player/attack/green/greenk1.png"), xoff = 2, yoff = -6, legs = lg.newImage("images/player/attack/green/greenk1legs.png"), legsy = 36}
+greenk1 = {im=lg.newImage("images/player/attack/green/greenk1.png"), xoff = 0, yoff = -6, legs = lg.newImage("images/player/attack/green/greenk1legs.png"), legsy = 36}
 greenk2 = {im=lg.newImage("images/player/attack/green/greenk2.png"), xoff = 0, yoff = -2}
 
 
@@ -255,11 +258,23 @@ function gandg(xx)
 
 
       if xx.animcounter < 4 then
-        xx.im = greenk03
+        if xx.g then
+          xx.im = greenk11
+        else
+          xx.im = agreenk11
+        end
       elseif xx.animcounter < 7 then
-        xx.im = greenk01
+        if xx.g then
+          xx.im = greenk12
+        else
+          xx.im = agreenk12
+        end
       elseif xx.animcounter < 12 then
-        xx.im = greenk02
+        if xx.g then
+          xx.im = greenk13
+        else
+          xx.im = agreenk13
+        end
 
       elseif xx.animcounter < 14 then
         xx.stop = false
@@ -271,7 +286,6 @@ function gandg(xx)
             xx.lr = -1
           end
         else
-
           if xx.runtap then
             if xx.left then xx.lr = -1 
             elseif xx.right then xx.lr = 1
@@ -306,7 +320,6 @@ function gandg(xx)
           xx.im = greenk2
         end
 
-        if xx.v ~= 0 then xx.lr = -xx.v/math.abs(xx.v) end
 
         if xx.animcounter <= 15 then
           repplay(xx.greens)

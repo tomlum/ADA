@@ -27,8 +27,6 @@ controllersReady = false
 controller_white_fade=0
 controller_black_fade=0
 
-me.using_keyboard = fightclub
-you.using_keyboard = fightclub
 
 function drawControllerCheck()
 
@@ -209,6 +207,12 @@ function holdmanage(xx)
   else
     xx.leftbumphold = false
   end
+
+  if xx.swap then
+    xx.holding_swap = true
+  else
+    xx.holding_swap = false
+  end
 end
 
 
@@ -264,7 +268,6 @@ me.lrdubtimer = 0
 you.lrdubtimer = 0
 
 function doubleDirection(xx)
-
 
 
   if ((not (xx.oldright or xx.oldleft) and xx.lrdubtimer ~= 0) or xx.runtap) and
@@ -363,58 +366,64 @@ end
 function keyboardcontrols()
 
 
+  if me.using_keyboard then
+    me.start = love.keyboard.isDown(" ")
+    me.up = love.keyboard.isDown("w")
+    me.down = love.keyboard.isDown("s")
+    me.leftb = love.keyboard.isDown("a")
+    me.rightb = love.keyboard.isDown("d")
 
-  me.start = love.keyboard.isDown(" ")
-  me.up = love.keyboard.isDown("w")
-  me.down = love.keyboard.isDown("s")
-  me.leftb = love.keyboard.isDown("a")
-  me.rightb = love.keyboard.isDown("d")
-
-  if OS_String == "OS X" then
-    me.a1b = love.keyboard.isDown("lgui") and me.up
-    me.a2b = love.keyboard.isDown("lgui") 
-    me.a3b = love.keyboard.isDown("lgui")
-    me.a4b = love.keyboard.isDown("lgui") and me.down
-  else
-    me.a1b = love.keyboard.isDown("lalt") and me.up
-    me.a2b = love.keyboard.isDown("lalt") 
-    me.a3b = love.keyboard.isDown("lalt")
-    me.a4b = love.keyboard.isDown("lalt") and me.down
+    if OS_String == "OS X" then
+      me.a1b = love.keyboard.isDown("lgui") and me.up
+      me.a2b = love.keyboard.isDown("lgui") 
+      me.a3b = love.keyboard.isDown("lgui")
+      me.a4b = love.keyboard.isDown("lgui") and me.down
+    else
+      me.a1b = love.keyboard.isDown("lalt") and me.up
+      me.a2b = love.keyboard.isDown("lalt") 
+      me.a3b = love.keyboard.isDown("lalt")
+      me.a4b = love.keyboard.isDown("lalt") and me.down
+    end
+    me.blockb = love.keyboard.isDown("c")
+    me.runb = me.blockb
+    --me.rightbumpb = love.keyboard.isDown("e")
+    --me.leftbumpb = love.keyboard.isDown("q")
+    me.swap = love.keyboard.isDown("v")
   end
-  me.blockb = love.keyboard.isDown("c")
-  me.runb = me.blockb
-  me.rightbumpb = love.keyboard.isDown("e")
-  me.leftbumpb = love.keyboard.isDown("q")
 
 
-  if youpuppet then
-    you.up = me.up 
-    you.down =     me.down 
-    you.leftb =     me.leftb 
-    you.rightb =     me.rightb 
-    you.a1b =     me.a1b 
-    you.a2b =     me.a2b 
-    you.a3b =     me.a3b 
-    you.a4b =     me.a4b 
-    you.blockb =     me.blockb 
-    you.start =     me.start 
-    you.runb =     me.runb 
-    you.rightbumpb =     me.rightbumpb 
-    you.leftbumpb =     me.leftbumpb
-  else
-    you.up = love.keyboard.isDown("o")
-    you.down = love.keyboard.isDown("l")
-    you.leftb = love.keyboard.isDown("k")
-    you.rightb = love.keyboard.isDown(";")
-    you.a1b = love.keyboard.isDown("[") and you.up
-    you.a2b = love.keyboard.isDown("[")
-    you.a3b = love.keyboard.isDown("[")
-    you.a4b = love.keyboard.isDown("[") and you.down
-    you.blockb = love.keyboard.isDown("=")
-    you.start = love.keyboard.isDown(" ")
-    you.runb = you.blockb
-    you.rightbumpb = love.keyboard.isDown("p")
-    you.leftbumpb = love.keyboard.isDown("i")
+  if you.using_keyboard then
+    if youpuppet then
+      you.up = me.up 
+      you.down =     me.down 
+      you.leftb =     me.leftb 
+      you.rightb =     me.rightb 
+      you.a1b =     me.a1b 
+      you.a2b =     me.a2b 
+      you.a3b =     me.a3b 
+      you.a4b =     me.a4b 
+      you.blockb =     me.blockb 
+      you.start =     me.start 
+      you.runb =     me.runb 
+      --you.rightbumpb =     me.rightbumpb 
+      --you.leftbumpb =     me.leftbumpb
+      you.swap =     me.swap
+    else
+      you.up = love.keyboard.isDown("o")
+      you.down = love.keyboard.isDown("l")
+      you.leftb = love.keyboard.isDown("k")
+      you.rightb = love.keyboard.isDown(";")
+      you.a1b = love.keyboard.isDown("[") and you.up
+      you.a2b = love.keyboard.isDown("[")
+      you.a3b = love.keyboard.isDown("[")
+      you.a4b = love.keyboard.isDown("[") and you.down
+      you.blockb = love.keyboard.isDown("=")
+      you.start = love.keyboard.isDown(" ")
+      you.runb = you.blockb
+      you.rightbumpb = love.keyboard.isDown("p")
+      you.leftbumpb = love.keyboard.isDown("i")
+      you.swap = love.keyboard.isDown("backspace")
+    end
   end
 
   me.a1 = you.a1

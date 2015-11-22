@@ -105,7 +105,7 @@ function randomizePitch()
   for i,xx in ipairs(players) do
     xx.blues:setPitch(.7 + (math.random() * .3) )
 
-    xx.airpurp2:setPitch(.5 + (math.random() * .3) )
+    xx.airpurp1:setPitch(.5 + (math.random() * .3) )
 
     xx.airpurp2:setPitch(.4 + (math.random() * .3) )
 

@@ -342,374 +342,367 @@ function vroomleft(xx)
 end 
 
 
+me.ctim = 0
+you.ctim = 0
 
+me.running = false
+you.running = false
 
---gravity = function (n)
-  --	if 
+me.runpace = defrunpace
+you.runpace = defrunpace
 
+--if me.running then jump height is half
 
+function fallthroughglassfloor(xx)
 
-  me.ctim = 0
-  you.ctim = 0
-
-  me.running = false
-  you.running = false
-
-  me.runpace = defrunpace
-  you.runpace = defrunpace
-
-  --if me.running then jump height is half
-
-  function fallthroughglassfloor(xx)
-
-    if xx.running and xx.plat.glass ~= nil then
-      xx.j = -4
-      xx.y = xx.y + 5
-      xx.gothroughplats = true
-      for i = -10, 10 do
-        makenglass(xx.mid+i,xx.plat.y,xx.v/2,xx.j, 1)
-      end
+  if xx.running and xx.plat.glass ~= nil then
+    xx.j = -4
+    xx.y = xx.y + 5
+    xx.gothroughplats = true
+    for i = -10, 10 do
+      makenglass(xx.mid+i,xx.plat.y,xx.v/2,xx.j, 1)
     end
-
   end
 
-
-  function runrunrun(xx)
-    fallthroughglassfloor(xx)
-    if not xx.g then xx.running = false end
-
-    if xx.flinch or math.abs(xx.v) <= speedminit then 
-      xx.running = false
-    elseif xx.running then 
-      xx.a1 = false
-      xx.a2 = false
-      xx.a3 = false
-      xx.a4 = false
+end
 
 
-    end
+function runrunrun(xx)
+  fallthroughglassfloor(xx)
+  if not xx.g then xx.running = false end
 
-    if xx.runtap and xx.running and (xx.right or xx.left) and not xx.block and not xx.dodge then         
-      if xx.right and xx.v > 0 then
-        xx.v = xx.color.s.speed*runspeed*xx.speedpenalty
-      elseif xx.left and xx.v < 0 then
-        xx.v = -xx.color.s.speed*runspeed*xx.speedpenalty
-      end
-
-
-
-
-
-    elseif math.abs(xx.v) > xx.color.s.speed*xx.speedpenalty*speedminit-accel*2 and (xx.left or xx.right) and xx.g and xx.runtap and not xx.block and not xx.dodge and xx.attack_num ~= 2 then
-      xx.a1 = false
-      xx.a2 = false
-      xx.a3 = false
-      xx.a4 = false
-      xx.running = true
-      if xx.right and xx.v > 0 then
-        xx.v = runspeed
-      elseif xx.left and xx.v < 0 then
-        xx.v = -runspeed
-      end
-
-
-    end
-
+  if xx.flinch or math.abs(xx.v) <= speedminit then 
+    xx.running = false
+  elseif xx.running then 
+    xx.a1 = false
+    xx.a2 = false
+    xx.a3 = false
+    xx.a4 = false
 
 
   end
 
-  function climbs(xx)
-
-    if xx.flinch then xx.ctim = 0 end
-
-    if xx.ctim > 0 then xx.ctim = xx.ctim + 1
-      xx.busy = true
-
-      if xx.ctim > 10 then
-        xx.ctim = 0
-        if xx.up then 
-          xx.g = false
-          xx.j = hopj
-          repplay(xx.jumpd) 
-        elseif xx.left then 
-          xx.g = false
-          xx.j = hopj2
-          xx.v = -hopv2
-        elseif xx.right then 
-          xx.g = false
-          xx.j = hopj2
-          xx.v = hopv2
-        end
-
-      elseif xx.ctim > 7 then
-        xx.im = climb3
-        xx.j = climbj
-      elseif xx.ctim > 4 then
-        xx.im = climb2
-        xx.j = climbj
-
-      elseif xx.ctim > 0 then
-        xx.im = climb
-        if xx.ctim == 4 then
-          repplay(xx.climbsound) 
-        end
-      end
-
+  if xx.runtap and xx.running and (xx.right or xx.left) and not xx.block and not xx.dodge then         
+    if xx.right and xx.v > 0 then
+      xx.v = xx.color.s.speed*runspeed*xx.speedpenalty
+    elseif xx.left and xx.v < 0 then
+      xx.v = -xx.color.s.speed*runspeed*xx.speedpenalty
     end
 
+
+
+
+
+  elseif math.abs(xx.v) > xx.color.s.speed*xx.speedpenalty*speedminit-accel*2 and (xx.left or xx.right) and xx.g and xx.runtap and not xx.block and not xx.dodge and xx.attack_num ~= 2 then
+    xx.a1 = false
+    xx.a2 = false
+    xx.a3 = false
+    xx.a4 = false
+    xx.running = true
+    if xx.right and xx.v > 0 then
+      xx.v = runspeed
+    elseif xx.left and xx.v < 0 then
+      xx.v = -runspeed
+    end
 
 
   end
 
-  me.oldg = true
-  you.oldg = true
-
-  me.gothroughplats = false
-  you.gothroughplats = false
-  me.speedpenalty = 1
-  you.speedpenalty = 1
 
 
+end
 
-  function speedpenaltycalc(xx,yy)
-    if
-      (xx.v * (xx.x - yy.x)/(math.abs(xx.x - yy.x))) > 0
-      then --xx.speedpenalty = .8
-    else
-      xx.speedpenalty = 1
-    end
-  end
+function climbs(xx)
 
+  if xx.flinch then xx.ctim = 0 end
 
-  me.jump_delay_counter = 0
-  you.jump_delay_counter = 0
+  if xx.ctim > 0 then xx.ctim = xx.ctim + 1
+    xx.busy = true
 
-  --[[Resets
-  xx.can_super_jump = false
-  xx.float = false
-  xx.stop = false
-  ]]
-  function movex(xx,yy)
-
-
-    doubleDirection(xx)
-
-    if xx.dodge or (xx.block and xx.g)
-      then xx.a1, xx.a2, xx.a3, xx.a4, xx.up = false,false,false,false,false
-    end
-
-    respawntravel(xx)
-    relativity(xx)
-    speedpenaltycalc(xx,yy)
-    runrunrun(xx)
-    transferofenergy(xx)
-
-    if xx.stop then xx.firstjump = false end
-
-    if xx.landing_counter > landing_wait then
-      xx.stop=true
-      xx.holda = true
-    end
-
-    if ((xx.g and xx.double_down ) or (not xx.g and xx.down and not xx.runb)) and not (xx.stop and not xx.grabbing) then 
-      xx.gothroughplats = true
-    end
-
-
-    ------?????--------
-    if xx.flinch then
-      xx.jt = 0
-    end
-
-    if not xx.g or (not xx.up and xx.jump_delay_counter<=0) or xx.flinch then
-      xx.jump_delay_counter = jump_delay
-    end
-
-
-    if xx.jump_delay_counter < jump_delay and not hitpause then
-      xx.jump_delay_counter = xx.jump_delay_counter - 1
-    end
-
-    if xx.superjumptimer > 0 and xx.jump_delay_counter < jump_delay then
-      xx.jump_delay_counter = 0
-    end
-
-    xdif = math.abs((you.x) - (me.x))
-
-    if xdif >= 2100
-      then speedlimit = minMaxSpeedDif+speedminit
-      runspeed = initrunspeed+minMaxSpeedDif
-    elseif xdif < 700 then
-      speedlimit = speedminit
-      runspeed = initrunspeed
-    else
-      speedlimit = (minMaxSpeedDif * ((xdif-700)/1400)) + speedminit
-      runspeed = (minMaxSpeedDif * ((xdif-700)/1400)) + initrunspeed
-    end 
-
-    local extra_height = 0
-
-    if xx.im.extra_height ~= nil then
-      extra_height = -xx.im.extra_height
-    end
-    xx.feet = xx.y+xx.height-extra_height
-
-    if xx.g then 
-
-      if xx.j < 0 then xx.j = 0 
-      end
-
-      if ((xx.up or xx.jump_delay_counter <= 0) and not xx.flinch and not xx.block and not xx.jstop and not xx.busy and xx.animcounter == 0)
-        or (xx.up and xx.greenkcondition)
-
-        then 
-
-        if xx.jump_delay_counter == jump_delay then
-          xx.jump_delay_counter = xx.jump_delay_counter - 1
-
-        elseif xx.jump_delay_counter > 0 then
-
-        else
-
-          makeLandDust(xx.mid, xx.feet, xx.v, math.random(3,5))
-          repplay(xx.jumpd)
-          if xx.running then
-            xx.jt = runjt
-            xx.jmax = runjmax*xx.color.s.jump/the_map.gravity
-            xx.j = runj
-          else
-            xx.jt = regJT
-            xx.jmax = jmax*xx.color.s.jump
-            if xx.can_super_jump then
-              xx.j = jumpj*superJumpRatio*xx.color.s.jump/the_map.gravity
-            else
-              xx.j = jumpj*xx.color.s.jump/the_map.gravity
-            end
-          end
-
-        end
-        xx.ht = 7
-        xx.firstjump = true
+    if xx.ctim > 10 then
+      xx.ctim = 0
+      if xx.up then 
         xx.g = false
-      elseif xx.right and xx.v >= 0 and not xx.stop and not xx.flinch and xx.landing_counter < land_pause_time and not xx.dodge
-        and not xx.left 
-        then 
-        vroomright(xx)
-      elseif xx.left and xx.v <= 0 and xx.stop == false and not xx.flinch and xx.landing_counter < land_pause_time and not xx.dodge
-        and not xx.right 
-        then 
-        vroomleft(xx)
+        xx.j = hopj
+        repplay(xx.jumpd) 
+      elseif xx.left then 
+        xx.g = false
+        xx.j = hopj2
+        xx.v = -hopv2
+      elseif xx.right then 
+        xx.g = false
+        xx.j = hopj2
+        xx.v = hopv2
+      end
+
+    elseif xx.ctim > 7 then
+      xx.im = climb3
+      xx.j = climbj
+    elseif xx.ctim > 4 then
+      xx.im = climb2
+      xx.j = climbj
+
+    elseif xx.ctim > 0 then
+      xx.im = climb
+      if xx.ctim == 4 then
+        repplay(xx.climbsound) 
+      end
+    end
+
+  end
+
+
+
+end
+
+me.oldg = true
+you.oldg = true
+
+me.gothroughplats = false
+you.gothroughplats = false
+me.speedpenalty = 1
+you.speedpenalty = 1
+
+
+
+function speedpenaltycalc(xx,yy)
+  if
+    (xx.v * (xx.x - yy.x)/(math.abs(xx.x - yy.x))) > 0 and not youpuppet
+    then xx.speedpenalty = .8
+  else
+    xx.speedpenalty = 1
+  end
+end
+
+
+me.jump_delay_counter = 0
+you.jump_delay_counter = 0
+
+--[[Resets
+xx.can_super_jump = false
+xx.float = false
+xx.stop = false
+]]
+function movex(xx,yy)
+
+
+  doubleDirection(xx)
+
+  if xx.dodge or (xx.block and xx.g)
+    then xx.a1, xx.a2, xx.a3, xx.a4, xx.up = false,false,false,false,false
+  end
+
+  respawntravel(xx)
+  relativity(xx)
+  speedpenaltycalc(xx,yy)
+  runrunrun(xx)
+  transferofenergy(xx)
+
+  if xx.stop then xx.firstjump = false end
+
+  if xx.landing_counter > landing_wait then
+    xx.stop=true
+    xx.holda = true
+  end
+
+  if ((xx.g and xx.double_down ) or (not xx.g and xx.down and not xx.runb)) and not (xx.stop and not xx.grabbing) then 
+    xx.gothroughplats = true
+  end
+
+
+  ------?????--------
+  if xx.flinch then
+    xx.jt = 0
+  end
+
+  if not xx.g or (not xx.up and xx.jump_delay_counter<=0) or xx.flinch then
+    xx.jump_delay_counter = jump_delay
+  end
+
+
+  if xx.jump_delay_counter < jump_delay and not hitpause then
+    xx.jump_delay_counter = xx.jump_delay_counter - 1
+  end
+
+  if xx.superjumptimer > 0 and xx.jump_delay_counter < jump_delay then
+    xx.jump_delay_counter = 0
+  end
+
+  xdif = math.abs((you.x) - (me.x))
+
+  if xdif >= 2100
+    then speedlimit = minMaxSpeedDif+speedminit
+    runspeed = initrunspeed+minMaxSpeedDif
+  elseif xdif < 700 then
+    speedlimit = speedminit
+    runspeed = initrunspeed
+  else
+    speedlimit = (minMaxSpeedDif * ((xdif-700)/1400)) + speedminit
+    runspeed = (minMaxSpeedDif * ((xdif-700)/1400)) + initrunspeed
+  end 
+
+  local extra_height = 0
+
+  if xx.im.extra_height ~= nil then
+    extra_height = -xx.im.extra_height
+  end
+  xx.feet = xx.y+xx.height-extra_height
+
+  if xx.g then 
+
+    if xx.j < 0 then xx.j = 0 
+    end
+
+    if ((xx.up or xx.jump_delay_counter <= 0) and not xx.flinch and not xx.block and not xx.jstop and not xx.busy and xx.animcounter == 0)
+      or (xx.up and xx.greenkcondition)
+
+      then 
+
+      if xx.jump_delay_counter == jump_delay then
+        xx.jump_delay_counter = xx.jump_delay_counter - 1
+
+      elseif xx.jump_delay_counter > 0 then
 
       else
-        fric(xx)
-      end
-    else
 
-      if xx.landing_counter > 0
-        then
-        xx.landing_counter = xx.landing_counter - 1*ramp(xx)
-        else xx.landing_counter = 0
-        end
-
-        if xx.blockb and (xx.using_keyboard or xx.a1b) and math.abs(xx.j) + math.abs(xx.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j) and xx.j > 0 then 
-          if climbplatcheck(xx.x, xx.y+xx.height/2, xx.lr, xx.height/2, xx.v, xx.j) then
-            xx.ctim = 7
-          else 
-            xx.ctim = 1
-          end
-          xx.im = climb
-          xx.onplat = true
-          xx.j = climbj
-          xx.v = xx.v/2
-        elseif xx.left and xx.v >= 1 
-          then 
-          if xx.flinch then
-            xx.v = xx.v - adecrate/5*ramp(xx)
-          else
-            xx.v = xx.v - adecrate*ramp(xx)
-          end
-          xx.slowdown = true
-
-        elseif xx.right and xx.v <= -1 
-          then 
-          if xx.flinch then
-            xx.v = xx.v + adecrate/5*ramp(xx)
-          else
-            xx.v = xx.v + adecrate*ramp(xx)
-          end
-          xx.slowdown = true
-        elseif xx.left and xx.v > - maxairmove 
-          then 
-          if xx.flinch then
-            xx.v = xx.v - amovrate/5*ramp(xx)
-          else
-            xx.v = xx.v - amovrate*ramp(xx)
-          end
-          xx.slowdown = false
-        elseif xx.right and xx.v < maxairmove 
-          then 
-          if xx.flinch then
-            xx.v = xx.v + amovrate/5*ramp(xx)
-          else
-            xx.v = xx.v + amovrate*ramp(xx)
-          end
-          xx.slowdown = false
-
-
-        end
-
-        --landing
-        if xx.up and xx.j > 0 
-          and xx.jmax > 0 
-          and xx.firstjump and not xx.flinch
-          then xx.jmax = xx.jmax - jumpheight*ramp(xx)
-          --the end arc/fall of any jump or the mini jump
+        makeLandDust(xx.mid, xx.feet, xx.v, math.random(3,5))
+        repplay(xx.jumpd)
+        if xx.running then
+          xx.jt = runjt
+          xx.jmax = runjmax*xx.color.s.jump/the_map.gravity
+          xx.j = runj
         else
-          xx.firstjump = false
-          if xx.jt > 0 then 
-            xx.jt = xx.jt -  1*ramp(xx)
-          elseif xx.jt <= 0 and xx.j > - maxgravity*xx.color.s.weight then 
-            xx.jt = xx.jt -  1*ramp(xx)
-            if xx.j >= 0 and not xx.float then
-              --[[if xx.jumptimer > 0 and xx. then
-              xx.jumptimer = xx.jumptimer - 1*ramp(xx)
-            else
-              ]]--
-              xx.j = xx.j - risegrav*ramp(xx)*xx.color.s.weight
-              --end
-            elseif not xx.float then
-              xx.j = xx.j - dropgrav*ramp(xx)*xx.color.s.weight
-            end
-            --elseif xx.jt <= 0 and xx.ht > 0
-            --then xx.j = 0
-            --	xx.ht = xx.ht - 1	
+          xx.jt = regJT
+          xx.jmax = jmax*xx.color.s.jump
+          if xx.can_super_jump then
+            xx.j = jumpj*superJumpRatio*xx.color.s.jump/the_map.gravity
+          else
+            xx.j = jumpj*xx.color.s.jump/the_map.gravity
           end
-
-
-
-
         end
+
+      end
+      xx.ht = 7
+      xx.firstjump = true
+      xx.g = false
+    elseif xx.right and xx.v >= 0 and not xx.stop and not xx.flinch and xx.landing_counter < land_pause_time and not xx.dodge
+      and not xx.left 
+      then 
+      vroomright(xx)
+    elseif xx.left and xx.v <= 0 and xx.stop == false and not xx.flinch and xx.landing_counter < land_pause_time and not xx.dodge
+      and not xx.right 
+      then 
+      vroomleft(xx)
+
+    else
+      fric(xx)
+    end
+  else
+
+    if xx.landing_counter > 0
+      then
+      xx.landing_counter = xx.landing_counter - 1*ramp(xx)
+      else xx.landing_counter = 0
       end
 
+      if xx.blockb and not xx.wall_grab and (xx.using_keyboard or xx.a1b) and math.abs(xx.j) + math.abs(xx.v)< velforclimb and climbplatcheck(xx.x, xx.y, xx.lr, xx.height, xx.v, xx.j) and xx.j > 0 then 
+        if climbplatcheck(xx.x, xx.y+xx.height/2, xx.lr, xx.height/2, xx.v, xx.j) then
+          xx.ctim = 7
+        else 
+          xx.ctim = 1
+        end
+        xx.im = climb
+        xx.onplat = true
+        xx.j = climbj
+        xx.v = xx.v/2
+      elseif xx.left and xx.v >= 1 
+        then 
+        if xx.flinch then
+          xx.v = xx.v - adecrate/5*ramp(xx)
+        else
+          xx.v = xx.v - adecrate*ramp(xx)
+        end
+        xx.slowdown = true
+
+      elseif xx.right and xx.v <= -1 
+        then 
+        if xx.flinch then
+          xx.v = xx.v + adecrate/5*ramp(xx)
+        else
+          xx.v = xx.v + adecrate*ramp(xx)
+        end
+        xx.slowdown = true
+      elseif xx.left and xx.v > - maxairmove 
+        then 
+        if xx.flinch then
+          xx.v = xx.v - amovrate/5*ramp(xx)
+        else
+          xx.v = xx.v - amovrate*ramp(xx)
+        end
+        xx.slowdown = false
+      elseif xx.right and xx.v < maxairmove 
+        then 
+        if xx.flinch then
+          xx.v = xx.v + amovrate/5*ramp(xx)
+        else
+          xx.v = xx.v + amovrate*ramp(xx)
+        end
+        xx.slowdown = false
 
 
-      xx.can_super_jump = false
-      xx.float = false
-      xx.stop = false
+      end
+
+      --landing
+      if xx.up and xx.j > 0 
+        and xx.jmax > 0 
+        and xx.firstjump and not xx.flinch
+        then xx.jmax = xx.jmax - jumpheight*ramp(xx)
+        --the end arc/fall of any jump or the mini jump
+      else
+        xx.firstjump = false
+        if xx.jt > 0 then 
+          xx.jt = xx.jt -  1*ramp(xx)
+        elseif xx.jt <= 0 and xx.j > - maxgravity*xx.color.s.weight then 
+          xx.jt = xx.jt -  1*ramp(xx)
+          if xx.j >= 0 and not xx.float then
+            --[[if xx.jumptimer > 0 and xx. then
+            xx.jumptimer = xx.jumptimer - 1*ramp(xx)
+          else
+            ]]--
+            xx.j = xx.j - risegrav*ramp(xx)*xx.color.s.weight
+            --end
+          elseif not xx.float then
+            xx.j = xx.j - dropgrav*ramp(xx)*xx.color.s.weight
+          end
+          --elseif xx.jt <= 0 and xx.ht > 0
+          --then xx.j = 0
+          --	xx.ht = xx.ht - 1	
+        end
 
 
 
+
+      end
     end
 
 
 
-    function applyMovements()
-      for i,xx in ipairs(players) do
-        xx.y = xx.y - xx.j*.9*xx.rampspeed
-        xx.x = xx.x + xx.v*xx.rampspeed
-      end
+    xx.can_super_jump = false
+    xx.float = false
+    xx.stop = false
+
+
+
+  end
+
+
+
+  function applyMovements()
+    for i,xx in ipairs(players) do
+      xx.y = xx.y - xx.j*.9*xx.rampspeed
+      xx.x = xx.x + xx.v*xx.rampspeed
     end
+  end
 
 
 

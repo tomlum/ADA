@@ -52,7 +52,7 @@ awaypenalty = .7
 initrunspeed = 7
 defrunpace = 19
 
-jump_delay = 6
+jump_delay = 8
 initjmax = 17+9
 jumpheight = .6
 initjumpj = 12
@@ -75,6 +75,7 @@ noshake = false
 walljumpjt = 14
 walljumpj = 12
 walljumpv = 9
+min_wall_grab_time = 12
 --for if holding up
 walljumpjt2 = 15
 walljumpj2 = 23
