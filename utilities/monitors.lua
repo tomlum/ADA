@@ -15,6 +15,7 @@ function  drawTrainingWheels()
       drawKeyboardControls2(screenwidth-540, screenheight-30, 2)
     end
   end
+  drawSpacebar()
 end
 
 

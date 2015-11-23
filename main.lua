@@ -10,6 +10,7 @@
 --can't kick combo out of purple kick
 
 --notes:
+--draw color as opposite
 --ledge grabbing while wall sliding, special animation?  kinda funny
 --add new finish to combo to Orange, long strike
 --air dash
@@ -38,10 +39,10 @@ havecinemabars = false
 noidle = true
 
 --Debug/Test Utilities
-fightclub = true
-demo = false
+fightclub = false
+demo = true
 debug = false
-MODE = "color"
+MODE = "controllerSetup"
 me.using_keyboard = true
 you.using_keyboard = true
 
@@ -160,5 +161,4 @@ function love.draw()
   --monitorParticles(100,100)
   --lg.print(tostring(me.dodgetype), 300, 320)
   --lg.rectangle("fill", screenwidth/2,0,screenwidth,screenheight)
-
 end

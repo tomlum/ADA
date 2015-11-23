@@ -236,12 +236,12 @@ function vct(l,a)
   end
 end
 
-function rgbset(c)
-  lg.setColor(c.r, c.g, c.b)
-end
-
 function rgbset(c,a)
-  lg.setColor(c.r, c.g, c.b,a)
+  if a == nil then
+    lg.setColor(c.r, c.g, c.b)
+  else
+    lg.setColor(c.r, c.g, c.b,a)
+  end
 end
 
 
@@ -582,8 +582,6 @@ function drawPlayer(xx)
 
 
   lg.setColor(255, 255, 255, 255)
-  drawcolorstuff(xx)
-  bolttraildraw(xx)
 
   if drawFeet then
     local pextra = 0
@@ -599,6 +597,12 @@ function drawPlayer(xx)
 
 
 
+end
+
+function postDrawPlayer(xx)
+
+  drawcolorstuff(xx)
+  bolttraildraw(xx)
 end
 
 --[[
@@ -1363,9 +1367,9 @@ function drawspine()
       if v.n >= 1 then 
         v.v = spines[i+1].v
         v.x = v.x + v.v 
-        if v.v == 14.5 then 
+        if isabout(v.v, 14.5) then 
           v.spinecolor = spines[i+1].spinecolor
-        elseif v.v == -14.5 then 
+        elseif isabout(v.v, -14.5) then 
           v.spinecolor2 = spines[i+1].spinecolor2
         end
       else

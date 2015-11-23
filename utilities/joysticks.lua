@@ -50,15 +50,17 @@ function drawControllerCheck()
 
   if not me.oldcontrollerready and (me.joystick ~= nil or love.keyboard.isDown(" ")) and not me.holda then
     controller_white_fade = 255
-    me.using_keyboard = true
-
+    if me.joystick == nil then
+      me.using_keyboard = true
+    end
     repplay(readysound)
   end
 
   if not you.oldcontrollerready and (you.joystick ~= nil or love.keyboard.isDown(" ")) and not you.holda and controller_white_fade~=255 then
     controller_white_fade = 255
-    you.using_keyboard = true
-
+    if you.joystick == nil then
+      you.using_keyboard = true
+    end
     repplay(readysound)
   end
 
@@ -120,7 +122,7 @@ end
 
 function checkForControllers()
   for i,v in ipairs(love.joystick.getJoysticks()) do
-    if me.joystick == nil then
+    if me.joystick == nil and not me.using_keyboard then
       if v:isGamepadDown("guide") then
         repplay(readysound)
         me.joystick = v
@@ -128,12 +130,12 @@ function checkForControllers()
       end
     end
 
-    if you.joystick == nil and i~=me.joystickn then
+    if you.joystick == nil and (i~=me.joystickn or me.using_keyboard) then
       if v:isGamepadDown("guide") then
         repplay(readysound)
+        you.joystick = v
+        you.joystickn = i
       end
-      you.joystick = v
-      you.joystickn = i
     end
   end
 end
@@ -147,19 +149,21 @@ function rumbleme(xx,i)
 end
 
 function rumblemodule(xx)
-  if xx.joystick ~= nil then
-    base = (xx.cct/colorchangetime)*colorvib
-    if xx.rumbleint >= 1 then
-      xx.lrum = 1
-      xx.rrum = math.min(1, xx.rumbleint - 1)
-    else
-      xx.lrum = xx.rumbleint 
-      xx.rrum = 0
+  if MODE == "play" then
+    if xx.joystick ~= nil then
+      base = (xx.cct/colorchangetime)*colorvib
+      if xx.rumbleint >= 1 then
+        xx.lrum = 1
+        xx.rrum = math.min(1, xx.rumbleint - 1)
+      else
+        xx.lrum = xx.rumbleint 
+        xx.rrum = 0
+      end
+
+      xx.joystick:setVibration(xx.lrum,xx.rrum)
+      xx.rumbleint = math.max(base,xx.rumbleint-.05)
+
     end
-
-    xx.joystick:setVibration(xx.lrum,xx.rrum)
-    xx.rumbleint = math.max(base,xx.rumbleint-.05)
-
   end
 end
 
@@ -386,8 +390,6 @@ function keyboardcontrols()
     end
     me.blockb = love.keyboard.isDown("c")
     me.runb = me.blockb
-    --me.rightbumpb = love.keyboard.isDown("e")
-    --me.leftbumpb = love.keyboard.isDown("q")
     me.swap = love.keyboard.isDown("v")
   end
 
@@ -405,8 +407,6 @@ function keyboardcontrols()
       you.blockb =     me.blockb 
       you.start =     me.start 
       you.runb =     me.runb 
-      --you.rightbumpb =     me.rightbumpb 
-      --you.leftbumpb =     me.leftbumpb
       you.swap =     me.swap
     else
       you.up = love.keyboard.isDown("o")
@@ -420,8 +420,6 @@ function keyboardcontrols()
       you.blockb = love.keyboard.isDown("=")
       you.start = love.keyboard.isDown(" ")
       you.runb = you.blockb
-      you.rightbumpb = love.keyboard.isDown("p")
-      you.leftbumpb = love.keyboard.isDown("i")
       you.swap = love.keyboard.isDown("backspace")
     end
   end
@@ -578,6 +576,22 @@ you.gv = boltspeed
 me.gv = boltspeed
 
 function jjstick(xx)
+  if not xx.using_keyboard then
+    xx.start = false
+    xx.up = false
+    xx.down = false
+    xx.leftb = false
+    xx.rightb = false
+
+    xx.a1b = false 
+    xx.a2b = false 
+    xx.a3b = false
+    xx.a4b = false 
+    xx.blockb = false
+    xx.runb = false
+  end
+
+
 
   if xx.joystick ~= nil then
     xx.a4 = false
@@ -598,121 +612,125 @@ function jjstick(xx)
     if xx.length > .8 then
 
 
+      if ((xx.jry/xx.jrx >= 1 or xx.jry/xx.jrx <= -1) and xx.jry < 0) 
+        or (MENU ~= "play" and xx.joystick:isGamepadDown("a"))
+        then
+        xx.a1b = true
+      end
+
+      if xx.jry/xx.jrx >= -1
+        and xx.jry/xx.jrx <= 1
+        and xx.jrx < 0
+        then
+        xx.a2b = true
+      end
+
+      if xx.jry/xx.jrx >= -1
+        and xx.jry/xx.jrx <= 1
+        and xx.jrx > 0
+        then
+        xx.a3b = true
+      end
+
       if (xx.jry/xx.jrx >= 1
         or xx.jry/xx.jrx <= -1)
-      and xx.jry < 0
+      and xx.jry > 0
       then
-      xx.a1b = true
+      xx.a4b = true
     end
 
-    if xx.jry/xx.jrx >= -1
-      and xx.jry/xx.jrx <= 1
-      and xx.jrx < 0
-      then
-      xx.a2b = true
-    end
-
-    if xx.jry/xx.jrx >= -1
-      and xx.jry/xx.jrx <= 1
-      and xx.jrx > 0
-      then
-      xx.a3b = true
-    end
-
-    if (xx.jry/xx.jrx >= 1
-      or xx.jry/xx.jrx <= -1)
-    and xx.jry > 0
-    then
-    xx.a4b = true
   end
 
-end
 
 
 
 
+  if xx.joystick:isGamepadDown("dpleft") then
+    xx.leftb = true
+  elseif xx.joystick:isGamepadDown("dpright") then
+    xx.rightb = true
+  end
 
-if xx.joystick:isGamepadDown("dpleft") then
-  xx.leftb = true
-elseif xx.joystick:isGamepadDown("dpright") then
-  xx.rightb = true
-end
-
-if xx.joystick:isGamepadDown("dpup") then
-  xx.upb = true
-elseif xx.joystick:isGamepadDown("dpdown") then
-  xx.downb = true
-end
-
-if xx.joystick:isGamepadDown("a") then
-  xx.up = true
-end
+  if xx.joystick:isGamepadDown("dpup") then
+    xx.upb = true
+  elseif xx.joystick:isGamepadDown("dpdown") then
+    xx.downb = true
+  end
 
 
-if xx.joystick:isGamepadDown("leftstick") then
-  xx.runb = true
-end 
-
-if xx.joystick:isGamepadDown("rightstick") then
-  xx.blockb = true
-end 
-if xx.joystick:isGamepadDown("start") then
-  xx.start = true
-end 
+  if xx.joystick:isGamepadDown("a") then
+    if MODE == "play" then
+      xx.up = true
+    else
+      xx.a1b = true
+    end
+  end
 
 
+  if xx.joystick:isGamepadDown("leftstick") then
+    xx.runb = true
+  end 
 
-if xx.joystick:getGamepadAxis("leftx") < -.4 then
-  xx.leftb = true
-elseif 
-  xx.joystick:getGamepadAxis("leftx")  > .4 then
-  xx.rightb = true
-end 
-
-if xx.runb then
-
-  if 
-    xx.joystick:getGamepadAxis("lefty") > 2 then
-    xx.down = true
-  elseif xx.joystick:getGamepadAxis("lefty") < - 2 then
-    xx.up = true
+  if xx.joystick:isGamepadDown("rightstick") or (MENU ~= "play" and xx.joystick:isGamepadDown("b")) then
+    xx.blockb = true
+  end 
+  if xx.joystick:isGamepadDown("start") then
+    xx.start = true
   end 
 
 
 
-else
-
-  if 
-    xx.joystick:getGamepadAxis("lefty") > .5 then
-    xx.down = true
-  elseif xx.joystick:getGamepadAxis("lefty") < - .5 then
-    xx.up = true
+  if xx.joystick:getGamepadAxis("leftx") < -.4 then
+    xx.leftb = true
+  elseif 
+    xx.joystick:getGamepadAxis("leftx")  > .4 then
+    xx.rightb = true
   end 
 
-end
+  if xx.runb then
 
--- if 
---      xx.joystick:getGamepadAxis("righty") > .4 then
---     xx.block = true
--- end 
+    if 
+      xx.joystick:getGamepadAxis("lefty") > 2 then
+      xx.down = true
+    elseif xx.joystick:getGamepadAxis("lefty") < - 2 then
+      xx.up = true
+    end 
 
-xx.rightbumpb = xx.joystick:getGamepadAxis("triggerright") > .5
-xx.leftbumpb = xx.joystick:getGamepadAxis("triggerleft") > .5
 
-slowbutton = xx.joystick:isGamepadDown("rightshoulder") or xx.joystick:isGamepadDown("leftshoulder")
 
-xx.jly = xx.joystick:getGamepadAxis("lefty")
-xx.jlx = xx.joystick:getGamepadAxis("leftx")
+  else
 
-xx.leftdeadzone = math.abs(xx.jlx/math.cos(math.atan(-xx.jly/xx.jlx))) < .3
+    if 
+      xx.joystick:getGamepadAxis("lefty") > .5 then
+      xx.down = true
+    elseif xx.joystick:getGamepadAxis("lefty") < - .5 then
+      xx.up = true
+    end 
 
-xx.start = xx.joystick:isGamepadDown("start")
+  end
 
-if not xx.leftdeadzone then
-  xx.angle = math.atan(-xx.joystick:getGamepadAxis("lefty")/(math.abs(xx.joystick:getGamepadAxis("leftx"))))
-else 
-  xx.angle = 0
-end
+  -- if 
+  --      xx.joystick:getGamepadAxis("righty") > .4 then
+  --     xx.block = true
+  -- end 
+
+  xx.rightbumpb = xx.joystick:getGamepadAxis("triggerright") > .5
+  xx.leftbumpb = xx.joystick:getGamepadAxis("triggerleft") > .5
+
+  slowbutton = xx.joystick:isGamepadDown("rightshoulder") or xx.joystick:isGamepadDown("leftshoulder")
+
+  xx.jly = xx.joystick:getGamepadAxis("lefty")
+  xx.jlx = xx.joystick:getGamepadAxis("leftx")
+
+  xx.leftdeadzone = math.abs(xx.jlx/math.cos(math.atan(-xx.jly/xx.jlx))) < .3
+
+  xx.start = xx.joystick:isGamepadDown("start")
+
+  if not xx.leftdeadzone then
+    xx.angle = math.atan(-xx.joystick:getGamepadAxis("lefty")/(math.abs(xx.joystick:getGamepadAxis("leftx"))))
+  else 
+    xx.angle = 0
+  end
 end
 end
 

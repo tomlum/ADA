@@ -22,7 +22,7 @@ ok4 = {im=lg.newImage("images/player/attack/orange/ok4.png"), xoff = 45,yoff = 0
 
 
 o32 = {im=lg.newImage("images/player/attack/orange/o32.png"), 
-  xoff = 9,yoff = -5}
+xoff = 9,yoff = -5}
 
 o33 = {im=lg.newImage("images/player/attack/orange/o33.png"), xoff = 4}
 
@@ -42,20 +42,20 @@ aorun2 = {im=lg.newImage("images/player/attack/orange/aorun2.png"), xoff = 3, yo
 at.o = {}
 at.o.p = {}
 at.o.p.dam = 7
-at.o.p.ft = 25
+at.o.p.ft = 25/2
 at.o.p.max = 2
 at.o.p.z = .4
 at.o.p.j = -20
 
 at.o.ap = {}
 at.o.ap.dam = 7
-at.o.ap.ft = 19
+at.o.ap.ft = 19/2
 at.o.ap.z = 3.5
 at.o.ap.j = -20
 
 at.o.ak = {}
 at.o.ak.dam = 10
-at.o.ak.ft = 18
+at.o.ak.ft = 18/2
 at.o.ak.max = 5
 at.o.ak.z = 4.5
 at.o.ak.j = -10
@@ -65,7 +65,7 @@ you.o5repcounter = 0
 
 at.o.k = {}
 at.o.k.dam = 9
-at.o.k.ft = 18
+at.o.k.ft = 18/2
 at.o.k.z = 4
 at.o.k.j = -20
 at.o.k.mj = 17
@@ -73,7 +73,7 @@ at.o.k.mj = 17
 
 at.o.u = {}
 at.o.u.dam = 7
-at.o.u.ft = 24
+at.o.u.ft = 24/2
 at.o.u.j = 25
 at.o.u.v = 0
 at.o.u.z = 4
@@ -137,7 +137,6 @@ function orangeyouglad(xx)
           end
           repplay(xx.orangesou)
 
-
         elseif xx.animcounter < 40 then
           if isabout(xx.animcounter, 8) then
 
@@ -160,7 +159,7 @@ function orangeyouglad(xx)
                 end
                 shakez(at.o.p.z)
 
-              end)
+                end)
           end
 
 
@@ -279,7 +278,7 @@ function orangeyouglad(xx)
                   end
                   shakez(at.o.k.z)
 
-                end)
+                  end)
             end
 
             repplay(xx.orangesou4)
@@ -346,7 +345,7 @@ function orangeyouglad(xx)
                 end
                 shakez(at.o.u.z)
 
-              end)
+                end)
           end
 
 
@@ -393,7 +392,7 @@ function orangeyouglad(xx)
                 end
                 shakez(at.o.ap.z)
 
-              end)
+                end)
             hexHit(xx, xx.id, 
               {x=xx.mid+(xx.lr*43), y = xx.y+24+31},
               {x=xx.mid+xx.v+(xx.lr*46), y = xx.y+32+31-xx.j},
@@ -411,7 +410,7 @@ function orangeyouglad(xx)
                 end
                 shakez(at.o.ap.z)
 
-              end)
+                end)
             repplay(xx.orangesou2)
           end
 
@@ -426,188 +425,188 @@ function orangeyouglad(xx)
         end
 
 
-      else if xx.attack_num == 5 then
-        if xx.animcounter < 6 then
-          if xx.o5repcounter%2==0 then
-            xx.im = ao21
-          else
-            xx.im = ao23
-          end
-
-
-        elseif xx.animcounter < 23 then
-
-          if isabout(xx.animcounter,  6) then
-
-            ocontactstuff(xx, xx.mid, xx.y,xx.v+81*xx.lr, xx.j-138)
-
-
-            hexHit(xx, xx.id, 
-              {x=xx.mid+(xx.lr*49), y = xx.y+70},
-              {x=xx.mid+xx.v+(xx.lr*56), y = xx.y+70-xx.j},
-              {x=xx.mid+xx.v+(xx.lr*83), y = xx.y+130-xx.j},
-              {x=xx.mid+(xx.lr*79), y = xx.y+138},
-              function(z)
-
-                xx.cancombo = true
-                z.v = z.v/5
-                z.j = z.j+at.o.ak.j
-                if not (z.block and z.lr == -xx.lr) then
-                  z.health = z.health - at.o.ak.dam
-                  z.flinch = true
-                  z.ft = z.ft+at.o.ak.ft
-                end
-                shakez(at.o.ak.z)
-
-              end)
-            repplay(xx.orangesou2)
-          end
-
-
-          if xx.oplat ~= nil then 
-            xx.float = true
-            xx.j = 0
-            xx.v = 0
-
-            rumbleme(xx,1/10)
-          end
-
-          if xx.o5repcounter%2==0  then
-            xx.im = ao22
-          else
-            xx.im = ao24
-          end
-
-
-
-        elseif xx.animcounter < 27 then
-          if xx.o5repcounter%2==0 then
-            xx.im = ao21
-          else
-            xx.im = ao23
-          end
-
-
-          if xx.oplat ~= nil then
-            if xx.oplat[3] ~= nil then
-              xx.j = xx.j
-            elseif xx.oplat.y == -1 then
-
-              xx.jmax = at.o.k.mj*xx.color.s.jump
-              xx.j = at.o.k.mj/2
-              xx.firstjump = true
+        else if xx.attack_num == 5 then
+          if xx.animcounter < 6 then
+            if xx.o5repcounter%2==0 then
+              xx.im = ao21
             else
-
-              xx.jmax = at.o.k.mj*xx.color.s.jump
-              xx.j = at.o.k.mj/2
-              xx.firstjump = true
+              xx.im = ao23
             end
-          end
-          xx.cmbo=true--combo(xx)
 
 
-        elseif xx.animcounter < 40 then
-          if xx.o5repcounter%2==0 then
-            xx.im = ao21
-          else
-            xx.im = ao23
-          end
+          elseif xx.animcounter < 23 then
 
-          xx.cmbo=true--combo(xx)
+            if isabout(xx.animcounter,  6) then
 
-        elseif xx.animcounter < 1000 then
-          xx.animcounter = 0
-        end
+              ocontactstuff(xx, xx.mid, xx.y,xx.v+81*xx.lr, xx.j-138)
 
 
-      elseif xx.attack_num == 6 then
-        
-        if xx.animcounter<7 then
-          xx.im = ao31
+              hexHit(xx, xx.id, 
+                {x=xx.mid+(xx.lr*49), y = xx.y+70},
+                {x=xx.mid+xx.v+(xx.lr*56), y = xx.y+70-xx.j},
+                {x=xx.mid+xx.v+(xx.lr*83), y = xx.y+130-xx.j},
+                {x=xx.mid+(xx.lr*79), y = xx.y+138},
+                function(z)
 
-        elseif xx.animcounter < 40 then
-          xx.im = ao32
-          if xx.animcounter <= 8 then
+                  xx.cancombo = true
+                  z.v = z.v/5
+                  z.j = z.j+at.o.ak.j
+                  if not (z.block and z.lr == -xx.lr) then
+                    z.health = z.health - at.o.ak.dam
+                    z.flinch = true
+                    z.ft = z.ft+at.o.ak.ft
+                  end
+                  shakez(at.o.ak.z)
 
-            ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 
-
-            hexHit(xx, xx.id, 
-              {x=xx.mid-(xx.lr*17), y = xx.y-23},
-              {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-xx.j-52},
-              {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-xx.j-52},
-              {x=xx.mid-(xx.lr*13), y = xx.y-21},
-              function(z)
-
-                xx.cancombo = true
-                z.v = z.v+at.o.u.v*xx.lr
-                z.j = z.j+at.o.u.j
-                if not (z.block and z.lr == -xx.lr) then
-                  z.health = z.health - at.o.p.dam
-                  z.flinch = true
-                  z.ft = z.ft+at.o.u.ft
-                end
-                shakez(at.o.p.z)
-
-            end)
-                      hexHit(xx, xx.id, 
-              {x=xx.mid+(xx.lr*12), y = xx.y-21},
-              {x=xx.mid+xx.v-(xx.lr*9), y = xx.y-xx.j-52},
-              {x=xx.mid+xx.v-(xx.lr*9), y = xx.y-xx.j-52},
-              {x=xx.mid+(xx.lr*8), y = xx.y-21},
-              function(z)
-
-                xx.cancombo = true
-                z.v = z.v-at.o.u.v*xx.lr
-                z.j = z.j+at.o.u.j
-                if not (z.block and z.lr == -xx.lr) then
-                  z.health = z.health - at.o.p.dam
-                  z.flinch = true
-                  z.ft = z.ft+at.o.u.ft
-                end
-                shakez(at.o.p.z)
-
-              end)
-            repplay(xx.orangesou2)
-          end
+                  end)
+              repplay(xx.orangesou2)
+            end
 
 
-          if xx.animcounter >= 15 then 
+            if xx.oplat ~= nil then 
+              xx.float = true
+              xx.j = 0
+              xx.v = 0
+
+              rumbleme(xx,1/10)
+            end
+
+            if xx.o5repcounter%2==0  then
+              xx.im = ao22
+            else
+              xx.im = ao24
+            end
+
+
+
+          elseif xx.animcounter < 27 then
+            if xx.o5repcounter%2==0 then
+              xx.im = ao21
+            else
+              xx.im = ao23
+            end
+
+
+            if xx.oplat ~= nil then
+              if xx.oplat[3] ~= nil then
+                xx.j = xx.j
+              elseif xx.oplat.y == -1 then
+
+                xx.jmax = at.o.k.mj*xx.color.s.jump
+                xx.j = at.o.k.mj/2
+                xx.firstjump = true
+              else
+
+                xx.jmax = at.o.k.mj*xx.color.s.jump
+                xx.j = at.o.k.mj/2
+                xx.firstjump = true
+              end
+            end
             xx.cmbo=true--combo(xx)
+
+
+          elseif xx.animcounter < 40 then
+            if xx.o5repcounter%2==0 then
+              xx.im = ao21
+            else
+              xx.im = ao23
+            end
+
+            xx.cmbo=true--combo(xx)
+
+          elseif xx.animcounter < 1000 then
+            xx.animcounter = 0
           end
 
 
-        elseif xx.animcounter < 42 then
-          xx.cmbo=true--combo(xx)
-          xx.im = ao31
+        elseif xx.attack_num == 6 then
 
-        elseif xx.animcounter < 44 then
-          xx.cmbo=true--combo(xx)
-        elseif xx.animcounter < 1000 then
-          xx.animcounter = 0
-        end
+          if xx.animcounter<7 then
+            xx.im = ao31
 
-      elseif xx.attack_num == 7 then
-        if xx.animcounter < 3 then
-        elseif xx.animcounter < 7 then
-          if isabout(xx.animcounter,  3) then
-            hexHit(xx, xx.id, 
-              {x=xx.mid+(xx.lr*90), y = xx.y+31},
-              {x=xx.mid+xx.v+(xx.lr*153), y = xx.y-xx.j+67},
-              {x=xx.mid+xx.v+(xx.lr*153), y = xx.y+65-xx.j+67},
-              {x=xx.mid+(xx.lr*88), y = xx.y+36},
-              function(z)
+          elseif xx.animcounter < 40 then
+            xx.im = ao32
+            if xx.animcounter <= 8 then
 
-                xx.cancombo = true
-                z.v = z.v+at.o.u.v*xx.lr
-                z.j = z.j+at.o.u.j
-                if not (z.block and z.lr == -xx.lr) then
-                  z.health = z.health - at.o.p.dam
-                  z.flinch = true
-                  z.ft = z.ft+at.o.u.ft
+              ocontactstuff(xx, xx.mid, xx.y,xx.v+(42*xx.lr), xx.j-65) 
+
+              hexHit(xx, xx.id, 
+                {x=xx.mid-(xx.lr*17), y = xx.y-23},
+                {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-xx.j-52},
+                {x=xx.mid+xx.v+(xx.lr*3), y = xx.y-xx.j-52},
+                {x=xx.mid-(xx.lr*13), y = xx.y-21},
+                function(z)
+
+                  xx.cancombo = true
+                  z.v = z.v+at.o.u.v*xx.lr
+                  z.j = z.j+at.o.u.j
+                  if not (z.block and z.lr == -xx.lr) then
+                    z.health = z.health - at.o.p.dam
+                    z.flinch = true
+                    z.ft = z.ft+at.o.u.ft
+                  end
+                  shakez(at.o.p.z)
+
+                  end)
+              hexHit(xx, xx.id, 
+                {x=xx.mid+(xx.lr*12), y = xx.y-21},
+                {x=xx.mid+xx.v-(xx.lr*9), y = xx.y-xx.j-52},
+                {x=xx.mid+xx.v-(xx.lr*9), y = xx.y-xx.j-52},
+                {x=xx.mid+(xx.lr*8), y = xx.y-21},
+                function(z)
+
+                  xx.cancombo = true
+                  z.v = z.v-at.o.u.v*xx.lr
+                  z.j = z.j+at.o.u.j
+                  if not (z.block and z.lr == -xx.lr) then
+                    z.health = z.health - at.o.p.dam
+                    z.flinch = true
+                    z.ft = z.ft+at.o.u.ft
+                  end
+                  shakez(at.o.p.z)
+
+                  end)
+              repplay(xx.orangesou2)
+            end
+
+
+            if xx.animcounter >= 15 then 
+              xx.cmbo=true--combo(xx)
+            end
+
+
+          elseif xx.animcounter < 42 then
+            xx.cmbo=true--combo(xx)
+            xx.im = ao31
+
+          elseif xx.animcounter < 44 then
+            xx.cmbo=true--combo(xx)
+          elseif xx.animcounter < 1000 then
+            xx.animcounter = 0
+          end
+
+        elseif xx.attack_num == 7 then
+          if xx.animcounter < 3 then
+          elseif xx.animcounter < 7 then
+            if isabout(xx.animcounter,  3) then
+              hexHit(xx, xx.id, 
+                {x=xx.mid+(xx.lr*90), y = xx.y+31},
+                {x=xx.mid+xx.v+(xx.lr*153), y = xx.y-xx.j+67},
+                {x=xx.mid+xx.v+(xx.lr*153), y = xx.y+65-xx.j+67},
+                {x=xx.mid+(xx.lr*88), y = xx.y+36},
+                function(z)
+
+                  xx.cancombo = true
+                  z.v = z.v+at.o.u.v*xx.lr
+                  z.j = z.j+at.o.u.j
+                  if not (z.block and z.lr == -xx.lr) then
+                    z.health = z.health - at.o.p.dam
+                    z.flinch = true
+                    z.ft = z.ft+at.o.u.ft
+                  end
+                  shakez(at.o.p.z)
                 end
-                shakez(at.o.p.z)
-                end
-              )
+                )
             end
 
             xx.im = orun

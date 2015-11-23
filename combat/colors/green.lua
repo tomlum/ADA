@@ -299,17 +299,17 @@ function gandg(xx)
         end
         xx.animcounter = 12
         if not xx.holda then
-          if (xx.a1b or xx.a2b or xx.a3b or xx.a4b)and #joysticks>=xx.id then
+          if (xx.a1b or xx.a2b or xx.a3b or xx.a4b)and not xx.using_keyboard then
             at.g.k.angle = xx.gangle
             xx.animcounter = 14
           elseif xx.a1b then
             at.g.k.angle = 90
             xx.animcounter = 14
-          elseif xx.a2b or xx.a3b then
-            at.g.k.angle = 0
-            xx.animcounter = 14
-          elseif xx.a4b then
+          elseif xx.a4b and not xx.g then
             at.g.k.angle = -90
+            xx.animcounter = 14
+          elseif xx.a2b or xx.a3b or (xx.a4b and xx.g) then
+            at.g.k.angle = 0
             xx.animcounter = 14
           elseif xx.color.n ~= 2 then
             xx.animcounter = 0
@@ -532,9 +532,8 @@ me.bolts = {}
 
 
 function boltdraw(xx)
-  for i = #xx.bolts, 1, -1 do
-    local v = xx.bolts[i]
-    rgbset(thecolors[2].c)
+  lg.setColor(thecolors[2].c.r,thecolors[2].c.g,thecolors[2].c.b)
+  for i,v in ipairs(xx.bolts) do
     lg.draw(bolt, 
       v.x-(2.5*(math.cos(math.rad(v.angle)))),
       v.y+(2.5*(math.sin(math.rad(v.angle)))), math.rad(180+v.angle))

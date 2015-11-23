@@ -21,10 +21,11 @@ seafoam = {r=0,g=255,b=255}
 turq = {r=145,g=222,b=161}
 pink = {r=255,g=0,b=255}
 
-color1 = xcolor("rich purple")
+color1 = xcolor("purple")
 color2 = xcolor("neon green")
 color3 =  xcolor("neon red")
 color4 = xcolor("neon blue")
+
 
 --color1 = xcolor("dark mauve")
 --color2 = xcolor("dark gold")

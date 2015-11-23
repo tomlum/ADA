@@ -39,6 +39,7 @@ function updateScreenInfo()
 end
 
 function drawcolorstuff(xx)
+  lg.setShader()
   spikedraw(xx)
   boltdraw(xx)
 
@@ -270,8 +271,8 @@ beigedif = 0
 function camerafol()
 
   if not no_screen_follow then
-    xdif = math.abs((you.x+you.v) - (me.x+me.v))
-    absdis = math.sqrt(((you.y-me.y)^2)+((you.x-me.x)^2))
+    xdif = math.abs((you.x+you.v) - (me.x+me.v))+1
+    absdis = math.sqrt(((you.y-me.y)^2)+((you.x-me.x)^2))+1
   else
     xdif = 0
     absdis = 0
@@ -347,7 +348,7 @@ function camerafol()
   -- end
 
 
-  if you.x < me.x and not no_screen_follow then
+  if you.x <= me.x and not no_screen_follow then
 
     youxrig = me.mid - (screenwidth*cscale*.75)-camera_center_offset 
     mexrig = you.mid - (screenwidth*cscale*.25)+camera_center_offset
@@ -818,6 +819,8 @@ function drawx(xx)
     drawPlayer(me)
 
   end
+  postDrawPlayer(me)
+  postDrawPlayer(you)
   if MODE ~= "retry" then
 
     drawparticles()

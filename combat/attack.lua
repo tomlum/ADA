@@ -25,6 +25,10 @@ throwz = .1
 function attackmanage(xx)
 
 
+	if xx.animcounter < 5 and xx.up and xx.attack_num == 1 then xx.attack_num = 3 end
+	if xx.animcounter < 5 and xx.down and xx.attack_num == 1 then xx.attack_num = 2 end
+	if xx.animcounter < 5 and xx.up and xx.attack_num == 4 then xx.attack_num = 6 end
+	if xx.animcounter < 5 and xx.down and xx.attack_num == 4 then xx.attack_num = 5 end
 	animate(xx)
 	blocknbusy(xx)
 	combomanage(xx)

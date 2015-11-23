@@ -17,6 +17,9 @@ you.id = 2
 function initPlayer(xx)
 	xx.is_player = true
 
+	xx.lrum = 0
+	xx.rrum = 0
+
 	xx.x = 0
 	xx.v = 0
 	xx.mid = 0
@@ -81,7 +84,7 @@ end
 
 function initMenus()
 	stagey = 0
-	modenum = 0
+	modenum = 1
 	pause = false
 	OLD_MODE = "begin"
 

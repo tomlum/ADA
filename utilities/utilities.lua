@@ -29,15 +29,6 @@ function debugReadouts()
     lg.print("j "..tostring(you.j), 10, 70)
   end
 
-
-
-  --lg.setShader()
-  --[[
-  boop = joystick:isVibrationSupported()
-  if boop then
-    lg.print("yeah",100,10,100)
-  end
-  ]]--
   lg.setColor(255,255,255)
   if readout then
     lg.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
