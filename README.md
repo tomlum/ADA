@@ -1,12 +1,10 @@
 # ADA
 
-Ada is a combinatorial, super powered 2d brawler set in large pixely New York city scapes.
+OurNameIsAda.com
+
+Ada is a two player highly combinatorial super powered brawler set in sweeping cityscapes with deep controls.
+
+I do the art, programming, music and story for it, so development can be a bit slow, I've been working on for about two years now, but it's just reached a point a where the combat portion of the game can be downloaded and played over at the website!  Holy cow!
 
 
-
-
-Ada is a game I've been working on for about two years now.  It's currently in a state of huge upheaval as I attempt to turn it from a messy side project to a well documented and efficient game.
-
-I do the art, programming, music and story for it, so development can be a bit slow.
-
-For questions suggestions comments, whatever, email me at checkeredlines@gmail.com
+For questions suggestions comments, whatever, email me at TomLumMail@gmail.com
