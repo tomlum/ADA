@@ -296,7 +296,12 @@ slide_time = 6
 function fric(xx) 
 
   if xx.dodgetype == 0 then
-    xx.v = r2b(xx.v,friction*ramp(xx),0)
+    local additionalFric = 0
+    if xx.left and xx.v > 0 or
+      xx.right and xx.v < 0 then
+      additionalFric = .15
+    end
+    xx.v = r2b(xx.v,(friction+additionalFric)*ramp(xx),0)
   end
 
   if not xx.landing and not ((xx.v < 0 and xx.leftb) or (xx.v > 0 and xx.rightb))

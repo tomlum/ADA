@@ -50,8 +50,9 @@ paper1 = lg.newImage("images/enviro/particles/paper/paper1.png")
 paper2 = lg.newImage("images/enviro/particles/paper/paper2.png")
 paper3 = lg.newImage("images/enviro/particles/paper/paper3.png")
 paper4 = lg.newImage("images/enviro/particles/paper/paper4.png")
-
-
+sigil = lg.newImage("images/player/attack/sigil2.png")
+sigilchange = {im = lg.newImage("images/player/attack/sigilchange.png"), xoff = 1, yoff = -5}
+jumpsigilchange = {im = lg.newImage("images/player/attack/jumpsigilchange.png"), extra_height = 5}
 
 sparkfaderate = 5
 
@@ -60,6 +61,58 @@ minute = 0
 
 tod = {1,1,1}
 
+function drawSigil(xx)
+
+
+  if xx.sigil_fade > 0 then
+    xx.sigil_fade = xx.sigil_fade + 1
+    if xx.sigil_fade > 40 then
+      xx.sigil_fade = -50
+    end
+  elseif xx.sigil_fade < 0 then
+    xx.sigil_fade = xx.sigil_fade + 1
+  end
+
+  if xx.spin_sigil or (xx.sigil_rot ~= 0 and xx.sigil_rot ~= 180) then
+    if xx.spin_sigil then
+      repplay(xx.sigilsound)
+      xx.sigil_fade = 1
+      xx.spin_sigil = false
+    end
+
+    xx.sigil_rot = xx.sigil_rot + 10
+
+    if xx.sigil_rot == 180 then
+      makensparksbox(xx.mid,xx.y+30, 20, 20, xx.rightc.c.r,xx.rightc.c.g,xx.rightc.c.b, 6)    
+    end
+
+    if xx.sigil_rot >= 360 then
+      makensparksbox(xx.mid,xx.y+30, 20, 20, xx.leftc.c.r,xx.leftc.c.g,xx.leftc.c.b, 6)    
+      xx.sigil_rot = 0
+    end
+  end
+  local fade_amount = ((math.min(math.abs(xx.sigil_fade), 30)/30))
+  if xx.sigil_rot >= 180 then
+    lg.setColor(xx.shade.r+fade_amount*(xx.leftc.c.r-xx.shade.r),
+      xx.shade.g+fade_amount*(xx.leftc.c.g-xx.shade.g),
+      xx.shade.b+fade_amount*(xx.leftc.c.b-xx.shade.b), fade_amount*200)
+    lg.draw(sigil, xx.mid-3*xx.lr, xx.y+30, math.rad(xx.sigil_rot), .9*xx.lr, .9, 19, 31)
+    lg.setColor(xx.shade.r+fade_amount*(xx.rightc.c.r-xx.shade.r),
+      xx.shade.g+fade_amount*(xx.rightc.c.g-xx.shade.g),
+      xx.shade.b+fade_amount*(xx.rightc.c.b-xx.shade.b), fade_amount*200)
+    lg.draw(sigil, xx.mid-3*xx.lr, xx.y+30, math.rad(180+xx.sigil_rot), 1*xx.lr, 1, 19, 31)
+  else
+
+    lg.setColor(xx.shade.r+fade_amount*(xx.rightc.c.r-xx.shade.r),
+      xx.shade.g+fade_amount*(xx.rightc.c.g-xx.shade.g),
+      xx.shade.b+fade_amount*(xx.rightc.c.b-xx.shade.b), fade_amount*200)
+    lg.draw(sigil, xx.mid-3*xx.lr, xx.y+30, math.rad(180+xx.sigil_rot), .9*xx.lr, .9, 19, 31)
+    lg.setColor(xx.shade.r+fade_amount*(xx.leftc.c.r-xx.shade.r),
+      xx.shade.g+fade_amount*(xx.leftc.c.g-xx.shade.g),
+      xx.shade.b+fade_amount*(xx.leftc.c.b-xx.shade.b), fade_amount*200)
+    lg.draw(sigil, xx.mid-3*xx.lr, xx.y+30, math.rad(xx.sigil_rot), 1*xx.lr, 1, 19, 31)
+  end
+end
 
 function moveTOD(delta)
   if minute + delta > 60 then
@@ -275,12 +328,6 @@ function cinemabars()
 
 
     if dangerclose then
-      --[[
-      if maxzoom > dangerZoom then
-        maxzoom = maxzoom - dangerZoomDelta
-        minzoom = minzoom - dangerZoomDelta
-      end
-      ]]--
 
       if barey < dangerbarey then
         barsmovein = 2
@@ -290,7 +337,7 @@ function cinemabars()
     elseif barey > 0 and slow_mo_t == 0 then
       barsmovein = -4
     end
-    barey = 120*(1-rampspeed)
+    --barey = 120*(1-rampspeed)
 
   end
 end
@@ -484,6 +531,8 @@ you.im = idle1
 
 
 function drawPlayer(xx)
+
+  drawSigil(xx)
   if ((dangerclose and xx.v ~=0) or drawtrails) and (xx.im~=idle1 and xx.im~=idle2) then
     table.insert(xx.trail, 
       {im = clone(xx.im), lr = xx.lr, xanimate = xx.xanimate, x = xx.x, y = xx.y, t = .3, colornum = xx.currentc, legs = clone(xx.curimlegs), legsy = xx.im.legsy,dangertrail = true})
@@ -536,7 +585,6 @@ function drawPlayer(xx)
     xx.curimlegs = xx.im.legs
     if not (xx.v == 0 or xx.slide) then
       if xx.walktimer < 7 then 
-
         xx.curimlegs = walklegs1.im
       elseif xx.walktimer >= 7 and xx.walktimer < 14 then
         xx.curimlegs = walklegs2.im
@@ -575,8 +623,9 @@ function drawPlayer(xx)
 
       --lg.draw(gahead,xx.mid-11*xx.lr, xx.y+6, 0, xlr, 1) 
 
-      lg.setShader()
     end
+
+      lg.setShader()
   end
 
 
@@ -1224,7 +1273,6 @@ function makeslidedust(why,ex,vee)
       table.insert(clouds,{x = ex, y = why, v=vee/3- floRan(3), j = floRan(vee/5), fade = 0, size = 3})
     end
   end
-
 end
 
 
@@ -1536,7 +1584,7 @@ function orient(xx)
 end
 
 
-function idleanimatex (xx)
+function idleanimatex(xx)
   if not noidle then
     xx.idletimer = xx.idletimer + 1*ramp(xx)
   end
@@ -1558,6 +1606,10 @@ function idleanimatex (xx)
     xx.idletimer = 0
   end
 
+  if xx.sigil_fade ~= 0 then
+    xx.im = sigilchange
+  end
+
   if xx.j ~= 0 then
     xx.superjumptimer = 0
   elseif xx.dubtimer < -15 then
@@ -1569,6 +1621,8 @@ function idleanimatex (xx)
     xx.can_super_jump = true
     xx.superjumptimer = r2b(xx.superjumptimer,1,0)
   end
+
+
 
 
 end
@@ -1642,9 +1696,12 @@ function animate(xx)
   landxcheck(xx)
   slidexcheck(xx)
   if xx.slide 
-    then xx.im = slide
+    then 
+    xx.im = slide
+    if xx.sigil_fade ~= 0 then
+      xx.im = sigilchange
+    end
     makeslidedust(xx.y+50,xx.mid + 15 * xx.lr,xx.v)
-
 
   elseif xx.landing
     then 
@@ -1665,6 +1722,11 @@ function animate(xx)
       else 
         xx.im = jumpfalling
       end
+
+      if xx.sigil_fade ~= 0 then
+        xx.im = jumpsigilchange
+      end
+
     end
 
   else

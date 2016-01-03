@@ -173,7 +173,7 @@ function gandg(xx)
           xx.creature = false
         end
 
-      elseif xx.animcounter < 40 then
+      elseif xx.animcounter < 60 then
         if xx.creature and math.abs(xx.v)>6 then 
           xx.im = greencreature
         else
@@ -191,20 +191,18 @@ function gandg(xx)
         end
 
         if xx.animcounter <= 9 then
-          if xx.rampcanhit then
-            if xx.repcounter ==1 and math.abs(xx.v) < greenspeedlimit then
-              xx.v = xx.v + (xx.lr*7)*xx.rampspeed/1.1
-              --xx.origgreenlr  = xx.lr
-            elseif xx.repcounter==2 and math.abs(xx.v) < greenspeedlimit then
-              --xx.lr=-xx.origgreenlr  
-              xx.v = math.abs(xx.v)*xx.lr + (xx.lr*5)*xx.rampspeed/1.1
-            elseif xx.repcounter==3 and math.abs(xx.v) < greenspeedlimit then
-              --xx.lr=xx.origgreenlr 
-              xx.v = math.abs(xx.v)*xx.lr + (xx.lr*4)*xx.rampspeed/1.1
-            elseif xx.repcounter==4 and math.abs(xx.v) < greenspeedlimit then
-              --xx.lr=xx.origgreenlr 
-              xx.v = math.abs(xx.v)*xx.lr + (xx.lr*3)*xx.rampspeed/1.1
-            end
+          if xx.repcounter ==1 and math.abs(xx.v) < greenspeedlimit then
+            xx.v = xx.v + (xx.lr*7)*5
+            --xx.origgreenlr  = xx.lr
+          elseif xx.repcounter==2 and math.abs(xx.v) < greenspeedlimit then
+            --xx.lr=-xx.origgreenlr  
+            xx.v = math.abs(xx.v)*xx.lr + (xx.lr*5)*5
+          elseif xx.repcounter==3 and math.abs(xx.v) < greenspeedlimit then
+            --xx.lr=xx.origgreenlr 
+            xx.v = math.abs(xx.v)*xx.lr + (xx.lr*4)*5
+          elseif xx.repcounter==4 and math.abs(xx.v) < greenspeedlimit then
+            --xx.lr=xx.origgreenlr 
+            xx.v = math.abs(xx.v)*xx.lr + (xx.lr*3)*5
           end
 
           if xx.creature then 
@@ -244,9 +242,11 @@ function gandg(xx)
 
           
           --combo(xx)
-        end
 
-      elseif xx.animcounter >= 50 then
+        elseif xx.animcounter < 12 then
+          xx.v = xx.v/1.2
+        end
+      elseif xx.animcounter >= 60 then
         xx.animcounter = 0
         xx.repcounter = 0
       end

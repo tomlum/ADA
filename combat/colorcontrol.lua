@@ -189,6 +189,7 @@ function changePlayerColor(xx)
     end
 
     if xx.swap and not xx.holding_swap then 
+      xx.spin_sigil = true
       if xx.color.n == xx.rightc.n then
         xx.cchangeto = xx.leftc 
       else

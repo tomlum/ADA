@@ -1,5 +1,6 @@
 -----Naming Conventions-----
 
+--a a4 make it stretch longer
 --fightclub = a mode/area for testing basic physics and combat
 --me = player 1
 --you = player 2
@@ -35,14 +36,14 @@ drawtrails = false
 noslowmo = false
 wobblecamera = false
 youpuppet = false
-havecinemabars = false
+havecinemabars = true
 noidle = true
 
 --Debug/Test Utilities
-fightclub = false
-demo = true
+fightclub = true
+demo = false
 debug = false
-MODE = "controllerSetup"
+MODE = "title"
 me.using_keyboard = true
 you.using_keyboard = true
 
@@ -159,6 +160,6 @@ function love.draw()
   lg.setColor(25,25,25)
 
   --monitorParticles(100,100)
-  --lg.print(tostring(me.dodgetype), 300, 320)
+  lg.print(tostring(dangerclose), 100, 100)
   --lg.rectangle("fill", screenwidth/2,0,screenwidth,screenheight)
 end

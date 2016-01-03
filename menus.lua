@@ -422,7 +422,7 @@ function drawControlsOverlay()
         end
         drawKey("c", 107*2, screenheight-48*2+27*2, 2)
       else
-        if string.find(me.joystick:getName(), "Playstation(R)3") then
+        if string.find(me.joystick:getName(), "PLAYSTATION(R)3") then
           lg.draw(ps3menubuttons, 0, screenheight, 0, 2,2, 0, 48)
         else
           lg.draw(xboxmenubuttons, 0, screenheight, 0, 2,2, 0, 48)
@@ -435,7 +435,7 @@ function drawControlsOverlay()
         draw(controlsoverlay2, 0, screenheight, 0, 2,2, 0, 48)
         drawKey("v", 13*2, screenheight+(-48+30)*2, 2)
       else
-        if string.find(me.joystick:getName(), "Playstation(R)3") then
+        if string.find(me.joystick:getName(), "PLAYSTATION(R)3") then
           lg.draw(ps3assigncolor, 0, screenheight, 0, 2,2, 0, 48)
         else
           lg.draw(xboxassigncolor, 0, screenheight, 0, 2,2, 0, 48)
@@ -446,7 +446,7 @@ function drawControlsOverlay()
         draw(controlsoverlay22, screenwidth, screenheight, 0, 2,2, 258, 48)
         drawKey("backspace", screenwidth+(-258+15)*2, screenheight+(-48+30)*2, 2)
       else
-        if string.find(you.joystick:getName(), "Playstation(R)3") then
+        if string.find(you.joystick:getName(), "PLAYSTATION(R)3") then
           lg.draw(rps3assigncolor, screenwidth, screenheight, 0, 2,2, 258, 48)
         else
           lg.draw(rxboxassigncolor, screenwidth, screenheight, 0, 2,2, 258, 48)
@@ -668,12 +668,12 @@ function drawMenus()
     local color = thecolors[i]
     if color.s~=nil then
       lg.setColor(color.c.r,color.c.g,color.c.b, allfade)
-      lg.sdraw(enviro.ada, 0, i*90, 0, .5, .5)
+      --lg.sdraw(enviro.ada, 0, i*90, 0, .5, .5)
     end
   end
 
   lg.setColor(255,255,255,allfade)
-  lg.draw(pressanybutton, screenwidth/2, screenheight/2, 0, screenwidth/1440,screenheight/900, 48, 18)
+  --lg.draw(pressanybutton, screenwidth/2, screenheight/2, 0, screenwidth/1440,screenheight/900, 48, 18)
   lg.setColor(0,0,0)
   lg.srectangle("fill", 0, 900-stagey*4, 1440, 900)
 

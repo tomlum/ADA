@@ -103,6 +103,8 @@ function randomizePitch()
   glassbreaks:setPitch(1.3 + (math.random() * .3) )
   
   for i,xx in ipairs(players) do
+
+    xx.sigilsound:setPitch(.8)
     xx.blues:setPitch(.7 + (math.random() * .3) )
 
     xx.airpurp1:setPitch(.5 + (math.random() * .3) )
@@ -115,7 +117,6 @@ function randomizePitch()
     xx.purpsound:setPitch(.8 + (math.random() * .3) )
 
     xx.purp2:setPitch(.8 + (math.random() * .3) )
-    xx.green:setPitch(1.2 + (math.random() * .3) )
 
     xx.land:setPitch(.8 + (math.random() * .3) )
     xx.flinch1:setPitch(.3 + (math.random() * .3) )
@@ -224,6 +225,12 @@ for i,xx in ipairs(players) do
   end
 
 
+  xx.sigilsound = love.audio.newSource("sounds/sigil2.wav", "static")
+  xx.sigilsound:setVolume(1-.82)
+
+  xx.slidesound = love.audio.newSource("sounds/slide.wav", "static")
+  xx.slidesound:setVolume(1-.82)
+
   xx.slidesound = love.audio.newSource("sounds/slide.wav", "static")
   xx.slidesound:setVolume(1-.82)
 
@@ -243,8 +250,6 @@ for i,xx in ipairs(players) do
   xx.minch = love.audio.newSource("sounds/greenhit.wav", "static")
   xx.minch:setVolume(1-.7-adj)
 
-  xx.green = love.audio.newSource("sounds/green.mp3", "static")
-  xx.green:setVolume(1-.8-adj)
 
   xx.whiff = love.audio.newSource("sounds/green.mp3", "static")
   xx.whiff:setVolume(1-.7-adj)
@@ -277,7 +282,7 @@ for i,xx in ipairs(players) do
   xx.blues:setVolume(1-.73-adj)
 
   xx.greens = love.audio.newSource("sounds/blue.mp3", "static")
-  xx.greens:setVolume(1-.6-adj)
+  xx.greens:setVolume(1-.7-adj)
 end
 
 

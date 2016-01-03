@@ -486,6 +486,7 @@ function randr(xx)
             if xx.animcounter < 22 - reddelta*xx.rlvl*2 then
               xx.v = xx.v+xx.lr*(at.r.u.mv+xx.rlvl/2)
               xx.j = at.r.u.mj+(xx.rlvl*3)
+            repplay(xx.redsound2)
             end
 
             hexHit(xx, xx.id, 
@@ -503,7 +504,6 @@ function randr(xx)
                   z.ft = z.ft+at.r.u.ft+at.r.u.delta*xx.rlvl
                 end
                 shakez(at.r.u.z)end)
-            repplay(xx.redsound2)
 
 
           end

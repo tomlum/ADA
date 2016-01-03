@@ -17,16 +17,19 @@ danger2tb = dangerbarey
 camera_center_offset=0
 
 defaultminzoom = .6
-defaultmaxzoom = .5
+defaultmaxzoom = .47
+dangerZoom = .42
 minzoom = defaultminzoom
 maxzoom = defaultmaxzoom
 minzdis = lg.getWidth()
 maxzdis = 4500
+dangerZoomDelta = .001
+flinchzoomamount = 7
 
 cscale = .7
 
 growrate = .02
-shrinkrate = .001
+shrinkrate = .003
 maxhealth = 1
 
 function updateScreenInfo()
@@ -68,12 +71,11 @@ function shakez(z)
   rumbleme(me,z/5)
   rumbleme(you,z/5)
   if dangerclose then
-    minzoom = dangerZoom + (defaultminzoom-defaultmaxzoom) - dangerZoomDelta * 10*z
-    maxzoom = dangerZoom  - dangerZoomDelta * 10*z
-
+    minzoom = dangerZoom + (defaultminzoom-defaultmaxzoom) - dangerZoomDelta * flinchzoomamount*z
+    maxzoom = dangerZoom  - dangerZoomDelta * flinchzoomamount*z
   else
-    minzoom = defaultminzoom - growrate*z
-    maxzoom = defaultmaxzoom - growrate*z
+    minzoom = defaultminzoom - growrate*z/1.5
+    maxzoom = defaultmaxzoom - growrate*z/1.5
   end
 end
 
@@ -670,7 +672,6 @@ paralaxcamshake = 0
 
 
 function drawx(xx)
-
 
   local blur_scale1 = 1/1000*cscale^2
   local rob = 0

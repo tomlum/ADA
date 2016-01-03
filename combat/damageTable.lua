@@ -22,7 +22,7 @@ land_pause_time = 8	--# of frames during landing when you can't move
 
 --Jumping
 regJT = 0	--default jumptime
-superJumpRatio = 1.5
+superJumpRatio = 1.3
 
 
 --set to 0 for whiplash like turning(?)
@@ -33,9 +33,6 @@ dangerrampspeed = .5
 rampnormaldelta = .008
 dangerRampDelta = rampnormaldelta*1.5
 dangerbarey = 70
---only for maxzoom
-dangerZoom = .4
-dangerZoomDelta = .001
 
 
 v_for_slowww = 5
@@ -45,14 +42,14 @@ defSpeedMInit = 6
 minMaxSpeedDif = 4
 accel = .5
 --higher means more fric
-friction = .4
+friction = .27
 
 awaypenalty = .7
 
 initrunspeed = 7
 defrunpace = 19
 
-jump_delay = 8
+jump_delay = 7
 initjmax = 17+9
 jumpheight = .6
 initjumpj = 12
@@ -180,7 +177,7 @@ runj = 10
 runjt = 3
 runjmax = 8
 
-minvfordust = 3
+minvfordust = 2
 
 
 
@@ -190,18 +187,3 @@ adecrate = .2
 --move rate
 amovrate = .7
 maxairmove = speedminit*.6
-
-
-
-function thev(x)
-	
-local dis = 1
-local v = 1
-while dis < x
-	do dis = dis + v
-		v = v + friction-.04
-end
-
-return v
-
-end

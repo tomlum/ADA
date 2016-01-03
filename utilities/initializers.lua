@@ -27,6 +27,11 @@ function initPlayer(xx)
 	xx.g = false
 	xx.y = 0
 
+
+	xx.spin_sigil = false
+	xx.sigil_rot = 0
+	xx.sigil_fade = 0
+
 	xx.outlineh = math.random()
 
 	xx.oldv = 0

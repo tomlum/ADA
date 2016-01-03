@@ -1,12 +1,9 @@
-
-
-
 op1 = {im=lg.newImage("images/player/attack/orange/op1.png"), xoff = 2}
-op2 = {im=lg.newImage("images/player/attack/orange/op2n.png"), xoff = 9,yoff = 10}
-op3 = {im=lg.newImage("images/player/attack/orange/op3n.png"), xoff = 9+11,yoff = 12+7}
-op4 = {im=lg.newImage("images/player/attack/orange/op4n.png"), xoff = 9,yoff = 12}
-op5 = {im=lg.newImage("images/player/attack/orange/op5n.png"), xoff = 9+11,yoff = 12+7}
-
+op2 = {im=lg.newImage("images/player/attack/orange/op2.png"), xoff = 9,yoff = 10}
+op3 = {im=lg.newImage("images/player/attack/orange/op3.png"), xoff = 9+11,yoff = 12+7}
+op4 = {im=lg.newImage("images/player/attack/orange/op4.png"), xoff = 9,yoff = 12}
+op5 = {im=lg.newImage("images/player/attack/orange/op5.png"), xoff = 9+11,yoff = 12+7}
+op6 = {im=lg.newImage("images/player/attack/orange/op6.png"), xoff = 22, yoff = -10}
 
 ao21 = {im=lg.newImage("images/player/attack/orange/ao21.png"), xoff = 9, yoff = 17, extra_height = 5}
 ao22 = {im=lg.newImage("images/player/attack/orange/ao22.png"), xoff = 9-5+13, extra_height = 5, yoff = 22}
@@ -43,7 +40,7 @@ at.o = {}
 at.o.p = {}
 at.o.p.dam = 7
 at.o.p.ft = 25/2
-at.o.p.max = 2
+at.o.p.max = 3
 at.o.p.z = .4
 at.o.p.j = -20
 
@@ -139,31 +136,51 @@ function orangeyouglad(xx)
 
         elseif xx.animcounter < 40 then
           if isabout(xx.animcounter, 8) then
+            if xx.repcounter >= 3 then
+              hexHit(xx, xx.id, 
+                {x=xx.mid+(xx.lr*12), y = xx.y+17},
+                {x=xx.mid+xx.v+(xx.lr*155), y = xx.y+27-xx.j},
+                {x=xx.mid+xx.v+(xx.lr*155), y = xx.y+30-xx.j},
+                {x=xx.mid+(xx.lr*12), y = xx.y+30},
+                function(z)
 
-            ocontactstuff(xx, xx.mid+(xx.lr*72), xx.y+32,xx.v+(19*xx.lr), xx.j-36) 
+                  xx.cancombo = true
+                  z.v = z.v+xx.lr*18
+                  if not (z.block and z.lr == -xx.lr) then
+                    z.health = z.health - at.o.p.dam
+                    z.flinch = true
+                    z.ft = z.ft+at.o.p.ft
+                  end
+                  shakez(at.o.p.z)
 
-            hexHit(xx, xx.id, 
-              {x=xx.mid+(xx.lr*59), y = xx.y+24},
-              {x=xx.mid+xx.v+(xx.lr*64), y = xx.y+24-xx.j},
-              {x=xx.mid+xx.v+(xx.lr*91), y = xx.y+60-xx.j},
-              {x=xx.mid+(xx.lr*89), y = xx.y+68},
-              function(z)
+                  end)
+            else
+              ocontactstuff(xx, xx.mid+(xx.lr*72), xx.y+32,xx.v+(19*xx.lr), xx.j-36) 
 
-                xx.cancombo = true
-                z.v = z.v/5
-                z.j = z.j+at.o.p.j
-                if not (z.block and z.lr == -xx.lr) then
-                  z.health = z.health - at.o.p.dam
-                  z.flinch = true
-                  z.ft = z.ft+at.o.p.ft
-                end
-                shakez(at.o.p.z)
+              hexHit(xx, xx.id, 
+                {x=xx.mid+(xx.lr*59), y = xx.y+24},
+                {x=xx.mid+xx.v+(xx.lr*64), y = xx.y+24-xx.j},
+                {x=xx.mid+xx.v+(xx.lr*91), y = xx.y+60-xx.j},
+                {x=xx.mid+(xx.lr*89), y = xx.y+68},
+                function(z)
 
-                end)
+                  xx.cancombo = true
+                  z.v = z.v/5
+                  z.j = z.j+at.o.p.j
+                  if not (z.block and z.lr == -xx.lr) then
+                    z.health = z.health - at.o.p.dam
+                    z.flinch = true
+                    z.ft = z.ft+at.o.p.ft
+                  end
+                  shakez(at.o.p.z)
+
+                  end)
+            end
           end
 
-
-          if xx.repcounter%2==0  then
+          if xx.repcounter >= 3 then
+            xx.im = op6
+          elseif xx.repcounter%2==0  then
             xx.im = op3
           else
             xx.im = op5
@@ -488,19 +505,9 @@ function orangeyouglad(xx)
 
 
             if xx.oplat ~= nil then
-              if xx.oplat[3] ~= nil then
-                xx.j = xx.j
-              elseif xx.oplat.y == -1 then
-
-                xx.jmax = at.o.k.mj*xx.color.s.jump
-                xx.j = at.o.k.mj/2
-                xx.firstjump = true
-              else
-
-                xx.jmax = at.o.k.mj*xx.color.s.jump
-                xx.j = at.o.k.mj/2
-                xx.firstjump = true
-              end
+              xx.jmax = at.o.k.mj*xx.color.s.jump
+              xx.j = (138-(xx.oplat.y-xx.y))/3
+              xx.firstjump = true
             end
             xx.cmbo=true--combo(xx)
 
